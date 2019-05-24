@@ -1,0 +1,25 @@
+os: linux
+
+services:
+  - docker
+
+language: python
+python: 3.6
+
+install:
+  - echo "Installing"
+  - pip install -r requirements.txt
+  - pip install -r requirements-test.txt
+  # Build any required docker containers here
+# - docker build -t mgnify/pipeline-v5-container_name <path>
+
+script:
+  - echo "Test"
+#  - cwltest --test $TRAVIS_BUID_DIR/test_workflow.yml  --verbose
+
+deploy:
+  provider: script
+  script: bash $TRAVOS_BUILD_DIR/docker_push.sh
+  on:
+    branch: master
+    os: linux
