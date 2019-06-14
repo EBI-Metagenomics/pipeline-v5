@@ -177,7 +177,7 @@ steps:
 
   unified_processing:
     label: continue with the main workflow
-    run: emg-core-analysis-v4.cwl
+    run: pipeline-core-analysis-v4.0.cwl
     in:
       mapseq_ref: mapseq_ref
       mapseq_taxonomy: mapseq_taxonomy 
