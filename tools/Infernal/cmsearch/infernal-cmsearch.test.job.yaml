@@ -1,0 +1,12 @@
+covariance_model_database:
+  class: File
+  path: test-input/tRNA5.c.cm
+cpu: 4
+cut_ga: null
+omit_alignment_section: true
+only_hmm: true
+query_sequences:
+  class: File
+  format: 'edam:format_1929'
+  path: test-input/mrum-genome.fa
+search_space_size: 1000
