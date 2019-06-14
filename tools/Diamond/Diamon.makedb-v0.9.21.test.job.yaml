@@ -1,0 +1,8 @@
+inputRefDBFile:
+  class: File
+  format: 'edam:format_1929'
+  path: >-
+    test-input/uniref90_subset.fasta
+taxonMapFile: null
+taxonNodesFiles: null
+threads: null
