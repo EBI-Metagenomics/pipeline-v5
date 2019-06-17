@@ -2,6 +2,7 @@ sudo: true
 matrix:
   include:
     - language: python
+      python: 3.6
       env: TOOL=Workflow validation tests
       install:
         - travis/install-nodejs.sh
@@ -10,6 +11,7 @@ matrix:
         - bash travis/workflow-cwl-validation-tests.sh
 
     - language: python
+      python: 3.6
       env: TOOL=Tool validation tests
       install:
         - travis/install-nodejs.sh
