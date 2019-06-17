@@ -1,20 +1,56 @@
-os: linux
+sudo: true
+matrix:
+  include:
+    - language: python
+      env: TOOL=Workflow validation tests
+      install:
+        - travis/install-nodejs.sh
+        - travis/install-cwl-tools.sh
+      script:
+        - bash travis/workflow-cwl-validation-tests.sh
 
-services:
-  - docker
+    - language: python
+      env: TOOL=Tool validation tests
+      install:
+        - travis/install-nodejs.sh
+        - travis/install-cwl-tools.sh
+      script:
+        - bash travis/tools-validation-tests.sh
 
-language: python
-python: 3.6
 
-install:
-  - echo "Installing"
-  - pip install -r requirements.txt
-  - pip install -r requirements-test.txt
+# No utils in place yet
+#    - language: python
+#      env: TOOL=Utils validation tests
+#      install:
+#        - travis/install-nodejs.sh
+#        - travis/install-cwl-runner.sh
+#      script:
+#        - bash travis/utils-validation-tests.sh
+
+    - language: Python
+      python: 3.6
+      os: linux
+      env: TOOL=Diamond.blastx-v0.9.21
+      services:
+        - docker
+      install:
+        - travis/install-nodejs.sh
+        - travis/install-cwl-tools.sh
+      script:
+        - bash travis/run-diamond.blastx-v0.9.21.sh
+        - if ! [ -e tools/Diamond/test_transcripts.fasta.diamond_matches ]; then exit 1; fi
+        - if ! diff -q tools/Diamond/test_transcripts.fasta.diamond_matches tools/Diamond/expected_output/test_transcripts.fasta.diamond_matches &>/dev/null; then exit 1; fi
+
+
+#install:
+#  - echo "Installing"
+#  - pip install -r requirements.txt
+#  - pip install -r requirements-test.txt
   # Build any required docker containers here
 # - docker build -t mgnify/pipeline-v5-container_name <path>
 
-script:
-  - echo "Test"
+#script:
+#  - echo "Test"
 #  - cwltest --test $TRAVIS_BUID_DIR/test_workflow.yml  --verbose
 
 #deploy:
