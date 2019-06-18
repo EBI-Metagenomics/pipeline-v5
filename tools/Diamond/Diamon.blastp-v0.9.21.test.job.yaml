@@ -1,0 +1,14 @@
+blockSize: null
+databaseFile:
+  class: File
+  path: >-
+    test-input/uniref90_subset.dmnd
+outputFormat: '6'
+queryGeneticCode: null
+queryInputFile:
+  class: File
+  format: 'edam:format_1929'
+  path: test-input/test_proteins.faa
+strand: both
+taxonList: null
+threads: null
