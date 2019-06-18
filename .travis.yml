@@ -37,11 +37,25 @@ matrix:
         - docker
       install:
         - travis/install-nodejs.sh
-        - travis/install-cwl-tools.sh
+        - pip install -r travis/requirements.txt
       script:
         - bash travis/run-diamond.blastx-v0.9.21.sh
         - if ! [ -e tools/Diamond/test_transcripts.fasta.diamond_matches ]; then exit 1; fi
         - if ! diff -q tools/Diamond/test_transcripts.fasta.diamond_matches tools/Diamond/expected_output/test_transcripts.fasta.diamond_matches &>/dev/null; then exit 1; fi
+
+    - language: Python
+      python: 3.6
+      os: linux
+      env: TOOL=Diamond.blastp-v0.9.21
+      services:
+        - docker
+      install:
+        - travis/install-nodejs.sh
+        - pip install -r travis/requirements.txt
+      script:
+        - bash travis/run-diamond.blastp-v0.9.21.sh
+        - if ! [ -e tools/Diamond/test_proteins.faa.diamond_matches ]; then exit 1; fi
+        - if ! diff -q tools/Diamond/test_proteins.faa.diamond_matches tools/Diamond/expected_output/test_proteins.faa.diamond_matches &>/dev/null; then exit 1; fi
 
 
 #install:
