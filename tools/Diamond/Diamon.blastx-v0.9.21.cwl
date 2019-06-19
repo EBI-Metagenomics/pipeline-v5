@@ -3,6 +3,8 @@ cwlVersion: v1.0
 $namespaces:
   edam: 'http://edamontology.org/'
   s: 'http://schema.org/'
+# TODO: Combine the 2 Diamond commands blastp and blastx into a single CWL tool description using Custome types
+# TODO: https://www.commonwl.org/user_guide/19-custom-types/index.html
 baseCommand:
   - diamond
   - blastx
