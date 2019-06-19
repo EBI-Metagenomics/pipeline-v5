@@ -89,6 +89,28 @@ inputs:
     doc: >
       Number of CPU threads. By default, the program will auto-detect and use
       all available virtual cores on the machine.
+  - id: maxTargetSeqs
+    type: int?
+    inputBinding:
+      position: 0
+      prefix: '--max-target-seqs'
+    label: Max number of target sequences per query
+    doc: >
+      The maximum number of target sequences per query to report alignments for (default=25).
+      Setting this to 0 will report all alignments that were found.
+  - id: top
+    type: int?
+    inputBinding:
+      position: 0
+      prefix: '--top'
+    label: Percentage range of the top alignment score
+    doc: >
+      Report alignments within the given percentage range of the top alignment score for a query
+      (overrides --max-target-seqs option). For example, setting this to 10 will report all align-
+      ments whose score is at most 10% lower than the best alignment score for a query.
+
+
+
 outputs:
   - id: matches
     type: File

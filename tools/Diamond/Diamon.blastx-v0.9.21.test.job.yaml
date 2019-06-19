@@ -12,3 +12,5 @@ queryInputFile:
 strand: both
 taxonList: null
 threads: null
+maxTargetSeqs: null
+top: null
