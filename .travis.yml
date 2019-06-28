@@ -1,62 +1,56 @@
 sudo: true
-matrix:
-  include:
-    - language: python
-      python: 3.6
-      env: TOOL=Tool validation tests
-      install:
-        - travis/install-nodejs.sh
-        - pip install -r travis/requirements.txt
-      script:
-        - bash travis/tools-validation-tests.sh
+language: python
+python: 3.6
 
-# TODO: Reactivate - No workflows in place yet for testing
-#    - language: python
+services:
+  - docker
+
+env:
+  - TOOL="Validate tools" SCRIPT="travis/tools-validation-tests.sh"
+  - TOOL="Diamond blastX" TEST="tools/Diamond/Diamond_blastx_test.yml"
+  - TOOL="Diamond blastP" TEST="tools/Diamond/Diamond_blastp_test.yml"
+#  - TOOL="Workflow validation tests" SCRIPT="travis/workflow-cwl-validation-tests.sh"
+#  - TOOL="Utils validation tests" SCRIPT="travis/utils-validation-tests.sh"
+
+install:
+  - travis/install-nodejs.sh
+  - pip install -r travis/requirements.txt
+
+script:
+  - if [ "$SCRIPT" ]; then
+      bash $SCRIPT;
+    else
+      cwltest --verbose --test $TEST;
+    fi
+
+#    - language: Python
 #      python: 3.6
-#      env: TOOL=Workflow validation tests
+#      os: linux
+#      env: TOOL=Diamond.blastx-v0.9.21
+#      services:
+#        - docker
 #      install:
 #        - travis/install-nodejs.sh
 #        - pip install -r travis/requirements.txt
 #      script:
-#        - bash travis/workflow-cwl-validation-tests.sh
-
-# TODO: Reactivate - No utils in place yet
-#    - language: python
-#      env: TOOL=Utils validation tests
+#        - bash travis/run-diamond.blastx-v0.9.21.sh
+#        - if ! [ -e tools/Diamond/test_transcripts.fasta.diamond_matches ]; then exit 1; fi
+#        - if ! diff -q tools/Diamond/test_transcripts.fasta.diamond_matches tools/Diamond/expected_output/test_transcripts.fasta.diamond_matches &>/dev/null; then exit 1; fi
+#
+#    - language: Python
+#      python: 3.6
+#      os: linux
+#      env: TOOL=Diamond.blastp-v0.9.21
+#      services:
+#        - docker
 #      install:
 #        - travis/install-nodejs.sh
-#        - travis/install-cwl-runner.sh
+#        - pip install -r travis/requirements.txt
 #      script:
-#        - bash travis/utils-validation-tests.sh
-
-    - language: Python
-      python: 3.6
-      os: linux
-      env: TOOL=Diamond.blastx-v0.9.21
-      services:
-        - docker
-      install:
-        - travis/install-nodejs.sh
-        - pip install -r travis/requirements.txt
-      script:
-        - bash travis/run-diamond.blastx-v0.9.21.sh
-        - if ! [ -e tools/Diamond/test_transcripts.fasta.diamond_matches ]; then exit 1; fi
-        - if ! diff -q tools/Diamond/test_transcripts.fasta.diamond_matches tools/Diamond/expected_output/test_transcripts.fasta.diamond_matches &>/dev/null; then exit 1; fi
-
-    - language: Python
-      python: 3.6
-      os: linux
-      env: TOOL=Diamond.blastp-v0.9.21
-      services:
-        - docker
-      install:
-        - travis/install-nodejs.sh
-        - pip install -r travis/requirements.txt
-      script:
-        - bash travis/run-diamond.blastp-v0.9.21.sh
-        - if ! [ -e tools/Diamond/test_proteins.faa.diamond_matches ]; then exit 1; fi
-        - if ! diff -q tools/Diamond/test_proteins.faa.diamond_matches tools/Diamond/expected_output/test_proteins.faa.diamond_matches &>/dev/null; then exit 1; fi
-
+#        - bash travis/run-diamond.blastp-v0.9.21.sh
+#        - if ! [ -e tools/Diamond/test_proteins.faa.diamond_matches ]; then exit 1; fi
+#        - if ! diff -q tools/Diamond/test_proteins.faa.diamond_matches tools/Diamond/expected_output/test_proteins.faa.diamond_matches &>/dev/null; then exit 1; fi
+#
 
 #install:
 #  - echo "Installing"
