@@ -1,7 +1,7 @@
 #cwltest
 
-- job: tools/Diamond/Diamon.blastx-v0.9.21.test.job.yaml
-  tool: tools/Diamond/Diamon.blastx-v0.9.21.cwl
+- job: tools/Diamond/Diamond.blastx-v0.9.21.test.job.yaml
+  tool: tools/Diamond/Diamond.blastx-v0.9.21.cwl
   output:
     matches:
       basename: "test_transcripts.fasta.diamond_matches"
