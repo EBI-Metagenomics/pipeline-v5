@@ -3,45 +3,19 @@ language: python
 python: 3.6
 
 env:
-  - TOOL="Tool validation tests" SCRIPT="travis/tools-validation-tests.sh"
-  - TOOL="Workflow validation tests" SCRIPT="travis/workflow-cwl-validation-tests.sh"
+  - Tool="Diamond X" TEST="tools/Diamond/Diamon_blastx_test.yml"
+#  - TOOL="Tool validation tests" SCRIPT="travis/tools-validation-tests.sh"
+#  -
+#  - TOOL="Workflow validation tests" SCRIPT="travis/workflow-cwl-validation-tests.sh"
+#  - TOOL="Utils validation tests" SCRIPT="travis/utils-validation-tests.sh"
 
 install:
   - travis/install-nodejs.sh
   - pip install -r travis/requirements.txt
 
 script:
-  - bash $SCRIPT
-#matrix:
-#  include:
-#    - language: python
-#      python: 3.6
-#      env: TOOL=Tool validation tests
-#      install:
-#        - travis/install-nodejs.sh
-#        - pip install -r travis/requirements.txt
-#      script:
-#        - bash travis/tools-validation-tests.sh
-#
-## TODO: Reactivate - No workflows in place yet for testing
-##    - language: python
-##      python: 3.6
-##      env: TOOL=Workflow validation tests
-##      install:
-##        - travis/install-nodejs.sh
-##        - pip install -r travis/requirements.txt
-##      script:
-##        - bash travis/workflow-cwl-validation-tests.sh
-#
-## TODO: Reactivate - No utils in place yet
-##    - language: python
-##      env: TOOL=Utils validation tests
-##      install:
-##        - travis/install-nodejs.sh
-##        - travis/install-cwl-runner.sh
-##      script:
-##        - bash travis/utils-validation-tests.sh
-#
+  - cwltest --verbose --test $TEST
+
 #    - language: Python
 #      python: 3.6
 #      os: linux
