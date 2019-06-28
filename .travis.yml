@@ -1,8 +1,10 @@
 sudo: true
 language: python
 python: 3.6
+
 env:
   - TOOL="Tool validation tests" SCRIPT="travis/tools-validation-tests.sh"
+  - TOOL="Workflow validation tests" SCRIPT="travis/workflow-cwl-validation-tests.sh"
 
 install:
   - travis/install-nodejs.sh
