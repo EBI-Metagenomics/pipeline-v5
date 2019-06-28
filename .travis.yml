@@ -2,8 +2,12 @@ sudo: true
 language: python
 python: 3.6
 
+services:
+  - docker
+
 env:
-  - Tool="Diamond X" TEST="tools/Diamond/Diamon_blastx_test.yml"
+  - TOOL="Validate tools" SCRIPT="travis/tools-validation-tests.sh"
+  - TOOL="Diamond X" TEST="tools/Diamond/Diamon_blastx_test.yml"
 #  - TOOL="Tool validation tests" SCRIPT="travis/tools-validation-tests.sh"
 #  -
 #  - TOOL="Workflow validation tests" SCRIPT="travis/workflow-cwl-validation-tests.sh"
@@ -14,7 +18,11 @@ install:
   - pip install -r travis/requirements.txt
 
 script:
-  - cwltest --verbose --test $TEST
+  - if [$TOOL=="Validate tools"]; then
+      bash $SCRIPT
+    else
+      cwltool --verbose --test $TEST
+    fi
 
 #    - language: Python
 #      python: 3.6
