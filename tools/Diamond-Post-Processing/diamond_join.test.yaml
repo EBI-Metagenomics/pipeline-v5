@@ -6,4 +6,4 @@
     output_sorted:
       basename: "example_diamond_10_sorted_join"
       class: File
-      checksum: "sha1$?"
+      checksum: "sha1$310fda6fcd4f9222112a186e7b42949c335ead87"
