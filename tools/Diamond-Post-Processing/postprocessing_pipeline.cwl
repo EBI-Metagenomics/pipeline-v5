@@ -2,12 +2,14 @@
 cwlVersion: v1.0
 class: Workflow
 
+doc: |
+  Represents a 2 step workflow which retrieves the top hits from a Diamond tabular output file and maps those hits to
+  a few UniRef90 annotations, like NCBI tax id or RepID.
+
+label: Represents a post processing step of the Diamond results.
+
 requirements:
   SubworkflowFeatureRequirement: {}
-  MultipleInputFeatureRequirement: {}
-  InlineJavascriptRequirement: {}
-  StepInputExpressionRequirement: {}
-  ScatterFeatureRequirement: {}
 
 inputs:
   input_diamond:
