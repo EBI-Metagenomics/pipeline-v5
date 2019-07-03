@@ -9,7 +9,7 @@ baseCommand: ['sort', '-k2,2']
 
 inputs:
   input_table:
-    type: File
+    type: File # Diamond's tabular format.
     inputBinding:
       separate: true
       position: 2
