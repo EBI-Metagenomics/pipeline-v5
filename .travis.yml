@@ -9,6 +9,7 @@ env:
   - TOOL="Validate tools" SCRIPT="travis/tools-validation-tests.sh"
   - TOOL="Diamond blastX" TEST="tools/Diamond/Diamond_blastx_test.yml"
   - TOOL="Diamond blastP" TEST="tools/Diamond/Diamond_blastp_test.yml"
+  - TOOL="Diamond Post Processing" TEST="tools/Diamond-Post-Processing/diamond_sorting.test.yaml"
 #  - TOOL="Workflow validation tests" SCRIPT="travis/workflow-cwl-validation-tests.sh"
 #  - TOOL="Utils validation tests" SCRIPT="travis/utils-validation-tests.sh"
 
