@@ -1,0 +1,9 @@
+#cwltest
+
+- job: tools/Diamond-Post-Processing/diamond_join.job.yaml
+  tool: tools/Diamond-Post-Processing/diamond_join.cwl
+  output:
+    output_sorted:
+      basename: "example_diamond_10_sorted_join"
+      class: File
+      checksum: "sha1$?"

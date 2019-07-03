@@ -9,7 +9,9 @@ env:
   - TOOL="Validate tools" SCRIPT="travis/tools-validation-tests.sh"
   - TOOL="Diamond blastX" TEST="tools/Diamond/Diamond_blastx_test.yml"
   - TOOL="Diamond blastP" TEST="tools/Diamond/Diamond_blastp_test.yml"
-  - TOOL="Diamond Post Processing" TEST="tools/Diamond-Post-Processing/diamond_sorting.test.yaml"
+  - TOOL="Diamond Post Processing Sorting" TEST="tools/Diamond-Post-Processing/diamond_sorting.test.yaml"
+  - TOOL="Diamond Post Processing Joining" TEST="tools/Diamond-Post-Processing/diamond_join.test.yaml"
+  - TOOL="Diamond Post Processing Joining" TEST="tools/Diamond-Post-Processing/postprocessing_pipeline.test.yml"
 #  - TOOL="Workflow validation tests" SCRIPT="travis/workflow-cwl-validation-tests.sh"
 #  - TOOL="Utils validation tests" SCRIPT="travis/utils-validation-tests.sh"
 
@@ -23,35 +25,6 @@ script:
     else
       cwltest --verbose --test $TEST;
     fi
-
-#    - language: Python
-#      python: 3.6
-#      os: linux
-#      env: TOOL=Diamond.blastx-v0.9.21
-#      services:
-#        - docker
-#      install:
-#        - travis/install-nodejs.sh
-#        - pip install -r travis/requirements.txt
-#      script:
-#        - bash travis/run-diamond.blastx-v0.9.21.sh
-#        - if ! [ -e tools/Diamond/test_transcripts.fasta.diamond_matches ]; then exit 1; fi
-#        - if ! diff -q tools/Diamond/test_transcripts.fasta.diamond_matches tools/Diamond/expected_output/test_transcripts.fasta.diamond_matches &>/dev/null; then exit 1; fi
-#
-#    - language: Python
-#      python: 3.6
-#      os: linux
-#      env: TOOL=Diamond.blastp-v0.9.21
-#      services:
-#        - docker
-#      install:
-#        - travis/install-nodejs.sh
-#        - pip install -r travis/requirements.txt
-#      script:
-#        - bash travis/run-diamond.blastp-v0.9.21.sh
-#        - if ! [ -e tools/Diamond/test_proteins.faa.diamond_matches ]; then exit 1; fi
-#        - if ! diff -q tools/Diamond/test_proteins.faa.diamond_matches tools/Diamond/expected_output/test_proteins.faa.diamond_matches &>/dev/null; then exit 1; fi
-#
 
 #install:
 #  - echo "Installing"
