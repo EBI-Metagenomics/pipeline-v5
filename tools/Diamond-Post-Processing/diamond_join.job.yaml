@@ -1,3 +1,6 @@
-input_table:
+input_diamond:
+  class: File
+  path: Files/example_diamond_10_sorted
+input_db:
   class: File
   path: Files/example_diamond_db
