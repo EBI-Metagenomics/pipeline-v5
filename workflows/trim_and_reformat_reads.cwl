@@ -47,7 +47,7 @@ steps:
     out: [ fasta ]
 
   clean_fasta_headers:
-    run: ../tools/clean_fasta_headers.cwl
+    run: ../utils/clean_fasta_headers.cwl
     in:
       sequences: convert_trimmed_reads_to_fasta/fasta
     out: [ sequences_with_cleaned_headers ]
