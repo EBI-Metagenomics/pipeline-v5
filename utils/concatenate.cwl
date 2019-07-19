@@ -22,7 +22,7 @@ outputs:
            return self; }
 
 doc: >
-  The cat (short for “concatenate“) command is one of the most frequently used command in
+  The cat (short for concatenate) command is one of the most frequently used command in
   Linux/Unix like operating systems. cat command allows us to create single or multiple
   files, view contain of file, concatenate files and redirect output in terminal or files.
 label: Redirecting Multiple Files Contain in a Single File
