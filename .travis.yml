@@ -7,6 +7,7 @@ services:
 
 env:
   - TOOL="Validate tools" SCRIPT="travis/tools-validation-tests.sh"
+  - TOOL="Validate tools" SCRIPT="travis/utils-validation-tests.sh"
   - TOOL="Diamond blastX" TEST="tools/Diamond/Diamond_blastx_test.yml"
   - TOOL="Diamond blastP" TEST="tools/Diamond/Diamond_blastp_test.yml"
   - TOOL="Diamond Post Processing Sorting" TEST="tools/Diamond-Post-Processing/diamond_sorting.test.yaml"
