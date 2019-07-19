@@ -1,0 +1,3 @@
+fasta_file:
+  class: File
+  path: ../input/chunk_1
