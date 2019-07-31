@@ -1,0 +1,6 @@
+wanted_file:
+  class: File
+  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/tools/Viral/ParsingPredictions/Putative_prophages_names.fna
+predicted_file:
+  class: File
+  path: ../input/chunk_1.faa

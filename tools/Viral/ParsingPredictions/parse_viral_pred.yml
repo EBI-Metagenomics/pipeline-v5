@@ -1,10 +1,10 @@
 assembly:
   class: File
-  path: ../../../workflows/chunk_1_filt500bp.fasta
+  path: ../../../workflows/Files_viral/chunk_1_filt500bp.fasta
 virfinder_tsv:
   class: File
-  path: ../../../workflows/VirFinder_output.tsv
+  path: ../../../workflows/Files_viral/VirFinder_output.tsv
 virsorter_dir:
   class: Directory
-  path: ../../../workflows/Predicted_viral_sequences
+  path: ../../../workflows/Files_viral/Predicted_viral_sequences
 output_dir: .

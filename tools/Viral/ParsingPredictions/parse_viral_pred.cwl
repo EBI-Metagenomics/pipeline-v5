@@ -10,7 +10,7 @@ requirements:
     dockerPull: cwl_parse_pred:latest
   InlineJavascriptRequirement: {}
 
-baseCommand: ['python', '/parse_viral_pred.py']
+baseCommand: ['python', '/vs_vf_categories.py']
 
 inputs:
   assembly:

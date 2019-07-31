@@ -10,39 +10,47 @@ from Bio import SeqIO
 
 def virus_parser(**kwargs):
 	
-	HC_viral_predictions = []
-	LC_viral_predictions = []
-	prophage_predictions = []
-	
+	HC_viral_predictions, LC_viral_predictions, prophage_predictions = [[] for _ in range(3)]
+	HC_viral_predictions_names, LC_viral_predictions_names, prophage_predictions_names = ['' for _ in range(3)]
+
 	VF_result_df = pd.read_csv(kwargs["VF_output"], sep="\t")
+
+	# VF_high_ids
 	VF_high_ids = list(VF_result_df[(VF_result_df["pvalue"] < 0.05) & (VF_result_df["score"] >= 0.90)]["name"].values)
 	if len(VF_high_ids) < 1:
 		print("No contigs with p < 0.05 and score >= 0.90 were reported by VirFinder")
+	else:
+		print(str(len(VF_high_ids)) + ' found VF high ids')
 
+	# VF_low_ids
 	VF_low_ids = list(VF_result_df[(VF_result_df["pvalue"] < 0.05) & (VF_result_df["score"] >= 0.70) & (VF_result_df["score"] < 0.9)]["name"].values)
 	if len(VF_low_ids) < 1:
 		print("No contigs with p < 0.05 and 0.70 <= score < 0.90 were reported by VirFinder")
+	else:
+		print(str(len(VF_low_ids)) + ' found VF low ids')
 
-	print(os.listdir(kwargs['VS_output']))
 	if len(glob.glob(os.path.join(kwargs["VS_output"], "*.fasta"))) > 0:
 		VirSorter_viral_high = [x for x in glob.glob(os.path.join(kwargs["VS_output"], "*.fasta")) if re.search(r"cat-[12]\.fasta$", x)]
 		VirSorter_viral_low = glob.glob(os.path.join(kwargs["VS_output"], "*cat-3.fasta"))[0]
 		VirSorter_prophages = [x for x in glob.glob(os.path.join(kwargs["VS_output"], "*.fasta")) if re.search(r"cat-[45]\.fasta$", x)]
-		
-		print("Beginning the identification of high confidence viral predictions...")
+		print('VirSorter_viral_high', VirSorter_viral_high)
+		print('VirSorter_viral_low', VirSorter_viral_low)
+		print('VirSorter_prophages', VirSorter_prophages)
+
+		print("\nBeginning the identification of high confidence viral predictions...")
 
 		VS_high_tuples = []
-		search_id = re.compile(r"VIRSorter_(\w+)-([a-z-]*cat_\d)")
-		for item in VirSorter_viral_high:
+		search_id = re.compile(r"VIRSorter_([\w_]+)-([\w_-]*cat_\d)")  # was: "VIRSorter_([\w]+)-([a-z-]*cat_\d)"
+		# Example: >VIRSorter_ERZ1024424_110-NODE-110-length-5464-cov-66_245332-cat_1
+		for item in VirSorter_viral_high:  # VIRSorter_cat-1.fasta, VIRSorter_cat-2.fasta
 			if os.stat(item).st_size != 0:
 				with open(item) as input_file:
 					for line in input_file:
 						if search_id.search(line):
 							VS_high_tuples.append((search_id.search(line).group(1), search_id.search(line).group(2)))
-
-
+		print('VS high tuples:' + str(len(VS_high_tuples)))
 		if len(VS_high_tuples) > 0:
-			for x,y in VS_high_tuples:
+			for x, y in VS_high_tuples:
 				for record in SeqIO.parse(kwargs["assembly_file"], "fasta"):
 					contig_id_search = re.sub(r"[.,:; ]", "_", record.description)
 					if contig_id_search == x and record.description in VF_high_ids:
@@ -72,16 +80,17 @@ def virus_parser(**kwargs):
 						record.description = "_".join(record.description.split()[1:])
 						HC_viral_predictions.append(record)
 						break
+			print('HC_viral_predictions', len(HC_viral_predictions))
 
 			VS_high_ids = [x[0] for x in VS_high_tuples]
-			VF_high_ids = [x for x in VF_high_ids if re.sub(r"[.,:; ]", "_", x) not in VS_high_ids]
-			VF_low_ids = [x for x in VF_low_ids if re.sub(r"[.,:; ]", "_", x) not in VS_high_ids]
+			VF_high_ids = [x for x in VF_high_ids if re.sub(r"[.,:; ]", "_", x) not in VS_high_ids]  # VF high - VS high
+			VF_low_ids = [x for x in VF_low_ids if re.sub(r"[.,:; ]", "_", x) not in VS_high_ids]  # VF low - VS high
 			print("High confidence viral predictions identified")
 
 		else:
 			print("No contigs were retrieved from VirSorter categories 1 and 2, therefore no high confidence viral contigs were reported")
 			
-		print("Beginning the identification of low confidence viral predictions...")
+		print("\nBeginning the identification of low confidence viral predictions...")
 
 		VS_low_tuples = []
 		if os.stat(VirSorter_viral_low).st_size != 0:
@@ -119,6 +128,8 @@ def virus_parser(**kwargs):
 							record.id = "%s_%s" % (record.id, y)
 							record.description = "_".join(record.description.split()[1:])
 							LC_viral_predictions.append(record)
+							lc_description_changed = '.'.join(record.description.split('_'))  # changge _ to .
+							LC_viral_predictions_names += lc_description_changed + '\n'
 							break
 
 		else:
@@ -131,6 +142,8 @@ def virus_parser(**kwargs):
 							record.id = record.id + "_10_H"
 							record.description = "_".join(record.description.split()[1:])
 							LC_viral_predictions.append(record)
+							lc_description_changed = '.'.join(record.description.split('_'))  # changge _ to .
+							LC_viral_predictions_names += lc_description_changed + '\n'
 							break
 
 		if len(LC_viral_predictions) < 1:
@@ -142,17 +155,16 @@ def virus_parser(**kwargs):
 		print("Beginning the identification of prophage predictions")
 
 		search_id = re.compile(r"VIRSorter_(.+?)_(gene_\d+_gene_\d+[0-9-]+cat_\d)")
-		print(search_id)
 		for item in VirSorter_prophages:
-			print(item)
 			if os.stat(item).st_size != 0:
 				for prophage in SeqIO.parse(item, "fasta"):
-					print(prophage.description)
 					prophage_description = search_id.search(prophage.description).group(1)
 					prophage_suffix = search_id.search(prophage.description).group(2)
 					for record in SeqIO.parse(kwargs["assembly_file"], "fasta"):
 						if re.sub(r"[.,:; ]", "_", record.description) == prophage_description:
 							prophage.id = "%s_%s" % (record.id, prophage_suffix)
+							prophage_description_changed = '.'.join(prophage_description.split('_'))  #changge _ to .
+							prophage_predictions_names += prophage_description_changed + '\n'
 							prophage.description = "_".join(record.description.split()[1:])
 							prophage_predictions.append(prophage)
 							break
@@ -176,14 +188,18 @@ def virus_parser(**kwargs):
 						record.id = record.id + "_10_H"
 						record.description = "_".join(record.description.split()[1:])
 						LC_viral_predictions.append(record)
+						lc_description_changed = '.'.join(record.description.split('_'))  # change _ to .
+						LC_viral_predictions_names += lc_description_changed + '\n'
 						break
 						
 			print("Low confidence viral predictions by VirFinder identified")
 					
-	return (HC_viral_predictions, LC_viral_predictions, prophage_predictions)
+	return [HC_viral_predictions, LC_viral_predictions, prophage_predictions, \
+		   HC_viral_predictions_names, LC_viral_predictions_names, prophage_predictions_names]
 
 
 if __name__ == "__main__":
+	"""
 	parser = argparse.ArgumentParser(description="Write fasta files with predicted viral contigs sorted in categories and putative prophages")
 	parser.add_argument("-a", "--assemb", dest="assemb", help="Metagenomic assembly fasta file", required=True)
 	parser.add_argument("-f", "--vfout", dest="finder", help="Absolute or relative path to VirFinder output file",
@@ -197,13 +213,28 @@ if __name__ == "__main__":
 		parser.print_help()
 	else:
 		args = parser.parse_args()
+	
 		viral_predictions = virus_parser(assembly_file=args.assemb, VF_output=args.finder, VS_output=args.sorter)
+
 		if sum([len(x) for x in viral_predictions]) > 0:
 			if len(viral_predictions[0]) > 0:
 				SeqIO.write(viral_predictions[0], os.path.join(args.outdir, "High_confidence_putative_viral_contigs.fna"), "fasta")
+				with open(os.path.join(args.outdir, "High_confidence_putative_names.fna"), 'w') as low_names:
+					low_names.write(viral_predictions[3])
+
 			if len(viral_predictions[1]) > 0:
 				SeqIO.write(viral_predictions[1], os.path.join(args.outdir, "Low_confidence_putative_viral_contigs.fna"), "fasta")
+				with open(os.path.join(args.outdir, "Low_confidence_putative_names.fna"), 'w') as low_names:
+					low_names.write(viral_predictions[4])
+
 			if len(viral_predictions[2]) > 0:
 				SeqIO.write(viral_predictions[2], os.path.join(args.outdir, "Putative_prophages.fna"), "fasta")
+				with open(os.path.join(args.outdir, "Putative_prophages_names.fna"), 'w') as proph_names:
+					proph_names.write(viral_predictions[5])
+
 		else:
 			print("Overall, no putative viral contigs or prophages were detected in the analysed metagenomic assembly")
+	"""
+	viral_predictions = virus_parser(assembly_file="../../../workflows/Files_viral/chunk_1_filt500bp.fasta",
+									 VF_output="../../../workflows/Files_viral/VirFinder_output.tsv",
+									 VS_output="../../../workflows/Files_viral/Predicted_viral_sequences")
