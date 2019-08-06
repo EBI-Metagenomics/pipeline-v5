@@ -27,6 +27,16 @@ outputs:
   output_evalue:
     outputSource: ratio_evalue/informative_table
     type: File
+  output_annotation:
+    outputSource: annotation/annotation_table
+    type: File
+  output_mapping:
+    outputSource: mapping/folder
+    type: Directory
+  output_assign:
+    outputSource: assign/assign_table
+    type: File
+
 
 steps:
 
@@ -36,25 +46,49 @@ steps:
       predicted_file: predicted_proteins
     out:
       - chosen_faa
-    run: ../tools/Viral/GetPredictedFaa/get_predicted_faa.cwl
+    run: ../../tools/Viral/GetPredictedFaa/get_predicted_faa.cwl
 
   hmmscan:
     in:
       seqfile: get_prodigal_predictions/chosen_faa
     out:
       - output_table
-    run: ../tools/Viral/HMMScan/hmmscan.cwl
+    run: ../../tools/Viral/HMMScan/hmmscan.cwl
 
   hmm_postprocessing:
     in:
       input_table: hmmscan/output_table
     out:
       - modified_file
-    run: ../tools/Viral/Modification/processing_hmm_result.cwl
+    run: ../../tools/Viral/Modification/processing_hmm_result.cwl
 
   ratio_evalue:
     in:
       input_table: hmm_postprocessing/modified_file
     out:
       - informative_table
-    run: ../tools/Viral/RatioEvalue/ratio_evalue.cwl
+    run: ../../tools/Viral/RatioEvalue/ratio_evalue.cwl
+
+  annotation:
+    in:
+      input_faa: get_prodigal_predictions/chosen_faa
+      input_table: ratio_evalue/informative_table
+    out:
+      - annotation_table
+    run: ../../tools/Viral/Annotation/viral_annotation.cwl
+
+  mapping:
+    in:
+      input_table: annotation/annotation_table
+    out:
+      - folder
+      - stdout
+      - stderr
+    run: ../../tools/Viral/Mapping/mapping.cwl
+
+  assign:
+    in:
+      input_table: annotation/annotation_table
+    out:
+      - assign_table
+    run: ../../tools/Viral/Assign/assign.cwl

@@ -1,3 +1,0 @@
-input_fasta_file:
-  class: File
-  path: ../tools/Viral/input/chunk_1
