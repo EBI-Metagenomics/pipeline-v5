@@ -27,7 +27,7 @@ inputs:
     type: Directory?
     default:
       class: Directory
-      path:  ../../WorkFlow/
+      path:  ../../../workflows/
       listing: []
     inputBinding:
       separate: true
@@ -45,12 +45,12 @@ outputs:
   stdout: stdout
   stderr: stderr
 
-  output_fastas:
+  output_array:
     type:
       type: array
-      items: File
+      items: Directory
     outputBinding:
-      glob: "*.fna"
+      glob: "*_*"
 
 
 doc: |

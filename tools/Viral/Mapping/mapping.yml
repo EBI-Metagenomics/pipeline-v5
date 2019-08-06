@@ -1,0 +1,3 @@
+input_table:
+  class: File
+  path: ../../Files/Viral_protein_annotation_table.tsv

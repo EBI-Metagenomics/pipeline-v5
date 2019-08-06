@@ -1,0 +1,12 @@
+assembly:
+  class: File
+  path: Files_viral/chunk_1_filt500bp.fasta
+virsorter_out:
+  class: Directory
+  path: Files_viral/Predicted_viral_sequences
+virfinder_out:
+  class: File
+  path: Files_viral/VirFinder_output.tsv
+predicted_proteins:
+  class: File
+  path: ../tools/Viral/input/chunk_1.faa

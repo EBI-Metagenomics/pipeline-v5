@@ -1,0 +1,3 @@
+input_table:
+  class: File
+  path: ../../WorkFlow/High_confidence_putative_viral_contigs_prot_ann_table.tsv

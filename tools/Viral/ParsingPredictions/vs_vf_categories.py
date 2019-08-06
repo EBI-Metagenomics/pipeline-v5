@@ -147,18 +147,27 @@ if __name__ == "__main__":
 
         if sum([len(x) for x in viral_predictions]) > 0:
             if len(viral_predictions[0]) > 0:
-                SeqIO.write(viral_predictions[0], os.path.join(args.outdir, "High_confidence_putative_viral_contigs.fna"), "fasta")
-                with open(os.path.join(args.outdir, "High_confidence_putative_names.fna"), 'w') as low_names:
-                    low_names.write(viral_predictions[3])
+                directory = os.path.join(args.outdir, 'High_confidence')
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                SeqIO.write(viral_predictions[0], os.path.join(directory, "High_confidence_putative_viral_contigs.fna"), "fasta")
+                with open(os.path.join(directory, "High_confidence_putative_names.fna"), 'w') as high_names:
+                    high_names.write(viral_predictions[3])
 
             if len(viral_predictions[1]) > 0:
-                SeqIO.write(viral_predictions[1], os.path.join(args.outdir, "Low_confidence_putative_viral_contigs.fna"), "fasta")
-                with open(os.path.join(args.outdir, "Low_confidence_putative_names.fna"), 'w') as low_names:
+                directory = os.path.join(args.outdir, 'Low_confidence')
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                SeqIO.write(viral_predictions[1], os.path.join(directory, "Low_confidence_putative_viral_contigs.fna"), "fasta")
+                with open(os.path.join(directory, "Low_confidence_putative_names.fna"), 'w') as low_names:
                     low_names.write(viral_predictions[4])
 
             if len(viral_predictions[2]) > 0:
-                SeqIO.write(viral_predictions[2], os.path.join(args.outdir, "Putative_prophages.fna"), "fasta")
-                with open(os.path.join(args.outdir, "Putative_prophages_names.fna"), 'w') as proph_names:
+                directory = os.path.join(args.outdir, 'Putative_prophages')
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                SeqIO.write(viral_predictions[2], os.path.join(directory, "Putative_prophages.fna"), "fasta")
+                with open(os.path.join(directory, "Putative_prophages_names.fna"), 'w') as proph_names:
                     proph_names.write(viral_predictions[5])
 
         else:
