@@ -2,26 +2,21 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: "Length Filter"
+label: "Viral contig assign"
 
 requirements:
   DockerRequirement:
-    dockerPull: viral_get_predicted_faa:latest
+    dockerPull: assign_taxonomy:latest
   InlineJavascriptRequirement: {}
 
-baseCommand: ['python', '/get_predicted_faa.py']
+baseCommand: ['python', '/contig_taxonomic_assign.py']
 
 inputs:
-  wanted_folder:
-    type: Directory
-    inputBinding:
-      separate: true
-      prefix: "-w"
-  predicted_file:
+  input_table:
     type: File
     inputBinding:
       separate: true
-      prefix: "-p"
+      prefix: "-i"
 
 stdout: stdout.txt
 stderr: stderr.txt
@@ -30,7 +25,7 @@ outputs:
   stdout: stdout
   stderr: stderr
 
-  chosen_faa:
+  assign_table:
     type: File
     outputBinding:
-      glob: '*.faa'
+      glob: "*tax_assign.tsv"

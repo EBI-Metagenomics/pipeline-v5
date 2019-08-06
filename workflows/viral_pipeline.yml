@@ -1,0 +1,6 @@
+assembly:
+  class: File
+  path: ../tools/Viral/input/chunk_1
+predicted_proteins:
+  class: File
+  path: ../tools/Viral/input/chunk_1.faa
