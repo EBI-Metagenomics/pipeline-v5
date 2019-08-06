@@ -1,7 +1,12 @@
 FROM ubuntu:18.04
 
 LABEL maintainer="Varsha Kale <vkale@ebi.ac.uk>"
-
+##############################################################
+# Dockerfile Version:   19.03.1
+# Software:             MAPseq
+# Software Version:     1.2.3
+# Description:          Image for MAPseq tool
+##############################################################
 RUN apt-get update && apt-get install -y \
   wget
 

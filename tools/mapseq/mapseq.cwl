@@ -37,7 +37,7 @@ inputs:
 baseCommand: /mapseq/mapseq-1.2.3-linux/mapseq
 arguments: ['-nthreads', '1', '-tophits', '80', '-topotus', '40', '-outfmt', 'simple']
 
-stdout: $(inputs.sequences).mseq  # helps with cwltool's --cache
+stdout: $(inputs.sequences.basename).mseq  # helps with cwltool's --cache
 
 outputs:
   classifications:
