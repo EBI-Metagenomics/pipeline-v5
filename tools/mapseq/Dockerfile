@@ -13,4 +13,4 @@ RUN wget $URL/$ZIP  \
   && tar xvzf $ZIP \
   && rm $ZIP
 
-#ENTRYPOINT ["mapseq-1.2.3-linux/mapseq"]
+CMD ["/mapseq/mapseq-1.2.3-linux/mapseq"]
