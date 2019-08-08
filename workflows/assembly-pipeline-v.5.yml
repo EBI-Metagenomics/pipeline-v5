@@ -1,0 +1,3 @@
+contigs:
+  class: File
+  path: gene_caller_input_example.fa

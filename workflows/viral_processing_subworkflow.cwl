@@ -46,28 +46,28 @@ steps:
       predicted_file: predicted_proteins
     out:
       - chosen_faa
-    run: ../../tools/Viral/GetPredictedFaa/get_predicted_faa.cwl
+    run: ../tools/Viral/GetPredictedFaa/get_predicted_faa.cwl
 
   hmmscan:
     in:
       seqfile: get_prodigal_predictions/chosen_faa
     out:
       - output_table
-    run: ../../tools/Viral/HMMScan/hmmscan.cwl
+    run: ../tools/Viral/HMMScan/hmmscan.cwl
 
   hmm_postprocessing:
     in:
       input_table: hmmscan/output_table
     out:
       - modified_file
-    run: ../../tools/Viral/Modification/processing_hmm_result.cwl
+    run: ../tools/Viral/Modification/processing_hmm_result.cwl
 
   ratio_evalue:
     in:
       input_table: hmm_postprocessing/modified_file
     out:
       - informative_table
-    run: ../../tools/Viral/RatioEvalue/ratio_evalue.cwl
+    run: ../tools/Viral/RatioEvalue/ratio_evalue.cwl
 
   annotation:
     in:
@@ -75,7 +75,7 @@ steps:
       input_table: ratio_evalue/informative_table
     out:
       - annotation_table
-    run: ../../tools/Viral/Annotation/viral_annotation.cwl
+    run: ../tools/Viral/Annotation/viral_annotation.cwl
 
   mapping:
     in:
@@ -84,11 +84,11 @@ steps:
       - folder
       - stdout
       - stderr
-    run: ../../tools/Viral/Mapping/mapping.cwl
+    run: ../tools/Viral/Mapping/mapping.cwl
 
   assign:
     in:
       input_table: annotation/annotation_table
     out:
       - assign_table
-    run: ../../tools/Viral/Assign/assign.cwl
+    run: ../tools/Viral/Assign/assign.cwl

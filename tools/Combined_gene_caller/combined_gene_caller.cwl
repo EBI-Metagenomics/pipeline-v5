@@ -37,10 +37,25 @@ outputs:
   stdout: stdout
   stderr: stderr
 
-  output_array:
-    type:
-      type: array
-      items: File
+  predicted_proteins:
+    type: File
     outputBinding:
-      glob: "$(inputs.input_fasta.basename)*"
+      glob: "$(inputs.input_fasta.basename).faa"
+
+  predicted_seq:
+    type: File
+    outputBinding:
+      glob: "$(inputs.input_fasta.basename).ffn"
+  gene_caller_out:
+    type: File
+    outputBinding:
+      glob: "$(inputs.input_fasta.basename).out"
+
+
+  #output_array:
+  #  type:
+  #    type: array
+  #    items: File
+  #  outputBinding:
+  #    glob: "$(inputs.input_fasta.basename)*"
 

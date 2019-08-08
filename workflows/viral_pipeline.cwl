@@ -44,7 +44,7 @@ steps:
     out:
       - filtered_contigs_fasta
     run: ../tools/Viral/LengthFiltering/length_filtering.cwl
-    label: "Extract sequences at least X kb long (default: X = 5)""
+    label: "Extract sequences at least X kb long (default: X = 5)"
 
   virfinder:
     in:
