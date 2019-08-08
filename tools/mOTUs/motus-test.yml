@@ -1,16 +1,6 @@
-forward_reads:
+reads:
   class: File
-  path: output_forward_paired.fq
+  path: merged-all.fq
   format: http://edamontology.org/format_1930
 
-reverse_reads:
-  class: File
-  path: output_reverse_paired.fq
-  format: http://edamontology.org/format_1930
-
-unpaired_reads:
-  class: File
-  path: unpaired.fq
-  format: http://edamontology.org/format_1930
-
-match_length: 45
+threads: 4

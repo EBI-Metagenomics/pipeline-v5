@@ -4,42 +4,35 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 requirements:
-  DockerRequirement:
-    dockerPull: quay.io/biocontainers/motus:2.1.1--py37_3
+    ResourceRequirement:
+        coresMax: 4
+        ramMin: 100
+#DockerRequirement:
+#dockerPull: quay.io/biocontainers/motus:2.1.1--py37_3
+
+hints:
+    SoftwareRequirement:
+        packages:
+            mOTUs2:
+                specs: ["http://biom-format.org/index.html"]
+                version: ["2.1.1"]
 
 
 label: "mOTU taxonomy assignment for assemblies"
 
 inputs:
-  forward_reads:
+  reads:
     type: File
     inputBinding:
         position: 1
-        prefix: -f
-    label: raw forward reads post qc
-    format: edam:format_1930
-
-  reverse_reads:
-    type: File
-    inputBinding:
-        position: 2
-        prefix: -r
-    label: raw reverse reads post qc
-    format: edam:format_1930
-
-  unpaired_reads:
-    type: File
-    inputBinding:
-        position: 3
         prefix: -s
-    label: unpaired reads post qc
+    label: merged and QC reads in fastq
     format: edam:format_1930
 
-  match_length:
+  threads:
     type: int
     inputBinding:
-        prefix: -l
-    label: minimum match length for classification
+        prefix: -t
 
 baseCommand: [motus]
 
