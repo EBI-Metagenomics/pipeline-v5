@@ -5,12 +5,12 @@ contigs:
 Diamond_databaseFile:  # change
   class: File
   path: >-
-    Diamond_test/chunk_1_uniref90.dmnd
+    _Diamond_test/chunk_1_uniref90.dmnd
 Diamond_outFormat: '6'
 Diamond_maxTargetSeqs: 1
 Diamond_postProcessingDB:  # change
   class: File
-  path: Diamond_test/diamond_pp_db
+  path: _Diamond_test/diamond_pp_db
 
 InterProScan_applications:
   - PfamA

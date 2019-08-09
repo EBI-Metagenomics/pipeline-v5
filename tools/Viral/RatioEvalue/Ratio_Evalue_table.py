@@ -13,7 +13,7 @@ from vphmm_taxa_dict import taxa_dict
 
 def ratio_evalue(vphmm_df):
 	"""This function takes a dataframe containing the result of the comparison
-	   between predicted viral proteins and the ViPhOG database, and outputs a
+	   between predicted _viral proteins and the ViPhOG database, and outputs a
 	   table storing the profile hit length ratio and total sequence Evalue for
 	   each profile-protein hit"""
 	#Keep only informative hits to ViPhOG database and those whose i-Evalue is <= 0.01

@@ -1,0 +1,7 @@
+seqfile:
+  class: File
+  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/workflows/gene_caller_input_example.fa.faa
+
+#database:
+#  class: File
+#  path: /Users/kates/Desktop/kegg-cwl/Tools/Hmmscan/db/KO_eg_db

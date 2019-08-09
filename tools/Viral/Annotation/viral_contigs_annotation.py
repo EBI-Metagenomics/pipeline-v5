@@ -10,7 +10,7 @@ from Bio import SeqIO
 
 
 def prot_annot_tbl(protein_file, ratio_evalue_file):
-	'''This function takes a fasta file containing the proteins predicted in a set of putative viral contigs and a dataframe that collates the
+	'''This function takes a fasta file containing the proteins predicted in a set of putative _viral contigs and a dataframe that collates the
 	   results obtained with hmmscan against the ViPhOG database for the same proteins'''
 	annotation_list = []
 	ratio_evalue_df = pd.read_csv(ratio_evalue_file, sep="\t")
@@ -33,9 +33,9 @@ def prot_annot_tbl(protein_file, ratio_evalue_file):
 	return protein_annot_df
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description = "Generate tabular file with ViPhOG annotation results for proteins predicted in viral contigs")
-	parser.add_argument("-p", "--prot", dest = "prot_file", help = "Relative or absolute path to protein file of predicted viral contigs", required = True)
-	parser.add_argument("-t", "--table", dest = "ratio_file", help = "Relative or absolute path to ratio_evalue tabular file generated for predicted viral contigs", required = True)
+	parser = argparse.ArgumentParser(description = "Generate tabular file with ViPhOG annotation results for proteins predicted in _viral contigs")
+	parser.add_argument("-p", "--prot", dest = "prot_file", help = "Relative or absolute path to protein file of predicted _viral contigs", required = True)
+	parser.add_argument("-t", "--table", dest = "ratio_file", help = "Relative or absolute path to ratio_evalue tabular file generated for predicted _viral contigs", required = True)
 	parser.add_argument("-o", "--outdir", dest = "output_dir", help = "Relative path to directory where you want the output file to be stored (default: cwd)", default = ".")
 	parser.add_argument("-n", "--name", dest="name_file",
 						help="Name of processing .fna file to write correct output name", default="annotated_contigs")

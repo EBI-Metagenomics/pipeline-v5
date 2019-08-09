@@ -129,14 +129,14 @@ def virus_parser(**kwargs):
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description="Write fasta files with predicted viral contigs sorted in categories and putative prophages")
+    parser = argparse.ArgumentParser(description="Write fasta files with predicted _viral contigs sorted in categories and putative prophages")
     parser.add_argument("-a", "--assemb", dest="assemb", help="Metagenomic assembly fasta file", required=True)
     parser.add_argument("-f", "--vfout", dest="finder", help="Absolute or relative path to VirFinder output file",
                         required=True)
     parser.add_argument("-s", "--vsdir", dest="sorter",
                         help="Absolute or relative path to directory containing VirSorter output", required=True)
     parser.add_argument("-o", "--outdir", dest="outdir",
-                        help="Absolute or relative path of directory where output viral prediction files should be stored (default: cwd)",
+                        help="Absolute or relative path of directory where output _viral prediction files should be stored (default: cwd)",
                         default=".")
     if len(sys.argv) == 1:
         parser.print_help()
@@ -171,7 +171,7 @@ if __name__ == "__main__":
                     proph_names.write(viral_predictions[5])
 
         else:
-            print("Overall, no putative viral contigs or prophages were detected in the analysed metagenomic assembly")
+            print("Overall, no putative _viral contigs or prophages were detected in the analysed metagenomic assembly")
     """
     viral_predictions = virus_parser(assembly_file="../../../workflows/Files_viral/chunk_1_filt500bp.fasta",
                                      VF_output="../../../workflows/Files_viral/VirFinder_output.tsv",

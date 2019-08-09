@@ -47,7 +47,7 @@ names(myColors) <- levels(annotation_table$Colour)
 
 dir.create(opt$outdir, showWarnings = FALSE)
 
-#Generate maps for each viral contig identified
+#Generate maps for each _viral contig identified
 for (item in unique(annotation_table$Contig)) {
 	sample_data <- subset(annotation_table, Contig == item)
 	pdf(file.path(normalizePath(opt$outdir), paste(item, ".pdf", sep = "")), width = 25, height = 10)

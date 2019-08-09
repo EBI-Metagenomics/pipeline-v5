@@ -37,7 +37,7 @@ def virus_parser(**kwargs):
 		print('VirSorter_viral_low', VirSorter_viral_low)
 		print('VirSorter_prophages', VirSorter_prophages)
 
-		print("\nBeginning the identification of high confidence viral predictions...")
+		print("\nBeginning the identification of high confidence _viral predictions...")
 
 		VS_high_tuples = []
 		search_id = re.compile(r"VIRSorter_([\w_]+)-([\w_-]*cat_\d)")  # was: "VIRSorter_([\w]+)-([a-z-]*cat_\d)"
@@ -85,12 +85,12 @@ def virus_parser(**kwargs):
 			VS_high_ids = [x[0] for x in VS_high_tuples]
 			VF_high_ids = [x for x in VF_high_ids if re.sub(r"[.,:; ]", "_", x) not in VS_high_ids]  # VF high - VS high
 			VF_low_ids = [x for x in VF_low_ids if re.sub(r"[.,:; ]", "_", x) not in VS_high_ids]  # VF low - VS high
-			print("High confidence viral predictions identified")
+			print("High confidence _viral predictions identified")
 
 		else:
-			print("No contigs were retrieved from VirSorter categories 1 and 2, therefore no high confidence viral contigs were reported")
+			print("No contigs were retrieved from VirSorter categories 1 and 2, therefore no high confidence _viral contigs were reported")
 			
-		print("\nBeginning the identification of low confidence viral predictions...")
+		print("\nBeginning the identification of low confidence _viral predictions...")
 
 		VS_low_tuples = []
 		if os.stat(VirSorter_viral_low).st_size != 0:
@@ -147,10 +147,10 @@ def virus_parser(**kwargs):
 							break
 
 		if len(LC_viral_predictions) < 1:
-			print("No low confidence viral contigs were reported")
+			print("No low confidence _viral contigs were reported")
 		
 		else:
-			print("Low confidence viral predictions identified")
+			print("Low confidence _viral predictions identified")
 			
 		print("Beginning the identification of prophage predictions")
 
@@ -176,11 +176,11 @@ def virus_parser(**kwargs):
 			print("Prophage predictions identified")
 			
 	else:
-		print("No putative viral sequences were reported by VirSorter")
+		print("No putative _viral sequences were reported by VirSorter")
 		
 		if len(VF_high_ids) > 0:
 			
-			print("Beginning the identification of low confidence viral predictions by VirFinder...")
+			print("Beginning the identification of low confidence _viral predictions by VirFinder...")
 			
 			for item in VF_high_ids:
 				for record in SeqIO.parse(kwargs["assembly_file"], "fasta"):
@@ -192,7 +192,7 @@ def virus_parser(**kwargs):
 						LC_viral_predictions_names += lc_description_changed + '\n'
 						break
 						
-			print("Low confidence viral predictions by VirFinder identified")
+			print("Low confidence _viral predictions by VirFinder identified")
 					
 	return [HC_viral_predictions, LC_viral_predictions, prophage_predictions, \
 		   HC_viral_predictions_names, LC_viral_predictions_names, prophage_predictions_names]
@@ -200,14 +200,14 @@ def virus_parser(**kwargs):
 
 if __name__ == "__main__":
 	"""
-	parser = argparse.ArgumentParser(description="Write fasta files with predicted viral contigs sorted in categories and putative prophages")
+	parser = argparse.ArgumentParser(description="Write fasta files with predicted _viral contigs sorted in categories and putative prophages")
 	parser.add_argument("-a", "--assemb", dest="assemb", help="Metagenomic assembly fasta file", required=True)
 	parser.add_argument("-f", "--vfout", dest="finder", help="Absolute or relative path to VirFinder output file",
 						required=True)
 	parser.add_argument("-s", "--vsdir", dest="sorter",
 						help="Absolute or relative path to directory containing VirSorter output", required=True)
 	parser.add_argument("-o", "--outdir", dest="outdir",
-						help="Absolute or relative path of directory where output viral prediction files should be stored (default: cwd)",
+						help="Absolute or relative path of directory where output _viral prediction files should be stored (default: cwd)",
 						default=".")
 	if len(sys.argv) == 1:
 		parser.print_help()
@@ -233,7 +233,7 @@ if __name__ == "__main__":
 					proph_names.write(viral_predictions[5])
 
 		else:
-			print("Overall, no putative viral contigs or prophages were detected in the analysed metagenomic assembly")
+			print("Overall, no putative _viral contigs or prophages were detected in the analysed metagenomic assembly")
 	"""
 	viral_predictions = virus_parser(assembly_file="../../../workflows/Files_viral/chunk_1_filt500bp.fasta",
 									 VF_output="../../../workflows/Files_viral/VirFinder_output.tsv",
