@@ -18,6 +18,7 @@ inputs:
     default:
       class: Directory
       path:  ../tools/Viral/VirSorter/virsorter-data
+      location: ../tools/Viral/VirSorter/virsorter-data
 
 outputs:
   output_parsing:

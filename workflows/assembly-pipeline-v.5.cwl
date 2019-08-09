@@ -42,6 +42,9 @@ steps:
     run: ../tools/Combined_gene_caller/combined_gene_caller.cwl
     label: "combine predictions of FragGeneScan and Prodigal with faselector"
 
+  # << Diamond blastp >>
+  # << Diamond post-processing >>
+
 
   #viral_pipeline:
   #  in:
@@ -53,7 +56,3 @@ steps:
   #    - output_final_assign
   #  run: viral_pipeline.cwl
   #  label: "detecting and processing viral sequences"
-
-
-  # << Diamond blastp >>
-  # << Diamond post-processing >>
