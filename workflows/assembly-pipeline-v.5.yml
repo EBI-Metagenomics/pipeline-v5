@@ -4,9 +4,9 @@ contigs:
 Diamond_databaseFile:
   class: File
   path: >-
-    ../tools/Diamond/test-input/uniref90_subset.dmnd
+    Diamond_test/chunk_1_uniref90.dmnd
 Diamond_outFormat: '6'
-#Diamond_test:
-#  class: File
-#  path: ../tools/Diamond/test-input/test_proteins.faa
-#  format: 'edam:format_1929'
+Diamond_maxTargetSeqs: 1
+Diamond_postProcessingDB:
+  class: File
+  path: Diamond_test/diamond_pp_db

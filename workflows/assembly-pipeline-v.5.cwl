@@ -28,9 +28,13 @@ inputs:
     type: File
   Diamond_outFormat:
     type: ../tools/Diamond/Diamond-output_formats.yaml#output_formats?
+  Diamond_maxTargetSeqs:
+    type: int
+  Diamond_postProcessingDB:
+    type: File
+
 
 outputs:
-
   # combined gene caller
   CGC_predicted_proteins:
     outputSource: combined_gene_caller/predicted_proteins
@@ -42,6 +46,9 @@ outputs:
   # Diamond
   Diamond_out:
     outputSource: diamond_blastp/matches
+    type: File
+  Diamond_annotations:
+    outputSource: diamond_post_processing/join_out
     type: File
 
   # Viral pipeline
@@ -74,14 +81,20 @@ steps:
       databaseFile: Diamond_databaseFile
       outputFormat: Diamond_outFormat
       queryInputFile: combined_gene_caller/predicted_proteins  # Diamond_test
+      maxTargetSeqs: Diamond_maxTargetSeqs
     out:
       - matches
     run: ../tools/Diamond/Diamond.blastp-v0.9.21.cwl
     label: "align DNA query sequences against a protein reference UniRef90 database"
 
-
-  # << Diamond post-processing >>
-
+  diamond_post_processing:
+    in:
+      input_diamond: diamond_blastp/matches
+      input_db: Diamond_postProcessingDB
+    out:
+      - join_out
+    run: ../tools/Diamond-Post-Processing/postprocessing_pipeline.cwl
+    label: "add additional annotation to diamond matches"
 
   #viral_pipeline:
   #  in:
