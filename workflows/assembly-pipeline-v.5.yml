@@ -1,3 +1,12 @@
 contigs:
   class: File
   path: ../tools/Combined_gene_caller/gene_caller_input_example.fa
+Diamond_databaseFile:
+  class: File
+  path: >-
+    ../tools/Diamond/test-input/uniref90_subset.dmnd
+Diamond_outFormat: '6'
+#Diamond_test:
+#  class: File
+#  path: ../tools/Diamond/test-input/test_proteins.faa
+#  format: 'edam:format_1929'
