@@ -11,24 +11,24 @@ requirements:
 inputs:
   contigs:
     type: File
-    default:
-      type: File
-      path: gene_caller_input_example.fa
-      listing: []
-      basename: gene_caller_input_example.fa
 
 outputs:
-  combined_gene_caller_predicted_proteins:
+  CGC_predicted_proteins:
     outputSource: combined_gene_caller/predicted_proteins
     type: File
 
-  combined_gene_caller_predicted_seq:
+  CGC_predicted_seq:
     outputSource: combined_gene_caller/predicted_seq
     type: File
+  #viral_parsing:
+  #  outputSource: viral_pipeline/output_parsing
+  #  type:
+  #    type: array
+  #    items: Directory
 
 steps:
 
-  # << QC >> don't dockerized
+  # << QC >> don't dockerized ???
 
   combined_gene_caller:
     in:
@@ -43,14 +43,17 @@ steps:
     label: "combine predictions of FragGeneScan and Prodigal with faselector"
 
 
-#  viral_pipeline:
-#    in:
-#      assembly: combined_gene_caller/predicted_seq
-#      predicted_proteins: combined_gene_caller/predicted_proteins
-#    out:
-#      - output_parsing
-#      - output_final_mapping
-#      - output_final_assign
-#    run: viral_pipeline.cwl
-#    label: "detecting and processing viral sequences"
+  #viral_pipeline:
+  #  in:
+  #    assembly: combined_gene_caller/predicted_seq
+  #    predicted_proteins: combined_gene_caller/predicted_proteins
+  #  out:
+  #    - output_parsing
+  #    - output_final_mapping
+  #    - output_final_assign
+  #  run: viral_pipeline.cwl
+  #  label: "detecting and processing viral sequences"
 
+
+  # << Diamond blastp >>
+  # << Diamond post-processing >>

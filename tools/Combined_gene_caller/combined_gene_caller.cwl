@@ -23,9 +23,8 @@ inputs:
     type: File?
     default:
       class: File
-      path: combined_gene_caller_conf.json
-      listing: []
-      basename: combined_gene_caller_conf.json
+      location: combined_gene_caller_conf.json
+      basename: combined_gene_caller_conf
     inputBinding:
       prefix: "-c"
 
@@ -50,12 +49,3 @@ outputs:
     type: File
     outputBinding:
       glob: "$(inputs.input_fasta.basename).out"
-
-
-  #output_array:
-  #  type:
-  #    type: array
-  #    items: File
-  #  outputBinding:
-  #    glob: "$(inputs.input_fasta.basename)*"
-
