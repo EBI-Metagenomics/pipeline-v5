@@ -13,6 +13,8 @@ requirements:
     types:
       - $import: ../tools/Diamond/Diamond-strand_values.yaml
       - $import: ../tools/Diamond/Diamond-output_formats.yaml
+      - $import: ../tools/InterProScan/InterProScan-apps.yaml
+      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
   - class: ResourceRequirement
     ramMin: 1000
   - class: SubworkflowFeatureRequirement
@@ -24,6 +26,7 @@ requirements:
 inputs:
   contigs:
     type: File
+
   Diamond_databaseFile:
     type: File
   Diamond_outFormat:
@@ -32,6 +35,13 @@ inputs:
     type: int
   Diamond_postProcessingDB:
     type: File
+
+  InterProScan_applications:
+    type: ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
+  InterProScan_outputFormat:
+    type: ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+  InterProScan_databases:
+    type: Directory
 
 
 outputs:
@@ -51,6 +61,11 @@ outputs:
     outputSource: diamond_post_processing/join_out
     type: File
 
+  # InterProScan
+  InterProScan_I5:
+    outputSource: interproscan/i5Annotations
+    type: File
+
   # Viral pipeline
   #viral_parsing:
   #  outputSource: viral_pipeline/output_parsing
@@ -62,8 +77,7 @@ steps:
 
   # << QC >> don't dockerized ???
 
-
-
+  # << CombinedGeneCaller >>
   combined_gene_caller:
     in:
       input_fasta: contigs
@@ -76,11 +90,26 @@ steps:
     run: ../tools/Combined_gene_caller/combined_gene_caller.cwl
     label: "combine predictions of FragGeneScan and Prodigal with faselector"
 
+  # << InterProScan >>
+  interproscan:
+    in:
+      applications: InterProScan_applications
+      inputFile: combined_gene_caller/predicted_proteins
+      outputFormat: InterProScan_outputFormat
+      databases: InterProScan_databases
+    out:
+      - i5Annotations
+    run: ../tools/InterProScan/InterProScan-v5.cwl
+    label: "InterProScan: protein sequence classifier"
+
+  << Genome Properties >>
+
+  # << Diamond >>
   diamond_blastp:
     in:
       databaseFile: Diamond_databaseFile
       outputFormat: Diamond_outFormat
-      queryInputFile: combined_gene_caller/predicted_proteins  # Diamond_test
+      queryInputFile: combined_gene_caller/predicted_proteins
       maxTargetSeqs: Diamond_maxTargetSeqs
     out:
       - matches
@@ -96,6 +125,7 @@ steps:
     run: ../tools/Diamond-Post-Processing/postprocessing_pipeline.cwl
     label: "add additional annotation to diamond matches"
 
+  # << Viral >>
   #viral_pipeline:
   #  in:
   #    assembly: combined_gene_caller/predicted_seq

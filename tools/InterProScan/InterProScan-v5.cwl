@@ -69,7 +69,7 @@ outputs:
   - id: i5Annotations
     type: File
     outputBinding:
-      glob: $(inputs.inputFile.nameroot).fasta.tsv
+      glob: $(inputs.inputFile.basename).tsv
 doc: >-
   InterProScan is the software package that allows sequences (protein and
   nucleic) to be scanned against InterPro's signatures. Signatures are
