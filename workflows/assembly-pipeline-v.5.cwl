@@ -95,6 +95,20 @@ outputs:
     outputSource: hmmscan/output_table
     type: File
 
+  pathways_summary:
+    outputSource: kegg_analysis/kegg_pathways_summary
+    type: File
+  pathways_matching:
+    outputSource: kegg_analysis/kegg_pathways_matching
+    type: File
+  pathways_missing:
+    outputSource: kegg_analysis/kegg_pathways_missing
+    type: File
+  pathways_contigs:
+    outputSource: kegg_analysis/kegg_contigs
+    type: Directory
+
+
   # Viral pipeline
   #viral_parsing:
   #  outputSource: viral_pipeline/output_parsing
@@ -154,6 +168,20 @@ steps:
       - output_table
     run: ../tools/hmmscan/hmmscan.cwl
     label: "Analysis using profile HMM on db"
+
+  # << 3.2.1 Pathways >>
+  kegg_analysis:
+    in:
+      input_table_hmmscan: hmmscan/output_table
+    out:
+      - modification_out
+      - parsing_hmmscan_out
+      - kegg_pathways_summary
+      - kegg_pathways_matching
+      - kegg_pathways_missing
+      - kegg_contigs
+      - kegg_stdout
+    run: kegg_analysis.cwl
 
   # << 3.3.0 COGs >>
 

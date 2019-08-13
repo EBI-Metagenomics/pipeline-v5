@@ -10,13 +10,11 @@ requirements:
   ScatterFeatureRequirement: {}
 
 inputs:
-  input_fasta:
+  input_table_hmmscan:
     type: File
 
 outputs:
-  hmmscan_out:
-    outputSource: hmmscan/output_table
-    type: File
+
   modification_out:
     outputSource: tab_modification/output_with_tabs
     type: File
@@ -43,18 +41,10 @@ outputs:
     type: File
 
 steps:
-  hmmscan:
-    in:
-      seqfile: input_fasta
-    out:
-      - output_table
-      - stdout
-      - stderr
-    run: ../tools/KEGG_analysis/Hmmscan/hmmscan.cwl
 
   tab_modification:
     in:
-      input_table: hmmscan/output_table
+      input_table: input_table_hmmscan
     out:
       - output_with_tabs
     run: ../tools/KEGG_analysis/Modification/modification_table.cwl
