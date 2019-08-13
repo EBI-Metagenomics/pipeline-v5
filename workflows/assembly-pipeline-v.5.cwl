@@ -45,7 +45,7 @@ inputs:
 
 
 outputs:
-  # combined gene caller
+  # Combined Gene Caller
   CGC_predicted_proteins:
     outputSource: combined_gene_caller/predicted_proteins
     type: File
@@ -64,6 +64,10 @@ outputs:
   # InterProScan
   InterProScan_I5:
     outputSource: interproscan/i5Annotations
+    type: File
+  # Genome properties
+  Genome_properties_summary:
+    outputSource: genome_properties/summary
     type: File
 
   # Viral pipeline
@@ -103,6 +107,15 @@ steps:
     label: "InterProScan: protein sequence classifier"
 
   # << Genome Properties >>
+  genome_properties:
+    in:
+      input_tsv_file: interproscan/i5Annotations
+    out:
+      - summary
+      - stderr
+      - stdout
+    run: ../tools/Genome_properties/genome_properties.cwl
+    label: "Preparing summary file for genome properties"
 
   # << Diamond >>
   diamond_blastp:
