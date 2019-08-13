@@ -4,3 +4,14 @@ assembly:
 predicted_proteins:
   class: File
   path: ../tools/Viral/input/chunk_1.faa
+
+hmmscan_gathering_bit_score:
+  type: boolean
+hmmscan_omit_alignment:
+  type: boolean
+hmmscan_name_database:
+  type: string
+hmmscan_folder_db:
+  type: Directory
+hmmscan_filter_e_value:
+  type: float

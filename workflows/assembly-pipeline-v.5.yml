@@ -19,3 +19,18 @@ InterProScan_outputFormat:
 InterProScan_databases:  # change
   class: Directory
   path: ../tools/InterProScan/test-input/databases
+
+HMMSCAN_gathering_bit_score: true
+HMMSCAN_omit_alignment: true
+HMMSCAN_name_database: db_kofam.hmm
+HMMSCAN_data:
+  class: Directory
+  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/tools/hmmscan/db
+
+viral_hmmscan_gathering_bit_score: false
+viral_hmmscan_omit_alignment: true
+viral_hmmscan_name_database: vpHMM_database
+viral_hmmscan_folder_db:  # change
+  class: Directory
+  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/tools/Viral/HMMScan/vpHMM_database
+viral_hmmscan_filter_e_value: 0.001

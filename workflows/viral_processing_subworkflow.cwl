@@ -13,6 +13,17 @@ inputs:
     type: Directory
   predicted_proteins:
     type: File
+  hmmscan_gathering_bit_score:
+    type: boolean
+  hmmscan_omit_alignment:
+    type: boolean
+  hmmscan_name_database:
+    type: string
+  hmmscan_folder_db:
+    type: Directory
+  hmmscan_filter_e_value:
+    type: float
+
 
 outputs:
   output_filtration:
@@ -51,9 +62,14 @@ steps:
   hmmscan:
     in:
       seqfile: get_prodigal_predictions/chosen_faa
+      gathering_bit_score: hmmscan_gathering_bit_score
+      name_database: hmmscan_name_database
+      data: hmmscan_folder_db
+      omit_alignment: hmmscan_omit_alignment
+      filter_e_value: hmmscan_filter_e_value
     out:
       - output_table
-    run: ../tools/Viral/HMMScan/hmmscan.cwl
+    run: ../tools/hmmscan/hmmscan.cwl
 
   hmm_postprocessing:
     in:

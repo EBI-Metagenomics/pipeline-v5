@@ -7,41 +7,56 @@ label: "Biosequence analysis using profile hidden Markov models"
 
 requirements:
   DockerRequirement:
-    dockerPull: hmmscan_kegg:latest
+    dockerPull: hmmscan_assembly:latest
   InlineJavascriptRequirement: {}
 
 baseCommand: ["hmmscan"]
 
 arguments:
-
-  - valueFrom: "--cut_ga"
-    position: 2
-  - valueFrom: --noali
-    position: 1
-
   - prefix: --domtblout
     valueFrom: $(inputs.seqfile.nameroot)_hmmscan.tbl
-    position: 3
-
+    position: 2
 
 inputs:
 
-  seqfile:
-    type: File
+  omit_alignment:
+    type: boolean?
     inputBinding:
-      position: 5
-      separate: true
+      position: 1
+      prefix: "--noali"
+
+  filter_e_value:
+    type: float?
+    inputBinding:
+      position: 3
+      prefix: "-E"
+
+  gathering_bit_score:
+    type: boolean?
+    inputBinding:
+      position: 4
+      prefix: "--cut_ga"
+
+  name_database:
+    type: string
+
   data:
     type: Directory?
     default:
       class: Directory
-      path:  ../tools/KEGG_analysis/Hmmscan/db/
-      location: ../tools/KEGG_analysis/Hmmscan/db/
+      path:  db/
+      location: db/
       listing: []
       basename: db
     inputBinding:
-      valueFrom: $(self.path)/db_kofam.hmm  # $(self.listing[0].dirname)/db_kofam.hmm
-      position: 4
+      valueFrom: $(self.path)/$(inputs.name_database)
+      position: 5
+
+  seqfile:
+    type: File
+    inputBinding:
+      position: 6
+      separate: true
 
 stdout: stdout.txt
 stderr: stderr.txt

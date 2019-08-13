@@ -4,3 +4,13 @@ folder_with_names:
 predicted_proteins:
   class: File
   path: ../tools/Viral/input/chunk_1.faa
+
+hmmscan_gathering_bit_score: false
+hmmscan_omit_alignment: true
+
+hmmscan_name_database: vpHMM_database
+hmmscan_folder_db:
+  class: Directory
+  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/tools/Viral/HMMScan/vpHMM_database
+
+hmmscan_filter_e_value: 0.001

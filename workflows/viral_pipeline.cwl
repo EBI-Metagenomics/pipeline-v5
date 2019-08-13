@@ -19,6 +19,16 @@ inputs:
       class: Directory
       path:  ../tools/Viral/VirSorter/virsorter-data
       location: ../tools/Viral/VirSorter/virsorter-data
+  hmmscan_gathering_bit_score:
+    type: boolean
+  hmmscan_omit_alignment:
+    type: boolean
+  hmmscan_name_database:
+    type: string
+  hmmscan_folder_db:
+    type: Directory
+  hmmscan_filter_e_value:
+    type: float
 
 outputs:
   output_parsing:
@@ -80,6 +90,12 @@ steps:
     in:
       folder_with_names: parse_pred_contigs/output_array
       predicted_proteins: predicted_proteins
+      hmmscan_gathering_bit_score: hmmscan_gathering_bit_score
+      hmmscan_omit_alignment: hmmscan_omit_alignment
+      hmmscan_name_database: hmmscan_name_database
+      hmmscan_folder_db: hmmscan_folder_db
+      hmmscan_filter_e_value: hmmscan_filter_e_value
+    type: float
     out:
       - output_filtration  # takes viral sequences from Prodigal results
       - output_hmmscan  # HMMSCAN predicts annotations for each protein from confidence groups
