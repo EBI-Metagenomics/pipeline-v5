@@ -102,7 +102,7 @@ steps:
     run: ../tools/InterProScan/InterProScan-v5.cwl
     label: "InterProScan: protein sequence classifier"
 
-  << Genome Properties >>
+  # << Genome Properties >>
 
   # << Diamond >>
   diamond_blastp:

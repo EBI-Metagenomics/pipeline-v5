@@ -1,0 +1,3 @@
+input_tsv_file:
+  class: File
+  path: ../InterProScan/test_single_protein.fasta.tsv
