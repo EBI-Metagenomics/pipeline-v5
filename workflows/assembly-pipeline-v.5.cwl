@@ -65,7 +65,34 @@ inputs:
 
 
 outputs:
-  # Combined Gene Caller
+
+  # << QC stats >>
+    qc_stats_summary:
+    type: File
+    outputSource: sequence_stats/summary_out
+  qc_stats_seq_len_pcbin:
+    type: File
+    outputSource: sequence_stats/seq_length_pcbin
+  qc_stats_seq_len_bin:
+    type: File
+    outputSource: sequence_stats/seq_length_bin
+  qc_stats_seq_len:
+    type: File
+    outputSource: sequence_stats/seq_length_out
+  qc_stats_nuc_dist:
+    type: File
+    outputSource: sequence_stats/nucleotide_distribution_out
+  qc_stats_gc_pcbin:
+    type: File
+    outputSource: sequence_stats/gc_sum_pcbin
+  qc_stats_gc_bin:
+    type: File
+    outputSource: sequence_stats/gc_sum_bin
+  qc_stats_gc:
+    type: File
+    outputSource: sequence_stats/gc_sum_out
+
+  # << Combined Gene Caller  >>
   CGC_predicted_proteins:
     outputSource: combined_gene_caller/predicted_proteins
     type: File
@@ -73,7 +100,7 @@ outputs:
     outputSource: combined_gene_caller/predicted_seq
     type: File
 
-  # Diamond
+  # << Diamond >>
   Diamond_out:
     outputSource: diamond_blastp/matches
     type: File
@@ -81,7 +108,7 @@ outputs:
     outputSource: diamond_post_processing/join_out
     type: File
 
-  # InterProScan
+  # << InterProScan >>
   InterProScan_I5:
     outputSource: interproscan/i5Annotations
     type: File
@@ -93,12 +120,12 @@ outputs:
     outputSource: genome_properties/table
     type: File
 
-  # KEGG analysis
+  # << KEGG analysis >>
   hmmscan_table:
     outputSource: hmmscan/output_table
     type: File
 
-  # Pathways analysis
+  # << Pathways analysis >>
   pathways_summary:
     outputSource: kegg_analysis/kegg_pathways_summary
     type: File
@@ -112,12 +139,12 @@ outputs:
     outputSource: kegg_analysis/kegg_contigs
     type: Directory
 
-  # antiSMASH
+  # << antiSMASH >>
   antiSMASH_results:
     outputSource: antismash/output_files
     type: Directory
 
-  # Viral pipeline
+  # << Viral pipeline >>
   #viral_parsing:
   #  outputSource: viral_pipeline/output_parsing
   #  type:
@@ -126,9 +153,24 @@ outputs:
 
 steps:
 
-  # << 1. QC >> don't dockerized ???
+  # << 1. QC >>
+  sequence_stats:
+    in:
+      QCed_reads: contigs
+    out:
+      - summary_out
+      - seq_length_pcbin
+      - seq_length_bin
+      - seq_length_out
+      - nucleotide_distribution_out
+      - gc_sum_pcbin
+      - gc_sum_bin
+      - gc_sum_out
+    run: ../tools/qc-stats/qc-stats.cwl
 
-  # << 2. CombinedGeneCaller >>
+  # << 2. RNA prediction >>
+
+  # << 3. CombinedGeneCaller >>
   combined_gene_caller:
     in:
       input_fasta: contigs
@@ -141,7 +183,7 @@ steps:
     run: ../tools/Combined_gene_caller/combined_gene_caller.cwl
     label: "combine predictions of FragGeneScan and Prodigal with faselector"
 
-  # << 3.1.0 InterProScan >>
+  # << 4.1.0 InterProScan >>
   interproscan:
     in:
       applications: InterProScan_applications
@@ -153,7 +195,7 @@ steps:
     run: ../tools/InterProScan/InterProScan-v5.cwl
     label: "InterProScan: protein sequence classifier"
 
-  # << 3.1.1 Genome Properties >>
+  # << 4.1.1 Genome Properties >>
   genome_properties:
     in:
       input_tsv_file: interproscan/i5Annotations
@@ -165,7 +207,7 @@ steps:
     run: ../tools/Genome_properties/genome_properties.cwl
     label: "Preparing summary file for genome properties"
 
-  # << 3.2.0 KEGG >>
+  # << 4.2.0 KEGG >>
   hmmscan:
     in:
       seqfile: combined_gene_caller/predicted_proteins
@@ -178,7 +220,7 @@ steps:
     run: ../tools/hmmscan/hmmscan.cwl
     label: "Analysis using profile HMM on db"
 
-  # << 3.2.1 Pathways >>
+  # << 4.2.1 Pathways >>
   kegg_analysis:
     in:
       input_table_hmmscan: hmmscan/output_table
@@ -192,11 +234,11 @@ steps:
       - kegg_stdout
     run: kegg_analysis.cwl
 
-  # << 3.3.0 COGs >>
+  # << 4.3.0 COGs >>
   # make db
   # run EggNOG
 
-  # << 3.4.0 Diamond >>
+  # << 4.4.0 Diamond >>
   diamond_blastp:
     in:
       databaseFile: Diamond_databaseFile
@@ -208,7 +250,7 @@ steps:
     run: ../tools/Diamond/Diamond.blastp-v0.9.21.cwl
     label: "align DNA query sequences against a protein reference UniRef90 database"
 
-  # << 3.4.1 Diamond post-processing >>
+  # << 4.4.1 Diamond post-processing >>
   diamond_post_processing:
     in:
       input_diamond: diamond_blastp/matches
@@ -218,7 +260,7 @@ steps:
     run: ../tools/Diamond-Post-Processing/postprocessing_pipeline.cwl
     label: "add additional annotation to diamond matches"
 
-  # << 3.5.0 Antismash >>
+  # << 4.5.0 Antismash >>
   antismash:
     in:
       input_fasta: contigs # TODO change to right file
@@ -227,7 +269,7 @@ steps:
     run: ../tools/antismash/antismash.cwl
     label: "analysis of secondary metabolite biosynthesis gene clusters in bacterial and fungal genomes"
 
-  # << 3.6.0 Viral >>
+  # << 4.6.0 Viral >>
   #viral_pipeline:
   #  in:
   #    assembly: combined_gene_caller/predicted_seq

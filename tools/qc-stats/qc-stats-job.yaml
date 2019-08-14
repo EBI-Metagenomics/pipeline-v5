@@ -1,5 +1,5 @@
 QCed_reads: 
   class: File
   format: http://edamontology.org/format_1929
-  path: /hps/nobackup/production/metagenomics/CWL/rdf/test/merged_with_unmerged_reads.trimmed.fastq.fasta
+  path: ../../files/merged_with_unmerged_reads.trimmed.fastq.fasta
 
