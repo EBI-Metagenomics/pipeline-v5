@@ -23,22 +23,22 @@ inputs:
       position: 1
       valueFrom: $(self.basename)
     label: Input fasta file.
+    format: edam:format_1929  # FASTA
 
 outputs:
   sequences_with_index:
     type: File
-    secondaryFiles: .ssi
     outputBinding:
-      glob: $(inputs.sequences.basename)
+      glob: $(inputs.sequences.basename).ssi
+    label: The index file
+    format: edam:format_1929  # FASTA
 
-    doc: The index file
+$namespaces:
+  edam: http://edamontology.org/
+  s: http://schema.org/
+$schemas:
+ - http://edamontology.org/EDAM_1.16.owl
+ - https://schema.org/docs/schema_org_rdfa.html
 
-#$namespaces:
-  #edam: http://edamontology.org/
-  #s: http://schema.org/
-#$schemas:
- #- http://edamontology.org/EDAM_1.16.owl
- #- https://schema.org/docs/schema_org_rdfa.html
-
-#s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-#s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"
+s:copyrightHolder: "EMBL - European Bioinformatics Institute"
