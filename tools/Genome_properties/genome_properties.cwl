@@ -10,7 +10,7 @@ requirements:
   InlineJavascriptRequirement: {}
 
 baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"]
-arguments: ["-name", "$(inputs.input_tsv_file.nameroot)", "-all", "-gpdir", "/genome-properties/flatfiles", "-outfiles", "long", "-gpff", "genomeProperties.txt"]
+arguments: ["-name", "$(inputs.input_tsv_file.nameroot)", "-all", "-gpdir", "/genome-properties/flatfiles", "-outfiles", "table", "-outfiles", "web_json", "-gpff", "genomeProperties.txt"]
 
 inputs:
   input_tsv_file:
@@ -32,10 +32,14 @@ outputs:
   stdout: stdout
   stderr: stderr
 
-  summary:
+  table:
     type: File
     outputBinding:
-      glob: "*$(inputs.input_tsv_file.nameroot)"
+      glob: "TABLE*$(inputs.input_tsv_file.nameroot)"
+  json:
+    type: File
+    outputBinding:
+      glob: "JSON*$(inputs.input_tsv_file.nameroot)"
 
 
 $namespaces:

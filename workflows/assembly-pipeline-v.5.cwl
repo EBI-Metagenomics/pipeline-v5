@@ -86,8 +86,11 @@ outputs:
     outputSource: interproscan/i5Annotations
     type: File
   # Genome properties
-  Genome_properties_summary:
-    outputSource: genome_properties/summary
+  Genome_properties_json:
+    outputSource: genome_properties/json
+    type: File
+  Genome_properties_table:
+    outputSource: genome_properties/table
     type: File
 
   # KEGG analysis
@@ -155,7 +158,8 @@ steps:
     in:
       input_tsv_file: interproscan/i5Annotations
     out:
-      - summary
+      - json
+      - table
       - stderr
       - stdout
     run: ../tools/Genome_properties/genome_properties.cwl
