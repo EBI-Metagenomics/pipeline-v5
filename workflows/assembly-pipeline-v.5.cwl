@@ -95,6 +95,7 @@ outputs:
     outputSource: hmmscan/output_table
     type: File
 
+  # Pathways analysis
   pathways_summary:
     outputSource: kegg_analysis/kegg_pathways_summary
     type: File
@@ -108,6 +109,10 @@ outputs:
     outputSource: kegg_analysis/kegg_contigs
     type: Directory
 
+  # antiSMASH
+  antiSMASH_results:
+    outputSource: antismash/output_files
+    type: Directory
 
   # Viral pipeline
   #viral_parsing:
@@ -184,6 +189,8 @@ steps:
     run: kegg_analysis.cwl
 
   # << 3.3.0 COGs >>
+  # make db
+  # run EggNOG
 
   # << 3.4.0 Diamond >>
   diamond_blastp:
@@ -208,6 +215,13 @@ steps:
     label: "add additional annotation to diamond matches"
 
   # << 3.5.0 Antismash >>
+  antismash:
+    in:
+      input_fasta: contigs # TODO change to right file
+    out:
+      - output_files
+    run: ../tools/antismash/antismash.cwl
+    label: "analysis of secondary metabolite biosynthesis gene clusters in bacterial and fungal genomes"
 
   # << 3.6.0 Viral >>
   #viral_pipeline:

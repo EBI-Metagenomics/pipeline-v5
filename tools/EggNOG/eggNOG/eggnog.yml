@@ -1,0 +1,3 @@
+fasta_file:
+  path: /Users/kates/Desktop/CWL_eggNOG/Files/GUT_GENOME000020.faa
+  class: File
