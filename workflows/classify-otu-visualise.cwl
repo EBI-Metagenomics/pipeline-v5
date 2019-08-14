@@ -28,7 +28,7 @@ outputs:
 
 steps:
   mapseq:
-    run: mapseq.cwl
+    run: ../tools/mapseq/mapseq.cwl
     in:
       sequences: fasta
       database: mapseq_ref
@@ -36,7 +36,7 @@ steps:
     out: [ classifications ]
 
   classifications_to_otu_counts:
-    run: mapseq2biom.cwl
+    run: ../tools/mapseq2biom.cwl
     in:
        otu_table: otu_ref
        label: sequencing_run_id
@@ -44,7 +44,7 @@ steps:
     out: [ otu_counts, krona_otu_counts ]
 
   visualize_otu_counts:
-    run: krona.cwl
+    run: ../tools/krona/krona.cwl
     in:
       otu_counts: classifications_to_otu_counts/krona_otu_counts
     out: [ otu_visualization ]
