@@ -26,10 +26,4 @@ RUN chmod -R a+rwx /owltools
 
 COPY go_summary_pipeline-1.0.py /go_summary_pipeline-1.0.py
 
-# delete
-COPY go_summary-config.json /go_summary-config.json
-COPY test_single_protein.fasta.tsv /test_single_protein.fasta.tsv
-RUN chmod -R a+rwx /tmp
-#
-
 CMD ["python", "/go_summary_pipeline-1.0.py"]
