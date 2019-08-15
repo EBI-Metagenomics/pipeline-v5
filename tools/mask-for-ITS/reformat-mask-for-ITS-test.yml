@@ -1,0 +1,17 @@
+sequences:
+  class: File
+  path: test-input/test-cmsearch.fasta
+  format: http://edamontology.org/format_1929
+maskfile:
+  class: File
+  path: expected-output/ITS-maskfile
+  format: http://edamontology.org/format_3475
+all_coordinates:
+  class: File
+  path: expected-output/SSU-and-LSU
+LSU_coords:
+  class: File
+  path: test-input/LSU-coords
+SSU_coords:
+  class: File
+  path: test-input/SSU-coords
