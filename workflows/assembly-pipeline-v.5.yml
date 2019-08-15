@@ -1,6 +1,7 @@
 contigs:
   class: File
   path: ../tools/Combined_gene_caller/gene_caller_input_example.fa
+  format: edam:format_1929
 
 Diamond_databaseFile:  # change
   class: File
@@ -20,8 +21,9 @@ InterProScan_databases:  # change
   class: Directory
   path: ../tools/InterProScan/test-input/databases
 
-go_summary_config:
-
+go_summary_config:  # change
+  class: File
+  path: ../tools/GO-slim/go_summary-config.json
 
 HMMSCAN_gathering_bit_score: true
 HMMSCAN_omit_alignment: true

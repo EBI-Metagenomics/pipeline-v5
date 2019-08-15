@@ -26,50 +26,35 @@ requirements:
 inputs:
   contigs:
     type: File
+    format: edam:format_1929  # FASTA
 
-  Diamond_databaseFile:
-    type: File
-  Diamond_outFormat:
-    type: ../tools/Diamond/Diamond-output_formats.yaml#output_formats?
-  Diamond_maxTargetSeqs:
-    type: int
-  Diamond_postProcessingDB:
-    type: File
+  Diamond_databaseFile: File
+  Diamond_outFormat: ../tools/Diamond/Diamond-output_formats.yaml#output_formats?
+  Diamond_maxTargetSeqs: int
+  Diamond_postProcessingDB: File
 
-  InterProScan_applications:
-    type: ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-  InterProScan_outputFormat:
-    type: ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-  InterProScan_databases:
-    type: Directory
+  InterProScan_applications: ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
+  InterProScan_outputFormat: ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+  InterProScan_databases: Directory
 
   go_summary_config: File
 
-  HMMSCAN_gathering_bit_score:
-    type: boolean
-  HMMSCAN_omit_alignment:
-    type: boolean
-  HMMSCAN_name_database:
-    type: string
-  HMMSCAN_data:
-    type: Directory
+  HMMSCAN_gathering_bit_score: boolean
+  HMMSCAN_omit_alignment: boolean
+  HMMSCAN_name_database: string
+  HMMSCAN_data: Directory
 
-  viral_hmmscan_gathering_bit_score:
-    type: boolean
-  viral_hmmscan_omit_alignment:
-    type: boolean
-  viral_hmmscan_name_database:
-    type: string
-  viral_hmmscan_folder_db:
-    type: Directory
-  viral_hmmscan_filter_e_value:
-    type: float
+  viral_hmmscan_gathering_bit_score: boolean
+  viral_hmmscan_omit_alignment: boolean
+  viral_hmmscan_name_database: string
+  viral_hmmscan_folder_db: Directory
+  viral_hmmscan_filter_e_value: float
 
 
 outputs:
 
   # << QC stats >>
-    qc_stats_summary:
+  qc_stats_summary:
     type: File
     outputSource: sequence_stats/summary_out
   qc_stats_seq_len_pcbin:
@@ -121,31 +106,31 @@ outputs:
   Genome_properties_table:
     outputSource: genome_properties/table
     type: File
-  go_summary:
+  GO_summary:
     type: File
     outputSource: summarize_with_GO/go_summary
-  go_summary_slim:
+  GO_summary_slim:
     type: File
     outputSource: summarize_with_GO/go_summary_slim
 
   # << KEGG analysis >>
-  hmmscan_table:
-    outputSource: hmmscan/output_table
-    type: File
+  #hmmscan_table:
+  #  outputSource: hmmscan/output_table
+  #  type: File
 
   # << Pathways analysis >>
-  pathways_summary:
-    outputSource: kegg_analysis/kegg_pathways_summary
-    type: File
-  pathways_matching:
-    outputSource: kegg_analysis/kegg_pathways_matching
-    type: File
-  pathways_missing:
-    outputSource: kegg_analysis/kegg_pathways_missing
-    type: File
-  pathways_contigs:
-    outputSource: kegg_analysis/kegg_contigs
-    type: Directory
+  #pathways_summary:
+  #  outputSource: kegg_analysis/kegg_pathways_summary
+  #  type: File
+  #pathways_matching:
+  #  outputSource: kegg_analysis/kegg_pathways_matching
+  #  type: File
+  #pathways_missing:
+  #  outputSource: kegg_analysis/kegg_pathways_missing
+  #  type: File
+  #pathways_contigs:
+  #  outputSource: kegg_analysis/kegg_contigs
+  #  type: Directory
 
   # << antiSMASH >>
   antiSMASH_results:
@@ -163,8 +148,8 @@ steps:
 
   # << 1. QC >>
   sequence_stats:
-    in:
-      QCed_reads: contigs
+    in:contigs
+      QCed_reads:
     out:
       - summary_out
       - seq_length_pcbin
