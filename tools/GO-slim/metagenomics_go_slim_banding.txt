@@ -1,0 +1,121 @@
+# Slim banding file created 23 June 2016
+# Col 1 = GO term identifier
+# Col 2 = GO term
+# Col 3 = Source/ontology of GO term
+#
+GO:0008150	biological process	biological_process
+GO:0071973	bacterial-type flagellar cell motility	biological_process
+GO:0071840	cellular component organization or biogenesis	biological_process
+GO:0071103	DNA conformation change	biological_process
+GO:0045454	cell redox homeostasis	biological_process
+GO:0065003	macromolecular complex assembly	biological_process
+GO:0016226	iron-sulfur cluster assembly	biological_process
+GO:0017004	cytochrome complex assembly	biological_process
+GO:0008152	metabolic process	biological_process
+GO:0008218	bioluminescence	biological_process
+GO:0009058	biosynthetic process	biological_process
+GO:0017000	antibiotic biosynthetic process	biological_process
+GO:0009403	toxin biosynthetic process	biological_process
+GO:0006259	DNA metabolic process	biological_process
+GO:0016070	RNA metabolic process	biological_process
+GO:0006351	transcription, DNA-templated	biological_process
+GO:0005975	carbohydrate metabolic process	biological_process
+GO:0006091	generation of precursor metabolites and energy	biological_process
+GO:0006629	lipid metabolic process	biological_process
+GO:0015948	methanogenesis	biological_process
+GO:0006807	nitrogen compound metabolic process	biological_process
+GO:0016310	phosphorylation	biological_process
+GO:0015979	photosynthesis	biological_process
+GO:0006508	proteolysis	biological_process
+GO:0044281	small molecule metabolic process	biological_process
+GO:0006412	translation	biological_process
+GO:0007155	cell adhesion	biological_process
+GO:0006457	protein folding	biological_process
+GO:0007165	signal transduction	biological_process
+GO:0000160	phosphorelay signal transduction system	biological_process
+GO:0009607	response to biotic stimulus	biological_process
+GO:0009628	response to abiotic stimulus	biological_process
+GO:0042221	response to chemical	biological_process
+GO:0006950	response to stress	biological_process
+GO:0009372	quorum sensing	biological_process
+GO:0006282	regulation of DNA repair	biological_process
+GO:0006808	regulation of nitrogen utilization	biological_process
+GO:0019222	regulation of metabolic process	biological_process
+GO:0009405	pathogenesis	biological_process
+GO:0043934	sporulation	biological_process
+GO:0006810	transport	biological_process
+GO:0016032	viral process	biological_process
+GO:0046718	viral entry into host cell	biological_process
+GO:0005575	cellular component	cellular_component
+GO:0005576	extracellular region	cellular_component
+GO:0005618	cell wall	cellular_component
+GO:0009276	Gram-negative-bacterium-type cell wall	cellular_component
+GO:0016020	membrane	cellular_component
+GO:0019867	outer membrane	cellular_component
+GO:0042597	periplasmic space	cellular_component
+GO:0031224	intrinsic to membrane	cellular_component
+GO:0019898	extrinsic component of membrane	cellular_component
+GO:0005886	plasma membrane	cellular_component
+GO:0005622	intracellular	cellular_component
+GO:0005737	cytoplasm	cellular_component
+GO:1902494	catalytic complex	cellular_component
+GO:0009317	acetyl-CoA carboxylase complex	cellular_component
+GO:0009349	riboflavin synthase complex	cellular_component
+GO:0009346	citrate lyase complex	cellular_component
+GO:0043190	ATP-binding cassette (ABC) transporter complex	cellular_component
+GO:0000015	phosphopyruvate hydratase complex	cellular_component
+GO:0009341	beta-galactosidase complex	cellular_component
+GO:0019008	molybdopterin synthase complex	cellular_component
+GO:1990204	oxidoreductase complex	cellular_component
+GO:0033202	DNA helicase complex	cellular_component
+GO:0042575	DNA polymerase complex	cellular_component
+GO:0098796	membrane protein complex	cellular_component
+GO:0016469	proton-transporting two-sector ATPase complex	cellular_component
+GO:0005839	proteasome core complex	cellular_component
+GO:0005874	microtubule	cellular_component
+GO:0048500	signal recognition particle	cellular_component
+GO:0009288	bacterial type flagellum	cellular_component
+GO:0005840	ribosome	cellular_component
+GO:0005694	chromosome	cellular_component
+GO:0005727	extrachromosomal circular DNA	cellular_component
+GO:0005634	nucleus	cellular_component
+GO:0009579	thylakoid	cellular_component
+GO:0019012	virion	cellular_component
+GO:0003674	molecular function	molecular_function
+GO:0016209	antioxidant activity	molecular_function
+GO:0004601	peroxidase activity	molecular_function
+GO:0003824	catalytic activity	molecular_function
+GO:0016787	hydrolase activity	molecular_function
+GO:0008233	peptidase activity	molecular_function
+GO:0016791	phosphatase activity	molecular_function
+GO:0017111	nucleoside-triphosphatase activity	molecular_function
+GO:0009055	electron carrier activity	molecular_function
+GO:0016853	isomerase activity	molecular_function
+GO:0016874	ligase activity	molecular_function
+GO:0016829	lyase activity	molecular_function
+GO:0016491	oxidoreductase activity	molecular_function
+GO:0000150	recombinase activity	molecular_function
+GO:0004803	transposase activiy	molecular_function
+GO:0030170	pyridoxal phosphate binding	molecular_function
+GO:0019842	vitamin binding	molecular_function
+GO:0030246	carbohydrate binding	molecular_function
+GO:0046906	tetrapyrrole binding	molecular_function
+GO:0043167	ion binding	molecular_function
+GO:0005515	protein binding	molecular_function
+GO:0016597	amino acid binding	molecular_function
+GO:0046872	metal ion binding	molecular_function
+GO:0008658	penicillin binding	molecular_function
+GO:0050662	coenzyme binding	molecular_function
+GO:0051536	iron-sulfur cluster binding	molecular_function
+GO:0003676	nucleic acid binding	molecular_function
+GO:0000166	nucleotide binding	molecular_function
+GO:0008134	transcription factor binding	molecular_function
+GO:0003700	transcription factor activity, sequence-specific DNA binding	molecular_function
+GO:0005215	transporter activity	molecular_function
+GO:0090484	drug transporter activity	molecular_function
+GO:0016740	transferase activity	molecular_function
+GO:0016301	kinase activity	molecular_function
+GO:0016779	nucleotidyltransferase activity	molecular_function
+GO:0004871	signal transducer activity	molecular_function
+GO:0004872	receptor activity	molecular_function
+GO:0003735	structural constituent of ribosome	molecular_function

@@ -20,6 +20,9 @@ InterProScan_databases:  # change
   class: Directory
   path: ../tools/InterProScan/test-input/databases
 
+go_summary_config:
+
+
 HMMSCAN_gathering_bit_score: true
 HMMSCAN_omit_alignment: true
 HMMSCAN_name_database: db_kofam.hmm

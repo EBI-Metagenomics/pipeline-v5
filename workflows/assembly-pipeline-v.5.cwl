@@ -43,6 +43,8 @@ inputs:
   InterProScan_databases:
     type: Directory
 
+  go_summary_config: File
+
   HMMSCAN_gathering_bit_score:
     type: boolean
   HMMSCAN_omit_alignment:
@@ -119,6 +121,12 @@ outputs:
   Genome_properties_table:
     outputSource: genome_properties/table
     type: File
+  go_summary:
+    type: File
+    outputSource: summarize_with_GO/go_summary
+  go_summary_slim:
+    type: File
+    outputSource: summarize_with_GO/go_summary_slim
 
   # << KEGG analysis >>
   hmmscan_table:
@@ -207,32 +215,45 @@ steps:
     run: ../tools/Genome_properties/genome_properties.cwl
     label: "Preparing summary file for genome properties"
 
-  # << 4.2.0 KEGG >>
-  hmmscan:
+  # << 4.1.2 GO-slim >>
+
+  summarize_with_GO:
+    doc: |
+      A summary of Gene Ontology (GO) terms derived from InterPro matches to
+      the sample. It is generated using a reduced list of GO terms called
+      GO slim (http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo)
+    run: ../tools/GO-slim/go_summary.cwl
     in:
-      seqfile: combined_gene_caller/predicted_proteins
-      gathering_bit_score: HMMSCAN_gathering_bit_score
-      name_database: HMMSCAN_name_database
-      data: HMMSCAN_data
-      omit_alignment: HMMSCAN_omit_alignment
-    out:
-      - output_table
-    run: ../tools/hmmscan/hmmscan.cwl
-    label: "Analysis using profile HMM on db"
+      InterProScan_results: interproscan/i5Annotations
+      config: go_summary_config
+    out: [ go_summary, go_summary_slim ]
+
+  # << 4.2.0 KEGG >>
+  #hmmscan:
+  #  in:
+  #    seqfile: combined_gene_caller/predicted_proteins
+  #    gathering_bit_score: HMMSCAN_gathering_bit_score
+  #    name_database: HMMSCAN_name_database
+  #    data: HMMSCAN_data
+  #    omit_alignment: HMMSCAN_omit_alignment
+  #  out:
+  #    - output_table
+  #  run: ../tools/hmmscan/hmmscan.cwl
+  #  label: "Analysis using profile HMM on db"
 
   # << 4.2.1 Pathways >>
-  kegg_analysis:
-    in:
-      input_table_hmmscan: hmmscan/output_table
-    out:
-      - modification_out
-      - parsing_hmmscan_out
-      - kegg_pathways_summary
-      - kegg_pathways_matching
-      - kegg_pathways_missing
-      - kegg_contigs
-      - kegg_stdout
-    run: kegg_analysis.cwl
+  #kegg_analysis:
+  #  in:
+  #    input_table_hmmscan: hmmscan/output_table
+  #  out:
+  #    - modification_out
+  #    - parsing_hmmscan_out
+  #    - kegg_pathways_summary
+  #    - kegg_pathways_matching
+  #    - kegg_pathways_missing
+  #    - kegg_contigs
+  #    - kegg_stdout
+  #  run: kegg_analysis.cwl
 
   # << 4.3.0 COGs >>
   # make db
