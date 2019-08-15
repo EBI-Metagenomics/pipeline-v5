@@ -2,9 +2,8 @@
 cwlVersion: v1.0
 class: CommandLineTool
 requirements:
-  ResourceRequirement:
-    coresMax: 1
-    ramMin: 100  # just a default, could be lowered
+ DockerRequirement:
+    dockerPull: alpine:3.7
 
 inputs:
   hits: { type: File, streamable: true }
