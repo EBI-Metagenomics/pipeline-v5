@@ -15,3 +15,10 @@ LSU_coords:
 SSU_coords:
   class: File
   path: test-input/SSU-coords
+summary:
+  class: File
+  path: test-input/summary.out
+script:
+  class: File
+  path: divide.sh
+
