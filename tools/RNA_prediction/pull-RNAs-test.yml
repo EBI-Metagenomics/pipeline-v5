@@ -1,6 +1,6 @@
 hits:
   class: File
-  path: test-cmsearch.txt
+  path: test-input/test-cmsearch.txt
 infernal_matches:
   class: File
-  path: test-cmsearch.txt
+  path: test-input/test-cmsearch.txt

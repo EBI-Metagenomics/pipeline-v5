@@ -1,0 +1,8 @@
+indexed_sequences:
+  class: File
+  path: test-input/test-cmsearch.fasta
+  format: http://edamontology.org/format_1929
+names_contain_subseq_coords:
+  class: File
+  path: test-input/matched_seqs_with_coords
+  format: http://edamontology.org/format_3475
