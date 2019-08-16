@@ -11,8 +11,8 @@ requirements:
 inputs:
   clan_info:
     type: File
-  cores:
-    type: int
+  #cores:
+    #type: int
   covariance_models:
     type: File[]
   query_sequences:
@@ -36,7 +36,7 @@ steps:
     run: ../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
     in:
       covariance_model_database: covariance_models
-      cpu: cores
+      #cpu: cores
       omit_alignment_section:
         default: true
       only_hmm:
