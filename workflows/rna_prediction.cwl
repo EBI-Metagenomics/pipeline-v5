@@ -17,7 +17,7 @@ inputs:
   silva_lsu_taxonomy: File
   silva_ssu_otus: File
   silva_lsu_otus: File
-  ncRNA_ribosomal_models: File
+  ncRNA_ribosomal_models: File[]
   ncRNA_ribosomal_model_clans: File
   otu_ssu_label:
     type: string
