@@ -18,17 +18,18 @@ outputs:
     type: File
     outputSource: mapseq/classifications
 
-  otu_tsv:
+  krona_tsv:
     type: File
-    outputSource: classifications_to_otu_counts/otu_counts
+    outputSource: classifications_to_otu_counts/otu_tsv
+
+  krona_txt:
+    type: File
+    outputSource: classifications_to_otu_counts/otu_txt
 
   krona_image:
     type: File
     outputSource: visualize_otu_counts/otu_visualization
 
-  otu_txt:
-    type: File
-    outputSource: classifications_to_otu_counts/krona_otu_counts
 
 
 steps:
@@ -46,10 +47,10 @@ steps:
        otu_table: otu_ref
        label: otu_label
        query: mapseq/classifications
-    out: [ otu_counts, krona_otu_counts ]
+    out: [ otu_tsv, otu_txt ]
 
   visualize_otu_counts:
     run: ../tools/krona/krona.cwl
     in:
-      otu_counts: classifications_to_otu_counts/krona_otu_counts
+      otu_counts: classifications_to_otu_counts/otu_txt
     out: [ otu_visualization ]

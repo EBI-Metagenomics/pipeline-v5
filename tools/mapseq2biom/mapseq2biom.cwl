@@ -41,15 +41,15 @@ arguments:
     prefix: --krona
 
 outputs:
-  otu_counts:
+  otu_tsv:
     type: File
-    format: edam:format_3746  # BIOM
+    format: edam:format_3475
     outputBinding:
       glob: $(inputs.query.basename).tsv
 
-  krona_otu_counts:
+  otu_txt:
     type: File
-    format: iana:text/tab-separated-values
+    format: edam:format_2330
     outputBinding:
       glob: $(inputs.label).txt
 

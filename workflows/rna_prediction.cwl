@@ -46,7 +46,7 @@ outputs:
 
   SSU_otu_tsv:
     type: File
-    outputSource: classify_SSUs/otu_tsv
+    outputSource: classify_SSUs/krona_tsv
 
   SSU_krona_image:
     type: File
@@ -58,7 +58,7 @@ outputs:
 
   LSU_otu_tsv:
     type: File
-    outputSource: classify_LSUs/otu_tsv
+    outputSource: classify_LSUs/krona_tsv
 
   LSU_krona_image:
     type: File
@@ -130,7 +130,7 @@ steps:
       mapseq_taxonomy: silva_ssu_taxonomy
       otu_ref: silva_ssu_otus
       otu_label: otu_ssu_label
-    out: [ krona_image, mapseq_classifications, otu_tsv, otu_txt ]
+    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
 
   extract_LSUs:
       run: ../tools/easel/esl-sfetch-manyseqs.cwl
@@ -147,14 +147,14 @@ steps:
       mapseq_taxonomy: silva_lsu_taxonomy
       otu_ref: silva_lsu_otus
       otu_label: otu_lsu_label
-    out: [ krona_image, mapseq_classifications, otu_tsv, otu_txt ]
+    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
 
 #convert biom to hdf5 and json formats
 
   ssu_convert_otu_counts_to_hdf5:
     run: ../tools/biom-convert/biom-convert.cwl
     in:
-       biom: classify_SSUs/otu_tsv
+       biom: classify_SSUs/krona_tsv
        hdf5: { default: true }
        table_type: { default: OTU table }
     out: [ result ]
@@ -162,7 +162,7 @@ steps:
   ssu_convert_otu_counts_to_json:
     run: ../tools/biom-convert/biom-convert.cwl
     in:
-       biom: classify_SSUs/otu_tsv
+       biom: classify_SSUs/krona_tsv
        json: { default: true }
        table_type: { default: OTU table }
     out: [ result ]
@@ -170,7 +170,7 @@ steps:
   lsu_convert_otu_counts_to_hdf5:
     run: ../tools/biom-convert/biom-convert.cwl
     in:
-       biom: classify_LSUs/otu_tsv
+       biom: classify_LSUs/krona_tsv
        hdf5: { default: true }
        table_type: { default: 'OTU table' }
     out: [ result ]
@@ -178,7 +178,7 @@ steps:
   lsu_convert_otu_counts_to_json:
     run: ../tools/biom-convert/biom-convert.cwl
     in:
-       biom: classify_LSUs/otu_tsv
+       biom: classify_LSUs/krona_tsv
        json: { default: true }
        table_type: { default: 'OTU table' }
     out: [ result ]
