@@ -27,7 +27,6 @@ inputs:
     type: File
     inputBinding:
       position: 2
-    format: edam:format_3475 #tsv
 
 baseCommand: [ esl-sfetch ]
 

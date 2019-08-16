@@ -11,7 +11,7 @@ inputs:
 
 stdin: $(inputs.hits.path)
 
-baseCommand: [ grep, "-e RF02543 -e RF02541 -e RF02541 -e RF00002" ]
+baseCommand: [ grep, LSU ]
 
 stdout: LSUs  # helps with cwltool's --cache
 

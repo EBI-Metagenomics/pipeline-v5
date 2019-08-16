@@ -8,6 +8,9 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
+  SchemaDefRequirement:
+    types:
+      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
   input_sequences: File
@@ -61,6 +64,21 @@ outputs:
     type: File
     outputSource: classify_LSUs/krona_image
 
+  ssu_hdf5_classifications:
+    type: File
+    outputSource: ssu_convert_otu_counts_to_hdf5/result
+
+  ssu_json_classifications:
+    type: File
+    outputSource: ssu_convert_otu_counts_to_json/result
+
+  lsu_hdf5_classifications:
+    type: File
+    outputSource: lsu_convert_otu_counts_to_hdf5/result
+
+  lsu_json_classifications:
+    type: File
+    outputSource: lsu_convert_otu_counts_to_json/result
 
 steps:
 
@@ -131,3 +149,36 @@ steps:
       otu_label: otu_lsu_label
     out: [ krona_image, mapseq_classifications, otu_tsv, otu_txt ]
 
+#convert biom to hdf5 and json formats
+
+  ssu_convert_otu_counts_to_hdf5:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: classify_SSUs/otu_tsv
+       hdf5: { default: true }
+       table_type: { default: OTU table }
+    out: [ result ]
+
+  ssu_convert_otu_counts_to_json:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: classify_SSUs/otu_tsv
+       json: { default: true }
+       table_type: { default: OTU table }
+    out: [ result ]
+
+  lsu_convert_otu_counts_to_hdf5:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: classify_LSUs/otu_tsv
+       hdf5: { default: true }
+       table_type: { default: 'OTU table' }
+    out: [ result ]
+
+  lsu_convert_otu_counts_to_json:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: classify_LSUs/otu_tsv
+       json: { default: true }
+       table_type: { default: 'OTU table' }
+    out: [ result ]

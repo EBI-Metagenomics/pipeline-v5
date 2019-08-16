@@ -28,8 +28,10 @@ inputs:
 outputs:
   sequences_with_index:
     type: File
+    secondaryFiles:
+        - .ssi
     outputBinding:
-      glob: $(inputs.sequences.basename).ssi
+      glob: $(inputs.sequences.basename)
     label: The index file
     format: edam:format_1929  # FASTA
 
