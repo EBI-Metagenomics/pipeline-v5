@@ -6,7 +6,7 @@ label: "Length Filter"
 
 requirements:
   DockerRequirement:
-    dockerPull: viral_get_predicted_faa:latest
+    dockerPull: viral_pipeline:latest
   InlineJavascriptRequirement: {}
 
 baseCommand: ['python', '/get_predicted_faa.py']

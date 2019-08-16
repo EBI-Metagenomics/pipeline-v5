@@ -6,7 +6,7 @@ label: "Viral contig assign"
 
 requirements:
   DockerRequirement:
-    dockerPull: assign_taxonomy:latest
+    dockerPull: viral_pipeline:latest
   InlineJavascriptRequirement: {}
 
 baseCommand: ['python', '/contig_taxonomic_assign.py']

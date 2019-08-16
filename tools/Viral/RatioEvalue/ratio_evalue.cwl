@@ -6,7 +6,7 @@ label: "Ratio Evalue table"
 
 requirements:
   DockerRequirement:
-    dockerPull: ratio_evalue:latest
+    dockerPull: viral_pipeline:latest
   InlineJavascriptRequirement: {}
 
 baseCommand: ['python', '/Ratio_Evalue_table.py']

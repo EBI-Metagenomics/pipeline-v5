@@ -7,7 +7,7 @@ label: "Parsing viral predicted files"
 
 requirements:
   DockerRequirement:
-    dockerPull: cwl_parse_pred:latest
+    dockerPull: viral_pipeline:latest
   InlineJavascriptRequirement: {}
 
 baseCommand: ['python', '/vs_vf_categories.py']

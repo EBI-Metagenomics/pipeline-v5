@@ -6,7 +6,7 @@ label: "Length Filter"
 
 requirements:
   DockerRequirement:
-    dockerPull: cwl_length_filter_docker:latest
+    dockerPull: viral_pipeline:latest
   InlineJavascriptRequirement: {}
 
 baseCommand: ['python', '/filter_contigs_len.py']

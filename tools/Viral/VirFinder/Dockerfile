@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-MAINTAINER sminot@fredhutch.org
 
 # Install prerequisites
 RUN apt update -qq && \
@@ -22,7 +21,3 @@ RUN R CMD INSTALL /usr/local/virfinder/VirFinder
 
 ADD /run_virfinder.Rscript /usr/local/bin/
 
-#RUN wget https://github.com/FredHutch/docker-virfinder/raw/master/data/LiverCirrhosis_2657Contigs.fasta
-#ADD LiverCirrhosis_2657Contigs.fasta /usr/local/virfinder/
-#ADD test.bats /usr/local/virfinder/
-#RUN bats /usr/local/virfinder/

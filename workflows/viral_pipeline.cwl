@@ -95,7 +95,6 @@ steps:
       hmmscan_name_database: hmmscan_name_database
       hmmscan_folder_db: hmmscan_folder_db
       hmmscan_filter_e_value: hmmscan_filter_e_value
-    type: float
     out:
       - output_filtration  # takes viral sequences from Prodigal results
       - output_hmmscan  # HMMSCAN predicts annotations for each protein from confidence groups

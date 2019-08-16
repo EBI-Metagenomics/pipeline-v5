@@ -2,6 +2,10 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
+hints:
+  - class: DockerRequirement
+    dockerPull: 'alpine:3.9.4'
+
 baseCommand: cat
 
 inputs:
@@ -19,8 +23,3 @@ inputs:
 stdout: $(inputs.input_file.nameroot)_modified.faa
 outputs:
   stdout: stdout
-
-  #output:
-  #  type: File
-  #  outputBinding:
-  #    glob: $(inputs.input_file.nameroot)_modified.faa
