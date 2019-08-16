@@ -7,7 +7,7 @@ label: "Unite KOs related to the same contig"
 
 requirements:
   DockerRequirement:
-    dockerPull: kegg_union_by_contigs:latest
+    dockerPull: kegg_analysis:latest
   InlineJavascriptRequirement: {}
 
 baseCommand: ['python', '/union_by_contigs.py']

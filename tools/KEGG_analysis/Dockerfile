@@ -16,7 +16,7 @@ RUN echo 'will cite' | parallel --citation &> /dev/null || true
 
 ##### Python packages
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"; python get-pip.py
-RUN pip install networkx numpy
+RUN pip install networkx numpy pandas biopython
 
 
 ##### KEGG pathways downloading
@@ -35,10 +35,14 @@ RUN parallel -k echo -n '{}:' ';' curl -s http://rest.kegg.jp/get/{} '|' grep ^C
 
 
 ##### Create a Graph for each pathway
-ADD make_graphs.py .
+ADD KEGG_pathways/make_graphs.py .
 RUN python make_graphs.py -i pathways/all_pathways.txt
 
-COPY . /
+
+# Add .py scripts
+COPY KEGG_pathways/give_pathways.py /give_pathways.py
+COPY Union_by_contigs/union_by_contigs.py /union_by_contigs.py
+COPY Parsing_hmmscan/parsing_hmmscan.py /parsing_hmmscan.py
 
 
 CMD ["python", "/give_pathways.py"]

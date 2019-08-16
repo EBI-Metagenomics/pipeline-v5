@@ -7,7 +7,7 @@ label: "Biosequence analysis using profile hidden Markov models"
 
 requirements:
   DockerRequirement:
-    dockerPull: parsing_hmmscan:latest
+    dockerPull: kegg_analysis:latest
   InlineJavascriptRequirement: {}
 
 baseCommand: ['python', '/parsing_hmmscan.py']

@@ -3,7 +3,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   DockerRequirement:
-    dockerPull: kegg:latest
+    dockerPull: kegg_analysis:latest
 
 baseCommand: ['python', '/give_pathways.py']
 arguments: ['-o', '/']
