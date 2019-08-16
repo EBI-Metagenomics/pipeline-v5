@@ -6,10 +6,11 @@ label: "Run taxonomic classification, create OTU table and krona visualisation"
 
 inputs:
   fasta: File
-  mapseq_ref: File
-    secondaryFiles: .mscluster
+  mapseq_ref: {type: File, secondaryFiles: [.mscluster] }
   mapseq_taxonomy: File
   otu_ref: File
+  otu_label:
+    type: string
 
 
 outputs:
@@ -25,6 +26,10 @@ outputs:
     type: File
     outputSource: visualize_otu_counts/otu_visualization
 
+  otu_txt:
+    type: File
+    outputSource: classifications_to_otu_counts/krona_otu_counts
+
 
 steps:
   mapseq:
@@ -36,10 +41,10 @@ steps:
     out: [ classifications ]
 
   classifications_to_otu_counts:
-    run: ../tools/mapseq2biom.cwl
+    run: ../tools/mapseq2biom/mapseq2biom.cwl
     in:
        otu_table: otu_ref
-       label: sequencing_run_id
+       label: otu_label
        query: mapseq/classifications
     out: [ otu_counts, krona_otu_counts ]
 

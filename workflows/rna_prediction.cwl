@@ -1,3 +1,4 @@
+#!/usr/bin/env cwl-runner
 class: Workflow
 cwlVersion: v1.0
 
@@ -9,55 +10,61 @@ requirements:
   ScatterFeatureRequirement: {}
 
 inputs:
-  sequencing_run_id: string  # convert_classifications_to_otu_counts
-  input_sequences:
-    type: File
-    format: edam:format_1929  # FASTA
-  ncRNA_ribosomal_models: File[]  # find_ribosomal_ncRNAs
-  ncRNA_ribosomal_model_clans: File  # find_ribosomal_ncRNAs
-
-  mapseq_ref:  # classify_SSUs
-    type: File
-    format: edam:format_1929  # FASTA
-    secondaryFiles: .mscluster
-  mapseq_taxonomy: File  # classify_SSUs
-
+  input_sequences: File
+  silva_ssu_database: {type: File, secondaryFiles: [.mscluster] }
+  silva_lsu_database: {type: File, secondaryFiles: [.mscluster] }
+  silva_ssu_taxonomy: File
+  silva_lsu_taxonomy: File
+  silva_ssu_otus: File
+  silva_lsu_otus: File
+  ncRNA_ribosomal_models: File
+  ncRNA_ribosomal_model_clans: File
+  otu_ssu_label:
+    type: string
+  otu_lsu_label:
+    type: string
 
 outputs:
-  #Repeat extraction for LSU
-  LSU_sequences:
+  ncRNAs:
     type: File
-    outputSource: extract_LSUs/sequences
+    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
 
-  #Taxonomic analysis step
-  SSU_sequences:
+  SSU_fasta:
     type: File
     outputSource: extract_SSUs/sequences
 
-  ssu_classifications:
+  LSU_fasta:
     type: File
-    outputSource: classify_SSUs/classifications
+    outputSource: extract_LSUs/sequences
 
-  #Taxonomic visualisation step
-  ssu_otu_visualization:
+  SSU_classifications:
     type: File
-    outputSource: visualize_otu_counts/otu_visualization
+    outputSource: classify_SSUs/mapseq_classifications
 
-  ssu_otu_counts_hdf5:
+  SSU_otu_tsv:
     type: File
-    outputSource: convert_otu_counts_to_hdf5/result
+    outputSource: classify_SSUs/otu_tsv
 
-  ssu_otu_counts_json:
+  SSU_krona_image:
     type: File
-    outputSource: convert_otu_counts_to_json/result
+    outputSource: classify_SSUs/krona_image
+
+  LSU_classifications:
+    type: File
+    outputSource: classify_LSUs/mapseq_classifications
+
+  LSU_otu_tsv:
+    type: File
+    outputSource: classify_LSUs/otu_tsv
+
+  LSU_krona_image:
+    type: File
+    outputSource: classify_LSUs/krona_image
 
 
 steps:
-  index_reads:
-    run: ../tools/RNA_prediction/esl-sfetch-index.cwl
-    in:
-      sequences: input_sequences
-    out: [ sequences_with_index ]
+
+#find SSU and LSU and get coords
 
   find_ribosomal_ncRNAs:
     run: cmsearch-multimodel-wf.cwl
@@ -65,73 +72,62 @@ steps:
       query_sequences: input_sequences
       covariance_models: ncRNA_ribosomal_models
       clan_info: ncRNA_ribosomal_model_clans
-    out: [ matches ]
+    out: [ deoverlapped_matches ]
 
-  # << LSU >>
-  get_LSU_coords:
-    run: ../tools/RNA_prediction/LSU-from-tablehits.cwl
+  index_reads:
+    run: ../tools/easel/esl-sfetch-index.cwl
     in:
-      table_hits: find_ribosomal_ncRNAs/matches
-    out: [ LSU_coordinates ]
+      sequences: input_sequences
+    out: [ sequences_with_index ]
 
-  extract_LSUs:
-    run: ../tools/RNA_prediction/esl-sfetch-manyseqs.cwl
-    in:
-      indexed_sequences: index_reads/sequences_with_index
-      names: get_LSU_coords/LSU_coordinates
-      names_contain_subseq_coords: { default: true }
-    out: [ sequences ]
-
-  # << SSU >>
   get_SSU_coords:
     run: ../tools/RNA_prediction/SSU-from-tablehits.cwl
     in:
-      table_hits: find_ribosomal_ncRNAs/matches
+      table_hits: find_ribosomal_ncRNAs/deoverlapped_matches
     out: [ SSU_coordinates ]
 
-  extract_SSUs:
-    run: ../tools/RNA_prediction/esl-sfetch-manyseqs.cwl
+  get_LSU_coords:
+    run: ../tools/RNA_prediction/LSU-from-tablehits.cwl
     in:
-      indexed_sequences: index_reads/sequences_with_index
-      names: get_SSU_coords/SSU_coordinates
-      names_contain_subseq_coords: { default: true }
-    out: [ sequences ]
+      table_hits: find_ribosomal_ncRNAs/deoverlapped_matches
+    out: [ LSU_coordinates ]
+
+#extract LSU and SSU
+#mapseq SILVA
+#convert to OTU
+#krona visualisation
+
+  extract_SSUs:
+      run: ../tools/easel/esl-sfetch-manyseqs.cwl
+      in:
+        indexed_sequences: index_reads/sequences_with_index
+        names_contain_subseq_coords: get_SSU_coords/SSU_coordinates
+      out: [ sequences ]
 
   classify_SSUs:
-    run: ../tools/mapseq/mapseq.cwl
+    run: classify-otu-visualise.cwl
     in:
-      sequences: extract_SSUs/sequences
-      database: mapseq_ref
-      taxonomy: mapseq_taxonomy
-    out: [ classifications ]
+      fasta: extract_SSUs/sequences
+      mapseq_ref: silva_ssu_database
+      mapseq_taxonomy: silva_ssu_taxonomy
+      otu_ref: silva_ssu_otus
+      otu_label: otu_ssu_label
+    out: [ krona_image, mapseq_classifications, otu_tsv, otu_txt ]
 
-  #Visualisation of taxonomic classification
-  convert_classifications_to_otu_counts:
-    run: ../tools/RNA_prediction/mapseq2biom.cwl
-    in:
-       otu_table: mapseq_taxonomy
-       label: sequencing_run_id
-       query: classify_SSUs/classifications
-    out: [ otu_counts, krona_otu_counts ]
+  extract_LSUs:
+      run: ../tools/easel/esl-sfetch-manyseqs.cwl
+      in:
+        indexed_sequences: index_reads/sequences_with_index
+        names_contain_subseq_coords: get_LSU_coords/LSU_coordinates
+      out: [ sequences ]
 
-  visualize_otu_counts:
-    run: ../tools/krona/krona.cwl
+  classify_LSUs:
+    run: classify-otu-visualise.cwl
     in:
-      otu_counts: convert_classifications_to_otu_counts/krona_otu_counts
-    out: [ otu_visualization ]
+      fasta: extract_LSUs/sequences
+      mapseq_ref: silva_lsu_database
+      mapseq_taxonomy: silva_lsu_taxonomy
+      otu_ref: silva_lsu_otus
+      otu_label: otu_lsu_label
+    out: [ krona_image, mapseq_classifications, otu_tsv, otu_txt ]
 
-  convert_otu_counts_to_hdf5:
-    run: ../tools/RNA_prediction/biom-convert.cwl
-    in:
-       biom: convert_classifications_to_otu_counts/otu_counts
-       hdf5: { default: true }
-       table_type: { default: OTU table }
-    out: [ result ]
-
-  convert_otu_counts_to_json:
-    run: ../tools/RNA_prediction/biom-convert.cwl
-    in:
-       biom: convert_classifications_to_otu_counts/otu_counts
-       json: { default: true }
-       table_type: { default: OTU table }
-    out: [ result ]
