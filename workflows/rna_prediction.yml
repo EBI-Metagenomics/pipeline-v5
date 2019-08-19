@@ -1,8 +1,10 @@
 #!/usr/bin/env cwl-runner
-cwl:tool: emg-assembly.cwl
+cwl:tool: rna_prediction.cwl
 sequencing_run_id: ERR770958
 
 input_sequences:
+  - class: File
+    path:
 
 ncRNA_ribosomal_models:
   - class: File
@@ -31,13 +33,23 @@ ncRNA_ribosomal_model_clans:
     class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/ribo.claninfo
 
-mapseq_ref:  # downloaded from https://www.arb-silva.de/fileadmin/silva_databases/qiime/Silva_128_release.tgz
-  format: edam:format_1929
-  class: File
-  path: /hps/nobackup/production/metagenomics/CWL/data/libraries/SILVA/99_otus.fasta
-  secondaryFiles:
-    - class: File
-      path: /hps/nobackup/production/metagenomics/CWL/data/libraries/SILVA/99_otus.fasta.mscluster
-mapseq_taxonomy:
-  class: File
-  path: /hps/nobackup/production/metagenomics/CWL/data/libraries/SILVA/consensus_taxonomy_7_levels.txt
+silva_ssu_database:
+  - class: File
+    path: pathto/silva_ssu
+silva_lsu_database:
+  - class: File
+    path: pathto/silva_lsu
+silva_ssu_taxonomy:
+  - class: File
+    path: pathto/silva_ssu_tax
+silva_lsu_taxonomy:
+  - class: File
+    path: pathto/silva_lsu_tax
+silva_ssu_otus:
+  - class: File
+    path: pathto/silva_ssu_otus
+silva_lsu_otus:
+  - class: File
+    path: pathto/silva_lsu_otus
+otu_ssu_label: 'SSU'
+otu_lsu_label: 'LSU'
