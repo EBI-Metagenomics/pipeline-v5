@@ -8,73 +8,48 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: SchemaDefRequirement
     types:
-        - $import: ../biom-convert/biom-convert-table.yaml
+        - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-    raw_forward: File
-    raw_reverse: File
+    qc_sequences: File
+    threads_needed:
+        type: int
 
 outputs:
     motus:
         type: File
-        outputSource: motus_classification/classifications
+        outputSource: motus_classification/motu_taxonomy
     krona_otus:
         type: File
-        outputSource: biom_to_tsv/tsv_classifications
+        outputSource: biom_to_tsv/result
     krona_figure:
         type: File
-        outputSource: krona_output/html_krona
+        outputSource: krona_output/otu_visualization
+    motus_tsv:
+        type: File
+        outputSource: biom_to_tsv/result
 
 steps:
-    seqprep:
-        run: ../tools/SeqPrep/seqprep.cwl
-        in:
-         forward: raw_forward
-         reverse: raw_reverse
-        out: [merged, unmerged_forward, unmerged_reverse]
-
-    merge:
-        run: ../tools/SeqPrep/seqprep-merge.cwl
-        in:
-         merged_file: seqprep/merged
-         unmergedF_file: seqprep/unmerged_forward
-         unmergedR_file: seqprep/unmerged_reverse
-        out: [all_merged]
-
-    quality-control:
-        run: ../tools/Trimmomatic/Trimmomatic-v0.36.cwl
-        in:
-          reads: merge/all_merged
-          phred: { default: '33' }
-          leading: { default: 3 }
-          trailing: { default: 3 }
-          end_mode: { default: SE }
-          minlen: { default: 100 }
-          slidingwindow:
-            default:
-              windowSize: 4
-              requiredQuality: 15
-        out: [trimmed_reads]
-
     motus_classification:
         run: ../tools/mOTUs/mOTUs.cwl
         in:
-          qc_reads: quality-control/trimmed_reads
-        out: [biom_classifications]
+          reads: qc_sequences
+          threads: threads_needed
+        out: [motu_taxonomy]
 
     biom_to_tsv:
         run: ../tools/biom-convert/biom-convert.cwl
         in:
-          biom: motus_classification/biom_classifications
+          biom: motus_classification/motu_taxonomy
           table_type: { default: 'Table' }
           tsv: { default: true }
-        out: [tsv_classifications]
+        out: [result]
 
     krona_output:
         run: ../tools/krona/krona.cwl
         in:
-          otu_counts: biom_to_tsv/tsv_classifications
-        out: [html_krona]
+          otu_counts: biom_to_tsv/result
+        out: [otu_visualization]
 
 $namespaces:
  edam: http://edamontology.org/
