@@ -8,7 +8,7 @@ label: visualize using krona
 
 requirements:
   DockerRequirement:
-    dockerPull: vkale/kronav2.7.1:1.0
+    dockerPull: kronav2.7.1:1.0
 
 inputs:
   otu_counts:

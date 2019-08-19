@@ -148,8 +148,8 @@ steps:
 
   # << 1. QC >>
   sequence_stats:
-    in:contigs
-      QCed_reads:
+    in:
+      QCed_reads: contigs
     out:
       - summary_out
       - seq_length_pcbin

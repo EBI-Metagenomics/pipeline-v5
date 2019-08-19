@@ -4,7 +4,7 @@ class: CommandLineTool
 
 requirements:
   DockerRequirement:
-    dockerPull: mgnify/perl:latest
+    dockerPull: mapseq2biom:latest
 
 #use Docker or source local path?
   #ResourceRequirement:
@@ -43,7 +43,7 @@ arguments:
 outputs:
   otu_tsv:
     type: File
-    format: edam:format_3475
+    format: edam:format_3746
     outputBinding:
       glob: $(inputs.query.basename).tsv
 
