@@ -13,17 +13,13 @@ inputs:
     type: File
     label: SSU and LSU coordinates combined
 
-baseCommand: []
+baseCommand: [awk]
 
 #reverse start and end where start < end (i.e. neg strand)
 arguments:
-  - awk
-  - '$2 > $3 { var = $3; $3 = $2; $2 = var } 1'
-  - $(inputs.all_coordinates)
-  - '|'
-  - awk
-  - '{print $4,$2,$3}'
+  - '$2 > $3 { var = $3; $3 = $2; $2 = var } 1 {print $4,$2,$3}'
   - OFS=\t
+  - $(inputs.all_coordinates)
 
 stdout: ITS-maskfile
 

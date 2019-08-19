@@ -4,6 +4,9 @@ cwlVersion: v1.0
 class: CommandLineTool
 label: get float proportion hits covered by SSUs and LSUs
 
+requirements:
+    - class: ShellCommandRequirement
+
 inputs:
 
   all_coordinates:

@@ -16,7 +16,6 @@ inputs:
       position: 1
       prefix: -fi
     label: Input fasta file.
-    format: edam:format_1929  # FASTA
 
   maskfile:
     type: File
@@ -24,7 +23,6 @@ inputs:
       position: 3
       prefix: -bed
     label: maskfile
-    format: edam:format_3475  # TSV
 
 baseCommand: [bedtools, maskfasta]
 

@@ -36,7 +36,7 @@ outputs:
 
   masked_sequences:
     type: File
-    outputSource: mask_for_ITS/masked_fasta
+    outputSource: mask_for_ITS/masked_sequences
 
   unite_classifications:
     type: File
@@ -86,18 +86,18 @@ steps:
 #check proportion LSU/SSU to total seqs.
 
   cat:
-    run: ../tools/mask-for-ITS/cat_LSU_SSU.cwl
+    run: ../tools/mask-for-ITS/cat-SSU-LSU.cwl
     in:
-      SSU-coords: SSU_coordinates
-      LSU-coords: LSU_coordinates
-    out: [ all_coordinates ]
+      SSU_coords: SSU_coordinates
+      LSU_coords: LSU_coordinates
+    out: [ all-coordinates ]
 
   match_proportion:
     run: ../tools/mask-for-ITS/divide.cwl
     in:
       script: divide_script
-      coordinates: cat/all_coordinates
-      stats: qc_stats_summary
+      all_coordinates: cat/all-coordinates
+      summary: qc_stats_summary
     out: [proportion]
 
   #if proportion < 0.90 then carry on, update with potential "conditional"
@@ -106,22 +106,22 @@ steps:
   reformat_coords:
     run: ../tools/mask-for-ITS/format-bedfile.cwl
     in:
-      coordinates: cat/all_coordinates
-    out: [ bedfile ]
+      all_coordinates: cat/all-coordinates
+    out: [ maskfile ]
 
   mask_for_ITS:
     run: ../tools/mask-for-ITS/bedtools.cwl
     in:
       sequences: query_sequences
-      maskfile: reformat_coords/bedfile
-    out: [masked_fasta]
+      maskfile: reformat_coords/maskfile
+    out: [masked_sequences]
 
 #run unite and ITSonedb
 
   run_unite:
     run: classify-otu-visualise.cwl
     in:
-      fasta: mask_for_ITS/masked_fasta
+      fasta: mask_for_ITS/masked_sequences
       mapseq_ref: unite_database
       mapseq_taxonomy: unite_taxonomy
       otu_ref: unite_otus
@@ -131,7 +131,7 @@ steps:
   run_itsonedb:
     run: classify-otu-visualise.cwl
     in:
-      fasta: mask_for_ITS/masked_fasta
+      fasta: mask_for_ITS/masked_sequences
       mapseq_ref: itsone_database
       mapseq_taxonomy: itsone_taxonomy
       otu_ref: itsone_otus
@@ -143,7 +143,7 @@ steps:
   unite_otu_counts_to_hdf5:
     run: ../tools/biom-convert/biom-convert.cwl
     in:
-       biom: run-unite/krona_tsv
+       biom: run_unite/krona_tsv
        hdf5: { default: true }
        table_type: { default: 'OTU table' }
     out: [ result ]
