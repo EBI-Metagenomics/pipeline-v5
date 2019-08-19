@@ -13,7 +13,7 @@ requirements:
 inputs:
   otu_counts:
     type: File
-    format: iana:text/tab-separated-values
+    format: edam:format_2330
     label: Tab-delimited text file
     inputBinding:
       position: 2
