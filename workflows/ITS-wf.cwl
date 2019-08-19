@@ -26,6 +26,8 @@ inputs:
   itsone_taxonomy: File
   itsone_otus: File
   divide_script: File
+  otu_unite_label: string
+  otu_itsone_label: string
 
 outputs:
   proportion_SU:

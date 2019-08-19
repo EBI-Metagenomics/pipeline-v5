@@ -38,7 +38,15 @@ outputs:
 
   LSU_fasta:
     type: File
-    outputSource: extract_LSUs/sequences
+    outputSource: extract_LSUs/sequenceS
+
+  SSU_coords:
+    type: File
+    outputSource: get_SSU_coords/SSU_coordinates
+
+  LSU_coords:
+    type: File
+    outputSource: get_LSU_coords/LSU_coordinates
 
   SSU_classifications:
     type: File
@@ -79,6 +87,7 @@ outputs:
   lsu_json_classifications:
     type: File
     outputSource: lsu_convert_otu_counts_to_json/result
+
 
 steps:
 
