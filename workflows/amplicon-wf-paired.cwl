@@ -22,7 +22,7 @@ inputs:
     lsu_tax: File
     ssu_otus: File
     lsu_otus: File
-    rfam_models: []
+    rfam_models: File[]
     rfam_model_clans: File
     ssu_label: string
     lsu_label: string
@@ -104,51 +104,51 @@ outputs:
 
   proportion_SU:
     type: File
-    outputSource: ITS/proportion
+    outputSource: ITS/proportion_SU
 
   masked_sequences:
     type: File
-    outputSource: ITS/masked_fasta
+    outputSource: ITS/masked_sequences
 
   unite_classifications:
     type: File
-    outputSource: ITS/mapseq_classifications
+    outputSource: ITS/unite_classifications
 
   unite_otu_tsv:
     type: File
-    outputSource: ITS/krona_tsv
+    outputSource: ITS/unite_otu_tsv
 
   unite_krona_image:
     type: File
-    outputSource: ITS/krona_image
+    outputSource: ITS/unite_krona_image
 
   itsonedb_classifications:
     type: File
-    outputSource: ITS/mapseq_classifications
+    outputSource: ITS/itsonedb_classifications
 
   itsonedb_otu_tsv:
     type: File
-    outputSource: ITS/krona_tsv
+    outputSource: ITS/itsonedb_otu_tsv
 
   itsonedb_krona_image:
     type: File
-    outputSource: ITS/krona_image
+    outputSource: ITS/itsonedb_krona_image
 
   unite_hdf5_classifications:
     type: File
-    outputSource: ITS/result
+    outputSource: ITS/unite_hdf5_classifications
 
   unite_json_classifications:
     type: File
-    outputSource: ITS/result
+    outputSource: ITS/unite_json_classifications
 
   itsonedb_hdf5_classifications:
     type: File
-    outputSource: ITS/result
+    outputSource: ITS/itsonedb_hdf5_classifications
 
   itsonedb_json_classifications:
     type: File
-    outputSource: ITS/result
+    outputSource: ITS/itsonedb_json_classifications
 
 steps:
 
@@ -222,7 +222,7 @@ steps:
     run: ITS-wf.cwl
     in:
         qc_stats_summary: qc_stats/summary_out
-        query_sequences: input_sequences
+        query_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
         LSU_coordinates: classify/LSU_coords
         SSU_coordinates: classify/SSU_coords
         unite_database: unite_db

@@ -38,7 +38,7 @@ outputs:
 
   LSU_fasta:
     type: File
-    outputSource: extract_LSUs/sequenceS
+    outputSource: extract_LSUs/sequences
 
   SSU_coords:
     type: File

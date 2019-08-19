@@ -5,12 +5,16 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 1024  # just a default, could be lowered
-hints:
- SoftwareRequirement:
-   packages:
-     seqprep:
-       specs: [ "https://identifiers.org/rrid/RRID:SCR_013004" ]
-       version: [ "1.1" ]
+
+requirements:
+    DockerRequirement:
+        dockerPull: quay.io/biocontainers/seqprep:1.1--1
+#hints:
+ #SoftwareRequirement:
+   #packages:
+     #seqprep:
+       #specs: [ "https://identifiers.org/rrid/RRID:SCR_013004" ]
+       #version: [ "1.1" ]
 
 inputs:
  forward_reads:
