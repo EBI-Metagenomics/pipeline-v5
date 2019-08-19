@@ -59,6 +59,7 @@ outputs:
   SSU_krona_image:
     type: File
     outputSource: classify_SSUs/krona_image
+    format: iana:text/html
 
   LSU_classifications:
     type: File
@@ -71,6 +72,7 @@ outputs:
   LSU_krona_image:
     type: File
     outputSource: classify_LSUs/krona_image
+    format: iana:text/html
 
   ssu_hdf5_classifications:
     type: File
@@ -191,3 +193,8 @@ steps:
        json: { default: true }
        table_type: { default: 'OTU table' }
     out: [ result ]
+
+
+$namespaces:
+ edam: http://edamontology.org/
+ iana: https://www.iana.org/assignments/media-types/

@@ -12,7 +12,7 @@ doc: |
 
 requirements:
   DockerRequirement:
-    dockerPull: vkale/mapseqv1.2.3:1.0
+    dockerPull: mapseq:latest
 
 inputs:
   sequences:

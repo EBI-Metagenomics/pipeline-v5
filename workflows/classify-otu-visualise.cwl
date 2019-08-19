@@ -29,6 +29,7 @@ outputs:
   krona_image:
     type: File
     outputSource: visualize_otu_counts/otu_visualization
+    format: iana:text/html
 
 
 
@@ -54,3 +55,8 @@ steps:
     in:
       otu_counts: classifications_to_otu_counts/otu_txt
     out: [ otu_visualization ]
+
+
+$namespaces:
+ edam: http://edamontology.org/
+ iana: https://www.iana.org/assignments/media-types/
