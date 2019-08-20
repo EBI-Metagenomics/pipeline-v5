@@ -1,6 +1,6 @@
 contigs:
   class: File
-  path: ../tools/Combined_gene_caller/gene_caller_input_example.fa
+  path: merged_file.fasta
   format: edam:format_1929
 
 rna_pred_silva_ssu_database:

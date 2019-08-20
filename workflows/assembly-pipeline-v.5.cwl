@@ -164,6 +164,12 @@ outputs:
   GO_summary_slim:
     type: File
     outputSource: summarize_with_GO/go_summary_slim
+  Pfam-parse_annotations:
+    type: File
+    outputSource: pfam_parse/pfam_annotations
+  Pfam-parse_summary:
+    type: File
+    outputSource: pfam_parse/pfam_summary
 
   # << KEGG analysis >>
   #hmmscan_table:
@@ -243,7 +249,6 @@ steps:
       - lsu_json_classifications
     run: rna_prediction.cwl
 
-
   # << CombinedGeneCaller >>
   combined_gene_caller:
     in:
@@ -269,31 +274,6 @@ steps:
     run: ../tools/InterProScan/InterProScan-v5.cwl
     label: "InterProScan: protein sequence classifier"
 
-  # << Systems. Genome Properties >>
-  genome_properties:
-    in:
-      input_tsv_file: interproscan/i5Annotations
-    out:
-      - json
-      - table
-      - stderr
-      - stdout
-    run: ../tools/Genome_properties/genome_properties.cwl
-    label: "Preparing summary file for genome properties"
-
-  # << Functional annotation. GO-slim >>
-
-  summarize_with_GO:
-    doc: |
-      A summary of Gene Ontology (GO) terms derived from InterPro matches to
-      the sample. It is generated using a reduced list of GO terms called
-      GO slim (http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo)
-    run: ../tools/GO-slim/go_summary.cwl
-    in:
-      InterProScan_results: interproscan/i5Annotations
-      config: go_summary_config
-    out: [ go_summary, go_summary_slim ]
-
   # << Functional annotation. KEGG >>
   #hmmscan:
   #  in:
@@ -306,6 +286,43 @@ steps:
   #    - output_table
   #  run: ../tools/hmmscan/hmmscan.cwl
   #  label: "Analysis using profile HMM on db"
+
+  # << Functional annotation. COGs >>
+  # make db
+  # run EggNOG
+
+  # << Functional annotation -- Results. GO-slim >>
+  summarize_with_GO:
+    doc: |
+      A summary of Gene Ontology (GO) terms derived from InterPro matches to
+      the sample. It is generated using a reduced list of GO terms called
+      GO slim (http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo)
+    run: ../tools/GO-slim/go_summary.cwl
+    in:
+      InterProScan_results: interproscan/i5Annotations
+      config: go_summary_config
+    out: [ go_summary, go_summary_slim ]
+
+  # << Functional annotation -- Results. Pfam parsing >>
+  pfam_parse:
+    in:
+      interpro_file: interproscan/i5Annotations
+    out:
+      - pfam_annotations
+      - pfam_summary
+    run: ../tools/Pfam-Parse/pfam_workflow.cwl
+
+  # << Systems. Genome Properties >>
+  genome_properties:
+    in:
+      input_tsv_file: interproscan/i5Annotations
+    out:
+      - json
+      - table
+      - stderr
+      - stdout
+    run: ../tools/Genome_properties/genome_properties.cwl
+    label: "Preparing summary file for genome properties"
 
   # << Systems. Pathways >>
   #kegg_analysis:
@@ -321,9 +338,14 @@ steps:
   #    - kegg_stdout
   #  run: kegg_analysis.cwl
 
-  # << Functional annotation. COGs >>
-  # make db
-  # run EggNOG
+  # << Systems. Antismash >>
+  antismash:
+    in:
+      input_fasta: contigs
+    out:
+      - output_files
+    run: ../tools/antismash/antismash.cwl
+    label: "analysis of secondary metabolite biosynthesis gene clusters in bacterial and fungal genomes"
 
   # << Diamond >>
   diamond_blastp:
@@ -346,15 +368,6 @@ steps:
       - join_out
     run: ../tools/Diamond-Post-Processing/postprocessing_pipeline.cwl
     label: "add additional annotation to diamond matches"
-
-  # << Systems. Antismash >>
-  antismash:
-    in:
-      input_fasta: contigs
-    out:
-      - output_files
-    run: ../tools/antismash/antismash.cwl
-    label: "analysis of secondary metabolite biosynthesis gene clusters in bacterial and fungal genomes"
 
   # << Viral >>
   #viral_pipeline:
