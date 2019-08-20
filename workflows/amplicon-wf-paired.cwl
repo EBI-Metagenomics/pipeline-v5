@@ -46,6 +46,10 @@ outputs:
     type: File
     outputSource: classify/ncRNAs
 
+  5s_fasta:
+    type: File
+    outputSource: classify/5S_fasta
+
   SSU_fasta:
     type: File
     outputSource: classify/SSU_fasta
@@ -204,6 +208,7 @@ steps:
        otu_lsu_label: lsu_label
     out:
       - ncRNAs
+      - 5S_fasta
       - SSU_fasta
       - LSU_fasta
       - SSU_coords

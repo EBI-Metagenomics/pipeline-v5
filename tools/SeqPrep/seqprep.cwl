@@ -5,10 +5,9 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 1024  # just a default, could be lowered
+  DockerRequirement:
+    dockerPull: quay.io/biocontainers/seqprep:1.1--1
 
-requirements:
-    DockerRequirement:
-        dockerPull: quay.io/biocontainers/seqprep:1.1--1
 #hints:
  #SoftwareRequirement:
    #packages:

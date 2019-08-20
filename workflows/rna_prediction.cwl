@@ -32,6 +32,10 @@ outputs:
     type: File
     outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
 
+  5S_fasta:
+    type: File
+    outputSource: extract_5S/sequences
+
   SSU_fasta:
     type: File
     outputSource: extract_SSUs/sequences
@@ -121,10 +125,24 @@ steps:
       table_hits: find_ribosomal_ncRNAs/deoverlapped_matches
     out: [ LSU_coordinates ]
 
+  get_5S_coords:
+    run: ../tools/RNA_prediction/5S-from-tablehits.cwl
+    in:
+      table_hits: find_ribosomal_ncRNAs/deoverlapped_matches
+    out: [ 5S_coordinates ]
+
+
 #extract LSU and SSU
 #mapseq SILVA
 #convert to OTU
 #krona visualisation
+
+  extract_5S:
+      run: ../tools/easel/esl-sfetch-manyseqs.cwl
+      in:
+        indexed_sequences: index_reads/sequences_with_index
+        names_contain_subseq_coords: get_5S_coords/5S_coordinates
+      out: [ sequences ]
 
   extract_SSUs:
       run: ../tools/easel/esl-sfetch-manyseqs.cwl
