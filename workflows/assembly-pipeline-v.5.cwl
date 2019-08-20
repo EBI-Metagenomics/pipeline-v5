@@ -94,6 +94,9 @@ outputs:
   ncRNAs:
     type: File
     outputSource: rna_prediction/ncRNAs
+  5S_fasta:
+    type: File
+    outputSource: rna_prediction/5S_fasta
   SSU_fasta:
     type: File
     outputSource: rna_prediction/SSU_fasta
@@ -235,6 +238,7 @@ steps:
       otu_lsu_label: rna_pred_otu_lsu_label
     out:
       - ncRNAs
+      - 5S_fasta
       - SSU_fasta
       - LSU_fasta
       - SSU_classifications
