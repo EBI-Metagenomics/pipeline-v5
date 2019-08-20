@@ -3,6 +3,51 @@ contigs:
   path: ../tools/Combined_gene_caller/gene_caller_input_example.fa
   format: edam:format_1929
 
+rna_pred_silva_ssu_database:
+  class: File
+  path: ../tools/RNA_prediction/data/filtered_SILVA_132_SSU.fasta
+rna_pred_silva_lsu_database:
+  class: File
+  path: ../tools/RNA_prediction/data/filtered_SILVA_132_LSU.fasta
+rna_pred_silva_ssu_taxonomy:
+  class: File
+  path: ../tools/RNA_prediction/data/slv_ssu_filtered2.txt
+rna_pred_silva_lsu_taxonomy:
+  class: File
+  path: ../tools/RNA_prediction/data/slv_lsu_filtered2.txt
+rna_pred_silva_ssu_otus:
+  class: File
+  path: ../tools/RNA_prediction/data/ssu2.otu
+rna_pred_silva_lsu_otus:
+  class: File
+  path: ../tools/RNA_prediction/data/lsu2.otu
+rna_pred_ncRNA_ribosomal_models:
+  - class: File
+    path: ../tools/RNA_prediction/data/RF00002.cm
+  - class: File
+    path: ../tools/RNA_prediction/data/RF00177.cm
+  - class: File
+    path: ../tools/RNA_prediction/data/RF01959.cm
+  - class: File
+    path: ../tools/RNA_prediction/data/RF01960.cm
+  - class: File
+    path: ../tools/RNA_prediction/data/RF02540.cm
+  - class: File
+    path: ../tools/RNA_prediction/data/RF02541.cm
+  - class: File
+    path: ../tools/RNA_prediction/data/RF02542.cm
+  - class: File
+    path: ../tools/RNA_prediction/data/RF02543.cm
+  - class: File
+    path: ../tools/RNA_prediction/data/RF02546.cm
+  - class: File
+    path: ../tools/RNA_prediction/data/RF02547.cm
+rna_pred_ncRNA_ribosomal_model_clans:  # change
+  class: File
+  path: ../tools/RNA_prediction/data/ribo.claninfo
+rna_pred_otu_ssu_label: 'SSU'
+rna_pred_otu_lsu_label: 'LSU'
+
 Diamond_databaseFile:  # change
   class: File
   path: >-

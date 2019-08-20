@@ -28,6 +28,17 @@ inputs:
     type: File
     format: edam:format_1929  # FASTA
 
+  rna_pred_silva_ssu_database: {type: File, secondaryFiles: [.mscluster] }
+  rna_pred_silva_lsu_database: {type: File, secondaryFiles: [.mscluster] }
+  rna_pred_silva_ssu_taxonomy: File
+  rna_pred_silva_lsu_taxonomy: File
+  rna_pred_silva_ssu_otus: File
+  rna_pred_silva_lsu_otus: File
+  rna_pred_ncRNA_ribosomal_models: File[]
+  rna_pred_ncRNA_ribosomal_model_clans: File
+  rna_pred_otu_ssu_label: string
+  rna_pred_otu_lsu_label: string
+
   Diamond_databaseFile: File
   Diamond_outFormat: ../tools/Diamond/Diamond-output_formats.yaml#output_formats?
   Diamond_maxTargetSeqs: int
@@ -78,6 +89,47 @@ outputs:
   qc_stats_gc:
     type: File
     outputSource: sequence_stats/gc_sum_out
+
+  # << RNA prediction >>
+  ncRNAs:
+    type: File
+    outputSource: rna_prediction/ncRNAs
+  SSU_fasta:
+    type: File
+    outputSource: rna_prediction/SSU_fasta
+  SSU_otu_tsv:
+    type: File
+    outputSource: rna_prediction/SSU_otu_tsv
+  SSU_krona_image:
+    type: File
+    outputSource: rna_prediction/SSU_krona_image
+  SSU_classifications:
+    type: File
+    outputSource: rna_prediction/SSU_classifications
+  ssu_json_classifications:
+    type: File
+    outputSource: rna_prediction/ssu_json_classifications
+  ssu_hdf5_classifications:
+    type: File
+    outputSource: rna_prediction/ssu_hdf5_classifications
+  LSU_fasta:
+    type: File
+    outputSource: rna_prediction/LSU_fasta
+  LSU_otu_tsv:
+    type: File
+    outputSource: rna_prediction/LSU_otu_tsv
+  LSU_krona_image:
+    type: File
+    outputSource: rna_prediction/LSU_krona_image
+  LSU_classifications:
+    type: File
+    outputSource: rna_prediction/LSU_classifications
+  lsu_json_classifications:
+    type: File
+    outputSource: rna_prediction/lsu_json_classifications
+  lsu_hdf5_classifications:
+    type: File
+    outputSource: rna_prediction/lsu_hdf5_classifications
 
   # << Combined Gene Caller  >>
   CGC_predicted_proteins:
@@ -146,7 +198,7 @@ outputs:
 
 steps:
 
-  # << 1. QC >>
+  # << QC >>
   sequence_stats:
     in:
       QCed_reads: contigs
@@ -161,9 +213,38 @@ steps:
       - gc_sum_out
     run: ../tools/qc-stats/qc-stats.cwl
 
-  # << 2. RNA prediction >>
+  # << RNA prediction >>
+  rna_prediction:
+    in:
+      input_sequences: contigs
+      silva_ssu_database: rna_pred_silva_ssu_database
+      silva_lsu_database: rna_pred_silva_lsu_database
+      silva_ssu_taxonomy: rna_pred_silva_ssu_taxonomy
+      silva_lsu_taxonomy: rna_pred_silva_lsu_taxonomy
+      silva_ssu_otus: rna_pred_silva_ssu_otus
+      silva_lsu_otus: rna_pred_silva_lsu_otus
+      ncRNA_ribosomal_models: rna_pred_ncRNA_ribosomal_models
+      ncRNA_ribosomal_model_clans: rna_pred_ncRNA_ribosomal_model_clans
+      otu_ssu_label: rna_pred_otu_ssu_label
+      otu_lsu_label: rna_pred_otu_lsu_label
+    out:
+      - ncRNAs
+      - SSU_fasta
+      - LSU_fasta
+      - SSU_classifications
+      - SSU_otu_tsv
+      - SSU_krona_image
+      - LSU_classifications
+      - LSU_otu_tsv
+      - LSU_krona_image
+      - ssu_hdf5_classifications
+      - ssu_json_classifications
+      - lsu_hdf5_classifications
+      - lsu_json_classifications
+    run: rna_prediction.cwl
 
-  # << 3. CombinedGeneCaller >>
+
+  # << CombinedGeneCaller >>
   combined_gene_caller:
     in:
       input_fasta: contigs
@@ -176,7 +257,7 @@ steps:
     run: ../tools/Combined_gene_caller/combined_gene_caller.cwl
     label: "combine predictions of FragGeneScan and Prodigal with faselector"
 
-  # << 4.1.0 InterProScan >>
+  # << Functional annotation. InterProScan >>
   interproscan:
     in:
       applications: InterProScan_applications
@@ -188,7 +269,7 @@ steps:
     run: ../tools/InterProScan/InterProScan-v5.cwl
     label: "InterProScan: protein sequence classifier"
 
-  # << 4.1.1 Genome Properties >>
+  # << Systems. Genome Properties >>
   genome_properties:
     in:
       input_tsv_file: interproscan/i5Annotations
@@ -200,7 +281,7 @@ steps:
     run: ../tools/Genome_properties/genome_properties.cwl
     label: "Preparing summary file for genome properties"
 
-  # << 4.1.2 GO-slim >>
+  # << Functional annotation. GO-slim >>
 
   summarize_with_GO:
     doc: |
@@ -213,7 +294,7 @@ steps:
       config: go_summary_config
     out: [ go_summary, go_summary_slim ]
 
-  # << 4.2.0 KEGG >>
+  # << Functional annotation. KEGG >>
   #hmmscan:
   #  in:
   #    seqfile: combined_gene_caller/predicted_proteins
@@ -226,7 +307,7 @@ steps:
   #  run: ../tools/hmmscan/hmmscan.cwl
   #  label: "Analysis using profile HMM on db"
 
-  # << 4.2.1 Pathways >>
+  # << Systems. Pathways >>
   #kegg_analysis:
   #  in:
   #    input_table_hmmscan: hmmscan/output_table
@@ -240,11 +321,11 @@ steps:
   #    - kegg_stdout
   #  run: kegg_analysis.cwl
 
-  # << 4.3.0 COGs >>
+  # << Functional annotation. COGs >>
   # make db
   # run EggNOG
 
-  # << 4.4.0 Diamond >>
+  # << Diamond >>
   diamond_blastp:
     in:
       databaseFile: Diamond_databaseFile
@@ -256,7 +337,7 @@ steps:
     run: ../tools/Diamond/Diamond.blastp-v0.9.21.cwl
     label: "align DNA query sequences against a protein reference UniRef90 database"
 
-  # << 4.4.1 Diamond post-processing >>
+  # << Diamond post-processing >>
   diamond_post_processing:
     in:
       input_diamond: diamond_blastp/matches
@@ -266,16 +347,16 @@ steps:
     run: ../tools/Diamond-Post-Processing/postprocessing_pipeline.cwl
     label: "add additional annotation to diamond matches"
 
-  # << 4.5.0 Antismash >>
+  # << Systems. Antismash >>
   antismash:
     in:
-      input_fasta: contigs # TODO change to right file
+      input_fasta: contigs
     out:
       - output_files
     run: ../tools/antismash/antismash.cwl
     label: "analysis of secondary metabolite biosynthesis gene clusters in bacterial and fungal genomes"
 
-  # << 4.6.0 Viral >>
+  # << Viral >>
   #viral_pipeline:
   #  in:
   #    assembly: combined_gene_caller/predicted_seq
