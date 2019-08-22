@@ -1,9 +1,9 @@
 folder_with_names:
   class: Directory
-  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/tools/Viral/ParsingPredictions/Putative_prophages
+  path: Low_confidence #/Users/kates/Desktop/EBI/CWL/pipeline-v5/tools/Viral/ParsingPredictions/Putative_prophages
 predicted_proteins:
   class: File
-  path: ../tools/Viral/input/chunk_1.faa
+  path: /Users/kates/Desktop/OFOV01_FASTA.fasta.faa  #../tools/Viral/input/chunk_1.faa
 
 hmmscan_gathering_bit_score: false
 hmmscan_omit_alignment: true

@@ -1,6 +1,6 @@
 wanted_folder:
   class: Directory
-  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/tools/Viral/ParsingPredictions/Putative_prophages
+  path: ../tools/Viral/ParsingPredictions/Putative_prophages
 predicted_file:
   class: File
   path: ../input/chunk_1.faa

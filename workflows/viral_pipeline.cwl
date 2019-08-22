@@ -31,16 +31,35 @@ inputs:
     type: float
 
 outputs:
+  output_lf:
+    outputSource: length_filter/filtered_contigs_fasta
+    type: File
+  output_virfinder:
+    outputSource: virfinder/output
+    type: File
+  output_virsorter:
+    outputSource: virsorter/predicted_viral_seq_dir
+    type: Directory
   output_parsing:
     outputSource: parse_pred_contigs/output_array
     type:
       type: array
       items: Directory
-  output_final_mapping:
-    outputSource: subworkflow_for_each_confidence_group/output_mapping
+  output_hmmscan:
+    outputSource: subworkflow_for_each_confidence_group/output_hmm_postprocessing
     type:
       type: array
-      items: Directory
+      items: File
+  output_annotation:
+    outputSource: subworkflow_for_each_confidence_group/output_annotation
+    type:
+      type: array
+      items: File
+  #output_final_mapping:
+  #  outputSource: subworkflow_for_each_confidence_group/output_mapping
+  #  type:
+  #    type: array
+  #    items: Directory
   output_final_assign:
     outputSource: subworkflow_for_each_confidence_group/output_assign
     type:
@@ -101,7 +120,7 @@ steps:
       - output_hmm_postprocessing  # makes hmmscan result tab-separated with title
       - output_evalue  # generate dataframe that stores the profile alignment ratio and total e-value for each ViPhOG-query pair
       - output_annotation  # generate tabular file with ViPhOG annotation results for proteins predicted in viral contigs
-      - output_mapping
+#      - output_mapping
       - output_assign
     scatter: folder_with_names
     run: viral_processing_subworkflow.cwl

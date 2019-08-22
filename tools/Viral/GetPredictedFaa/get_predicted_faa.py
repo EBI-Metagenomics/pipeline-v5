@@ -16,14 +16,13 @@ def choose_predictions(wanted_folder, file_faa):
     with open(out_name, 'w') as file_out:
         seqiter = SeqIO.parse(open(file_faa), 'fasta')
         for seq in seqiter:
-            search_id = re.compile(r"([0-9A-Za-z._-]+cov-[0-9.]+)_([0-9_+-]+)")
+            search_id = re.compile(r"([0-9A-Za-z._:,-]+cov-[0-9.]+)_([0-9_+-]+)")
             name = search_id.search(seq.id).group(1)
             if name in namesSet:
                 SeqIO.write(seq, file_out, "fasta")
 
 
 if __name__ == "__main__":
-
     sys.stderr.write('taking_faa_predictions_from_input.FAA_according_list_with_potential_names')
 
     parser = argparse.ArgumentParser(description="taking_faa_predictions_from_input.FAA_according_list_with_potential_names")
@@ -37,4 +36,4 @@ if __name__ == "__main__":
         args = parser.parse_args()
         choose_predictions(args.wanted_folder, args.predicted_file)
 
-    #choose_predictions("../ParsingPredictions/High_confidence/", "../input/chunk_1.faa")
+#choose_predictions("/Users/kates/Desktop/EBI/CWL/pipeline-v5/workflows/Low_confidence/", "/Users/kates/Desktop/OFOV01_FASTA.fasta.faa")

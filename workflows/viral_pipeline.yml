@@ -1,9 +1,9 @@
 assembly:
   class: File
-  path: ../tools/Viral/_input/chunk_1
+  path: /Users/kates/Desktop/OBJB01/OBJB01_FASTA.fasta
 predicted_proteins:
   class: File
-  path: ../tools/Viral/_input/chunk_1.faa
+  path: /Users/kates/Desktop/OBJB01/OBJB01_FASTA.fasta.faa
 
 hmmscan_gathering_bit_score: false
 hmmscan_omit_alignment: true

@@ -39,6 +39,8 @@ inputs:
   rna_pred_otu_ssu_label: string
   rna_pred_otu_lsu_label: string
 
+  CGC_seq_type: string
+
   Diamond_databaseFile: File
   Diamond_outFormat: ../tools/Diamond/Diamond-output_formats.yaml#output_formats?
   Diamond_maxTargetSeqs: int
@@ -257,6 +259,7 @@ steps:
   combined_gene_caller:
     in:
       input_fasta: contigs
+      seq_type: CGC_seq_type
     out:
       - predicted_proteins
       - predicted_seq
@@ -376,7 +379,7 @@ steps:
   # << Viral >>
   #viral_pipeline:
   #  in:
-  #    assembly: combined_gene_caller/predicted_seq
+  #    assembly: contigs
   #    predicted_proteins: combined_gene_caller/predicted_proteins
   #    hmmscan_gathering_bit_score: viral_hmmscan_gathering_bit_score
   #    hmmscan_omit_alignment: viral_hmmscan_omit_alignment

@@ -48,6 +48,8 @@ rna_pred_ncRNA_ribosomal_model_clans:  # change
 rna_pred_otu_ssu_label: 'SSU'
 rna_pred_otu_lsu_label: 'LSU'
 
+CGC_seq_type: "a"
+
 Diamond_databaseFile:  # change
   class: File
   path: >-
