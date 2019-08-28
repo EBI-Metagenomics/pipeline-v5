@@ -10,7 +10,7 @@ requirements:
   InlineJavascriptRequirement: {}
 
 baseCommand: ['/usr/bin/python2.7', '/combined_gene_caller.py']
-arguments: ["-v", "-s", "a"]
+arguments: ["-v"]
 
 inputs:
   input_fasta:
@@ -18,6 +18,16 @@ inputs:
     inputBinding:
       separate: true
       prefix: "-i"
+
+  seq_type:
+    type: string
+    inputBinding:
+      prefix: "-s"
+
+  maskfile:
+    type: File
+    inputBinding:
+        prefix: "-k"
 
   config:
     type: File?
