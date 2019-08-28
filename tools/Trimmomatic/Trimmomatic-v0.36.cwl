@@ -9,8 +9,10 @@ hints:
       trimmomatic:
         version:
           - 0.36--6
-  - class: DockerRequirement
-    dockerPull: 'quay.io/biocontainers/trimmomatic:0.36--6'
+#  - class: DockerRequirement
+#    dockerPull: 'quay.io/biocontainers/trimmomatic:0.36--6'
+
+#  - $import: trimmomatic-docker.yml
 
 requirements:
  ResourceRequirement:
@@ -26,8 +28,7 @@ requirements:
  InlineJavascriptRequirement: {}
  ShellCommandRequirement: {}
 
-# hints:
-#  - $import: trimmomatic-docker.yml
+baseCommand: [ trimmomatic ]
 
 inputs:
   phred:
@@ -282,8 +283,6 @@ outputs:
              return null;
            }
          }
-
-baseCommand: [ trimmomatic ]
 
 arguments:
 - valueFrom: trim.log

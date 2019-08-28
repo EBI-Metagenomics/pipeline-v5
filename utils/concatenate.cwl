@@ -31,9 +31,9 @@ requirements:
     ramMin: 100
     coresMax: 1
   - class: InlineJavascriptRequirement
-hints:
-  - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+#hints:
+#  - class: DockerRequirement
+#    dockerPull: 'alpine:3.7'
 stdout: $(inputs.outputFileName)
 $schemas:
   - 'https://schema.org/docs/schema_org_rdfa.html'

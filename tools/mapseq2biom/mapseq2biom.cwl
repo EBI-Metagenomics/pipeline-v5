@@ -2,14 +2,9 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-requirements:
-  DockerRequirement:
-    dockerPull: mapseq2biom:latest
-
-#use Docker or source local path?
-  #ResourceRequirement:
-    #coresMax: 1
-    #ramMin: 1024  # just a default, could be lowered
+#requirements:
+#  DockerRequirement:
+#    dockerPull: mapseq2biom:latest
 
 inputs:
   otu_table:
@@ -32,7 +27,7 @@ inputs:
     inputBinding:
       prefix: --label
 
-baseCommand: ['perl', '/mapseq2biom.pl'] # or perl /hps/nobackup/production/metagenomics/production-scripts/current/mgportal/analysis-pipeline/python/tools/taxonomy_summary/scripts/mapseq2biom.pl
+baseCommand: ['mapseq2biom.pl'] # or perl /hps/nobackup/production/metagenomics/production-scripts/current/mgportal/analysis-pipeline/python/tools/taxonomy_summary/scripts/mapseq2biom.pl
 
 arguments:
   - valueFrom: $(inputs.query.basename).tsv

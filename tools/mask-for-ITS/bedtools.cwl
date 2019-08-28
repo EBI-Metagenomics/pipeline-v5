@@ -5,9 +5,9 @@ class: CommandLineTool
 label: mask SSU and LSU coorindates with bedtools for ITS
 doc: "https://bedtools.readthedocs.io/en/latest/content/tools/maskfasta.html"
 
-requirements:
- DockerRequirement:
-   dockerPull: quay.io/biocontainers/bedtools:2.28.0--hdf88d34_0
+#requirements:
+# DockerRequirement:
+#   dockerPull: quay.io/biocontainers/bedtools:2.28.0--hdf88d34_0
 
 inputs:
   sequences:

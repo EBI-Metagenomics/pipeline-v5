@@ -1,9 +1,10 @@
 #!/usr/bin/env
 cwlVersion: v1.0
 class: CommandLineTool
-requirements:
- DockerRequirement:
-    dockerPull: alpine:3.7
+
+#requirements:
+# DockerRequirement:
+#    dockerPull: alpine:3.7
 
 inputs:
   hits: { type: File, streamable: true }

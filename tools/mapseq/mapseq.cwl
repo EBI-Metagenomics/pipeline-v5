@@ -10,9 +10,9 @@ doc: |
   classifications to ribosomal RNA sequences.
   https://github.com/jfmrod/MAPseq
 
-requirements:
-  DockerRequirement:
-    dockerPull: mapseq:latest
+#requirements:
+#  DockerRequirement:
+#    dockerPull: mapseq:latest
 
 inputs:
   sequences:

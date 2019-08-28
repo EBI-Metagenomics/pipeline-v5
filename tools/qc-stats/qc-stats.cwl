@@ -7,8 +7,8 @@ label: "Post QC-ed input analysis of sequence file"
 #doc: |
 
 requirements:
-  #DockerRequirement:
-    #dockerPull: qc-stats:latest
+#  DockerRequirement:
+#    dockerPull: qc-stats:latest
   ResourceRequirement:
     coresMax: 1
     ramMin: 1024  # just a default, could be lowered
@@ -51,7 +51,7 @@ inputs:
     inputBinding:
       prefix: "-m"
 
-baseCommand: [ "python", "/MGRAST_base.py" ]
+baseCommand: ["MGRAST_base.py" ]
 
 outputs:
   summary_out:

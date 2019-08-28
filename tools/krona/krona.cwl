@@ -6,9 +6,9 @@ label: visualize using krona
 
 #edited from ebi-metagenomics-cwl/tools/krona.cwl
 
-requirements:
-  DockerRequirement:
-    dockerPull: kronav2.7.1:1.0
+#requirements:
+#  DockerRequirement:
+#    dockerPull: kronav2.7.1:1.0
 
 inputs:
   otu_counts:

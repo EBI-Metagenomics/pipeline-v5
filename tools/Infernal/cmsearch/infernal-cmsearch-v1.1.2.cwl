@@ -97,8 +97,8 @@ hints:
           - 'https://identifiers.org/rrid/RRID:SCR_011809'
         version:
           - 1.1.2
-  - class: DockerRequirement
-    dockerPull: 'quay.io/biocontainers/infernal:1.1.2--h470a237_1'
+#  - class: DockerRequirement
+#    dockerPull: 'quay.io/biocontainers/infernal:1.1.2--h470a237_1'
   - class: gx:interface
     gx:inputs:
       - gx:name: covariance_model_database

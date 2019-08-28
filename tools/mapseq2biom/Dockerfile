@@ -1,6 +1,9 @@
 FROM perl:latest
 
-COPY mapseq2biom.pl /
+COPY mapseq2biom.pl /tools
+
+RUN chmod -R a+rwx /tools
+ENV PATH="/tools:${PATH}"
 
 ##############################################################
 # Dockerfile Version:   19.03.1
@@ -10,4 +13,4 @@ COPY mapseq2biom.pl /
 ##############################################################
 
 
-CMD ["perl", "/mapseq2biom.pl"]
+CMD ["mapseq2biom.pl"]
