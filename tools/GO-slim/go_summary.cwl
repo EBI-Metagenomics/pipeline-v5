@@ -26,7 +26,7 @@ inputs:
     inputBinding:
       prefix: --config
 
-baseCommand: ["python", "/go_summary_pipeline-1.0.py"]
+baseCommand: ["go_summary_pipeline-1.0.py"]
 
 arguments:
   - valueFrom: go-summary

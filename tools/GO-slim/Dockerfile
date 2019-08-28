@@ -17,13 +17,14 @@ RUN apt-get install -y openjdk-8-jre
 
 RUN pip install psutil
 
-COPY go-basic-metagenomics_release_20160705.obo /go-basic-metagenomics_release_20160705.obo
-COPY metagenomics_go_slim_banding.txt /metagenomics_go_slim_banding.txt
-COPY metagenomics_go_slim_ids.txt /metagenomics_go_slim_ids.txt
-COPY owltools/* /owltools/
-RUN chmod -R a+rwx /owltools
+COPY go-basic-metagenomics_release_20160705.obo /tools/go-basic-metagenomics_release_20160705.obo
+COPY metagenomics_go_slim_banding.txt /tools/metagenomics_go_slim_banding.txt
+COPY metagenomics_go_slim_ids.txt /tools/metagenomics_go_slim_ids.txt
+COPY owltools/* /tools/owltools/
+RUN chmod -R a+rwx /tools/owltools
 
+COPY go_summary_pipeline-1.0.py /tools/go_summary_pipeline-1.0.py
+RUN chmod -R a+rwx /tools
+ENV PATH="/tools:${PATH}"
 
-COPY go_summary_pipeline-1.0.py /go_summary_pipeline-1.0.py
-
-CMD ["python", "/go_summary_pipeline-1.0.py"]
+CMD ["go_summary_pipeline-1.0.py"]

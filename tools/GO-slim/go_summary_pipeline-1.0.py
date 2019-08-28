@@ -1,4 +1,6 @@
-#!/nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools/anaconda/bin/python
+#!/usr/bin/env python
+
+# nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools/anaconda/bin/python
 
 """
 INPUT - InterProScan result file:
