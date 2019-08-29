@@ -18,13 +18,6 @@ requirements:
  ResourceRequirement:
    ramMin: 10240
    coresMin: 8
- SchemaDefRequirement:
-   types:
-    - $import: trimmomatic-end_mode.yaml
-    - $import: trimmomatic-sliding_window.yaml
-    - $import: trimmomatic-phred.yaml
-    - $import: trimmomatic-illumina_clipping.yaml
-    - $import: trimmomatic-max_info.yaml
  InlineJavascriptRequirement: {}
  ShellCommandRequirement: {}
 
