@@ -7,9 +7,9 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 100  # just a default, could be lowered
-  SchemaDefRequirement:
-    types:
-      - $import: biom-convert-table.yaml
+#  SchemaDefRequirement:
+#    types:
+#      - $import: biom-convert-table.yaml
 
 hints:
   SoftwareRequirement:
@@ -29,7 +29,7 @@ inputs:
       prefix: --input-fp
 
   table_type:
-    type: biom-convert-table.yaml#table_type?
+    type: string? #biom-convert-table.yaml#table_type?
     inputBinding:
       prefix: --table-type
 
