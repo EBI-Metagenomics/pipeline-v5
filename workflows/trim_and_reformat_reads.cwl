@@ -4,11 +4,6 @@ label: Trim and reformat reads (single and paired end version)
 
 requirements:
  - class: SubworkflowFeatureRequirement
- - class: SchemaDefRequirement
-   types:
-    - $import: ../tools/Trimmomatic/trimmomatic-sliding_window.yaml
-    - $import: ../tools/Trimmomatic/trimmomatic-end_mode.yaml
-    - $import: ../tools/Trimmomatic/trimmomatic-phred.yaml
 
 inputs:
   reads:
