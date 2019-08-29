@@ -32,7 +32,7 @@ baseCommand: [ trimmomatic ]
 
 inputs:
   phred:
-    type: trimmomatic-phred.yaml#phred?
+    type: string?  #trimmomatic-phred.yaml#phred?
     inputBinding:
       prefix: -phred
       separate: false
@@ -109,7 +109,7 @@ inputs:
       investigated.
 
   slidingwindow:
-    type: trimmomatic-sliding_window.yaml#slidingWindow?
+    type: int? #trimmomatic-sliding_window.yaml#slidingWindow?
     inputBinding:
       position: 15
       valueFrom: |
@@ -130,7 +130,7 @@ inputs:
       <requiredQuality> specifies the average quality required
 
   illuminaClip:
-    type: trimmomatic-illumina_clipping.yaml#illuminaClipping?
+    type:  File? #trimmomatic-illumina_clipping.yaml#illuminaClipping?
     inputBinding:
       valueFrom: |
         ${ if ( self ) {
@@ -205,7 +205,7 @@ inputs:
       MaxInfo instead
 
   maxinfo:
-    type: trimmomatic-max_info.yaml#maxinfo?
+    type: int?  #trimmomatic-max_info.yaml#maxinfo?
     inputBinding:
       position: 15
       valueFrom: |
@@ -227,7 +227,7 @@ inputs:
       longer reads, while a high value (>0.8) favours read correctness.
 
   end_mode:
-    type: trimmomatic-end_mode.yaml#end_mode
+    type: string  #trimmomatic-end_mode.yaml#end_mode
     inputBinding:
       position: 3
     label: 'read -end mode format'
