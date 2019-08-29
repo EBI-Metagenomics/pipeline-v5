@@ -10,9 +10,9 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
-  SchemaDefRequirement:
-    types:
-      - $import: ../tools/biom-convert/biom-convert-table.yaml
+#  SchemaDefRequirement:
+#    types:
+#      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
   qc_stats_summary: File
