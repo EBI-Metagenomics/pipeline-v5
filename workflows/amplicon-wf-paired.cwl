@@ -8,9 +8,6 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
-  SchemaDefRequirement:
-    types:
-      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
     forward_reads: File
