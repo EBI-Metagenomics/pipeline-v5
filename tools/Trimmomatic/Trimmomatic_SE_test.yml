@@ -1,7 +1,7 @@
 #cwltest
 
-- job: tools/Trimmomatic/Trimmomatic-v0.36-SE.test.job.yaml
-  tool: tools/Trimmomatic/Trimmomatic-v0.36.cwl
+- job: Trimmomatic-v0.36-SE.test.job.yaml
+  tool: Trimmomatic-v0.36.cwl
   output:
     log_file:
       basename: "trim.log"
