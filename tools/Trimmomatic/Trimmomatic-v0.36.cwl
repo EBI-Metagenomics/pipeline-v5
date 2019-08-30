@@ -21,7 +21,7 @@ requirements:
  InlineJavascriptRequirement: {}
  ShellCommandRequirement: {}
 
-baseCommand: [ trimmomatic ]
+baseCommand: [ java -jar trimmomatic.jar ]
 
 inputs:
   phred:
@@ -102,17 +102,11 @@ inputs:
       investigated.
 
   slidingwindow:
-    type: int? #trimmomatic-sliding_window.yaml#slidingWindow?
+    type: string? #trimmomatic-sliding_window.yaml#slidingWindow?
     inputBinding:
       position: 15
-      valueFrom: |
-        ${ if ( self ) {
-             return "SLIDINGWINDOW:" + self.windowSize + ":"
-               + self.requiredQuality;
-           } else {
-             return self;
-           }
-         }
+      prefix: 'SLIDINGWINDOW:'
+      separate: false
     label: 'read filtering sliding window'
     doc: >
       Perform a sliding window trimming, cutting once the average quality
