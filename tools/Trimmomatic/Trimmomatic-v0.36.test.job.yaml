@@ -1,4 +1,4 @@
-end_mode: SE
+end_mode: PE
 phred: '33'
 headcrop: 1
 minlen: 5
