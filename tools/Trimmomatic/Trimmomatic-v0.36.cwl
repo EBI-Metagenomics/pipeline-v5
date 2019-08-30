@@ -21,7 +21,7 @@ requirements:
  InlineJavascriptRequirement: {}
  ShellCommandRequirement: {}
 
-baseCommand: [ java -jar trimmomatic.jar ]
+baseCommand: [ trimmomatic.sh ]
 
 inputs:
   phred:
