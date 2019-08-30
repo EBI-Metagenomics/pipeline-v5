@@ -23,6 +23,9 @@ install:
   - travis/install-nodejs.sh
   - pip install -r travis/requirements.txt
 
+before_script:
+  - pip freeze
+
 script:
   - if [ "$SCRIPT" ]; then
       bash $SCRIPT;
