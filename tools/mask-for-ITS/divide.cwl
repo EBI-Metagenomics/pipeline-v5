@@ -21,13 +21,7 @@ inputs:
       position: 3
     label: merged fasta files summary from qc-stats
 
-  script:
-    type: File
-    inputBinding:
-      position: 1
-    label: bash script
-
-baseCommand: [sh]
+baseCommand: [divide]
 
 stdout: division
 

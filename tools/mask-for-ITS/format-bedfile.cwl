@@ -7,19 +7,17 @@ label: "reformat coords file for masking with bedtools"
 #requirements:
 #    DockerRequirement:
 #        dockerPull: alpine:3.7
-inputs:
 
+inputs:
   all_coordinates:
     type: File
     label: SSU and LSU coordinates combined
+    inputBinding:
+      prefix: '-i'
 
-baseCommand: [awk]
+baseCommand: [format_bedfile]
 
 #reverse start and end where start < end (i.e. neg strand)
-arguments:
-  - '$2 > $3 { var = $3; $3 = $2; $2 = var } 1 {print $4,$2,$3}'
-  - OFS=\t
-  - $(inputs.all_coordinates)
 
 stdout: ITS-maskfile
 
