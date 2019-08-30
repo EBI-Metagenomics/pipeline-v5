@@ -30,6 +30,7 @@ before_script:
 script:
   - if [ "$ENV_SCRIPT" ]; then
         bash $ENV_SCRIPT;
+    fi
   - if [ "$SCRIPT" ]; then
       bash $SCRIPT;
     else
