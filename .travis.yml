@@ -8,9 +8,9 @@ services:
 env:
   - TOOL="Validate tools" SCRIPT="travis/tools-validation-tests.sh"
   - TOOL="Validate tools" SCRIPT="travis/utils-validation-tests.sh"
-  - TOOL="Trimmomatic PE" TEST="tools/Trimmomatic/Diamond_blastx_test.yml"
-  - TOOL="Trimmomatic SE" TEST="tools/Trimmomatic/Diamond_blastx_test.yml"
-  - TOOL="Diamond blastX" TEST="tools/Diamond/Diamond_blastx_test.yml"
+  - TOOL="Trimmomatic SE" TEST="Trimmomatic_SE_test.yml" CD="tools/Trimmomatic"
+  - TOOL="Trimmomatic PE" TEST="tools/Trimmomatic/Trimmomatic_PE_test.yml"
+  - TOOL="Diamond blastX" TEST="Diamond_blastx_test.yml" CD="tools/Diamond/"
   - TOOL="Diamond blastP" TEST="tools/Diamond/Diamond_blastp_test.yml"
   - TOOL="Diamond Post Processing Sorting" TEST="tools/Diamond-Post-Processing/diamond_sorting.test.yaml"
   - TOOL="Diamond Post Processing Joining" TEST="tools/Diamond-Post-Processing/diamond_join.test.yaml"
@@ -25,12 +25,13 @@ install:
 
 before_script:
   - pip freeze
+  - pwd
 
 script:
   - if [ "$SCRIPT" ]; then
       bash $SCRIPT;
     else
-      cwltest --verbose --test $TEST;
+      cd $CD && cwltest --verbose --test $TEST;
     fi
 
 #install:

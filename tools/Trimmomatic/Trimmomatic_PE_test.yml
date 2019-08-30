@@ -1,6 +1,6 @@
 #cwltest
 
-- job: Trimmomatic-v0.36.test.job.yaml
+- job: Trimmomatic-v0.36-PE.test.job.yaml
   tool: Trimmomatic-v0.36.cwl
   output:
     log_file:
