@@ -13,9 +13,11 @@ RUN apt-get update && apt-get install -y \
 ENV ZIP=mapseq-1.2.3-linux.tar.gz
 ENV URL=https://github.com/jfmrod/MAPseq/releases/download/v1.2.3/
 
-WORKDIR /mapseq
+WORKDIR /mapseq/
 RUN wget $URL/$ZIP  \
   && tar xvzf $ZIP \
   && rm $ZIP
 
-CMD ["/mapseq/mapseq-1.2.3-linux/mapseq"]
+ENV PATH="/mapseq/mapseq-1.2.3-linux/:${PATH}"
+
+CMD ["mapseq"]

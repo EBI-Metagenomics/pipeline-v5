@@ -34,7 +34,7 @@ inputs:
     inputBinding:
       position: 3
 
-baseCommand: /mapseq/mapseq-1.2.3-linux/mapseq
+baseCommand: mapseq
 arguments: ['-nthreads', '1', '-tophits', '80', '-topotus', '40', '-outfmt', 'simple']
 
 stdout: $(inputs.database.nameroot).mseq  # helps with cwltool's --cache
