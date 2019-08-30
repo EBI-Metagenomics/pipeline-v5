@@ -34,7 +34,6 @@ inputs:
     itsonedb_tax: File
     itsonedb_otu_file: File
     itsonedb_label: string
-    divide_sh: File
 
 outputs:
   processed_nucleotide_reads:
@@ -218,8 +217,7 @@ steps:
         unite_otus: unite_otu_file
         itsone_database: itsonedb
         itsone_taxonomy: itsonedb_tax
-        itsone_otus: itsonedb_otu_file
-        divide_script: divide_sh
+        itsone_otus: itsonedb_otu_file'
         otu_unite_label: unite_label
         otu_itsone_label: itsonedb_label
     out:

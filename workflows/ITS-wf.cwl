@@ -25,7 +25,6 @@ inputs:
   itsone_database: {type: File, secondaryFiles: [.mscluster] }
   itsone_taxonomy: File
   itsone_otus: File
-  divide_script: File
   otu_unite_label: string
   otu_itsone_label: string
 
@@ -95,7 +94,6 @@ steps:
   match_proportion:
     run: ../tools/mask-for-ITS/divide.cwl
     in:
-      script: divide_script
       all_coordinates: cat/all-coordinates
       summary: qc_stats_summary
     out: [proportion]
