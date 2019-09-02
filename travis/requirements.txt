@@ -1,3 +1,4 @@
 cwl-runner==1.0
+cwltool==1.0.20190815141648
 cwltest==1.0.20190228134645
 html5lib==1.0.1
