@@ -17,8 +17,8 @@ hints:
       biom-format:
         specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
         version: [ "2.1.6" ]
-#  DockerRequirement:
-#    dockerPull: biom-format:latest
+  DockerRequirement:
+    dockerPull: biom-format:v2.1.7dfsg-2-deb-py3_cv1
 
 
 inputs:
