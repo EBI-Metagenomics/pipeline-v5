@@ -14,6 +14,12 @@ doc: |
 #  DockerRequirement:
 #    dockerPull: mapseq:latest
 
+requirements:
+  ResourceRequirement:
+    ramMin: 4096
+    ramMax: 4096
+    coresMin: 2
+
 inputs:
   sequences:
     type: File

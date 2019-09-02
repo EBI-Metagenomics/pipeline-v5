@@ -3,12 +3,12 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-hints:
-  - class: SoftwareRequirement
-    packages:
-      trimmomatic:
-        version:
-          - 0.36--6
+#hints:
+#  - class: SoftwareRequirement
+#    packages:
+#      trimmomatic:
+#        version:
+#          - 0.36--6
 #  - class: DockerRequirement
 #    dockerPull: 'quay.io/biocontainers/trimmomatic:0.36--6'
 
@@ -21,7 +21,7 @@ requirements:
  InlineJavascriptRequirement: {}
  ShellCommandRequirement: {}
 
-baseCommand: [ trimmomatic.sh ]
+baseCommand: [ trimmomatic ]
 
 inputs:
   phred:
@@ -246,30 +246,6 @@ outputs:
     format: edam:format_1930  # fastq
     outputBinding:
       glob: $(inputs.reads1.nameroot).trimmed.unpaired.fastq
-
-  reads2_trimmed_paired:
-    type: File?
-    format: edam:format_1930  # fastq
-    outputBinding:
-      glob: |
-        ${ if (inputs.reads2 ) {
-             return inputs.reads2.nameroot + '.trimmed.fastq';
-           } else {
-             return null;
-           }
-         }
-
-  reads2_trimmed_unpaired:
-    type: File?
-    format: edam:format_1930  # fastq
-    outputBinding:
-      glob: |
-        ${ if (inputs.reads2 ) {
-             return inputs.reads2.nameroot + '.trimmed.unpaired.fastq';
-           } else {
-             return null;
-           }
-         }
 
 arguments:
 - valueFrom: trim.log

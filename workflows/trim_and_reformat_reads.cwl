@@ -21,7 +21,7 @@ steps:
     doc: |
       Low quality trimming (low quality ends and sequences with < quality scores
       less than 15 over a 4 nucleotide wide window are removed)
-    run: ../tools/Trimmomatic/Trimmomatic-v0.36.cwl
+    run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
       reads1: reads
       phred: { default: '33' }
