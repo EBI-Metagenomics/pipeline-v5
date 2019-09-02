@@ -31,7 +31,9 @@ inputs:
   table_type:
     type: string? #biom-convert-table.yaml#table_type?
     inputBinding:
-      prefix: --table-type
+      prefix: --table-type=
+      separate: false
+      valueFrom: $('"' + inputs.table_type + '"')
 
   json:
     type: boolean?
@@ -76,7 +78,13 @@ arguments:
 outputs:
   result:
     type: File
-    outputBinding: { glob: "$(inputs.biom.nameroot)*" }
+    outputBinding:
+      glob: |
+       ${ var ext = "";
+       if (inputs.json) { ext = ".json"; }
+       if (inputs.hdf5) { ext = ".hdf5"; }
+       if (inputs.tsv) { ext = ".tsv"; }
+       return inputs.biom.nameroot + ext; }
 
 $namespaces:
  edam: http://edamontology.org/
