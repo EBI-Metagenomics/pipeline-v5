@@ -5,6 +5,8 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 100  # just a default, could be lowered
+  DockerRequirement:
+    dockerPull: biopython/biopython:latest
 hints:
   SoftwareRequirement:
     packages:
