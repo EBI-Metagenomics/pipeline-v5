@@ -226,7 +226,7 @@ outputs:
     type: File
     format: edam:format_1930  # fastq
     outputBinding:
-      glob: $(inputs.reads1.nameroot).trimmed.fastq
+      glob: $(inputs.reads1.basename).trimmed.fastq
 
   log_file:
     type: File
@@ -245,7 +245,7 @@ outputs:
     type: File?
     format: edam:format_1930  # fastq
     outputBinding:
-      glob: $(inputs.reads1.nameroot).trimmed.unpaired.fastq
+      glob: $(inputs.reads1.basename).trimmed.unpaired.fastq
 
 arguments:
 - valueFrom: trim.log
@@ -254,35 +254,35 @@ arguments:
 - valueFrom: $(runtime.cores)
   position: 4
   prefix: -threads
-- valueFrom: $(inputs.reads1.nameroot).trimmed.fastq
+- valueFrom: $(inputs.reads1.basename).trimmed.fastq
   position: 7
-- valueFrom: |
-    ${
-      if (inputs.end_mode == "PE" && inputs.reads2) {
-        return inputs.reads1.nameroot + '.trimmed.unpaired.fastq';
-      } else {
-        return null;
-      }
-    }
-  position: 8
-- valueFrom: |
-    ${
-      if (inputs.end_mode == "PE" && inputs.reads2) {
-        return inputs.reads2.nameroot + '.trimmed.fastq';
-      } else {
-        return null;
-      }
-    }
-  position: 9
-- valueFrom: |
-    ${
-      if (inputs.end_mode == "PE" && inputs.reads2) {
-        return inputs.reads2.nameroot + '.trimmed.unpaired.fastq';
-      } else {
-        return null;
-      }
-    }
-  position: 10
+#- valueFrom: |
+#    ${
+#      if (inputs.end_mode == "PE" && inputs.reads2) {
+#        return inputs.reads1.nameroot + '.trimmed.unpaired.fastq';
+#      } else {
+#        return null;
+#      }
+#    }
+#  position: 8
+#- valueFrom: |
+#    ${
+#      if (inputs.end_mode == "PE" && inputs.reads2) {
+#        return inputs.reads2.nameroot + '.trimmed.fastq';
+#      } else {
+#        return null;
+#      }
+#    }
+#  position: 9
+#- valueFrom: |
+#    ${
+#      if (inputs.end_mode == "PE" && inputs.reads2) {
+#        return inputs.reads2.nameroot + '.trimmed.unpaired.fastq';
+#      } else {
+#        return null;
+#      }
+#    }
+#  position: 10
 
 doc: >
   Trimmomatic is a fast, multithreaded command line tool that can be used to trim and crop
