@@ -8,8 +8,11 @@ services:
 env:
   - TOOL="Validate tools" SCRIPT="travis/tools-validation-tests.sh"
   - TOOL="Validate tools" SCRIPT="travis/utils-validation-tests.sh"
-  - TOOL="Diamond blastX" TEST="tools/Diamond/Diamond_blastx_test.yml"
-  - TOOL="Diamond blastP" TEST="tools/Diamond/Diamond_blastp_test.yml"
+  - TOOL="Biom convert" TEST="biom-convert_test.yml" CD="tools/biom-convert"
+  - TOOL="Trimmomatic SE" TEST="Trimmomatic_SE_test.yml" CD="tools/Trimmomatic" ENV_SCRIPT="travis/trimmomatic_path.sh"
+  - TOOL="Trimmomatic PE" TEST="Trimmomatic_PE_test.yml" CD="tools/Trimmomatic" ENV_SCRIPT="travis/trimmomatic_path.sh"
+  - TOOL="Diamond blastX" TEST="Diamond_blastx_test.yml" CD="tools/Diamond"
+  - TOOL="Diamond blastP" TEST="Diamond_blastp_test.yml" CD="tools/Diamond"
   - TOOL="Diamond Post Processing Sorting" TEST="tools/Diamond-Post-Processing/diamond_sorting.test.yaml"
   - TOOL="Diamond Post Processing Joining" TEST="tools/Diamond-Post-Processing/diamond_join.test.yaml"
   - TOOL="Diamond Post Processing workflow" TEST="tools/Diamond-Post-Processing/postprocessing_pipeline.test.yml"
@@ -21,11 +24,15 @@ install:
   - travis/install-nodejs.sh
   - pip install -r travis/requirements.txt
 
+before_script:
+  - pip freeze
+  - pwd
+
 script:
   - if [ "$SCRIPT" ]; then
       bash $SCRIPT;
     else
-      cwltest --verbose --test $TEST;
+      cd $CD && cwltest --verbose --test $TEST;
     fi
 
 #install:
