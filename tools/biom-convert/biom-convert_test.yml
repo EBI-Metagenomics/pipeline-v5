@@ -1,0 +1,9 @@
+#cwltest
+
+- job: biom-convert-test.job-input.yml
+  tool: biom-convert.cwl
+  output:
+    log_file:
+      basename: "test-mapseq.json"
+      class: File
+      checksum: "sha1$f0f577582691966edac311542775d87567e2b3fa"

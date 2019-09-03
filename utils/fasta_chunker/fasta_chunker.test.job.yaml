@@ -3,5 +3,5 @@ seqs:
   class: File
   format: 'edam:format_1929'
   metadata: {}
-  path: ../test-input/test_seq.fasta
+  path: ../test-inputs/test_seq.fasta
   secondaryFiles: []
