@@ -8,6 +8,7 @@ services:
 env:
   - TOOL="Validate tools" SCRIPT="travis/tools-validation-tests.sh"
   - TOOL="Validate tools" SCRIPT="travis/utils-validation-tests.sh"
+  - TOOL="FASTQ to FASTA converter" TEST="fastq_to_fasta.cwl" CD="utils/"
   - TOOL="Biom convert" TEST="biom-convert_test.yml" CD="tools/biom-convert"
   - TOOL="Trimmomatic SE" TEST="Trimmomatic_SE_test.yml" CD="tools/Trimmomatic" ENV_SCRIPT="travis/trimmomatic_path.sh"
   - TOOL="Trimmomatic PE" TEST="Trimmomatic_PE_test.yml" CD="tools/Trimmomatic" ENV_SCRIPT="travis/trimmomatic_path.sh"

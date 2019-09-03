@@ -5,6 +5,8 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 100  # just a default, could be lowered
+#  DockerRequirement:
+#    dockerPull: biopython/biopython:latest
 hints:
   SoftwareRequirement:
     packages:
@@ -20,16 +22,9 @@ inputs:
 
 stdin: $(inputs.fastq.path)
 
-baseCommand: [ python ]
+baseCommand: [ fastq_to_fasta.py ]
 
-arguments:
-  - valueFrom: |
-      import sys
-      from Bio import SeqIO
-      SeqIO.convert(sys.stdin, "fastq", sys.stdout, "fasta")
-    prefix: -c
-
-stdout: $(inputs.fastq.basename).fasta  # helps with cwltool's cache
+stdout: $(inputs.fastq.nameroot).fasta  # helps with cwltool's cache
 
 outputs:
   fasta:
