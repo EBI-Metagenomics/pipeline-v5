@@ -29,9 +29,6 @@ inputs:
   otu_itsone_label: string
 
 outputs:
-  proportion_SU:
-    type: File
-    outputSource: match_proportion/proportion
 
   masked_sequences:
     type: File
@@ -45,6 +42,10 @@ outputs:
     type: File
     outputSource: run_unite/krona_tsv
 
+  unite_otu_txt:
+    type: File
+    outputSource: run_unite/krona_txt
+
   unite_krona_image:
     type: File
     outputSource: run_unite/krona_image
@@ -56,6 +57,10 @@ outputs:
   itsonedb_otu_tsv:
     type: File
     outputSource: run_itsonedb/krona_tsv
+
+  itsonedb_otu_txt:
+    type: File
+    outputSource: run_itsonedb/krona_txt
 
   itsonedb_krona_image:
     type: File
@@ -96,7 +101,7 @@ steps:
     in:
       all_coordinates: cat/all-coordinates
       summary: qc_stats_summary
-    out: [proportion]
+    out: [fasta_out]
 
   #if proportion < 0.90 then carry on, update with potential "conditional"
   #mask SSU/LSU
@@ -110,7 +115,7 @@ steps:
   mask_for_ITS:
     run: ../tools/mask-for-ITS/bedtools.cwl
     in:
-      sequences: query_sequences
+      sequences: match_proportion/fasta_out
       maskfile: reformat_coords/maskfile
     out: [masked_sequences]
 

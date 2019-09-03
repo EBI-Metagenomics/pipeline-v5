@@ -8,9 +8,9 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
-  SchemaDefRequirement:
-    types:
-      - $import: ../tools/biom-convert/biom-convert-table.yaml
+#  SchemaDefRequirement:
+#    types:
+#      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
   input_sequences: File
@@ -60,6 +60,10 @@ outputs:
     type: File
     outputSource: classify_SSUs/krona_tsv
 
+  SSU_otu_txt:
+    type: File
+    outputSource: classify_SSUs/krona_txt
+
   SSU_krona_image:
     type: File
     outputSource: classify_SSUs/krona_image
@@ -72,6 +76,10 @@ outputs:
   LSU_otu_tsv:
     type: File
     outputSource: classify_LSUs/krona_tsv
+
+  LSU_otu_txt:
+    type: File
+    outputSource: classify_LSUs/krona_txt
 
   LSU_krona_image:
     type: File
