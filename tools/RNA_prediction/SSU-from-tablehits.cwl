@@ -8,9 +8,9 @@ inputs:
     label: output of infernal's cmsearch
 
 outputs:
- SSU_coordinates:
-   type: File
-   outputSource: extract_coords/matched_seqs_with_coords
+  SSU_coordinates:
+    type: File
+    outputSource: extract_coords/matched_seqs_with_coords
 
 steps:
   grep:
