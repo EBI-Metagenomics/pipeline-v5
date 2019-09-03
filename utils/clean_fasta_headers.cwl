@@ -2,7 +2,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: replace problem characters from FASTA headers with dashes
+label: Replaces problematic characters from FASTA headers with dashes
 
 requirements:
   ResourceRequirement:
@@ -17,7 +17,7 @@ inputs:
 
 stdin: $(inputs.sequences.path)
 
-baseCommand: [ tr, ' /|<_;#', '-------' ]
+baseCommand: [ tr, '" /|<_;#"', '-------' ]
 
 stdout: $(inputs.sequences.nameroot).cleaned.fasta
 
@@ -25,6 +25,10 @@ outputs:
   sequences_with_cleaned_headers:
     type: stdout
     format: edam:format_1929  # FASTA
+
+#hints:
+#  - class: DockerRequirement
+#    dockerPull: 'alpine:3.7'
 
 $namespaces:
  edam: http://edamontology.org/
