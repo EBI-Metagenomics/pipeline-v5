@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: get float proportion hits covered by SSUs and LSUs
+label: "get proportion of LSU/SSU hits to total seqs and rename file prefix to EMPTY if >90%"
 
 requirements:
     - class: ShellCommandRequirement
@@ -15,6 +15,11 @@ inputs:
       position: 2
     label: LSU and SSU coordinates
 
+  fasta:
+    type: File
+    inputBinding:
+        position: 4
+
   summary:
     type: File
     inputBinding:
@@ -23,8 +28,9 @@ inputs:
 
 baseCommand: [divide]
 
-stdout: division
-
 outputs:
-  proportion:
-    type: stdout
+
+  fasta_out:
+    type: File
+    outputBinding:
+        glob: "*.fasta"

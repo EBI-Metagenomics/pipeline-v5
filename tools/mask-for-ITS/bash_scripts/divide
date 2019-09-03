@@ -2,10 +2,20 @@
 
 coordinates=$1
 stats=$2
+fasta=$3
 
 y=($(wc -l $coordinates))
 x=($(grep -m1 "sequence_count" $stats | cut -f 2))
 
-bc <<< "scale=10; ($y/$x)"
+proportion=($(bc <<< "scale=10; ($y/$x)"))
+num1=0.9
+
+standard=$((`echo "$proportion >= $num1"| bc`))
+if [ $standard -eq 1 ]
+then
+  mv "$fasta" "EMPTY.fasta"
+else
+  cp "$fasta" .
+fi
 
 ###

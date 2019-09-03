@@ -72,6 +72,10 @@ outputs:
     type: File
     outputSource: classify/SSU_otu_tsv
 
+  SSU_otu_txt:
+    type: File
+    outputSource: classify/SSU_otu_txt
+
   SSU_krona_image:
     type: File
     outputSource: classify/SSU_krona_image
@@ -83,6 +87,10 @@ outputs:
   LSU_otu_tsv:
     type: File
     outputSource: classify/LSU_otu_tsv
+
+  LSU_otu_txt:
+    type: File
+    outputSource: classify/LSU_otu_txt
 
   LSU_krona_image:
     type: File
@@ -120,6 +128,10 @@ outputs:
     type: File
     outputSource: ITS/unite_otu_tsv
 
+  unite_otu_txt:
+    type: File
+    outputSource: ITS/unite_otu_txt
+
   unite_krona_image:
     type: File
     outputSource: ITS/unite_krona_image
@@ -131,6 +143,10 @@ outputs:
   itsonedb_otu_tsv:
     type: File
     outputSource: ITS/itsonedb_otu_tsv
+
+  itsonedb_otu_txt:
+    type: File
+    outputSource: ITS/itsonedb_otu_txt
 
   itsonedb_krona_image:
     type: File
@@ -197,9 +213,11 @@ steps:
       - LSU_coords
       - SSU_classifications
       - SSU_otu_tsv
+      - SSU_otu_txt
       - SSU_krona_image
       - LSU_classifications
       - LSU_otu_tsv
+      - LSU_otu_txt
       - LSU_krona_image
       - ssu_hdf5_classifications
       - ssu_json_classifications
@@ -225,9 +243,11 @@ steps:
       - masked_sequences
       - unite_classifications
       - unite_otu_tsv
+      - unite_otu_txt
       - unite_krona_image
       - itsonedb_classifications
       - itsonedb_otu_tsv
+      - itsonedb_otu_txt
       - itsonedb_krona_image
       - unite_hdf5_classifications
       - unite_json_classifications

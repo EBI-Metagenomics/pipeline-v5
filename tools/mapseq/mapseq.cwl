@@ -43,7 +43,7 @@ inputs:
 baseCommand: mapseq
 arguments: ['-nthreads', '1', '-tophits', '80', '-topotus', '40', '-outfmt', 'simple']
 
-stdout: $(inputs.database.nameroot).mseq  # helps with cwltool's --cache
+stdout: $(inputs.sequences.nameroot).$(input.database.nameroot).mseq  # helps with cwltool's --cache
 
 outputs:
   classifications:
