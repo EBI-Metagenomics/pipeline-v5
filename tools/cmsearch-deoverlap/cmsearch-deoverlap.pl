@@ -109,7 +109,7 @@ foreach my $tblout_file (@tblout_file_A) {
       "grep -v ^\# $tblout_file | sort -k 1,1 -k 15,15rn -k 16,16g > $sorted_tblout_file" : 
       "grep -v ^\# $tblout_file | sort -k 1,1 -k 16,16g -k 15,15rn > $sorted_tblout_file";
   run_command($sort_cmd, $do_debug);
-  $output_file = $tblout_file . ".deoverlapped";
+  $output_file =  "result.deoverlapped";  #$tblout_file . ".deoverlapped";
   $out_FH = undef;
   open($out_FH, ">", $output_file) || die "ERROR unable to open $output_file for writing"; 
   ($nkept, $nremoved) = parse_sorted_tblout_file($sorted_tblout_file, (defined $in_clanin) ? \%clan_H : undef, $rank_by_score, $do_maxkeep, $do_debug, $out_FH);

@@ -62,12 +62,12 @@ outputs:
     label: 'target hits table, format 2'
     type: File
     outputBinding:
-      glob: $(inputs.query_sequences.basename).cmsearch_matches.tbl
+      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch_matches.tbl
   - id: programOutput
     label: 'direct output to file, not stdout'
     type: File
     outputBinding:
-      glob: $(inputs.query_sequences.basename).cmsearch.out
+      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch.out
 doc: >
   Infernal ("INFERence of RNA ALignment") is for searching DNA sequence
   databases for RNA structure and sequence similarities. It is an implementation
@@ -85,10 +85,10 @@ label: Search sequence(s) against a covariance model database
 arguments:
   - position: 0
     prefix: '--tblout'
-    valueFrom: $(inputs.query_sequences.basename).cmsearch_matches.tbl
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch_matches.tbl
   - position: 0
     prefix: '-o'
-    valueFrom: $(inputs.query_sequences.basename).cmsearch.out
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch.out
 hints:
   - class: SoftwareRequirement
     packages:
