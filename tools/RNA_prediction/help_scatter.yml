@@ -1,0 +1,11 @@
+input_files:
+  - class: File
+    path: SSU.grepped.matched_seqs_with_coords
+  - class: File
+    path: LSU.grepped.matched_seqs_with_coords
+  - class: File
+    path: RF00002.grepped.matched_seqs_with_coords
+
+output_filename_ssu: SSU_extracted
+output_filename_lsu: LSU_extracted
+output_filename_5s: 5S_extracted

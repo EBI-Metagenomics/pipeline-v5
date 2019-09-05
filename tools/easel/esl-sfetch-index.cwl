@@ -23,7 +23,6 @@ inputs:
       position: 1
       valueFrom: $(self.basename)
     label: Input fasta file.
-    format: edam:format_1929  # FASTA
 
 outputs:
   sequences_with_index:

@@ -44,8 +44,7 @@ inputs:
       a bias composition filter is used after the F1 stage (with P=0.02
       survival threshold). Any hit that survives all stages and has an HMM
       E-value or bit score above the reporting threshold will be output.
-  - format: 'edam:format_1929'
-    id: query_sequences
+  - id: query_sequences
     type: File
     inputBinding:
       position: 2

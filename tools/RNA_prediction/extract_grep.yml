@@ -1,0 +1,4 @@
+input_file:
+  class: File
+  path: test-input/test-cmsearch.txt
+pattern: "SSU"

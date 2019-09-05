@@ -48,7 +48,7 @@ steps:
     out: [ matches, programOutput ]
 
   run_concatenate_matches:
-    run: ../utils/concatenate.cwl
+    run: ../tools/RNA_prediction/concatenate.cwl
     in:
       files: cmsearch/matches
       outputFileName: catOutputFileName
