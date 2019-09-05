@@ -27,12 +27,24 @@ inputs:
   ncRNA_ribosomal_models: File[]
   ncRNA_ribosomal_model_clans: File
   patterns: string[]
+  output_filename_ssu: string
+  output_filename_lsu: string
+  output_filename_5s: string
 
 
 outputs:
   ncRNAs:
     type: File
     outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
+  SSU_seqs:
+    type: File
+    outputSource: help_patch/ssu_file
+  LSU_seqs:
+    type: File
+    outputSource: help_patch/lsu_file
+  5S_seqs:
+    type: File
+    outputSource: help_patch/5s_file
 
 steps:
 
@@ -60,3 +72,13 @@ steps:
       index_reads: index_reads/sequences_with_index
     scatter: input_pattern
     out: [ finalOutFiles ]
+
+# bash-script to separate SSU and LSU for futher processing
+  help_patch:
+    run: ../tools/RNA_prediction/help_scatter.cwl
+    in:
+      input_files: extract_sequences/finalOutFiles
+      output_filename_ssu: output_filename_ssu
+      output_filename_lsu: output_filename_lsu
+      output_filename_5s: output_filename_5s
+    out: [ssu_file, lsu_file, 5s_file]
