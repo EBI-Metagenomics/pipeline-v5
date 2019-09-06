@@ -26,15 +26,16 @@ inputs:
   silva_lsu_otus: File
   ncRNA_ribosomal_models: File[]
   ncRNA_ribosomal_model_clans: File
-  pattern_SSU: string
-  pattern_LSU: string
-  pattern_5S: string
+  patterns: string[]
   output_filename_ssu: string
   output_filename_lsu: string
   output_filename_5s: string
 
 
-outputs: []
+outputs:
+   coords:
+     type: File[]
+     outputSource: extract_sequences/finalOutFiles
 #  ncRNAs:
 #    type: File
 #    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
@@ -72,31 +73,24 @@ steps:
       input_file: find_ribosomal_ncRNAs/deoverlapped_matches
     out: [moved_file]
 
-# TODO scatter
-# SSU : pull -> extract coords -> esl-sfetch
+# pull -> extract coords -> esl-sfetch
   extract_sequences:
     run: ../tools/RNA_prediction/get-extract-subwf.cwl
     in:
       input_file: hack/moved_file
-      input_pattern: pattern_SSU
+      input_pattern: patterns
       index_reads: index_reads/sequences_with_index
-    out: [ finalOutFiles ]
-
-# LSU : pull -> extract coords -> esl-sfetch
-  extract_sequences:
-    run: ../tools/RNA_prediction/get-extract-subwf.cwl
-    in:
-      input_file: hack/moved_file
-      input_pattern: pattern_LSU
-      index_reads: index_reads/sequences_with_index
+    scatter: input_pattern
     out: [ finalOutFiles ]
 
 # bash-script to separate SSU and LSU for futher processing
-#  help_patch:
-#    run: ../tools/RNA_prediction/help_scatter.cwl
-#    in:
-#      input_files: extract_sequences/finalOutFiles
-#      output_filename_ssu: output_filename_ssu
-#      output_filename_lsu: output_filename_lsu
-#      output_filename_5s: output_filename_5s
-#    out: [ssu_file, lsu_file, 5s_file]
+  help_patch:
+    run: ../tools/RNA_prediction/help_scatter.cwl
+    in:
+      input_files: extract_sequences/finalOutFiles
+      output_filename_ssu: output_filename_ssu
+      output_filename_lsu: output_filename_lsu
+      output_filename_5s: output_filename_5s
+    out: [ssu_file, lsu_file, 5s_file]
+
+# extract
