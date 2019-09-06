@@ -74,7 +74,7 @@ steps:
 
 # TODO scatter
 # SSU : pull -> extract coords -> esl-sfetch
-  extract_sequences:
+  extract_sequences_SSU:
     run: ../tools/RNA_prediction/get-extract-subwf.cwl
     in:
       input_file: hack/moved_file
@@ -83,7 +83,7 @@ steps:
     out: [ finalOutFiles ]
 
 # LSU : pull -> extract coords -> esl-sfetch
-  extract_sequences:
+  extract_sequences_LSU:
     run: ../tools/RNA_prediction/get-extract-subwf.cwl
     in:
       input_file: hack/moved_file
