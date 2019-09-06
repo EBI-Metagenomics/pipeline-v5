@@ -58,7 +58,7 @@ steps:
 
 # extract coordinates
   extract_coords:
-    run: extract-coords_awk.cwl
+    run: ../tools/RNA_prediction/extract-coords_awk.cwl
     in:
       infernal_matches: find_ribosomal_ncRNAs/deoverlapped_matches
     out: [ matched_seqs_with_coords ]
