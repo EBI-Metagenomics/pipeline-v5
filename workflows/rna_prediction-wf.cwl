@@ -37,7 +37,7 @@ inputs:
 outputs:
   ncRNAs:
     type: File
-    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
+    outputSource: hack/moved_file
   SSU_seqs:
     type: File
     outputSource: extract_sequences_SSU/finalOutFiles
