@@ -17,7 +17,7 @@ inputs:
 outputs:
   - id: finalOutFiles
     type: File
-    outputSource: get_coords/grepped_file
+    outputSource: extract_coords/matched_seqs_with_coords
 #    outputSource: extract_sequences/sequences
 
 steps:
@@ -34,9 +34,9 @@ steps:
       infernal_matches: get_coords/grepped_file
     out: [ matched_seqs_with_coords ]
 
-  extract_sequences:
-    run: ../easel/esl-sfetch-manyseqs.cwl
-    in:
-      indexed_sequences: index_reads
-      names_contain_subseq_coords: extract_coords/matched_seqs_with_coords
-    out: [ sequences ]
+#  extract_sequences:
+#    run: ../easel/esl-sfetch-manyseqs.cwl
+#    in:
+#      indexed_sequences: index_reads
+#      names_contain_subseq_coords: extract_coords/matched_seqs_with_coords
+#    out: [ sequences ]

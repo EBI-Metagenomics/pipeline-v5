@@ -32,7 +32,10 @@ inputs:
   output_filename_5s: string
 
 
-outputs: []
+outputs:
+   coords:
+     type: File[]
+     outputSource: extract_sequences/finalOutFiles
 #  ncRNAs:
 #    type: File
 #    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
