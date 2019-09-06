@@ -6,50 +6,68 @@ label: Subworkflow for mOTUs classification
 
 requirements:
   - class: InlineJavascriptRequirement
-  - class: SchemaDefRequirement
-    types:
-        - $import: ../tools/biom-convert/biom-convert-table.yaml
+#  - class: SchemaDefRequirement
+#    types:
+#        - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-    qc_sequences: File
-    threads_needed:
-        type: int
+    merged_reads: File
 
 outputs:
-    motus:
+    motus_biom:
         type: File
         outputSource: motus_classification/motu_taxonomy
-    krona_otus:
-        type: File
-        outputSource: biom_to_tsv/result
-    krona_figure:
-        type: File
-        outputSource: krona_output/otu_visualization
+#    krona_otus:
+#        type: File
+#        outputSource: biom_to_tsv/result
+#    krona_figure:
+#        type: File
+#        outputSource: krona_output/otu_visualization
     motus_tsv:
         type: File
         outputSource: biom_to_tsv/result
 
 steps:
+
+    trim:
+          trim_quality_control:
+    doc: |
+      Low quality trimming (low quality ends and sequences with < quality scores
+      less than 15 over a 4 nucleotide wide window are removed)
+    run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+    in:
+      reads1: merged_reads
+      phred: { default: '33' }
+      leading: { default: 3 }
+      trailing: { default: 3 }
+      end_mode: { default: SE }
+      minlen: { default: 100 }
+      slidingwindow:
+        default:
+          windowSize: 4
+          requiredQuality: 15
+    out: [reads1_trimmed]
+
     motus_classification:
         run: ../tools/mOTUs/mOTUs.cwl
         in:
-          reads: qc_sequences
-          threads: threads_needed
+          reads: trim/reads1_trimmed
+          threads: 4
         out: [motu_taxonomy]
 
     biom_to_tsv:
         run: ../tools/biom-convert/biom-convert.cwl
         in:
           biom: motus_classification/motu_taxonomy
-          table_type: { default: 'Table' }
           tsv: { default: true }
         out: [result]
 
-    krona_output:
-        run: ../tools/krona/krona.cwl
-        in:
-          otu_counts: biom_to_tsv/result
-        out: [otu_visualization]
+#enough hits for a krona visualisation??
+#    krona_output:
+#        run: ../tools/krona/krona.cwl
+#        in:
+#          otu_counts: biom_to_tsv/result
+#        out: [otu_visualization]
 
 $namespaces:
  edam: http://edamontology.org/
