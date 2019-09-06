@@ -30,7 +30,7 @@ inputs:
 
 baseCommand: [ esl-sfetch ]
 
-stdout: $(inputs.indexed_sequences.nameroot)_$(inputs.names_contain_subseq_coords.nameroot).fasta
+stdout: $(inputs.indexed_sequences.basename)_$(inputs.names_contain_subseq_coords.basename).fasta
 
 outputs:
   sequences:
