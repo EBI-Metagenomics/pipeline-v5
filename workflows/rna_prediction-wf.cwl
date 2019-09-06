@@ -71,14 +71,14 @@ steps:
     out: [moved_file]
 
 # pull -> extract coords -> esl-sfetch
-#  extract_sequences:
-#    run: ../tools/RNA_prediction/get-extract-subwf.cwl
-#    in:
-#      input_file: find_ribosomal_ncRNAs/deoverlapped_matches
-#      input_pattern: patterns
-#      index_reads: index_reads/sequences_with_index
-#    scatter: input_pattern
-#    out: [ finalOutFiles ]
+  extract_sequences:
+    run: ../tools/RNA_prediction/get-extract-subwf.cwl
+    in:
+      input_file: hack/moved_file
+      input_pattern: patterns
+      index_reads: index_reads/sequences_with_index
+    scatter: input_pattern
+    out: [ finalOutFiles ]
 
 # bash-script to separate SSU and LSU for futher processing
 #  help_patch:
