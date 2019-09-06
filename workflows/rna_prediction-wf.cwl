@@ -35,12 +35,12 @@ inputs:
 
 
 outputs: []
-#  ncRNAs:
-#    type: File
-#    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
-#  SSU_seqs:
-#    type: File
-#    outputSource: help_patch/ssu_file
+  ncRNAs:
+    type: File
+    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
+  SSU_seqs:
+    type: File
+    outputSource: extract_sequences_SSU/finalOutFiles
 #  LSU_seqs:
 #    type: File
 #    outputSource: help_patch/lsu_file

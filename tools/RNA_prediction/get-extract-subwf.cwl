@@ -17,8 +17,7 @@ inputs:
 outputs:
   - id: finalOutFiles
     type: File
-    outputSource: get_coords/grepped_file
-#    outputSource: extract_sequences/sequences
+    outputSource: extract_sequences/sequences
 
 steps:
   get_coords:
