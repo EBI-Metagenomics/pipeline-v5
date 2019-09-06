@@ -15,9 +15,9 @@ inputs:
     inputBinding:
       prefix: -Cf
       position: 1
-    secondaryFiles:
-       - .ssi
-    format: edam:format_1929  # FASTA
+#    secondaryFiles:
+#       - .ssi
+#    format: edam:format_1929  # FASTA
 
 
   names_contain_subseq_coords:
@@ -35,7 +35,7 @@ stdout: $(inputs.indexed_sequences.nameroot)_$(inputs.names_contain_subseq_coord
 outputs:
   sequences:
     type: stdout
-    format: edam:format_1929  # FASTA
+#    format: edam:format_1929  # FASTA
 
 $namespaces:
  edam: http://edamontology.org/
