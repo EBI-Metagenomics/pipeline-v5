@@ -34,7 +34,7 @@ inputs:
   output_filename_5s: string
 
 
-outputs: []
+outputs:
   ncRNAs:
     type: File
     outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
