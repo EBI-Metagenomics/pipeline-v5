@@ -36,15 +36,15 @@ outputs:
   ncRNAs:
     type: File
     outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
-  SSU_seqs:
-    type: File
-    outputSource: help_patch/ssu_file
-  LSU_seqs:
-    type: File
-    outputSource: help_patch/lsu_file
-  5S_seqs:
-    type: File
-    outputSource: help_patch/5s_file
+#  SSU_seqs:
+#    type: File
+#    outputSource: help_patch/ssu_file
+#  LSU_seqs:
+#    type: File
+#    outputSource: help_patch/lsu_file
+#  5S_seqs:
+#    type: File
+#    outputSource: help_patch/5s_file
 
 steps:
 
@@ -63,22 +63,29 @@ steps:
       clan_info: ncRNA_ribosomal_model_clans
     out: [ deoverlapped_matches ]
 
-# pull -> extract coords -> esl-sfetch
-  extract_sequences:
-    run: ../tools/RNA_prediction/get-extract-subwf.cwl
+# small hack for CWLEXEC
+  hack:
+    run: ../tools/RNA_prediction/moving_hack.cwl
     in:
       input_file: find_ribosomal_ncRNAs/deoverlapped_matches
-      input_pattern: patterns
-      index_reads: index_reads/sequences_with_index
-    scatter: input_pattern
-    out: [ finalOutFiles ]
+    out: [moved_file]
+
+# pull -> extract coords -> esl-sfetch
+#  extract_sequences:
+#    run: ../tools/RNA_prediction/get-extract-subwf.cwl
+#    in:
+#      input_file: find_ribosomal_ncRNAs/deoverlapped_matches
+#      input_pattern: patterns
+#      index_reads: index_reads/sequences_with_index
+#    scatter: input_pattern
+#    out: [ finalOutFiles ]
 
 # bash-script to separate SSU and LSU for futher processing
-  help_patch:
-    run: ../tools/RNA_prediction/help_scatter.cwl
-    in:
-      input_files: extract_sequences/finalOutFiles
-      output_filename_ssu: output_filename_ssu
-      output_filename_lsu: output_filename_lsu
-      output_filename_5s: output_filename_5s
-    out: [ssu_file, lsu_file, 5s_file]
+#  help_patch:
+#    run: ../tools/RNA_prediction/help_scatter.cwl
+#    in:
+#      input_files: extract_sequences/finalOutFiles
+#      output_filename_ssu: output_filename_ssu
+#      output_filename_lsu: output_filename_lsu
+#      output_filename_5s: output_filename_5s
+#    out: [ssu_file, lsu_file, 5s_file]
