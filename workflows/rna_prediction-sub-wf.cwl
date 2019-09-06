@@ -56,12 +56,12 @@ steps:
       clan_info: ncRNA_ribosomal_model_clans
     out: [ cmsearch_matches, concatenate_matches, deoverlapped_matches ]
 
-# SSU : pull -> extract coords -> esl-sfetch
-#  extract_sequences_SSU:
-#    run: ../tools/RNA_prediction/get-extract-subwf.cwl
-#    in:
-#      input_file: hack/moved_file
-#      input_pattern: pattern_SSU
-#      index_reads: index_reads/sequences_with_index
-#    out: [ finalOutFiles ]
+#  extract coords -> esl-sfetch
+  extract_sequences_SSU:
+    run: ../tools/RNA_prediction/get-extract-subwf.cwl
+    in:
+      input_file: hack/moved_file
+      input_pattern: pattern_SSU
+      index_reads: index_reads/sequences_with_index
+    out: [ finalOutFiles ]
 
