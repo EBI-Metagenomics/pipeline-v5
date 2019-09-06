@@ -44,9 +44,9 @@ outputs:
   LSU_seqs:
     type: File
     outputSource: extract_sequences_LSU/finalOutFiles
-#  5S_seqs:
-#    type: File
-#    outputSource: help_patch/5s_file
+  5S_seqs:
+    type: File
+    outputSource: extract_sequences_5S/finalOutFiles
 
 steps:
 
@@ -91,12 +91,11 @@ steps:
       index_reads: index_reads/sequences_with_index
     out: [ finalOutFiles ]
 
-# bash-script to separate SSU and LSU for futher processing
-#  help_patch:
-#    run: ../tools/RNA_prediction/help_scatter.cwl
-#    in:
-#      input_files: extract_sequences/finalOutFiles
-#      output_filename_ssu: output_filename_ssu
-#      output_filename_lsu: output_filename_lsu
-#      output_filename_5s: output_filename_5s
-#    out: [ssu_file, lsu_file, 5s_file]
+# 5S : pull -> extract coords -> esl-sfetch
+  extract_sequences_5S:
+    run: ../tools/RNA_prediction/get-extract-subwf.cwl
+    in:
+      input_file: hack/moved_file
+      input_pattern: pattern_5S
+      index_reads: index_reads/sequences_with_index
+    out: [ finalOutFiles ]
