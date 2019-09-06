@@ -1,7 +1,4 @@
-forward_reads:
-  type: File
-  format: edam:format_1930  # FASTQ
-reverse_reads:
+raw_reads:
   type: File
   format: edam:format_1930  # FASTQ
 

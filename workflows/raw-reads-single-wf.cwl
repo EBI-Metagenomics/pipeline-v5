@@ -13,10 +13,7 @@ requirements:
       - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-  forward_reads:
-    type: File
-    format: edam:format_1930  # FASTQ
-  reverse_reads:
+  raw_reads:
     type: File
     format: edam:format_1930  # FASTQ
 
@@ -177,34 +174,17 @@ outputs:
 
 steps:
 
-  overlap_reads:
-    label: Merge paired reads with overlap into single reads
-    run: ../tools/SeqPrep/seqprep.cwl
-    in:
-      forward_reads: forward_reads
-      reverse_reads: reverse_reads
-    out: [ merged_reads, forward_unmerged_reads, reverse_unmerged_reads ]
-
-  combine_overlapped_and_unmerged_reads:
-    label: Merge the outputs of SeqPrep (merged reads, forward and reverse unmerged reads) into a single file
-    run: ../tools/SeqPrep/seqprep-merge.cwl
-    in: 
-      merged_reads: overlap_reads/merged_reads
-      forward_unmerged_reads: overlap_reads/forward_unmerged_reads
-      reverse_unmerged_reads: overlap_reads/reverse_unmerged_reads
-    out: [ merged_with_unmerged_reads ]
-
   mOTUs:
     run: mOTUs-workflow.cwl
     in:
-      merged_reads: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+      merged_reads: raw_reads
     out: [ motus_biom, motus_tsv ]
 
   trim_and_reformat_reads:
     label: Trim and reformat reads
     run: trim_and_reformat_reads.cwl
     in:
-      reads: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+      reads: raw_reads
     out:  [ trimmed_and_reformatted_reads ]
 
   generate_qc_stats:
