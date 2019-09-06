@@ -28,11 +28,11 @@ steps:
       pattern: input_pattern
     out: [ grepped_file ]
 
-#  extract_coords:
-#    run: extract-coords_awk.cwl
-#    in:
-#      infernal_matches: get_coords/grepped_file
-#    out: [ matched_seqs_with_coords ]
+  extract_coords:
+    run: extract-coords_awk.cwl
+    in:
+      infernal_matches: get_coords/grepped_file
+    out: [ matched_seqs_with_coords ]
 
 #  extract_sequences:
 #    run: ../easel/esl-sfetch-manyseqs.cwl
