@@ -32,10 +32,10 @@ inputs:
   output_filename_5s: string
 
 
-outputs:
-  ncRNAs:
-    type: File
-    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
+outputs: []
+#  ncRNAs:
+#    type: File
+#    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
 #  SSU_seqs:
 #    type: File
 #    outputSource: help_patch/ssu_file
