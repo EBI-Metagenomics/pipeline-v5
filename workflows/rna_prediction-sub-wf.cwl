@@ -56,11 +56,17 @@ steps:
       clan_info: ncRNA_ribosomal_model_clans
     out: [ cmsearch_matches, concatenate_matches, deoverlapped_matches ]
 
-# extract coordinates
+# extract coordinates for everything
   extract_coords:
     run: ../tools/RNA_prediction/extract-coords_awk.cwl
     in:
       infernal_matches: find_ribosomal_ncRNAs/deoverlapped_matches
     out: [ matched_seqs_with_coords ]
 
-
+# extract sequences
+  extract_sequences:
+    run: ../tools/easel/esl-sfetch-manyseqs.cwl
+    in:
+      indexed_sequences: index_reads/sequences_with_index
+      names_contain_subseq_coords: extract_coords/matched_seqs_with_coords
+    out: [ sequences ]
