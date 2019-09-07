@@ -144,7 +144,7 @@ steps:
     in:
        biom: classify_SSUs/krona_tsv
        hdf5: { default: true }
-       table_type: { default: OTU table }
+       table_type: { default: 'OTU table' }
     out: [ result ]
 
   ssu_convert_otu_counts_to_json:
@@ -152,5 +152,5 @@ steps:
     in:
        biom: classify_SSUs/krona_tsv
        json: { default: true }
-       table_type: { default: OTU table }
+       table_type: { default: 'OTU table' }
     out: [ result ]
