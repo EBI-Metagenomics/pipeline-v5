@@ -37,15 +37,30 @@ outputs:
   ncRNAs:
     type: File
     outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
-  SSU_seqs:
+  SSU_fasta:
     type: File
     outputSource: extract_subunits/SSU_seqs
-  LSU_seqs:
+  LSU_fasta:
     type: File
     outputSource: extract_subunits/LSU_seqs
-  5S_seqs:
+  5S_fasta:
     type: File
     outputSource: extract_subunits/5S_seqs
+
+  SSU_classifications:
+    type: File
+    outputSource: classify_SSUs/mapseq_classifications
+  SSU_otu_txt:
+    type: File
+    outputSource: classify_SSUs/krona_txt
+  SSU_otu_tsv:
+    type: File
+    outputSource: classify_SSUs/krona_tsv
+  SSU_krona_image:
+    type: File
+    outputSource: classify_SSUs/krona_image
+    format: iana:text/html
+
 
 steps:
 
@@ -90,7 +105,7 @@ steps:
     out: [SSU_seqs, LSU_seqs, 5S_seqs]
 
 # classify SSU
-  classify_SSU:
+  classify_SSUs:
     run: classify-otu-visualise.cwl
     in:
       fasta: extract_subunits/SSU_seqs
