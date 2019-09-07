@@ -70,7 +70,7 @@ steps:
 
 # separate to SSU, LSU and 5.8S
   extract_subunits:
-    run: ../tools/easel/get_subunits.cwl
+    run: ../tools/RNA_prediction/get_subunits.cwl
     in:
       input_fasta: extract_sequences/sequences
       pattern_SSU: pattern_SSU
