@@ -57,7 +57,7 @@ outputs:
     type: File
     outputSource: classify_SSUs/krona_tsv
   SSU_krona_image:
-   type: File
+    type: File
     outputSource: classify_SSUs/krona_image
 
 
