@@ -53,13 +53,12 @@ outputs:
   SSU_otu_txt:
     type: File
     outputSource: classify_SSUs/krona_txt
-#  SSU_otu_tsv:
-#    type: File
-#    outputSource: classify_SSUs/krona_tsv
-#  SSU_krona_image:
-#   type: File
-#    outputSource: classify_SSUs/krona_image
-#    format: iana:text/html
+  SSU_otu_tsv:
+    type: File
+    outputSource: classify_SSUs/krona_tsv
+  SSU_krona_image:
+   type: File
+    outputSource: classify_SSUs/krona_image
 
 
 steps:
