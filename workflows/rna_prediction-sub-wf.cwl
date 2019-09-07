@@ -60,6 +60,18 @@ outputs:
     type: File
     outputSource: classify_SSUs/krona_image
 
+  LSU_classifications:
+    type: File
+    outputSource: classify_LSUs/mapseq_classifications
+  LSU_otu_txt:
+    type: File
+    outputSource: classify_LSUs/krona_txt
+  LSU_otu_tsv:
+    type: File
+    outputSource: classify_LSUs/krona_tsv
+  LSU_krona_image:
+    type: File
+    outputSource: classify_LSUs/krona_image
 
 steps:
 
