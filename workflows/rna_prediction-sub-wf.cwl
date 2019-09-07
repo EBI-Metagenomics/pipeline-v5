@@ -24,6 +24,8 @@ inputs:
   silva_lsu_taxonomy: File
   silva_ssu_otus: File
   silva_lsu_otus: File
+  otu_ssu_label: string
+  otu_lsu_label: string
   ncRNA_ribosomal_models: File[]
   ncRNA_ribosomal_model_clans: File
   pattern_SSU: string
@@ -86,3 +88,14 @@ steps:
       pattern_LSU: pattern_LSU
       pattern_5S: pattern_5S
     out: [SSU_seqs, LSU_seqs, 5S_seqs]
+
+# classify SSU
+  run: classify-otu-visualise.cwl
+    in:
+      fasta: extract_subunits/SSU_seqs
+      mapseq_ref: silva_ssu_database
+      mapseq_taxonomy: silva_ssu_taxonomy
+      otu_ref: silva_ssu_otus
+      otu_label: otu_ssu_label
+    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
+
