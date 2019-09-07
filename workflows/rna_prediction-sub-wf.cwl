@@ -29,9 +29,6 @@ inputs:
   pattern_SSU: string
   pattern_LSU: string
   pattern_5S: string
-  output_filename_ssu: string
-  output_filename_lsu: string
-  output_filename_5s: string
 
 
 outputs:
@@ -70,3 +67,5 @@ steps:
       indexed_sequences: index_reads/sequences_with_index
       names_contain_subseq_coords: extract_coords/matched_seqs_with_coords
     out: [ sequences ]
+
+# separate to SSU, LSU and 5.8S

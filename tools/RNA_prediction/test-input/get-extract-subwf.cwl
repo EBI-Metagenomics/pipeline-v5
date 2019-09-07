@@ -20,6 +20,12 @@ outputs:
     outputSource: extract_sequences/sequences
 
 steps:
+#  get_coords:
+#    run: extract_grep.cwl
+#    in:
+#      input_file: input_file
+#      pattern: input_pattern
+#    out: [ grepped_file ]
 
   extract_coords:
     run: extract-coords_awk.cwl
@@ -34,9 +40,3 @@ steps:
       names_contain_subseq_coords: extract_coords/matched_seqs_with_coords
     out: [ sequences ]
 
-#  get_coords:
-#    run: extract_grep.cwl
-#    in:
-#      input_file: input_file
-#      pattern: input_pattern
-#    out: [ grepped_file ]

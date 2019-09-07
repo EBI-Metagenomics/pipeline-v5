@@ -1,0 +1,6 @@
+input_fasta:
+  class: File
+  path:
+pattern_SSU: SSU
+pattern_LSU: LSU
+pattern_5S: RF00002
