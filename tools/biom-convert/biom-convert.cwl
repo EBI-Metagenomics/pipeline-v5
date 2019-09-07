@@ -11,14 +11,14 @@ requirements:
 #    types:
 #      - $import: biom-convert-table.yaml
 
-hints:
-  SoftwareRequirement:
-    packages:
-      biom-format:
-        specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
-        version: [ "2.1.6" ]
-  DockerRequirement:
-    dockerPull: quay.io/biocontainers/biom-format:2.1.6--py36_0
+#hints:
+#  SoftwareRequirement:
+#    packages:
+#      biom-format:
+#        specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
+#        version: [ "2.1.6" ]
+#  DockerRequirement:
+#    dockerPull: quay.io/biocontainers/biom-format:2.1.6--py36_0
 
 
 inputs:
