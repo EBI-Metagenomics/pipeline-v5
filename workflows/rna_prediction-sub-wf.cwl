@@ -69,3 +69,11 @@ steps:
     out: [ sequences ]
 
 # separate to SSU, LSU and 5.8S
+  extract_subunits:
+    run: ../tools/easel/get_subunits.cwl
+    in:
+      input_fasta: extract_sequences/sequences
+      pattern_SSU: pattern_SSU
+      pattern_LSU: pattern_LSU
+      pattern_5S: pattern_5S
+    out: [SSU_seqs, LSU_seqs, 5S_seqs]
