@@ -47,19 +47,19 @@ outputs:
     type: File
     outputSource: extract_subunits/5S_seqs
 
-  SSU_classifications:
-    type: File
-    outputSource: classify_SSUs/mapseq_classifications
-  SSU_otu_txt:
-    type: File
-    outputSource: classify_SSUs/krona_txt
-  SSU_otu_tsv:
-    type: File
-    outputSource: classify_SSUs/krona_tsv
-  SSU_krona_image:
-    type: File
-    outputSource: classify_SSUs/krona_image
-    format: iana:text/html
+#  SSU_classifications:
+#    type: File
+#    outputSource: classify_SSUs/mapseq_classifications
+#  SSU_otu_txt:
+#    type: File
+#    outputSource: classify_SSUs/krona_txt
+#  SSU_otu_tsv:
+#    type: File
+#    outputSource: classify_SSUs/krona_tsv
+#  SSU_krona_image:
+#   type: File
+#    outputSource: classify_SSUs/krona_image
+#    format: iana:text/html
 
 
 steps:
