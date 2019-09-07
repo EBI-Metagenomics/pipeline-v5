@@ -35,6 +35,15 @@ outputs:
   ncRNAs:
     type: File
     outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
+  SSU_seqs:
+    type: File
+    outputSource: extract_subunits/SSU_seqs
+  LSU_seqs:
+    type: File
+    outputSource: extract_subunits/LSU_seqs
+  5S_seqs:
+    type: File
+    outputSource: extract_subunits/5S_seqs
 
 steps:
 
