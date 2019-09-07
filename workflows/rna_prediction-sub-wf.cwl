@@ -90,7 +90,8 @@ steps:
     out: [SSU_seqs, LSU_seqs, 5S_seqs]
 
 # classify SSU
-  run: classify-otu-visualise.cwl
+  classify_SSU:
+    run: classify-otu-visualise.cwl
     in:
       fasta: extract_subunits/SSU_seqs
       mapseq_ref: silva_ssu_database
