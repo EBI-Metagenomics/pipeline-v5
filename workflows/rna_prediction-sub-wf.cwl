@@ -115,3 +115,13 @@ steps:
       otu_label: otu_ssu_label
     out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
 
+# classify LSU
+  classify_LSUs:
+    run: classify-otu-visualise.cwl
+    in:
+      fasta: extract_subunits/LSU_seqs
+      mapseq_ref: silva_lsu_database
+      mapseq_taxonomy: silva_lsu_taxonomy
+      otu_ref: silva_lsu_otus
+      otu_label: otu_lsu_label
+    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
