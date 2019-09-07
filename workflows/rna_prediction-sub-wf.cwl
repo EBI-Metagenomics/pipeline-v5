@@ -136,3 +136,21 @@ steps:
       otu_ref: silva_lsu_otus
       otu_label: otu_lsu_label
     out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
+
+#convert biom to hdf5 and json formats
+
+  ssu_convert_otu_counts_to_hdf5:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: classify_SSUs/krona_tsv
+       hdf5: { default: true }
+       table_type: { default: OTU table }
+    out: [ result ]
+
+  ssu_convert_otu_counts_to_json:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: classify_SSUs/krona_tsv
+       json: { default: true }
+       table_type: { default: OTU table }
+    out: [ result ]
