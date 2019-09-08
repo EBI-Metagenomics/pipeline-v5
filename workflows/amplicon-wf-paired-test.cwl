@@ -39,7 +39,55 @@ inputs:
 outputs:
   processed_nucleotide_reads:
     type: File
-    outputSource: trim_and_reformat_reads/trimmed_and_reformatted_reads
+    outputSource: clean_fasta_headers/sequences_with_cleaned_headers
+
+  ncRNAs:
+    type: File
+    outputSource: classify/ncRNAs
+
+  5s_fasta:
+    type: File
+    outputSource: classify/5S_fasta
+
+  SSU_fasta:
+    type: File
+    outputSource: classify/SSU_fasta
+
+  LSU_fasta:
+    type: File
+    outputSource: classify/LSU_fasta
+
+  SSU_classifications:
+    type: File
+    outputSource: classify/SSU_classifications
+
+  SSU_otu_tsv:
+    type: File
+    outputSource: classify/SSU_otu_tsv
+
+  SSU_otu_txt:
+    type: File
+    outputSource: classify/SSU_otu_txt
+
+  SSU_krona_image:
+    type: File
+    outputSource: classify/SSU_krona_image
+
+  LSU_classifications:
+    type: File
+    outputSource: classify/LSU_classifications
+
+  LSU_otu_tsv:
+    type: File
+    outputSource: classify/LSU_otu_tsv
+
+  LSU_otu_txt:
+    type: File
+    outputSource: classify/LSU_otu_txt
+
+  LSU_krona_image:
+    type: File
+    outputSource: classify/LSU_krona_image
 
 steps:
 

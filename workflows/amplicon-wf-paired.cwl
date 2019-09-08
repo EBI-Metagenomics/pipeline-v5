@@ -57,14 +57,6 @@ outputs:
     type: File
     outputSource: classify/LSU_fasta
 
-  SSU_coords:
-    type: File
-    outputSource: classify/SSU_coords
-
-  LSU_coords:
-    type: File
-    outputSource: classify/LSU_coords
-
   SSU_classifications:
     type: File
     outputSource: classify/SSU_classifications
