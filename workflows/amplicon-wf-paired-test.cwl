@@ -106,7 +106,7 @@ steps:
   classify:
     run: rna_prediction-sub-wf.cwl
     in:
-       input_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
+       input_sequences: clean_fasta_headers/sequences_with_cleaned_headers
        silva_ssu_database: ssu_db
        silva_lsu_database: lsu_db
        silva_ssu_taxonomy: ssu_tax
