@@ -111,6 +111,16 @@ steps:
       infernal_matches: find_ribosomal_ncRNAs/deoverlapped_matches
     out: [ matched_seqs_with_coords ]
 
+# extract coords of SSU ans LSU for ITS
+  extract_subunits_coords:
+    run: ../tools/RNA_prediction/get_subunits.cwl
+    in:
+      input:
+      pattern_SSU: pattern_SSU
+      pattern_LSU: pattern_LSU
+      mode: { default: 'coords' }
+    out: [SSU_seqs, LSU_seqs]
+
 # extract sequences
   extract_sequences:
     run: ../tools/easel/esl-sfetch-manyseqs.cwl
@@ -123,10 +133,11 @@ steps:
   extract_subunits:
     run: ../tools/RNA_prediction/get_subunits.cwl
     in:
-      input_fasta: extract_sequences/sequences
+      input: extract_sequences/sequences
       pattern_SSU: pattern_SSU
       pattern_LSU: pattern_LSU
       pattern_5S: pattern_5S
+      mode: { default: 'fasta' }
     out: [SSU_seqs, LSU_seqs, 5S_seqs]
 
 # classify SSU

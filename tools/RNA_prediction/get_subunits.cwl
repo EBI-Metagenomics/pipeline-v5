@@ -7,7 +7,7 @@ class: CommandLineTool
 #    dockerPull: alpine:3.7
 
 inputs:
-  input_fasta:
+  input:
     label: fasta file (from esl) with all subunits
     type: File
     inputBinding:
@@ -22,9 +22,14 @@ inputs:
     inputBinding:
       prefix: -l
   pattern_5S:
-    type: string
+    type: string?
     inputBinding:
       prefix: -f
+
+  mode:
+    type: string
+    inputBinding:
+      prefix: -m
 
 baseCommand: get_subunits.py
 
@@ -32,14 +37,14 @@ outputs:
   SSU_seqs:
     type: File
     outputBinding:
-      glob: "*SSU_extracted.fasta*"
+      glob: "*SSU*"
   LSU_seqs:
     type: File
     outputBinding:
-      glob: "*LSU_extracted.fasta*"
+      glob: "*LSU*"
 
   5S_seqs:
-    type: File
+    type: File?
     outputBinding:
       glob: "*5S_extracted.fasta*"
 

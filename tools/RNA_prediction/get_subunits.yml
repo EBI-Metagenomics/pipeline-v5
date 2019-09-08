@@ -1,6 +1,7 @@
-input_fasta:
+input:
   class: File
-  path:
+  path: test.bio
 pattern_SSU: SSU
 pattern_LSU: LSU
-pattern_5S: RF00002
+#pattern_5S: RF00002
+mode: coords
