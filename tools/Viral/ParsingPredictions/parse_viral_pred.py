@@ -199,7 +199,7 @@ def virus_parser(**kwargs):
 
 
 if __name__ == "__main__":
-	"""
+
 	parser = argparse.ArgumentParser(description="Write fasta files with predicted _viral contigs sorted in categories and putative prophages")
 	parser.add_argument("-a", "--assemb", dest="assemb", help="Metagenomic assembly fasta file", required=True)
 	parser.add_argument("-f", "--vfout", dest="finder", help="Absolute or relative path to VirFinder output file",
@@ -238,3 +238,4 @@ if __name__ == "__main__":
 	viral_predictions = virus_parser(assembly_file="../../../workflows/Files_viral/chunk_1_filt500bp.fasta",
 									 VF_output="../../../workflows/Files_viral/VirFinder_output.tsv",
 									 VS_output="../../../workflows/Files_viral/Predicted_viral_sequences")
+	"""

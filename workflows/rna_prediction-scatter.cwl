@@ -33,9 +33,12 @@ inputs:
 
 
 outputs:
-  ncRNAs:
-    type: File
-    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
+   coords:
+     type: File[]
+     outputSource: extract_sequences/finalOutFiles
+#  ncRNAs:
+#    type: File
+#    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
 #  SSU_seqs:
 #    type: File
 #    outputSource: help_patch/ssu_file
@@ -81,11 +84,13 @@ steps:
     out: [ finalOutFiles ]
 
 # bash-script to separate SSU and LSU for futher processing
-#  help_patch:
-#    run: ../tools/RNA_prediction/help_scatter.cwl
-#    in:
-#      input_files: extract_sequences/finalOutFiles
-#      output_filename_ssu: output_filename_ssu
-#      output_filename_lsu: output_filename_lsu
-#      output_filename_5s: output_filename_5s
-#    out: [ssu_file, lsu_file, 5s_file]
+  help_patch:
+    run: ../tools/RNA_prediction/help_scatter.cwl
+    in:
+      input_files: extract_sequences/finalOutFiles
+      output_filename_ssu: output_filename_ssu
+      output_filename_lsu: output_filename_lsu
+      output_filename_5s: output_filename_5s
+    out: [ssu_file, lsu_file, 5s_file]
+
+# extract

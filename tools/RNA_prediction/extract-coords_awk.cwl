@@ -10,19 +10,19 @@ inputs:
   infernal_matches:
     label: output from infernal cmsearch
     type: File
-    streamable: true
-
-baseCommand: awk
-
-stdout: $(inputs.infernal_matches.basename).matched_seqs_with_coords  # helps with cwltool's --cache
-
+    inputBinding:
+      prefix: -i
 arguments:
-  - {print $1"-"$3"/"$8"-"$9" "$8" "$9" "$1}  # may require wrap to ''
-  - $(inputs.infernal_matches.path)
+  - valueFrom: $(inputs.infernal_matches.basename)
+    prefix: -n
+
+baseCommand: awk_tool
 
 outputs:
   matched_seqs_with_coords:
-    type: stdout
+    type: File
+    outputBinding:
+      glob: "*matched_seqs_with_coords*"
 
 doc: |
   The awk script takes the output of Infernal's cmsearch so-called fmt=1 mode
