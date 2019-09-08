@@ -17,8 +17,8 @@ requirements:
 inputs:
   qc_stats_summary: File
   query_sequences: File
-  LSU_coordinates: File
-  SSU_coordinates: File
+  LSU_fasta: File
+  SSU_fasta: File
   unite_database: {type: File, secondaryFiles: [.mscluster] }
   unite_taxonomy: File
   unite_otus: File
@@ -89,18 +89,13 @@ steps:
 #ITS pipeline starts here!
 #check proportion LSU/SSU to total seqs.
 
-  cat:
-    run: ../tools/mask-for-ITS/cat-SSU-LSU.cwl
-    in:
-      SSU_coords: SSU_coordinates
-      LSU_coords: LSU_coordinates
-    out: [ all-coordinates ]
-
   match_proportion:
     run: ../tools/mask-for-ITS/divide.cwl
     in:
-      all_coordinates: cat/all-coordinates
+      fasta_SSU: SSU_fasta
+      fasta_LSU: LSU_fasta
       summary: qc_stats_summary
+      fasta: query_sequences
     out: [fasta_out]
 
   #if proportion < 0.90 then carry on, update with potential "conditional"

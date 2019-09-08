@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
-coordinates=$1
-stats=$2
-fasta=$3
+coordinates_LSU=$1
+coordinates_SSU=$2
+stats=$3
+fasta=$4
 
-y=($(wc -l $coordinates))
+coordinates=($( cat $coordinates_LSU $coordinates_LSU ))
+
+y=($( grep ">" $coordinates | wc -l ))
 x=($(grep -m1 "sequence_count" $stats | cut -f 2))
 
 proportion=($(bc <<< "scale=10; ($y/$x)"))

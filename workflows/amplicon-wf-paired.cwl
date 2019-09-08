@@ -19,10 +19,13 @@ inputs:
     lsu_tax: File
     ssu_otus: File
     lsu_otus: File
+
     rfam_models: File[]
     rfam_model_clans: File
+
     ssu_label: string
     lsu_label: string
+    5s_pattern: string
 
     unite_db: {type: File, secondaryFiles: [.mscluster] }
     unite_tax: File
@@ -205,7 +208,7 @@ steps:
       - gc_sum_out
 
   classify:
-    run: rna_prediction.cwl
+    run: rna_prediction-sub-wf.cwl
     in:
        input_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
        silva_ssu_database: ssu_db
@@ -216,8 +219,9 @@ steps:
        silva_lsu_otus: lsu_otus
        ncRNA_ribosomal_models: rfam_models
        ncRNA_ribosomal_model_clans: rfam_model_clans
-       otu_ssu_label: ssu_label
-       otu_lsu_label: lsu_label
+       pattern_SSU: ssu_label
+       pattern_LSU: lsu_label
+       pattern_5S: 5s_pattern
     out:
       - ncRNAs
       - 5S_fasta
@@ -231,19 +235,19 @@ steps:
       - SSU_krona_image
       - LSU_classifications
       - LSU_otu_tsv
-#      - LSU_otu_txt
+      - LSU_otu_txt
       - LSU_krona_image
-      - ssu_hdf5_classifications
-      - ssu_json_classifications
-      - lsu_hdf5_classifications
-      - lsu_json_classifications
+#      - ssu_hdf5_classifications
+#      - ssu_json_classifications
+#      - lsu_hdf5_classifications
+#      - lsu_json_classifications
   ITS:
     run: ITS-wf.cwl
     in:
         qc_stats_summary: qc_stats/summary_out
         query_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
-        LSU_coordinates: classify/LSU_coords
-        SSU_coordinates: classify/SSU_coords
+        LSU_fasta: classify/LSU_fasta
+        SSU_fasta: classify/SSU_fasta
         unite_database: unite_db
         unite_taxonomy: unite_tax
         unite_otus: unite_otu_file

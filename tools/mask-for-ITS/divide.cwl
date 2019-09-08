@@ -9,22 +9,26 @@ requirements:
 
 inputs:
 
-  all_coordinates:
+  fasta_SSU:
+    type: File
+    inputBinding:
+      position: 1
+
+  fasta_LSU:
     type: File
     inputBinding:
       position: 2
-    label: LSU and SSU coordinates
-
-  fasta:
-    type: File
-    inputBinding:
-        position: 4
 
   summary:
     type: File
     inputBinding:
       position: 3
     label: merged fasta files summary from qc-stats
+
+  fasta:
+    type: File
+    inputBinding:
+        position: 4
 
 baseCommand: [divide]
 

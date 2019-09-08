@@ -191,7 +191,7 @@ steps:
       - gc_sum_out
 
   classify:
-    run: rna_prediction.cwl
+    run: rna_prediction-sub-wf.cwl
     in:
        input_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
        silva_ssu_database: ssu_db
