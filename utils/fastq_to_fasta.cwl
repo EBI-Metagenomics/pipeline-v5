@@ -29,7 +29,8 @@ baseCommand: [ fastq_to_fasta.py ]
 outputs:
   fasta:
     type: File
-    outputBinding: "*.fasta"
+    outputBinding:
+      glob: "*.fasta"
 
 $namespaces:
  edam: http://edamontology.org/
