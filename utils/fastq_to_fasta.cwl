@@ -17,19 +17,19 @@ hints:
 inputs:
   fastq:
     type: File
-    streamable: true
-    format: edam:format_1930  # FASTQ
+    inputBinding:
+      prefix: '-i'
 
-stdin: $(inputs.fastq.path)
+arguments:
+  - valueFrom: $(inputs.fastq.nameroot).fasta
+    prefix: '-o'
 
 baseCommand: [ fastq_to_fasta.py ]
 
-stdout: $(inputs.fastq.nameroot).fasta  # helps with cwltool's cache
-
 outputs:
   fasta:
-    type: stdout
-    format: edam:format_1929  # FASTA
+    type: File
+    outputBinding: "*.fasta"
 
 $namespaces:
  edam: http://edamontology.org/
