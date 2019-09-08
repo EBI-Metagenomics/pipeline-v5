@@ -59,16 +59,40 @@ steps:
       reverse_unmerged_reads: overlap_reads/reverse_unmerged_reads
     out: [ merged_with_unmerged_reads ]
 
-  trim_and_reformat_reads:
-    run: trim_and_reformat_reads.cwl
+  trim_quality_control:
+    doc: |
+      Low quality trimming (low quality ends and sequences with < quality scores
+      less than 15 over a 4 nucleotide wide window are removed)
+    run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
-      reads: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
-    out:  [ trimmed_and_reformatted_reads ]
+      reads1: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+      phred: { default: '33' }
+      leading: { default: 3 }
+      trailing: { default: 3 }
+      end_mode: { default: SE }
+      minlen: { default: 100 }
+      slidingwindow:
+        default:
+          windowSize: 4
+          requiredQuality: 15
+    out: [reads1_trimmed]
+
+  convert_trimmed_reads_to_fasta:
+    run: ../utils/fastq_to_fasta.cwl
+    in:
+      fastq: trim_quality_control/reads1_trimmed
+    out: [ fasta ]
+
+  clean_fasta_headers:
+    run: ../utils/clean_fasta_headers.cwl
+    in:
+      sequences: convert_trimmed_reads_to_fasta/fasta
+    out: [ sequences_with_cleaned_headers ]
 
   qc_stats:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
-        QCed_reads: trim_and_reformat_reads/trimmed_and_reformatted_reads
+        QCed_reads: clean_fasta_headers/sequences_with_cleaned_headers
     out:
       - summary_out
       - seq_length_pcbin
@@ -78,3 +102,4 @@ steps:
       - gc_sum_pcbin
       - gc_sum_bin
       - gc_sum_out
+
