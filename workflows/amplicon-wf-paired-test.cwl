@@ -103,3 +103,31 @@ steps:
       - gc_sum_bin
       - gc_sum_out
 
+  classify:
+    run: rna_prediction-sub-wf.cwl
+    in:
+       input_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
+       silva_ssu_database: ssu_db
+       silva_lsu_database: lsu_db
+       silva_ssu_taxonomy: ssu_tax
+       silva_lsu_taxonomy: lsu_tax
+       silva_ssu_otus: ssu_otus
+       silva_lsu_otus: lsu_otus
+       ncRNA_ribosomal_models: rfam_models
+       ncRNA_ribosomal_model_clans: rfam_model_clans
+       pattern_SSU: ssu_label
+       pattern_LSU: lsu_label
+       pattern_5S: 5s_pattern
+    out:
+      - ncRNAs
+      - 5S_fasta
+      - SSU_fasta
+      - LSU_fasta
+      - SSU_classifications
+      - SSU_otu_tsv
+      - SSU_otu_txt
+      - SSU_krona_image
+      - LSU_classifications
+      - LSU_otu_tsv
+      - LSU_otu_txt
+      - LSU_krona_image
