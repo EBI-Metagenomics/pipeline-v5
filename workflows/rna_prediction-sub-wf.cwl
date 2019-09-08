@@ -115,7 +115,7 @@ steps:
   extract_subunits_coords:
     run: ../tools/RNA_prediction/get_subunits.cwl
     in:
-      input:
+      input: extract_coords/matched_seqs_with_coords
       pattern_SSU: pattern_SSU
       pattern_LSU: pattern_LSU
       mode: { default: 'coords' }
