@@ -171,6 +171,8 @@ steps:
       - 5S_fasta
       - SSU_fasta
       - LSU_fasta
+      - SSU_coords
+      - LSU_coords
       - SSU_classifications
       - SSU_otu_tsv
       - SSU_otu_txt
@@ -179,3 +181,20 @@ steps:
       - LSU_otu_tsv
       - LSU_otu_txt
       - LSU_krona_image
+
+  ITS:
+    run: ITS-test.cwl
+    in:
+        qc_stats_summary: qc_stats/summary_out
+        query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
+        LSU_coordinates: classify/LSU_coords
+        SSU_coordinates: classify/SSU_coords
+        unite_database: unite_db
+        unite_taxonomy: unite_tax
+        unite_otus: unite_otu_file
+        itsone_database: itsonedb
+        itsone_taxonomy: itsonedb_tax
+        itsone_otus: itsonedb_otu_file
+        otu_unite_label: unite_label
+        otu_itsone_label: itsonedb_label
+    out: []

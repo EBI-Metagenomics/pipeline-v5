@@ -45,6 +45,13 @@ outputs:
     type: File
     outputSource: extract_subunits/5S_seqs
 
+  SSU_coords:
+    type: File
+    outputSource: extract_subunits_coords/SSU_seqs
+  LSU_coords:
+    type: File
+    outputSource: extract_subunits_coords/LSU_seqs
+
   SSU_classifications:
     type: File
     outputSource: classify_SSUs/mapseq_classifications
