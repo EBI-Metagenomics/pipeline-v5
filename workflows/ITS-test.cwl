@@ -28,7 +28,60 @@ inputs:
   otu_unite_label: string
   otu_itsone_label: string
 
-outputs: []
+outputs:
+
+  masked_sequences:
+    type: File
+    outputSource: mask_for_ITS/masked_sequences
+
+  unite_classifications:
+    type: File
+    outputSource: run_unite/mapseq_classifications
+
+  unite_otu_tsv:
+    type: File
+    outputSource: run_unite/krona_tsv
+
+  unite_otu_txt:
+    type: File
+    outputSource: run_unite/krona_txt
+
+  unite_krona_image:
+    type: File
+    outputSource: run_unite/krona_image
+
+  itsonedb_classifications:
+    type: File
+    outputSource: run_itsonedb/mapseq_classifications
+
+  itsonedb_otu_tsv:
+    type: File
+    outputSource: run_itsonedb/krona_tsv
+
+  itsonedb_otu_txt:
+    type: File
+    outputSource: run_itsonedb/krona_txt
+
+  itsonedb_krona_image:
+    type: File
+    outputSource: run_itsonedb/krona_image
+
+  unite_hdf5_classifications:
+    type: File
+    outputSource: unite_otu_counts_to_hdf5/result
+
+  unite_json_classifications:
+    type: File
+    outputSource: unite_otu_counts_to_json/result
+
+  itsonedb_hdf5_classifications:
+    type: File
+    outputSource: itsonedb_otu_counts_to_hdf5/result
+
+  itsonedb_json_classifications:
+    type: File
+    outputSource: itsonedb_otu_counts_to_json/result
+
 
 
 #ADD QUALITY CONTROLLED READS
