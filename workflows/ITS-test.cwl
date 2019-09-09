@@ -45,8 +45,8 @@ steps:
   match_proportion:
     run: ../tools/mask-for-ITS/divide.cwl
     in:
-      script: divide_script
       all_coordinates: cat/all-coordinates
       summary: qc_stats_summary
+      fasta: query_sequences
     out: [proportion]
 

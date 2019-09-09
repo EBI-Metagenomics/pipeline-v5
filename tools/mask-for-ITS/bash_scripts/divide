@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-coordinates_LSU=$1
-coordinates_SSU=$2
-stats=$3
-fasta=$4
+coordinates=$1
+stats=$2
+fasta=$3
 
-coordinates=($( cat $coordinates_LSU $coordinates_LSU ))
 
-y=($( grep ">" $coordinates | wc -l ))
+y=($( wc -l $coordinates))
 x=($(grep -m1 "sequence_count" $stats | cut -f 2))
 
 proportion=($(bc <<< "scale=10; ($y/$x)"))
@@ -18,7 +16,7 @@ if [ $standard -eq 1 ]
 then
   mv "$fasta" "EMPTY.fasta"
 else
-  cp "$fasta" .
+  cp "$fasta" "$fasta.not_empty.fasta"
 fi
 
 ###
