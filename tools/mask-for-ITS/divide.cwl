@@ -33,4 +33,4 @@ outputs:
   fasta_output:
     type: File
     outputBinding:
-      glob: "*fasta"
+      glob: "*mpty.fasta"

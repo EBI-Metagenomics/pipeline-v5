@@ -14,7 +14,7 @@ num1=0.9
 standard=$((`echo "$proportion >= $num1"| bc`))
 if [ $standard -eq 1 ]
 then
-  mv "$fasta" "EMPTY.fasta"
+  mv "$fasta" "Empty.fasta"
 else
   cp "$fasta" "$fasta.not_empty.fasta"
 fi
