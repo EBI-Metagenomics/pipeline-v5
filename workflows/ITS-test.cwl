@@ -41,3 +41,14 @@ steps:
       SSU_coords: SSU_coordinates
       LSU_coords: LSU_coordinates
     out: [ all-coordinates ]
+
+  match_proportion:
+    run: ../tools/mask-for-ITS/divide.cwl
+    in:
+      all_coordinates: cat/all-coordinates
+      summary: qc_stats_summary
+      fasta: query_sequences
+    out: [proportion]
+
+  #if proportion < 0.90 then carry on, update with potential "conditional"
+  #mask SSU/LSU
