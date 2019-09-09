@@ -48,7 +48,7 @@ steps:
       all_coordinates: cat/all-coordinates
       summary: qc_stats_summary
       fasta: query_sequences
-    out: [proportion]
+    out: [fasta_output]
 
   #if proportion < 0.90 then carry on, update with potential "conditional"
   #mask SSU/LSU
@@ -61,7 +61,7 @@ steps:
   mask_for_ITS:
     run: ../tools/mask-for-ITS/bedtools.cwl
     in:
-      sequences: query_sequences
+      sequences: match_proportion/fasta_output
       maskfile: reformat_coords/maskfile
     out: [masked_sequences]
 

@@ -29,8 +29,6 @@ inputs:
 
 baseCommand: [divide]
 
-stdout: division
-
 outputs:
   fasta_output:
     type: File
