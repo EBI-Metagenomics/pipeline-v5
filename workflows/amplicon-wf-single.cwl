@@ -172,16 +172,41 @@ outputs:
 
 steps:
 
-  trim_and_reformat_reads:
-    run: trim_and_reformat_reads.cwl
+  trim_quality_control:
+    doc: |
+      Low quality trimming (low quality ends and sequences with < quality scores
+      less than 15 over a 4 nucleotide wide window are removed)
+    run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
-      reads: single_reads
-    out:  [ trimmed_and_reformatted_reads ]
+      reads1: single_reads
+      phred: { default: '33' }
+      leading: { default: 3 }
+      trailing: { default: 3 }
+      end_mode: { default: SE }
+      minlen: { default: 100 }
+      slidingwindow:
+        default:
+          windowSize: 4
+          requiredQuality: 15
+    out: [reads1_trimmed]
 
+  convert_trimmed_reads_to_fasta:
+    run: ../utils/fastq_to_fasta.cwl
+    in:
+      fastq: trim_quality_control/reads1_trimmed
+    out: [ fasta ]
+
+  clean_fasta_headers:
+    run: ../utils/clean_fasta_headers.cwl
+    in:
+      sequences: convert_trimmed_reads_to_fasta/fasta
+    out: [ sequences_with_cleaned_headers ]
+
+# << QC >>
   qc_stats:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
-        QCed_reads: trim_and_reformat_reads/trimmed_and_reformatted_reads
+        QCed_reads: clean_fasta_headers/sequences_with_cleaned_headers
     out:
       - summary_out
       - seq_length_pcbin
@@ -192,10 +217,11 @@ steps:
       - gc_sum_bin
       - gc_sum_out
 
+# << Get RNA >>
   classify:
     run: rna_prediction-sub-wf.cwl
     in:
-       input_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
+       input_sequences: clean_fasta_headers/sequences_with_cleaned_headers
        silva_ssu_database: ssu_db
        silva_lsu_database: lsu_db
        silva_ssu_taxonomy: ssu_tax
@@ -223,6 +249,7 @@ steps:
       - LSU_otu_txt
       - LSU_krona_image
 
+# << ITS >>
 
 #  ITS:
 #    run: ITS-wf.cwl

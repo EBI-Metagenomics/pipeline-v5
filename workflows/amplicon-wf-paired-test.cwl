@@ -91,6 +91,7 @@ outputs:
 
 steps:
 
+# << SeqPrep >>
   overlap_reads:
     label: Paired-end overlapping reads are merged
     run: ../tools/SeqPrep/seqprep.cwl
@@ -107,6 +108,7 @@ steps:
       reverse_unmerged_reads: overlap_reads/reverse_unmerged_reads
     out: [ merged_with_unmerged_reads ]
 
+# << Trim and Reformat >>
   trim_quality_control:
     doc: |
       Low quality trimming (low quality ends and sequences with < quality scores
@@ -137,6 +139,7 @@ steps:
       sequences: convert_trimmed_reads_to_fasta/fasta
     out: [ sequences_with_cleaned_headers ]
 
+# << QC >>
   qc_stats:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
@@ -151,6 +154,7 @@ steps:
       - gc_sum_bin
       - gc_sum_out
 
+# << Get RNA >>
   classify:
     run: rna_prediction-sub-wf.cwl
     in:
@@ -181,3 +185,5 @@ steps:
       - LSU_otu_tsv
       - LSU_otu_txt
       - LSU_krona_image
+
+# << ITS >>
