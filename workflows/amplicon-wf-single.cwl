@@ -40,7 +40,7 @@ inputs:
 outputs:
   processed_nucleotide_reads:
     type: File
-    outputSource: trim_and_reformat_reads/trimmed_and_reformatted_reads
+    outputSource: clean_fasta_headers/sequences_with_cleaned_headers
 
   ncRNAs:
     type: File
@@ -57,14 +57,6 @@ outputs:
   LSU_fasta:
     type: File
     outputSource: classify/LSU_fasta
-
-  SSU_coords:
-    type: File
-    outputSource: classify/SSU_coords
-
-  LSU_coords:
-    type: File
-    outputSource: classify/LSU_coords
 
   SSU_classifications:
     type: File
