@@ -23,8 +23,10 @@ inputs:
     lsu_otus: File
     rfam_models: File[]
     rfam_model_clans: File
+
     ssu_label: string
     lsu_label: string
+    5s_pattern: string
 
     unite_db: {type: File, secondaryFiles: [.mscluster] }
     unite_tax: File
@@ -202,8 +204,9 @@ steps:
        silva_lsu_otus: lsu_otus
        ncRNA_ribosomal_models: rfam_models
        ncRNA_ribosomal_model_clans: rfam_model_clans
-       otu_ssu_label: ssu_label
-       otu_lsu_label: lsu_label
+       pattern_SSU: ssu_label
+       pattern_LSU: lsu_label
+       pattern_5S: 5s_pattern
     out:
       - ncRNAs
       - 5S_fasta
@@ -219,6 +222,7 @@ steps:
       - LSU_otu_tsv
       - LSU_otu_txt
       - LSU_krona_image
+
 
 #  ITS:
 #    run: ITS-wf.cwl
