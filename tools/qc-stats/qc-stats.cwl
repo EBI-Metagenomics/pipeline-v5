@@ -10,8 +10,9 @@ requirements:
 #  DockerRequirement:
 #    dockerPull: qc-stats:latest
   ResourceRequirement:
-    coresMax: 1
-    ramMin: 1024  # just a default, could be lowered
+    coresMax: 4
+    ramMin: 100
+    ramMax: 500
   InlineJavascriptRequirement: {}
 
 inputs:

@@ -35,7 +35,8 @@ requirements:
       LC_ALL: C
   - class: ResourceRequirement
     ramMin: 100
-    coresMax: 1
+    ramMax: 500
+    coresMax: 2
   - class: InitialWorkDirRequirement
     listing:
       - $(inputs.cmsearch_matches)

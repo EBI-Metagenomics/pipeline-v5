@@ -16,8 +16,8 @@ class: CommandLineTool
 
 requirements:
  ResourceRequirement:
-   ramMin: 4096
-   ramMax: 4096
+   ramMin: 8192
+   ramMax: 16384
    coresMin: 8
  InlineJavascriptRequirement: {}
  ShellCommandRequirement: {}

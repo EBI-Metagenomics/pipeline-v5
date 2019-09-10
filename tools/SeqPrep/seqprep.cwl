@@ -4,7 +4,8 @@ class: CommandLineTool
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 1024  # just a default, could be lowered
+    ramMin: 4096
+    ramMax: 4096
 #  DockerRequirement:
 #    dockerPull: quay.io/biocontainers/seqprep:1.1--1
 
