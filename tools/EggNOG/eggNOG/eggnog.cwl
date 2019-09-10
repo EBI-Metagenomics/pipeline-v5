@@ -4,12 +4,12 @@ class: CommandLineTool
 
 label: "eggNOG"
 
-requirements:
-  DockerRequirement:
-    dockerPull: eggnog_pipeline:latest
-  InlineJavascriptRequirement: {}
+#requirements:
+#  DockerRequirement:
+#    dockerPull: eggnog_pipeline:latest
+#  InlineJavascriptRequirement: {}
 
-baseCommand: ['python', '/emapper.py']
+baseCommand: [emapper.py]
 arguments:
   - valueFrom: "16"
     prefix: --cpu
