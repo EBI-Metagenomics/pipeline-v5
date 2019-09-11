@@ -41,24 +41,18 @@ inputs:
       prefix: --dmnd_db
 
   data_dir:
-    type: string
-    #type: Directory #/Users/kates/Desktop/CWL_eggNOG/eggnog-mapper/data/
+    type: string  # data/
     inputBinding:
       prefix: --data_dir
 
-stderr: stderr.txt
-stdout: stdout.txt
-
 outputs:
-  stderr: stderr
-  stdout: stdout
 
   output_annotations:
     type: File
     outputBinding:
-      glob: eggnog.emapper.annotations
+      glob: "*emapper.annotations*"
 
   output_orthologs:
     type: File
     outputBinding:
-      glob: eggnog.emapper.seed_orthologs
+      glob: "*emapper.seed_orthologs*"

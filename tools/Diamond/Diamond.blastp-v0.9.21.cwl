@@ -141,8 +141,10 @@ requirements:
 #      - $import: Diamond-strand_values.yaml
 #      - $import: Diamond-output_formats.yaml
   - class: ResourceRequirement
-    ramMin: 2000
-    ramMax: 2000
+    ramMin: 6000
+    ramMax: 6000
+    coresMin: 2
+
   - class: InlineJavascriptRequirement
 #hints:
 #  - class: DockerRequirement
