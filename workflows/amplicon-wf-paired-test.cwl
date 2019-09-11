@@ -49,6 +49,10 @@ outputs:
     type: File
     outputSource: classify/ncRNAs
 
+  cmsearch_tblout:
+    type: File
+    outputSource: classify/cmsearch_tblout
+
   5s_fasta:
     type: File
     outputSource: classify/5S_fasta
