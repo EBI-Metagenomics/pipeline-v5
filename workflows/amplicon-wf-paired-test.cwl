@@ -41,6 +41,10 @@ outputs:
     type: File
     outputSource: clean_fasta_headers/sequences_with_cleaned_headers
 
+  qc_stats_out:
+    type: Directory
+    outputSource: qc_stats/output_dir
+
   ncRNAs:
     type: File
     outputSource: classify/ncRNAs
@@ -144,15 +148,7 @@ steps:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
         QCed_reads: clean_fasta_headers/sequences_with_cleaned_headers
-    out:
-      - summary_out
-      - seq_length_pcbin
-      - seq_length_bin
-      - seq_length_out
-      - nucleotide_distribution_out
-      - gc_sum_pcbin
-      - gc_sum_bin
-      - gc_sum_out
+    out: [ output_dir ]
 
 # << Get RNA >>
   classify:
@@ -172,6 +168,7 @@ steps:
        pattern_5S: 5s_pattern
     out:
       - ncRNAs
+      - cmsearch_tblout
       - 5S_fasta
       - SSU_fasta
       - LSU_fasta
