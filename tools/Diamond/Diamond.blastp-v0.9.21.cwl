@@ -144,9 +144,9 @@ requirements:
     ramMin: 2000
     ramMax: 2000
   - class: InlineJavascriptRequirement
-hints:
-  - class: DockerRequirement
-    dockerPull: 'buchfink/diamond:version0.9.21'
+#hints:
+#  - class: DockerRequirement
+#    dockerPull: 'buchfink/diamond:version0.9.21'
 $schemas:
   - 'http://edamontology.org/EDAM_1.20.owl'
   - 'https://schema.org/docs/schema_org_rdfa.html'
