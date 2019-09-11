@@ -7,6 +7,4 @@ db:
 db_diamond:
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/eggnog_proteins.dmnd
   class: File
-data_dir:
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/
-  class: Directory
+data_dir: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/

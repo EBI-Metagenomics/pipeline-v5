@@ -23,7 +23,7 @@ inputs:
     label: DIAMOND database input file
     doc: Path to the DIAMOND database file.
   - id: outputFormat
-    type: Diamond-output_formats.yaml#output_formats?
+    type: string  # Diamond-output_formats.yaml#output_formats?
     inputBinding:
       position: 0
       prefix: '--outfmt'
@@ -61,7 +61,7 @@ inputs:
       compressed). If this parameter is omitted, the input will be read from
       stdin
   - id: strand
-    type: Diamond-strand_values.yaml#strand?
+    type: string  # Diamond-strand_values.yaml#strand?
     inputBinding:
       position: -3
       prefix: '--strand'
@@ -136,12 +136,13 @@ arguments:
     prefix: '--out'
     valueFrom: $(inputs.queryInputFile.basename).diamond_matches
 requirements:
-  - class: SchemaDefRequirement
-    types:
-      - $import: Diamond-strand_values.yaml
-      - $import: Diamond-output_formats.yaml
+#  - class: SchemaDefRequirement
+#    types:
+#      - $import: Diamond-strand_values.yaml
+#      - $import: Diamond-output_formats.yaml
   - class: ResourceRequirement
-    ramMin: 1000
+    ramMin: 2000
+    ramMax: 2000
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement

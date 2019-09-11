@@ -4,15 +4,19 @@ class: CommandLineTool
 
 label: "eggNOG"
 
-#requirements:
+requirements:
 #  DockerRequirement:
 #    dockerPull: eggnog_pipeline:latest
 #  InlineJavascriptRequirement: {}
+  ResourceRequirement:
+    ramMin: 20000
+    ramMax: 20000
+    coresMin: 2
 
 baseCommand: [emapper.py]
 arguments:
-  - valueFrom: "16"
-    prefix: --cpu
+#  - valueFrom: "16"
+#    prefix: --cpu
   - valueFrom: diamond
     prefix: -m
   - valueFrom: "eggnog_output"
@@ -37,7 +41,8 @@ inputs:
       prefix: --dmnd_db
 
   data_dir:
-    type: Directory #/Users/kates/Desktop/CWL_eggNOG/eggnog-mapper/data/
+    type: string
+    #type: Directory #/Users/kates/Desktop/CWL_eggNOG/eggnog-mapper/data/
     inputBinding:
       prefix: --data_dir
 
