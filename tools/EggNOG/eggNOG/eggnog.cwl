@@ -15,7 +15,7 @@ arguments:
     prefix: --cpu
   - valueFrom: diamond
     prefix: -m
-  - valueFrom: /Users/kates/Desktop/CWL_eggNOG/eggnog
+  - valueFrom: "eggnog_output"
     prefix: -o
 
 
@@ -27,32 +27,17 @@ inputs:
       prefix: "-i"
 
   db:
-    type: File?
-    default:
-      class: File
-      path: /Users/kates/Desktop/CWL_eggNOG/eggnog-mapper/data/eggnog.db
-      listing: []
-      basename: data/eggnog.db
+    type: File?  # data/eggnog.db
     inputBinding:
       prefix: --database
 
   db_diamond:
-    type: File?
-    default:
-      class: File
-      path: /Users/kates/Desktop/CWL_eggNOG/eggnog-mapper/data/eggnog_proteins.dmnd
-      listing: []
-      basename: data/eggnog_proteins.dmnd
+    type: File?  # data/eggnog_proteins.dmnd
     inputBinding:
       prefix: --dmnd_db
 
   data_dir:
-    type: Directory?
-    default:
-      class: Directory
-      path: /Users/kates/Desktop/CWL_eggNOG/eggnog-mapper/data/
-      listing: []
-      basename: data
+    type: Directory #/Users/kates/Desktop/CWL_eggNOG/eggnog-mapper/data/
     inputBinding:
       prefix: --data_dir
 

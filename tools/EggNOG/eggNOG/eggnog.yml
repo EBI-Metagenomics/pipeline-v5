@@ -1,3 +1,12 @@
 fasta_file:
-  path: /Users/kates/Desktop/CWL_eggNOG/Files/GUT_GENOME000020.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/example.faa
   class: File
+db:
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/eggnog.db
+  class: File
+db_diamond:
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/eggnog_proteins.dmnd
+  class: File
+data_dir:
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/
+  class: Directory
