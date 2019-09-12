@@ -5,7 +5,7 @@ cwlVersion: v1.0
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement
-  - class: SchemaDefRequirement
+#  - class: SchemaDefRequirement
 #    types:
 #      - $import: ../tools/InterProScan/InterProScan-apps.yaml
 #      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
