@@ -1,6 +1,6 @@
 input_fasta:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/work-dir/good/single_ERR1594332/clean_fasta_headers/ERR1594332.fastq.gz.trimmed.cleaned.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA.fasta
 seq_type: "a"
 maskfile:
   class: File

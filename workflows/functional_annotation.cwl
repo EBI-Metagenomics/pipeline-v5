@@ -67,15 +67,15 @@ steps:
       - stdout
     label: "predictions of FragGeneScan with faselector"
 
-#  interproscan:
-#    run: ../tools/InterProScan/InterProScan-v5.cwl
-#    in:
-#      applications: InterProScan_applications
-#      inputFile: combined_gene_caller/predicted_proteins
-#      outputFormat: InterProScan_outputFormat
-#      databases: InterProScan_databases
-#    out: [ i5Annotations ]
-#    label: "InterProScan: protein sequence classifier"
+  interproscan:
+    run: ../tools/InterProScan/InterProScan-v5-none_docker.cwl
+    in:
+      applications: InterProScan_applications
+      inputFile: combined_gene_caller/predicted_proteins
+      outputFormat: InterProScan_outputFormat
+      databases: InterProScan_databases
+    out: [ i5Annotations ]
+    label: "InterProScan: protein sequence classifier"
 
   hmmscan:
     run: ../tools/hmmscan/hmmscan.cwl

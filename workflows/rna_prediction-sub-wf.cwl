@@ -38,6 +38,9 @@ outputs:
   cmsearch_tblout:
     type: File
     outputSource: find_ribosomal_ncRNAs/concatenate_matches
+  cmsearch_deoverlapped:
+    type: File
+    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
   SSU_fasta:
     type: File
     outputSource: extract_subunits/SSU_seqs
