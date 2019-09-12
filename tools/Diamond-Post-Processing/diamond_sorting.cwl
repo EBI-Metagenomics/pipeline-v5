@@ -1,9 +1,9 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-requirements:
-  DockerRequirement:
-    dockerPull: alpine:3.9.4
+#requirements:
+#  DockerRequirement:
+#    dockerPull: alpine:3.9.4
 
 baseCommand: ['sort', '-k2,2']
 
