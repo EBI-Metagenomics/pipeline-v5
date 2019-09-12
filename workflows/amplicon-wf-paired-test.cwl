@@ -39,7 +39,7 @@ inputs:
 outputs:
   processed_nucleotide_reads:
     type: File
-    outputSource: clean_fasta_headers/sequences_with_cleaned_headers
+    outputSource: run_quality_control_filtering/filtered_file
 
   qc_stats_out:
     type: Directory
@@ -147,18 +147,26 @@ steps:
       sequences: convert_trimmed_reads_to_fasta/fasta
     out: [ sequences_with_cleaned_headers ]
 
+
+  run_quality_control_filtering:
+    run: ..tools/qc-filtering/qc-filtering.cwl
+    in:
+      seq_file: clean_fasta_headers/sequences_with_cleaned_headers
+    out: [ filtered_file ]
+
+
 # << QC >>
   qc_stats:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
-        QCed_reads: clean_fasta_headers/sequences_with_cleaned_headers
+        QCed_reads: run_quality_control_filtering/filtered_file
     out: [ output_dir ]
 
 # << Get RNA >>
   classify:
     run: rna_prediction-sub-wf.cwl
     in:
-       input_sequences: clean_fasta_headers/sequences_with_cleaned_headers
+       input_sequences: run_quality_control_filtering/filtered_file
        silva_ssu_database: ssu_db
        silva_lsu_database: lsu_db
        silva_ssu_taxonomy: ssu_tax
