@@ -1,3 +1,7 @@
+#!/usr/bin/env cwl-runner
+class: Workflow
+cwlVersion: v1.0
+
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement
@@ -8,9 +12,9 @@ requirements:
 
 inputs:
   sequences: File
-  cmsearch: File
-  config: File
 
+  ncRNAs: File
+  config: File
   pipeline_seq_type: string
 
   HMMSCAN_gathering_bit_score: boolean
@@ -22,9 +26,9 @@ inputs:
   EggNOG_diamond_db: File
   EggNOG_data_dir: string
 
-  InterProScan_databases: Directory
-  InterProScan_applications:   # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-  InterProScan_outputFormat:   # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+#  InterProScan_databases: Directory
+#  InterProScan_applications:   # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
+#  InterProScan_outputFormat:   # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
 outputs:
 
@@ -35,12 +39,17 @@ outputs:
     outputSource: combined_gene_caller/predicted_seq
     type: File
 
-  InterProScan_I5:
-    outputSource: interproscan/i5Annotations
-    type: File
+#  InterProScan_I5:
+#    outputSource: interproscan/i5Annotations
+#    type: File
 
   hmmscan_table:
     outputSource: hmmscan/output_table
+
+#  eggnog_annotations:
+#    outputSource: eggnog/output_annotations
+#  eggnog_orthologs:
+#    outputSource: eggnog/output_orthologs
 
 steps:
     combined_gene_caller:
@@ -48,7 +57,7 @@ steps:
     in:
       input_fasta: sequences
       seq_type: pipeline_seq_type
-      maskfile: cmsearch
+      maskfile: ncRNAs
       config: config
     out:
       - predicted_proteins
@@ -58,15 +67,15 @@ steps:
       - stdout
     label: "predictions of FragGeneScan with faselector"
 
-  interproscan:
-    run: ../tools/InterProScan/InterProScan-v5.cwl
-    in:
-      applications: InterProScan_applications
-      inputFile: combined_gene_caller/predicted_proteins
-      outputFormat: InterProScan_outputFormat
-      databases: InterProScan_databases
-    out: [ i5Annotations ]
-    label: "InterProScan: protein sequence classifier"
+#  interproscan:
+#    run: ../tools/InterProScan/InterProScan-v5.cwl
+#    in:
+#      applications: InterProScan_applications
+#      inputFile: combined_gene_caller/predicted_proteins
+#      outputFormat: InterProScan_outputFormat
+#      databases: InterProScan_databases
+#    out: [ i5Annotations ]
+#    label: "InterProScan: protein sequence classifier"
 
   hmmscan:
     run: ../tools/hmmscan/hmmscan.cwl
