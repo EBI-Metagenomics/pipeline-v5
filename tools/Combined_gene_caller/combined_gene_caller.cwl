@@ -8,6 +8,7 @@ label: "Combined Gene Caller"
 #  DockerRequirement:
 #    dockerPull: gene_caller:latest
 #  InlineJavascriptRequirement: {}
+# baseCommand: [combined_gene_caller_docker.py]
 
 baseCommand: [combined_gene_caller.py]
 arguments: ["-v"]

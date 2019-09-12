@@ -5,12 +5,13 @@ FROM centos:centos7
 RUN yum -y update; yum clean all
 RUN yum -y install curl wget tar
 
-ADD emapper.py .
-ADD eggnogmapper .
 
-COPY eggnogmapper /eggnogmapper
-COPY emapper.py /emapper.py
+COPY eggnogmapper /tools/eggnogmapper
+COPY emapper.py /tools/emapper.py
 
 RUN wget https://github.com/bbuchfink/diamond/releases/download/v0.9.24/diamond-linux64.tar.gz && tar -xzvf diamond-linux64.tar.gz  && cp diamond /bin/diamond
 
-CMD ["python", "/emapper.py"]
+RUN chmod -R a+rwx /tools
+ENV PATH="/tools:${PATH}"
+
+CMD [emapper.py]
