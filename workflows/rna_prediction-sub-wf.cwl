@@ -181,13 +181,13 @@ steps:
 
 #convert biom to hdf5 and json formats
 
-  ssu_convert_otu_counts_to_hdf5:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: classify_SSUs/krona_tsv
-       hdf5: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
+#  ssu_convert_otu_counts_to_hdf5:
+#    run: ../tools/biom-convert/biom-convert.cwl
+#    in:
+#       biom: classify_SSUs/krona_tsv
+#       hdf5: { default: true }
+#       table_type: { default: 'OTU table' }
+#    out: [ result ]
 
 #  ssu_convert_otu_counts_to_json:
 #    run: ../tools/biom-convert/biom-convert.cwl

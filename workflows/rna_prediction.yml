@@ -1,6 +1,6 @@
 input_sequences:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA_1000.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA.fasta
 
 silva_ssu_database:
   class: File
