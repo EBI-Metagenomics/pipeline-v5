@@ -4,12 +4,12 @@ class: CommandLineTool
 
 label: "Combined Gene Caller"
 
-requirements:
-  DockerRequirement:
-    dockerPull: gene_caller:latest
-  InlineJavascriptRequirement: {}
+#requirements:
+#  DockerRequirement:
+#    dockerPull: gene_caller:latest
+#  InlineJavascriptRequirement: {}
 
-baseCommand: ['/usr/bin/python2.7', '/combined_gene_caller.py']
+baseCommand: [combined_gene_caller.py]
 arguments: ["-v"]
 
 inputs:
