@@ -125,8 +125,8 @@ hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
-    ramMin: 8192
-    ramMax: 8192
+    ramMin: 10000
+    ramMax: 10000
     coresMin: 4
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'

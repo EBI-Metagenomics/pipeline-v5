@@ -37,7 +37,8 @@ doc: >
 label: Redirecting Multiple Files Contain in a Single File
 requirements:
   - class: ResourceRequirement
-    ramMin: 100
+    ramMin: 10000
+    ramMax: 10000
     coresMax: 1
   - class: InlineJavascriptRequirement
 $schemas:
