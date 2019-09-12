@@ -1,6 +1,6 @@
 seqfile:
   class: File
-  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/workflows/gene_caller_input_example.fa.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/example.faa
 
 gathering_bit_score: true
 
@@ -8,6 +8,6 @@ name_database: db_kofam.hmm
 
 data:
   class: Directory
-  path: db
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs
 
 omit_alignment: true

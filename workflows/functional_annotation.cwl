@@ -9,6 +9,7 @@ requirements:
 inputs:
   sequences: File
   cmsearch: File
+  config: File
 
   pipeline_seq_type: string
 
@@ -22,8 +23,8 @@ inputs:
   EggNOG_data_dir: string
 
   InterProScan_databases: Directory
-  #  InterProScan_applications: ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-  #  InterProScan_outputFormat: ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+  InterProScan_applications:   # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
+  InterProScan_outputFormat:   # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
 outputs:
 
@@ -48,13 +49,14 @@ steps:
       input_fasta: sequences
       seq_type: pipeline_seq_type
       maskfile: cmsearch
+      config: config
     out:
       - predicted_proteins
       - predicted_seq
       - gene_caller_out
       - stderr
       - stdout
-    label: "predictions of FragGeneScan with faselector
+    label: "predictions of FragGeneScan with faselector"
 
   interproscan:
     run: ../tools/InterProScan/InterProScan-v5.cwl

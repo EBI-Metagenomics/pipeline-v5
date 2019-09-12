@@ -31,7 +31,7 @@ inputs:
         prefix: "-k"
 
   config:
-    type: File?
+    type: File
     default:
       class: File
       location: combined_gene_caller_conf.json

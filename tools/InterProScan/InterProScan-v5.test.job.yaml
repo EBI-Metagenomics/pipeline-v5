@@ -1,11 +1,8 @@
-applications:
-  - PfamA
+applications: PfamA
 inputFile:
   class: File
-  format: 'edam:format_1929'
-  path: test-input/test_single_protein.fasta
-outputFormat:
-  - TSV
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/example.fasta
+outputFormat: TSV
 databases:
   class: Directory
   path: test-input/databases
