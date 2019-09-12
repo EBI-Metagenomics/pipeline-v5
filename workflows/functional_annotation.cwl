@@ -52,7 +52,7 @@ outputs:
 #    outputSource: eggnog/output_orthologs
 
 steps:
-    combined_gene_caller:
+  combined_gene_caller:
     run: ../tools/Combined_gene_caller/combined_gene_caller.cwl
     in:
       input_fasta: sequences
