@@ -5,7 +5,7 @@ requirements:
   DockerRequirement:
     dockerPull: linux_docker_diamond:latest
 
-baseCommand: ["bash", "/run_join.sh"]
+baseCommand: [diamond_post_run_join.sh]
 
 inputs:
   input_diamond:

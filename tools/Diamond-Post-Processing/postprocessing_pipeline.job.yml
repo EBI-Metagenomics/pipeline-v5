@@ -1,6 +1,6 @@
 input_diamond:
   class: File
-  path: Files/example_diamond_10
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/work-dir/good/diamond/example.faa.diamond_matches
 input_db:
   class: File
-  path: Files/example_diamond_db
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/db_uniref90_result.txt

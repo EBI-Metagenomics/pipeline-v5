@@ -2,7 +2,8 @@ FROM centos:centos7
 
 LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 
-COPY . /
+COPY diamond_post_run_join.sh /tools/diamond_post_run_join.sh
+RUN chmod a+rwx /tools
+ENV PATH="/tools"${PATH}"
 
-CMD ["sort"]
-CMD ["bash", "/run_join.sh"]
+CMD [diamond_post_run_join.sh]
