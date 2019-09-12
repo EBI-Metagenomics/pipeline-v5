@@ -1,3 +1,7 @@
 input_fasta:
   class: File
-  path: gene_caller_input_example.fa
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/work-dir/good/single_ERR1594332/clean_fasta_headers/ERR1594332.fastq.gz.trimmed.cleaned.fasta
+seq_type: "a"
+maskfile:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/work-dir/good/single_ERR1594332/classify/find_ribosomal_ncRNAs/remove_overlaps/result.deoverlapped

@@ -2,22 +2,28 @@ requirements:
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement
   - class: SchemaDefRequirement
-    types:
-      - $import: ../tools/InterProScan/InterProScan-apps.yaml
-      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
+#    types:
+#      - $import: ../tools/InterProScan/InterProScan-apps.yaml
+#      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
 
 inputs:
   sequences: File
   cmsearch: File
 
-  InterProScan_applications: ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-  InterProScan_outputFormat: ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-  InterProScan_databases: Directory
+  pipeline_seq_type: string
 
   HMMSCAN_gathering_bit_score: boolean
   HMMSCAN_omit_alignment: boolean
   HMMSCAN_name_database: string
   HMMSCAN_data: Directory
+
+  EggNOG_db: File
+  EggNOG_diamond_db: File
+  EggNOG_data_dir: string
+
+  InterProScan_databases: Directory
+  #  InterProScan_applications: ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
+  #  InterProScan_outputFormat: ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
 outputs:
 
@@ -40,7 +46,7 @@ steps:
     run: ../tools/Combined_gene_caller/combined_gene_caller.cwl
     in:
       input_fasta: sequences
-      seq_type: { default: "s" }
+      seq_type: pipeline_seq_type
       maskfile: cmsearch
     out:
       - predicted_proteins
@@ -72,3 +78,10 @@ steps:
     label: "Analysis using profile HMM on db"
 
 #   eggnog:
+#     run: ../tools/EggNOG/eggNOG/eggnog.cwl
+#      in:
+#        fasta_file: combined_gene_caller/predicted_proteins
+#        db: EggNOG_db
+#        db_diamond: EggNOG_diamond_db
+#        data_dir: EggNOG_data_dir
+#      out: [output_annotations, output_orthologs]
