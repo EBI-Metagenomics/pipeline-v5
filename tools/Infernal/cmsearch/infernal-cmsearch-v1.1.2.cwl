@@ -125,7 +125,7 @@ hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
-    ramMin: 2048
+    ramMin: 8192
     ramMax: 8192
     coresMin: 4
 $schemas:
