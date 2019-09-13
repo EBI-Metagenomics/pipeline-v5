@@ -34,9 +34,9 @@ requirements:
     envDef:
       LC_ALL: C
   - class: ResourceRequirement
-    ramMin: 100
-    ramMax: 500
-    coresMax: 2
+    ramMin: 20000
+    ramMax: 20000
+    coresMax: 4
   - class: InitialWorkDirRequirement
     listing:
       - $(inputs.cmsearch_matches)
