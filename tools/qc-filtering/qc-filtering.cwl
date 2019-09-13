@@ -25,6 +25,8 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.seq_file.nameroot)_post-qc.fasta
+  stats:
+    type: stdout
 
 arguments:
    - position: 1

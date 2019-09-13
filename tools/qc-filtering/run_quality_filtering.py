@@ -31,6 +31,7 @@ def parse_args(argv):
     parser = argparse.ArgumentParser(
         description='Quality control filtering step built into the Mgnify pipeline.')
     parser.add_argument('seq_file', help='Sequence file path', type=str)
+    parser.add_argument('fasta_output_file', help='FASTA formatted output file name', type=str)
     parser.add_argument('output_file_name', help='FASTA formatted output file name', type=str)
     parser.add_argument('--min_length', help='Minimum read length', type=int, default=100)
     return parser.parse_args(argv)
@@ -70,6 +71,8 @@ def filter_sequences(seq_file, file_format, min_read_length):
             rejected_length_counter += 1
     length_filtered = total_sequence_counter - rejected_length_counter
     nbase_filtered = length_filtered - rejected_length_counter
+
+
     sys.stdout.write("after_trimmed:{},after_length:{},after_nbases:{}".format(total_sequence_counter, length_filtered,
                                                                                nbase_filtered))
 
@@ -95,11 +98,40 @@ def parse_file_format(file_name):
     return file_format
 
 
-def write_fasta_output(output_file_name, filtered_seqs):
-    handle = open(output_file_name, "w")
+def write_fasta_output(fasta_output_file, filtered_seqs):
+    handle = open(fasta_output_file, "w")
     writer = FastaWriter(handle)
     writer.write_file(filtered_seqs)
     handle.close()
+
+
+def get_qc_stats(submitted_count, trim_count, length_count, rejected_n_count):
+    """
+        Submitted nucleotide sequences  18632
+        Nucleotide sequences after format-specific filtering    18632
+        Nucleotide sequences after length filtering     18632
+        Nucleotide sequences after undetermined bases filtering 18632
+        Nucleotide sequences with predicted CDS 18590
+        Nucleotide sequences with predicted RNA 54
+        Nucleotide sequences with InterProScan match    16727
+        Predicted CDS   82527
+        Predicted CDS with InterProScan match   63566
+        Total InterProScan matches      225337
+
+    :return:
+    """
+    handler = open("statistics", "w")
+    handler.write("Submitted nucleotide sequences\t{0}\n".format(submitted_count))
+    handler.write("Nucleotide sequences after format-specific filtering\t{0}\n".format(trim_count))
+    handler.write("Nucleotide sequences after length filtering\t{0}\n".format(length_count))
+    handler.write("Nucleotide sequences after undetermined bases filtering\t{0}\n".format(rejected_n_count))
+    # handler.write("Nucleotide sequences with predicted CDS\t{0}\n".format(reads_with_orf_count))
+    # handler.write("Nucleotide sequences with predicted RNA\t{0}\n".format(rna_count))
+    # handler.write("Nucleotide sequences with InterProScan match\t{0}\n".format(readsWithMatchNumber))
+    # handler.write("Predicted CDS\t{0}\n".format(predictedCDSNumber))
+    # handler.write("Predicted CDS with InterProScan match\t{0}\n".format(cdsWithMatchNumber))
+    # handler.write("Total InterProScan matches\t{0}\n".format(matchNumber))
+    handler.close()
 
 
 def main(argv=sys.argv[1:]):
@@ -108,7 +140,7 @@ def main(argv=sys.argv[1:]):
     file_format = parse_file_format(args.seq_file)
 
     filtered_seqs = filter_sequences(args.seq_file, file_format, args.min_length)
-    write_fasta_output(args.output_file_name, filtered_seqs)
+    write_fasta_output(args.fasta_output_file, filtered_seqs)
 
 
 if __name__ == '__main__':
