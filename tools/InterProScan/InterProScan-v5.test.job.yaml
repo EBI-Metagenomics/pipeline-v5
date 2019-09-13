@@ -1,8 +1,11 @@
-applications: PfamA
+applications:
+  - PfamA
 inputFile:
   class: File
+  format: 'edam:format_1929'
   path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/example.fasta
-outputFormat: TSV
+outputFormat:
+  - TSV
 databases:
   class: Directory
-  path: test-input/databases
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data
