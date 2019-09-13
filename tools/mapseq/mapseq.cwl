@@ -16,8 +16,8 @@ doc: |
 
 requirements:
   ResourceRequirement:
-    ramMin: 4096
-    ramMax: 4096
+    ramMin: 10000
+    ramMax: 10000
     coresMin: 2
 
 inputs:

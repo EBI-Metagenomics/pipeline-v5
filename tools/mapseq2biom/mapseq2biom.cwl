@@ -2,9 +2,13 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-#requirements:
+requirements:
 #  DockerRequirement:
 #    dockerPull: mapseq2biom:latest
+  ResourceRequirement:
+    ramMin: 10000
+    ramMax: 10000
+    coresMin: 2
 
 inputs:
   otu_table:

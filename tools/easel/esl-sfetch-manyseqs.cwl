@@ -7,6 +7,11 @@ doc: "https://github.com/EddyRivasLab/easel"
 # DockerRequirement:
 #   dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
+requirements:
+  ResourceRequirement:
+    ramMin: 25000
+    ramMax: 25000
+    coresMin: 2
 
 inputs:
   indexed_sequences:

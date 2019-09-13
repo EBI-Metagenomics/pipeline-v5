@@ -9,8 +9,8 @@ requirements:
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
   ResourceRequirement:
-    ramMin: 50000
-    ramMax: 50000
+    ramMin: 25000
+    ramMax: 25000
     coresMin: 2
 #  SchemaDefRequirement:
 #    types:
