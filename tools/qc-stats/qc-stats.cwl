@@ -48,12 +48,14 @@ inputs:
     label: Maximum number of sequences to sub-sample 
     type: int?
     default: 2000000
-    inputBinding:
-      prefix: "-m"
   out_dir_name:
     label: Specifies output subdirectory
     type: string
     default: qc-statistics
+  sequence_count:
+    label: Specifies the number of sequences in the input read file (FASTA formatted)
+    type: int
+
 
 outputs:
   output_dir:
@@ -68,13 +70,33 @@ arguments:
      valueFrom: $(inputs.out_dir_name)/$(inputs.summary)
    - position: 2
      prefix: '-d'
-     valueFrom: $(inputs.out_dir_name)/$(inputs.nucleotide_distribution)
+     valueFrom: |
+       ${ var suffix = '.full';
+          if (inputs.sequence_count > inputs.max_seq) {
+            suffix = '.sub-set';
+          }
+          return "".concat(inputs.out_dir_name, '/', inputs.nucleotide_distribution, suffix);
+       }
    - position: 3
      prefix: '-g'
-     valueFrom: $(inputs.out_dir_name)/$(inputs.gc_sum)
+     valueFrom: |
+       ${ var suffix = '.full';
+          if (inputs.sequence_count > inputs.max_seq) {
+            suffix = '.sub-set';
+          }
+          return "".concat(inputs.out_dir_name, '/', inputs.gc_sum, suffix);
+       }
    - position: 4
      prefix: '-l'
-     valueFrom: $(inputs.out_dir_name)/$(inputs.length_sum)
+     valueFrom: |
+       ${ var suffix = '.full';
+          if (inputs.sequence_count > inputs.max_seq) {
+            suffix = '.sub-set';
+          }
+          return "".concat(inputs.out_dir_name, '/', inputs.length_sum, suffix);
+       }
+   - position: 5
+     valueFrom: ${ if (inputs.sequence_count > inputs.max_seq) { return '-m '.concat(inputs.max_seq)} else { return ''} }
 
 
 $namespaces:

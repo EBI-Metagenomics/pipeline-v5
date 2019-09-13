@@ -2,4 +2,4 @@ QCed_reads:
   class: File
   format: http://edamontology.org/format_1929
   path: test-inputs/test.fasta
-
+sequence_count: 5000
