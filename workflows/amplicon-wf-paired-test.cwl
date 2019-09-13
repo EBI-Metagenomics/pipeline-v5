@@ -147,19 +147,24 @@ steps:
       sequences: convert_trimmed_reads_to_fasta/fasta
     out: [ sequences_with_cleaned_headers ]
 
-
   run_quality_control_filtering:
     run: ..tools/qc-filtering/qc-filtering.cwl
     in:
       seq_file: clean_fasta_headers/sequences_with_cleaned_headers
     out: [ filtered_file ]
 
+  count_processed_reads:
+    run: ../utils/count_fasta.cwl
+    in:
+      sequences: run_quality_control_filtering/filtered_file
+    out: [ count ]
 
 # << QC >>
   qc_stats:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
         QCed_reads: run_quality_control_filtering/filtered_file
+        sequence_count: count_processed_reads/count
     out: [ output_dir ]
 
 # << Get RNA >>
