@@ -6,7 +6,8 @@ requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     coresMax: 1
-    ramMin: 100  # just a default, could be lowered
+    ramMin: 5000  # just a default, could be lowered
+    ramMax: 5000
 #  SchemaDefRequirement:
 #    types:
 #      - $import: biom-convert-table.yaml

@@ -9,7 +9,7 @@ label: "Biosequence analysis using profile hidden Markov models"
 #   dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
 requirements:
-  ResourceRequirement
+  ResourceRequirement:
     ramMin: 10000
     ramMax: 10000
   InlineJavascriptRequirement: {}
