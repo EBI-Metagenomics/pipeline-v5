@@ -32,9 +32,9 @@ inputs:
   table_type:
     type: string? #biom-convert-table.yaml#table_type?
     inputBinding:
-      prefix: --table-type=
-      separate: false
-      valueFrom: $('"' + inputs.table_type + '"')
+      prefix: --table-type  # --table-type=    <- worked for cwlexec
+      separate: true # false                                  <- worked for cwlexec
+      valueFrom: $(inputs.table_type)  # $('"' + inputs.table_type + '"')      <- worked for cwlexec
 
   json:
     type: boolean?
