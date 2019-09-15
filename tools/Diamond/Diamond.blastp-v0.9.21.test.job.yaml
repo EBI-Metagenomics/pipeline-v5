@@ -1,14 +1,13 @@
 blockSize: null
 databaseFile:
   class: File
-  path: >-
-    test-input/uniref90_subset.dmnd
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/uniref90_diamond-v0.9.21.dmnd
 outputFormat: '6'
 queryGeneticCode: null
 queryInputFile:
   class: File
   format: 'edam:format_1929'
-  path: test-input/test_proteins.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/output-dir/combined_gene_caller-c9119bb3-1897-4bfe-8eaf-48b4b5ac3934/ERZ477576_FASTA.fasta.faa
 strand: both
 taxonList: null
 threads: null

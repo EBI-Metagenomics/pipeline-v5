@@ -16,7 +16,8 @@ requirements:
 #      - $import: ../tools/InterProScan/InterProScan-apps.yaml
 #      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
   - class: ResourceRequirement
-    ramMin: 10000
+    ramMin: 20000
+    ramMax: 20000
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
@@ -93,6 +94,8 @@ steps:
 
 # << FUNCTIONAL ANNOTATION >>
 
+
+# Return chunked proteins to Diamond input (!!!)
 # << DIAMOND >>
 #  diamond_blastp:
 #    in:

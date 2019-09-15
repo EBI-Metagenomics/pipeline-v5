@@ -2,8 +2,7 @@ applications:
   - PfamA
 inputFile:
   class: File
-  format: 'edam:format_1929'
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/example.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/output-dir/combined_gene_caller-c9119bb3-1897-4bfe-8eaf-48b4b5ac3934/ERZ477576_FASTA.fasta.faa
 outputFormat:
   - TSV
 databases:

@@ -7,8 +7,7 @@ $namespaces:
 id: i5
 baseCommand: interproscan.sh
 inputs:
-  - format: 'edam:format_1929'
-    id: inputFile
+  - id: inputFile
     type: File
     inputBinding:
       position: 8
@@ -91,8 +90,8 @@ arguments:
 requirements:
   - class: ShellCommandRequirement
   - class: ResourceRequirement
-    ramMin: 4096
-    ramMax: 8192
+    ramMin: 10000
+    ramMax: 10000
     coresMin: 4
   - class: InlineJavascriptRequirement
 #  - class: SchemaDefRequirement

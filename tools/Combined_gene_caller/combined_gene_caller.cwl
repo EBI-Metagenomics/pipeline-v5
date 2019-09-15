@@ -4,7 +4,11 @@ class: CommandLineTool
 
 label: "Combined Gene Caller"
 
-#requirements:
+requirements:
+  ResourceRequirement:
+    ramMin: 7000
+    ramMax: 7000
+    coresMin: 4
 #  DockerRequirement:
 #    dockerPull: gene_caller:latest
 #  InlineJavascriptRequirement: {}

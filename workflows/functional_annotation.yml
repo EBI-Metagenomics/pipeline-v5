@@ -1,10 +1,10 @@
 sequences:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/work-dir/good/single_ERR1594332/clean_fasta_headers/ERR1594332.fastq.gz.trimmed.cleaned.fasta
+  path:
 
 ncRNAs:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/work-dir/good/single_ERR1594332/classify/find_ribosomal_ncRNAs/remove_overlaps/result.deoverlapped
+  path:
 pipeline_seq_type: "a"
 config:
   class: File
@@ -25,6 +25,10 @@ EggNOG_diamond_db:
   class: File
 EggNOG_data_dir: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/
 
-#  InterProScan_databases:
-#  InterProScan_applications:
-#  InterProScan_outputFormat:
+InterProScan_applications:
+  - PfamA
+InterProScan_outputFormat:
+  - TSV
+InterProScan_databases:
+  class: Directory
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data

@@ -44,6 +44,9 @@ inputs:
   HMMSCAN_omit_alignment_in: boolean
   HMMSCAN_name_database_in: string
   HMMSCAN_data_in: Directory
+  EggNOG_db:
+  EggNOG_diamond_db:
+  EggNOG_data_dir:
 
 outputs:
   motus_biom:
@@ -286,6 +289,9 @@ steps:
       HMMSCAN_omit_alignment: HMMSCAN_omit_alignment_in
       HMMSCAN_name_database: HMMSCAN_name_database_in
       HMMSCAN_data: HMMSCAN_data_in
+      EggNOG_db:
+      EggNOG_diamond_db:
+      EggNOG_data_dir:
     out:
       - CGC_predicted_proteins
       - CGC_predicted_seq

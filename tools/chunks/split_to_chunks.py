@@ -4,12 +4,11 @@ import argparse
 import sys
 from Bio import SeqIO
 
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Split to chunks")
     parser.add_argument("-i", "--input", dest="input", help="Input fasta file", required=True)
     parser.add_argument("-s", "--size", dest="size", help="Chunk size")
+    parser.add_argument("-o", "--outdir", dest="outdir", help="Output directory")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -23,7 +22,7 @@ if __name__ == "__main__":
                 fileName = currentSequences[0].id + "_" + currentSequences[-1].id + ".fasta"
                 for char in ["/", " ", ":"]:
                     fileName = fileName.replace(char, "_")
-                SeqIO.write(currentSequences, "$(runtime.outdir)/" + fileName, "fasta")
+                SeqIO.write(currentSequences, args.outdir + "/" + fileName, "fasta")
                 currentSequences = []
 
         # write any remaining sequences
@@ -31,4 +30,4 @@ if __name__ == "__main__":
             fileName = currentSequences[0].id + "_" + currentSequences[-1].id + ".fasta"
             for char in ["/", " ", ":"]:
                 fileName = fileName.replace(char, "_")
-            SeqIO.write(currentSequences, "$(runtime.outdir)/" + fileName, "fasta")
+            SeqIO.write(currentSequences, args.outdir + "/" + fileName, "fasta")

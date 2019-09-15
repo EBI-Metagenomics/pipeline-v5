@@ -3,6 +3,10 @@ class: Workflow
 cwlVersion: v1.0
 
 requirements:
+  - ResourceRequirement:
+    ramMin: 20000
+    ramMax: 20000
+    coresMin: 2
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement
 #  - class: SchemaDefRequirement
@@ -26,9 +30,9 @@ inputs:
   EggNOG_diamond_db: File
   EggNOG_data_dir: string
 
-#  InterProScan_databases: Directory
-#  InterProScan_applications:   # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-#  InterProScan_outputFormat:   # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+  InterProScan_databases: Directory
+  InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
+  InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
 outputs:
 
@@ -39,17 +43,17 @@ outputs:
     outputSource: combined_gene_caller/predicted_seq
     type: File
 
-#  InterProScan_I5:
-#    outputSource: interproscan/i5Annotations
-#    type: File
+  InterProScan_I5:
+    outputSource: interproscan/i5Annotations
+    type: File
 
   hmmscan_table:
     outputSource: hmmscan/output_table
 
-#  eggnog_annotations:
-#    outputSource: eggnog/output_annotations
-#  eggnog_orthologs:
-#    outputSource: eggnog/output_orthologs
+  eggnog_annotations:
+    outputSource: eggnog/output_annotations
+  eggnog_orthologs:
+    outputSource: eggnog/output_orthologs
 
 steps:
   combined_gene_caller:
@@ -88,11 +92,11 @@ steps:
     out: [ output_table ]
     label: "Analysis using profile HMM on db"
 
-#   eggnog:
-#     run: ../tools/EggNOG/eggNOG/eggnog.cwl
-#      in:
-#        fasta_file: combined_gene_caller/predicted_proteins
-#        db: EggNOG_db
-#        db_diamond: EggNOG_diamond_db
-#        data_dir: EggNOG_data_dir
-#      out: [output_annotations, output_orthologs]
+   eggnog:
+     run: ../tools/EggNOG/eggNOG/eggnog.cwl
+      in:
+        fasta_file: combined_gene_caller/predicted_proteins
+        db: EggNOG_db
+        db_diamond: EggNOG_diamond_db
+        data_dir: EggNOG_data_dir
+      out: [output_annotations, output_orthologs]
