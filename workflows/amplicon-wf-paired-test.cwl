@@ -157,6 +157,7 @@ steps:
     run: ..tools/qc-filtering/qc-filtering.cwl
     in:
       seq_file: clean_fasta_headers/sequences_with_cleaned_headers
+      submitted_seq_count: count_submitted_reads/count
     out: [ filtered_file ]
 
   count_processed_reads:
