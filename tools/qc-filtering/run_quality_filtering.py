@@ -1,4 +1,4 @@
-#!/usr/bin/env /home/maxim/.virtualenvs/mgpipeline/bin/python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 # Copyright 2019 EMBL - European Bioinformatics Institute
