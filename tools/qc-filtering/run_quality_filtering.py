@@ -123,7 +123,7 @@ def write_qc_stats_file(stats_output_file, submitted_count, trim_count, length_c
     handler.write("Submitted nucleotide sequences\t{0}\n".format(submitted_count))
     handler.write("Nucleotide sequences after format-specific filtering\t{0}\n".format(trim_count))
     handler.write("Nucleotide sequences after length filtering\t{0}\n".format(length_count))
-    handler.write("Nucleotide sequences after undetermined bases filtering\t{0}\n".format(rejected_n_count))
+    handler.write("Nucleotide sequences after undetermined bases filtering\t{0}".format(rejected_n_count))
     # handler.write("Nucleotide sequences with predicted CDS\t{0}\n".format(reads_with_orf_count))
     # handler.write("Nucleotide sequences with predicted RNA\t{0}\n".format(rna_count))
     # handler.write("Nucleotide sequences with InterProScan match\t{0}\n".format(readsWithMatchNumber))
