@@ -106,61 +106,61 @@ outputs:
 #    type: File
 #    outputSource: classify/lsu_json_classifications
 
-#  proportion_SU:
-#    type: File
-#    outputSource: ITS/proportion_SU
+  proportion_SU:
+    type: File
+    outputSource: ITS/proportion_SU
 
-#  masked_sequences:
-#    type: File
-#    outputSource: ITS/masked_sequences
+  masked_sequences:
+    type: File
+    outputSource: ITS/masked_sequences
 
-#  unite_classifications:
-#    type: File
-#    outputSource: ITS/unite_classifications
+  unite_classifications:
+    type: File
+    outputSource: ITS/unite_classifications
 
-# unite_otu_tsv:
-#    type: File
-#    outputSource: ITS/unite_otu_tsv
+ unite_otu_tsv:
+    type: File
+    outputSource: ITS/unite_otu_tsv
 
-#  unite_otu_txt:
-#    type: File
-#    outputSource: ITS/unite_otu_txt
+  unite_otu_txt:
+    type: File
+    outputSource: ITS/unite_otu_txt
 
-#  unite_krona_image:
-#    type: File
-#    outputSource: ITS/unite_krona_image
+  unite_krona_image:
+    type: File
+    outputSource: ITS/unite_krona_image
 
-#  itsonedb_classifications:
-#    type: File
-#    outputSource: ITS/itsonedb_classifications
+  itsonedb_classifications:
+    type: File
+    outputSource: ITS/itsonedb_classifications
 
-#  itsonedb_otu_tsv:
-#    type: File
-#    outputSource: ITS/itsonedb_otu_tsv
+  itsonedb_otu_tsv:
+    type: File
+    outputSource: ITS/itsonedb_otu_tsv
 
-#  itsonedb_otu_txt:
-#    type: File
-#    outputSource: ITS/itsonedb_otu_txt
+  itsonedb_otu_txt:
+    type: File
+    outputSource: ITS/itsonedb_otu_txt
 
-#  itsonedb_krona_image:
-#    type: File
-#    outputSource: ITS/itsonedb_krona_image
+  itsonedb_krona_image:
+    type: File
+    outputSource: ITS/itsonedb_krona_image
 
-#  unite_hdf5_classifications:
-#    type: File
-#    outputSource: ITS/unite_hdf5_classifications
+  unite_hdf5_classifications:
+    type: File
+    outputSource: ITS/unite_hdf5_classifications
 
-#  unite_json_classifications:
-#    type: File
-#    outputSource: ITS/unite_json_classifications
+  unite_json_classifications:
+    type: File
+    outputSource: ITS/unite_json_classifications
 
-#  itsonedb_hdf5_classifications:
-#    type: File
-#    outputSource: ITS/itsonedb_hdf5_classifications
+  itsonedb_hdf5_classifications:
+    type: File
+    outputSource: ITS/itsonedb_hdf5_classifications
 
-#  itsonedb_json_classifications:
-#    type: File
-#    outputSource: ITS/itsonedb_json_classifications
+  itsonedb_json_classifications:
+    type: File
+    outputSource: ITS/itsonedb_json_classifications
 
 steps:
 
@@ -243,33 +243,32 @@ steps:
 
 # << ITS >>
 
-#  ITS:
-#    run: ITS-wf.cwl
-#    in:
-#        qc_stats_summary: qc_stats/summary_out
-#        query_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
-#        LSU_coordinates: classify/LSU_coords
-#        SSU_coordinates: classify/SSU_coords
-#        unite_database: unite_db
-#        unite_taxonomy: unite_tax
-#        unite_otus: unite_otu_file
-#        itsone_database: itsonedb
-#        itsone_taxonomy: itsonedb_tax
-#        itsone_otus: itsonedb_otu_file'
-#        otu_unite_label: unite_label
-#        otu_itsone_label: itsonedb_label
-#    out:
-#      - proportion_SU
-#      - masked_sequences
-#      - unite_classifications
-#      - unite_otu_tsv
-#      - unite_otu_txt
-#      - unite_krona_image
-#      - itsonedb_classifications
-#      - itsonedb_otu_tsv
-#      - itsonedb_otu_txt
-#      - itsonedb_krona_image
-#      - unite_hdf5_classifications
-#      - unite_json_classifications
-#      - itsonedb_hdf5_classifications
-#      - itsonedb_json_classifications
+  ITS:
+    run: ITS-test.cwl
+    in:
+        qc_stats_summary: qc_stats/summary_out
+        query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
+        LSU_coordinates: classify/LSU_coords
+        SSU_coordinates: classify/SSU_coords
+        unite_database: unite_db
+        unite_taxonomy: unite_tax
+        unite_otus: unite_otu_file
+        itsone_database: itsonedb
+        itsone_taxonomy: itsonedb_tax
+        itsone_otus: itsonedb_otu_file
+        otu_unite_label: unite_label
+        otu_itsone_label: itsonedb_label
+    out:
+      - masked_sequences
+      - unite_classifications
+      - unite_otu_tsv
+      - unite_otu_txt
+      - unite_krona_image
+      - itsonedb_classifications
+      - itsonedb_otu_tsv
+      - itsonedb_otu_txt
+      - itsonedb_krona_image
+      - unite_hdf5_classifications
+      - unite_json_classifications
+      - itsonedb_hdf5_classifications
+      - itsonedb_json_classifications
