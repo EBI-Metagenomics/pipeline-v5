@@ -18,6 +18,8 @@ inputs:
   seq_file:
     type: File
     format: edam:format_1929  # FASTA
+    inputBinding:
+      position: 1
     label: 'Trimmed sequence file'
     doc: >
       Trimmed and FASTQ to FASTA converted sequences file.
@@ -28,7 +30,7 @@ inputs:
       Number of originally submitted sequences as in the user
       submitted FASTQ file - single end FASTQ or pair end merged FASTQ file.
   stats_file_name:
-    type: str
+    type: string
     default: stats_summary
     label: 'Post QC stats output file name'
     doc: >
@@ -44,11 +46,9 @@ outputs:
     label: Stats summary output file
     type: File
     outputBinding:
-      glob: $(inputs.stats_file_name.basename)
+      glob: $(inputs.stats_file_name)
 
 arguments:
-   - position: 1
-     valueFrom: $(inputs.seq_file)
    - position: 2
      valueFrom: $(inputs.seq_file.nameroot)_filtered.fasta
    - position: 3
