@@ -106,9 +106,9 @@ outputs:
 #    type: File
 #    outputSource: classify/lsu_json_classifications
 
-  proportion_SU:
-    type: File
-    outputSource: ITS/proportion_SU
+#  proportion_SU:
+#    type: File
+#    outputSource: ITS/proportion_SU
 
   masked_sequences:
     type: File
@@ -118,7 +118,7 @@ outputs:
     type: File
     outputSource: ITS/unite_classifications
 
- unite_otu_tsv:
+  unite_otu_tsv:
     type: File
     outputSource: ITS/unite_otu_tsv
 
