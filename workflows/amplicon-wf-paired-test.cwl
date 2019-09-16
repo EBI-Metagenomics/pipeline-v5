@@ -147,6 +147,12 @@ steps:
       sequences: convert_trimmed_reads_to_fasta/fasta
     out: [ sequences_with_cleaned_headers ]
 
+  count_submitted_reads:
+    run: ../utils/count_fastq.cwl
+    in:
+      sequences: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+    out: [ count ]
+
   run_quality_control_filtering:
     run: ..tools/qc-filtering/qc-filtering.cwl
     in:
