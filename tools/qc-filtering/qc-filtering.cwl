@@ -18,21 +18,43 @@ inputs:
   seq_file:
     type: File
     format: edam:format_1929  # FASTA
+    label: 'Trimmed sequence file'
+    doc: >
+      Trimmed and FASTQ to FASTA converted sequences file.
+  submitted_seq_count:
+    type: int
+    label: 'Number of submitted sequences'
+    doc: >
+      Number of originally submitted sequences as in the user
+      submitted FASTQ file - single end FASTQ or pair end merged FASTQ file.
+  stats_file_name:
+    type: str
+    default: stats_summary
+    label: 'Post QC stats output file name'
+    doc: >
+      Give a name for the file which will hold the stats after QC.
 
 outputs:
   filtered_file:
     label: Filtered output file
     type: File
     outputBinding:
-      glob: $(inputs.seq_file.nameroot)_post-qc.fasta
-  stats:
-    type: stdout
+      glob: $(inputs.seq_file.nameroot)_filtered.fasta
+  stats_summary_file:
+    label: Stats summary output file
+    type: File
+    outputBinding:
+      glob: $(inputs.stats_file_name.basename)
 
 arguments:
    - position: 1
      valueFrom: $(inputs.seq_file)
    - position: 2
-     valueFrom: $(inputs.seq_file.nameroot)_post-qc.fasta
+     valueFrom: $(inputs.seq_file.nameroot)_filtered.fasta
+   - position: 3
+     valueFrom: $(inputs.stats_file_name)
+   - position: 4
+     valueFrom: $(inputs.submitted_seq_count)
 
 $namespaces:
  edam: http://edamontology.org/

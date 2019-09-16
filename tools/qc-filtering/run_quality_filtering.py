@@ -32,7 +32,8 @@ def parse_args(argv):
         description='Quality control filtering step built into the Mgnify pipeline.')
     parser.add_argument('seq_file', help='Sequence file path', type=str)
     parser.add_argument('fasta_output_file', help='FASTA formatted output file name', type=str)
-    parser.add_argument('output_file_name', help='FASTA formatted output file name', type=str)
+    parser.add_argument('stats_output_file', help='Stats output file name', type=str)
+    parser.add_argument('submitted_count', help='Number of submitted sequences', type=int)
     parser.add_argument('--min_length', help='Minimum read length', type=int, default=100)
     return parser.parse_args(argv)
 
@@ -43,12 +44,13 @@ def get_proportion(sequence, character):
     return count / float(sequence_length)
 
 
-def filter_sequences(seq_file, file_format, min_read_length):
+def filter_sequences(seq_file, file_format, min_read_length, submitted_count, stats_output_file):
     """
         Discards sequences that are 99 bp or less, or > 10% N.
 
         The Python yield keyword explained:
         https://pythontips.com/2013/09/29/the-python-yield-keyword-explained/
+    :param submitted_count:
     :param seq_file:
     :param file_format:
     :param min_read_length:
@@ -72,9 +74,7 @@ def filter_sequences(seq_file, file_format, min_read_length):
     length_filtered = total_sequence_counter - rejected_length_counter
     nbase_filtered = length_filtered - rejected_length_counter
 
-
-    sys.stdout.write("after_trimmed:{},after_length:{},after_nbases:{}".format(total_sequence_counter, length_filtered,
-                                                                               nbase_filtered))
+    write_qc_stats_file(stats_output_file, submitted_count, total_sequence_counter, length_filtered, nbase_filtered)
 
 
 def parse_file_format(file_name):
@@ -82,7 +82,6 @@ def parse_file_format(file_name):
         Please note: This MUST contain all sequence formats we expect as key and the necessary BioPython format option
         as value.
         NB the BioPython format option is not always identical to the sequence format name.
-
 
     :param file_name:
     :return:
@@ -105,7 +104,7 @@ def write_fasta_output(fasta_output_file, filtered_seqs):
     handle.close()
 
 
-def get_qc_stats(submitted_count, trim_count, length_count, rejected_n_count):
+def write_qc_stats_file(stats_output_file, submitted_count, trim_count, length_count, rejected_n_count):
     """
         Submitted nucleotide sequences  18632
         Nucleotide sequences after format-specific filtering    18632
@@ -120,7 +119,7 @@ def get_qc_stats(submitted_count, trim_count, length_count, rejected_n_count):
 
     :return:
     """
-    handler = open("statistics", "w")
+    handler = open(stats_output_file, "w")
     handler.write("Submitted nucleotide sequences\t{0}\n".format(submitted_count))
     handler.write("Nucleotide sequences after format-specific filtering\t{0}\n".format(trim_count))
     handler.write("Nucleotide sequences after length filtering\t{0}\n".format(length_count))
@@ -139,7 +138,8 @@ def main(argv=sys.argv[1:]):
 
     file_format = parse_file_format(args.seq_file)
 
-    filtered_seqs = filter_sequences(args.seq_file, file_format, args.min_length)
+    filtered_seqs = filter_sequences(args.seq_file, file_format, args.min_length, args.submitted_count,
+                                     args.stats_output_file)
     write_fasta_output(args.fasta_output_file, filtered_seqs)
 
 
