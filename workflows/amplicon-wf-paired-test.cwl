@@ -95,3 +95,22 @@ steps:
       #    windowSize: 4
       #    requiredQuality: 15
     out: [reads1_trimmed]
+
+  convert_trimmed_reads_to_fasta:
+    run: ../utils/fastq_to_fasta.cwl
+    in:
+      fastq: trim_quality_control/reads1_trimmed
+    out: [ fasta ]
+
+  clean_fasta_headers:
+    run: ../utils/clean_fasta_headers.cwl
+    in:
+      sequences: convert_trimmed_reads_to_fasta/fasta
+    out: [ sequences_with_cleaned_headers ]
+
+  run_quality_control_filtering:
+    run: ../tools/qc-filtering/qc-filtering.cwl
+    in:
+      seq_file: clean_fasta_headers/sequences_with_cleaned_headers
+      submitted_seq_count: count_submitted_reads/count
+    out: [ filtered_file ]
