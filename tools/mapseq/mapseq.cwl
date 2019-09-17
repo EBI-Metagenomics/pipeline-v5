@@ -17,7 +17,7 @@ doc: |
 requirements:
   ResourceRequirement:
     ramMin: 10000
-    tmpdirMin: 10000
+    tmpdirMin: 15000
     coresMin: 2
 
 inputs:

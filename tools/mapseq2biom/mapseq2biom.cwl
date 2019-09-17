@@ -8,6 +8,7 @@ requirements:
   ResourceRequirement:
     ramMin: 10000
     ramMax: 10000
+    tmpdirMin: 15000
     coresMin: 2
 
 inputs:
