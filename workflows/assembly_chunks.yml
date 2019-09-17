@@ -1,3 +1,10 @@
 proteins:
   class: File
-  path:
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/output-dir/combined_gene_caller-c9119bb3-1897-4bfe-8eaf-48b4b5ac3934/ERZ477576_FASTA.fasta.faa
+InterProScan_applications:
+  - PfamA
+InterProScan_outputFormat:
+  - TSV
+databases:
+  class: Directory
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data

@@ -21,8 +21,8 @@ requirements:
 inputs:
   proteins: File
 
-  InterProScan_applications: ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-  InterProScan_outputFormat: ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+  InterProScan_applications: string[]?  #../tools/InterProScan/InterProScan-apps.yaml#apps[]?
+  InterProScan_outputFormat: string[]?  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
   InterProScan_databases: Directory
 
 
