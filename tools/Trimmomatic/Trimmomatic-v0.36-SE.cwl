@@ -15,12 +15,15 @@ class: CommandLineTool
 #  - $import: trimmomatic-docker.yml
 
 requirements:
- ResourceRequirement:
-   ramMin: 8192
-   ramMax: 16384
-   coresMin: 8
- InlineJavascriptRequirement: {}
- ShellCommandRequirement: {}
+  SchemaDefRequirement:
+    types:
+      - $import: trimmomatic-sliding_window.yaml
+  ResourceRequirement:
+    ramMin: 8192
+    ramMax: 16384
+    coresMin: 8
+  InlineJavascriptRequirement: {}
+  ShellCommandRequirement: {}
 
 baseCommand: [ trimmomatic ]
 
@@ -103,7 +106,7 @@ inputs:
       investigated.
 
   slidingwindow:
-    type: string? #trimmomatic-sliding_window.yaml#slidingWindow?
+    type: trimmomatic-sliding_window.yaml#slidingWindow?
     inputBinding:
       position: 15
       prefix: 'SLIDINGWINDOW:'

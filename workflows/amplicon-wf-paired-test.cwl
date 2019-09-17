@@ -8,6 +8,9 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
+  SchemaDefRequirement:
+    types:
+      - $import: ../tools/Trimmomatic/trimmomatic-sliding_window.yaml
 
 inputs:
     forward_reads: File
