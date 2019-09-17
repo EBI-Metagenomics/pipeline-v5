@@ -132,7 +132,7 @@ outputs:
     outputSource: ITS/unite_json_classifications
   itsonedb_hdf5_classifications:
     type: File
-    utputSource: ITS/itsonedb_hdf5_classifications
+    outputSource: ITS/itsonedb_hdf5_classifications
   itsonedb_json_classifications:
     type: File
     outputSource: ITS/itsonedb_json_classifications
