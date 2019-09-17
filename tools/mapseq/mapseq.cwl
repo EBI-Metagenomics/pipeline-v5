@@ -14,11 +14,11 @@ doc: |
 #  DockerRequirement:
 #    dockerPull: mapseq:latest
 
-requirements:
-  ResourceRequirement:
-    ramMin: 10000
-    tmpdirMin: 15000
-    coresMin: 2
+#requirements:
+#  ResourceRequirement:
+#    ramMin: 10000
+#    tmpdirMin: 15000
+#    coresMin: 2
 
 inputs:
   sequences:

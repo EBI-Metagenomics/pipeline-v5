@@ -6,14 +6,14 @@ label: visualize using krona
 
 #edited from ebi-metagenomics-cwl/tools/krona.cwl
 
-requirements:
+#requirements:
 #  DockerRequirement:
 #    dockerPull: kronav2.7.1:1.0
-  ResourceRequirement:
-    ramMin: 15000
-    ramMax: 15000
-    tmpdirMin: 15000
-    coresMin: 2
+#  ResourceRequirement:
+#    ramMin: 15000
+#    ramMax: 15000
+#    tmpdirMin: 15000
+#    coresMin: 2
 
 inputs:
   otu_counts:
