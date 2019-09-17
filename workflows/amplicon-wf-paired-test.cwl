@@ -44,7 +44,10 @@ outputs:
   count_submitted_reads:
     type: int
     outputSource: count_submitted_reads/count
-
+# << Trimming >>
+  trim_quality_control:
+    type: File
+    outputSource: trim_quality_control/reads1_trimmed
 
 steps:
 
@@ -71,3 +74,21 @@ steps:
       sequences: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
     out: [ count ]
 
+# << Trim and Reformat >>
+  trim_quality_control:
+    doc: |
+      Low quality trimming (low quality ends and sequences with < quality scores
+      less than 15 over a 4 nucleotide wide window are removed)
+    run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+    in:
+      reads1: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+      phred: { default: '33' }
+      leading: { default: 3 }
+      trailing: { default: 3 }
+      end_mode: { default: SE }
+      minlen: { default: 100 }
+      slidingwindow:
+        default:
+          windowSize: 4
+          requiredQuality: 15
+    out: [reads1_trimmed]
