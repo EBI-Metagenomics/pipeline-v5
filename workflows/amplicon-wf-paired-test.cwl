@@ -253,7 +253,7 @@ steps:
     run: ITS-wf.cwl
     in:
       qc_stats_summary: qc_stats/summary_out
-      query_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
+      query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
       LSU_fasta: classify/LSU_fasta
       SSU_fasta: classify/SSU_fasta
       unite_database: unite_db
