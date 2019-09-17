@@ -52,7 +52,7 @@ outputs:
     type: File
     outputSource: extract_subunits/LSU_seqs
   5S_fasta:
-    type: File
+    type: File?
     outputSource: extract_subunits/5S_seqs
 
   SSU_coords:
