@@ -5,6 +5,6 @@ InterProScan_applications:
   - PfamA
 InterProScan_outputFormat:
   - TSV
-databases:
+InterProScan_databases:
   class: Directory
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data
