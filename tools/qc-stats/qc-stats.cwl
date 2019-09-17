@@ -59,10 +59,16 @@ inputs:
 
 outputs:
   output_dir:
-      label: Contains all stats output files
-      type: Directory
-      outputBinding:
-        glob: $(inputs.out_dir_name)
+    label: Contains all stats output files
+    type: Directory
+    outputBinding:
+      glob: $(inputs.out_dir_name)
+  summary_out:
+    label: Contains the summary statistics for the input sequence file
+    type: File
+    format: iana:text/plain
+    outputBinding:
+      glob: $(inputs.out_dir_name)/$(inputs.summary)
 
 arguments:
    - position: 1
