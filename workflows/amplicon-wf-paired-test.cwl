@@ -254,8 +254,8 @@ steps:
     in:
       qc_stats_summary: qc_stats/summary_out
       query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
-      LSU_fasta: classify/LSU_fasta
-      SSU_fasta: classify/SSU_fasta
+      LSU_coordinates: classify/LSU_coords
+      SSU_coordinates: classify/SSU_coords
       unite_database: unite_db
       unite_taxonomy: unite_tax
       unite_otus: unite_otu_file
