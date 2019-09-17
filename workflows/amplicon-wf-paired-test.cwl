@@ -265,7 +265,7 @@ steps:
       otu_unite_label: unite_label
       otu_itsone_label: itsonedb_label
     out:
-      - proportion_SU
+
       - masked_sequences
       - unite_classifications
       - unite_otu_tsv
