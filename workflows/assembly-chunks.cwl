@@ -48,7 +48,7 @@ steps:
       databases: InterProScan_databases
     out:
       - i5Annotations
-    run: ../tools/InterProScan/InterProScan-v5.cwl
+    run: ../tools/InterProScan/InterProScan-v5-none_docker.cwl
     label: "InterProScan: protein sequence classifier"
 
   # interpro
