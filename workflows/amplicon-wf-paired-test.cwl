@@ -250,7 +250,7 @@ steps:
 
   # << ITS >>
   ITS:
-    run: ITS-wf.cwl
+    run: ITS-test.cwl
     in:
       qc_stats_summary: qc_stats/summary_out
       query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
