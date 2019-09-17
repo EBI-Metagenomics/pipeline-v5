@@ -97,6 +97,46 @@ outputs:
     type: File
     outputSource: classify/LSU_krona_image
 
+  masked_sequences:
+    type: File
+    outputSource: ITS/masked_sequences
+  unite_classifications:
+    type: File
+    outputSource: ITS/unite_classifications
+  unite_otu_tsv:
+    type: File
+    outputSource: ITS/unite_otu_tsv
+  unite_otu_txt:
+    type: File
+    outputSource: ITS/unite_otu_txt
+  unite_krona_image:
+    type: File
+    outputSource: ITS/unite_krona_image
+  itsonedb_classifications:
+    type: File
+    outputSource: ITS/itsonedb_classifications
+  itsonedb_otu_tsv:
+    type: File
+    outputSource: ITS/itsonedb_otu_tsv
+  itsonedb_otu_txt:
+    type: File
+    outputSource: ITS/itsonedb_otu_txt
+  itsonedb_krona_image:
+    type: File
+    outputSource: ITS/itsonedb_krona_image
+  unite_hdf5_classifications:
+    type: File
+    outputSource: ITS/unite_hdf5_classifications
+  unite_json_classifications:
+    type: File
+    outputSource: ITS/unite_json_classifications
+  itsonedb_hdf5_classifications:
+    type: File
+    utputSource: ITS/itsonedb_hdf5_classifications
+  itsonedb_json_classifications:
+    type: File
+    outputSource: ITS/itsonedb_json_classifications
+
 steps:
 
 # << SeqPrep >>
@@ -115,6 +155,12 @@ steps:
       forward_unmerged_reads: overlap_reads/forward_unmerged_reads
       reverse_unmerged_reads: overlap_reads/reverse_unmerged_reads
     out: [ merged_with_unmerged_reads ]
+
+  count_submitted_reads:
+    run: ../utils/count_fastq.cwl
+    in:
+      sequences: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+    out: [ count ]
 
 # << Trim and Reformat >>
   trim_quality_control:
@@ -147,12 +193,6 @@ steps:
       sequences: convert_trimmed_reads_to_fasta/fasta
     out: [ sequences_with_cleaned_headers ]
 
-  count_submitted_reads:
-    run: ../utils/count_fastq.cwl
-    in:
-      sequences: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
-    out: [ count ]
-
   run_quality_control_filtering:
     run: ../tools/qc-filtering/qc-filtering.cwl
     in:
@@ -172,24 +212,25 @@ steps:
     in:
         QCed_reads: run_quality_control_filtering/filtered_file
         sequence_count: count_processed_reads/count
-    out: [ output_dir ]
+    out: [ output_dir, summary_out ]
 
-# << Get RNA >>
+
+  # << Get RNA >>
   classify:
     run: rna_prediction-sub-wf.cwl
     in:
-       input_sequences: run_quality_control_filtering/filtered_file
-       silva_ssu_database: ssu_db
-       silva_lsu_database: lsu_db
-       silva_ssu_taxonomy: ssu_tax
-       silva_lsu_taxonomy: lsu_tax
-       silva_ssu_otus: ssu_otus
-       silva_lsu_otus: lsu_otus
-       ncRNA_ribosomal_models: rfam_models
-       ncRNA_ribosomal_model_clans: rfam_model_clans
-       pattern_SSU: ssu_label
-       pattern_LSU: lsu_label
-       pattern_5S: 5s_pattern
+      input_sequences: run_quality_control_filtering/filtered_file
+      silva_ssu_database: ssu_db
+      silva_lsu_database: lsu_db
+      silva_ssu_taxonomy: ssu_tax
+      silva_lsu_taxonomy: lsu_tax
+      silva_ssu_otus: ssu_otus
+      silva_lsu_otus: lsu_otus
+      ncRNA_ribosomal_models: rfam_models
+      ncRNA_ribosomal_model_clans: rfam_model_clans
+      pattern_SSU: ssu_label
+      pattern_LSU: lsu_label
+      pattern_5S: 5s_pattern
     out:
       - ncRNAs
       - cmsearch_tblout
@@ -207,4 +248,34 @@ steps:
       - LSU_otu_txt
       - LSU_krona_image
 
-# << ITS >>
+  # << ITS >>
+  ITS:
+    run: ITS-wf.cwl
+    in:
+      qc_stats_summary: qc_stats/summary_out
+      query_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
+      LSU_fasta: classify/LSU_fasta
+      SSU_fasta: classify/SSU_fasta
+      unite_database: unite_db
+      unite_taxonomy: unite_tax
+      unite_otus: unite_otu_file
+      itsone_database: itsonedb
+      itsone_taxonomy: itsonedb_tax
+      itsone_otus: itsonedb_otu_file
+      otu_unite_label: unite_label
+      otu_itsone_label: itsonedb_label
+    out:
+      - proportion_SU
+      - masked_sequences
+      - unite_classifications
+      - unite_otu_tsv
+      - unite_otu_txt
+      - unite_krona_image
+      - itsonedb_classifications
+      - itsonedb_otu_tsv
+      - itsonedb_otu_txt
+      - itsonedb_krona_image
+      - unite_hdf5_classifications
+      - unite_json_classifications
+      - itsonedb_hdf5_classifications
+      - itsonedb_json_classifications
