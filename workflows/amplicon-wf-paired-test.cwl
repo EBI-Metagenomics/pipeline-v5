@@ -40,23 +40,105 @@ inputs:
     itsonedb_label: string
 
 outputs:
-# << SeqPrep >>
-  result_SeqPrep_step:
-    type: File
-    outputSource: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
-  count_submitted_reads:
-    type: int
-    outputSource: count_submitted_reads/count
-# << Trimming >>
-  trim_quality_control:
-    type: File
-    outputSource: trim_quality_control/reads1_trimmed
   processed_nucleotide_reads:
     type: File
     outputSource: run_quality_control_filtering/filtered_file
+
   qc_stats_out:
     type: Directory
     outputSource: qc_stats/output_dir
+
+  ncRNAs:
+    type: File
+    outputSource: classify/ncRNAs
+
+  cmsearch_tblout:
+    type: File
+    outputSource: classify/cmsearch_tblout
+
+  5s_fasta:
+    type: File
+    outputSource: classify/5S_fasta
+
+  SSU_fasta:
+    type: File
+    outputSource: classify/SSU_fasta
+
+  LSU_fasta:
+    type: File
+    outputSource: classify/LSU_fasta
+
+  SSU_classifications:
+    type: File
+    outputSource: classify/SSU_classifications
+
+  SSU_otu_tsv:
+    type: File
+    outputSource: classify/SSU_otu_tsv
+
+  SSU_otu_txt:
+    type: File
+    outputSource: classify/SSU_otu_txt
+
+  SSU_krona_image:
+    type: File
+    outputSource: classify/SSU_krona_image
+
+  LSU_classifications:
+    type: File
+    outputSource: classify/LSU_classifications
+
+  LSU_otu_tsv:
+    type: File
+    outputSource: classify/LSU_otu_tsv
+
+  LSU_otu_txt:
+    type: File
+    outputSource: classify/LSU_otu_txt
+
+  LSU_krona_image:
+    type: File
+    outputSource: classify/LSU_krona_image
+
+  masked_sequences:
+    type: File
+    outputSource: ITS/masked_sequences
+  unite_classifications:
+    type: File
+    outputSource: ITS/unite_classifications
+  unite_otu_tsv:
+    type: File
+    outputSource: ITS/unite_otu_tsv
+  unite_otu_txt:
+    type: File
+    outputSource: ITS/unite_otu_txt
+  unite_krona_image:
+    type: File
+    outputSource: ITS/unite_krona_image
+  itsonedb_classifications:
+    type: File
+    outputSource: ITS/itsonedb_classifications
+  itsonedb_otu_tsv:
+    type: File
+    outputSource: ITS/itsonedb_otu_tsv
+  itsonedb_otu_txt:
+    type: File
+    outputSource: ITS/itsonedb_otu_txt
+  itsonedb_krona_image:
+    type: File
+    outputSource: ITS/itsonedb_krona_image
+  unite_hdf5_classifications:
+    type: File
+    outputSource: ITS/unite_hdf5_classifications
+  unite_json_classifications:
+    type: File
+    outputSource: ITS/unite_json_classifications
+  itsonedb_hdf5_classifications:
+    type: File
+    outputSource: ITS/itsonedb_hdf5_classifications
+  itsonedb_json_classifications:
+    type: File
+    outputSource: ITS/itsonedb_json_classifications
 
 steps:
 
@@ -167,3 +249,35 @@ steps:
       - LSU_otu_tsv
       - LSU_otu_txt
       - LSU_krona_image
+
+# << ITS >>
+  ITS:
+    run: ITS-test.cwl
+    in:
+      qc_stats_summary: qc_stats/summary_out
+      query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
+      LSU_coordinates: classify/LSU_coords
+      SSU_coordinates: classify/SSU_coords
+      unite_database: unite_db
+      unite_taxonomy: unite_tax
+      unite_otus: unite_otu_file
+      itsone_database: itsonedb
+      itsone_taxonomy: itsonedb_tax
+      itsone_otus: itsonedb_otu_file
+      otu_unite_label: unite_label
+      otu_itsone_label: itsonedb_label
+    out:
+
+      - masked_sequences
+      - unite_classifications
+      - unite_otu_tsv
+      - unite_otu_txt
+      - unite_krona_image
+      - itsonedb_classifications
+      - itsonedb_otu_tsv
+      - itsonedb_otu_txt
+      - itsonedb_krona_image
+      - unite_hdf5_classifications
+      - unite_json_classifications
+      - itsonedb_hdf5_classifications
+      - itsonedb_json_classifications
