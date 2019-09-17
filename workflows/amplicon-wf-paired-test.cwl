@@ -8,9 +8,9 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
-  SchemaDefRequirement:
-    types:
-      - $import: ../tools/Trimmomatic/trimmomatic-sliding_window.yaml
+#  SchemaDefRequirement:
+#    types:
+#      - $import: ../tools/Trimmomatic/trimmomatic-sliding_window.yaml
 
 inputs:
     forward_reads: File
@@ -90,8 +90,8 @@ steps:
       trailing: { default: 3 }
       end_mode: { default: SE }
       minlen: { default: 100 }
-      slidingwindow:
-        default:
-          windowSize: 4
-          requiredQuality: 15
+      slidingwindow: { default: '4:15' }
+      #  default:
+      #    windowSize: 4
+      #    requiredQuality: 15
     out: [reads1_trimmed]
