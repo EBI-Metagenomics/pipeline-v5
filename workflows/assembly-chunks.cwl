@@ -56,5 +56,6 @@ steps:
     run: ../tools/chunks/concatenate.cwl
     in:
       files: interproscan/i5Annotations
+      outputFileName: { default: "interpro" }
     out: [ result ]
     label: "combine all chunked interpro outputs to 1 tsv"
