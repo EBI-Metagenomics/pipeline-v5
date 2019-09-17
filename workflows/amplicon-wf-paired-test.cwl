@@ -51,6 +51,12 @@ outputs:
   trim_quality_control:
     type: File
     outputSource: trim_quality_control/reads1_trimmed
+  processed_nucleotide_reads:
+    type: File
+    outputSource: run_quality_control_filtering/filtered_file
+  qc_stats_out:
+    type: Directory
+    outputSource: qc_stats/output_dir
 
 steps:
 
@@ -114,3 +120,18 @@ steps:
       seq_file: clean_fasta_headers/sequences_with_cleaned_headers
       submitted_seq_count: count_submitted_reads/count
     out: [ filtered_file ]
+
+  count_processed_reads:
+    run: ../utils/count_fasta.cwl
+    in:
+      sequences: run_quality_control_filtering/filtered_file
+    out: [ count ]
+
+# << QC >>
+  qc_stats:
+    run: ../tools/qc-stats/qc-stats.cwl
+    in:
+        QCed_reads: run_quality_control_filtering/filtered_file
+        sequence_count: count_processed_reads/count
+    out: [ output_dir, summary_out ]
+
