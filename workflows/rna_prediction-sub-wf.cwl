@@ -119,6 +119,7 @@ steps:
       query_sequences: input_sequences
       covariance_models: ncRNA_ribosomal_models
       clan_info: ncRNA_ribosomal_model_clans
+      catOutputFileName: { default: "result_cat" }
     out: [ cmsearch_matches, concatenate_matches, deoverlapped_matches ]
 
 # extract coordinates for everything
