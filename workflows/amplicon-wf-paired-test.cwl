@@ -16,6 +16,9 @@ inputs:
     forward_reads: File
     reverse_reads: File
 
+    qc_min_length: int
+    stats_file_name: string
+
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
     ssu_tax: File
@@ -47,6 +50,10 @@ outputs:
   qc_stats_out:
     type: Directory
     outputSource: qc_stats/output_dir
+
+  qc_filtering_stats:
+    type: File
+    outputSource: run_quality_control_filtering/stats_summary_file
 
   ncRNAs:
     type: File
@@ -99,6 +106,8 @@ outputs:
   LSU_krona_image:
     type: File
     outputSource: classify/LSU_krona_image
+
+# TODO add biom-convert results
 
   masked_sequences:
     type: File
@@ -201,7 +210,9 @@ steps:
     in:
       seq_file: clean_fasta_headers/sequences_with_cleaned_headers
       submitted_seq_count: count_submitted_reads/count
-    out: [ filtered_file ]
+      stats_file_name: stats_file_name
+      min_length: qc_min_length
+    out: [ filtered_file, stats_summary_file ]
 
   count_processed_reads:
     run: ../utils/count_fasta.cwl
@@ -249,6 +260,10 @@ steps:
       - LSU_otu_tsv
       - LSU_otu_txt
       - LSU_krona_image
+#      - ssu_hdf5_classifications
+#      - ssu_json_classifications
+#      - lsu_hdf5_classifications
+#      - lsu_json_classifications
 
 # << ITS >>
   ITS:
