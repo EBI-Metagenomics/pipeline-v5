@@ -14,7 +14,6 @@ inputs:
   input_fasta:
     type: File
 
-
 arguments:
   - valueFrom: ..$(inputs.input_fasta.path)
     position: 1

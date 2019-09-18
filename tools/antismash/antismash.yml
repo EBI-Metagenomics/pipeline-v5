@@ -1,3 +1,3 @@
 input_fasta:
   class: File
-  path: ../Combined_gene_caller/gene_caller_input_example.fa
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA.fasta
