@@ -11,6 +11,8 @@ inputs:
   input_fasta:
     type: File
 
+baseCommand: [antismash]
+
 arguments:
   - valueFrom: ..$(inputs.input_fasta.path)
     position: 5
