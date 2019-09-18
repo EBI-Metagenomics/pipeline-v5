@@ -107,11 +107,27 @@ outputs:
     type: File
     outputSource: classify/LSU_krona_image
 
-# TODO add biom-convert results
+
+  ssu_hdf5_classifications:
+    type: File
+    outputSource: classify/ssu_hdf5_classifications
+
+  ssu_json_classifications:
+    type: File
+    outputSource: classify/ssu_json_classifications
+
+  lsu_hdf5_classifications:
+    type: File
+    outputSource: classify/lsu_hdf5_classifications
+
+  lsu_json_classifications:
+    type: File
+    outputSource: classify/lsu_json_classifications
 
   masked_sequences:
     type: File
     outputSource: ITS/masked_sequences
+
   unite_classifications:
     type: File
     outputSource: ITS/unite_classifications
@@ -260,10 +276,10 @@ steps:
       - LSU_otu_tsv
       - LSU_otu_txt
       - LSU_krona_image
-#      - ssu_hdf5_classifications
-#      - ssu_json_classifications
-#      - lsu_hdf5_classifications
-#      - lsu_json_classifications
+      - ssu_hdf5_classifications
+      - ssu_json_classifications
+      - lsu_hdf5_classifications
+      - lsu_json_classifications
 
 # << ITS >>
   ITS:
