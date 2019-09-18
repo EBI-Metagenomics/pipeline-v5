@@ -35,6 +35,13 @@ inputs:
     label: 'Post QC stats output file name'
     doc: >
       Give a name for the file which will hold the stats after QC.
+  min_length:
+    type: int
+    default: 100 # For assemblies we need to set this in the input YAML to 500
+    label: 'Minimum read or contig length'
+    doc: >
+      Specify the minimum read or contig length for sequences to pass QC filtering.
+
 
 outputs:
   filtered_file:
@@ -56,6 +63,9 @@ arguments:
      valueFrom: $(inputs.stats_file_name)
    - position: 4
      valueFrom: $(inputs.submitted_seq_count)
+   - position: 5
+     prefix: '--min_length'
+     valueFrom: $(inputs.min_length)
 
 $namespaces:
  edam: http://edamontology.org/
