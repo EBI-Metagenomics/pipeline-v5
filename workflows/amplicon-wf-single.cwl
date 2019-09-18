@@ -15,12 +15,16 @@ requirements:
 inputs:
     single_reads: File
 
+    qc_min_length: int
+    stats_file_name: string
+
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
     ssu_tax: File
     lsu_tax: File
     ssu_otus: File
     lsu_otus: File
+
     rfam_models: File[]
     rfam_model_clans: File
 
@@ -40,11 +44,23 @@ inputs:
 outputs:
   processed_nucleotide_reads:
     type: File
-    outputSource: clean_fasta_headers/sequences_with_cleaned_headers
+    outputSource: run_quality_control_filtering/filtered_file
+
+  qc_stats_out:
+    type: Directory
+    outputSource: qc_stats/output_dir
+
+  qc_filtering_stats:
+    type: File
+    outputSource: run_quality_control_filtering/stats_summary_file
 
   ncRNAs:
     type: File
     outputSource: classify/ncRNAs
+
+  cmsearch_tblout:
+    type: File
+    outputSource: classify/cmsearch_tblout
 
   5s_fasta:
     type: File
@@ -176,10 +192,10 @@ steps:
       trailing: { default: 3 }
       end_mode: { default: SE }
       minlen: { default: 100 }
-      slidingwindow:
-        default:
-          windowSize: 4
-          requiredQuality: 15
+      slidingwindow: { default: '4:15' }
+      #  default:
+      #    windowSize: 4
+      #    requiredQuality: 15
     out: [reads1_trimmed]
 
   convert_trimmed_reads_to_fasta:
@@ -194,39 +210,48 @@ steps:
       sequences: convert_trimmed_reads_to_fasta/fasta
     out: [ sequences_with_cleaned_headers ]
 
+  run_quality_control_filtering:
+    run: ../tools/qc-filtering/qc-filtering.cwl
+    in:
+      seq_file: clean_fasta_headers/sequences_with_cleaned_headers
+      submitted_seq_count: count_submitted_reads/count
+      stats_file_name: stats_file_name
+      min_length: qc_min_length
+    out: [ filtered_file, stats_summary_file ]
+
+  count_processed_reads:
+    run: ../utils/count_fasta.cwl
+    in:
+      sequences: run_quality_control_filtering/filtered_file
+    out: [ count ]
+
 # << QC >>
   qc_stats:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
         QCed_reads: clean_fasta_headers/sequences_with_cleaned_headers
-    out:
-      - summary_out
-      - seq_length_pcbin
-      - seq_length_bin
-      - seq_length_out
-      - nucleotide_distribution_out
-      - gc_sum_pcbin
-      - gc_sum_bin
-      - gc_sum_out
+        sequence_count: count_processed_reads/count
+    out: [ output_dir, summary_out ]
 
 # << Get RNA >>
   classify:
     run: rna_prediction-sub-wf.cwl
     in:
-       input_sequences: clean_fasta_headers/sequences_with_cleaned_headers
-       silva_ssu_database: ssu_db
-       silva_lsu_database: lsu_db
-       silva_ssu_taxonomy: ssu_tax
-       silva_lsu_taxonomy: lsu_tax
-       silva_ssu_otus: ssu_otus
-       silva_lsu_otus: lsu_otus
-       ncRNA_ribosomal_models: rfam_models
-       ncRNA_ribosomal_model_clans: rfam_model_clans
-       pattern_SSU: ssu_label
-       pattern_LSU: lsu_label
-       pattern_5S: 5s_pattern
+      input_sequences: run_quality_control_filtering/filtered_file
+      silva_ssu_database: ssu_db
+      silva_lsu_database: lsu_db
+      silva_ssu_taxonomy: ssu_tax
+      silva_lsu_taxonomy: lsu_tax
+      silva_ssu_otus: ssu_otus
+      silva_lsu_otus: lsu_otus
+      ncRNA_ribosomal_models: rfam_models
+      ncRNA_ribosomal_model_clans: rfam_model_clans
+      pattern_SSU: ssu_label
+      pattern_LSU: lsu_label
+      pattern_5S: 5s_pattern
     out:
       - ncRNAs
+      - cmsearch_tblout
       - 5S_fasta
       - SSU_fasta
       - LSU_fasta
@@ -240,25 +265,29 @@ steps:
       - LSU_otu_tsv
       - LSU_otu_txt
       - LSU_krona_image
+#      - ssu_hdf5_classifications
+#      - ssu_json_classifications
+#      - lsu_hdf5_classifications
+#      - lsu_json_classifications
 
 # << ITS >>
-
   ITS:
     run: ITS-test.cwl
     in:
-        qc_stats_summary: qc_stats/summary_out
-        query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
-        LSU_coordinates: classify/LSU_coords
-        SSU_coordinates: classify/SSU_coords
-        unite_database: unite_db
-        unite_taxonomy: unite_tax
-        unite_otus: unite_otu_file
-        itsone_database: itsonedb
-        itsone_taxonomy: itsonedb_tax
-        itsone_otus: itsonedb_otu_file
-        otu_unite_label: unite_label
-        otu_itsone_label: itsonedb_label
+      qc_stats_summary: qc_stats/summary_out
+      query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
+      LSU_coordinates: classify/LSU_coords
+      SSU_coordinates: classify/SSU_coords
+      unite_database: unite_db
+      unite_taxonomy: unite_tax
+      unite_otus: unite_otu_file
+      itsone_database: itsonedb
+      itsone_taxonomy: itsonedb_tax
+      itsone_otus: itsonedb_otu_file
+      otu_unite_label: unite_label
+      otu_itsone_label: itsonedb_label
     out:
+
       - masked_sequences
       - unite_classifications
       - unite_otu_tsv
