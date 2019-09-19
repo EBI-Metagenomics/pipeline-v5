@@ -20,6 +20,8 @@ arguments:
   - prefix: --domtblout
     valueFrom: $(inputs.seqfile.nameroot)_hmmscan.tbl
     position: 2
+  - prefix: --cpu
+    valueFrom: '32'
 
 inputs:
 
