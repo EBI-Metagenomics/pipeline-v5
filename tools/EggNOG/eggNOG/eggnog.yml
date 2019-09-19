@@ -1,5 +1,5 @@
 fasta_file:
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/example.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
   class: File
 db:
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/eggnog.db

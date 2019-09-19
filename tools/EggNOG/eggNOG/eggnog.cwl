@@ -9,9 +9,8 @@ requirements:
 #    dockerPull: eggnog_pipeline:latest
 #  InlineJavascriptRequirement: {}
   ResourceRequirement:
-    ramMin: 40000
-    ramMax: 40000
-    coresMin: 2
+    ramMin: 70000
+    coresMin: 32
 
 baseCommand: [emapper.py]
 arguments:
