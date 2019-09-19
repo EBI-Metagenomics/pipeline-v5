@@ -1,6 +1,6 @@
 seqfile:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/output-dir/combined_gene_caller-c9119bb3-1897-4bfe-8eaf-48b4b5ac3934/ERZ477576_FASTA.fasta.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
 
 gathering_bit_score: true
 

@@ -10,8 +10,8 @@ label: "Biosequence analysis using profile hidden Markov models"
 
 requirements:
   ResourceRequirement:
-    ramMin: 10000
-    ramMax: 10000
+    ramMin: 40000
+    coresMin: 32
   InlineJavascriptRequirement: {}
 
 baseCommand: ["hmmscan"]
