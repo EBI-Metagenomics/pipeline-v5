@@ -108,21 +108,21 @@ outputs:
     outputSource: classify/LSU_krona_image
 
 
-  ssu_hdf5_classifications:
-    type: File
-    outputSource: classify/ssu_hdf5_classifications
+#  ssu_hdf5_classifications:
+#    type: File
+#    outputSource: classify/ssu_hdf5_classifications
 
-  ssu_json_classifications:
-    type: File
-    outputSource: classify/ssu_json_classifications
+#  ssu_json_classifications:
+#    type: File
+#    outputSource: classify/ssu_json_classifications
 
-  lsu_hdf5_classifications:
-    type: File
-    outputSource: classify/lsu_hdf5_classifications
+#  lsu_hdf5_classifications:
+#    type: File
+#    outputSource: classify/lsu_hdf5_classifications
 
-  lsu_json_classifications:
-    type: File
-    outputSource: classify/lsu_json_classifications
+#  lsu_json_classifications:
+#    type: File
+#    outputSource: classify/lsu_json_classifications
 
   masked_sequences:
     type: File
@@ -276,10 +276,10 @@ steps:
       - LSU_otu_tsv
       - LSU_otu_txt
       - LSU_krona_image
-      - ssu_hdf5_classifications
-      - ssu_json_classifications
-      - lsu_hdf5_classifications
-      - lsu_json_classifications
+#      - ssu_hdf5_classifications
+#      - ssu_json_classifications
+#      - lsu_hdf5_classifications
+#      - lsu_json_classifications
 
 # << ITS >>
   ITS:

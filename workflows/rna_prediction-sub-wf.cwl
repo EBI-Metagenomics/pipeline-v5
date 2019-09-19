@@ -88,21 +88,21 @@ outputs:
     type: File
     outputSource: classify_LSUs/krona_image
 
-  ssu_hdf5_classifications:
-    type: File
-    outputSource: ssu_convert_otu_counts_to_hdf5/result
+#  ssu_hdf5_classifications:
+#    type: File
+#    outputSource: ssu_convert_otu_counts_to_hdf5/result
 
-  ssu_json_classifications:
-    type: File
-    outputSource: ssu_convert_otu_counts_to_json/result
+#  ssu_json_classifications:
+#    type: File
+#    outputSource: ssu_convert_otu_counts_to_json/result
 
-  lsu_hdf5_classifications:
-    type: File
-    outputSource: lsu_convert_otu_counts_to_hdf5/result
+#  lsu_hdf5_classifications:
+#    type: File
+#    outputSource: lsu_convert_otu_counts_to_hdf5/result
 
-  lsu_json_classifications:
-    type: File
-    outputSource: lsu_convert_otu_counts_to_json/result
+#  lsu_json_classifications:
+#    type: File
+#    outputSource: lsu_convert_otu_counts_to_json/result
 
 steps:
 
@@ -182,34 +182,34 @@ steps:
 
 #convert biom to hdf5 and json formats
 
-  ssu_convert_otu_counts_to_hdf5:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: classify_SSUs/krona_tsv
-       hdf5: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
+#  ssu_convert_otu_counts_to_hdf5:
+#    run: ../tools/biom-convert/biom-convert.cwl
+#    in:
+#       biom: classify_SSUs/krona_tsv
+#       hdf5: { default: true }
+#       table_type: { default: 'OTU table' }
+#    out: [ result ]
 
-  ssu_convert_otu_counts_to_json:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: classify_SSUs/krona_tsv
-       json: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
+#  ssu_convert_otu_counts_to_json:
+#    run: ../tools/biom-convert/biom-convert.cwl
+#    in:
+#       biom: classify_SSUs/krona_tsv
+#       json: { default: true }
+#       table_type: { default: 'OTU table' }
+#    out: [ result ]
 
-  lsu_convert_otu_counts_to_hdf5:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: classify_LSUs/krona_tsv
-       hdf5: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
+#  lsu_convert_otu_counts_to_hdf5:
+#    run: ../tools/biom-convert/biom-convert.cwl
+#    in:
+#       biom: classify_LSUs/krona_tsv
+#       hdf5: { default: true }
+#       table_type: { default: 'OTU table' }
+#    out: [ result ]
 
-  lsu_convert_otu_counts_to_json:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: classify_LSUs/krona_tsv
-       json: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
+#  lsu_convert_otu_counts_to_json:
+#    run: ../tools/biom-convert/biom-convert.cwl
+#    in:
+#       biom: classify_LSUs/krona_tsv
+ #      json: { default: true }
+ #      table_type: { default: 'OTU table' }
+ #   out: [ result ]
