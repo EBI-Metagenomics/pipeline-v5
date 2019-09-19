@@ -66,21 +66,21 @@ outputs:
     type: File
     outputSource: run_itsonedb/krona_image
 
-  unite_hdf5_classifications:
-    type: File
-    outputSource: unite_otu_counts_to_hdf5/result
+#  unite_hdf5_classifications:
+#    type: File
+#    outputSource: unite_otu_counts_to_hdf5/result
 
-  unite_json_classifications:
-    type: File
-    outputSource: unite_otu_counts_to_json/result
+#  unite_json_classifications:
+#    type: File
+#    outputSource: unite_otu_counts_to_json/result
 
-  itsonedb_hdf5_classifications:
-    type: File
-    outputSource: itsonedb_otu_counts_to_hdf5/result
+#  itsonedb_hdf5_classifications:
+#    type: File
+#    outputSource: itsonedb_otu_counts_to_hdf5/result
 
-  itsonedb_json_classifications:
-    type: File
-    outputSource: itsonedb_otu_counts_to_json/result
+#  itsonedb_json_classifications:
+#    type: File
+#    outputSource: itsonedb_otu_counts_to_json/result
 
 
 
@@ -142,34 +142,34 @@ steps:
 
 #get json and hdf5 files
 
-  unite_otu_counts_to_hdf5:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: run_unite/krona_tsv
-       hdf5: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
+#  unite_otu_counts_to_hdf5:
+#    run: ../tools/biom-convert/biom-convert.cwl
+#    in:
+#       biom: run_unite/krona_tsv
+#       hdf5: { default: true }
+#       table_type: { default: 'OTU table' }
+#    out: [ result ]
 
-  unite_otu_counts_to_json:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: run_unite/krona_tsv
-       json: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
+#  unite_otu_counts_to_json:
+#    run: ../tools/biom-convert/biom-convert.cwl
+#    in:
+#       biom: run_unite/krona_tsv
+#       json: { default: true }
+#       table_type: { default: 'OTU table' }
+#    out: [ result ]
 
-  itsonedb_otu_counts_to_hdf5:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: run_itsonedb/krona_tsv
-       hdf5: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
+#  itsonedb_otu_counts_to_hdf5:
+#    run: ../tools/biom-convert/biom-convert.cwl
+#    in:
+#       biom: run_itsonedb/krona_tsv
+#       hdf5: { default: true }
+#       table_type: { default: 'OTU table' }
+#    out: [ result ]
 
-  itsonedb_otu_counts_to_json:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: run_itsonedb/krona_tsv
-       json: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
+#  itsonedb_otu_counts_to_json:
+#    run: ../tools/biom-convert/biom-convert.cwl
+#   in:
+#       biom: run_itsonedb/krona_tsv
+#       json: { default: true }
+#       table_type: { default: 'OTU table' }
+#    out: [ result ]

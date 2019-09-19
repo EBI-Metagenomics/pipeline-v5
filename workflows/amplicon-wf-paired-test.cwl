@@ -152,18 +152,18 @@ outputs:
   itsonedb_krona_image:
     type: File
     outputSource: ITS/itsonedb_krona_image
-  unite_hdf5_classifications:
-    type: File
-    outputSource: ITS/unite_hdf5_classifications
-  unite_json_classifications:
-    type: File
-    outputSource: ITS/unite_json_classifications
-  itsonedb_hdf5_classifications:
-    type: File
-    outputSource: ITS/itsonedb_hdf5_classifications
-  itsonedb_json_classifications:
-    type: File
-    outputSource: ITS/itsonedb_json_classifications
+#  unite_hdf5_classifications:
+#    type: File
+#    outputSource: ITS/unite_hdf5_classifications
+#  unite_json_classifications:
+#    type: File
+#    outputSource: ITS/unite_json_classifications
+#  itsonedb_hdf5_classifications:
+#    type: File
+#    outputSource: ITS/itsonedb_hdf5_classifications
+#  itsonedb_json_classifications:
+#    type: File
+#    outputSource: ITS/itsonedb_json_classifications
 
 steps:
 
@@ -308,7 +308,7 @@ steps:
       - itsonedb_otu_tsv
       - itsonedb_otu_txt
       - itsonedb_krona_image
-      - unite_hdf5_classifications
-      - unite_json_classifications
-      - itsonedb_hdf5_classifications
-      - itsonedb_json_classifications
+#      - unite_hdf5_classifications
+#      - unite_json_classifications
+#      - itsonedb_hdf5_classifications
+#      - itsonedb_json_classifications
