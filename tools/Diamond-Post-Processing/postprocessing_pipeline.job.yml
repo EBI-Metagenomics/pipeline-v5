@@ -1,6 +1,6 @@
 input_diamond:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/work-dir/good/diamond/example.faa.diamond_matches
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/diamond/ERZ477576_FASTA.fasta.faa.diamond_matches
 input_db:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/db_uniref90_result.txt
