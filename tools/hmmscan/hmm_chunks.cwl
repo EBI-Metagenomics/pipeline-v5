@@ -49,13 +49,14 @@ steps:
       name_database: name_database
       data: data
       omit_alignment: omit_alignment
-    out: [hmm_result]
+    out: [ hmm_result ]
 
 # << Unite hmmscan >>
   combine_hmm:
     run: ../chunks/concatenate.cwl
     in:
       files: hmmscan/hmm_result
+      outputFileName: { default: 'hmm_united' }
     out: [ result ]
     label: "combined chunked hmmscam outputs"
 
