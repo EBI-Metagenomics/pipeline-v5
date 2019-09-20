@@ -9,14 +9,14 @@ $schemas:
   - 'https://schema.org/docs/schema_org_rdfa.html'
 
 requirements:
-  - class: SchemaDefRequirement
-    types:
-      - $import: ../tools/Diamond/Diamond-strand_values.yaml
-      - $import: ../tools/Diamond/Diamond-output_formats.yaml
-      - $import: ../tools/InterProScan/InterProScan-apps.yaml
-      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
+#  - class: SchemaDefRequirement
+#    types:
+#      - $import: ../tools/Diamond/Diamond-strand_values.yaml
+#      - $import: ../tools/Diamond/Diamond-output_formats.yaml
+#      - $import: ../tools/InterProScan/InterProScan-apps.yaml
+#      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
   - class: ResourceRequirement
-    ramMin: 1000
+    ramMin: 50000
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement

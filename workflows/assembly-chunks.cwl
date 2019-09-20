@@ -55,12 +55,12 @@ steps:
 # << Functional annotation. eggnog >>
   eggnog:
     run: ../tools/EggNOG/eggNOG/eggnog.cwl
-      in:
-        fasta_file: combined_gene_caller/predicted_proteins
-        db: EggNOG_db
-        db_diamond: EggNOG_diamond_db
-        data_dir: EggNOG_data_dir
-      out: [output_annotations, output_orthologs]
+    in:
+      fasta_file: combined_gene_caller/predicted_proteins
+      db: EggNOG_db
+      db_diamond: EggNOG_diamond_db
+      data_dir: EggNOG_data_dir
+    out: [output_annotations, output_orthologs]
 
 # << Functional annotation. hmmscan >>
   #hmmscan:
