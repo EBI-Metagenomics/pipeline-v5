@@ -41,10 +41,10 @@ steps:
 
 # << Functional annotation. hmmscan >>
   hmmscan:
-    scatter: seqfile
+    scatter: input_file
     run: hmmscan-subwf.cwl
     in:
-      seqfile: split_seqs/chunks
+      input_file: split_seqs/chunks
       gathering_bit_score: gathering_bit_score
       name_database: name_database
       data: data
