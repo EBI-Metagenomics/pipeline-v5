@@ -45,7 +45,7 @@ steps:
   hmmscan:
     scatter: seqfile
     in:
-      seqfile: proteins
+      seqfile: split_seqs/chunks
       gathering_bit_score: HMMSCAN_gathering_bit_score
       name_database: HMMSCAN_name_database
       data: HMMSCAN_data
