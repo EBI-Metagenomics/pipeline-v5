@@ -1,88 +1,53 @@
 contigs:
   class: File
-  path: merged_file.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/example.fasta
   format: edam:format_1929
+# RNA PREDICTION
+ssu_db:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/filtered_SILVA_132_SSU.fasta
+lsu_db:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/filtered_SILVA_132_LSU.fasta
+ssu_tax:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/slv_ssu_filtered2.txt
+lsu_tax:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/slv_lsu_filtered2.txt
+ssu_otus:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/ssu2.otu
+lsu_otus:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/lsu2.otu
 
-rna_pred_silva_ssu_database:
-  class: File
-  path: ../tools/RNA_prediction/data/filtered_SILVA_132_SSU.fasta
-rna_pred_silva_lsu_database:
-  class: File
-  path: ../tools/RNA_prediction/data/filtered_SILVA_132_LSU.fasta
-rna_pred_silva_ssu_taxonomy:
-  class: File
-  path: ../tools/RNA_prediction/data/slv_ssu_filtered2.txt
-rna_pred_silva_lsu_taxonomy:
-  class: File
-  path: ../tools/RNA_prediction/data/slv_lsu_filtered2.txt
-rna_pred_silva_ssu_otus:
-  class: File
-  path: ../tools/RNA_prediction/data/ssu2.otu
-rna_pred_silva_lsu_otus:
-  class: File
-  path: ../tools/RNA_prediction/data/lsu2.otu
-rna_pred_ncRNA_ribosomal_models:
+rfam_models:
   - class: File
-    path: ../tools/RNA_prediction/data/RF00002.cm
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF00002.cm
   - class: File
-    path: ../tools/RNA_prediction/data/RF00177.cm
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF00177.cm
   - class: File
-    path: ../tools/RNA_prediction/data/RF01959.cm
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF01959.cm
   - class: File
-    path: ../tools/RNA_prediction/data/RF01960.cm
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF01960.cm
   - class: File
-    path: ../tools/RNA_prediction/data/RF02540.cm
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02540.cm
   - class: File
-    path: ../tools/RNA_prediction/data/RF02541.cm
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02541.cm
   - class: File
-    path: ../tools/RNA_prediction/data/RF02542.cm
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02542.cm
   - class: File
-    path: ../tools/RNA_prediction/data/RF02543.cm
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02543.cm
   - class: File
-    path: ../tools/RNA_prediction/data/RF02546.cm
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02546.cm
   - class: File
-    path: ../tools/RNA_prediction/data/RF02547.cm
-rna_pred_ncRNA_ribosomal_model_clans:  # change
-  class: File
-  path: ../tools/RNA_prediction/data/ribo.claninfo
-rna_pred_otu_ssu_label: 'SSU'
-rna_pred_otu_lsu_label: 'LSU'
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02547.cm
 
-CGC_seq_type: "a"
-
-Diamond_databaseFile:  # change
+rfam_model_clans:
   class: File
-  path: >-
-    _Diamond_test/chunk_1_uniref90.dmnd
-Diamond_outFormat: '6'
-Diamond_maxTargetSeqs: 1
-Diamond_postProcessingDB:  # change
-  class: File
-  path: _Diamond_test/diamond_pp_db
+  path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/ribo.claninfo
 
-InterProScan_applications:
-  - PfamA
-InterProScan_outputFormat:
-  - TSV
-InterProScan_databases:  # change
-  class: Directory
-  path: ../tools/InterProScan/test-input/databases
-
-go_summary_config:  # change
-  class: File
-  path: ../tools/GO-slim/go_summary-config.json
-
-HMMSCAN_gathering_bit_score: true
-HMMSCAN_omit_alignment: true
-HMMSCAN_name_database: db_kofam.hmm
-HMMSCAN_data:
-  class: Directory
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs
-
-viral_hmmscan_gathering_bit_score: false
-viral_hmmscan_omit_alignment: true
-viral_hmmscan_name_database: vpHMM_database
-viral_hmmscan_folder_db:  # change
-  class: Directory
-  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/tools/Viral/HMMScan/vpHMM_database
-viral_hmmscan_filter_e_value: 0.001
+ssu_label: 'SSU'
+lsu_label: 'LSU'
+5s_pattern: '5_8S'

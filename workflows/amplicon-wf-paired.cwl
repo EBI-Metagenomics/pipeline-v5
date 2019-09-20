@@ -8,10 +8,16 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
+#  SchemaDefRequirement:
+#    types:
+#      - $import: ../tools/Trimmomatic/trimmomatic-sliding_window.yaml
 
 inputs:
     forward_reads: File
     reverse_reads: File
+
+    qc_min_length: int
+    stats_file_name: string
 
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -39,11 +45,23 @@ inputs:
 outputs:
   processed_nucleotide_reads:
     type: File
-    outputSource: trim_and_reformat_reads/trimmed_and_reformatted_reads
+    outputSource: run_quality_control_filtering/filtered_file
+
+  qc_stats_out:
+    type: Directory
+    outputSource: qc_stats/output_dir
+
+  qc_filtering_stats:
+    type: File
+    outputSource: run_quality_control_filtering/stats_summary_file
 
   ncRNAs:
     type: File
     outputSource: classify/ncRNAs
+
+  cmsearch_tblout:
+    type: File
+    outputSource: classify/cmsearch_tblout
 
   5s_fasta:
     type: File
@@ -89,25 +107,22 @@ outputs:
     type: File
     outputSource: classify/LSU_krona_image
 
-  ssu_hdf5_classifications:
-    type: File
-    outputSource: classify/ssu_hdf5_classifications
 
-  ssu_json_classifications:
-    type: File
-    outputSource: classify/ssu_json_classifications
+#  ssu_hdf5_classifications:
+#    type: File
+#    outputSource: classify/ssu_hdf5_classifications
 
-  lsu_hdf5_classifications:
-    type: File
-    outputSource: classify/lsu_hdf5_classifications
+#  ssu_json_classifications:
+#    type: File
+#    outputSource: classify/ssu_json_classifications
 
-  lsu_json_classifications:
-    type: File
-    outputSource: classify/lsu_json_classifications
+#  lsu_hdf5_classifications:
+#    type: File
+#    outputSource: classify/lsu_hdf5_classifications
 
-  proportion_SU:
-    type: File
-    outputSource: ITS/proportion_SU
+#  lsu_json_classifications:
+#    type: File
+#    outputSource: classify/lsu_json_classifications
 
   masked_sequences:
     type: File
@@ -116,53 +131,43 @@ outputs:
   unite_classifications:
     type: File
     outputSource: ITS/unite_classifications
-
   unite_otu_tsv:
     type: File
     outputSource: ITS/unite_otu_tsv
-
   unite_otu_txt:
     type: File
     outputSource: ITS/unite_otu_txt
-
   unite_krona_image:
     type: File
     outputSource: ITS/unite_krona_image
-
   itsonedb_classifications:
     type: File
     outputSource: ITS/itsonedb_classifications
-
   itsonedb_otu_tsv:
     type: File
     outputSource: ITS/itsonedb_otu_tsv
-
   itsonedb_otu_txt:
     type: File
     outputSource: ITS/itsonedb_otu_txt
-
   itsonedb_krona_image:
     type: File
     outputSource: ITS/itsonedb_krona_image
-
-  unite_hdf5_classifications:
-    type: File
-    outputSource: ITS/unite_hdf5_classifications
-
-  unite_json_classifications:
-    type: File
-    outputSource: ITS/unite_json_classifications
-
-  itsonedb_hdf5_classifications:
-    type: File
-    outputSource: ITS/itsonedb_hdf5_classifications
-
-  itsonedb_json_classifications:
-    type: File
-    outputSource: ITS/itsonedb_json_classifications
+#  unite_hdf5_classifications:
+#    type: File
+#    outputSource: ITS/unite_hdf5_classifications
+#  unite_json_classifications:
+#    type: File
+#    outputSource: ITS/unite_json_classifications
+#  itsonedb_hdf5_classifications:
+#    type: File
+#    outputSource: ITS/itsonedb_hdf5_classifications
+#  itsonedb_json_classifications:
+#    type: File
+#    outputSource: ITS/itsonedb_json_classifications
 
 steps:
 
+# << SeqPrep >>
   overlap_reads:
     label: Paired-end overlapping reads are merged
     run: ../tools/SeqPrep/seqprep.cwl
@@ -179,48 +184,90 @@ steps:
       reverse_unmerged_reads: overlap_reads/reverse_unmerged_reads
     out: [ merged_with_unmerged_reads ]
 
-  trim_and_reformat_reads:
-    run: trim_and_reformat_reads.cwl
+  count_submitted_reads:
+    run: ../utils/count_fastq.cwl
     in:
-      reads: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
-    out:  [ trimmed_and_reformatted_reads ]
+      sequences: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+    out: [ count ]
 
+# << Trim and Reformat >>
+  trim_quality_control:
+    doc: |
+      Low quality trimming (low quality ends and sequences with < quality scores
+      less than 15 over a 4 nucleotide wide window are removed)
+    run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+    in:
+      reads1: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+      phred: { default: '33' }
+      leading: { default: 3 }
+      trailing: { default: 3 }
+      end_mode: { default: SE }
+      minlen: { default: 100 }
+      slidingwindow: { default: '4:15' }
+      #  default:
+      #    windowSize: 4
+      #    requiredQuality: 15
+    out: [reads1_trimmed]
+
+  convert_trimmed_reads_to_fasta:
+    run: ../utils/fastq_to_fasta.cwl
+    in:
+      fastq: trim_quality_control/reads1_trimmed
+    out: [ fasta ]
+
+  clean_fasta_headers:
+    run: ../utils/clean_fasta_headers.cwl
+    in:
+      sequences: convert_trimmed_reads_to_fasta/fasta
+    out: [ sequences_with_cleaned_headers ]
+
+  run_quality_control_filtering:
+    run: ../tools/qc-filtering/qc-filtering.cwl
+    in:
+      seq_file: clean_fasta_headers/sequences_with_cleaned_headers
+      submitted_seq_count: count_submitted_reads/count
+      stats_file_name: stats_file_name
+      min_length: qc_min_length
+    out: [ filtered_file, stats_summary_file ]
+
+  count_processed_reads:
+    run: ../utils/count_fasta.cwl
+    in:
+      sequences: run_quality_control_filtering/filtered_file
+    out: [ count ]
+
+# << QC >>
   qc_stats:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
-        QCed_reads: trim_and_reformat_reads/trimmed_and_reformatted_reads
-    out:
-      - summary_out
-      - seq_length_pcbin
-      - seq_length_bin
-      - seq_length_out
-      - nucleotide_distribution_out
-      - gc_sum_pcbin
-      - gc_sum_bin
-      - gc_sum_out
+        QCed_reads: run_quality_control_filtering/filtered_file
+        sequence_count: count_processed_reads/count
+    out: [ output_dir, summary_out ]
 
+# << Get RNA >>
   classify:
     run: rna_prediction-sub-wf.cwl
     in:
-       input_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
-       silva_ssu_database: ssu_db
-       silva_lsu_database: lsu_db
-       silva_ssu_taxonomy: ssu_tax
-       silva_lsu_taxonomy: lsu_tax
-       silva_ssu_otus: ssu_otus
-       silva_lsu_otus: lsu_otus
-       ncRNA_ribosomal_models: rfam_models
-       ncRNA_ribosomal_model_clans: rfam_model_clans
-       pattern_SSU: ssu_label
-       pattern_LSU: lsu_label
-       pattern_5S: 5s_pattern
+      input_sequences: run_quality_control_filtering/filtered_file
+      silva_ssu_database: ssu_db
+      silva_lsu_database: lsu_db
+      silva_ssu_taxonomy: ssu_tax
+      silva_lsu_taxonomy: lsu_tax
+      silva_ssu_otus: ssu_otus
+      silva_lsu_otus: lsu_otus
+      ncRNA_ribosomal_models: rfam_models
+      ncRNA_ribosomal_model_clans: rfam_model_clans
+      pattern_SSU: ssu_label
+      pattern_LSU: lsu_label
+      pattern_5S: 5s_pattern
     out:
       - ncRNAs
+      - cmsearch_tblout
       - 5S_fasta
       - SSU_fasta
       - LSU_fasta
-#      - SSU_coords
-#      - LSU_coords
+      - SSU_coords
+      - LSU_coords
       - SSU_classifications
       - SSU_otu_tsv
       - SSU_otu_txt
@@ -233,23 +280,25 @@ steps:
 #      - ssu_json_classifications
 #      - lsu_hdf5_classifications
 #      - lsu_json_classifications
+
+# << ITS >>
   ITS:
-    run: ITS-wf.cwl
+    run: ITS-test.cwl
     in:
-        qc_stats_summary: qc_stats/summary_out
-        query_sequences: trim_and_reformat_reads/trimmed_and_reformatted_reads
-        LSU_fasta: classify/LSU_fasta
-        SSU_fasta: classify/SSU_fasta
-        unite_database: unite_db
-        unite_taxonomy: unite_tax
-        unite_otus: unite_otu_file
-        itsone_database: itsonedb
-        itsone_taxonomy: itsonedb_tax
-        itsone_otus: itsonedb_otu_file
-        otu_unite_label: unite_label
-        otu_itsone_label: itsonedb_label
+      qc_stats_summary: qc_stats/summary_out
+      query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
+      LSU_coordinates: classify/LSU_coords
+      SSU_coordinates: classify/SSU_coords
+      unite_database: unite_db
+      unite_taxonomy: unite_tax
+      unite_otus: unite_otu_file
+      itsone_database: itsonedb
+      itsone_taxonomy: itsonedb_tax
+      itsone_otus: itsonedb_otu_file
+      otu_unite_label: unite_label
+      otu_itsone_label: itsonedb_label
     out:
-      - proportion_SU
+
       - masked_sequences
       - unite_classifications
       - unite_otu_tsv
@@ -259,10 +308,7 @@ steps:
       - itsonedb_otu_tsv
       - itsonedb_otu_txt
       - itsonedb_krona_image
-      - unite_hdf5_classifications
-      - unite_json_classifications
-      - itsonedb_hdf5_classifications
-      - itsonedb_json_classifications
-
-
-
+#      - unite_hdf5_classifications
+#      - unite_json_classifications
+#      - itsonedb_hdf5_classifications
+#      - itsonedb_json_classifications
