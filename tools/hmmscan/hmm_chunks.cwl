@@ -33,7 +33,7 @@ outputs:
 steps:
 
   split_seqs:
-    run: ../tools/chunks/fasta_chunker.cwl
+    run: ../chunks/fasta_chunker.cwl
     in:
       seqs: input_file
       chunk_size: { default: 10 }
@@ -42,7 +42,7 @@ steps:
 # << Functional annotation. hmmscan >>
   hmmscan:
     scatter: seqfile
-    run: ../tools/hmmscan/hmmscan-subwf.cwl
+    run: hmmscan-subwf.cwl
     in:
       seqfile: split_seqs/chunks
       gathering_bit_score: gathering_bit_score
