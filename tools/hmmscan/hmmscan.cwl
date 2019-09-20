@@ -10,7 +10,7 @@ label: "Biosequence analysis using profile hidden Markov models"
 
 requirements:
   ResourceRequirement:
-    ramMin: 40000
+    ramMin: 5000
     coresMin: 32
   InlineJavascriptRequirement: {}
 
