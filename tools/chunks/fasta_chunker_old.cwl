@@ -9,7 +9,6 @@ requirements:
   ResourceRequirement:
     coresMax: 8
     ramMin: 10000  # just a default, could be lowered
-    ramMax: 10000
 hints:
   SoftwareRequirement:
     packages:
