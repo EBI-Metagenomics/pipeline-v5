@@ -54,7 +54,7 @@ steps:
 
 # << Functional annotation. eggnog >>
   eggnog:
-    scatter: seqfile
+    scatter: fasta_file
     run: ../tools/EggNOG/eggNOG/eggnog.cwl
     in:
       fasta_file: split_seqs/chunks
