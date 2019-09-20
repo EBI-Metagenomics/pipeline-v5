@@ -185,6 +185,7 @@ steps:
       sequences: single_reads
     out: [ count ]
 
+# << Trimm >>
   trim_quality_control:
     doc: |
       Low quality trimming (low quality ends and sequences with < quality scores
@@ -215,6 +216,7 @@ steps:
       sequences: convert_trimmed_reads_to_fasta/fasta
     out: [ sequences_with_cleaned_headers ]
 
+# << QC filtering >>
   run_quality_control_filtering:
     run: ../tools/qc-filtering/qc-filtering.cwl
     in:

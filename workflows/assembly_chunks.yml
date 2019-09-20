@@ -1,11 +1,11 @@
 proteins:
   format: edam:format_1929
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/output-dir/combined_gene_caller-c9119bb3-1897-4bfe-8eaf-48b4b5ac3934/ERZ477576_FASTA.fasta.faa
-InterProScan_applications:
-  - PfamA
-InterProScan_outputFormat:
-  - TSV
-InterProScan_databases:
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
+
+HMMSCAN_gathering_bit_score: true
+HMMSCAN_omit_alignment: true
+HMMSCAN_name_database: db_kofam.hmm
+HMMSCAN_data:
   class: Directory
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs

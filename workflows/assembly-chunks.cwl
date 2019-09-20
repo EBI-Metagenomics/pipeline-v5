@@ -10,8 +10,8 @@ $schemas:
 
 requirements:
   - class: ResourceRequirement
-    ramMin: 5000
-    ramMax: 10000
+    ramMin: 50000
+    coresMin: 32
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
@@ -21,13 +21,16 @@ requirements:
 inputs:
   proteins: File
 
-  InterProScan_applications: string[]?  #../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-  InterProScan_outputFormat: string[]?  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-  InterProScan_databases: Directory
+  HMMSCAN_gathering_bit_score: boolean
+  HMMSCAN_omit_alignment: boolean
+  HMMSCAN_name_database: string
+  HMMSCAN_data: Directory
 
+outputs:
 
-
-outputs: []
+  hmmscan_files:
+    type: File[]
+    outputSource: hmmscan/output_table
 
 steps:
 
@@ -35,27 +38,18 @@ steps:
     run: ../tools/chunks/fasta_chunker_old.cwl
     in:
       seqs: proteins
-      chunk_size: { default: 100000 }
+      chunk_size: { default: 1000 }
     out: [ chunks ]
 
-  # << Functional annotation. InterProScan >>
-  interproscan:
-    scatter: inputFile
+  # << Functional annotation. hmmscan >>
+  hmmscan:
+    scatter: seqfile
     in:
-      inputFile: split_seqs/chunks
-      applications: InterProScan_applications
-      outputFormat: InterProScan_outputFormat
-      databases: InterProScan_databases
+      seqfile: proteins
+      gathering_bit_score: HMMSCAN_gathering_bit_score
+      name_database: HMMSCAN_name_database
+      data: HMMSCAN_data
+      omit_alignment: HMMSCAN_omit_alignment
     out:
-      - i5Annotations
-    run: ../tools/InterProScan/InterProScan-v5-none_docker.cwl
-    label: "InterProScan: protein sequence classifier"
-
-  # interpro
-  combine_interpro:
-    run: ../tools/chunks/concatenate.cwl
-    in:
-      files: interproscan/i5Annotations
-      outputFileName: { default: "interpro" }
-    out: [ result ]
-    label: "combine all chunked interpro outputs to 1 tsv"
+      - output_table
+    run: ../tools/hmmscan/hmmscan.cwl

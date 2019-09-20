@@ -77,7 +77,7 @@ HMMSCAN_omit_alignment: true
 HMMSCAN_name_database: db_kofam.hmm
 HMMSCAN_data:
   class: Directory
-  path: /Users/kates/Desktop/EBI/CWL/pipeline-v5/tools/hmmscan/db
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs
 
 viral_hmmscan_gathering_bit_score: false
 viral_hmmscan_omit_alignment: true
