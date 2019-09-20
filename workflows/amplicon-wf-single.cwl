@@ -179,6 +179,11 @@ outputs:
 #    outputSource: ITS/itsonedb_json_classifications
 
 steps:
+  count_submitted_reads:
+    run: ../utils/count_fastq.cwl
+    in:
+      sequences: single_reads
+    out: [ count ]
 
   trim_quality_control:
     doc: |
