@@ -30,5 +30,5 @@ if __name__ == "__main__":
 
         # write any remaining sequences
         if len(currentSequences) > 0:
-            fileName = str(cur_number - int(args.size) +1) + "_" + str(cur_number) + ext
+            fileName = str(cur_number - len(currentSequences)) + "_" + str(cur_number) + ext
             SeqIO.write(currentSequences, fileName, "fasta")

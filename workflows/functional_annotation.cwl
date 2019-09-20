@@ -91,8 +91,8 @@ steps:
     out: [ output_table ]
     label: "Analysis using profile HMM on db"
 
-   eggnog:
-     run: ../tools/EggNOG/eggNOG/eggnog.cwl
+  eggnog:
+    run: ../tools/EggNOG/eggNOG/eggnog.cwl
       in:
         fasta_file: combined_gene_caller/predicted_proteins
         db: EggNOG_db

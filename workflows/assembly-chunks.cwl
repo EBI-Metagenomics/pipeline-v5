@@ -26,11 +26,22 @@ inputs:
   HMMSCAN_name_database: string
   HMMSCAN_data: Directory
 
-outputs:
+  EggNOG_db: File
+  EggNOG_diamond_db: File
+  EggNOG_data_dir: string
 
-  hmmscan_files:
+
+outputs:
+  #hmmscan_files:
+  #  type: File[]
+  #  outputSource: hmmscan/output_table
+
+  eggnog_annotations:
     type: File[]
-    outputSource: hmmscan/output_table
+    outputSource: eggnog/output_annotations
+  eggnog_orthologs:
+    type: File[]
+    outputSource: eggnog/output_orthologs
 
 steps:
 
@@ -41,15 +52,25 @@ steps:
       chunk_size: { default: 1000 }
     out: [ chunks ]
 
-  # << Functional annotation. hmmscan >>
-  hmmscan:
-    scatter: seqfile
-    in:
-      seqfile: split_seqs/chunks
-      gathering_bit_score: HMMSCAN_gathering_bit_score
-      name_database: HMMSCAN_name_database
-      data: HMMSCAN_data
-      omit_alignment: HMMSCAN_omit_alignment
-    out:
-      - output_table
-    run: ../tools/hmmscan/hmmscan.cwl
+# << Functional annotation. eggnog >>
+  eggnog:
+    run: ../tools/EggNOG/eggNOG/eggnog.cwl
+      in:
+        fasta_file: combined_gene_caller/predicted_proteins
+        db: EggNOG_db
+        db_diamond: EggNOG_diamond_db
+        data_dir: EggNOG_data_dir
+      out: [output_annotations, output_orthologs]
+
+# << Functional annotation. hmmscan >>
+  #hmmscan:
+  #  scatter: seqfile
+  #  in:
+  #    seqfile: split_seqs/chunks
+  #    gathering_bit_score: HMMSCAN_gathering_bit_score
+  #    name_database: HMMSCAN_name_database
+  #    data: HMMSCAN_data
+  #    omit_alignment: HMMSCAN_omit_alignment
+  #  out:
+  #    - output_table
+  #  run: ../tools/hmmscan/hmmscan.cwl
