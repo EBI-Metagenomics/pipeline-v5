@@ -44,10 +44,6 @@ outputs:
     type: Directory
     outputSource: qc_stats/output_dir
 
-  qc_filtering_stats:
-    type: File
-    outputSource: run_quality_control_filtering/stats_summary_file
-
   ncRNAs:
     type: File
     outputSource: classify/ncRNAs
