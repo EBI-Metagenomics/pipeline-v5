@@ -17,7 +17,6 @@ requirements:
   - class: StepInputExpressionRequirement
   - class: ScatterFeatureRequirement
 
-
 inputs:
   contigs: File
 
