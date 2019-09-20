@@ -47,13 +47,7 @@ inputs:
     type: string
 
   data:
-    type: Directory?
-    default:
-      class: Directory
-      path:  db/
-      location: db/
-      listing: []
-      basename: db
+    type: Directory
     inputBinding:
       valueFrom: $(self.path)/$(inputs.name_database)
       position: 5
