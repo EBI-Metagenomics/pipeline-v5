@@ -57,6 +57,6 @@ steps:
     in:
       files: hmmscan/output_table
     out: [ result ]
-    label "combined chunked hmmscam outputs"
+    label: "combined chunked hmmscam outputs"
 
 # << Add header >>
