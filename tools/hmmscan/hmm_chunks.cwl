@@ -53,7 +53,7 @@ steps:
 
 # << Unite hmmscan >>
   combine_hmm:
-    run: ../utils/concatenate.cwl
+    run: ../../utils/concatenate.cwl
     in:
       files: hmmscan/output_table
     out: [ result ]
