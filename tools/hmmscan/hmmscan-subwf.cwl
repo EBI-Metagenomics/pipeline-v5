@@ -15,6 +15,9 @@ inputs:
   omit_alignment: boolean
 
 outputs:
+  hmm_result:
+    type: File
+    outputSource: remove_header/result
 
 steps:
   hmmscan:
