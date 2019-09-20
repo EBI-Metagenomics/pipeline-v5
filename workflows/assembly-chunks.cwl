@@ -54,9 +54,10 @@ steps:
 
 # << Functional annotation. eggnog >>
   eggnog:
+    scatter: seqfile
     run: ../tools/EggNOG/eggNOG/eggnog.cwl
     in:
-      fasta_file: combined_gene_caller/predicted_proteins
+      fasta_file: split_seqs/chunks
       db: EggNOG_db
       db_diamond: EggNOG_diamond_db
       data_dir: EggNOG_data_dir
