@@ -36,7 +36,7 @@ steps:
     run: ../chunks/fasta_chunker.cwl
     in:
       seqs: input_file
-      chunk_size: { default: 10 }
+      chunk_size: { default: 1000 }
     out: [ chunks ]
 
 # << Functional annotation. hmmscan >>
@@ -61,3 +61,4 @@ steps:
     label: "combined chunked hmmscam outputs"
 
 # << Add header >>
+# written but not tested

@@ -1,0 +1,3 @@
+input_table:
+  class: File
+  path: gene_caller_input_example.fa_hmmscan.tbl
