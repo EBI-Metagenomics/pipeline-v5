@@ -50,7 +50,7 @@ outputs:
 
   cmsearch_tblout:
     type: File
-    outputSource: classify/cmsearch_tblout
+    outputSource: classify/cmsearch_deoverlapped
 
   5s_fasta:
     type: File
@@ -131,19 +131,23 @@ steps:
        pattern_5S: 5s_pattern
     out:
       - ncRNAs
+      - cmsearch_deoverlapped
       - 5S_fasta
+
       - SSU_fasta
-      - LSU_fasta
       - SSU_coords
-      - LSU_coords
       - SSU_classifications
       - SSU_otu_tsv
       - SSU_otu_txt
       - SSU_krona_image
+
+      - LSU_fasta
+      - LSU_coords
       - LSU_classifications
       - LSU_otu_tsv
       - LSU_otu_txt
       - LSU_krona_image
+
 #      - ssu_hdf5_classifications
 #      - ssu_json_classifications
 #      - lsu_hdf5_classifications
