@@ -4,13 +4,13 @@ class: CommandLineTool
 
 label: split FASTA by number of records
 doc: based upon code by Maxim Scheremetjew, EMBL-EBI
-#copied from ebi-metagenomics-cwl/tools/fasta_chunker.cwl
+#copied from ebi-metagenomics-cwl/tools/fasta_chunker.cwl and fixed
 
 
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 100  # just a default, could be lowered
+    ramMin: 1000  # just a default, could be lowered
 hints:
   SoftwareRequirement:
     packages:
@@ -30,17 +30,12 @@ inputs:
 
 baseCommand: [ split_to_chunks.py ]
 
-arguments:
-  - prefix: -c
-    valueFrom: |
-
-
 outputs:
   chunks:
     format: edam:format_1929  # FASTA
     type: File[]
     outputBinding:
-      glob: '*'
+      glob: '*_*'
 
 $namespaces:
  edam: http://edamontology.org/

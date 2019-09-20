@@ -35,7 +35,7 @@ outputs:
 steps:
 
   split_seqs:
-    run: ../tools/chunks/fasta_chunker_old.cwl
+    run: ../tools/chunks/fasta_chunker.cwl
     in:
       seqs: proteins
       chunk_size: { default: 1000 }
