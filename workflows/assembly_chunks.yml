@@ -1,7 +1,7 @@
 proteins:
   format: edam:format_1929
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA_10000.fasta.faa
 
 HMMSCAN_gathering_bit_score: true
 HMMSCAN_omit_alignment: true
