@@ -90,7 +90,7 @@ arguments:
 requirements:
   - class: ShellCommandRequirement
   - class: ResourceRequirement
-    ramMin: 40000
+    ramMin: 10000
     coresMin: 4
   - class: InlineJavascriptRequirement
 #  - class: SchemaDefRequirement
