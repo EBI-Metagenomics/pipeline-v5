@@ -2,8 +2,7 @@ applications:
   - PfamA
 inputFile:
   class: File
-  path: test.fasta.faa
-  #/hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
 outputFormat:
   - TSV
 databases:
