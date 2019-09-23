@@ -1,0 +1,4 @@
+interpro_file:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/interpro
+  #format: 'edam:format_3475'

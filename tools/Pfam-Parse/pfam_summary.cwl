@@ -34,9 +34,9 @@ outputs:
     label: Frequency of each Pfam hit
     #format: edam:format_3475
 
-hints:
-  - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+#hints:
+#  - class: DockerRequirement
+#    dockerPull: 'alpine:3.7'
 
 #$namespaces:
   #edam:http://edamontology.org/
