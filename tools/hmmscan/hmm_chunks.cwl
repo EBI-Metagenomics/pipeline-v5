@@ -29,7 +29,12 @@ outputs:
   hmmscan_result:
     type: File
     outputSource: combine_hmm/result
-
+  hmmscan_tab:
+    type: File
+    outputSource: tab_modification/output_with_tabs
+  hmm_summary:
+    type: File
+    outputSource: summary/hmmscan_summary
 steps:
 
   split_seqs:
@@ -62,3 +67,18 @@ steps:
 
 # << Add header >>
 # written but not tested
+
+# << add TAB step >>
+  tab_modification:
+    run: ../KEGG_analysis/Modification/modification_table.cwl
+    in:
+      input_table: combine_hmm/result
+    out: [ output_with_tabs ]
+    label: "change spaced file to tsv"
+
+# << Summary for TAB DEL>>
+  summary:
+    run: summary.cwl
+    in:
+      hmm_tab_results: tab_modification/output_with_tabs
+    out: [hmmscan_summary]
