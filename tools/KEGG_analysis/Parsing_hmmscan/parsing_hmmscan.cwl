@@ -6,11 +6,11 @@ class: CommandLineTool
 label: "Biosequence analysis using profile hidden Markov models"
 
 requirements:
-  DockerRequirement:
-    dockerPull: kegg_analysis:latest
+#  DockerRequirement:
+#    dockerPull: kegg_analysis:latest
   InlineJavascriptRequirement: {}
 
-baseCommand: ['python', '/parsing_hmmscan.py']
+baseCommand: ['parsing_hmmscan.py']
 
 inputs:
   table:

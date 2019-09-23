@@ -1,4 +1,4 @@
-import numpy as np
+#!/usr/bin/env python3
 import os
 import argparse
 import sys
@@ -26,9 +26,9 @@ def parsing(input_file, outdir):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description = "Generates file with KEGG orthologs for each contig")
-    parser.add_argument("-i", "--input", dest = "input_file", help = "Tab deliminated file with hmmscan results", required = True)
-    parser.add_argument("-o", "--outdir", dest = "outdir", help = "Relative path to directory where you want the output file to be stored (default: cwd)", default = ".")
+    parser = argparse.ArgumentParser(description="Generates file with KEGG orthologs for each contig")
+    parser.add_argument("-i", "--input", dest="input_file", help="Tab deliminated file with hmmscan results", required=True)
+    parser.add_argument("-o", "--outdir", dest="outdir", help="Relative path to directory where you want the output file to be stored (default: cwd)", default = ".")
 
     if len(sys.argv) == 1:
         parser.print_help()

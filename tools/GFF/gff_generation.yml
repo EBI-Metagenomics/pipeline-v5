@@ -1,0 +1,7 @@
+eggnog_results:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/eggnog
+input_faa:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
+output_name: result.gff

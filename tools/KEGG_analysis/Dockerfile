@@ -40,9 +40,13 @@ RUN python make_graphs.py -i pathways/all_pathways.txt
 
 
 # Add .py scripts
-COPY KEGG_pathways/give_pathways.py /give_pathways.py
-COPY Union_by_contigs/union_by_contigs.py /union_by_contigs.py
-COPY Parsing_hmmscan/parsing_hmmscan.py /parsing_hmmscan.py
+mkdir /tools
+COPY KEGG_pathways/give_pathways.py /tools/give_pathways.py
+COPY Union_by_contigs/union_by_contigs.py /tools/union_by_contigs.py
+COPY Parsing_hmmscan/parsing_hmmscan.py /tools/parsing_hmmscan.py
+
+RUN chmod -R a+rwx /tools
+ENV PATH="/tools:${PATH}"
 
 
-CMD ["python", "/give_pathways.py"]
+CMD [give_pathways.py]

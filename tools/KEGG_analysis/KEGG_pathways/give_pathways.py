@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import numpy as np
 import argparse
@@ -7,7 +9,7 @@ import pickle
 import networkx as nx
 
 
-def download_pathways(outdir):
+def download_pathways(path_to_graphs, path_to_graphs_names, path_to_graphs_classes):
     """
     Function loads dict of graph that was saved by docker container to graphs.pickle
     :param outdir: path to file with graphs
@@ -15,19 +17,19 @@ def download_pathways(outdir):
              dict of names of pathways
              dict of classes of pathways
     """
-    path_to_graphs = os.path.join(outdir, "graphs.pkl")
+    #path_to_graphs = os.path.join(outdir, "graphs.pkl")
     graph_file = open(path_to_graphs, 'rb')
     graphs = pickle.load(graph_file)
 
     pathway_names = {}
-    path_to_graphs_names = os.path.join(outdir, "pathways/all_pathways_names.txt")
+    #path_to_graphs_names = os.path.join(outdir, "pathways/all_pathways_names.txt")
     with open(path_to_graphs_names, 'r') as file_names:
         for line in file_names:
             line = line.strip().split(':')
             pathway_names[line[0]] = line[1]
 
     pathway_classes = {}
-    path_to_graphs_classes = os.path.join(outdir, "pathways/all_pathways_class.txt")
+    #path_to_graphs_classes = os.path.join(outdir, "pathways/all_pathways_class.txt")
     with open(path_to_graphs_classes, 'r') as file_classes:
         for line in file_classes:
             line = line.strip().split(':')
@@ -255,6 +257,11 @@ def sort_out_pathways(graphs, edges, pathway_names, pathway_classes, outdir):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generates Graphs for each contig")
     parser.add_argument("-i", "--input", dest="input_file", help="Each line = pathway", required=True)
+
+    parser.add_argument("-g", "--graphs", dest="graphs", help="graphs in pickle format", required=True)
+    parser.add_argument("-n", "--names", dest="names", help="Pathway names", required=True)
+    parser.add_argument("-c", "--classes", dest="classes", help="Pathway classes", required=True)
+
     parser.add_argument("-o", "--outdir", dest="outdir",
                         help="Relative path to directory where you want the output file to be stored (default: cwd)",
                         default=".")
@@ -263,7 +270,7 @@ if __name__ == "__main__":
         parser.print_help()
     else:
         args = parser.parse_args()
-        graphs, pathway_names, pathway_classes = download_pathways(args.outdir)
+        graphs, pathway_names, pathway_classes = download_pathways(args.graphs, args.names, args.classes)
         edges, dict_KO_by_contigs = get_list_items(args.input_file)
         print(edges)
         sort_out_pathways(graphs, edges, pathway_names, pathway_classes, '')

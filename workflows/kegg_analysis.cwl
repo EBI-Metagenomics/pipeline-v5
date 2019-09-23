@@ -10,8 +10,10 @@ requirements:
   ScatterFeatureRequirement: {}
 
 inputs:
-  input_table_hmmscan:
-    type: File
+  input_table_hmmscan: File
+  graphs: File
+  pathways_names: File
+  pathways_classes: File
 
 outputs:
 
@@ -70,6 +72,9 @@ steps:
   kegg_pathways:
     in:
       input_table: union_by_contigs/output_table
+      graphs: graphs
+      pathways_names: pathways_names
+      pathways_classes: pathways_classes
     out:
       - output_pathways_summary
       - output_pathways_matching

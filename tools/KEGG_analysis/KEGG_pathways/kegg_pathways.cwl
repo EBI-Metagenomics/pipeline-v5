@@ -1,11 +1,12 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-requirements:
-  DockerRequirement:
-    dockerPull: kegg_analysis:latest
 
-baseCommand: ['python', '/give_pathways.py']
+#requirements:
+#  DockerRequirement:
+#    dockerPull: kegg_analysis:latest
+
+baseCommand: [give_pathways.py]
 arguments: ['-o', '/']
 
 inputs:
@@ -14,6 +15,18 @@ inputs:
     inputBinding:
       separate: true
       prefix: -i
+  graphs:
+    type: File
+    inputBinding:
+      prefix: -g
+  pathways_names:
+    type: File
+    inputBinding:
+      prefix: -n
+  pathways_classes:
+    type: File
+    inputBinding:
+      prefix: -c
 
 stdout: stdout.txt
 
