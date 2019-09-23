@@ -10,7 +10,7 @@ $schemas:
 
 requirements:
   - class: ResourceRequirement
-    ramMin: 10000
+    ramMin: 40000
     coresMin: 32
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
@@ -35,7 +35,7 @@ steps:
     run: ../chunks/fasta_chunker.cwl
     in:
       seqs: inputFile
-      chunk_size: { default: 10000 }
+      chunk_size: { default: 50000 }
     out: [ chunks ]
 
 # << Functional annotation. InterProScan >>
