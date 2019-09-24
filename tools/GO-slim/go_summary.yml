@@ -3,4 +3,4 @@ InterProScan_results:
   path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/interpro/interpo_united_100
 config:
   class: File
-  path: go_summary-config.json
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/GO-slim/go_summary-config.json
