@@ -18,4 +18,4 @@ outputs:
   hmmscan_summary:
     type: File
     outputBinding:
-      glob: '*summary.hmmscan'
+      glob: '*summary.ko'

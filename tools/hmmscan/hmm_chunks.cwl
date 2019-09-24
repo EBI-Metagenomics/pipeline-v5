@@ -65,9 +65,6 @@ steps:
     out: [ result ]
     label: "combined chunked hmmscam outputs"
 
-# << Add header >>
-# written but not tested
-
 # << add TAB step >>
   tab_modification:
     run: ../KEGG_analysis/Modification/modification_table.cwl
@@ -76,9 +73,12 @@ steps:
     out: [ output_with_tabs ]
     label: "change spaced file to tsv"
 
-# << Summary for TAB DEL>>
+# << Summary for TAB DELIM. >>
   summary:
     run: summary.cwl
     in:
       hmm_tab_results: tab_modification/output_with_tabs
     out: [hmmscan_summary]
+
+# << Add header >>
+# NOT REQUIRED

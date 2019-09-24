@@ -6,6 +6,6 @@ while getopts i: option; do
 	esac
 done
 
-export OUTPUT='summary.hmmscan'
+export OUTPUT='summary.ko'
 
 sed 's/\t/ /23g' ${INPUT} | cut -f1,23 | sort | uniq -c > ${OUTPUT}
