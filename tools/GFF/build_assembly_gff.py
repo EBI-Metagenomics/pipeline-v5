@@ -22,6 +22,20 @@ import argparse
 class EggResult:
     """
     Simple representation of a EggNOG result row.
+    Current pipeline tsv columns
+        - query_name
+        - seed_eggNOG_ortholog
+        - seed_ortholog_evalue
+        - seed_ortholog_score
+        - predicted_gene_name
+        - GO_terms
+        - KEGG_KOs
+        - BiGG_reactions
+        - Annotation_tax_scope
+        - OGs
+        - bestOG|evalue|score
+        - COG cat
+        - eggNOG annot
     """
 
     def __init__(self, line):
@@ -32,35 +46,40 @@ class EggResult:
         self.seed_eggNOG_ortholog = columns[1]
         self.seed_ortholog_evalue = columns[2]
         self.seed_ortholog_score = columns[3]
-        self.best_tax_level = columns[4]
-        self.preferred_name = columns[5]
-        self.GOs = columns[6]
-        self.EC = columns[7]
-        self.KEGG_ko = columns[8]
-        self.KEGG_Pathway = columns[9]
-        self.KEGG_Module = columns[10]
-        self.KEGG_Reaction = columns[11]
-        self.KEGG_rclass = columns[12]
-        self.BRITE = columns[13]
-        self.KEGG_TC = columns[14]
-        self.CAZy = columns[15]
-        self.BiGG_Reaction = columns[16]
-        self.EggNOG_OGS = columns[18]
-        self.COG = columns[20]
+        self.preferred_name = columns[4]
+        self.GOs = columns[5]
+        self.KEGG_ko = columns[6]
+        self.BiGG_reactions = columns[7]
+        self.best_tax_level = columns[8]  # Annotation_tax_scope but renamed for API sake
+        self.OGs = columns[9]
+        # self.bestOG = columns[10] # should we include this?
+        self.COG = columns[11]
+        self.eggNOG = columns[12]
 
     def get_annotations(self):
         """
         Get the annotation in an array
-        # """
-        return ';'.join([a + '=' + v for a,v in self.__dict__.items() if v and a != 'query_name'])
+        """
+        return ';'.join([a + '=' + v for a, v in self.__dict__.items() if v and a != 'query_name'])
 
-def parse_fasta_header(header):
+
+def parse_fasta_header_mags(header):
+    # MAGs contigs files follow this structure.
     match = re.match(
         '^\>(?P<contig>.+\-\-contig:-.*)\s\#\s(?P<start>\d+)\s\#\s(?P<end>\d+)\s\#\s(?P<strand>\-1|1)\s.*$', header)
     if match:
         groups = match.groupdict()
         return groups['contig'], groups['start'], groups['end'], groups['strand']
     return None, None, None, None
+
+
+def parse_fasta_header(header):
+    # FIXME: add sanity check
+    splitted = header.replace('>', '').split(' # ')
+    if len(splitted) < 4:
+        return None, None, None, None
+    contig, start, end, strand = splitted[:4]
+    return contig, start, end, strand
 
 
 def build_gff(egg, faa):
@@ -147,10 +166,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     with open(args.out, 'w') as out_handle:
-        out_handle.write('##gff-version 3')
+        out_handle.write('##gff-version 3' + '\n')
         for row in build_gff(args.egg, args.faa):
-            out_handle.write('\t'.join(row))
-
+            out_handle.write('\t'.join(row) + '\n')
         #print('##gff-version 3', file=out_handle)
         #for row in build_gff(args.egg, args.faa):
         #    print('\t'.join(row), file=out_handle)
