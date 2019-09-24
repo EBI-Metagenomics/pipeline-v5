@@ -6,8 +6,8 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 10240  # just a default, could be lowered
-  DockerRequirement:
-    dockerPull: go_slim:latest
+#  DockerRequirement:
+#    dockerPull: go_slim:latest
 hints:
  SoftwareRequirement:
    packages:

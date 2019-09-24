@@ -1,6 +1,6 @@
 InterProScan_results:
   class: File
-  path: ../InterProScan/test_single_protein.fasta.tsv
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/interpro/interpo_united
 config:
   class: File
   path: go_summary-config.json
