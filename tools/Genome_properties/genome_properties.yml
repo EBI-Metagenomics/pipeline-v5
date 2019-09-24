@@ -1,3 +1,6 @@
 input_tsv_file:
   class: File
   path: ../InterProScan/test_single_protein.fasta.tsv
+flatfiles_path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/genome-properties/flatfiles
+GP_txt: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/genome-properties/flatfiles/genomeProperties.txt
+

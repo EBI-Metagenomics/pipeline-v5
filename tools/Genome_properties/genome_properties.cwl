@@ -5,12 +5,27 @@ class: CommandLineTool
 label: "Genome properties https://genome-properties.readthedocs.io"
 
 requirements:
-  DockerRequirement:
-    dockerPull: genome_properties:latest
+#  DockerRequirement:
+#    dockerPull: genome_properties:latest
   InlineJavascriptRequirement: {}
 
-baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"]
-arguments: ["-name", "$(inputs.input_tsv_file.nameroot)", "-all", "-gpdir", "/genome-properties/flatfiles", "-outfiles", "table", "-outfiles", "web_json", "-gpff", "genomeProperties.txt"]
+#baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"]
+#arguments: ["-name", "$(inputs.input_tsv_file.nameroot)", "-all", "-gpdir", "/genome-properties/flatfiles", "-outfiles", "table", "-outfiles", "web_json", "-gpff", "genomeProperties.txt"]
+
+# without docker
+baseCommand: [assign_genome_properties.pl]
+arguments:
+  - position: 0
+    valueFrom: $(inputs.input_tsv_file.nameroot)
+    prefix: '-name'
+  - position: 1
+    valueFrom: "-all"
+  - position: 2
+    valueFrom: "table"
+    prefix: "-outfiles"
+  - position: 3
+    valueFrom: "web_json"
+    prefix: "-outfiles"
 
 inputs:
   input_tsv_file:
@@ -18,6 +33,15 @@ inputs:
     inputBinding:
       separate: true
       prefix: "-matches"
+
+  flatfiles_path:
+    type: string
+    inputBinding:
+      prefix: "-gpdir"
+  GP_txt:
+    type: string
+    inputBinding:
+      prefix: "-gpff"
 
   out_dir:
     type: string?

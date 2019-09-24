@@ -1,7 +1,7 @@
 eggnog_results:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/eggnog/eggnog_output.emapper.annotations_tab
+  path: eggnog_output.emapper.annotations_tab_100 #/hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/eggnog/eggnog_output.emapper.annotations_tab_100
 input_faa:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
+  path:  /Users/kates/Desktop/ERZ477576_FASTA.fasta.faa #/hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
 output_name: result.gff

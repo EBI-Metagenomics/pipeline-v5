@@ -32,6 +32,9 @@ arguments:
   - valueFrom: go-summary
     prefix: --output-file
 
+stderr: stderr.txt
+stdout: stdout.txt
+
 outputs:
   go_summary:
     type: File
@@ -41,7 +44,8 @@ outputs:
     type: File
     format: iana:text/csv
     outputBinding: { glob: go-summary_slim }
-
+  stderr: stderr
+  stdout: stdout
 
 $namespaces:
  iana: https://www.iana.org/assignments/media-types/
