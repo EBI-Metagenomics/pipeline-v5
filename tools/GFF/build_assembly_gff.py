@@ -50,7 +50,7 @@ class EggResult:
         self.GOs = columns[5]
         self.KEGG_ko = columns[6]
         self.BiGG_reactions = columns[7]
-        self.best_tax_level = columns[8]  # Annotation_tax_scope but renamed for API sake
+        # self.best_tax_level = columns[8] # Annotation_tax_scope but renamed for API sake
         self.OGs = columns[9]
         # self.bestOG = columns[10] # should we include this?
         self.COG = columns[11]
@@ -64,7 +64,6 @@ class EggResult:
 
 
 def parse_fasta_header_mags(header):
-    # MAGs contigs files follow this structure.
     match = re.match(
         '^\>(?P<contig>.+\-\-contig:-.*)\s\#\s(?P<start>\d+)\s\#\s(?P<end>\d+)\s\#\s(?P<strand>\-1|1)\s.*$', header)
     if match:
@@ -166,9 +165,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     with open(args.out, 'w') as out_handle:
-        out_handle.write('##gff-version 3' + '\n')
+        print('##gff-version 3', file=out_handle)
         for row in build_gff(args.egg, args.faa):
-            out_handle.write('\t'.join(row) + '\n')
-        #print('##gff-version 3', file=out_handle)
-        #for row in build_gff(args.egg, args.faa):
-        #    print('\t'.join(row), file=out_handle)
+            print('\t'.join(row), file=out_handle, end='')
