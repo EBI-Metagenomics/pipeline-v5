@@ -35,7 +35,7 @@ steps:
     run: ../chunks/fasta_chunker.cwl
     in:
       seqs: inputFile
-      chunk_size: { default: 50000 }
+      chunk_size: { default: 10000 }
     out: [ chunks ]
 
 # << Functional annotation. InterProScan >>

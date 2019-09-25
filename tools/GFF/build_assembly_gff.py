@@ -18,7 +18,6 @@
 import re
 import argparse
 
-
 class EggResult:
     """
     Simple representation of a EggNOG result row.

@@ -1,5 +1,9 @@
 applications:
   - PfamA
+  - TIGRFAM
+  - PRINTS
+  - PrositePatterns
+  - Gene3d
 inputFile:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
