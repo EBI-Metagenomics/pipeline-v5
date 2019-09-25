@@ -37,7 +37,7 @@ arguments:
       sortedEntries = sorted(unsortedEntries, key=lambda item: item[2])
       sortedEntries.reverse()
       for entry in sortedEntries:
-          print(",".join(['"' + entry[0], entry[1], str(entry[2]) + '"']))
+          print('"' + entry[0] + '"' + ',' + '"' + entry[1] + '"' + ',' + '"' + str(entry[2]) + '"')
 
 stdout: summary.ipr
 
