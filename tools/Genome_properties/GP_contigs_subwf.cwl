@@ -19,7 +19,8 @@ inputs:
 outputs:
   summaries:
     type: File[]
-    outputBinding: "SUMMARY*"
+    outputBinding:
+      glob: "SUMMARY*"
 
 steps:
 
