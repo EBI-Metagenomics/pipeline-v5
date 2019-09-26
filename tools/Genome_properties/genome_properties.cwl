@@ -4,7 +4,7 @@ class: CommandLineTool
 
 label: "Genome properties https://genome-properties.readthedocs.io"
 
-#requirements:
+requirements:
 #  DockerRequirement:
 #    dockerPull: genome_properties:latest
   InlineJavascriptRequirement: {}
