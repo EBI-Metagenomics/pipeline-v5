@@ -4,14 +4,14 @@ class: CommandLineTool
 
 label: "Genome properties https://genome-properties.readthedocs.io"
 
-requirements:
-  DockerRequirement:
-    dockerPull: genome_properties:latest
+#requirements:
+#  DockerRequirement:
+#    dockerPull: genome_properties:latest
   InlineJavascriptRequirement: {}
 
-baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"] # <--- for docker
+#baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"] # <--- for docker
 
-#baseCommand: [assign_genome_properties.pl]    # without docker
+baseCommand: [assign_genome_properties.pl]    # without docker
 
 arguments:
   - position: 0
