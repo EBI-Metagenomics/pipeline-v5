@@ -16,7 +16,10 @@ inputs:
   flatfiles_path: string
   GP_txt : string
 
-outputs: []
+outputs:
+  summaries:
+    type: File[]
+    outputBinding: "SUMMARY*"
 
 steps:
 
