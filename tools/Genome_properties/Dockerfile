@@ -1,9 +1,5 @@
 FROM ubuntu:14.04
 
-#COPY code /genome-properties/code
-#COPY flatfiles /genome-properties/flatfiles
-#COPY data /genome-properties/data
-
 # Update the repository sources list
 RUN apt-get update
 

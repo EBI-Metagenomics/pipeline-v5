@@ -17,6 +17,7 @@
 
 import re
 import argparse
+from __future__ import print_function
 
 class EggResult:
     """

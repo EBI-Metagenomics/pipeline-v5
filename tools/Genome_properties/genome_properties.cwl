@@ -5,15 +5,14 @@ class: CommandLineTool
 label: "Genome properties https://genome-properties.readthedocs.io"
 
 requirements:
-  DockerRequirement:
-    dockerPull: genome_properties:latest
+#  DockerRequirement:
+#    dockerPull: genome_properties:latest
   InlineJavascriptRequirement: {}
 
-baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"]
-#arguments: ["-name", "$(inputs.input_tsv_file.nameroot)", "-all", "-gpdir", "/genome-properties/flatfiles", "-outfiles", "table", "-outfiles", "web_json", "-gpff", "genomeProperties.txt"]
+#baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"] <--- for docker
 
-# without docker
-#baseCommand: [assign_genome_properties.pl]
+baseCommand: [assign_genome_properties.pl]    # without docker
+
 arguments:
   - position: 0
     valueFrom: $(inputs.input_tsv_file.nameroot)
