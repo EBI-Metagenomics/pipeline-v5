@@ -1,6 +1,6 @@
 input_tsv_file:
   class: File
-  path: interpo_united
+  path: /Users/kates/Desktop/interpo_united
 flatfiles_path: /genome-properties/flatfiles #/hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/genome-properties/flatfiles
 GP_txt: genomeProperties.txt #/hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/genome-properties/flatfiles/genomeProperties.txt
 
