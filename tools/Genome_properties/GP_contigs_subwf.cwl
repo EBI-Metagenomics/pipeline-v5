@@ -3,7 +3,7 @@ cwlVersion: v1.0
 
 requirements:
   - class: ResourceRequirement
-    ramMin: 10000
+    ramMin: 40000
     coresMin: 32
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
@@ -13,6 +13,8 @@ requirements:
 
 inputs:
   input_table: File
+  flatfiles_path: string
+  GP_txt : string
 
 outputs: []
 
@@ -29,7 +31,7 @@ steps:
     scatter: input_tsv_file
     in:
       input_tsv_file: split_interpro/files_by_contigs
-      flatfiles_path: {default: '/genome-properties/flatfiles'}
-      GP_txt: {default: 'genomeProperties.txt'}
+      flatfiles_path: flatfiles_path
+      GP_txt: GP_txt
     out: [summary]
 
