@@ -19,8 +19,7 @@ inputs:
 outputs:
   summaries:
     type: File[]
-    outputBinding:
-      glob: "SUMMARY*"
+    outputSource: run_gp/summary
 
 steps:
 
