@@ -1,6 +1,6 @@
 input_tsv_file:
   class: File
-  path: interpo_united_100
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/IPS/interpo_united
   #/hps/nobackup2/production/metagenomics/pipeline/NAR-results/interpro/interpo_united_100
 flatfiles_path: /genome-properties/flatfiles#/hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/genome-properties/flatfiles
   #/genome-properties/flatfiles
