@@ -60,10 +60,10 @@ outputs:
     type: File
     outputBinding:
       glob: "$(inputs.input_fasta.basename).ffn"
-  gene_caller_out:
-    type: File
-    outputBinding:
-      glob: "$(inputs.input_fasta.basename).out"
+#  gene_caller_out:
+#    type: File
+#    outputBinding:
+#      glob: "$(inputs.input_fasta.basename).out"
 
 
 $namespaces:
