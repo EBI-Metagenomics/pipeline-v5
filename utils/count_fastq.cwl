@@ -11,13 +11,13 @@ inputs:
   sequences:
     type: File
     streamable: true
-    format: edam:format_1930  # FASTQ
+    format: edam:format_1930  # FASTQ compressed
 
 baseCommand: [ bash ]
 
 arguments:
   - valueFrom: |
-      expr \$(wc -l < $(inputs.sequences.path)) / 4
+      expr \$(zcat $(inputs.sequences.path) | wc -l) / 4
     prefix: -c
 
 stdout: count
