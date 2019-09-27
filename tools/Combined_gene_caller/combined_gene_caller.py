@@ -426,6 +426,8 @@ if __name__ == "__main__":
         if not output_dir.endswith("/"):
             output_dir += "/"
         output_file = output_dir + input_file_basename
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
     files['merged'] = [output_file + ext for ext in ['.out', '.ffn', '.faa']]
     seq_type = args['seq_type']
     temp_dir = args['temp_dir']
