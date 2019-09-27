@@ -34,6 +34,11 @@ inputs:
     inputBinding:
         prefix: "-k"
 
+  outdir:
+    type: string
+    inputBinding:
+        prefix: "-o"
+
   config:
     type: File
     default:
@@ -55,11 +60,11 @@ outputs:
     format: 'edam:format_1929'
     type: File
     outputBinding:
-      glob: "$(inputs.input_fasta.basename).faa"
+      glob: "CGC-output/$(inputs.input_fasta.basename).faa"
   predicted_seq:
     type: File
     outputBinding:
-      glob: "$(inputs.input_fasta.basename).ffn"
+      glob: "CGC-output/$(inputs.input_fasta.basename).ffn"
 #  gene_caller_out:
 #    type: File
 #    outputBinding:
