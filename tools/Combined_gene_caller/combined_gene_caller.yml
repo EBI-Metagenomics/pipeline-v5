@@ -1,10 +1,10 @@
 input_fasta:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/ERZ782910_unzip.fasta
 seq_type: "a"
 maskfile:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/work-dir/good/single_ERR1594332/classify/find_ribosomal_ncRNAs/remove_overlaps/result.deoverlapped
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/QC_RNA_PRED/qc-rna/result.deoverlapped
 config:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/utils/combined_gene_caller_conf.json
