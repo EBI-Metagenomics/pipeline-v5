@@ -2,7 +2,7 @@ input_tsv_file:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/IPS/interpo_united
   #/hps/nobackup2/production/metagenomics/pipeline/NAR-results/interpro/interpo_united_100
-flatfiles_path: /genome-properties/flatfiles#/hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/genome-properties/flatfiles
+flatfiles_path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/genome-properties/flatfiles
   #/genome-properties/flatfiles
 GP_txt: genomeProperties.txt
   # genomeProperties.txt #/hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/genome-properties/flatfiles/genomeProperties.txt
