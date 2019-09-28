@@ -1,7 +1,0 @@
-input_table:
-  class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/interpro/interpo_united_1000
-flatfiles_path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/genome-properties/flatfiles
-  #/genome-properties/flatfiles
-GP_txt: genomeProperties.txt
-  # genomeProperties.txt #/hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/genome-properties/flatfiles/genomeProperties.txt

@@ -1,6 +1,6 @@
 InterProScan_results:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/intepro-chunks-5db/interpo_united
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/IPS/interpo_united
 config:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/GO-slim/go_summary-config.json
