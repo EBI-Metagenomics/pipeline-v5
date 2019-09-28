@@ -7,7 +7,7 @@ queryGeneticCode: null
 queryInputFile:
   class: File
   format: 'edam:format_1929'
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/CGC/ERZ782910_unzip_unspace.fasta.faa
 strand: both
 taxonList: null
 threads: null

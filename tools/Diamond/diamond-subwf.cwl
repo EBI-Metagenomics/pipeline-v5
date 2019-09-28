@@ -15,7 +15,7 @@ inputs:
   maxTargetSeqs: int
   strand: string
   databaseFile: File
-  Uniref90_db_txt : File
+  Uniref90_db_txt: File
 
 outputs:
   diamond_output:

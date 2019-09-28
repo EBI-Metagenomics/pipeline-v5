@@ -1,6 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+
 #requirements:
 #  DockerRequirement:
 #    dockerPull: linux_docker_diamond:latest
