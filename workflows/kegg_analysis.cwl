@@ -50,6 +50,7 @@ steps:
     out:
       - output_with_tabs
     run: ../tools/KEGG_analysis/Modification/modification_table.cwl
+    label: "make table tab-separated"
 
   parsing_hmmscan:
     in:
@@ -59,6 +60,7 @@ steps:
       - stdout
       - stderr
     run: ../tools/KEGG_analysis/Parsing_hmmscan/parsing_hmmscan.cwl
+    label: "leave file with contig and it's KO"
 
   union_by_contigs:
     in:
@@ -68,6 +70,7 @@ steps:
       - stdout
       - stderr
     run: ../tools/KEGG_analysis/Union_by_contigs/union_by_contigs.cwl
+    label: "creates file: contig KO KO KO..."
 
   kegg_pathways:
     in:

@@ -7,11 +7,11 @@ def union_KOs(filename):
     with open(filename, 'r') as file_in:
         for line in file_in:
             line = line.strip().split('\t')
-            name = line[0].split('.')[0]
-            orthologs = line[1:]
+            name = line[0]  # .split('.')[0]
+            orthologs = line[1]
             if name not in dict_by_contigs:
                 dict_by_contigs[name] = []
-            dict_by_contigs[name] += orthologs
+            dict_by_contigs[name].append(orthologs)
     return dict_by_contigs
 
 
@@ -28,5 +28,5 @@ if __name__ == "__main__":
 
     with open('union_ko_contigs.txt', 'w') as file_out:
         for contig in dict_by_contigs:
-            line_out = '\t'.join([contig]+dict_by_contigs[contig]) + '\n'
+            line_out = contig + '\t' + '\t'.join(dict_by_contigs[contig]) + '\n'
             file_out.write(line_out)
