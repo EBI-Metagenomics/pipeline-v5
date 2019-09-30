@@ -6,7 +6,7 @@ applications:
   - Gene3d
 inputFile:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/CGC/ERZ782910_unzip_unspace.fasta.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-raw-reads/CGC-chunk/faa_combined_test
 outputFormat:
   - TSV
 databases:
