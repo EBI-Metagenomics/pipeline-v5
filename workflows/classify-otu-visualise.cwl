@@ -16,22 +16,20 @@ inputs:
 outputs:
   mapseq_classifications:
     type: File
-    outputSource: mapseq/classifications
+    outputSource: edit_empty_tax/mapseq_out
 
   krona_tsv:
     type: File
-    outputSource: classifications_to_otu_counts/otu_tsv
+    outputSource: edit_empty_tax/otu_out
 
   krona_txt:
     type: File
-    outputSource: classifications_to_otu_counts/otu_txt
+    outputSource: edit_empty_tax/biom_out
 
   krona_image:
     type: File
-    outputSource: visualize_otu_counts/otu_visualization
+    outputSource: edit_empty_tax/krona_out
     format: iana:text/html
-
-
 
 steps:
   mapseq:
@@ -55,6 +53,15 @@ steps:
     in:
       otu_counts: classifications_to_otu_counts/otu_txt
     out: [ otu_visualization ]
+
+  edit_empty_tax:
+    run: ../tools/biom_convert/empty_tax.cwl
+    in:
+      mapseq: mapseq/classifications
+      otutable: classifications_to_otu_counts/otu_tsv
+      biomable: classifications_to_otu_counts/otu_txt
+      krona: visualise_otu_counts/otu_visualisation
+    out: [mapseq_out, otu_out, biom_out, krona_out]
 
 
 $namespaces:
