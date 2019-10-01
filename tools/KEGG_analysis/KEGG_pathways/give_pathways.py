@@ -205,8 +205,8 @@ def sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
         #file_out_summary.write('**********************************************\nPercentage = ' + str(percentage) + '\n')
         for name_pathway in dict_sort_by_percentage[percentage]:
             #flag_not_empty = True
-            matching_current = str(len(dict_sort_by_percentage[percentage][name_pathway][1]))
-            missing_current = str(len(dict_sort_by_percentage[percentage][name_pathway][2]))
+            matching_current = ','.join(dict_sort_by_percentage[percentage][name_pathway][1])
+            missing_current = ','.join(dict_sort_by_percentage[percentage][name_pathway][2])
             if contig_name != '':
                 out_name_pathway = '\t'.join([contig_name, name_pathway])
             else:
