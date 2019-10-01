@@ -5,8 +5,8 @@ class: CommandLineTool
 
 requirements:
     ResourceRequirement:
-        coresMax: 4
-        ramMin: 100
+        coresMin: 4
+        ramMin: 10000
 #DockerRequirement:
 #dockerPull: quay.io/biocontainers/motus:2.1.1--py37_3
 
@@ -15,7 +15,7 @@ hints:
         packages:
             mOTUs2:
                 specs: ["http://biom-format.org/index.html"]
-                version: ["2.1.1"]
+                version: ["2.5.1"]
 
 
 label: "mOTU taxonomy assignment for assemblies"
@@ -36,7 +36,8 @@ inputs:
 
 baseCommand: [motus]
 
-arguments: [profile, -c, -q, -B]
+arguments: [profile, -c, -q]
+# -B]
 
 stdout: classifications.motus.biom
 
