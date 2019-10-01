@@ -260,10 +260,10 @@ def sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
 
 
 def set_headers(file_summary, file_matching, file_missing, contig):
-    summary_header = '\t'.join(['Module_accession', '% completeness', 'pathway_name',
-                                          'pathway_class', 'matching_KO', 'missing_KO'])
-    matching_header = '\t'.join(['Module_accession', '% completeness', '#matching_KO', 'list_matching_KO'])
-    missing_header = '\t'.join(['Module_accession', '% completeness', '#missing_KO', 'list_missing_KO'])
+    summary_header = '\t'.join(['module_accession', 'completeness', 'pathway_name',
+                                          'pathway_class', 'matching_ko', 'missing_ko'])
+    matching_header = '\t'.join(['module_accession', 'completeness', 'number_matching_KO', 'list_matching_ko'])
+    missing_header = '\t'.join(['module_accession', 'completeness', 'number_missing_KO', 'list_missing_ko'])
 
     if contig:
         summary_header = 'contig\t' + summary_header
