@@ -9,7 +9,6 @@ requirements:
     - class: ShellCommandRequirement
 
 inputs:
-
   mapseq:
     type: File
     inputBinding:
@@ -30,7 +29,7 @@ inputs:
     inputBinding:
       position: 4
 
-baseCommand: [empty_tax]
+baseCommand: [sh empty_tax]
 
 outputs:
   mapseq_out:
