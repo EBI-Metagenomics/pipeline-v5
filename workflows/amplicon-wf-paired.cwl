@@ -32,6 +32,7 @@ inputs:
     ssu_label: string
     lsu_label: string
     5s_pattern: string
+    5.8s_pattern: string
 
     unite_db: {type: File, secondaryFiles: [.mscluster] }
     unite_tax: File
@@ -260,6 +261,7 @@ steps:
       pattern_SSU: ssu_label
       pattern_LSU: lsu_label
       pattern_5S: 5s_pattern
+      pattern_5.8S: 5.8s_pattern
     out:
       - ncRNAs
       - cmsearch_tblout

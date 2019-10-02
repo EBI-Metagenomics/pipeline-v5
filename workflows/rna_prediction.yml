@@ -49,4 +49,5 @@ ncRNA_ribosomal_model_clans:
 
 pattern_SSU: 'SSU'
 pattern_LSU: 'LSU'
-pattern_5S: '5_8S'
+pattern_5.8S: '5_8S'
+pattern_5S: '5S'

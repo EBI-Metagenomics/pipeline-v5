@@ -1,7 +1,7 @@
 input:
   class: File
-  path: test.bio
+  path: test.get_subunits
 pattern_SSU: SSU
 pattern_LSU: LSU
-#pattern_5S: RF00002
-mode: coords
+pattern_5S: 5S
+mode: fasta
