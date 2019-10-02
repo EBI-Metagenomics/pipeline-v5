@@ -5,7 +5,11 @@ class: Workflow
 label: "Run taxonomic classification, create OTU table and krona visualisation"
 
 requirements:
-  InlineJavascriptRequirement
+  SubworkflowFeatureRequirement: {}
+  MultipleInputFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
+  StepInputExpressionRequirement: {}
+  ScatterFeatureRequirement: {}
 
 inputs:
   fasta: File
