@@ -78,7 +78,7 @@ steps:
     in:
       mapseq: mapseq/classifications
       otutable: classifications_to_otu_counts/otu_tsv
-      biomable: classifications_to_otu_counts/otu_txt
+      biomtable: classifications_to_otu_counts/otu_txt
       krona: visualize_otu_counts/otu_visualization
     out: [mapseq_out, otu_out, biom_out, krona_out]
 
