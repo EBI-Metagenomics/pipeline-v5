@@ -1,7 +1,11 @@
 cwlVersion: v1.0
 class: ExpressionTool
 requirements:
-  InlineJavascriptRequirement
+  SubworkflowFeatureRequirement: {}
+  MultipleInputFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
+  StepInputExpressionRequirement: {}
+  ScatterFeatureRequirement: {}
 inputs:
   list: File[]
 outputs:
