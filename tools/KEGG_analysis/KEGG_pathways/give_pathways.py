@@ -205,8 +205,8 @@ def sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
         #file_out_summary.write('**********************************************\nPercentage = ' + str(percentage) + '\n')
         for name_pathway in dict_sort_by_percentage[percentage]:
             #flag_not_empty = True
-            matching_current = str(len(dict_sort_by_percentage[percentage][name_pathway][1]))
-            missing_current = str(len(dict_sort_by_percentage[percentage][name_pathway][2]))
+            matching_current = ','.join(dict_sort_by_percentage[percentage][name_pathway][1])
+            missing_current = ','.join(dict_sort_by_percentage[percentage][name_pathway][2])
             if contig_name != '':
                 out_name_pathway = '\t'.join([contig_name, name_pathway])
             else:
@@ -260,10 +260,10 @@ def sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
 
 
 def set_headers(file_summary, file_matching, file_missing, contig):
-    summary_header = '\t'.join(['Module_accession', '% completeness', 'pathway_name',
-                                          'pathway_class', 'matching_KO', 'missing_KO'])
-    matching_header = '\t'.join(['Module_accession', '% completeness', '#matching_KO', 'list_matching_KO'])
-    missing_header = '\t'.join(['Module_accession', '% completeness', '#missing_KO', 'list_missing_KO'])
+    summary_header = '\t'.join(['module_accession', 'completeness', 'pathway_name',
+                                          'pathway_class', 'matching_ko', 'missing_ko'])
+    matching_header = '\t'.join(['module_accession', 'completeness', 'number_matching_KO', 'list_matching_ko'])
+    missing_header = '\t'.join(['module_accession', 'completeness', 'number_missing_KO', 'list_missing_ko'])
 
     if contig:
         summary_header = 'contig\t' + summary_header
