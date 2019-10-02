@@ -50,7 +50,6 @@ expression: |
   }
 
 
-
 steps:
   mapseq:
     run: ../tools/mapseq/mapseq.cwl
@@ -80,7 +79,7 @@ steps:
       mapseq: mapseq/classifications
       otutable: classifications_to_otu_counts/otu_tsv
       biomable: classifications_to_otu_counts/otu_txt
-      krona: visualise_otu_counts/otu_visualisation
+      krona: visualize_otu_counts/otu_visualisation
     out: [mapseq_out, otu_out, biom_out, krona_out]
 
   counts_to_hdf5:
