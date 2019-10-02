@@ -74,7 +74,7 @@ steps:
     out: [ otu_visualization ]
 
   edit_empty_tax:
-    run: ../tools/biom_convert/empty_tax.cwl
+    run: ../tools/biom-convert/empty_tax.cwl
     in:
       mapseq: mapseq/classifications
       otutable: classifications_to_otu_counts/otu_tsv
