@@ -4,6 +4,9 @@ cwlVersion: v1.0
 class: Workflow
 label: "Run taxonomic classification, create OTU table and krona visualisation"
 
+requirements:
+  InlineJavascriptRequirement
+
 inputs:
   fasta: File
   mapseq_ref: {type: File, secondaryFiles: [.mscluster] }
