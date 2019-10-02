@@ -13,7 +13,6 @@ inputs:
     type: string
 
 outputs:
-  out: Directory
 
   mapseq_classifications:
     type: File
@@ -40,15 +39,9 @@ outputs:
     type: File
     outputSource: counts_to_hdf5/result
 
-expression: |
-  ${
-    return {"out": {
-      "class": "Directory",
-      "basename": "my_directory_name",
-      "listing": [outputs.mapseq_classifications, outputs.krona_tsv, outputs.krona_txt]
-    } };
-  }
-
+  out_dir:
+    type: Directory
+    outputSource: return_output_dir/out
 
 steps:
   mapseq:
@@ -98,6 +91,13 @@ steps:
        table_type: { default: 'OTU table' }
     out: [ result ]
 
+  return_output_dir:
+    run: ../utils/return_directory.cwl
+    in:
+      list:
+        - counts_to_hdf5/result
+        - counts_to_json/result
+    out: [ out ]
 
 $namespaces:
  edam: http://edamontology.org/
