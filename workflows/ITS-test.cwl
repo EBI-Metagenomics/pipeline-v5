@@ -128,7 +128,7 @@ steps:
       mapseq_taxonomy: unite_taxonomy
       otu_ref: unite_otus
       otu_label: otu_unite_label
-    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
+    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image, mapseq_json, mapseq_hdf5]
 
   run_itsonedb:
     run: classify-otu-visualise.cwl
@@ -138,38 +138,4 @@ steps:
       mapseq_taxonomy: itsone_taxonomy
       otu_ref: itsone_otus
       otu_label: otu_itsone_label
-    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
-
-#get json and hdf5 files
-
-#  unite_otu_counts_to_hdf5:
-#    run: ../tools/biom-convert/biom-convert.cwl
-#    in:
-#       biom: run_unite/krona_tsv
-#       hdf5: { default: true }
-#       table_type: { default: 'OTU table' }
-#    out: [ result ]
-
-#  unite_otu_counts_to_json:
-#    run: ../tools/biom-convert/biom-convert.cwl
-#    in:
-#       biom: run_unite/krona_tsv
-#       json: { default: true }
-#       table_type: { default: 'OTU table' }
-#    out: [ result ]
-
-#  itsonedb_otu_counts_to_hdf5:
-#    run: ../tools/biom-convert/biom-convert.cwl
-#    in:
-#       biom: run_itsonedb/krona_tsv
-#       hdf5: { default: true }
-#       table_type: { default: 'OTU table' }
-#    out: [ result ]
-
-#  itsonedb_otu_counts_to_json:
-#    run: ../tools/biom-convert/biom-convert.cwl
-#   in:
-#       biom: run_itsonedb/krona_tsv
-#       json: { default: true }
-#       table_type: { default: 'OTU table' }
-#    out: [ result ]
+    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image, mapseq_json, mapseq_hdf5]

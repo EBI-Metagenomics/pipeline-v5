@@ -12,8 +12,9 @@ inputs:
   otu_label:
     type: string
 
-
 outputs:
+  out: Directory
+
   mapseq_classifications:
     type: File
     outputSource: edit_empty_tax/mapseq_out
@@ -30,6 +31,25 @@ outputs:
     type: File
     outputSource: edit_empty_tax/krona_out
     format: iana:text/html
+
+  mapseq_json:
+    type: File
+    outputSource: counts_to_json/result
+
+  mapseq_hdf5:
+    type: File
+    outputSource: counts_to_hdf5/result
+
+expression: |
+  ${
+    return {"out": {
+      "class": "Directory",
+      "basename": "my_directory_name",
+      "listing": [outputs.mapseq_classifications, outputs.krona_tsv, outputs.krona_txt]
+    } };
+  }
+
+
 
 steps:
   mapseq:
@@ -62,6 +82,22 @@ steps:
       biomable: classifications_to_otu_counts/otu_txt
       krona: visualise_otu_counts/otu_visualisation
     out: [mapseq_out, otu_out, biom_out, krona_out]
+
+  counts_to_hdf5:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: edit_empty_tax/otu_out
+       hdf5: { default: true }
+       table_type: { default: 'OTU table' }
+    out: [ result ]
+
+  counts_to_json:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: edit_empty_tax/otu_out
+       json: { default: true }
+       table_type: { default: 'OTU table' }
+    out: [ result ]
 
 
 $namespaces:
