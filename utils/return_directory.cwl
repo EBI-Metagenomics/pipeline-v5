@@ -8,13 +8,14 @@ requirements:
   ScatterFeatureRequirement: {}
 inputs:
   list: File[]
+  dir_name: string
 outputs:
   out: Directory
 expression: |
   ${
     return {"out": {
       "class": "Directory",
-      "basename": "my_directory_name",
+      "basename": inputs.dir_name,
       "listing": inputs.list
     } };
   }

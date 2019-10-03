@@ -18,6 +18,7 @@ inputs:
   otu_ref: File
   otu_label:
     type: string
+  return_dirname: string
 
 outputs:
 
@@ -101,7 +102,12 @@ steps:
   return_output_dir:
     run: ../utils/return_directory.cwl
     in:
+      dir_name: return_dirname
       list:
+        - edit_empty_tax/mapseq_out
+        - edit_empty_tax/otu_out
+        - edit_empty_tax/biom_out
+        - edit_empty_tax/krona_out
         - counts_to_hdf5/result
         - counts_to_json/result
     out: [ out ]
