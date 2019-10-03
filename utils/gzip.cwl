@@ -1,8 +1,12 @@
 #!/usr/bin/env
 cwlVersion: v1.0
 class: CommandLineTool
+
 requirements:
   InlineJavascriptRequirement: {}
+  ResourceRequirement:
+    coresMax: 16
+    ramMin: 5000
 
 inputs:
   uncompressed_file:
@@ -10,8 +14,8 @@ inputs:
     inputBinding:
       position: 1
 
-baseCommand: [ gzip ]
-arguments: ["-c"]
+baseCommand: [ pigz ]
+arguments: ["-p", "16", "-c"]
 
 stdout: $(inputs.uncompressed_file.basename).gz
 

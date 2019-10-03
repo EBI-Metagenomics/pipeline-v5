@@ -12,6 +12,9 @@ requirements:
     coresMax: 1
     ramMin: 1000  # just a default, could be lowered
 hints:
+  DockerRequirement:
+    dockerPull: 'alpine:3.7'
+
   SoftwareRequirement:
     packages:
       biopython:

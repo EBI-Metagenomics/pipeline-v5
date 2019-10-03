@@ -1,8 +1,0 @@
-#!/bin/bash
-while getopts i:p: option; do
-	case "${option}" in
-		i) INPUT=${OPTARG};;
-		p) PATTERN=${OPTARG};;
-	esac
-done
-grep ${PATTERN} ${INPUT} > ${PATTERN}".grepped"

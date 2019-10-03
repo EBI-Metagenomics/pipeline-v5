@@ -2,9 +2,11 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
+hints:
+  DockerRequirement:
+    dockerPull: mapseq2biom:latest
+
 #requirements:
-#  DockerRequirement:
-#    dockerPull: mapseq2biom:latest
 #  ResourceRequirement:
 #    ramMin: 10000
 #    ramMax: 10000
@@ -37,7 +39,7 @@ baseCommand: ['mapseq2biom.pl'] # or perl /hps/nobackup/production/metagenomics/
 arguments:
   - valueFrom: $(inputs.query.basename).tsv
     prefix: --outfile
-  - valueFrom: $(inputs.label).txt
+  - valueFrom: $(inputs.query.basename).txt
     prefix: --krona
 
 outputs:
@@ -49,7 +51,7 @@ outputs:
   otu_txt:
     type: File
     outputBinding:
-      glob: $(inputs.label).txt
+      glob: $(inputs.query.basename).txt
 
 $namespaces:
  edam: http://edamontology.org/

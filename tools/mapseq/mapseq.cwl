@@ -10,9 +10,6 @@ doc: |
   classifications to ribosomal RNA sequences.
   https://github.com/jfmrod/MAPseq
 
-#requirements:
-#  DockerRequirement:
-#    dockerPull: mapseq:latest
 
 #requirements:
 #  ResourceRequirement:
@@ -21,6 +18,9 @@ doc: |
 #    coresMin: 2
 
 inputs:
+
+  prefix: File
+
   sequences:
     type: File
     inputBinding:
@@ -43,11 +43,16 @@ inputs:
 baseCommand: mapseq
 arguments: ['-nthreads', '1', '-tophits', '80', '-topotus', '40', '-outfmt', 'simple']
 
-stdout: $(inputs.sequences.nameroot).$(inputs.database.nameroot).mseq  # helps with cwltool's --cache
+stdout: $(inputs.prefix.nameroot)_$(inputs.database.basename).mseq  # helps with cwltool's --cache
 
 outputs:
   classifications:
     type: stdout
+
+
+hints:
+  - class: DockerRequirement
+    dockerPull: mapseq:latest
 
 $namespaces:
  edam: http://edamontology.org/

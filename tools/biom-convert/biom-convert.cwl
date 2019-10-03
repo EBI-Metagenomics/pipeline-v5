@@ -12,14 +12,15 @@ requirements:
 #    types:
 #      - $import: biom-convert-table.yaml
 
-#hints:
+hints:
+  DockerRequirement:
+    dockerPull: quay.io/biocontainers/biom-format:2.1.6--py36_0
 #  SoftwareRequirement:
 #    packages:
 #      biom-format:
 #        specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
 #        version: [ "2.1.6" ]
-#  DockerRequirement:
-#    dockerPull: quay.io/biocontainers/biom-format:2.1.6--py36_0
+#
 
 
 inputs:
@@ -67,9 +68,9 @@ baseCommand: [ "biom", "convert" ]
 arguments:
   - valueFrom: |
      ${ var ext = "";
-        if (inputs.json) { ext = ".json"; }
-        if (inputs.hdf5) { ext = ".hdf5"; }
-        if (inputs.tsv) { ext = ".tsv"; }
+        if (inputs.json) { ext = "_json.biom"; }
+        if (inputs.hdf5) { ext = "_hdf5.biom"; }
+        if (inputs.tsv) { ext = "_tsv.biom"; }
         return inputs.biom.nameroot + ext; }
     prefix: --output-fp
   - valueFrom: "--collapsed-observations"
@@ -81,9 +82,9 @@ outputs:
     outputBinding:
       glob: |
        ${ var ext = "";
-       if (inputs.json) { ext = ".json"; }
-       if (inputs.hdf5) { ext = ".hdf5"; }
-       if (inputs.tsv) { ext = ".tsv"; }
+       if (inputs.json) { ext = "_json.biom"; }
+       if (inputs.hdf5) { ext = "_hdf5.biom"; }
+       if (inputs.tsv) { ext = "_tsv.biom"; }
        return inputs.biom.nameroot + ext; }
 
 $namespaces:

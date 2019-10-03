@@ -6,9 +6,11 @@ label: "Post QC-ed input analysis of sequence file"
 
 #doc: |
 
+hints:
+  DockerRequirement:
+    dockerPull: qc-stats:latest
+
 requirements:
-#  DockerRequirement:
-#    dockerPull: qc-stats:latest
   ResourceRequirement:
     coresMax: 4
     ramMin: 100
@@ -25,7 +27,7 @@ baseCommand: ["MGRAST_base.py" ]
 inputs:
   QCed_reads:
     type: File
-    format: edam:format_1929  # FASTA
+    # format: edam:format_1929  # FASTA
     inputBinding:
       prefix: -i
   length_sum:

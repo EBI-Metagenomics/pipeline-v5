@@ -2,9 +2,9 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-#requirements:
-# DockerRequirement:
-#    dockerPull: alpine:3.7
+hints:
+ DockerRequirement:
+   dockerPull: alpine:3.7
 
 inputs:
   infernal_matches:

@@ -19,6 +19,7 @@ inputs:
   otu_label:
     type: string
   return_dirname: string
+  file_for_prefix: File
 
 outputs:
 
@@ -53,15 +54,16 @@ outputs:
 
 steps:
   mapseq:
-    run: ../tools/mapseq/mapseq.cwl
+    run: ../../tools/mapseq/mapseq.cwl
     in:
+      prefix: file_for_prefix
       sequences: fasta
       database: mapseq_ref
       taxonomy: mapseq_taxonomy
     out: [ classifications ]
 
   classifications_to_otu_counts:
-    run: ../tools/mapseq2biom/mapseq2biom.cwl
+    run: ../../tools/mapseq2biom/mapseq2biom.cwl
     in:
        otu_table: otu_ref
        label: otu_label
@@ -69,13 +71,13 @@ steps:
     out: [ otu_tsv, otu_txt ]
 
   visualize_otu_counts:
-    run: ../tools/krona/krona.cwl
+    run: ../../tools/krona/krona.cwl
     in:
       otu_counts: classifications_to_otu_counts/otu_txt
     out: [ otu_visualization ]
 
   edit_empty_tax:
-    run: ../tools/biom-convert/empty_tax.cwl
+    run: ../../tools/biom-convert/empty_tax.cwl
     in:
       mapseq: mapseq/classifications
       otutable: classifications_to_otu_counts/otu_tsv
@@ -84,7 +86,7 @@ steps:
     out: [mapseq_out, otu_out, biom_out, krona_out]
 
   counts_to_hdf5:
-    run: ../tools/biom-convert/biom-convert.cwl
+    run: ../../tools/biom-convert/biom-convert.cwl
     in:
        biom: edit_empty_tax/otu_out
        hdf5: { default: true }
@@ -92,7 +94,7 @@ steps:
     out: [ result ]
 
   counts_to_json:
-    run: ../tools/biom-convert/biom-convert.cwl
+    run: ../../tools/biom-convert/biom-convert.cwl
     in:
        biom: edit_empty_tax/otu_out
        json: { default: true }
@@ -100,14 +102,14 @@ steps:
     out: [ result ]
 
   compress_mapseq:
-    run: ../utils/gzip.cwl
+    run: ../../utils/gzip.cwl
     in:
       uncompressed_file: edit_empty_tax/mapseq_out
     out: [compressed_file]
     label: "gzip mapseq output"
 
   return_output_dir:
-    run: ../utils/return_directory.cwl
+    run: ../../utils/return_directory.cwl
     in:
       dir_name: return_dirname
       list:

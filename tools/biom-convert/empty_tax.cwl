@@ -5,6 +5,10 @@ class: CommandLineTool
 label: rename empty tax files and add mock bacteria to empty otu table
 #this to avoid errors with empty files further down the pipeline
 
+hints:
+  - class: DockerRequirement
+    dockerPull: alpine:3.7
+
 #requirements:
 #    - class: ShellCommandRequirement
 

@@ -5,9 +5,10 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 100  # just a default, could be lowered
-#  DockerRequirement:
-#    dockerPull: biopython/biopython:latest
+
 hints:
+  DockerRequirement:
+    dockerPull: biopython/biopython:latest
   SoftwareRequirement:
     packages:
       biopython:
@@ -21,7 +22,7 @@ inputs:
       prefix: '-i'
 
 arguments:
-  - valueFrom: $(inputs.fastq.nameroot).fasta
+  - valueFrom: $(inputs.fastq.nameroot).unclean
     prefix: '-o'
 
 baseCommand: [ fastq_to_fasta.py ]
@@ -31,7 +32,7 @@ outputs:
     type: File
     format: edam:format_1929
     outputBinding:
-      glob: "*.fasta"
+      glob: "*.unclean"
 
 $namespaces:
  edam: http://edamontology.org/

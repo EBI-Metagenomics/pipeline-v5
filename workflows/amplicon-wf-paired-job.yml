@@ -1,0 +1,9 @@
+forward_reads:
+  class: File
+  path:
+  format: http://edamontology.org/format_1930
+reverse_reads:
+  class: File
+  path:
+  format: http://edamontology.org/format_1930
+

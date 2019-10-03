@@ -4,9 +4,11 @@ class: CommandLineTool
 
 label: "antiSMASH"
 
-requirements:
+hints:
   DockerRequirement:
     dockerPull: antismash/standalone:5.0.0
+
+requirements:
   InlineJavascriptRequirement: {}
 
 

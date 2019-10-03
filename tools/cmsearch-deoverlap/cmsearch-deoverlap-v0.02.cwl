@@ -41,6 +41,7 @@ requirements:
     listing:
       - $(inputs.cmsearch_matches)
   - class: InlineJavascriptRequirement
+
 hints:
   - class: SoftwareRequirement
     packages:
@@ -49,8 +50,10 @@ hints:
           - 'https://github.com/nawrockie/cmsearch_tblout_deoverlap'
         version:
           - '0.02'
-#  - class: DockerRequirement
-#    dockerPull: biocrusoe/cmsearch-deoverlap
+
+  - class: DockerRequirement
+    dockerPull: biocrusoe/cmsearch-deoverlap
+
   - class: gx:interface
     gx:inputs:
       - gx:name: clan_information

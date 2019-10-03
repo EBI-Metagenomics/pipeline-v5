@@ -28,9 +28,9 @@ outputs:
     label: Pfam results only
     #format: edam:format_3475
 
-#hints:
-#  - class: DockerRequirement
-#    dockerPull: 'alpine:3.7'
+hints:
+  - class: DockerRequirement
+    dockerPull: 'alpine:3.7'
 
 #$namespaces:
   #edam:http://edamontology.org/

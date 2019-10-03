@@ -6,9 +6,10 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 10240  # just a default, could be lowered
-#  DockerRequirement:
-#    dockerPull: go_slim:latest
+
 hints:
+ DockerRequirement:
+   dockerPull: go_slim:latest
  SoftwareRequirement:
    packages:
      owltools:

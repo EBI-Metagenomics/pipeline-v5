@@ -14,6 +14,8 @@ requirements:
 
 inputs:
     single_reads: File
+    forward_unmerged_reads: File?
+    reverse_unmerged_reads: File?
 
     qc_min_length: int
     stats_file_name: string
@@ -31,6 +33,7 @@ inputs:
     ssu_label: string
     lsu_label: string
     5s_pattern: string
+    5.8s_pattern: string
 
     unite_db: {type: File, secondaryFiles: [.mscluster] }
     unite_tax: File
@@ -42,150 +45,51 @@ inputs:
     itsonedb_label: string
 
 outputs:
-  processed_nucleotide_reads:
-    type: File
-    outputSource: run_quality_control_filtering/filtered_file
 
-  qc_stats_out:
+  gz_files:  # fasta.gz, cmsearch.gz, deoverlapped.gz
+    type: File[]
+    outputSource: gzip_files/compressed_file
+
+  qc-statistics:
     type: Directory
     outputSource: qc_stats/output_dir
-
-  qc_filtering_stats:
+  qc_summary:
     type: File
     outputSource: run_quality_control_filtering/stats_summary_file
 
-  ncRNAs:
-    type: File
-    outputSource: classify/ncRNAs
+  LSU_folder:
+    type: Directory
+    outputSource: classify/LSU_folder
+  SSU_folder:
+    type: Directory
+    outputSource: classify/SSU_folder
 
-  cmsearch_tblout:
-    type: File
-    outputSource: classify/cmsearch_tblout
+  sequence-categorisation_folder:
+    type: Directory
+    outputSource: classify/sequence-categorisation
 
-  5s_fasta:
-    type: File
-    outputSource: classify/5S_fasta
+  sequence-categorisation_masking:
+    type: Directory
+    outputSource: ITS/masking_file
 
-  SSU_fasta:
-    type: File
-    outputSource: classify/SSU_fasta
+  ITS_unite_results:
+    type: Directory
+    outputSource: ITS/unite_folder
 
-  LSU_fasta:
-    type: File
-    outputSource: classify/LSU_fasta
-
-  SSU_classifications:
-    type: File
-    outputSource: classify/SSU_classifications
-
-  SSU_otu_tsv:
-    type: File
-    outputSource: classify/SSU_otu_tsv
-
-  SSU_otu_txt:
-    type: File
-    outputSource: classify/SSU_otu_txt
-
-  SSU_krona_image:
-    type: File
-    outputSource: classify/SSU_krona_image
-
-  LSU_classifications:
-    type: File
-    outputSource: classify/LSU_classifications
-
-  LSU_otu_tsv:
-    type: File
-    outputSource: classify/LSU_otu_tsv
-
-  LSU_otu_txt:
-    type: File
-    outputSource: classify/LSU_otu_txt
-
-  LSU_krona_image:
-    type: File
-    outputSource: classify/LSU_krona_image
-
-#  ssu_hdf5_classifications:
-#    type: File
-#    outputSource: classify/ssu_hdf5_classifications
-
-#  ssu_json_classifications:
-#    type: File
-#    outputSource: classify/ssu_json_classifications
-
-#  lsu_hdf5_classifications:
-#    type: File
-#    outputSource: classify/lsu_hdf5_classifications
-
-#  lsu_json_classifications:
-#    type: File
-#    outputSource: classify/lsu_json_classifications
-
-#  proportion_SU:
-#    type: File
-#    outputSource: ITS/proportion_SU
-
-  masked_sequences:
-    type: File
-    outputSource: ITS/masked_sequences
-
-  unite_classifications:
-    type: File
-    outputSource: ITS/unite_classifications
-
-  unite_otu_tsv:
-    type: File
-    outputSource: ITS/unite_otu_tsv
-
-  unite_otu_txt:
-    type: File
-    outputSource: ITS/unite_otu_txt
-
-  unite_krona_image:
-    type: File
-    outputSource: ITS/unite_krona_image
-
-  itsonedb_classifications:
-    type: File
-    outputSource: ITS/itsonedb_classifications
-
-  itsonedb_otu_tsv:
-    type: File
-    outputSource: ITS/itsonedb_otu_tsv
-
-  itsonedb_otu_txt:
-    type: File
-    outputSource: ITS/itsonedb_otu_txt
-
-  itsonedb_krona_image:
-    type: File
-    outputSource: ITS/itsonedb_krona_image
-
-#  unite_hdf5_classifications:
-#    type: File
-#    outputSource: ITS/unite_hdf5_classifications
-
-#  unite_json_classifications:
-#    type: File
-#    outputSource: ITS/unite_json_classifications
-
-#  itsonedb_hdf5_classifications:
-#    type: File
-#    outputSource: ITS/itsonedb_hdf5_classifications
-
-#  itsonedb_json_classifications:
-#    type: File
-#    outputSource: ITS/itsonedb_json_classifications
-
-
+  ITS_itsonedb_results:
+    type: Directory
+    outputSource: ITS/itsonedb_folder
 
 steps:
-# << SeqPrep - unzipping only >>
+
+# << unzipping only >>
   unzip_reads:
-    run: ../tools/SeqPrep/seqprep-merge.cwl
+    run: ../utils/multiple-gunzip.cwl
     in:
-      forward_unmerged_reads: single_reads
+      target_reads: single_reads
+      forward_unmerged_reads: forward_unmerged_reads
+      reverse_unmerged_reads: reverse_unmerged_reads
+      reads: { default: true }
     out: [ unzipped_merged_reads ]
 
   count_submitted_reads:
@@ -194,45 +98,22 @@ steps:
       sequences: unzip_reads/unzipped_merged_reads
     out: [ count ]
 
-# << Trimm >>
-  trim_quality_control:
-    doc: |
-      Low quality trimming (low quality ends and sequences with < quality scores
-      less than 15 over a 4 nucleotide wide window are removed)
-    run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+# << Trim and Reformat >>
+  trimming:
+    run: subworkflows/trim_and_reformat_reads.cwl
     in:
-      reads1: unzip_reads/unzipped_merged_reads
-      phred: { default: '33' }
-      leading: { default: 3 }
-      trailing: { default: 3 }
-      end_mode: { default: SE }
-      minlen: { default: 100 }
-      slidingwindow: { default: '4:15' }
-      #  default:
-      #    windowSize: 4
-      #    requiredQuality: 15
-    out: [reads1_trimmed]
-
-  convert_trimmed_reads_to_fasta:
-    run: ../utils/fastq_to_fasta.cwl
-    in:
-      fastq: trim_quality_control/reads1_trimmed
-    out: [ fasta ]
-
-  clean_fasta_headers:
-    run: ../utils/clean_fasta_headers.cwl
-    in:
-      sequences: convert_trimmed_reads_to_fasta/fasta
-    out: [ sequences_with_cleaned_headers ]
+      reads: unzip_reads/unzipped_merged_reads
+    out: [ trimmed_and_reformatted_reads ]
 
 # << QC filtering >>
   run_quality_control_filtering:
     run: ../tools/qc-filtering/qc-filtering.cwl
     in:
-      seq_file: clean_fasta_headers/sequences_with_cleaned_headers
+      seq_file: trimming/trimmed_and_reformatted_reads
       submitted_seq_count: count_submitted_reads/count
-      stats_file_name: stats_file_name
+      stats_file_name: {default: 'qc_summary'}
       min_length: qc_min_length
+      input_file_format: { default: 'fasta' }
     out: [ filtered_file, stats_summary_file ]
 
   count_processed_reads:
@@ -245,13 +126,13 @@ steps:
   qc_stats:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
-        QCed_reads: clean_fasta_headers/sequences_with_cleaned_headers
+        QCed_reads: run_quality_control_filtering/filtered_file
         sequence_count: count_processed_reads/count
     out: [ output_dir, summary_out ]
 
 # << Get RNA >>
   classify:
-    run: rna_prediction-sub-wf.cwl
+    run: subworkflows/rna_prediction-sub-wf.cwl
     in:
       input_sequences: run_quality_control_filtering/filtered_file
       silva_ssu_database: ssu_db
@@ -265,32 +146,21 @@ steps:
       pattern_SSU: ssu_label
       pattern_LSU: lsu_label
       pattern_5S: 5s_pattern
+      pattern_5.8S: 5.8s_pattern
     out:
-      - ncRNAs
-      - cmsearch_tblout
-      - 5S_fasta
-      - SSU_fasta
-      - LSU_fasta
+      - ncRNA
+      - cmsearch_result
+      - SSU_folder
+      - LSU_folder
+      - sequence-categorisation
       - SSU_coords
       - LSU_coords
-      - SSU_classifications
-      - SSU_otu_tsv
-      - SSU_otu_txt
-      - SSU_krona_image
-      - LSU_classifications
-      - LSU_otu_tsv
-      - LSU_otu_txt
-      - LSU_krona_image
-#      - ssu_hdf5_classifications
-#      - ssu_json_classifications
-#      - lsu_hdf5_classifications
-#      - lsu_json_classifications
 
 # << ITS >>
   ITS:
-    run: ITS-test.cwl
+    run: subworkflows/ITS/ITS-wf.cwl
     in:
-      query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
+      query_sequences: run_quality_control_filtering/filtered_file
       LSU_coordinates: classify/LSU_coords
       SSU_coordinates: classify/SSU_coords
       unite_database: unite_db
@@ -302,17 +172,17 @@ steps:
       otu_unite_label: unite_label
       otu_itsone_label: itsonedb_label
     out:
+      - masking_file
+      - unite_folder
+      - itsonedb_folder
 
-      - masked_sequences
-      - unite_classifications
-      - unite_otu_tsv
-      - unite_otu_txt
-      - unite_krona_image
-      - itsonedb_classifications
-      - itsonedb_otu_tsv
-      - itsonedb_otu_txt
-      - itsonedb_krona_image
-#      - unite_hdf5_classifications
-#      - unite_json_classifications
-#      - itsonedb_hdf5_classifications
-#      - itsonedb_json_classifications
+# gzip and chunk
+  gzip_files:
+    run: ../utils/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file:
+        - run_quality_control_filtering/filtered_file
+        - classify/cmsearch_result
+        - classify/ncRNA
+    out: [compressed_file]

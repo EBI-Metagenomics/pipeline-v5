@@ -112,11 +112,11 @@ requirements:
     ramMin: 2048
     ramMax: 8192
     coresMin: 4
-#  - class: DockerRequirement
-#    dockerPull: 'biocontainers/interproscan:v5.30-69.0_cv1'
   - class: InlineJavascriptRequirement
 
 hints:
+  - class: DockerRequirement
+    dockerPull: 'biocontainers/interproscan:v5.30-69.0_cv1'
   - class: gx:interface
     gx:inputs:
       - gx:name: applications

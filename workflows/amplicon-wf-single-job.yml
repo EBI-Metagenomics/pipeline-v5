@@ -1,0 +1,102 @@
+single_reads:
+  class: File
+  path:
+  format: http://edamontology.org/format_1930
+
+qc_min_length: 100
+stats_file_name: 'qc_summary'
+
+ssu_label: 'SSU'
+lsu_label: 'LSU'
+5.8s_pattern: '5_8S'
+5s_pattern: '5S'
+
+unite_label: 'UNITE'
+itsonedb_label: 'ITSonedb'
+
+ssu_db:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/SSU.fasta
+  checksum:
+lsu_db:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/LSU.fasta
+  checksum:
+ssu_tax:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/slv_ssu_filtered2.txt
+  checksum:
+lsu_tax:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/slv_lsu_filtered2.txt
+  checksum:
+ssu_otus:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/ssu2.otu
+  checksum:
+lsu_otus:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/lsu2.otu
+  checksum:
+
+rfam_models:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF00002.cm
+    checksum:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF00177.cm
+    checksum:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF01959.cm
+    checksum:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF01960.cm
+    checksum:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02540.cm
+    checksum:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02541.cm
+    checksum:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02542.cm
+    checksum:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02543.cm
+    checksum:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02546.cm
+    checksum:
+  - class: File
+    path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02547.cm
+    checksum:
+
+rfam_model_clans:
+  class: File
+  path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/ribo.claninfo
+  checksum:
+
+unite_db:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/UNITE/unite.fasta
+  checksum:
+unite_tax:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/UNITE/UNITE-tax.txt
+  checksum:
+unite_otu_file:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/UNITE/UNITE.otu
+  checksum:
+itsonedb:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/ITSonedb/itsonedb.fasta
+  checksum:
+itsonedb_tax:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/ITSonedb/ITSonedb-tax.txt
+  checksum:
+itsonedb_otu_file:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/ITSonedb/ITSonedb.otu
+  checksum:

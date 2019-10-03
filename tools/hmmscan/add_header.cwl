@@ -2,9 +2,9 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-#hints:
-# DockerRequirement:
-#   dockerPull: 'alpine:3.7'
+hints:
+  DockerRequirement:
+    dockerPull: 'alpine:3.7'
 
 requirements:
   ResourceRequirement:

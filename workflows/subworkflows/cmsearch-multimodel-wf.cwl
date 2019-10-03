@@ -9,17 +9,12 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  clan_info:
-    type: File
-  #cores:
-    #type: int
-  covariance_models:
-    type: File[]
-  query_sequences:
-    type: File
-  catOutputFileName:
-    type: string
-    default: cat_cmsearch_matches.tbl
+  clan_info: File
+  #cores: int
+  covariance_models: File[]
+  query_sequences: File
+  targetFile: File
+
 outputs:
   cmsearch_matches:
     outputSource: cmsearch/matches
@@ -30,10 +25,11 @@ outputs:
   deoverlapped_matches:
     outputSource: remove_overlaps/deoverlapped_matches
     type: File
+
 steps:
   cmsearch:
     label: Search sequence(s) against a covariance model database
-    run: ../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
+    run: ../../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
     in:
       covariance_model_database: covariance_models
       #cpu: cores
@@ -48,15 +44,15 @@ steps:
     out: [ matches, programOutput ]
 
   run_concatenate_matches:
-    run: ../tools/RNA_prediction/concatenate.cwl
+    run: ../../tools/RNA_prediction/concatenate_cmsearch.cwl
     in:
       files: cmsearch/matches
-      outputFileName: catOutputFileName
+      targetFile: targetFile
     out: [ result ]
 
   remove_overlaps:
     label: Remove lower scoring overlaps from cmsearch --tblout files.
-    run: ../tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
+    run: ../../tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
     in:
       clan_information: clan_info
       cmsearch_matches: run_concatenate_matches/result
@@ -66,4 +62,4 @@ $schemas:
   - 'https://schema.org/docs/schema_org_rdfa.html'
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:copyrightHolder: "EMBL - European Bioinformatics Institute, 2018"
-s:author: "Arnaud Meng, Maxim Scheremetjew"
+s:author: "Arnaud Meng, Maxim Scheremetjew, Ekaterina Sakharova"

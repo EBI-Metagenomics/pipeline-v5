@@ -2,6 +2,9 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
+# In fasta mode:
+# this script returns LSU, SSU, 5S, 5.8S and models fasta-s.gz
+
 requirements:
   ResourceRequirement:
     ramMin: 25000
@@ -31,12 +34,16 @@ inputs:
     type: string?
     inputBinding:
       prefix: -e
-  mode:
-    type: string
+  prefix_file:
+    type: File?
     inputBinding:
-      prefix: -m
+
 
 baseCommand: get_subunits.py
+
+arguments:
+  - valueFrom: $(inputs.prefix_file.nameroot)
+    prefix: '-p'
 
 stdout: stdout.txt
 
@@ -46,22 +53,21 @@ outputs:
   SSU_seqs:
     type: File
     outputBinding:
-      glob: "*SSU*"
+      glob: "sequence-categorisation/*SSU.fasta*"
   LSU_seqs:
     type: File
     outputBinding:
-      glob: "*LSU*"
+      glob: "sequence-categorisation/*LSU.fasta*"
 
-  5S_seqs:
-    type: File?
+  fastas:
+    type: File[]
     outputBinding:
-      glob: "5S.fasta"
+      glob: "sequence-categorisation/*.fa*"
 
-  5_8S_seqs:
-    type: File?
+  sequence-categorisation:
+    type: Directory?
     outputBinding:
-      glob: "5_8S.fasta"
-
+      glob: "sequence-categorisation"
 
 hints:
   - class: DockerRequirement

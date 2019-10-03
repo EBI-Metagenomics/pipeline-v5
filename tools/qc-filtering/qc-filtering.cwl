@@ -3,9 +3,11 @@ class: CommandLineTool
 
 label: "Quality control filtering step using the BioPython package."
 
+hints:
+  DockerRequirement:
+    dockerPull: alpine:3.7
+
 requirements:
-#  DockerRequirement:
-#    dockerPull: alpine:3.7
   ResourceRequirement:
     coresMax: 4
     ramMin: 100
@@ -41,6 +43,7 @@ inputs:
     label: 'Minimum read or contig length'
     doc: >
       Specify the minimum read or contig length for sequences to pass QC filtering.
+  input_file_format: string
 
 
 outputs:
@@ -49,7 +52,7 @@ outputs:
     format: edam:format_1929  # FASTA
     type: File
     outputBinding:
-      glob: $(inputs.seq_file.nameroot)_filtered.fasta
+      glob: $(inputs.seq_file.nameroot).fasta
   stats_summary_file:
     label: Stats summary output file
     type: File
@@ -58,7 +61,7 @@ outputs:
 
 arguments:
    - position: 2
-     valueFrom: $(inputs.seq_file.nameroot)_filtered.fasta
+     valueFrom: $(inputs.seq_file.nameroot).fasta
    - position: 3
      valueFrom: $(inputs.stats_file_name)
    - position: 4
@@ -66,6 +69,9 @@ arguments:
    - position: 5
      prefix: '--min_length'
      valueFrom: $(inputs.min_length)
+   - position: 6
+     prefix: '--extension'
+     valueFrom: $(inputs.input_file_format)
 
 $namespaces:
  edam: http://edamontology.org/

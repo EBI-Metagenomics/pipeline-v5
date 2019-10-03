@@ -7,8 +7,6 @@ label: visualize using krona
 #edited from ebi-metagenomics-cwl/tools/krona.cwl
 
 #requirements:
-#  DockerRequirement:
-#    dockerPull: kronav2.7.1:1.0
 #  ResourceRequirement:
 #    ramMin: 15000
 #    ramMax: 15000
@@ -25,7 +23,7 @@ inputs:
 baseCommand: ktImportText
 
 arguments:
-  - valueFrom: $(inputs.otu_counts.nameroot).html
+  - valueFrom: "krona.html"
     prefix: -o
 
 outputs:
@@ -33,7 +31,11 @@ outputs:
     type: File
     format: iana:text/html
     outputBinding:
-      glob: $(inputs.otu_counts.nameroot).html
+      glob: "*.html"
+
+hints:
+  DockerRequirement:
+    dockerPull: kronav2.7.1:1.0
 
 $namespaces:
  edam: http://edamontology.org/

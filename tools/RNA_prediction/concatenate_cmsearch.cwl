@@ -10,15 +10,14 @@ hints:
 baseCommand:
   - cat
 inputs:
-  - id: files
+  files:
     type: 'File[]'
     inputBinding:
       position: 1
     streamable: true
-  - id: outputFileName
-    type: string
+  targetFile: File
 
-stdout: $(inputs.outputFileName)
+stdout: $(inputs.targetFile.nameroot).cmsearch.all.tblout
 
 outputs:
   - id: result

@@ -3,9 +3,9 @@ class: CommandLineTool
 label: extract by names from an indexed sequence file
 doc: "https://github.com/EddyRivasLab/easel"
 
-#hints:
-# DockerRequirement:
-#   dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
+hints:
+  DockerRequirement:
+    dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
 requirements:
   ResourceRequirement:

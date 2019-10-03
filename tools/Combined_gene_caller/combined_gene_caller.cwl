@@ -4,13 +4,16 @@ class: CommandLineTool
 
 label: "Combined Gene Caller"
 
+hints:
+  - class: DockerRequirement
+    dockerPull: gene_caller:latest
+
 requirements:
   ResourceRequirement:
     ramMin: 7000
     ramMax: 7000
     coresMin: 4
-#  DockerRequirement:
-#    dockerPull: gene_caller:latest
+
 #  InlineJavascriptRequirement: {}
 # baseCommand: [combined_gene_caller_docker.py]
 

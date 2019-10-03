@@ -1,13 +1,13 @@
 input_sequences:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA_1000.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA_10000.fasta
 
 silva_ssu_database:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/filtered_SILVA_132_SSU.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/SSU.fasta
 silva_lsu_database:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/filtered_SILVA_132_LSU.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/LSU.fasta
 silva_ssu_taxonomy:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/slv_ssu_filtered2.txt

@@ -5,9 +5,9 @@ class: CommandLineTool
 label: mask SSU and LSU coorindates with bedtools for ITS
 doc: "https://bedtools.readthedocs.io/en/latest/content/tools/maskfasta.html"
 
-#requirements:
-# DockerRequirement:
-#   dockerPull: quay.io/biocontainers/bedtools:2.28.0--hdf88d34_0
+hints:
+ DockerRequirement:
+   dockerPull: quay.io/biocontainers/bedtools:2.28.0--hdf88d34_0
 
 inputs:
   sequences:
@@ -27,7 +27,7 @@ inputs:
 baseCommand: [bedtools, maskfasta]
 
 arguments:
-  - valueFrom: masked-for-ITS.fasta
+  - valueFrom: ITS_masked.fasta
     prefix: -fo
 
 outputs:
@@ -35,7 +35,7 @@ outputs:
     type: File
     format: edam:format_1929  # FASTA
     outputBinding:
-      glob: masked-for-ITS.fasta
+      glob: ITS_masked.fasta
 
 $namespaces:
   edam: http://edamontology.org/

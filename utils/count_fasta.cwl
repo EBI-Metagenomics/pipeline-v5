@@ -7,6 +7,10 @@ requirements:
     coresMax: 1
     ramMin: 100  # just a default, could be lowered
 
+hints:
+  - class: DockerRequirement
+    dockerPull: 'alpine:3.7'
+
 inputs:
   sequences:
     type: File

@@ -4,13 +4,15 @@ class: CommandLineTool
 
 label: "eggNOG"
 
+hints:
+  DockerRequirement:
+    dockerPull: eggnog_pipeline:latest
+
 requirements:
-#  DockerRequirement:
-#    dockerPull: eggnog_pipeline:latest
-#  InlineJavascriptRequirement: {}
   ResourceRequirement:
     ramMin: 40000
     coresMin: 32
+#  InlineJavascriptRequirement: {}
 
 baseCommand: [emapper.py]
 arguments:

@@ -5,9 +5,11 @@ class: CommandLineTool
 
 label: "Unite KOs related to the same contig"
 
+hints:
+  DockerRequirement:
+    dockerPull: kegg_analysis:latest
+
 requirements:
-#  DockerRequirement:
-#    dockerPull: kegg_analysis:latest
   InlineJavascriptRequirement: {}
 
 baseCommand: [union_by_contigs.py]

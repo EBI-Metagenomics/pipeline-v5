@@ -34,7 +34,8 @@ def parse_args(argv):
     parser.add_argument('fasta_output_file', help='FASTA formatted output file name', type=str)
     parser.add_argument('stats_output_file', help='Stats output file name', type=str)
     parser.add_argument('submitted_count', help='Number of submitted sequences', type=int)
-    parser.add_argument('--min_length', help='Minimum read length', type=int, default=100)
+    parser.add_argument('--min_length', help='Minimum read length', type = int, default=100)
+    parser.add_argument('--extension', help='input file extension', type = str)
     return parser.parse_args(argv)
 
 
@@ -72,12 +73,12 @@ def filter_sequences(seq_file, file_format, min_read_length, submitted_count, st
         else:
             rejected_length_counter += 1
     length_filtered = total_sequence_counter - rejected_length_counter
-    nbase_filtered = length_filtered - rejected_length_counter
+    nbase_filtered = length_filtered - rejected_n_counter
 
     write_qc_stats_file(stats_output_file, submitted_count, total_sequence_counter, length_filtered, nbase_filtered)
 
 
-def parse_file_format(file_name):
+def parse_file_format(extension):
     """
         Please note: This MUST contain all sequence formats we expect as key and the necessary BioPython format option
         as value.
@@ -87,7 +88,7 @@ def parse_file_format(file_name):
     :return:
     """
 
-    extension = os.path.splitext(file_name)[1][1:].strip().lower()
+    #extension = os.path.splitext(file_name)[1][1:].strip().lower()
 
     dictFormat = {'sff': 'sff-trim', 'fasta': 'fasta', 'fastq': 'fastq', 'fq': 'fastq'}
     file_format = dictFormat.get(extension)
@@ -136,7 +137,7 @@ def write_qc_stats_file(stats_output_file, submitted_count, trim_count, length_c
 def main(argv=sys.argv[1:]):
     args = parse_args(argv)
 
-    file_format = parse_file_format(args.seq_file)
+    file_format = parse_file_format(args.extension)
 
     filtered_seqs = filter_sequences(args.seq_file, file_format, args.min_length, args.submitted_count,
                                      args.stats_output_file)

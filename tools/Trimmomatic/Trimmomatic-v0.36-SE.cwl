@@ -3,14 +3,14 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-#hints:
+hints:
+  - class: DockerRequirement
+    dockerPull: 'quay.io/biocontainers/trimmomatic:0.36--6'
 #  - class: SoftwareRequirement
 #    packages:
 #      trimmomatic:
 #        version:
 #          - 0.36--6
-#  - class: DockerRequirement
-#    dockerPull: 'quay.io/biocontainers/trimmomatic:0.36--6'
 
 #  - $import: trimmomatic-docker.yml
 
@@ -153,7 +153,6 @@ inputs:
 
   reads2:
     type: File?
-    format: edam:format_1930  # fastq
     inputBinding:
       position: 6
     label: 'FASTQ read file 2'
@@ -162,7 +161,6 @@ inputs:
 
   reads1:
     type: File
-    format: edam:format_1930  # fastq
     inputBinding:
       position: 5
     label: 'FASTQ read file 1'
@@ -230,7 +228,7 @@ outputs:
     type: File
     format: edam:format_1930  # fastq
     outputBinding:
-      glob: $(inputs.reads1.basename).trimmed.fastq
+      glob: $(inputs.reads1.nameroot).trimmed
 
   log_file:
     type: File
@@ -258,7 +256,7 @@ arguments:
 - valueFrom: $(runtime.cores)
   position: 4
   prefix: -threads
-- valueFrom: $(inputs.reads1.basename).trimmed.fastq
+- valueFrom: $(inputs.reads1.nameroot).trimmed
   position: 7
 #- valueFrom: |
 #    ${

@@ -7,15 +7,15 @@ requirements:
     ResourceRequirement:
         coresMin: 4
         ramMin: 10000
-#DockerRequirement:
-#dockerPull: quay.io/biocontainers/motus:2.1.1--py37_3
 
 hints:
-    SoftwareRequirement:
-        packages:
-            mOTUs2:
-                specs: ["http://biom-format.org/index.html"]
-                version: ["2.5.1"]
+  DockerRequirement:
+    dockerPull: quay.io/biocontainers/motus:2.1.1--py37_3
+  SoftwareRequirement:
+    packages:
+      mOTUs2:
+        specs: ["http://biom-format.org/index.html"]
+        version: ["2.5.1"]
 
 
 label: "mOTU taxonomy assignment for assemblies"

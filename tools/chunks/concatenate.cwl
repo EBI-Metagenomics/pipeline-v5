@@ -3,9 +3,9 @@ cwlVersion: v1.0
 $namespaces:
   s: 'http://schema.org/'
 
-#hints:
-#  - class: DockerRequirement
-#    dockerPull: 'alpine:3.7'
+hints:
+  - class: DockerRequirement
+    dockerPull: 'alpine:3.7'
 
 baseCommand:
   - cat

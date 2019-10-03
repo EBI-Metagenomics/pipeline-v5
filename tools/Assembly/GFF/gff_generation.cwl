@@ -2,9 +2,9 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-#requirements:
-#  DockerRequirement:
-#    dockerPull: alpine:3.9.4
+hints:
+  DockerRequirement:
+    dockerPull: alpine:3.9.4
 
 baseCommand: [build_assembly_gff.py]
 
