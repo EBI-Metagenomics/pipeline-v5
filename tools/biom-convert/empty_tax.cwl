@@ -29,7 +29,7 @@ inputs:
     inputBinding:
       position: 4
 
-baseCommand: [bash empty_tax.sh]
+baseCommand: [empty_tax.sh]
 
 outputs:
   mapseq_out:

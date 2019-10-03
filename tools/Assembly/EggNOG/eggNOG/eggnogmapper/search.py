@@ -1,23 +1,17 @@
 #!/usr/bin/env python
 from __future__ import absolute_import
 
-import sys
-import os
 import socket
 import struct
 import math
 import re
-import time
 import subprocess
-import cPickle
-import multiprocessing
 
 from tempfile import NamedTemporaryFile, mkdtemp
 import uuid
-from collections import defaultdict, Counter
+from collections import defaultdict
 
 from . import seqio
-from . import annota
 from .common import *
 
 B62_IDENTITIES = {'A': 4, 'B': 4, 'C': 9, 'D': 6, 'E': 5, 'F': 6, 'G': 6, 'H': 8,
