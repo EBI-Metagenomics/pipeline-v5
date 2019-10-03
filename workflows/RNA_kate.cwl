@@ -63,47 +63,9 @@ outputs:
     type: File
     outputSource: extract_subunits_coords/LSU_seqs
 
-  SSU_classifications:
+  sequences_esl:
     type: File
-    outputSource: classify_SSUs/mapseq_classifications
-  SSU_otu_txt:
-    type: File
-    outputSource: classify_SSUs/krona_txt
-  SSU_otu_tsv:
-    type: File
-    outputSource: classify_SSUs/krona_tsv
-  SSU_krona_image:
-    type: File
-    outputSource: classify_SSUs/krona_image
-
-  LSU_classifications:
-    type: File
-    outputSource: classify_LSUs/mapseq_classifications
-  LSU_otu_txt:
-    type: File
-    outputSource: classify_LSUs/krona_txt
-  LSU_otu_tsv:
-    type: File
-    outputSource: classify_LSUs/krona_tsv
-  LSU_krona_image:
-    type: File
-    outputSource: classify_LSUs/krona_image
-
-  ssu_hdf5_classifications:
-    type: File
-    outputSource: ssu_convert_otu_counts_to_hdf5/result
-
-  ssu_json_classifications:
-    type: File
-    outputSource: ssu_convert_otu_counts_to_json/result
-
-  lsu_hdf5_classifications:
-    type: File
-    outputSource: lsu_convert_otu_counts_to_hdf5/result
-
-  lsu_json_classifications:
-    type: File
-    outputSource: lsu_convert_otu_counts_to_json/result
+    outputSource: extract_sequences/sequences
 
 steps:
 
@@ -159,59 +121,3 @@ steps:
       pattern_5.8S: pattern_5.8S
       mode: { default: 'fasta' }
     out: [SSU_seqs, LSU_seqs, 5S_seqs, 5_8S_seqs]
-
-# classify SSU
-  classify_SSUs:
-    run: classify-otu-visualise.cwl
-    in:
-      fasta: extract_subunits/SSU_seqs
-      mapseq_ref: silva_ssu_database
-      mapseq_taxonomy: silva_ssu_taxonomy
-      otu_ref: silva_ssu_otus
-      otu_label: pattern_SSU
-    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
-
-# classify LSU
-  classify_LSUs:
-    run: classify-otu-visualise.cwl
-    in:
-      fasta: extract_subunits/LSU_seqs
-      mapseq_ref: silva_lsu_database
-      mapseq_taxonomy: silva_lsu_taxonomy
-      otu_ref: silva_lsu_otus
-      otu_label: pattern_LSU
-    out: [ mapseq_classifications, krona_tsv, krona_txt, krona_image ]
-
-#convert biom to hdf5 and json formats
-
-  ssu_convert_otu_counts_to_hdf5:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: classify_SSUs/krona_tsv
-       hdf5: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
-
-  ssu_convert_otu_counts_to_json:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: classify_SSUs/krona_tsv
-       json: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
-
-  lsu_convert_otu_counts_to_hdf5:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: classify_LSUs/krona_tsv
-       hdf5: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]
-
-  lsu_convert_otu_counts_to_json:
-    run: ../tools/biom-convert/biom-convert.cwl
-    in:
-       biom: classify_LSUs/krona_tsv
-       json: { default: true }
-       table_type: { default: 'OTU table' }
-    out: [ result ]

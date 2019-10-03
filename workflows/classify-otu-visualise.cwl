@@ -4,6 +4,13 @@ cwlVersion: v1.0
 class: Workflow
 label: "Run taxonomic classification, create OTU table and krona visualisation"
 
+requirements:
+  SubworkflowFeatureRequirement: {}
+  MultipleInputFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
+  StepInputExpressionRequirement: {}
+  ScatterFeatureRequirement: {}
+
 inputs:
   fasta: File
   mapseq_ref: {type: File, secondaryFiles: [.mscluster] }
@@ -11,9 +18,10 @@ inputs:
   otu_ref: File
   otu_label:
     type: string
-
+  return_dirname: string
 
 outputs:
+
   mapseq_classifications:
     type: File
     outputSource: edit_empty_tax/mapseq_out
@@ -30,6 +38,18 @@ outputs:
     type: File
     outputSource: edit_empty_tax/krona_out
     format: iana:text/html
+
+  mapseq_json:
+    type: File
+    outputSource: counts_to_json/result
+
+  mapseq_hdf5:
+    type: File
+    outputSource: counts_to_hdf5/result
+
+  out_dir:
+    type: Directory
+    outputSource: return_output_dir/out
 
 steps:
   mapseq:
@@ -55,14 +75,50 @@ steps:
     out: [ otu_visualization ]
 
   edit_empty_tax:
-    run: ../tools/biom_convert/empty_tax.cwl
+    run: ../tools/biom-convert/empty_tax.cwl
     in:
       mapseq: mapseq/classifications
       otutable: classifications_to_otu_counts/otu_tsv
-      biomable: classifications_to_otu_counts/otu_txt
-      krona: visualise_otu_counts/otu_visualisation
+      biomtable: classifications_to_otu_counts/otu_txt
+      krona: visualize_otu_counts/otu_visualization
     out: [mapseq_out, otu_out, biom_out, krona_out]
 
+  counts_to_hdf5:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: edit_empty_tax/otu_out
+       hdf5: { default: true }
+       table_type: { default: 'OTU table' }
+    out: [ result ]
+
+  counts_to_json:
+    run: ../tools/biom-convert/biom-convert.cwl
+    in:
+       biom: edit_empty_tax/otu_out
+       json: { default: true }
+       table_type: { default: 'OTU table' }
+    out: [ result ]
+
+  compress_mapseq:
+    run: ../utils/gzip.cwl
+    in:
+      uncompressed_file: edit_empty_tax/mapseq_out
+    out: [compressed_file]
+    label: "gzip mapseq output"
+
+  return_output_dir:
+    run: ../utils/return_directory.cwl
+    in:
+      dir_name: return_dirname
+      list:
+        - compress_mapseq/compressed_file
+        - edit_empty_tax/otu_out
+        - edit_empty_tax/biom_out
+        - edit_empty_tax/krona_out
+        - counts_to_hdf5/result
+        - counts_to_json/result
+    out: [ out ]
+    label: "return all files in one folder"
 
 $namespaces:
  edam: http://edamontology.org/

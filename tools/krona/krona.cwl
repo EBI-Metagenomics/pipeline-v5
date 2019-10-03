@@ -18,7 +18,6 @@ label: visualize using krona
 inputs:
   otu_counts:
     type: File
-    format: edam:format_2330
     label: Tab-delimited text file
     inputBinding:
       position: 2

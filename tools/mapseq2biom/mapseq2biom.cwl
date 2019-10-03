@@ -43,13 +43,11 @@ arguments:
 outputs:
   otu_tsv:
     type: File
-    format: edam:format_3746
     outputBinding:
       glob: $(inputs.query.basename).tsv
 
   otu_txt:
     type: File
-    format: edam:format_2330
     outputBinding:
       glob: $(inputs.label).txt
 

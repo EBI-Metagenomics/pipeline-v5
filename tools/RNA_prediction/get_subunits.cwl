@@ -3,8 +3,6 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 requirements:
-# DockerRequirement:
-#    dockerPull: alpine:3.7
   ResourceRequirement:
     ramMin: 25000
     ramMax: 25000
@@ -29,7 +27,10 @@ inputs:
     type: string?
     inputBinding:
       prefix: -f
-
+  pattern_5.8S:
+    type: string?
+    inputBinding:
+      prefix: -e
   mode:
     type: string
     inputBinding:
@@ -37,7 +38,11 @@ inputs:
 
 baseCommand: get_subunits.py
 
+stdout: stdout.txt
+
 outputs:
+  stdout: stdout
+
   SSU_seqs:
     type: File
     outputBinding:
@@ -50,7 +55,17 @@ outputs:
   5S_seqs:
     type: File?
     outputBinding:
-      glob: "*5S_extracted.fasta*"
+      glob: "5S.fasta"
+
+  5_8S_seqs:
+    type: File?
+    outputBinding:
+      glob: "5_8S.fasta"
+
+
+hints:
+  - class: DockerRequirement
+    dockerPull: alpine:3.7
 
 $namespaces:
  s: http://schema.org/

@@ -1,6 +1,6 @@
 input_sequences:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA_1000.fasta
 
 silva_ssu_database:
   class: File
@@ -49,4 +49,5 @@ ncRNA_ribosomal_model_clans:
 
 pattern_SSU: 'SSU'
 pattern_LSU: 'LSU'
-pattern_5S: '5_8S'
+pattern_5.8S: '5_8S'
+pattern_5S: '5S'
