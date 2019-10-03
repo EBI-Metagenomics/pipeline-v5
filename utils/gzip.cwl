@@ -16,7 +16,7 @@ outputs:
   gziped_file:
     type: File
     outputBinding:
-      glob: *.gz
+      glob: "*.gz"
 
 hints:
   - class: DockerRequirement
