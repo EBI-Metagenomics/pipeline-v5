@@ -11,12 +11,13 @@ inputs:
       position: 1
 
 baseCommand: [ gzip ]
+arguments: ["-c"]
+
+stdout: $(inputs.uncompressed_file.basename).gz
 
 outputs:
-  gziped_file:
-    type: File
-    outputBinding:
-      glob: "*.gz"
+  compressed_file:
+    type: stdout
 
 hints:
   - class: DockerRequirement

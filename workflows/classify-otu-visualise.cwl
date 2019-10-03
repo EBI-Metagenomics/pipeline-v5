@@ -103,7 +103,7 @@ steps:
     run: ../utils/gzip.cwl
     in:
       uncompressed_file: edit_empty_tax/mapseq_out
-    out: [gziped_file]
+    out: [compressed_file]
     label: "gzip mapseq output"
 
   return_output_dir:
