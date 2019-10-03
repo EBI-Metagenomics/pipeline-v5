@@ -99,18 +99,26 @@ steps:
        table_type: { default: 'OTU table' }
     out: [ result ]
 
+  compress_mapseq:
+    run: ../utils/gzip.cwl
+    in:
+      uncompressed_file: edit_empty_tax/mapseq_out
+    out: [gziped_file]
+    label: "gzip mapseq output"
+
   return_output_dir:
     run: ../utils/return_directory.cwl
     in:
       dir_name: return_dirname
       list:
-        - edit_empty_tax/mapseq_out
+        - compress_mapseq/gziped_file
         - edit_empty_tax/otu_out
         - edit_empty_tax/biom_out
         - edit_empty_tax/krona_out
         - counts_to_hdf5/result
         - counts_to_json/result
     out: [ out ]
+    label: "return all files in one folder"
 
 $namespaces:
  edam: http://edamontology.org/
