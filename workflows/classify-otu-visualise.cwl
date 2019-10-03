@@ -111,7 +111,7 @@ steps:
     in:
       dir_name: return_dirname
       list:
-        - compress_mapseq/gziped_file
+        - compress_mapseq/compressed_file
         - edit_empty_tax/otu_out
         - edit_empty_tax/biom_out
         - edit_empty_tax/krona_out
