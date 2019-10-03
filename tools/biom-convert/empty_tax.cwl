@@ -5,8 +5,8 @@ class: CommandLineTool
 label: rename empty tax files and add mock bacteria to empty otu table
 #this to avoid errors with empty files further down the pipeline
 
-requirements:
-    - class: ShellCommandRequirement
+#requirements:
+#    - class: ShellCommandRequirement
 
 inputs:
   mapseq:
@@ -29,7 +29,7 @@ inputs:
     inputBinding:
       position: 4
 
-baseCommand: [sh empty_tax.sh]
+baseCommand: [bash empty_tax.sh]
 
 outputs:
   mapseq_out:
