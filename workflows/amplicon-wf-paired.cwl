@@ -182,12 +182,12 @@ steps:
       merged_reads: overlap_reads/merged_reads
       forward_unmerged_reads: overlap_reads/forward_unmerged_reads
       reverse_unmerged_reads: overlap_reads/reverse_unmerged_reads
-    out: [ merged_with_unmerged_reads ]
+    out: [ unzipped_merged_reads ]
 
   count_submitted_reads:
     run: ../utils/count_fastq.cwl
     in:
-      sequences: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+      sequences: combine_overlapped_and_unmerged_reads/unzipped_merged_reads
     out: [ count ]
 
 # << Trim and Reformat >>
@@ -197,7 +197,7 @@ steps:
       less than 15 over a 4 nucleotide wide window are removed)
     run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
-      reads1: combine_overlapped_and_unmerged_reads/merged_with_unmerged_reads
+      reads1: combine_overlapped_and_unmerged_reads/unzipped_merged_reads
       phred: { default: '33' }
       leading: { default: 3 }
       trailing: { default: 3 }

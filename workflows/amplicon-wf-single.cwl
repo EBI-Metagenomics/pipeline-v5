@@ -178,11 +178,20 @@ outputs:
 #    type: File
 #    outputSource: ITS/itsonedb_json_classifications
 
+
+
 steps:
+# << SeqPrep - unzipping only >>
+  unzip_reads:
+    run: ../tools/SeqPrep/seqprep-merge.cwl
+    in:
+      forward_unmerged_reads: single_reads
+    out: [ unzipped_merged_reads ]
+
   count_submitted_reads:
     run: ../utils/count_fastq.cwl
     in:
-      sequences: single_reads
+      sequences: unzip_reads/unzipped_merged_reads
     out: [ count ]
 
 # << Trimm >>
@@ -192,7 +201,7 @@ steps:
       less than 15 over a 4 nucleotide wide window are removed)
     run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
-      reads1: single_reads
+      reads1: unzip_reads/unzipped_merged_reads
       phred: { default: '33' }
       leading: { default: 3 }
       trailing: { default: 3 }
