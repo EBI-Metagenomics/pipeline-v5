@@ -15,10 +15,9 @@ requirements:
 #      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-  qc_stats_summary: File
+  LSU_coordinates: File
+  SSU_coordinates: File
   query_sequences: File
-  LSU_fasta: File
-  SSU_fasta: File
   unite_database: {type: File, secondaryFiles: [.mscluster] }
   unite_taxonomy: File
   unite_otus: File
@@ -82,21 +81,13 @@ outputs:
     type: File
     outputSource: itsonedb_otu_counts_to_json/result
 
-#ADD QUALITY CONTROLLED READS
-
 steps:
-
-#ITS pipeline starts here!
-#check proportion LSU/SSU to total seqs.
-
-  match_proportion:
-    run: ../tools/mask-for-ITS/divide.cwl
+  cat:
+    run: ../tools/mask-for-ITS/cat-SSU-LSU.cwl
     in:
-      fasta_SSU: SSU_fasta
-      fasta_LSU: LSU_fasta
-      summary: qc_stats_summary
-      fasta: query_sequences
-    out: [fasta_out]
+      SSU_coords: SSU_coordinates
+      LSU_coords: LSU_coordinates
+    out: [ all-coordinates ]
 
   #if proportion < 0.90 then carry on, update with potential "conditional"
   #mask SSU/LSU
@@ -110,7 +101,7 @@ steps:
   mask_for_ITS:
     run: ../tools/mask-for-ITS/bedtools.cwl
     in:
-      sequences: match_proportion/fasta_out
+      sequences: query_sequences
       maskfile: reformat_coords/maskfile
     out: [masked_sequences]
 

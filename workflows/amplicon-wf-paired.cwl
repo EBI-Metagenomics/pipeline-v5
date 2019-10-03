@@ -287,7 +287,6 @@ steps:
   ITS:
     run: ITS-test.cwl
     in:
-      qc_stats_summary: qc_stats/summary_out
       query_sequences: clean_fasta_headers/sequences_with_cleaned_headers
       LSU_coordinates: classify/LSU_coords
       SSU_coordinates: classify/SSU_coords
