@@ -14,7 +14,7 @@ inputs:
     type: File
     inputBinding: { position: 1 }
 
-baseCommand: ['write_ipr_summary.py']
+baseCommand: ['python','write_ipr_summary.py']
 
 stdout: summary.ipr
 

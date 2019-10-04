@@ -36,7 +36,7 @@ inputs:
         position: 5
         prefix: -c
 
-baseCommand: ['functional_stats.py']
+baseCommand: ['python', 'functional_stats.py']
 
 outputs:
   ipr_stats:
