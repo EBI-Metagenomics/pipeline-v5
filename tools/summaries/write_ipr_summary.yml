@@ -1,0 +1,3 @@
+ipr_entry_maps:
+  class: File
+  path: ipr_entry_maps.yaml
