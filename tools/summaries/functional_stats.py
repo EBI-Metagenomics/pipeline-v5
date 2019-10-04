@@ -4,9 +4,28 @@ import yaml
 #import os - add output dir?
 import argparse
 import sys
+from Bio import SeqIO
+import re
 
-'''script to generate stats for each funtional analysis. Each function pulls out total number of matches, number of predicted coding sequences with match
-and number of contigs with match. Outputs in TSV file. Entry map is generated for InterProScan as input to write IPR summary'''
+'''script to generate stats for each funtional analysis and orf stats. Each function pulls out total number of matches, number of predicted coding sequences with match
+and number of contigs with match. ORF stats gives number of CDS, contigs with CDS and Contigs with RNA. Outputs in TSV format.
+Entry map is generated for InterProScan as input to write IPR summary'''
+
+def orf_stats(cds_file, cmsearch_deoverlap):
+    numberOrfs = 0
+    readsWithOrf = set()
+    readsWithRNA = set()
+    for record in SeqIO.parse(cds_file, "fasta"):
+        ID = (record.id.split("_"))[0]
+        readsWithOrf.add(ID)
+        numberOrfs += 1
+    numberReadsWithOrf = len(readsWithOrf)
+    for hit in open(cmsearch_deoverlap, "r"):
+        RNAaccession = re.search("(\S+)\s+-", hit.strip())[1]
+        readsWithRNA.add(RNAaccession)
+    numberReadswithRNA = len(readsWithRNA)
+    with open("orf.stats", "w") as file_out:
+        file_out.write("Predicted CDS\t" + str(numberOrfs) + "\nContigs with predicted CDS\t" + str(numberReadsWithOrf) + "\nContigs with predicted with rRNA\t" + str(numberReadswithRNA))
 
 def ipr_stats(interpro_file):
     match_count = CDS_with_match_number = reads_with_match_count = 0
@@ -84,6 +103,8 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--interpro", dest="interpro_file", help="Tab deliminated file with interpro results", required=True)
     parser.add_argument("-k", "--hmmscan", dest="hmmscan_file", help="Tab deliminated file with hmmscan results", required=True)
     parser.add_argument("-p", "--pfam", dest="pfam_file", help="Tab deliminated file with pfam results", required=True)
+    parser.add_argument("-r", "--rna", dest="cmsearch_deoverlap", help="cmsearch deoverlapped results", required=True)
+    parser.add_argument("-c", "--cds", dest="cds_file", help="predicted coding sequences", required=True)
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -92,3 +113,4 @@ if __name__ == "__main__":
         ipr_stats(args.interpro_file)
         hmmscan_stats(args.hmmscan_file)
         pfam_stats(args.pfam_file)
+        orf_stats(args.cds_file, args.cmsearch_deoverlap)
