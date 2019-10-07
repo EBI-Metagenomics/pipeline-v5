@@ -6,15 +6,16 @@ label: "gather summary file from InterProScan"
 
 requirements:
   ResourceRequirement:
-    coresMax: 1
-    ramMin: 4768  # just a default, could be lowered
+    ramMin: 9500  # just a default, could be lowered
 
 inputs:
   ipr_entry_maps:
     type: File
-    inputBinding: { position: 1 }
+    inputBinding:
+        position: 1
+        prefix: -i
 
-baseCommand: ['python','write_ipr_summary.py']
+baseCommand: ['write_ipr_summary.py']
 
 stdout: summary.ipr
 
