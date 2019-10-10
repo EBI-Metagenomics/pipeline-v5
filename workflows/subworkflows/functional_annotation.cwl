@@ -14,11 +14,8 @@ requirements:
 #      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
 
 inputs:
-  sequences: File
 
-  ncRNAs: File
-  config: File
-  pipeline_seq_type: string
+  CGC_predicted_proteins: File
 
   HMMSCAN_gathering_bit_score: boolean
   HMMSCAN_omit_alignment: boolean
@@ -35,13 +32,6 @@ inputs:
 
 outputs:
 
-  CGC_predicted_proteins:
-    outputSource: combined_gene_caller/predicted_proteins
-    type: File
-  CGC_predicted_seq:
-    outputSource: combined_gene_caller/predicted_seq
-    type: File
-
   InterProScan_I5:
     outputSource: interproscan/i5Annotations
     type: File
@@ -55,33 +45,37 @@ outputs:
     outputSource: eggnog/output_orthologs
 
 steps:
-  combined_gene_caller:
-    run: ../tools/Combined_gene_caller/combined_gene_caller.cwl
-    in:
-      input_fasta: sequences
-      seq_type: pipeline_seq_type
-      maskfile: ncRNAs
-      config: config
-    out:
-      - predicted_proteins
-      - predicted_seq
-      - gene_caller_out
-      - stderr
-      - stdout
-    label: "predictions of FragGeneScan with faselector"
 
-  interproscan:
-    run: ../tools/InterProScan/InterProScan-v5-none_docker.cwl
+  # << Chunk faa file >>
+    split_seqs:
     in:
-      applications: InterProScan_applications
-      inputFile: combined_gene_caller/predicted_proteins
-      outputFormat: InterProScan_outputFormat
-      databases: InterProScan_databases
+      seqs:
+      chunk_size: { default: 100000 }
+    out: [ chunks ]
+    run: ../tools/fasta_chunker.cwl
+
+  # << InterProScan >>
+  interproscan:
+    scatter: inputFile
+    in:
+      applications: applications
+      inputFile: split_seqs/chunks
+      outputFormat: outputFormat
+      databases: databases
     out: [ i5Annotations ]
+    run: ../tools/InterProScan/InterProScan-v5-none_docker.cwl
     label: "InterProScan: protein sequence classifier"
 
+  combine_IPS:
+    in:
+      files: interproscan/i5Annotations
+      outputFileName: { default: 'interpro_united' }
+    out: [result]
+    run: ../tools/chunks/concatenate.cwl
+
+  # << hmmscan >>
   hmmscan:
-    run: ../tools/hmmscan/hmmscan.cwl
+    scatter: seqfile
     in:
       seqfile: combined_gene_caller/predicted_proteins
       gathering_bit_score: HMMSCAN_gathering_bit_score
@@ -89,13 +83,40 @@ steps:
       data: HMMSCAN_data
       omit_alignment: HMMSCAN_omit_alignment
     out: [ output_table ]
+    run: ../tools/hmmscan/hmmscan.cwl
     label: "Analysis using profile HMM on db"
 
+  combine_hmmscan:
+    in:
+      files: hmmscan/output_table
+      outputFileName: { default: 'hmm_united'
+    out: [result]
+    run: ../tools/chunks/concatenate.cwl
+
+  # << EggNOG >>
   eggnog:
-    run: ../tools/EggNOG/eggNOG/eggnog.cwl
+    scatter: fasta_file
       in:
-        fasta_file: combined_gene_caller/predicted_proteins
-        db: EggNOG_db
-        db_diamond: EggNOG_diamond_db
-        data_dir: EggNOG_data_dir
-      out: [output_annotations, output_orthologs]
+        fasta_file: split_seqs/chunks
+        db_diamond: db_diamond
+        db: db
+        data_dir: data_dir
+      out: [annotations, orthologs]
+    run: ../tools/EggNOG/eggNOG/eggnog.cwl
+
+  combine_annotations:
+    run: ../chunks/concatenate.cwl
+    in:
+      files: eggnog/annotations
+      outputFileName: { default: 'annotations_united' }
+    out: [ result ]
+
+  combine_orthologs:
+    run: ../chunks/concatenate.cwl
+    in:
+      files: eggnog/orthologs
+      outputFileName: { default: 'orthologs_united' }
+    out: [ result ]
+
+
+
