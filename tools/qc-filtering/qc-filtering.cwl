@@ -10,8 +10,8 @@ hints:
 requirements:
   ResourceRequirement:
     coresMax: 4
-    ramMin: 200
-    ramMax: 500
+    ramMin: 100
+    ramMax: 2000
   InlineJavascriptRequirement: {}
 
 baseCommand: ["run_quality_filtering.py" ]
@@ -19,7 +19,7 @@ baseCommand: ["run_quality_filtering.py" ]
 inputs:
   seq_file:
     type: File
-    format: edam:format_1929  # FASTA
+    # format: edam:format_1929  # FASTA
     inputBinding:
       position: 1
     label: 'Trimmed sequence file'
