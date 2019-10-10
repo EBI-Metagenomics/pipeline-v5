@@ -68,16 +68,24 @@ def hmmscan_stats(hmmscan_file):
     match_count = CDS_with_match_number = reads_with_match_count = 0
     cds = set();
     reads = set()
+    entry2protein = {}
+    entry2name = {}
     for line in open(hmmscan_file, "r"):
         splitLine = line.strip().split("\t")
         cdsAccessions = splitLine[3].split("|")
         for cdsAccession in cdsAccessions:
+            entry = splitLine[0]
+            entry2protein.setdefault(entry, set()).add(cdsAccession)
+            entry2name[entry] = " ".join(splitLine[22:])
             cds.add(cdsAccession)
             readAccession = (cdsAccession.split("_"))[0]
             reads.add(readAccession)
         match_count += 1
     CDS_with_match_count = len(cds)
     reads_with_match_count = len(reads)
+    with open("hmm_entry_maps.yaml", "w") as mapsFile:
+        yaml.dump({"entry2protein": entry2protein,
+                   "entry2name": entry2name}, mapsFile)
     with open("hmmscan.stats", "w") as file_out:
         file_out.write("Total KO matches\t"+str(match_count)+"\nPredicted CDS with KO match\t"+str(CDS_with_match_count)+"\nContigs with KO match\t"+str(reads_with_match_count))
 
@@ -85,6 +93,8 @@ def pfam_stats(pfam_file):
     match_count = CDS_with_match_number = reads_with_match_count = 0
     cds = set();
     reads = set()
+    entry2protein = {};
+    entry2name = {}
     for line in open(pfam_file, "r"):
         splitLine = line.strip().split("\t")
         cdsAccessions = splitLine[0].split("|")
@@ -92,9 +102,15 @@ def pfam_stats(pfam_file):
             cds.add(cdsAccession)
             readAccession = (cdsAccession.split("_"))[0]
             reads.add(readAccession)
+            entry = splitLine[4]
+            entry2protein.setdefault(entry, set()).add(cdsAccession)
+            entry2name[entry] = splitLine[5]
         match_count += 1
     CDS_with_match_count = len(cds)
     reads_with_match_count = len(reads)
+    with open("pfam_entry_maps.yaml", "w") as mapsFile:
+        yaml.dump({"entry2protein": entry2protein,
+                   "entry2name": entry2name}, mapsFile)
     with open("pfam.stats", "w") as file_out:
         file_out.write("Total Pfam matches\t"+str(match_count)+"\nPredicted CDS with Pfam match\t"+str(CDS_with_match_count)+"\nContigs with Pfam match\t"+str(reads_with_match_count))
 

@@ -15,12 +15,36 @@ inputs:
         position: 1
         prefix: -i
 
+  hmm_entry_maps:
+    type: File
+    inputBinding:
+        position: 2
+        prefix: -k
+
+  pfam_entry_maps:
+    type: File
+    inputBinding:
+        position: 3
+        prefix: -p
+
 baseCommand: ['write_ipr_summary.py']
 
-stdout: summary.ipr
-
 outputs:
-  ipr_summary: stdout
+  ipr_summary:
+    type: File
+    outputBinding:
+        glob: "summary.ipr"
+
+  hmm_summary:
+    type: File
+    outputBinding:
+        glob: "summary.hmm"
+
+  pfam_summary:
+    type: File
+    outputBinding:
+        glob: "summary.pfam"
+
 
 $namespaces:
  s: http://schema.org/

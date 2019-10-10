@@ -59,6 +59,14 @@ outputs:
     type: File
     outputBinding:
         glob: "ipr_entry_maps.yaml"
+  hmm_maps:
+    type: File
+    outputBinding:
+        glob: "hmm_entry_maps.yaml"
+  pfam_maps:
+    type: File
+    outputBinding:
+        glob: "pfam_entry_maps.yaml"
   orf_stats:
     type: File
     outputBinding:
