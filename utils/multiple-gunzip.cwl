@@ -48,7 +48,7 @@ outputs:
     type: stdout
 
 stdout: ${ var ext = "";
-       if (inputs.assembly) { ext = inputs.target_reads.nameroot.split('.')[0] + '_FASTA.fasta.unfiltered'; }
+       if (inputs.assembly) { ext = inputs.target_reads.nameroot.split('.')[0] + '_FASTA.unfiltered'; }
        if (inputs.reads) { ext = inputs.target_reads.nameroot.split('.')[0] + '_FASTQ.fastq'; }
        return ext; }
 
