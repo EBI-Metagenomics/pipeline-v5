@@ -23,14 +23,56 @@ requirements:
   - class: StepInputExpressionRequirement
   - class: ScatterFeatureRequirement
 
+inputs:
+    #QC#
+    contigs: File
+    contig_min_length: int
+
+    #rna prediction#
+    ssu_db: {type: File, secondaryFiles: [.mscluster] }
+    lsu_db: {type: File, secondaryFiles: [.mscluster] }
+    ssu_tax: File
+    lsu_tax: File
+    ssu_otus: File
+    lsu_otus: File
+    rfam_models: File[]
+    rfam_model_clans: File
+    ssu_label: string
+    lsu_label: string
+    5s_pattern: string
+    5.8s_pattern: string
+
+outputs:
+    # << QC >>
+    #gz_files: fasta.gz, cmsearch.gz, deoverlapped.gz + chunked
+    qc-statistics:
+        type: Directory
+        outputSource: qc_stats/output_dir
+    qc_summary:
+        type: File
+        outputSource: length_filter/stats_summary_file
+
+    # << rna_prediction >>
+    LSU_folder:
+        type: Directory
+        outputSource: classify/LSU_folder
+
+    SSU_folder:
+        type: Directory
+        outputSource: classify/SSU_folder
+
+    sequence-categorisation_folder:
+        type: Directory
+        outputSource: classify/sequence-categorisation
+
 steps:
 
   # << unzip contig file >>
   unzip:
     in:
-      forward_unmerged_reads: contigs
+      target_reads: contigs
     out: [unzipped_merged_reads]
-    run: ../tools/Seqprep/seqprep-merge.cwl
+    run: ../utils/multiple_gunzip.cwl
 
   # << count reads pre QC >>
   count_reads:
@@ -39,62 +81,66 @@ steps:
     out: [ count ]
     run: ../utils/count_fasta.cwl
 
+  # <<clean fasta headers??>>
+  clean_headers:
+    in:
+      sequences: unzip/unzipped_merged_reads
+    out: [ sequences_with_cleaned_headers ]
+    run: ../utils/clean_fasta_headers.cwl
+    labels: "removes spaces in some headers"
+
   # << Length QC >>
   length_filter:
     in:
       seq_file: unzip/unzipped_merged_reads
-      min_length: contig_length
+      min_length: contig_min_length
       submitted_seq_count: count_reads/count
-      stats_file_name: ?
+      stats_file_name: { default: 'qc_summary' }
+      input_file_format: { default: fasta }
     out: [filtered_file, stats_summary_file]
     run: ../tools/qc-filtering/qc-filtering.cwl
 
-  # << QC stats >>
-  sequence_stats:
+  # << count processed reads >>
+  count_processed_reads:
     in:
-      QCed_reads: contigs
-    out:
-      - summary_out
-      - seq_length_pcbin
-      - seq_length_bin
-      - seq_length_out
-      - nucleotide_distribution_out
-      - gc_sum_pcbin
-      - gc_sum_bin
-      - gc_sum_out
+      sequences: length_filter/filtered_file
+    out: [ count ]
+    run: ../utils/count_fasta.cwl
+
+  # << QC stats >>
+  qc_stats:
+    in:
+      QCed_reads: length_filter/filtered_file
+      sequence_count: count_processed_reads/count
+    out: [ output_dir, summary_out ]
     run: ../tools/qc-stats/qc-stats.cwl
 
   # << RNA prediction >>
   rna_prediction:
     in:
-      input_sequences: contigs
-      silva_ssu_database: rna_pred_silva_ssu_database
-      silva_lsu_database: rna_pred_silva_lsu_database
-      silva_ssu_taxonomy: rna_pred_silva_ssu_taxonomy
-      silva_lsu_taxonomy: rna_pred_silva_lsu_taxonomy
-      silva_ssu_otus: rna_pred_silva_ssu_otus
-      silva_lsu_otus: rna_pred_silva_lsu_otus
-      ncRNA_ribosomal_models: rna_pred_ncRNA_ribosomal_models
-      ncRNA_ribosomal_model_clans: rna_pred_ncRNA_ribosomal_model_clans
-      otu_ssu_label: rna_pred_otu_ssu_label
-      otu_lsu_label: rna_pred_otu_lsu_label
+      input_sequences: length_filter/filtered_file
+      silva_ssu_database: ssu_db
+      silva_lsu_database: lsu_db
+      silva_ssu_taxonomy: ssu_tax
+      silva_lsu_taxonomy: lsu_tax
+      silva_ssu_otus: ssu_otus
+      silva_lsu_otus: lsu_otus
+      ncRNA_ribosomal_models: rfam_models
+      ncRNA_ribosomal_model_clans: rfam_model_clans
+      pattern_SSU: ssu_label
+      pattern_LSU: lsu_label
+      pattern_5S: 5s_pattern
+      pattern_5.8S: 5.8s_pattern
     out:
-      - ncRNAs
-      - 5S_fasta
-      - SSU_fasta
-      - LSU_fasta
-      - SSU_classifications
-      - SSU_otu_tsv
-      - SSU_krona_image
-      - LSU_classifications
-      - LSU_otu_tsv
-      - LSU_krona_image
-      - ssu_hdf5_classifications
-      - ssu_json_classifications
-      - lsu_hdf5_classifications
-      - lsu_json_classifications
-    run: rna_prediction.cwl
-
+      - ncRNA
+      - cmsearch_result
+      - SSU_folder
+      - LSU_folder
+      - sequence-categorisation
+      - SSU_coords
+      - LSU_coords
+    run: subworkflows/rna_prediction-sub-wf.cwl
+##########CHANGE FROM HERE ONWARDS##################
   # << Chunk fasta >>
     split_seqs:
     in:
