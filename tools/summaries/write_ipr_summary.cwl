@@ -9,42 +9,19 @@ requirements:
     ramMin: 9500  # just a default, could be lowered
 
 inputs:
-  ipr_entry_maps:
-    type: File
+  entry_maps:
+    type: File[]
     inputBinding:
-        position: 1
-        prefix: -i
-
-  hmm_entry_maps:
-    type: File
-    inputBinding:
-        position: 2
-        prefix: -k
-
-  pfam_entry_maps:
-    type: File
-    inputBinding:
-        position: 3
-        prefix: -p
+        position: 0
 
 baseCommand: ['write_ipr_summary.py']
 
 outputs:
-  ipr_summary:
-    type: File
+  summaries:
+    type: array
+    items: File
     outputBinding:
-        glob: "summary.ipr"
-
-  hmm_summary:
-    type: File
-    outputBinding:
-        glob: "summary.hmm"
-
-  pfam_summary:
-    type: File
-    outputBinding:
-        glob: "summary.pfam"
-
+        glob: "summary.*"
 
 $namespaces:
  s: http://schema.org/

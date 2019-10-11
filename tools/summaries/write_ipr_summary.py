@@ -23,18 +23,15 @@ def write_summary(maps):
     sortedEntries.reverse()
     with open("summary."+outputfilename, "w") as file_out:
         for entry in sortedEntries:
-          file_out.write('"' + entry[0] + '"' + ',' + '"' + entry[1] + '"' + ',' + '"' + str(entry[2]) + '"\n')
+          file_out.write('"' + '","'.join([str(i) for i in entry]) + '"\n')
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generates InterProScan summary file")
-    parser.add_argument("-i", dest="ipr_maps", help="mapping ipr file from output of functional stats", required=True)
-    parser.add_argument("-k", dest="hmm_maps", help="mapping hmm file from output for functional stats", required=True)
-    parser.add_argument("-p", dest="pfam_maps", help="mapping pfam file from output for functional stats", required=True)
+   parser = argparse.ArgumentParser(description="Generates InterProScan, Pfam and KEGG ortholog summary count files")
+   parser.add_argument("files", help="list of input files", default=[sys.stdin], nargs='+')
+   if len(sys.argv) == 1:
+       parser.print_help()
+   else:
+       args = parser.parse_args()
+       for file in args.files:
+           write_summary(file)
 
-    if len(sys.argv) == 1:
-        parser.print_help()
-    else:
-        args = parser.parse_args()
-        write_summary(args.ipr_maps)
-        write_summary(args.hmm_maps)
-        write_summary(args.pfam_maps)
