@@ -23,6 +23,10 @@ outputs:
     outputBinding:
         glob: "summary.*"
 
+hints:
+  - class: DockerRequirement
+    dockerPull: 'alpine:3.7'
+
 $namespaces:
  s: http://schema.org/
  iana: https://www.iana.org/assignments/media-types/
