@@ -8,22 +8,22 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  input_file: File
+  seqfile: File
   gathering_bit_score: boolean
   name_database: string
   data: Directory
   omit_alignment: boolean
 
 outputs:
-  hmm_result:
+  output_table:
     type: File
-    outputSource: remove_header/result
+    outputSource: make_tab_sep/output_with_tabs
 
 steps:
   hmmscan:
     run: hmmscan.cwl
     in:
-      seqfile: input_file
+      seqfile: seqfile
       gathering_bit_score: gathering_bit_score
       name_database: name_database
       data: data
@@ -36,6 +36,12 @@ steps:
     in:
       table: hmmscan/output_table
     out: [ result ]
+
+  make_tab_sep:
+    run: ../../utils/make_tab_sep.cwl
+    in:
+      input_table: remove_header/result
+    out: [ output_with_tabs ]
 
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'

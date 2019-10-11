@@ -49,10 +49,10 @@ steps:
   # << Chunk faa file >>
     split_seqs:
     in:
-      seqs:
+      seqs: CGC_predicted_proteins
       chunk_size: { default: 100000 }
     out: [ chunks ]
-    run: ../tools/fasta_chunker.cwl
+    run: ../../tools/fasta_chunker.cwl
 
   # << InterProScan >>
   interproscan:
@@ -63,7 +63,7 @@ steps:
       outputFormat: outputFormat
       databases: databases
     out: [ i5Annotations ]
-    run: ../tools/InterProScan/InterProScan-v5-none_docker.cwl
+    run: ../../tools/InterProScan/InterProScan-v5-none_docker.cwl
     label: "InterProScan: protein sequence classifier"
 
   combine_IPS:
@@ -71,19 +71,19 @@ steps:
       files: interproscan/i5Annotations
       outputFileName: { default: 'interpro_united' }
     out: [result]
-    run: ../tools/chunks/concatenate.cwl
+    run: ../../tools/chunks/concatenate.cwl
 
   # << hmmscan >>
   hmmscan:
     scatter: seqfile
     in:
-      seqfile: combined_gene_caller/predicted_proteins
+      seqfile: split_seqs/chunks
       gathering_bit_score: HMMSCAN_gathering_bit_score
       name_database: HMMSCAN_name_database
       data: HMMSCAN_data
       omit_alignment: HMMSCAN_omit_alignment
     out: [ output_table ]
-    run: ../tools/hmmscan/hmmscan.cwl
+    run: ../../tools/hmmscan/hmmscan-subwf.cwl
     label: "Analysis using profile HMM on db"
 
   combine_hmmscan:
@@ -91,32 +91,29 @@ steps:
       files: hmmscan/output_table
       outputFileName: { default: 'hmm_united'
     out: [result]
-    run: ../tools/chunks/concatenate.cwl
+    run: ../../tools/chunks/concatenate.cwl
 
   # << EggNOG >>
   eggnog:
     scatter: fasta_file
       in:
         fasta_file: split_seqs/chunks
-        db_diamond: db_diamond
-        db: db
-        data_dir: data_dir
+        db_diamond: EggNOG_diamond
+        db: EggNOG_db
+        data_dir: EggNOG_data_dir
       out: [annotations, orthologs]
-    run: ../tools/EggNOG/eggNOG/eggnog.cwl
+    run: ../../tools/EggNOG/eggNOG/eggnog.cwl
 
   combine_annotations:
-    run: ../chunks/concatenate.cwl
+    run: ../../chunks/concatenate.cwl
     in:
       files: eggnog/annotations
       outputFileName: { default: 'annotations_united' }
     out: [ result ]
 
   combine_orthologs:
-    run: ../chunks/concatenate.cwl
+    run: ../../chunks/concatenate.cwl
     in:
       files: eggnog/orthologs
       outputFileName: { default: 'orthologs_united' }
     out: [ result ]
-
-
-

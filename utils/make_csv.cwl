@@ -1,35 +1,32 @@
-#!/usr/bin/env
 cwlVersion: v1.0
 class: CommandLineTool
+
 requirements:
-  InlineJavascriptRequirement: {}
   ResourceRequirement:
     coresMax: 1
     ramMin: 100  # just a default, could be lowered
 
-hints:
-  - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+baseCommand: [ make_csv.py ]
 
 inputs:
-  sequences:
+  tab_sep_table:
     type: File
-    streamable: true
-    format: edam:format_1929  # FASTA
-
-stdin: $(inputs.sequences.path)
-
-baseCommand: [ grep, -c, '^>' ]
-
-stdout: count
+    inputBinding:
+      prefix: '-i'
+  output_name:
+    type: string
+    inputBinding:
+      prefix: '-o'
 
 outputs:
-  count:
-    type: int
+  csv_result:
+    type: File
     outputBinding:
-      glob: count
-      loadContents: true
-      outputEval: $(Number(self[0].contents))
+      glob: $(inputs.output_name)
+
+hints:
+  DockerRequirement:
+    dockerPull: alpine:3.7
 
 $namespaces:
  edam: http://edamontology.org/
