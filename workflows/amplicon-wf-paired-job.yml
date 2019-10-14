@@ -87,11 +87,11 @@ unite_db:
 unite_tax:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/UNITE/UNITE-tax.txt
-  checksum: e17426b8bc3457985c5a322cea3b6acf
+  checksum: 1fc36341db17533f7ae266a0dd07ae3b
 unite_otu_file:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/UNITE/UNITE.otu
-  checksum: 87cb9642e1badc0bcd208029beb66302
+  checksum: da918f9884c7b96b8bd40f5a9afe4608
 itsonedb:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/ITSonedb/itsonedb.fasta
