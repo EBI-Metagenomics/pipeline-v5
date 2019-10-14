@@ -10,67 +10,34 @@ requirements:
     ramMin: 10000  # just a default, could be lowered
 
 inputs:
-  interpro_file:
-    type: File
+  files:
+    type: File[]
     inputBinding:
-        position: 1
-        prefix: -i
-  hmmscan_file:
-    type: File
-    inputBinding:
-        position: 2
-        prefix: -k
-  pfam_file:
-    type: File
-    inputBinding:
-        position: 3
-        prefix: -p
+        prefix: -f
   cmsearch_file:
     type: File
     inputBinding:
-        position: 4
         prefix: -r
   cds_file:
     type: File
     inputBinding:
-        position: 5
         prefix: -c
 
 baseCommand: ['functional_stats.py']
 
 outputs:
-  ipr_stats:
-    type: File
+  stats:
+    type: File[]
     outputBinding:
-        glob: "ipr.stats"
-  pfam_stats:
-    type: File
+        glob: "*.stats"
+  yamls:
+    type: File[]
     outputBinding:
-        glob: "pfam.stats"
-  go_stats:
-    type: File
-    outputBinding:
-        glob: "GO.stats"
-  hmmscan_stats:
-    type: File
-    outputBinding:
-        glob: "hmmscan.stats"
-  ipr_maps:
-    type: File
-    outputBinding:
-        glob: "ipr_entry_maps.yaml"
-  hmm_maps:
-    type: File
-    outputBinding:
-        glob: "hmm_entry_maps.yaml"
-  pfam_maps:
-    type: File
-    outputBinding:
-        glob: "pfam_entry_maps.yaml"
-  orf_stats:
-    type: File
-    outputBinding:
-        glob: "orf.stats"
+        glob: "*.yaml"
+
+hints:
+  - class: DockerRequirement
+    dockerPull: 'alpine:3.7'
 
 
 $namespaces:

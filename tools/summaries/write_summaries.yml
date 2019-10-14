@@ -1,0 +1,7 @@
+entry_maps:
+  class: File
+  path: ipr_entry_maps.yaml
+  class: File
+  path: pfam_entry_maps.yaml
+  class: File
+  path: hmm_entry_maps.yaml

@@ -1,15 +1,13 @@
-interpro_file:
-  class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/interpro/interpo_united
-hmmscan_file:
-  class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/hmmscan/hmm_united_tab
-pfam_file:
-  class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/pfam-parse/interpo_united.annotations.pfam
+files:
+  - class: File
+    path: /Users/kates/Desktop/interpro_united
+  - class: File
+    path: /Users/kates/Desktop/hmm_united_tab
+  - class: File
+    path: /Users/kates/Desktop/interpo_united.annotations.pfam
 cmsearch_file:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/RNA_pred_assembly/result.deoverlapped
+  path: /Users/kates/Desktop/result.deoverlapped
 cds_file:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
+  path: /Users/kates/Desktop/ERZ477576_FASTA.fasta.faa

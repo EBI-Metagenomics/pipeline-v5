@@ -14,7 +14,7 @@ inputs:
     inputBinding:
         position: 0
 
-baseCommand: ['write_ipr_summary.py']
+baseCommand: ['write_summaries.py']
 
 outputs:
   summaries:
@@ -22,6 +22,10 @@ outputs:
     items: File
     outputBinding:
         glob: "summary.*"
+
+hints:
+  - class: DockerRequirement
+    dockerPull: 'alpine:3.7'
 
 $namespaces:
  s: http://schema.org/
