@@ -1,10 +1,12 @@
 sequences:
   class: File
-  path:
-
-ncRNAs:
-  class: File
-  path:
+  path: ../../tools/Combined_gene_caller/gene_caller_input_example.fa
+names:
+  - interproscan_united
+  - hmmscan_united
+#ncRNAs:
+#  class: File
+#  path:
 pipeline_seq_type: "a"
 config:
   class: File

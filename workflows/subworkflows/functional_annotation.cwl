@@ -4,7 +4,7 @@ cwlVersion: v1.0
 
 requirements:
   - ResourceRequirement:
-    ramMin: 50000
+    ramMin: 5000
     coresMin: 32
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement
@@ -16,6 +16,8 @@ requirements:
 inputs:
 
   CGC_predicted_proteins: File
+
+  names: string[]
 
   HMMSCAN_gathering_bit_score: boolean
   HMMSCAN_omit_alignment: boolean
@@ -31,18 +33,21 @@ inputs:
   InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
 outputs:
+  results:
+    type: File[]
+    outputSource: combine/result
 
-  InterProScan_I5:
-    outputSource: interproscan/i5Annotations
-    type: File
+#  InterProScan_I5:
+#    outputSource: interproscan/i5Annotations
+#    type: File
 
-  hmmscan_table:
-    outputSource: hmmscan/output_table
+#  hmmscan_table:
+#    outputSource: hmmscan/output_table
 
-  eggnog_annotations:
-    outputSource: eggnog/output_annotations
-  eggnog_orthologs:
-    outputSource: eggnog/output_orthologs
+#  eggnog_annotations:
+#    outputSource: eggnog/output_annotations
+#  eggnog_orthologs:
+#    outputSource: eggnog/output_orthologs
 
 steps:
 
@@ -50,7 +55,7 @@ steps:
     split_seqs:
     in:
       seqs: CGC_predicted_proteins
-      chunk_size: { default: 100000 }
+      chunk_size: 1 # { default: 100000 }
     out: [ chunks ]
     run: ../../tools/fasta_chunker.cwl
 
@@ -66,12 +71,6 @@ steps:
     run: ../../tools/InterProScan/InterProScan-v5-none_docker.cwl
     label: "InterProScan: protein sequence classifier"
 
-  combine_IPS:
-    in:
-      files: interproscan/i5Annotations
-      outputFileName: { default: 'interpro_united' }
-    out: [result]
-    run: ../../tools/chunks/concatenate.cwl
 
   # << hmmscan >>
   hmmscan:
@@ -86,34 +85,37 @@ steps:
     run: ../../tools/hmmscan/hmmscan-subwf.cwl
     label: "Analysis using profile HMM on db"
 
-  combine_hmmscan:
+  combine:
+    scatter: [files, outputFileName]
     in:
-      files: hmmscan/output_table
-      outputFileName: { default: 'hmm_united'
+      files:
+        - interproscan/i5Annotations
+        - hmmscan/output_table
+      outputFileName: names
     out: [result]
     run: ../../tools/chunks/concatenate.cwl
 
   # << EggNOG >>
-  eggnog:
-    scatter: fasta_file
-      in:
-        fasta_file: split_seqs/chunks
-        db_diamond: EggNOG_diamond
-        db: EggNOG_db
-        data_dir: EggNOG_data_dir
-      out: [annotations, orthologs]
-    run: ../../tools/EggNOG/eggNOG/eggnog.cwl
+#  eggnog:
+#    scatter: fasta_file
+#      in:
+#        fasta_file: split_seqs/chunks
+#        db_diamond: EggNOG_diamond
+#        db: EggNOG_db
+#        data_dir: EggNOG_data_dir
+#      out: [annotations, orthologs]
+#    run: ../../tools/EggNOG/eggNOG/eggnog.cwl
 
-  combine_annotations:
-    run: ../../chunks/concatenate.cwl
-    in:
-      files: eggnog/annotations
-      outputFileName: { default: 'annotations_united' }
-    out: [ result ]
+#  combine_annotations:
+#    run: ../../chunks/concatenate.cwl
+#    in:
+#      files: eggnog/annotations
+#      outputFileName: { default: 'annotations_united' }
+#    out: [ result ]
 
-  combine_orthologs:
-    run: ../../chunks/concatenate.cwl
-    in:
-      files: eggnog/orthologs
-      outputFileName: { default: 'orthologs_united' }
-    out: [ result ]
+#  combine_orthologs:
+#    run: ../../chunks/concatenate.cwl
+#    in:
+#      files: eggnog/orthologs
+#      outputFileName: { default: 'orthologs_united' }
+#    out: [ result ]
