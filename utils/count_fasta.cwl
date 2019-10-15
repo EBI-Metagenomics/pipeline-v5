@@ -15,7 +15,7 @@ inputs:
   sequences:
     type: File
     streamable: true
-    format: edam:format_1929  # FASTA
+    # format: edam:format_1929  # FASTA
 
 stdin: $(inputs.sequences.path)
 

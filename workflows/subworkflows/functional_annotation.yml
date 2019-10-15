@@ -1,16 +1,10 @@
-sequences:
+CGC_predicted_proteins:
   class: File
-  path: ../../tools/Combined_gene_caller/gene_caller_input_example.fa
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_100_FASTA.fasta.faa
+
 names:
   - interproscan_united
   - hmmscan_united
-#ncRNAs:
-#  class: File
-#  path:
-pipeline_seq_type: "a"
-config:
-  class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/utils/combined_gene_caller_conf.json
 
 HMMSCAN_gathering_bit_score: true
 HMMSCAN_omit_alignment: true

@@ -9,10 +9,11 @@ hints:
 
 requirements:
   - class: ResourceRequirement
-    ramMin: 10000
-    ramMax: 10000
-    coresMax: 16
+    ramMin: 20000
+    ramMax: 20000
+    coresMax: 4
   - class: InlineJavascriptRequirement
+  - class: ScatterFeatureRequirement
 
 baseCommand: ['grep', '-v', '^#']
 
@@ -23,10 +24,12 @@ inputs:
       position: 1
 
 stdout: $(inputs.table.nameroot)_without_header$(inputs.table.nameext)
+stderr: stderr.txt
 
 outputs:
   result:
     type: stdout
+  stderr: stderr
 
 $schemas:
   - 'https://schema.org/docs/schema_org_rdfa.html'

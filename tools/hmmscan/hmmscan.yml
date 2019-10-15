@@ -1,6 +1,6 @@
-input_file:
+seqfile:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_FASTA.fasta.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_100_FASTA.fasta.faa
 
 gathering_bit_score: true
 

@@ -3,11 +3,11 @@ class: Workflow
 cwlVersion: v1.0
 
 requirements:
-  - ResourceRequirement:
-    ramMin: 5000
-    coresMin: 32
-  - class: SubworkflowFeatureRequirement
-  - class: ScatterFeatureRequirement
+  ResourceRequirement:
+      ramMin: 5000
+      coresMin: 8
+  SubworkflowFeatureRequirement: {}
+  ScatterFeatureRequirement: {}
 #  - class: SchemaDefRequirement
 #    types:
 #      - $import: ../tools/InterProScan/InterProScan-apps.yaml
@@ -34,8 +34,9 @@ inputs:
 
 outputs:
   results:
-    type: File[]
+    type: File
     outputSource: combine/result
+    valueFrom: $( self.filter(file => !!file.basename.match(/^.*hmmscan.*$/)).pop() )
 
 #  InterProScan_I5:
 #    outputSource: interproscan/i5Annotations
@@ -43,6 +44,7 @@ outputs:
 
 #  hmmscan_table:
 #    outputSource: hmmscan/output_table
+#    type: File
 
 #  eggnog_annotations:
 #    outputSource: eggnog/output_annotations
@@ -52,21 +54,22 @@ outputs:
 steps:
 
   # << Chunk faa file >>
-    split_seqs:
+  split_seqs:
     in:
       seqs: CGC_predicted_proteins
-      chunk_size: 1 # { default: 100000 }
+      chunk_size: { default: 20 }  # 100000
     out: [ chunks ]
-    run: ../../tools/fasta_chunker.cwl
+    run: ../../tools/chunks/fasta_chunker.cwl
+
 
   # << InterProScan >>
   interproscan:
     scatter: inputFile
     in:
-      applications: applications
+      applications: InterProScan_applications
       inputFile: split_seqs/chunks
-      outputFormat: outputFormat
-      databases: databases
+      outputFormat: InterProScan_outputFormat
+      databases: InterProScan_databases
     out: [ i5Annotations ]
     run: ../../tools/InterProScan/InterProScan-v5-none_docker.cwl
     label: "InterProScan: protein sequence classifier"
@@ -87,6 +90,7 @@ steps:
 
   combine:
     scatter: [files, outputFileName]
+    scatterMethod: dotproduct
     in:
       files:
         - interproscan/i5Annotations

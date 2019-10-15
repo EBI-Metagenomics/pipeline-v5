@@ -30,7 +30,7 @@ baseCommand: [ fastq_to_fasta.py ]
 outputs:
   fasta:
     type: File
-    format: edam:format_1929
+    # format: edam:format_1929
     outputBinding:
       glob: "*.unclean"
 

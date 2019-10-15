@@ -1,53 +1,76 @@
 contigs:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/example.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA_10000.fasta.gz
   format: edam:format_1929
+
+contig_min_length: 100
+
 # RNA PREDICTION
+
+ssu_label: 'SSU'
+lsu_label: 'LSU'
+5.8s_pattern: '5_8S'
+5s_pattern: '5S'
+
 ssu_db:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/filtered_SILVA_132_SSU.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/SSU.fasta
+  checksum: 6f1eef56ade33ef01d7446b1ab3b9622
 lsu_db:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/filtered_SILVA_132_LSU.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/LSU.fasta
+  checksum: 49ed3e24d82235bbbfdb049bf21abc05
 ssu_tax:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/slv_ssu_filtered2.txt
+  checksum: 293c7f6f2380433b2b132a9e48485f50
 lsu_tax:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/slv_lsu_filtered2.txt
+  checksum: 6ae872750f3e4adc37f91630a8bcbf5f
 ssu_otus:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/ssu2.otu
+  checksum: 9a338f42e8734a10549dc5fbc633311a
 lsu_otus:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/lsu2.otu
+  checksum: 578b6a6ca012cec60c83707f0f77b635
 
 rfam_models:
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF00002.cm
+    checksum: 30af1b9283ed10bfb22fbd1571be51e9
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF00177.cm
+    checksum: 94a864300ab97ea91c8e334af1f15ccf
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF01959.cm
+    checksum: 358464d747ca08973983181e6c5d3c36
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF01960.cm
+    checksum: 7e207426e32053bdad4dbe325f4d53f2
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02540.cm
+    checksum: 21c240b829b6c8d44acb320826dd3988
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02541.cm
+    checksum: 909e8186ecff869c21bd4f17b17d6d18
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02542.cm
+    checksum: f21a130574b87a3cae0eb4aab0f38e6a
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02543.cm
+    checksum: 6ec013d40fbce6dbbb2a1c35e68d777c
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02546.cm
+    checksum: 91f899f34613e77694b97c993414e5c2
   - class: File
     path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/RF02547.cm
+    checksum: 43f94845c34819ebbecfa9050a992ea9
 
 rfam_model_clans:
   class: File
   path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/ribo.claninfo
+  checksum: ed55b0130da268e5deca604fa34da618
 
-ssu_label: 'SSU'
-lsu_label: 'LSU'
-5s_pattern: '5_8S'

@@ -10,9 +10,10 @@ hints:
 
 requirements:
   ResourceRequirement:
-    ramMin: 5000
+    ramMin: 20000
     coresMin: 32
   InlineJavascriptRequirement: {}
+  ScatterFeatureRequirement: {}
 
 baseCommand: ["hmmscan"]
 

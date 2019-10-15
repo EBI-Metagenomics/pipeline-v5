@@ -2,6 +2,9 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
+requirements:
+  - class: ScatterFeatureRequirement
+
 hints:
   DockerRequirement:
     dockerPull: alpine:3.9.4

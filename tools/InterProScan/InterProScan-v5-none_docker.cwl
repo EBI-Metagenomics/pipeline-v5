@@ -93,11 +93,14 @@ requirements:
     ramMin: 40000
     coresMin: 4
   - class: InlineJavascriptRequirement
+  - class: ScatterFeatureRequirement
+
 #  - class: SchemaDefRequirement
 #    types:
 #      - type: enum
 #        name: outputFormats
 #        symbols: [ TSV, XML, JSON, GFF3 ]
+
 $schemas:
   - 'http://edamontology.org/EDAM_1.20.owl'
   - 'https://schema.org/docs/schema_org_rdfa.html'

@@ -9,8 +9,14 @@ $schemas:
   - 'https://schema.org/docs/schema_org_rdfa.html'
 
 requirements:
+#  - class: SchemaDefRequirement
+#    types:
+#      - $import: ../tools/Diamond/Diamond-strand_values.yaml
+#      - $import: ../tools/Diamond/Diamond-output_formats.yaml
+#      - $import: ../tools/InterProScan/InterProScan-apps.yaml
+#      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
   - class: ResourceRequirement
-    ramMin: 20000
+    ramMin: 50000
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
@@ -18,148 +24,115 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  contigs: File
 
-  ssu_db: {type: File, secondaryFiles: [.mscluster] }
-  lsu_db: {type: File, secondaryFiles: [.mscluster] }
-  ssu_tax: File
-  lsu_tax: File
-  ssu_otus: File
-  lsu_otus: File
+    contigs: File
+    contig_min_length: int
 
-  rfam_models: File[]
-  rfam_model_clans: File
-
-  ssu_label: string
-  lsu_label: string
-  5s_pattern: string
+    #rna prediction#
+    ssu_db: {type: File, secondaryFiles: [.mscluster] }
+    lsu_db: {type: File, secondaryFiles: [.mscluster] }
+    ssu_tax: File
+    lsu_tax: File
+    ssu_otus: File
+    lsu_otus: File
+    rfam_models: File[]
+    rfam_model_clans: File
+    ssu_label: string
+    lsu_label: string
+    5s_pattern: string
+    5.8s_pattern: string
 
 outputs:
-  count_reads:
-    type: int
-    outputSource: count_processed_reads/count
 
-  qc_stats_out:
+  qc-statistics:
     type: Directory
     outputSource: qc_stats/output_dir
-
-  ncRNAs:
+  qc_summary:
     type: File
-    outputSource: classify/ncRNAs
+    outputSource: length_filter/stats_summary_file
 
-  cmsearch_tblout:
-    type: File
-    outputSource: classify/cmsearch_deoverlapped
+  LSU_folder:
+    type: Directory
+    outputSource: rna_prediction/LSU_folder
+  SSU_folder:
+    type: Directory
+    outputSource: rna_prediction/SSU_folder
 
-  5s_fasta:
-    type: File
-    outputSource: classify/5S_fasta
-
-  SSU_fasta:
-    type: File
-    outputSource: classify/SSU_fasta
-
-  LSU_fasta:
-    type: File
-    outputSource: classify/LSU_fasta
-
-  SSU_classifications:
-    type: File
-    outputSource: classify/SSU_classifications
-
-  SSU_otu_tsv:
-    type: File
-    outputSource: classify/SSU_otu_tsv
-
-  SSU_otu_txt:
-    type: File
-    outputSource: classify/SSU_otu_txt
-
-  SSU_krona_image:
-    type: File
-    outputSource: classify/SSU_krona_image
-
-  LSU_classifications:
-    type: File
-    outputSource: classify/LSU_classifications
-
-  LSU_otu_tsv:
-    type: File
-    outputSource: classify/LSU_otu_tsv
-
-  LSU_otu_txt:
-    type: File
-    outputSource: classify/LSU_otu_txt
-
-  LSU_krona_image:
-    type: File
-    outputSource: classify/LSU_krona_image
+  sequence-categorisation_folder:
+    type: Directory
+    outputSource: rna_prediction/sequence-categorisation
 
 steps:
 
-# << COUNT READS >>
-  count_processed_reads:
-    run: ../utils/count_fasta.cwl
+  # << unzip contig file >>
+  unzip:
     in:
-      sequences: contigs
+      target_reads: contigs
+      assembly: {default: true}
+    out: [unzipped_merged_reads]
+    run: ../utils/multiple-gunzip.cwl
+
+  # << count reads pre QC >>
+  count_reads:
+    in:
+      sequences: unzip/unzipped_merged_reads
     out: [ count ]
+    run: ../utils/count_fasta.cwl
 
-# << QC >>
+  # <<clean fasta headers??>>
+  clean_headers:
+    in:
+      sequences: unzip/unzipped_merged_reads
+    out: [ sequences_with_cleaned_headers ]
+    run: ../utils/clean_fasta_headers.cwl
+    label: "removes spaces in some headers"
+
+  # << Length QC >>
+  length_filter:
+    in:
+      seq_file: unzip/unzipped_merged_reads
+      min_length: contig_min_length
+      submitted_seq_count: count_reads/count
+      stats_file_name: { default: 'qc_summary' }
+      input_file_format: { default: fasta }
+    out: [filtered_file, stats_summary_file]
+    run: ../tools/qc-filtering/qc-filtering.cwl
+
+  # << count processed reads >>
+  count_processed_reads:
+    in:
+      sequences: length_filter/filtered_file
+    out: [ count ]
+    run: ../utils/count_fasta.cwl
+
+  # << QC stats >>
   qc_stats:
-    run: ../tools/qc-stats/qc-stats.cwl
     in:
-      QCed_reads: contigs
+      QCed_reads: length_filter/filtered_file
       sequence_count: count_processed_reads/count
-    out: [ output_dir, summary_out ]
+    out: [ output_dir ]
+    run: ../tools/qc-stats/qc-stats.cwl
 
-# << RNA PREDICTION >>
-  classify:
-    run: rna_prediction-sub-wf.cwl
+  # << RNA prediction >>
+  rna_prediction:
     in:
-       input_sequences: contigs
-       silva_ssu_database: ssu_db
-       silva_lsu_database: lsu_db
-       silva_ssu_taxonomy: ssu_tax
-       silva_lsu_taxonomy: lsu_tax
-       silva_ssu_otus: ssu_otus
-       silva_lsu_otus: lsu_otus
-       ncRNA_ribosomal_models: rfam_models
-       ncRNA_ribosomal_model_clans: rfam_model_clans
-       pattern_SSU: ssu_label
-       pattern_LSU: lsu_label
-       pattern_5S: 5s_pattern
+      input_sequences: length_filter/filtered_file
+      silva_ssu_database: ssu_db
+      silva_lsu_database: lsu_db
+      silva_ssu_taxonomy: ssu_tax
+      silva_lsu_taxonomy: lsu_tax
+      silva_ssu_otus: ssu_otus
+      silva_lsu_otus: lsu_otus
+      ncRNA_ribosomal_models: rfam_models
+      ncRNA_ribosomal_model_clans: rfam_model_clans
+      pattern_SSU: ssu_label
+      pattern_LSU: lsu_label
+      pattern_5S: 5s_pattern
+      pattern_5.8S: 5.8s_pattern
     out:
-      - ncRNAs
-      - cmsearch_deoverlapped
-      - 5S_fasta
-
-      - SSU_fasta
-      - SSU_coords
-      - SSU_classifications
-      - SSU_otu_tsv
-      - SSU_otu_txt
-      - SSU_krona_image
-
-      - LSU_fasta
-      - LSU_coords
-      - LSU_classifications
-      - LSU_otu_tsv
-      - LSU_otu_txt
-      - LSU_krona_image
-
-#      - ssu_hdf5_classifications
-#      - ssu_json_classifications
-#      - lsu_hdf5_classifications
-#      - lsu_json_classifications
-
-# << CHUNKS >>
-
-# << COMBINED GENE CALLER >>
-
-# << FUNCTIONAL ANNOTATION SW >>
-
-# << DIAMOND SW >>
-
-# << VIRAL >>
-
-# << UNITE CHUNKS >>
+      - ncRNA
+      - cmsearch_result
+      - SSU_folder
+      - LSU_folder
+      - sequence-categorisation
+    run: subworkflows/rna_prediction-sub-wf.cwl

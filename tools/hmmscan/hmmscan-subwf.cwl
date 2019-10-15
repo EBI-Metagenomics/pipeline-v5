@@ -5,7 +5,10 @@ $namespaces:
   s: 'http://schema.org/'
 
 requirements:
-  - class: ScatterFeatureRequirement
+  ScatterFeatureRequirement: {}
+  ResourceRequirement:
+    ramMin: 20000
+    coresMin: 32
 
 inputs:
   seqfile: File
@@ -31,17 +34,17 @@ steps:
     out: [ output_table ]
     label: "Analysis using profile HMM on db"
 
-  remove_header:
-    run: ../chunks/remove_headers.cwl
-    in:
-      table: hmmscan/output_table
-    out: [ result ]
-
   make_tab_sep:
     run: ../../utils/make_tab_sep.cwl
     in:
-      input_table: remove_header/result
+      input_table: hmmscan/output_table
     out: [ output_with_tabs ]
+
+  #remove_header:
+  #  run: ../chunks/remove_headers.cwl
+  #  in:
+  #    table: hmmscan/output_table
+  #  out: [ result, stderr ]
 
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'
