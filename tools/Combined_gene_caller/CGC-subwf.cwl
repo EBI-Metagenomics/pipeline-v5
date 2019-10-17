@@ -22,6 +22,12 @@ outputs:
   results:
     type: File[]
     outputSource: combine/result
+  cgc_faa:
+    type: File[]
+    outputSource: combined_gene_caller/predicted_proteins
+  cgc_fnn:
+    type: File[]
+    outputSource: combined_gene_caller/predicted_seq
 
 steps:
 
