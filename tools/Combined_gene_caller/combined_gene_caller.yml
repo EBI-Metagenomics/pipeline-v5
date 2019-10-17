@@ -9,3 +9,6 @@ config:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/utils/combined_gene_caller_conf.json
 outdir: CGC-output
+postfixes:
+  - '_CDS.faa'
+  - '_CDS.fnn'

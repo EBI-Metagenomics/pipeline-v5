@@ -16,6 +16,7 @@ inputs:
   maskfile: File
   config: File
   outdir: string
+  postfixes: string[]
 
 outputs:
   results:
@@ -30,7 +31,7 @@ steps:
       seqs: input_fasta
       chunk_size: { default: 2000 }  # 100000
     out: [ chunks ]
-    run: ../tools/chunks/fasta_chunker.cwl
+    run: ../chunks/fasta_chunker.cwl
 
 
   # << CGC >>
@@ -48,12 +49,14 @@ steps:
 
 
   combine:
-    scatter: files
+    scatter: [ files, postfix ]
+    scatterMethod: dotproduct
     in:
       files:
         - combined_gene_caller/predicted_proteins
         - combined_gene_caller/predicted_seq
       outputFileName: input_fasta
+      postfix: postfixes
     out: [result]
     run: ../chunks/concatenate.cwl
 

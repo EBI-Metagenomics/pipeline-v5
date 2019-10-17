@@ -10,15 +10,11 @@ hints:
 baseCommand:
   - cat
 inputs:
-  - id: files
-    type: 'File[]'
-    inputBinding:
-      position: 1
-    streamable: true
-  - id: outputFileName
-    type: File
+  files: File[]
+  outputFileName: File
+  postfix: string?
 
-stdout: $(inputs.outputFileName.nameroot).united
+stdout: $(inputs.outputFileName.nameroot)$(inputs.postfix)
 
 outputs:
   - id: result
