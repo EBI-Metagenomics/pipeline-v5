@@ -10,6 +10,6 @@ queryInputFile:
   path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/CGC/ERZ782910_unzip_unspace.fasta.faa
 strand: both
 taxonList: null
-threads: null
+threads: 32
 maxTargetSeqs: 1
 top: null
