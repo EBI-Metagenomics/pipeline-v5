@@ -162,6 +162,6 @@ steps:
     scatter: uncompressed_file
     in:
       uncompressed_file:
-        source: [ classify/cmsearch_result, classify/ncRNA, length_filter/filtered_file, cgc/results]
+        source: [ rna_prediction/cmsearch_result, rna_prediction/ncRNA, length_filter/filtered_file, cgc/results]
         linkMerge: merge_flattened
     out: [compressed_file]
