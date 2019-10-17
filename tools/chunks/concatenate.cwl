@@ -10,7 +10,10 @@ hints:
 baseCommand:
   - cat
 inputs:
-  files: File[]
+  files:
+    type: File[]
+    inputBinding:
+      position: 1
   outputFileName: File
   postfix: string?
 
