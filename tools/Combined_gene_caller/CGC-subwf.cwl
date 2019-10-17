@@ -55,7 +55,9 @@ steps:
       files:
         - combined_gene_caller/predicted_proteins
         - combined_gene_caller/predicted_seq
-      outputFileName: input_fasta
+      outputFileName:
+        source: input_fasta
+        valueFrom: $(self.nameroot)
       postfix: postfixes
     out: [result]
     run: ../chunks/concatenate.cwl

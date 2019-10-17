@@ -68,6 +68,10 @@ outputs:
     type: File
     outputSource: extract_sequences/sequences
 
+  LSU-SSU-count:
+    type: File
+    outputSource: extract_subunits_coords/counts
+
 steps:
 
   index_reads:
@@ -100,7 +104,7 @@ steps:
       input: extract_coords/matched_seqs_with_coords
       pattern_SSU: pattern_SSU
       pattern_LSU: pattern_LSU
-    out: [SSU_seqs, LSU_seqs]
+    out: [SSU_seqs, LSU_seqs, counts]
 
 # extract sequences
   extract_sequences:

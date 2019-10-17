@@ -80,4 +80,45 @@ CGC_config:
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/utils/combined_gene_caller_conf.json
 CGC_postfixes:
   - '_CDS.faa'
-  - '_CDS.fnn'
+  - '_CDS.ffn'
+
+# functional annotation
+func_ann_names:
+  - interproscan_united
+  - hmmscan_united
+HMMSCAN_gathering_bit_score: true
+HMMSCAN_omit_alignment: true
+HMMSCAN_name_database: db_kofam.hmm
+HMMSCAN_data:
+  class: Directory
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs
+
+EggNOG_db:
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/eggnog.db
+  class: File
+EggNOG_diamond_db:
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/eggnog_proteins.dmnd
+  class: File
+EggNOG_data_dir: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/
+
+InterProScan_applications:
+  - PfamA
+  - TIGRFAM
+  - PRINTS
+  - PrositePatterns
+  - Gene3d
+InterProScan_outputFormat:
+  - TSV
+InterProScan_databases:
+  class: Directory
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data
+
+# Diamond
+Uniref90_db_txt:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/db_uniref90_result.txt
+diamond_maxTargetSeqs: 1
+diamond_databaseFile:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/uniref90_diamond-v0.9.21.dmnd
+diamond_header: 'uniref90_ID\tcontig_name\tpercentage_of_identical_matches\tlenght\tmismatch\tgapopen\tqstart\tqend\tsstart\tsend\tevalue\tbitscore\tprotein_name\tnum_in_cluster\ttaxonomy\ttax_id\trep_id'
