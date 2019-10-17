@@ -13,7 +13,6 @@ requirements:
 inputs:
   queryInputFile:
     type: File
-    format: 'edam:format_1929'
   outputFormat: string
   maxTargetSeqs: int
   strand: string

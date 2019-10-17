@@ -1,6 +1,5 @@
 queryInputFile:
   class: File
-  format: 'edam:format_1929'
   path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_100_FASTA.fasta.faa
 outputFormat: '6'
 maxTargetSeqs: 1
