@@ -1,14 +1,14 @@
 queryInputFile:
   class: File
   format: 'edam:format_1929'
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/CGC/ERZ782910_unzip_unspace.fasta.faa
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_100_FASTA.fasta.faa
 outputFormat: '6'
 maxTargetSeqs: 1
 strand: both
 databaseFile:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/uniref90_diamond-v0.9.21.dmnd
-
+treads: 32
 Uniref90_db_txt:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/db_uniref90_result.txt

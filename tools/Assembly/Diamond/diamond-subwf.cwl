@@ -6,6 +6,9 @@ label: Subworkflow unites Diamond and Diamond post-processing
 
 requirements:
   SubworkflowFeatureRequirement: {}
+  ResourceRequirement:
+    ramMin: 30000
+    coresMin: 32
 
 inputs:
   queryInputFile:
@@ -15,6 +18,7 @@ inputs:
   maxTargetSeqs: int
   strand: string
   databaseFile: File
+  threads: int
   Uniref90_db_txt: File
 
 outputs:
@@ -33,6 +37,7 @@ steps:
       maxTargetSeqs: maxTargetSeqs
       strand: strand
       databaseFile: databaseFile
+      threads: threads
     out: [ matches ]
     run: Diamond.blastp-v0.9.21.cwl
 

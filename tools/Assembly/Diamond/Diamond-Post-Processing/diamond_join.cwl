@@ -20,7 +20,7 @@ inputs:
       separate: true
       prefix: -d
 
-stdout: $(inputs.input_diamond.nameroot)_join
+stdout: $(inputs.input_diamond.nameroot)_summary.diamond
 
 outputs:
   output_join:

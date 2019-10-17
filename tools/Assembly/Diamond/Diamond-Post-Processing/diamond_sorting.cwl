@@ -15,7 +15,7 @@ inputs:
       separate: true
       position: 2
 
-stdout: $(inputs.input_table.nameroot)_sorted
+stdout: $(inputs.input_table.nameroot).sorted
 
 outputs:
   output_sorted:
