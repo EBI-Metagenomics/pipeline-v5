@@ -19,8 +19,9 @@ inputs:
     inputBinding:
       separate: true
       prefix: -d
+  filename: File
 
-stdout: $(inputs.input_diamond.nameroot)_summary.diamond
+stdout: $(inputs.filename.nameroot)_summary.diamond
 
 outputs:
   output_join:

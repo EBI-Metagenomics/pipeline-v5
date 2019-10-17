@@ -11,22 +11,22 @@ requirements:
     coresMin: 32
 
 inputs:
-  queryInputFile:
-    type: File
+  queryInputFile: File
   outputFormat: string
   maxTargetSeqs: int
   strand: string
   databaseFile: File
   threads: int
-#  Uniref90_db_txt: File
+  Uniref90_db_txt: File
+  filename: File
 
 outputs:
   diamond_output:
     type: File
     outputSource: diamond_run/matches
-#  post-processing_output:
-#    type: File
-#    outputSource: post_processing_uniref90/join_out
+  post-processing_output:
+    type: File
+    outputSource: post_processing_uniref90/join_out
 
 steps:
   diamond_run:
@@ -40,12 +40,13 @@ steps:
     out: [ matches ]
     run: Diamond.blastp-v0.9.21.cwl
 
-#  post_processing_uniref90:
-#    in:
-#      input_diamond: diamond_run/matches
-#      input_db: Uniref90_db_txt
-#    out: [join_out]
-#    run: Diamond-Post-Processing/postprocessing_subwf.cwl
+  post_processing_uniref90:
+    in:
+      input_diamond: diamond_run/matches
+      input_db: Uniref90_db_txt
+      filename: filename
+    out: [join_out]
+    run: Diamond-Post-Processing/postprocessing_subwf.cwl
 
 $namespaces:
  s: http://schema.org/
