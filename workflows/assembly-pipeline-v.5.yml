@@ -74,3 +74,10 @@ rfam_model_clans:
   path: /hps/nobackup/production/metagenomics/CWL/data/libraries/Rfam/ribosomal/ribo.claninfo
   checksum: ed55b0130da268e5deca604fa34da618
 
+# Combined gene caller
+CGC_config:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/utils/combined_gene_caller_conf.json
+CGC_postfixes:
+  - '_CDS.faa'
+  - '_CDS.fnn'

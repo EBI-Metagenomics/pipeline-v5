@@ -42,6 +42,10 @@ inputs:
     5s_pattern: string
     5.8s_pattern: string
 
+    # cgc
+    CGC_config: File
+    CGC_postfixes: string[]
+
 outputs:
 
   qc-statistics:
@@ -62,9 +66,12 @@ outputs:
     type: Directory
     outputSource: rna_prediction/sequence-categorisation
 
-steps:
+  compressed_files:
+    type: File[]
+    outputSource: compression/compressed_file
 
-  # << unzip contig file >>
+steps:
+# << unzip contig file >>
   unzip:
     in:
       target_reads: contigs
@@ -72,14 +79,14 @@ steps:
     out: [unzipped_merged_reads]
     run: ../utils/multiple-gunzip.cwl
 
-  # << count reads pre QC >>
+# << count reads pre QC >>
   count_reads:
     in:
       sequences: unzip/unzipped_merged_reads
     out: [ count ]
     run: ../utils/count_fasta.cwl
 
-  # <<clean fasta headers??>>
+# <<clean fasta headers??>>
   clean_headers:
     in:
       sequences: unzip/unzipped_merged_reads
@@ -87,7 +94,7 @@ steps:
     run: ../utils/clean_fasta_headers.cwl
     label: "removes spaces in some headers"
 
-  # << Length QC >>
+# << Length QC >>
   length_filter:
     in:
       seq_file: unzip/unzipped_merged_reads
@@ -98,14 +105,14 @@ steps:
     out: [filtered_file, stats_summary_file]
     run: ../tools/qc-filtering/qc-filtering.cwl
 
-  # << count processed reads >>
+# << count processed reads >>
   count_processed_reads:
     in:
       sequences: length_filter/filtered_file
     out: [ count ]
     run: ../utils/count_fasta.cwl
 
-  # << QC stats >>
+# << QC stats >>
   qc_stats:
     in:
       QCed_reads: length_filter/filtered_file
@@ -113,7 +120,7 @@ steps:
     out: [ output_dir ]
     run: ../tools/qc-stats/qc-stats.cwl
 
-  # << RNA prediction >>
+# << RNA prediction >>
   rna_prediction:
     in:
       input_sequences: length_filter/filtered_file
@@ -136,3 +143,25 @@ steps:
       - LSU_folder
       - sequence-categorisation
     run: subworkflows/rna_prediction-sub-wf.cwl
+
+# combined gene caller
+  cgc:
+    in:
+      input_fasta: length_filter/filtered_file
+      seq_type: { default: 'a' }
+      maskfile: rna_prediction/ncRNA
+      config: CGC_config
+      outdir: { default: 'CGC-output' }
+      postfixes: CGC_postfixes
+    out: [ results ]
+    run: ../tools/Combined_gene_caller/CGC-subwf.cwl
+
+# final gzip
+  compression:
+    run: ../utils/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file:
+        source: [ classify/cmsearch_result, classify/ncRNA, length_filter/filtered_file, cgc/results]
+        linkMerge: merge_flattened
+    out: [compressed_file]
