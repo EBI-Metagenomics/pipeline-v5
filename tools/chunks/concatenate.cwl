@@ -16,9 +16,9 @@ inputs:
       position: 1
     streamable: true
   - id: outputFileName
-    type: string
+    type: File
 
-stdout: $(inputs.outputFileName)
+stdout: $(inputs.outputFileName.nameroot).united
 
 outputs:
   - id: result
