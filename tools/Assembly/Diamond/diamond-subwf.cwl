@@ -37,7 +37,7 @@ steps:
       maxTargetSeqs: maxTargetSeqs
       strand: strand
       databaseFile: databaseFile
-      threads: threads
+      # threads: threads
     out: [ matches ]
     run: Diamond.blastp-v0.9.21.cwl
 
