@@ -19,15 +19,15 @@ inputs:
   strand: string
   databaseFile: File
   threads: int
-  Uniref90_db_txt: File
+#  Uniref90_db_txt: File
 
 outputs:
   diamond_output:
     type: File
     outputSource: diamond_run/matches
-  post-processing_output:
-    type: File
-    outputSource: post_processing_uniref90/join_out
+#  post-processing_output:
+#    type: File
+#    outputSource: post_processing_uniref90/join_out
 
 steps:
   diamond_run:
@@ -37,16 +37,16 @@ steps:
       maxTargetSeqs: maxTargetSeqs
       strand: strand
       databaseFile: databaseFile
-      # threads: threads
+      threads: threads
     out: [ matches ]
     run: Diamond.blastp-v0.9.21.cwl
 
-  post_processing_uniref90:
-    in:
-      input_diamond: diamond_run/matches
-      input_db: Uniref90_db_txt
-    out: [join_out]
-    run: Diamond-Post-Processing/postprocessing_subwf.cwl
+#  post_processing_uniref90:
+#    in:
+#      input_diamond: diamond_run/matches
+#      input_db: Uniref90_db_txt
+#    out: [join_out]
+#    run: Diamond-Post-Processing/postprocessing_subwf.cwl
 
 $namespaces:
  s: http://schema.org/
