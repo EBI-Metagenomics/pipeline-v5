@@ -75,6 +75,10 @@ outputs:
     type: File[]
     outputSource: compression/compressed_file
 
+  diamond_temp:
+    type: File
+    outputSource: diamond/post-processing_output
+
 steps:
 # << unzip contig file >>
   unzip:
