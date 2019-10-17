@@ -21,7 +21,7 @@ inputs:
       prefix: -d
   filename: File
 
-stdout: $(inputs.filename.nameroot)_summary.diamond
+stdout: $(inputs.filename.nameroot)_summary.diamond.without_header
 
 outputs:
   output_join:

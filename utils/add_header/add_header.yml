@@ -1,0 +1,5 @@
+input_table:
+  class: File
+  path: test.txt
+output_name: memevr
+header: 'me\tme2\tme3'

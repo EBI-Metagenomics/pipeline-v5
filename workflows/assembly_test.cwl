@@ -46,6 +46,11 @@ inputs:
     CGC_config: File
     CGC_postfixes: string[]
 
+    # diamond
+    Uniref90_db_txt: File
+    diamond_maxTargetSeqs: int
+    diamond_databaseFile: File
+
 outputs:
 
   qc-statistics:
@@ -144,7 +149,7 @@ steps:
       - sequence-categorisation
     run: subworkflows/rna_prediction-sub-wf.cwl
 
-# combined gene caller
+# << COMBINED GENE CALLER >>
   cgc:
     in:
       input_fasta: length_filter/filtered_file
@@ -156,7 +161,27 @@ steps:
     out: [ results ]
     run: ../tools/Combined_gene_caller/CGC-subwf.cwl
 
-# final gzip
+# << DIAMOND >>
+  diamond:
+    run: ../tools/Assembly/Diamond/diamond-subwf.cwl
+    in:
+      queryInputFile:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      outputFormat: { default: '6' }
+      maxTargetSeqs: diamond_maxTargetSeqs
+      strand: { default: 'both'}
+      databaseFile: diamond_databaseFile
+      threads: { default: 32 }
+      Uniref90_db_txt: Uniref90_db_txt
+      filename: length_filter/filtered_file
+    out: [post-processing_output]
+
+### final steps
+
+# add header
+
+# gzip
   compression:
     run: ../utils/gzip.cwl
     scatter: uncompressed_file
