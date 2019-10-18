@@ -14,7 +14,7 @@ inputs:
   data_dir: string
 
   cpu: int
-  output: string
+  file_acc: string
 
 outputs:
   annotations:
@@ -36,7 +36,7 @@ steps:
       no_annot: {default: true}
       no_file_comments: {default: true}
       cpu: cpu
-      output: output
+      output: file_acc
       mode: { default: diamond }
     out: [ output_orthologs ]
 
@@ -44,8 +44,8 @@ steps:
     run: ../../chunks/concatenate.cwl
     in:
       files: eggnog_homology_searches/output_orthologs
-      outputFileName: {default: eggnog }
-      postfix: {default: _result }
+      outputFileName: file_acc
+      postfix: {default: .emapper.seed_orthologs }
     out: [result]
 
   eggnog_annotation:
@@ -55,7 +55,7 @@ steps:
       data_dir: data_dir
       no_file_comments: {default: true}
       cpu: cpu
-      output: output
+      output: file_acc
     out: [ output_annotations ]
 
 

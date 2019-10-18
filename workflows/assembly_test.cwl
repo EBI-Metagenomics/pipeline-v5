@@ -59,7 +59,6 @@ inputs:
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
-
     # diamond
     Uniref90_db_txt: File
     diamond_maxTargetSeqs: int
@@ -97,6 +96,10 @@ outputs:
   functional_annotation_res:
     type: File[]
     outputSource: functional_annotation/results
+  eggnog_annotations:
+    outputSource: functional_annotation/eggnog_annotations
+  eggnog_orthologs:
+    outputSource: functional_annotation/eggnog_orthologs
 
 steps:
 # << unzip contig file >>
@@ -218,7 +221,7 @@ steps:
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
-    out: [ results ]
+    out: [ results, eggnog_annotations, eggnog_orthologs ]
 
 
 # << FINAL STEPS >>
