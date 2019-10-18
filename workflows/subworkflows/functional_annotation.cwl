@@ -34,9 +34,8 @@ inputs:
 
 outputs:
   results:
-    type: File
+    type: File[]
     outputSource: combine/result
-    valueFrom: $( self.filter(file => !!file.basename.match(/^.*hmmscan.*$/)).pop() )
 
 #  InterProScan_I5:
 #    outputSource: interproscan/i5Annotations
