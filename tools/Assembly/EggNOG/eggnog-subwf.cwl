@@ -8,7 +8,7 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  fasta_file: File
+  fasta_file: File[]
   db_diamond: File
   db: File
   data_dir: string
@@ -24,10 +24,11 @@ outputs:
   #  outputSource: remove_header_annotations/result
   orthologs:
     type: File
-    outputSource: eggnog_homology_searches/output_orthologs
+    outputSource: unite_seed_orthologs/result
 
 steps:
   eggnog_homology_searches:
+    scatter: fasta_file
     run: eggNOG/eggnog.cwl
     in:
       fasta_file: fasta_file
@@ -41,7 +42,13 @@ steps:
       mode: { default: diamond }
     out: [ output_orthologs ]
 
-  #unite_seed_orthologs:
+  unite_seed_orthologs:
+    run: ../../chunks/concatenate.cwl
+    in:
+      file: eggnog_homology_searches/output_orthologs
+      outputFileName: {default: eggnog }
+      postfix: {default: _result }
+    out: [result]
 
   #eggnog_annotation:
 
