@@ -52,6 +52,7 @@ steps:
     run: eggNOG/eggnog.cwl
     in:
       annotate_hits_table: unite_seed_orthologs/result
+      data_dir: data_dir
       no_file_comments: {default: true}
       cpu: cpu
       output: output
