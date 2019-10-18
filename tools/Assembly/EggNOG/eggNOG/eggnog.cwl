@@ -78,12 +78,12 @@ inputs:
 
 outputs:
 
-  output_annotations:
-    type: File
-    outputBinding:
-      glob: "*emapper.annotations*"
+  #output_annotations:
+  #  type: File
+  #  outputBinding:
+  #    glob: "*emapper.annotations*"
 
   output_orthologs:
-    type: File
+    type: File?
     outputBinding:
-      glob: "*emapper.seed_orthologs*"
+      glob: $(inputs.output)*orthologs*

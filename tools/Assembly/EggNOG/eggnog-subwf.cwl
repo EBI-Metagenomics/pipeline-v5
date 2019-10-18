@@ -13,35 +13,49 @@ inputs:
   db: File
   data_dir: string
 
+  no_annot: boolean
+  no_file_comments: boolean
+  cpu: int
+  output: string
+
 outputs:
-  annotations:
-    type: File
-    outputSource: remove_header_annotations/result
+  #annotations:
+  #  type: File
+  #  outputSource: remove_header_annotations/result
   orthologs:
     type: File
-    outputSource: remove_header_orthologs/result
+    outputSource: eggnog_homology_searches/output_orthologs
 
 steps:
-  eggnog:
+  eggnog_homology_searches:
     run: eggNOG/eggnog.cwl
     in:
       fasta_file: fasta_file
       db_diamond: db_diamond
       db: db
       data_dir: data_dir
-    out: [ output_annotations, output_orthologs ]
+      no_annot: no_annot
+      no_file_comments: no_file_comments
+      cpu: cpu
+      output: output
+    out: [ output_orthologs ]
 
-  remove_header_annotations:
-    run: ../chunks/remove_headers.cwl
-    in:
-      table: eggnog/output_annotations
-    out: [ result ]
+  #unite_seed_orthologs:
 
-  remove_header_orthologs:
-    run: ../chunks/remove_headers.cwl
-    in:
-      table: eggnog/output_orthologs
-    out: [ result ]
+  #eggnog_annotation:
+
+
+#  remove_header_annotations:
+#    run: ../chunks/remove_headers.cwl
+#    in:
+#      table: eggnog/output_annotations
+#    out: [ result ]
+
+#  remove_header_orthologs:
+#    run: ../chunks/remove_headers.cwl
+#    in:
+#      table: eggnog/output_orthologs
+#    out: [ result ]
 
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'
