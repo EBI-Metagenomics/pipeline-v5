@@ -38,8 +38,10 @@ outputs:
     outputSource: combine/result
   eggnog_annotations:
     outputSource: eggnog/annotations
+    type: File
   eggnog_orthologs:
     outputSource: eggnog/orthologs
+    type: File
 
 steps:
 
