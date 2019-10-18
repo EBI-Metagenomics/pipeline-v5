@@ -88,6 +88,7 @@ steps:
         - interproscan/i5Annotations
         - hmmscan/output_table
       outputFileName: names
+      postfix: {default: ''}
     out: [result]
     run: ../../tools/chunks/concatenate.cwl
 
