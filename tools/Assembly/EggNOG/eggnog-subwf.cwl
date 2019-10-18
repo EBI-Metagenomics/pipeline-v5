@@ -45,7 +45,7 @@ steps:
   unite_seed_orthologs:
     run: ../../chunks/concatenate.cwl
     in:
-      file: eggnog_homology_searches/output_orthologs
+      files: eggnog_homology_searches/output_orthologs
       outputFileName: {default: eggnog }
       postfix: {default: _result }
     out: [result]
