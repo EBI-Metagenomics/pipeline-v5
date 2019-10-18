@@ -94,12 +94,12 @@ HMMSCAN_data:
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs
 
 EggNOG_db:
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/eggnog.db
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/eggnog.db
   class: File
 EggNOG_diamond_db:
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/eggnog_proteins.dmnd
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/eggnog_proteins.dmnd
   class: File
-EggNOG_data_dir: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-1.0.3/data/
+EggNOG_data_dir: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/
 
 InterProScan_applications:
   - PfamA
