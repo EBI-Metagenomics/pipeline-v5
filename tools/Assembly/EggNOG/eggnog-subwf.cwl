@@ -17,9 +17,9 @@ inputs:
   output: string
 
 outputs:
-  #annotations:
-  #  type: File
-  #  outputSource: remove_header_annotations/result
+  annotations:
+    type: File
+    outputSource: eggnog_annotation/output_annotations
   orthologs:
     type: File
     outputSource: unite_seed_orthologs/result
@@ -45,23 +45,18 @@ steps:
     in:
       files: eggnog_homology_searches/output_orthologs
       outputFileName: {default: eggnog }
-      #postfix: {default: _result }
+      postfix: {default: _result }
     out: [result]
 
-  #eggnog_annotation:
+  eggnog_annotation:
+    run: eggNOG/eggnog.cwl
+    in:
+      annotate_hits_table: unite_seed_orthologs/result
+      no_file_comments: {default: true}
+      cpu: cpu
+      output: output
+    out: [ output_annotations ]
 
-
-#  remove_header_annotations:
-#    run: ../chunks/remove_headers.cwl
-#    in:
-#      table: eggnog/output_annotations
-#    out: [ result ]
-
-#  remove_header_orthologs:
-#    run: ../chunks/remove_headers.cwl
-#    in:
-#      table: eggnog/output_orthologs
-#    out: [ result ]
 
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'

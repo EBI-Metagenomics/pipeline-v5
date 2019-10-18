@@ -18,7 +18,7 @@ baseCommand: [emapper.py]
 
 inputs:
   fasta_file:
-    type: File
+    type: File?
     inputBinding:
       separate: true
       prefix: -i
@@ -37,7 +37,7 @@ inputs:
     label: Path to DIAMOND-compatible database
 
   data_dir:
-    type: string  # data/
+    type: string?  # data/
     inputBinding:
       prefix: --data_dir
     label: Directory to use for DATA_PATH
@@ -66,7 +66,7 @@ inputs:
       prefix: --cpu
 
   annotate_hits_table:
-    type: boolean?
+    type: File?
     inputBinding:
       prefix: --annotate_hits_table
     label: Annotatate TSV formatted table of query->hits
@@ -78,10 +78,10 @@ inputs:
 
 outputs:
 
-  #output_annotations:
-  #  type: File
-  #  outputBinding:
-  #    glob: "*emapper.annotations*"
+  output_annotations:
+    type: File?
+    outputBinding:
+      glob: $(inputs.output)*annotations*
 
   output_orthologs:
     type: File?
