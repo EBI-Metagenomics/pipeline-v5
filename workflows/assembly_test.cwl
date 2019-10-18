@@ -50,6 +50,7 @@ inputs:
     Uniref90_db_txt: File
     diamond_maxTargetSeqs: int
     diamond_databaseFile: File
+    diamond_header: string
 
 outputs:
 
@@ -77,7 +78,7 @@ outputs:
 
   diamond_temp:
     type: File
-    outputSource: diamond/post-processing_output
+    outputSource: header_addition/output_table
 
 steps:
 # << unzip contig file >>
@@ -181,9 +182,18 @@ steps:
       filename: length_filter/filtered_file
     out: [post-processing_output]
 
-### final steps
+# << FINAL STEPS >>
 
 # add header
+  header_addition:
+    run: ../utils/add_header/add_header.cwl
+    in:
+      input_table: diamond/post-processing_output
+      output_name:
+        source: diamond/post-processing_output
+        valueFrom: $(self.nameroot)
+      header: diamond_header
+    out: [ output_table ]
 
 # gzip
   compression:

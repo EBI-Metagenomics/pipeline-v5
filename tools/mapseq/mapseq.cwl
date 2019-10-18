@@ -10,12 +10,11 @@ doc: |
   classifications to ribosomal RNA sequences.
   https://github.com/jfmrod/MAPseq
 
-
-#requirements:
-#  ResourceRequirement:
-#    ramMin: 10000
-#    tmpdirMin: 15000
-#    coresMin: 2
+requirements:
+  ResourceRequirement:
+    ramMin: 3000
+    ramMax: 4000
+    coresMin: 2
 
 inputs:
 
