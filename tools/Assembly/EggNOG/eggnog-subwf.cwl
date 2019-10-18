@@ -13,8 +13,6 @@ inputs:
   db: File
   data_dir: string
 
-  no_annot: boolean
-  no_file_comments: boolean
   cpu: int
   output: string
 
@@ -35,8 +33,8 @@ steps:
       db_diamond: db_diamond
       db: db
       data_dir: data_dir
-      no_annot: no_annot
-      no_file_comments: no_file_comments
+      no_annot: {default: true}
+      no_file_comments: {default: true}
       cpu: cpu
       output: output
       mode: { default: diamond }
@@ -47,7 +45,7 @@ steps:
     in:
       files: eggnog_homology_searches/output_orthologs
       outputFileName: {default: eggnog }
-      postfix: {default: _result }
+      #postfix: {default: _result }
     out: [result]
 
   #eggnog_annotation:
