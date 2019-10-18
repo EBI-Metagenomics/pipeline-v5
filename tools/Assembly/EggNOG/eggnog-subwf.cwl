@@ -38,6 +38,7 @@ steps:
       no_file_comments: no_file_comments
       cpu: cpu
       output: output
+      mode: { default: diamond }
     out: [ output_orthologs ]
 
   #unite_seed_orthologs:

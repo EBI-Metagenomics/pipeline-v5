@@ -46,7 +46,7 @@ inputs:
     type: string?
     inputBinding:
       prefix: -m
-  label: hmmer or diamond
+    label: hmmer or diamond
 
   no_annot:
     type: boolean?
