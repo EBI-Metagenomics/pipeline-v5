@@ -42,6 +42,11 @@ outputs:
     outputBinding:
       glob: "*LSU*"
 
+ counts:
+    type: File
+    outputBinding:
+    glob: "RNA-counts"
+
 hints:
   - class: DockerRequirement
     dockerPull: alpine:3.7

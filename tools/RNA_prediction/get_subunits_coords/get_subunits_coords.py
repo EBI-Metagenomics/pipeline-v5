@@ -9,6 +9,8 @@ from Bio import SeqIO
 
 SSU_coords = "SSU_coords"
 LSU_coords = "LSU_coords"
+SSU-count = 0
+LSU-count = 0
 
 if __name__ == "__main__":
 
@@ -26,7 +28,13 @@ if __name__ == "__main__":
             for line in input:
                 if args.lsu in line:
                     out_lsu.write(line)
+                    LSU-count += 1
                 elif args.ssu in line:
                     out_ssu.write(line)
+                    SSU-count += 1
+        with open("RNA-counts", 'w') as count:
+            count.write("LSU count\t" + LSU-count + "\nSSU count\t" + SSU-count)
+
     out_ssu.close()
     out_lsu.close()
+    count.close()

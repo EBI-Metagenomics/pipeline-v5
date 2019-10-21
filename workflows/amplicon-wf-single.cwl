@@ -80,6 +80,10 @@ outputs:
     type: Directory
     outputSource: ITS/itsonedb_folder
 
+  rna-count:
+    type: File
+    outputSource: amplicon-single/LSU-SSU-count
+
 steps:
 
 # << unzipping only >>
@@ -150,6 +154,7 @@ steps:
     out:
       - ncRNA
       - cmsearch_result
+      - LSU-SSU-count
       - SSU_folder
       - LSU_folder
       - sequence-categorisation
