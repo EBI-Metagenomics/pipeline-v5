@@ -41,11 +41,10 @@ outputs:
     type: File
     outputBinding:
       glob: "*LSU*"
-
- counts:
+  counts:
     type: File
     outputBinding:
-    glob: "RNA-counts"
+      glob: "RNA-counts"
 
 hints:
   - class: DockerRequirement
