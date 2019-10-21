@@ -78,6 +78,10 @@ outputs:
     type: Directory
     outputSource: amplicon-single/ITS_itsonedb_results
 
+  rna-count:
+    type: File
+    outputSource: amplicon-single/LSU-SSU-count
+
 steps:
 
 # << SeqPrep >>
@@ -127,6 +131,7 @@ steps:
       - gz_files
       - qc-statistics
       - qc_summary
+      - LSU-SSU-count
       - LSU_folder
       - SSU_folder
       - sequence-categorisation_folder
