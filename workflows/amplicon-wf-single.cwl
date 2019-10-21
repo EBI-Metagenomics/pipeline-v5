@@ -82,7 +82,7 @@ outputs:
 
   rna-count:
     type: File
-    outputSource: amplicon-single/LSU-SSU-count
+    outputSource: classify/LSU-SSU-count
 
 steps:
 
