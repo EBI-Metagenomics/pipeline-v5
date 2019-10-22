@@ -62,7 +62,7 @@ outputs:
   fastas:
     type: File[]
     outputBinding:
-      glob: "sequence-categorisation/*.fa*"
+      glob: "sequence-categorisation/*.fa"
 
   sequence-categorisation:
     type: Directory?

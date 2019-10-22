@@ -68,6 +68,10 @@ outputs:
     type: Directory
     outputSource: classify/sequence-categorisation
 
+  sequence-categorisation_folder_two:
+    type: Directory
+    outputSource: classify/sequence-categorisation_two
+
   sequence-categorisation_masking:
     type: Directory
     outputSource: ITS/masking_file
@@ -158,6 +162,7 @@ steps:
       - SSU_folder
       - LSU_folder
       - sequence-categorisation
+      - sequence-categorisation_two
       - SSU_coords
       - LSU_coords
 

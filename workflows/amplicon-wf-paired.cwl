@@ -66,6 +66,10 @@ outputs:
     type: Directory
     outputSource: amplicon-single/sequence-categorisation_folder
 
+  sequence-categorisation_folder_two:
+    type: Directory
+    outputSource: amplicon-single/sequence-categorisation_folder_two
+
   sequence-categorisation_masking:
     type: Directory
     outputSource: amplicon-single/sequence-categorisation_masking
@@ -80,7 +84,7 @@ outputs:
 
   rna-count:
     type: File
-    outputSource: amplicon-single/LSU-SSU-count
+    outputSource: amplicon-single/rna-count
 
 steps:
 
@@ -135,6 +139,7 @@ steps:
       - LSU_folder
       - SSU_folder
       - sequence-categorisation_folder
+      - sequence-categorisation_folder_two
       - sequence-categorisation_masking
       - ITS_unite_results
       - ITS_itsonedb_results
