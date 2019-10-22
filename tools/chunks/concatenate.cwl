@@ -14,10 +14,10 @@ inputs:
     type: File[]
     inputBinding:
       position: 1
-  outputFileName: File
+  outputFileName: string
   postfix: string?
 
-stdout: $(inputs.outputFileName.nameroot)$(inputs.postfix)
+stdout: $(inputs.outputFileName)$(inputs.postfix)
 
 outputs:
   - id: result

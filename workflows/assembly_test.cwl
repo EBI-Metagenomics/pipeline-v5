@@ -46,6 +46,25 @@ inputs:
     CGC_config: File
     CGC_postfixes: string[]
 
+    # functional annotation
+    func_ann_names: string[]
+    HMMSCAN_gathering_bit_score: boolean
+    HMMSCAN_omit_alignment: boolean
+    HMMSCAN_name_database: string
+    HMMSCAN_data: Directory
+    EggNOG_db: File
+    EggNOG_diamond_db: File
+    EggNOG_data_dir: string
+    InterProScan_databases: Directory
+    InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
+    InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+
+    # diamond
+    Uniref90_db_txt: File
+    diamond_maxTargetSeqs: int
+    diamond_databaseFile: File
+    diamond_header: string
+
 outputs:
 
   qc-statistics:
@@ -69,6 +88,18 @@ outputs:
   compressed_files:
     type: File[]
     outputSource: compression/compressed_file
+
+  diamond_temp:
+    type: File
+    outputSource: header_addition/output_table
+
+  functional_annotation_res:
+    type: File[]
+    outputSource: functional_annotation/results
+  eggnog_annotations:
+    outputSource: functional_annotation/eggnog_annotations
+  eggnog_orthologs:
+    outputSource: functional_annotation/eggnog_orthologs
 
 steps:
 # << unzip contig file >>
@@ -144,7 +175,7 @@ steps:
       - sequence-categorisation
     run: subworkflows/rna_prediction-sub-wf.cwl
 
-# combined gene caller
+# << COMBINED GENE CALLER >>
   cgc:
     in:
       input_fasta: length_filter/filtered_file
@@ -156,7 +187,57 @@ steps:
     out: [ results ]
     run: ../tools/Combined_gene_caller/CGC-subwf.cwl
 
-# final gzip
+# << DIAMOND >>
+  diamond:
+    run: ../tools/Assembly/Diamond/diamond-subwf.cwl
+    in:
+      queryInputFile:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      outputFormat: { default: '6' }
+      maxTargetSeqs: diamond_maxTargetSeqs
+      strand: { default: 'both'}
+      databaseFile: diamond_databaseFile
+      threads: { default: 32 }
+      Uniref90_db_txt: Uniref90_db_txt
+      filename: length_filter/filtered_file
+    out: [post-processing_output]
+
+# << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
+  functional_annotation:
+    run: subworkflows/functional_annotation.cwl
+    in:
+      CGC_predicted_proteins:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      names: func_ann_names
+      HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
+      HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
+      HMMSCAN_name_database: HMMSCAN_name_database
+      HMMSCAN_data: HMMSCAN_data
+      EggNOG_db: EggNOG_db
+      EggNOG_diamond_db: EggNOG_diamond_db
+      EggNOG_data_dir: EggNOG_data_dir
+      InterProScan_databases: InterProScan_databases
+      InterProScan_applications: InterProScan_applications
+      InterProScan_outputFormat: InterProScan_outputFormat
+    out: [ results, eggnog_annotations, eggnog_orthologs ]
+
+
+# << FINAL STEPS >>
+
+# add header
+  header_addition:
+    run: ../utils/add_header/add_header.cwl
+    in:
+      input_table: diamond/post-processing_output
+      output_name:
+        source: diamond/post-processing_output
+        valueFrom: $(self.nameroot)
+      header: diamond_header
+    out: [ output_table ]
+
+# gzip
   compression:
     run: ../utils/gzip.cwl
     scatter: uncompressed_file

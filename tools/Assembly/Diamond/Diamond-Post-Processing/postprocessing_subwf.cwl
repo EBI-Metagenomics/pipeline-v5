@@ -12,10 +12,9 @@ requirements:
   SubworkflowFeatureRequirement: {}
 
 inputs:
-  input_diamond:
-    type: File
-  input_db:
-    type: File
+  input_diamond: File
+  input_db: File
+  filename: File
 
 outputs:
   join_out:
@@ -34,6 +33,7 @@ steps:
     in:
       input_diamond: sorting/output_sorted
       input_db: input_db
+      filename: filename
     out:
       - output_join
     run: diamond_join.cwl

@@ -11,4 +11,4 @@ config:
 outdir: CGC-output
 postfixes:
   - '_CDS.faa'
-  - '_CDS.fnn'
+  - '_CDS.ffn'

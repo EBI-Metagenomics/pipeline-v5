@@ -34,22 +34,14 @@ inputs:
 
 outputs:
   results:
-    type: File
+    type: File[]
     outputSource: combine/result
-    valueFrom: $( self.filter(file => !!file.basename.match(/^.*hmmscan.*$/)).pop() )
-
-#  InterProScan_I5:
-#    outputSource: interproscan/i5Annotations
-#    type: File
-
-#  hmmscan_table:
-#    outputSource: hmmscan/output_table
-#    type: File
-
-#  eggnog_annotations:
-#    outputSource: eggnog/output_annotations
-#  eggnog_orthologs:
-#    outputSource: eggnog/output_orthologs
+  eggnog_annotations:
+    outputSource: eggnog/annotations
+    type: File
+  eggnog_orthologs:
+    outputSource: eggnog/orthologs
+    type: File
 
 steps:
 
@@ -96,30 +88,20 @@ steps:
         - interproscan/i5Annotations
         - hmmscan/output_table
       outputFileName: names
+      postfix: {default: ''}
     out: [result]
     run: ../../tools/chunks/concatenate.cwl
 
   # << EggNOG >>
-#  eggnog:
-#    scatter: fasta_file
-#      in:
-#        fasta_file: split_seqs/chunks
-#        db_diamond: EggNOG_diamond
-#        db: EggNOG_db
-#        data_dir: EggNOG_data_dir
-#      out: [annotations, orthologs]
-#    run: ../../tools/EggNOG/eggNOG/eggnog.cwl
-
-#  combine_annotations:
-#    run: ../../chunks/concatenate.cwl
-#    in:
-#      files: eggnog/annotations
-#      outputFileName: { default: 'annotations_united' }
-#    out: [ result ]
-
-#  combine_orthologs:
-#    run: ../../chunks/concatenate.cwl
-#    in:
-#      files: eggnog/orthologs
-#      outputFileName: { default: 'orthologs_united' }
-#    out: [ result ]
+  eggnog:
+    run: ../../tools/Assembly/EggNOG/eggnog-subwf.cwl
+    in:
+      fasta_file: split_seqs/chunks
+      db_diamond: EggNOG_diamond_db
+      db: EggNOG_db
+      data_dir: EggNOG_data_dir
+      cpu: { default: 16 }
+      file_acc:
+        source: CGC_predicted_proteins
+        valueFrom: $(self.nameroot)
+    out: [ annotations, orthologs]

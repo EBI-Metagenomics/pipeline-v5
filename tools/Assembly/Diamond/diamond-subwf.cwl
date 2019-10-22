@@ -11,15 +11,14 @@ requirements:
     coresMin: 32
 
 inputs:
-  queryInputFile:
-    type: File
-    format: 'edam:format_1929'
+  queryInputFile: File
   outputFormat: string
   maxTargetSeqs: int
   strand: string
   databaseFile: File
   threads: int
   Uniref90_db_txt: File
+  filename: File
 
 outputs:
   diamond_output:
@@ -45,6 +44,7 @@ steps:
     in:
       input_diamond: diamond_run/matches
       input_db: Uniref90_db_txt
+      filename: filename
     out: [join_out]
     run: Diamond-Post-Processing/postprocessing_subwf.cwl
 

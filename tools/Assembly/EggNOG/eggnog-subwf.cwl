@@ -8,40 +8,56 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  fasta_file: File
+  fasta_file: File[]
   db_diamond: File
   db: File
   data_dir: string
 
+  cpu: int
+  file_acc: string
+
 outputs:
   annotations:
     type: File
-    outputSource: remove_header_annotations/result
+    outputSource: eggnog_annotation/output_annotations
   orthologs:
     type: File
-    outputSource: remove_header_orthologs/result
+    outputSource: unite_seed_orthologs/result
 
 steps:
-  eggnog:
+  eggnog_homology_searches:
+    scatter: fasta_file
     run: eggNOG/eggnog.cwl
     in:
       fasta_file: fasta_file
       db_diamond: db_diamond
       db: db
       data_dir: data_dir
-    out: [ output_annotations, output_orthologs ]
+      no_annot: {default: true}
+      no_file_comments: {default: true}
+      cpu: cpu
+      output: file_acc
+      mode: { default: diamond }
+    out: [ output_orthologs ]
 
-  remove_header_annotations:
-    run: ../chunks/remove_headers.cwl
+  unite_seed_orthologs:
+    run: ../../chunks/concatenate.cwl
     in:
-      table: eggnog/output_annotations
-    out: [ result ]
+      files: eggnog_homology_searches/output_orthologs
+      outputFileName: file_acc
+      postfix: {default: .emapper.seed_orthologs }
+    out: [result]
 
-  remove_header_orthologs:
-    run: ../chunks/remove_headers.cwl
+  eggnog_annotation:
+    run: eggNOG/eggnog.cwl
     in:
-      table: eggnog/output_orthologs
-    out: [ result ]
+      annotate_hits_table: unite_seed_orthologs/result
+      data_dir: data_dir
+      no_file_comments: {default: true}
+      cpu: cpu
+      output: file_acc
+    out: [ output_annotations ]
+
 
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'
