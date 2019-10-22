@@ -135,7 +135,7 @@ steps:
       - gz_files
       - qc-statistics
       - qc_summary
-      - LSU-SSU-count
+      - rna-count
       - LSU_folder
       - SSU_folder
       - sequence-categorisation_folder
