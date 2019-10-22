@@ -33,7 +33,7 @@ if __name__ == "__main__":
                     out_ssu.write(line)
                     SSU_count += 1
         with open("RNA-counts", 'w') as count:
-            count.write("LSU count\t" + str(LSU-count) + "\nSSU count\t" + str(SSU-count))
+            count.write("LSU count\t" + str(LSU_count) + "\nSSU count\t" + str(SSU_count))
 
     out_ssu.close()
     out_lsu.close()
