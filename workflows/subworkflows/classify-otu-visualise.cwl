@@ -52,6 +52,10 @@ outputs:
     type: Directory
     outputSource: return_output_dir/out
 
+  fasta_output:
+    type: File
+    outputSource: compress_fasta/compressed_file
+
 steps:
   mapseq:
     run: ../../tools/mapseq/mapseq.cwl
@@ -83,7 +87,8 @@ steps:
       otutable: classifications_to_otu_counts/otu_tsv
       biomtable: classifications_to_otu_counts/otu_txt
       krona: visualize_otu_counts/otu_visualization
-    out: [mapseq_out, otu_out, biom_out, krona_out]
+      fasta: fasta
+    out: [mapseq_out, otu_out, biom_out, krona_out, fasta_out]
 
   counts_to_hdf5:
     run: ../../tools/biom-convert/biom-convert.cwl
@@ -107,6 +112,13 @@ steps:
       uncompressed_file: edit_empty_tax/mapseq_out
     out: [compressed_file]
     label: "gzip mapseq output"
+
+  compress_fasta:
+    run: ../../utils/gzip.cwl
+    in:
+      uncompressed_file: edit_empty_tax/fasta_out
+    out: [compressed_file]
+    label: "compressed fasta file, original or empty.fasta"
 
   return_output_dir:
     run: ../../utils/return_directory.cwl

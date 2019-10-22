@@ -49,6 +49,10 @@ outputs:
     type: Directory
     outputSource: move_fastas/out
 
+  sequence-categorisation_two:  # LSU, SSU or empty
+    type: Directory
+    outputSource: move_fastas_two/out
+
   SSU_coords:  # for ITS
     type: File
     outputSource: extract_subunits_coords/SSU_seqs
@@ -137,7 +141,7 @@ steps:
       otu_label: pattern_SSU
       return_dirname: {default: 'taxonomy-summary/SSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir ]
+    out: [ out_dir, fasta_output ]
 
 # classify LSU
   classify_LSUs:
@@ -150,7 +154,7 @@ steps:
       otu_label: pattern_LSU
       return_dirname: {default: 'taxonomy-summary/LSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir ]
+    out: [ out_dir, fasta_output ]
 
 # gzip and chunk sequence-categorisation
   gzip_files:
@@ -165,5 +169,14 @@ steps:
     run: ../../utils/return_directory.cwl
     in:
       list: gzip_files/compressed_file
+      dir_name: { default: 'sequence-categorisation' }
+    out: [out]
+
+  move_fastas_two:
+    run: ../../utils/return_directory.cwl
+    in:
+      list:
+        - classify_SSUs/fasta_output
+        - classify_LSUs/fasta_output
       dir_name: { default: 'sequence-categorisation' }
     out: [out]

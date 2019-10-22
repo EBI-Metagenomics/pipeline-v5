@@ -33,6 +33,11 @@ inputs:
     inputBinding:
       position: 4
 
+  fasta:
+    type: File
+    inputBinding:
+      position: 5
+
 baseCommand: [empty_tax.sh]
 
 outputs:
@@ -55,3 +60,8 @@ outputs:
     type: File
     outputBinding:
       glob: "*.html"
+
+  fasta_out:
+    type: File
+    outputBinding:
+      glob: "*.fasta"
