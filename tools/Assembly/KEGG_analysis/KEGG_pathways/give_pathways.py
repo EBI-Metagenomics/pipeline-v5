@@ -329,7 +329,6 @@ if __name__ == "__main__":
 
         for contig in dict_KO_by_contigs:
             edges = dict_KO_by_contigs[contig]
-            print(contig, edges)
             # run
             sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
                               contig, file_out_summary, file_out_matching, file_out_missing)

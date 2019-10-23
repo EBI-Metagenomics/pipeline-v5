@@ -84,8 +84,8 @@ CGC_postfixes:
 
 # functional annotation
 func_ann_names:
-  - interproscan_united
-  - hmmscan_united
+  - I5.tsv.without_header
+  - hmm.tsv.without_header
 HMMSCAN_gathering_bit_score: true
 HMMSCAN_omit_alignment: true
 HMMSCAN_name_database: db_kofam.hmm

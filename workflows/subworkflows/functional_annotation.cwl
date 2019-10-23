@@ -81,14 +81,16 @@ steps:
     label: "Analysis using profile HMM on db"
 
   combine:
-    scatter: [files, outputFileName]
+    scatter: [files, postfix]
     scatterMethod: dotproduct
     in:
       files:
         - interproscan/i5Annotations
         - hmmscan/output_table
-      outputFileName: names
-      postfix: {default: ''}
+      outputFileName:
+        source: CGC_predicted_proteins
+        valueFrom: $(self.nameroot.split('_CDS')[0])
+      postfix: names
     out: [result]
     run: ../../tools/chunks/concatenate.cwl
 
