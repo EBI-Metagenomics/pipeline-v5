@@ -81,8 +81,10 @@ CGC_config:
 CGC_postfixes:
   - '_CDS.faa'
   - '_CDS.ffn'
+cgc_chunk_size: 2000  # 100000
 
 # functional annotation
+fa_chunk_size: 3000 # 100000
 func_ann_names:
   - I5.tsv.without_header
   - hmm.tsv.without_header

@@ -33,4 +33,4 @@ outputs:
   output_table:
     type: File
     outputBinding:
-      glob: "*_parsed.txt"
+      glob: "*_parsed*"

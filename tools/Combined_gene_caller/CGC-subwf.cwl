@@ -17,6 +17,7 @@ inputs:
   config: File
   outdir: string
   postfixes: string[]
+  chunk_size: int
 
 outputs:
   results:
@@ -29,7 +30,7 @@ steps:
   split_seqs:
     in:
       seqs: input_fasta
-      chunk_size: { default: 2000 }  # 100000
+      chunk_size: chunk_size
     out: [ chunks ]
     run: ../chunks/fasta_chunker.cwl
 

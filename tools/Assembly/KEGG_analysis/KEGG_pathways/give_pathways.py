@@ -299,9 +299,9 @@ if __name__ == "__main__":
         name_output_matching = 'matching_ko_pathways.txt'
         name_output_missing = 'missing_ko_pathways.txt'
 
-        file_out_summary = open(name_output_summary, "a+")
-        file_out_matching = open(name_output_matching, "a+")
-        file_out_missing = open(name_output_missing, "a+")
+        file_out_summary = open(name_output_summary, "wt")
+        file_out_matching = open(name_output_matching, "wt")
+        file_out_missing = open(name_output_missing, "wt")
 
         set_headers(file_out_summary, file_out_matching, file_out_missing, False)
 
@@ -322,9 +322,9 @@ if __name__ == "__main__":
         name_output_missing = os.path.join("Contigs", 'missing_ko_pathways.txt')
 
         # open files
-        file_out_summary = open(name_output_summary, "a+")
-        file_out_matching = open(name_output_matching, "a+")
-        file_out_missing = open(name_output_missing, "a+")
+        file_out_summary = open(name_output_summary, "wt")
+        file_out_matching = open(name_output_matching, "wt")
+        file_out_missing = open(name_output_missing, "wt")
         set_headers(file_out_summary, file_out_matching, file_out_missing, True)
 
         for contig in dict_KO_by_contigs:

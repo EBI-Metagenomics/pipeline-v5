@@ -16,7 +16,7 @@ requirements:
 inputs:
 
   CGC_predicted_proteins: File
-
+  chunk_size: int
   names: string[]
 
   HMMSCAN_gathering_bit_score: boolean
@@ -49,7 +49,7 @@ steps:
   split_seqs:
     in:
       seqs: CGC_predicted_proteins
-      chunk_size: { default: 20 }  # 100000
+      chunk_size: chunk_size
     out: [ chunks ]
     run: ../../tools/chunks/fasta_chunker.cwl
 

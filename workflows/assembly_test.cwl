@@ -45,8 +45,10 @@ inputs:
     # cgc
     CGC_config: File
     CGC_postfixes: string[]
+    cgc_chunk_size: int
 
     # functional annotation
+    fa_chunk_size: int
     func_ann_names: string[]
     HMMSCAN_gathering_bit_score: boolean
     HMMSCAN_omit_alignment: boolean
@@ -186,6 +188,7 @@ steps:
       config: CGC_config
       outdir: { default: 'CGC-output' }
       postfixes: CGC_postfixes
+      chunk_size: cgc_chunk_size
     out: [ results ]
     run: ../tools/Combined_gene_caller/CGC-subwf.cwl
 
@@ -212,6 +215,7 @@ steps:
       CGC_predicted_proteins:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      chunk_size: fa_chunk_size
       names: func_ann_names
       HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
       HMMSCAN_omit_alignment: HMMSCAN_omit_alignment

@@ -18,7 +18,7 @@ def parsing(input_file, outdir):
             dict_contigs[contig].append(kegg_annotation)
 
     # leave unique records and save
-    path_output = os.path.join(outdir, os.path.basename(input_file).split('.')[0]+'_parsed.txt')
+    path_output = os.path.join(outdir, os.path.basename(input_file)+'_parsed')
     with open(path_output, 'w+') as file_out:
         for key in dict_contigs:
             #dict_contigs[key] = np.unique(dict_contigs[key])
