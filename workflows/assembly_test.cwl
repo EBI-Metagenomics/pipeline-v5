@@ -98,8 +98,10 @@ outputs:
     outputSource: functional_annotation/results
   eggnog_annotations:
     outputSource: functional_annotation/eggnog_annotations
+    type: File
   eggnog_orthologs:
     outputSource: functional_annotation/eggnog_orthologs
+    type: File
 
 steps:
 # << unzip contig file >>
