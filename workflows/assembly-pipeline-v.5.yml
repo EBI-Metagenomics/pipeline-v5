@@ -1,6 +1,6 @@
 contigs:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA_10000.fasta.gz
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA_1000.fasta.gz
   format: edam:format_1929
 
 contig_min_length: 100
@@ -85,9 +85,9 @@ cgc_chunk_size: 2000  # 100000
 
 # functional annotation
 fa_chunk_size: 3000 # 100000
-func_ann_names:
-  - .I5.tsv.without_header
-  - .hmm.tsv.without_header
+func_ann_names_ips: .I5.tsv.without_header
+func_ann_names_hmmscan: .hmm.tsv.without_header
+
 HMMSCAN_gathering_bit_score: true
 HMMSCAN_omit_alignment: true
 HMMSCAN_name_database: db_kofam.hmm

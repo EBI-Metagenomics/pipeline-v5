@@ -17,7 +17,8 @@ inputs:
 
   CGC_predicted_proteins: File
   chunk_size: int
-  names: string[]
+  name_ips: string
+  name_hmmscan: string
 
   HMMSCAN_gathering_bit_score: boolean
   HMMSCAN_omit_alignment: boolean
@@ -33,9 +34,12 @@ inputs:
   InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
 outputs:
-  results:
-    type: File[]
-    outputSource: combine/result
+  hmmscan_result:
+    type: File
+    outputSource: combine_hmmscan/result
+  ips_result:
+    type: File
+    outputSource: combine_ips/result
   eggnog_annotations:
     outputSource: eggnog/annotations
     type: File
@@ -66,6 +70,16 @@ steps:
     run: ../../tools/InterProScan/InterProScan-v5-none_docker.cwl
     label: "InterProScan: protein sequence classifier"
 
+  combine_ips:
+    in:
+      files: interproscan/i5Annotations
+      outputFileName:
+        source: CGC_predicted_proteins
+        valueFrom: $(self.nameroot.split('_CDS')[0])
+      postfix: name_ips
+    out: [result]
+    run: ../../tools/chunks/concatenate.cwl
+
 
   # << hmmscan >>
   hmmscan:
@@ -80,17 +94,13 @@ steps:
     run: ../../tools/hmmscan/hmmscan-subwf.cwl
     label: "Analysis using profile HMM on db"
 
-  combine:
-    scatter: [files, postfix]
-    scatterMethod: dotproduct
+  combine_hmmscan:
     in:
-      files:
-        - interproscan/i5Annotations
-        - hmmscan/output_table
+      files: hmmscan/output_table
       outputFileName:
         source: CGC_predicted_proteins
         valueFrom: $(self.nameroot.split('_CDS')[0])
-      postfix: names
+      postfix: name_hmmscan
     out: [result]
     run: ../../tools/chunks/concatenate.cwl
 

@@ -49,7 +49,8 @@ inputs:
 
     # functional annotation
     fa_chunk_size: int
-    func_ann_names: string[]
+    func_ann_names_ips: string
+    func_ann_names_hmmscan: string
     HMMSCAN_gathering_bit_score: boolean
     HMMSCAN_omit_alignment: boolean
     HMMSCAN_name_database: string
@@ -96,20 +97,6 @@ outputs:
   compressed_files:
     type: File[]
     outputSource: compression/compressed_file
-
-  diamond_temp:
-    type: File
-    outputSource: header_addition/output_table
-
-  functional_annotation_res:
-    type: File[]
-    outputSource: functional_annotation/results
-  eggnog_annotations:
-    outputSource: functional_annotation/eggnog_annotations
-    type: File
-  eggnog_orthologs:
-    outputSource: functional_annotation/eggnog_orthologs
-    type: File
 
   go_summary:
     outputSource: go_summary/go_summary
@@ -229,7 +216,8 @@ steps:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
       chunk_size: fa_chunk_size
-      names: func_ann_names
+      name_ips: func_ann_names_ips
+      name_hmmscan: func_ann_names_hmmscan
       HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
       HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
       HMMSCAN_name_database: HMMSCAN_name_database
@@ -240,15 +228,13 @@ steps:
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
-    out: [ results, eggnog_annotations, eggnog_orthologs ]
+    out: [ hmmscan_result, ips_result, eggnog_annotations, eggnog_orthologs ]
 
 # << GO SUMMARY>>
   go_summary:
     run: ../tools/GO-slim/go_summary.cwl
     in:
-      InterProScan_results:
-        source: functional_annotation/results
-        valueFrom: $(self.filter(file => !!file.basename.match(/^.*.I5.tsv*$/)).pop().nameroot)
+      InterProScan_results: functional_annotation/ips_result
       config: go_config
     out: [go_summary, go_summary_slim]
 
@@ -256,23 +242,14 @@ steps:
 
 # add header
   header_addition:
-    scatter: [input_table, output_name, header]
+    scatter: [input_table, header]
     scatterMethod: dotproduct
     run: ../utils/add_header/add_header.cwl
     in:
       input_table:
-        - source: diamond/post-processing_output
-        - source: functional_annotation/results
-          valueFrom: $(self.filter(file => !!file.basename.match(/^.*.hmm.tsv*$/)).pop())
-        - source: functional_annotation/results
-          valueFrom: $(self.filter(file => !!file.basename.match(/^.*.I5.tsv*$/)).pop())
-      output_name:
-        - source: diamond/post-processing_output  # diamond result
-          valueFrom: $(self.nameroot)
-        - source: functional_annotation/results   # hmmscan result
-          valueFrom: $(self.filter(file => !!file.basename.match(/^.*.hmm.tsv*$/)).pop().nameroot)
-        - source: functional_annotation/results   # IPS result
-          valueFrom: $(self.filter(file => !!file.basename.match(/^.*.I5.tsv*$/)).pop().nameroot)
+        - diamond/post-processing_output
+        - functional_annotation/hmmscan_result
+        - functional_annotation/ips_result
       header:
         - diamond_header
         - hmmscan_header

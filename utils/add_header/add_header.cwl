@@ -19,17 +19,13 @@ inputs:
     type: File
     inputBinding:
       prefix: -i
-  output_name:
-    type: string
-    inputBinding:
-      prefix: -o
   header:
     type: string
     inputBinding:
       prefix: -h
 
+stdout: $(inputs.input_table.nameroot)
+
 outputs:
   output_table:
-    type: File
-    outputBinding:
-      glob: $(inputs.output_name)
+    type: stdout
