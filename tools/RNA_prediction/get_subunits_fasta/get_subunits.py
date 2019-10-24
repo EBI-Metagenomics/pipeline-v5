@@ -108,7 +108,7 @@ if __name__ == "__main__":
         LSU_e_out.close()
 
         # remove empty files
-        for onefile in [FiveS_filename, FiveEightS_filename] + names:
+        for onefile in [LSU_filename, SSU_filename, FiveS_filename, FiveEightS_filename] + names:
             if os.path.getsize(onefile) == 0:
                 os.remove(onefile)
 

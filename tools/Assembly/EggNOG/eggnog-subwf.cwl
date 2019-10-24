@@ -44,8 +44,10 @@ steps:
     run: ../../chunks/concatenate.cwl
     in:
       files: eggnog_homology_searches/output_orthologs
-      outputFileName: file_acc
-      postfix: {default: .emapper.seed_orthologs }
+      outputFileName:
+        source: file_acc
+        valueFrom: $(file_acc.split('_CDS')[0])
+      postfix: { default: .emapper.seed_orthologs }
     out: [result]
 
   eggnog_annotation:

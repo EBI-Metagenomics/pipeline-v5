@@ -86,14 +86,15 @@ cgc_chunk_size: 2000  # 100000
 # functional annotation
 fa_chunk_size: 3000 # 100000
 func_ann_names:
-  - I5.tsv.without_header
-  - hmm.tsv.without_header
+  - .I5.tsv.without_header
+  - .hmm.tsv.without_header
 HMMSCAN_gathering_bit_score: true
 HMMSCAN_omit_alignment: true
 HMMSCAN_name_database: db_kofam.hmm
 HMMSCAN_data:
   class: Directory
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs
+hmmscan_header: 'target_name\ttarget_accession\ttlen\tquery_name\tquery_accession\tqlen\tfull_sequence_e-value\tfull_sequence_score\tfull_sequence_bias\t#\tof\tc-evalue\ti-evalue\tdomain_score\tdomain_bias\thmm_coord_from\thmm_coord_to\tali_coord_from\tali_coord_to\tenv_coord_from\tenv_coord_to\tacc\tdescription_of_target'
 
 EggNOG_db:
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/eggnog.db
@@ -114,6 +115,7 @@ InterProScan_outputFormat:
 InterProScan_databases:
   class: Directory
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data
+ips_header: 'protein_accession\tsequence_md5_digest\tsequence_length\tanalysis\tsignature_accession\tsignature_description\tstart_location\tstop_location\tscore\tstatus\tdate\taccession\tdescription\tgo\tpathways_annotations'
 
 # Diamond
 Uniref90_db_txt:
@@ -124,3 +126,8 @@ diamond_databaseFile:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/uniref90_diamond-v0.9.21.dmnd
 diamond_header: 'uniref90_ID\tcontig_name\tpercentage_of_identical_matches\tlenght\tmismatch\tgapopen\tqstart\tqend\tsstart\tsend\tevalue\tbitscore\tprotein_name\tnum_in_cluster\ttaxonomy\ttax_id\trep_id'
+
+# GO
+go_config:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/GO-slim/go_summary-config.json

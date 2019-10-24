@@ -54,18 +54,24 @@ inputs:
     HMMSCAN_omit_alignment: boolean
     HMMSCAN_name_database: string
     HMMSCAN_data: Directory
+    hmmscan_header: string
     EggNOG_db: File
     EggNOG_diamond_db: File
     EggNOG_data_dir: string
     InterProScan_databases: Directory
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+    ips_header: string
 
     # diamond
     Uniref90_db_txt: File
     diamond_maxTargetSeqs: int
     diamond_databaseFile: File
     diamond_header: string
+
+    # GO
+    go_config: File
+
 
 outputs:
 
@@ -103,6 +109,13 @@ outputs:
     type: File
   eggnog_orthologs:
     outputSource: functional_annotation/eggnog_orthologs
+    type: File
+
+  go_summary:
+    outputSource: go_summary/go_summary
+    type: File
+  go_summary_slim:
+    outputSource: go_summary/go_summary_slim
     type: File
 
 steps:
@@ -229,18 +242,41 @@ steps:
       InterProScan_outputFormat: InterProScan_outputFormat
     out: [ results, eggnog_annotations, eggnog_orthologs ]
 
+# << GO SUMMARY>>
+  go_summary:
+    run: ../tools/GO-slim/go_summary.cwl
+    in:
+      InterProScan_results:
+        source: functional_annotation/results
+        valueFrom: $(self.filter(file => !!file.basename.match(/^.*.I5.tsv*$/)).pop().nameroot)
+      config: go_config
+    out: [go_summary, go_summary_slim]
 
 # << FINAL STEPS >>
 
 # add header
   header_addition:
+    scatter: [input_table, output_name, header]
+    scatterMethod: dotproduct
     run: ../utils/add_header/add_header.cwl
     in:
-      input_table: diamond/post-processing_output
+      input_table:
+        - source: diamond/post-processing_output
+        - source: functional_annotation/results
+          valueFrom: $(self.filter(file => !!file.basename.match(/^.*.hmm.tsv*$/)).pop())
+        - source: functional_annotation/results
+          valueFrom: $(self.filter(file => !!file.basename.match(/^.*.I5.tsv*$/)).pop())
       output_name:
-        source: diamond/post-processing_output
-        valueFrom: $(self.nameroot)
-      header: diamond_header
+        - source: diamond/post-processing_output  # diamond result
+          valueFrom: $(self.nameroot)
+        - source: functional_annotation/results   # hmmscan result
+          valueFrom: $(self.filter(file => !!file.basename.match(/^.*.hmm.tsv*$/)).pop().nameroot)
+        - source: functional_annotation/results   # IPS result
+          valueFrom: $(self.filter(file => !!file.basename.match(/^.*.I5.tsv*$/)).pop().nameroot)
+      header:
+        - diamond_header
+        - hmmscan_header
+        - ips_header
     out: [ output_table ]
 
 # gzip
@@ -249,6 +285,15 @@ steps:
     scatter: uncompressed_file
     in:
       uncompressed_file:
-        source: [ rna_prediction/cmsearch_result, rna_prediction/ncRNA, length_filter/filtered_file, cgc/results]
+        source:
+          - rna_prediction/cmsearch_result              # cmsearch.all
+          - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
+          - length_filter/filtered_file                 # _FASTA
+          - cgc/results                                 # faa, ffn
+          - header_addition/output_table                # hmmscan, diamond, IPS
+          - functional_annotation/eggnog_annotations
+          - functional_annotation/eggnog_orthologs
         linkMerge: merge_flattened
     out: [compressed_file]
+
+# move
