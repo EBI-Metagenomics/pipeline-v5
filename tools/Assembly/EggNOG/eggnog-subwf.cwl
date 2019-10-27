@@ -46,7 +46,7 @@ steps:
       files: eggnog_homology_searches/output_orthologs
       outputFileName:
         source: file_acc
-        valueFrom: $(file_acc.split('_CDS')[0])
+        valueFrom: $(self.split('_CDS')[0])
       postfix: { default: .emapper.seed_orthologs }
     out: [result]
 
