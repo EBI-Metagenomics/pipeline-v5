@@ -27,11 +27,12 @@ inputs:
     inputBinding:
       prefix: --config
 
-baseCommand: ["go_summary_pipeline-1.0.py"]
+  output_name:
+    type: string
+    inputBinding:
+      prefix: --output-file
 
-arguments:
-  - valueFrom: go-summary
-    prefix: --output-file
+baseCommand: ["go_summary_pipeline-1.0.py"]
 
 stderr: stderr.txt
 stdout: stdout.txt

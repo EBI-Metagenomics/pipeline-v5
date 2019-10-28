@@ -236,6 +236,9 @@ steps:
     in:
       InterProScan_results: functional_annotation/ips_result
       config: go_config
+      output_name:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot)_summary.go
     out: [go_summary, go_summary_slim]
 
 # << FINAL STEPS >>

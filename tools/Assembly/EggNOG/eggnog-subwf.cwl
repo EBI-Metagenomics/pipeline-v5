@@ -57,7 +57,9 @@ steps:
       data_dir: data_dir
       no_file_comments: {default: true}
       cpu: cpu
-      output: file_acc
+      output:
+        source: file_acc
+        valueFrom: $(self.split('_CDS')[0])
     out: [ output_annotations ]
 
 
