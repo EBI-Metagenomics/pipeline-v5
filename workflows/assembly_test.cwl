@@ -259,7 +259,7 @@ steps:
       interpro: functional_annotation/ips_result
     out: [annotations]
 
-<< KEGG PATHWAYS >>
+# << KEGG PATHWAYS >>
   pathways:
     run: subworkflows/assembly/kegg_analysis.cwl
     in:
