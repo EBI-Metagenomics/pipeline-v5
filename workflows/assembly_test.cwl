@@ -104,6 +104,13 @@ outputs:
   go_summary_slim:
     outputSource: go_summary/go_summary_slim
     type: File
+  pfam:
+    outputSource: pfam/annotations
+    type: File
+  summaries:
+    outputSource: write_summaries/summaries
+    type: File[]
+
 
 steps:
 # << unzip contig file >>
@@ -240,6 +247,23 @@ steps:
         source: length_filter/filtered_file
         valueFrom: $(self.nameroot)_summary.go
     out: [go_summary, go_summary_slim]
+
+# << Pfam >>
+  pfam:
+    run: ../tools/Pfam-Parse/pfam_annotations.cwl
+    in:
+      interpro: functional_annotation/ips_result
+    out: [annotations]
+
+# << summaries IPS, HMMScan, Pfam >>
+  write_summaries:
+    run: ../tools/summaries/write_summaries.cwl
+    in:
+      entry_maps:
+        - functional_annotation/ips_result
+        - pfam/annotations
+        - functional_annotation/hmmscan_result
+    out: [summaries]
 
 # << FINAL STEPS >>
 
