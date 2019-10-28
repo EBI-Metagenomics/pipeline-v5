@@ -18,8 +18,7 @@ baseCommand: ['write_summaries.py']
 
 outputs:
   summaries:
-    type: array
-    items: File
+    type: File[]
     outputBinding:
         glob: "summary.*"
 
