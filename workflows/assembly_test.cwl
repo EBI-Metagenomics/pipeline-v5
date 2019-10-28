@@ -73,6 +73,10 @@ inputs:
     # GO
     go_config: File
 
+    # Pathways
+    graphs: File
+    pathways_names: File
+    pathways_classes: File
 
 outputs:
 
@@ -248,12 +252,23 @@ steps:
         valueFrom: $(self.nameroot)_summary.go
     out: [go_summary, go_summary_slim]
 
-# << Pfam >>
+# << PFAM >>
   pfam:
     run: ../tools/Pfam-Parse/pfam_annotations.cwl
     in:
       interpro: functional_annotation/ips_result
     out: [annotations]
+
+<< KEGG PATHWAYS >>
+  pathways:
+    run: subworkflows/assembly/kegg_analysis.cwl
+    in:
+      input_table_hmmscan: functional_annotation/hmmscan_result
+      graphs: graphs
+      pathways_names: pathways_names
+      pathways_classes: pathways_classes
+    out: [ kegg_pathways_summary, kegg_contigs]  # change contigs for one file
+
 
 # << summaries IPS, HMMScan, Pfam >>
   write_summaries:

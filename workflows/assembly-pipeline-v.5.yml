@@ -131,3 +131,14 @@ diamond_header: 'uniref90_ID\tcontig_name\tpercentage_of_identical_matches\tleng
 go_config:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/GO-slim/go_summary-config.json
+
+# Pathways
+graphs:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/graphs.pkl
+pathways_names:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/all_pathways_names.txt
+pathways_classes:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/all_pathways_class.txt
