@@ -41,11 +41,13 @@ outputs:
   go_summary:
     type: File
     format: iana:text/csv
-    outputBinding: { glob: *_summary.go }
+    outputBinding:
+      glob: "*_summary.go"
   go_summary_slim:
     type: File
     format: iana:text/csv
-    outputBinding: { glob: *_summary.go-slim }
+    outputBinding:
+      glob: "*_summary.go-slim"
   stderr: stderr
   stdout: stdout
 
