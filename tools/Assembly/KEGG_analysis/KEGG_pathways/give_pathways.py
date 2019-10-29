@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import os
-import numpy as np
 import argparse
 import sys
 import pdb
@@ -54,7 +52,7 @@ def get_list_items(input_path):
                 dict_KO_by_contigs[name] = []
             dict_KO_by_contigs[name] += line[1:]
             items += line[1:]
-    return list(np.unique(items)), dict_KO_by_contigs
+    return list(set(items)), dict_KO_by_contigs
 
 
 def intersection(lst1, lst2):
@@ -175,7 +173,7 @@ def calculate_percentage(graph, dict_edges, unnecessary_nodes, edges, name_pathw
 
 
 def sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
-                      contig_name, file_out_summary, file_out_matching, file_out_missing):
+                      contig_name, file_out_summary):
     """
     Function sorts out all pathways and prints info about pathway that percentage of intersection more than 0
     :param graphs: Dict of graphs
@@ -183,8 +181,6 @@ def sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
     :param contig_name == name of contig, or '' for full summary
     :return: -
     """
-
-    # set filenames
     flag_not_empty = False
 
     dict_sort_by_percentage = {}
@@ -220,59 +216,15 @@ def sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
     file_out_summary.write('Set of nodes: ' + str(edges) + '\n')
     """
 
-    # output matching KOs
-    for percentage in sorted(list(dict_sort_by_percentage.keys()), reverse=True):
-        for name_pathway in dict_sort_by_percentage[percentage]:
-            #flag_not_empty = True
-            matching_current = dict_sort_by_percentage[percentage][name_pathway][1]
-            if contig_name != '':
-                out_name_pathway = '\t'.join([contig_name, name_pathway])
-            else:
-                out_name_pathway = name_pathway
-            output_line = '\t'.join([out_name_pathway, str(percentage), str(len(matching_current)),
-                                    ', '.join(matching_current)])
-            file_out_matching.write(output_line + '\n')
 
-    # output missing KOs
-    for percentage in sorted(list(dict_sort_by_percentage.keys()), reverse=True):
-        for name_pathway in dict_sort_by_percentage[percentage]:
-            missing_current = dict_sort_by_percentage[percentage][name_pathway][2]
-            if contig_name != '':
-                out_name_pathway = '\t'.join([contig_name, name_pathway])
-            else:
-                out_name_pathway = name_pathway
-            if len(missing_current) == 0:
-                continue
-            #flag_not_empty = True
-            output_line = '\t'.join([out_name_pathway, str(percentage), str(len(missing_current)),
-                                     ', '.join(missing_current)])
-            file_out_missing.write(output_line + '\n')
-
-"""  check not to create folders for empty contigs
-    if outdir != '':  # Contigs folder
-        if not flag_not_empty:
-            full_path = os.path.join("Contigs", outdir)
-            files = os.listdir(full_path)
-            for file in files:
-                os.remove(os.path.join(full_path, file))
-            os.rmdir(full_path)
-"""
-
-
-def set_headers(file_summary, file_matching, file_missing, contig):
+def set_headers(file_summary, contig):
     summary_header = '\t'.join(['module_accession', 'completeness', 'pathway_name',
                                           'pathway_class', 'matching_ko', 'missing_ko'])
-    matching_header = '\t'.join(['module_accession', 'completeness', 'number_matching_KO', 'list_matching_ko'])
-    missing_header = '\t'.join(['module_accession', 'completeness', 'number_missing_KO', 'list_missing_ko'])
-
+    #matching_header = '\t'.join(['module_accession', 'completeness', 'number_matching_KO', 'list_matching_ko'])
+    #missing_header = '\t'.join(['module_accession', 'completeness', 'number_missing_KO', 'list_missing_ko'])
     if contig:
         summary_header = 'contig\t' + summary_header
-        matching_header = 'contig\t' + matching_header
-        missing_header = 'contig\t' + missing_header
-
     file_summary.write(summary_header + '\n')
-    file_matching.write(matching_header + '\n')
-    file_missing.write(missing_header + '\n')
 
 
 if __name__ == "__main__":
@@ -283,9 +235,7 @@ if __name__ == "__main__":
     parser.add_argument("-n", "--names", dest="names", help="Pathway names", required=True)
     parser.add_argument("-c", "--classes", dest="classes", help="Pathway classes", required=True)
 
-    parser.add_argument("-o", "--outdir", dest="outdir",
-                        help="Relative path to directory where you want the output file to be stored (default: cwd)",
-                        default=".")
+    parser.add_argument("-o", "--outname", dest="outname", help="first part of ouput name", default="summary.kegg")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -293,46 +243,23 @@ if __name__ == "__main__":
         args = parser.parse_args()
         graphs, pathway_names, pathway_classes = download_pathways(args.graphs, args.names, args.classes)
         edges, dict_KO_by_contigs = get_list_items(args.input_file)
+        name_output = args.outname + '.summary.kegg'
 
         # COMMON INFO
-        name_output_summary = 'summary_pathways.txt'
-        name_output_matching = 'matching_ko_pathways.txt'
-        name_output_missing = 'missing_ko_pathways.txt'
-
+        name_output_summary = name_output + '_pathways'
         file_out_summary = open(name_output_summary, "wt")
-        file_out_matching = open(name_output_matching, "wt")
-        file_out_missing = open(name_output_missing, "wt")
-
-        set_headers(file_out_summary, file_out_matching, file_out_missing, False)
-
-        sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
-                          '', file_out_summary, file_out_matching, file_out_missing)
-
+        set_headers(file_out_summary, False)
+        sort_out_pathways(graphs, edges, pathway_names, pathway_classes, '', file_out_summary)
         file_out_summary.close()
-        file_out_matching.close()
-        file_out_missing.close()
 
         # BY CONTIGS
-        if not os.path.exists("Contigs"): os.mkdir("Contigs")
-
-        # set names
-        # os.mkdir(os.path.join("Contigs", outdir))  # to create separate folder for each contig
-        name_output_summary = os.path.join("Contigs", 'summary_pathways.txt')
-        name_output_matching = os.path.join("Contigs", 'matching_ko_pathways.txt')
-        name_output_missing = os.path.join("Contigs", 'missing_ko_pathways.txt')
-
-        # open files
+        name_output_summary = name_output + '_contigs'
         file_out_summary = open(name_output_summary, "wt")
-        file_out_matching = open(name_output_matching, "wt")
-        file_out_missing = open(name_output_missing, "wt")
-        set_headers(file_out_summary, file_out_matching, file_out_missing, True)
+        set_headers(file_out_summary, True)
 
         for contig in dict_KO_by_contigs:
             edges = dict_KO_by_contigs[contig]
-            # run
-            sort_out_pathways(graphs, edges, pathway_names, pathway_classes,
-                              contig, file_out_summary, file_out_matching, file_out_missing)
+            sort_out_pathways(graphs, edges, pathway_names, pathway_classes, contig, file_out_summary)
 
         file_out_summary.close()
-        file_out_matching.close()
-        file_out_missing.close()
+

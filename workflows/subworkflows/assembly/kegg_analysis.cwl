@@ -11,6 +11,7 @@ requirements:
 
 inputs:
   input_table_hmmscan: File
+  outputname: string
   graphs: File
   pathways_names: File
   pathways_classes: File
@@ -27,17 +28,11 @@ outputs:
     outputSource: union_by_contigs/output_table
     type: File
   kegg_pathways_summary:
-    outputSource: kegg_pathways/output_pathways_summary
+    outputSource: kegg_pathways/summary_pathways
     type: File
-  kegg_pathways_matching:
-    outputSource: kegg_pathways/output_pathways_matching
+  kegg_contigs_summary:
+    outputSource: kegg_pathways/summary_contigs
     type: File
-  kegg_pathways_missing:
-    outputSource: kegg_pathways/output_pathways_missing
-    type: File
-  kegg_contigs:
-    outputSource: kegg_pathways/out_folder
-    type: Directory
   kegg_stdout:
     outputSource: kegg_pathways/stdout
     type: File
@@ -49,7 +44,7 @@ steps:
       input_table: input_table_hmmscan
     out:
       - output_with_tabs
-    run: ../tools/KEGG_analysis/Modification/modification_table.cwl
+    run: ../../../tools/Assembly/KEGG_analysis/Modification/modification_table.cwl
     label: "make table tab-separated"
 
   parsing_hmmscan:
@@ -59,7 +54,7 @@ steps:
       - output_table
       - stdout
       - stderr
-    run: ../tools/KEGG_analysis/Parsing_hmmscan/parsing_hmmscan.cwl
+    run: ../../../tools/Assembly/KEGG_analysis/Parsing_hmmscan/parsing_hmmscan.cwl
     label: "leave file with contig and it's KO"
 
   union_by_contigs:
@@ -69,7 +64,7 @@ steps:
       - output_table
       - stdout
       - stderr
-    run: ../tools/KEGG_analysis/Union_by_contigs/union_by_contigs.cwl
+    run: ../../../tools/Assembly/KEGG_analysis/Union_by_contigs/union_by_contigs.cwl
     label: "creates file: contig KO KO KO..."
 
   kegg_pathways:
@@ -78,10 +73,9 @@ steps:
       graphs: graphs
       pathways_names: pathways_names
       pathways_classes: pathways_classes
+      outputname: outputname
     out:
-      - output_pathways_summary
-      - output_pathways_matching
-      - output_pathways_missing
-      - out_folder
+      - summary_pathways
+      - summary_contigs
       - stdout
-    run: ../tools/KEGG_analysis/KEGG_pathways/kegg_pathways.cwl
+    run: ../../../tools/Assembly/KEGG_analysis/KEGG_pathways/kegg_pathways.cwl

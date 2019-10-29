@@ -7,6 +7,8 @@ label: "antiSMASH"
 requirements:
   InlineJavascriptRequirement: {}
 
+# !!!!!!!!!!!!!!!!!!! ADD --smcogs --transatpks_da --borderpredict --asf --inclusive
+
 inputs:
   input_fasta:
     type: File

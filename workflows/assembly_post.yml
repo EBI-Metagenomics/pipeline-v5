@@ -1,0 +1,37 @@
+ips_result:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.I5.tsv
+go_config:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/GO-slim/go_summary-config.json
+fasta:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.fasta
+hmmscan_result:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.hmm.tsv
+graphs:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/graphs.pkl
+pathways_names:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/all_pathways_names.txt
+pathways_classes:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/all_pathways_class.txt
+rna:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.cmsearch.all.tblout.deoverlapped
+cds:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA_CDS.faa
+
+gp_flatfiles_path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/genome-properties/flatfiles
+
+pfam:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.pfam
+
+eggnog_ann:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.emapper.annotations

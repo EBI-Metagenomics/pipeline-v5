@@ -4,10 +4,9 @@ class: CommandLineTool
 
 hints:
   DockerRequirement:
-    dockerPull: kegg_analysis:latest
+    dockerPull: kegg_test:latest
 
 baseCommand: [give_pathways.py]
-arguments: ['-o', '/']
 
 inputs:
   input_table:
@@ -27,28 +26,22 @@ inputs:
     type: File
     inputBinding:
       prefix: -c
+  outputname:
+    type: string
+    inputBinding:
+      prefix: -o
 
 stdout: stdout.txt
 
 outputs:
-  output_pathways_summary:
+  summary_pathways:
     type: File
     outputBinding:
-      glob: summary_pathways.txt
+      glob: "*summary.kegg_pathways"
 
-  output_pathways_matching:
+  summary_contigs:
     type: File
     outputBinding:
-      glob: matching_ko_pathways.txt
-
-  output_pathways_missing:
-    type: File
-    outputBinding:
-      glob: missing_ko_pathways.txt
+      glob: "*summary.kegg_contigs"
 
   stdout: stdout
-
-  out_folder:
-    type: Directory
-    outputBinding:
-      glob: "Contigs"

@@ -10,10 +10,18 @@ requirements:
     ramMin: 10000  # just a default, could be lowered
 
 inputs:
-  files:
-    type: File[]
+  interproscan:
+    type: File
     inputBinding:
-        prefix: -f
+        prefix: -i
+  hmmscan:
+    type: File
+    inputBinding:
+        prefix: -k
+  pfam:
+    type: File
+    inputBinding:
+        prefix: -p
   cmsearch_file:
     type: File
     inputBinding:
@@ -23,17 +31,25 @@ inputs:
     inputBinding:
         prefix: -c
 
-baseCommand: ['functional_stats.py']
+baseCommand: [functional_stats.py]
 
 outputs:
   stats:
-    type: File[]
+    type: Directory
     outputBinding:
-        glob: "*.stats"
-  yamls:
-    type: File[]
+        glob: "functional-annotation"
+  ips_yaml:
+    type: File
     outputBinding:
-        glob: "*.yaml"
+        glob: "InterProScan*.yaml"
+  ko_yaml:
+    type: File
+    outputBinding:
+        glob: "KO*.yaml"
+  pfam_yaml:
+    type: File
+    outputBinding:
+        glob: "pfam*.yaml"
 
 hints:
   - class: DockerRequirement

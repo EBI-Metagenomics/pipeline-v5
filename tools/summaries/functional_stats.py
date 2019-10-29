@@ -12,7 +12,7 @@ import re
 and number of contigs with match. ORF stats gives number of CDS, contigs with CDS and Contigs with RNA. Outputs in TSV format.
 Entry map is generated for InterProScan as input to write IPR summary'''
 
-def orf_stats(cds_file, cmsearch_deoverlap):
+def orf_stats(cds_file, cmsearch_deoverlap, outdir):
     numberOrfs = 0
     readsWithOrf = set()
     readsWithRNA = set()
@@ -25,12 +25,11 @@ def orf_stats(cds_file, cmsearch_deoverlap):
         RNAaccession = re.search("(\S+)\s+-", hit.strip())[1]
         readsWithRNA.add(RNAaccession)
     numberReadswithRNA = len(readsWithRNA)
-    with open("orf.stats", "w") as file_out:
+    with open(os.path.join(outdir, "orf.stats"), "w") as file_out:
         file_out.write("Predicted CDS\t" + str(numberOrfs) + "\nContigs with predicted CDS\t" + str(numberReadsWithOrf) + "\nContigs with predicted with rRNA\t" + str(numberReadswithRNA))
 
-
+'''
 def define_tool(input_file):
-
     filename = os.path.basename(input_file)
     print(filename)
     if len(filename.split('hmm')) > 1 or len(filename.split('hmmscan')) > 1:
@@ -41,9 +40,10 @@ def define_tool(input_file):
         return 'pfam'
     else:
         print('There is no matches with input name')
+'''
 
 
-def stats(input_file, cdsAccessions_list, protein_list):
+def stats(input_file, cds_column_number, protein_column_number, hash, outdir):
 
     match_count, CDS_with_match_number, reads_with_match_count, go_match_count, go_CDS_match, go_reads_match \
         = [0 for _ in range(6)]
@@ -51,9 +51,6 @@ def stats(input_file, cdsAccessions_list, protein_list):
     cds, reads, go_cds, go_reads = [set() for _ in range(4)]
     entry2protein, entry2name = [{} for _ in range(2)]
 
-    hash = define_tool(input_file)
-    cds_column_number = cdsAccessions_list[hash]
-    protein_column_number = protein_list[hash]
     print(hash + ' :cds_column_number: ' + str(cds_column_number) + ', protein_column_number: ' + str(protein_column_number))
 
     for line in open(input_file, "r"):
@@ -93,19 +90,21 @@ def stats(input_file, cdsAccessions_list, protein_list):
         yaml.dump({"entry2protein": entry2protein,
                    "entry2name": entry2name}, mapsFile)
 
-    with open(hash + ".stats", "w") as file_out:
+    with open(os.path.join(outdir, hash.lower() + ".stats"), "w") as file_out:
         file_out.write("Total " + hash + " matches\t" + str(match_count) +
                        "\nPredicted CDS with " + hash + " match\t" + str(CDS_with_match_count) +
                        "\nContigs with " + hash + " match\t"+str(reads_with_match_count))
     if hash == 'InterProScan':
-        with open("GO.stats", "w") as file_out:
+        with open(os.path.join(outdir, "go.stats"), "w") as file_out:
             file_out.write("Total GO matches\t" + str(go_match_count) + "\nPredicted CDS with GO match\t" + str(
                 go_CDS_match) + "\nContigs with GO match\t" + str(go_reads_match))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generates stats files for all functional analyses")
-    parser.add_argument("-f", nargs='+', dest="files")
+    parser.add_argument("-i", "--interproscan", dest="interproscan", help="interproscan predicted seqs", required=True)
+    parser.add_argument("-k", "--hmmscan", dest="hmmscan", help="hmmscan predicted seqs", required=True)
+    parser.add_argument("-p", "--pfam", dest="pfam", help="pfam annotation predicted seqs", required=True)
     parser.add_argument("-r", "--rna", dest="cmsearch_deoverlap", help="cmsearch deoverlapped results", required=True)
     parser.add_argument("-c", "--cds", dest="cds_file", help="predicted coding sequences", required=True)
 
@@ -113,10 +112,18 @@ if __name__ == "__main__":
         parser.print_help()
     else:
         args = parser.parse_args()
+        final_folder = os.path.join('functional-annotation', 'stats')
+        if not os.path.exists(final_folder): os.makedirs(final_folder)
+
         cdsAccessions_list = {'KO': 3, 'pfam': 0, 'InterProScan': 0}
         protein_column = {'KO': 0, 'pfam': 4, 'InterProScan': 11}
-        for file_name in args.files:
-            print(file_name)
-            stats(file_name, cdsAccessions_list, protein_column)
 
-        orf_stats(args.cds_file, args.cmsearch_deoverlap)
+        files = [args.interproscan, args.hmmscan, args.pfam]
+        hashes = ['InterProScan', 'KO', 'pfam']
+
+        for file_annotation, num in zip(files, range(len(files))):
+            print(file_annotation)
+            hash = hashes[num]
+            stats(file_annotation, cdsAccessions_list[hash], protein_column[hash], hash, final_folder)
+
+        orf_stats(args.cds_file, args.cmsearch_deoverlap, final_folder)

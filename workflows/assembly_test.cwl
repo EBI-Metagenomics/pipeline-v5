@@ -102,18 +102,26 @@ outputs:
     type: File[]
     outputSource: compression/compressed_file
 
+  pathways:
+    type: File
+    outputSource: pathways/kegg_pathways_summary
+  contig_pathways:
+    type: File
+    outputSource: pathways/kegg_contigs_summary
+
   go_summary:
     outputSource: go_summary/go_summary
     type: File
   go_summary_slim:
     outputSource: go_summary/go_summary_slim
     type: File
-  pfam:
-    outputSource: pfam/annotations
-    type: File
+
   summaries:
     outputSource: write_summaries/summaries
     type: File[]
+  stats:
+    outputSource: write_summaries/stats
+    type: Directory
 
 
 steps:
@@ -249,36 +257,45 @@ steps:
       config: go_config
       output_name:
         source: length_filter/filtered_file
-        valueFrom: $(self.nameroot)_summary.go
+        valueFrom: $(self.nameroot).summary.go
     out: [go_summary, go_summary_slim]
-
-# << PFAM >>
-  pfam:
-    run: ../tools/Pfam-Parse/pfam_annotations.cwl
-    in:
-      interpro: functional_annotation/ips_result
-    out: [annotations]
 
 # << KEGG PATHWAYS >>
   pathways:
     run: subworkflows/assembly/kegg_analysis.cwl
     in:
       input_table_hmmscan: functional_annotation/hmmscan_result
+      outputname:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot)
       graphs: graphs
       pathways_names: pathways_names
       pathways_classes: pathways_classes
-    out: [ kegg_pathways_summary, kegg_contigs]  # change contigs for one file
+    out: [ kegg_pathways_summary, kegg_contigs_summary]
 
-
-# << summaries IPS, HMMScan, Pfam >>
-  write_summaries:
-    run: ../tools/summaries/write_summaries.cwl
+# << PFAM >>
+  pfam:
+    run: ../tools/Pfam-Parse/pfam_annotations.cwl
     in:
-      entry_maps:
-        - functional_annotation/ips_result
-        - pfam/annotations
-        - functional_annotation/hmmscan_result
-    out: [summaries]
+      interpro: functional_annotation/ips_result
+      outputname:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot).pfam
+    out: [annotations]
+
+# << summaries and stats IPS, HMMScan, Pfam >>
+  write_summaries:
+    run: subworkflows/func_summaries.cwl
+    in:
+       interproscan_annotation: functional_annotation/ips_result
+       hmmscan_annotation: functional_annotation/hmmscan_result
+       pfam_annotation: pfam/annotations
+       rna: rna_prediction/ncRNA
+       cds:
+         source: cgc/results
+         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+    out: [summaries, stats]
+
 
 # << FINAL STEPS >>
 

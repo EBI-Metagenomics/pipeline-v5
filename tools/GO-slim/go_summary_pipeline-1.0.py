@@ -480,7 +480,7 @@ if __name__ == '__main__':
     print "After getting GO slim counts: " + GOSummaryUtils.get_memory_info(process)
 
     go_slim_summary = GOSummaryUtils.get_go_slim_summary(go_slim_banding_file, go_slims_2_protein_count)
-    go_slim_output_file = output_file + '-slim'
+    go_slim_output_file = output_file + '_slim'
     print "Writing GO slim summary to the following file: " + go_slim_output_file
     GOSummaryUtils.writeGoSummaryToFile(go_slim_summary, go_slim_output_file)
     # delete full GO summary variable
