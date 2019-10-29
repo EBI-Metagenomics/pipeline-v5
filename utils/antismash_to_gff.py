@@ -16,8 +16,14 @@
 #
 import argparse
 import subprocess
+import urllib
+import json
 
 from Bio import SeqIO
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def aggregate_clusters(geneclus_file):
@@ -43,38 +49,98 @@ def aggregate_clusters(geneclus_file):
                                   entries.split(';'))))
     return res
 
+def antismash_load_types(json_file):
+    """Load the gene types from the json
+    The structure of the json is:
+    {
+        "cluster-74": {
+            "end": 12552, 
+            "idx": 74, 
+            "orfs": [
+                {
+                    "locus_tag": "ctg562_1", 
+                    "end": 282, 
+                    "description": "<span ....", 
+                    "start": 1, 
+                    "type": "other", 
+                    "strand": 1
+                },...
+            ]
+        } {...
+        }
+    }
+    """
+    feature_types = {}
+    with open(json_file) as f:
+        clusters = json.load(f)
+        for ckey in clusters.keys():
+            cluster_data = clusters[ckey]
+            for orf in cluster_data.get('orfs', []):
+                if 'locus_tag' in orf: 
+                    feature_types[orf.get('locus_tag')] = orf.get('type', 'other')
+    return feature_types
 
-def build_gff(embl_file, gclusters):
+def _get_value(entry_quals, key, encode=False):
+    return list(map(lambda v: urllib.parse.quote(v) if encode else v, entry_quals.get(key, [])))
+
+def build_attributes(entry_quals, gc_data, as_types):
+    """Convert the CDS features to gff attributes field for an CDS entry
+    """
+    locus_tag = entry_quals.get('locus_tag')[0]
+    attributes = []
+    attributes.append(['notes', _get_value(entry_quals, 'note', True)])
+    attributes.append(['gene_functions', _get_value(entry_quals, 'gene_functions')])
+    # gene kinds has:
+    # - biosynthetic (core)
+    # - biosynthetic-additional
+    # - other
+    # - regulatory
+    # - transport
+    if locus_tag in as_types:
+        attributes.append(['type', [as_types[locus_tag]]])
+    attributes.append(['gene_kind', _get_value(entry_quals, 'gene_kind')])
+    attributes.append(['product', _get_value(entry_quals, 'product')])
+    attributes.append(['description', _get_value(entry_quals, 'description')])
+    # stuff the gene cluster data
+    cluster_type = filter(lambda x: x[0] == locus_tag, gc_data)
+    attributes.append(['gene_clusters', list(map(lambda x: x[1], cluster_type))])
+    return ';'.join([name + '=' + ','.join(values) for name,values in attributes if len(values)])
+
+def build_gff(embl_file, gclusters, as_types):
     """Build the GFF from the geneclusters and the EMBL file
     """
     entries = SeqIO.parse(embl_file, 'embl')
     for entry in entries:
         query_name = entry.description.replace(' ', '-')
+        # filter the embl file by the contigs that have a 
+        # gene cluster entry in the geneclusters.txt file
         gc_data = gclusters.get(query_name, None)
         if not gc_data:
             continue
         # get the data from the embl file
         for entry_feature in entry.features:
-            if 'locus_tag' not in entry_feature.qualifiers:
+            if entry_feature.type != 'CDS':
                 continue
-            locus_tag = entry_feature.qualifiers['locus_tag'][0]
-            # if this feature has multiples gclusters annotations
-            # they will be stuffed on the last column of the
-            # gff file
-            cluster_type = filter(lambda x: x[0] == locus_tag, gc_data)
-            annotations = ','.join(map(lambda x: x[1], cluster_type))
-            if annotations:
+
+            quals = entry_feature.qualifiers
+            if 'locus_tag' not in quals:
+                continue
+
+            attributes = build_attributes(quals, gc_data, as_types)
+            if attributes:
                 yield [
                     query_name,
-                    'Prediction',
+                    'antiSMASH',
                     'CDS',
                     str(entry_feature.location.start),
                     str(entry_feature.location.end),
                     '.',  # Score
                     '+' if entry_feature.strand > 0 else '-',
                     '.',
-                    'ID=' + query_name + ';antiSMASH=' + annotations
+                    'ID=' + query_name + ';' + attributes
                 ]
+            else:
+                logger.warning(entry.id + ' has no attributes')
 
 
 if __name__ == '__main__':
@@ -87,6 +153,9 @@ if __name__ == '__main__':
         '-g', dest='geneclus', help='antiSMASH geneclusters.txt file',
         required=True)
     parser.add_argument(
+        '-j', dest='gc_json', help='antiSMASH geneclusters.json file',
+        required=True)
+    parser.add_argument(
         '-o', dest='out', help='Ouput GFF file name', required=True)
     args = parser.parse_args()
 
@@ -95,8 +164,9 @@ if __name__ == '__main__':
         print('##gff-version 3', file=out_handle)
 
         clusters_data = aggregate_clusters(args.geneclus)
+        as_types = antismash_load_types(args.gc_json)        
 
-        for row in build_gff(args.embl, clusters_data):
+        for row in build_gff(args.embl, clusters_data, as_types):
             print('\t'.join(row), file=out_handle)
 
     print('Sorting...')
