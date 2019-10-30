@@ -66,9 +66,13 @@ def antismash_load_types(json_file):
                     "strand": 1
                 },...
             ]
-        } {...
+        }, {...
         }
-    }
+    }.
+    Note: this json file is build from the geneclusters.js file of
+    the html output of antiSMASH.
+    To build the json file:
+    echo ";var fs = require('fs'); fs.writeFileSync('./geneclusters.json', JSON.stringify(geneclusters));" >> geneclusters.js
     """
     feature_types = {}
     with open(json_file) as f:
@@ -90,7 +94,7 @@ def build_attributes(entry_quals, gc_data, as_types):
     attributes = []
     attributes.append(['notes', _get_value(entry_quals, 'note', True)])
     attributes.append(['gene_functions', _get_value(entry_quals, 'gene_functions')])
-    # gene kinds has:
+    # gene kinds| types possible values:
     # - biosynthetic (core)
     # - biosynthetic-additional
     # - other
@@ -100,7 +104,6 @@ def build_attributes(entry_quals, gc_data, as_types):
         attributes.append(['type', [as_types[locus_tag]]])
     attributes.append(['gene_kind', _get_value(entry_quals, 'gene_kind')])
     attributes.append(['product', _get_value(entry_quals, 'product')])
-    attributes.append(['description', _get_value(entry_quals, 'description')])
     # stuff the gene cluster data
     cluster_type = filter(lambda x: x[0] == locus_tag, gc_data)
     attributes.append(['gene_clusters', list(map(lambda x: x[1], cluster_type))])
