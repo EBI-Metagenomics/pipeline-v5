@@ -84,16 +84,26 @@ def antismash_load_types(json_file):
                     feature_types[orf.get('locus_tag')] = orf.get('type', 'other')
     return feature_types
 
-def _get_value(entry_quals, key, encode=False):
-    return list(map(lambda v: urllib.parse.quote(v) if encode else v, entry_quals.get(key, [])))
+def _get_value(entry_quals, key, cb=lambda x: x):
+    """Get the value from the entry and apply the callback
+    """
+    return list(map(lambda v: cb(v), entry_quals.get(key, [])))
+
+def _clean_as_notes(value):
+    """Remove comments that point to antiSMASH HTML images and URLEncode
+    """
+    if '.png' in value:
+        return ''
+    else:
+        return urllib.parse.quote(value)
 
 def build_attributes(entry_quals, gc_data, as_types):
     """Convert the CDS features to gff attributes field for an CDS entry
     """
     locus_tag = entry_quals.get('locus_tag')[0]
     attributes = []
-    attributes.append(['notes', _get_value(entry_quals, 'note', True)])
-    attributes.append(['gene_functions', _get_value(entry_quals, 'gene_functions')])
+    attributes.append(['as_notes', _get_value(entry_quals, 'note', _clean_as_notes)])
+    attributes.append(['as_gene_functions', _get_value(entry_quals, 'gene_functions')])
     # gene kinds| types possible values:
     # - biosynthetic (core)
     # - biosynthetic-additional
@@ -101,12 +111,14 @@ def build_attributes(entry_quals, gc_data, as_types):
     # - regulatory
     # - transport
     if locus_tag in as_types:
-        attributes.append(['type', [as_types[locus_tag]]])
-    attributes.append(['gene_kind', _get_value(entry_quals, 'gene_kind')])
+        attributes.append(['as_type', [as_types[locus_tag]]])
+    else:
+        attributes.append(['as_type', ['other']])
+    attributes.append(['as_gene_kind', _get_value(entry_quals, 'gene_kind')])
     attributes.append(['product', _get_value(entry_quals, 'product')])
     # stuff the gene cluster data
     cluster_type = filter(lambda x: x[0] == locus_tag, gc_data)
-    attributes.append(['gene_clusters', list(map(lambda x: x[1], cluster_type))])
+    attributes.append(['as_gene_clusters', list(map(lambda x: x[1], cluster_type))])
     return ';'.join([name + '=' + ','.join(values) for name,values in attributes if len(values)])
 
 def build_gff(embl_file, gclusters, as_types):
