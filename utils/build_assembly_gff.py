@@ -17,6 +17,7 @@ import argparse
 import re
 import subprocess
 import sys
+from urllib import parse
 
 
 class Annotation:
@@ -44,8 +45,11 @@ class Annotation:
     def _split_line(self, line):
         return line.replace('\n', ' ').replace('\r', '').split('\t')
 
-    def _get_value(self, value):
-        return list(filter(None, value.strip().split(',')))
+    def _get_value(self, value, split=True):
+        if split:
+            return list(filter(None, value.strip().split(',')))
+        else:
+            return [value.strip()] if value else []
 
     def get(self):
         """
@@ -58,21 +62,24 @@ class EggResult(Annotation):
     """EggNOG tsv result row.
     """
     def __init__(self, line):
+        """Lines parsed according to the documentation
+        https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2#v200
+        """
         columns = self._split_line(line)
         self.query_name = columns[0].strip()
-        # Unused cols
-        # self.seed_eggNOG_ortholog = columns[1]
-        # self.seed_ortholog_evalue = columns[2]
-        # self.seed_ortholog_score = columns[3]
-        # self.preferred_name = columns[4]
-        # self.best_tax_level = columns[8] # Annotation_tax_scope but renamed for API sake
-        # self.bestOG = columns[10] # should we include this?
-        self.GO = self._get_value(columns[5])
-        self.KEGG = self._get_value(columns[6])
-        self.BiGG_reactions = self._get_value(columns[7])
-        self.OGs = self._get_value(columns[9])
-        self.COG = self._get_value(columns[11])
-        self.eggNOG = self._get_value(columns[12])
+        self.eggnog_ortholog = self._get_value(columns[1], split=False)
+        self.eggnog_score = self._get_value(columns[2], split=False)
+        self.eggnog_evalue = self._get_value(columns[3], split=False)
+        self.eggnog_tax = self._get_value(columns[5], split=False)
+
+        self.go = self._get_value(columns[6])
+        self.ecnumber = self._get_value(columns[7])
+        self.kegg = self._get_value(columns[8])
+        self.brite = self._get_value(columns[13])
+        self.bigg_reaction = self._get_value(columns[16])
+        self.ogs = self._get_value(columns[19])
+        self.cog = self._get_value(columns[20])
+        self.eggnog = [parse.quote(columns[21])] if columns[21] else []
 
 
 class InterProResult(Annotation):
@@ -83,31 +90,9 @@ class InterProResult(Annotation):
         self.query_name = columns[0].strip()
         pfam = columns[4]
         if re.match('PF\d+', pfam): # noqa
-            self.Pfam = self._get_value(pfam)
+            self.pfam = self._get_value(pfam)
         if len(columns) > 11:
-            self.InterPro = self._get_value(columns[11])
-
-
-# FIXME: are we going to use this?.
-# class AntiSMASH(Annotation):
-#     """antiSMASH gene clusters result row.
-#     """
-#     def __init__(self, line):
-#         columns = self._split_line(line)
-#         self.query_name = columns[1].strip().replace(' ', '-')
-#         print(self.query_name)
-#         self.antiSMASH = self._get_value(columns[3])
-
-
-# FIXME: are we going to use this?
-# class KeggModule(Annotation):
-#     """KEGG Modules annotation row.
-#     """
-#     def __init__(self, line):
-#         columns = self._split_line(line)
-#         print(line)
-#         self.query_name = columns[1].strip()
-#         self.KEGGModule = self._get_value(columns[2])
+            self.interpro = self._get_value(columns[11])
 
 
 def parse_fasta_header_mags(header):
@@ -192,14 +177,16 @@ def build_gff(annotations, faa):
 
             ann_string = ';'.join(['{}={}'.format(k, ','.join(v).strip()) for k, v in row_annotations.items()])
 
+            eggNOGScore = ''.join(row_annotations.get('eggNOG_score', []))
+
             if len(ann_string):
                 yield [
                     clean_name,
-                    'Prediction',
+                    'eggNOG-v2',
                     'CDS',
                     start,
                     end,
-                    '.',  # Score
+                    eggNOGScore or '.',
                     '+' if strand == '1' else '-',
                     '.',
                     'ID=' + clean_name + ';' + ann_string
@@ -210,7 +197,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Build an assembly GFF file (sorted and indexed using samtools and tabix)')
     parser.add_argument(
-        '-e', dest='egg', help='EggNOG tsv results', required=False)
+        '-e', dest='egg', help='EggNOG tsv results. eggNOG version 2 required.', required=False)
     parser.add_argument(
         '-i', dest='interpro', help='InterProScan tsv results', required=False)
     # FIXME: Are we going to use this?
@@ -232,9 +219,6 @@ if __name__ == '__main__':
         annotations = {}
         load_annotation(args.egg, EggResult, annotations)
         load_annotation(args.interpro, InterProResult, annotations)
-        # load_annotation(args.antismash, AntiSMASH, annotations)
-        # if args.keggmodule:
-        #     load_annotation(args.keggmodule, KeggModule, annotations)
 
         for row in build_gff(annotations, args.faa):
             print('\t'.join(row), file=out_handle)

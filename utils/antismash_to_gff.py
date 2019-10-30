@@ -16,7 +16,7 @@
 #
 import argparse
 import subprocess
-import urllib
+from urllib import parse
 import json
 
 from Bio import SeqIO
@@ -95,7 +95,7 @@ def _clean_as_notes(value):
     if '.png' in value:
         return ''
     else:
-        return urllib.parse.quote(value)
+        return parse.quote(value)
 
 def build_attributes(entry_quals, gc_data, as_types):
     """Convert the CDS features to gff attributes field for an CDS entry
@@ -104,21 +104,23 @@ def build_attributes(entry_quals, gc_data, as_types):
     attributes = []
     attributes.append(['as_notes', _get_value(entry_quals, 'note', _clean_as_notes)])
     attributes.append(['as_gene_functions', _get_value(entry_quals, 'gene_functions')])
-    # gene kinds| types possible values:
+    # gene kinds | types possible values:
     # - biosynthetic (core)
     # - biosynthetic-additional
     # - other
     # - regulatory
     # - transport
     if locus_tag in as_types:
-        attributes.append(['as_type', [as_types[locus_tag]]])
+        types = [as_types[locus_tag]]
+        attributes.append(['as_type', types])
+        # stuff the gene cluster data
+        if not 'other' in types:
+            cluster_type = filter(lambda x: x[0] == locus_tag, gc_data)        
+            attributes.append(['as_gene_clusters', list(map(lambda x: x[1], cluster_type))])
     else:
         attributes.append(['as_type', ['other']])
     attributes.append(['as_gene_kind', _get_value(entry_quals, 'gene_kind')])
     attributes.append(['product', _get_value(entry_quals, 'product')])
-    # stuff the gene cluster data
-    cluster_type = filter(lambda x: x[0] == locus_tag, gc_data)
-    attributes.append(['as_gene_clusters', list(map(lambda x: x[1], cluster_type))])
     return ';'.join([name + '=' + ','.join(values) for name,values in attributes if len(values)])
 
 def build_gff(embl_file, gclusters, as_types):
