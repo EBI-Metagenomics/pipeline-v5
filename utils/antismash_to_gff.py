@@ -149,8 +149,8 @@ def build_gff(embl_file, gclusters, as_types):
                     query_name,
                     'antiSMASH',
                     'CDS',
-                    str(entry_feature.location.start),
-                    str(entry_feature.location.end),
+                    str(entry_feature.location.start + 1), # correct offset gff are +1
+                    str(entry_feature.location.end + 1),
                     '.',  # Score
                     '+' if entry_feature.strand > 0 else '-',
                     '.',
