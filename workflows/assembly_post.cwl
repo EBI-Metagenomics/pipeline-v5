@@ -32,29 +32,11 @@ inputs:
   eggnog_ann: File
 
 outputs:
-  gff:
-    outputSource: gff/output_gff_gz
-    type: File
-  gff_tbi:
-    outputSource: gff/output_gff_index
-    type: File
   gp_summary:
     outputSource: genome_properties/summary
     type: File
 
 steps:
-
-# << GFF >>
-  gff:
-    run: ../tools/Assembly/GFF/gff_generation.cwl
-    in:
-      ips_results: ips_result
-      eggnog_results: eggnog_ann
-      input_faa: cds
-      output_name:
-        source: cds
-        valueFrom: $(self.nameroot.split('_CDS')[0]).contigs.annotations.gff
-    out: [ output_gff_gz, output_gff_index ]
 
 # << GENOME PROPERTIES >>
   genome_properties:
@@ -63,4 +45,7 @@ steps:
       input_tsv_file: ips_result
       flatfiles_path: gp_flatfiles_path
       GP_txt: {default: genomeProperties.txt}
+      name:
+        source: fasta
+        valueFrom: $(self.nameroot).summary.gprops.tsv
     out: [ summary ]

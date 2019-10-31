@@ -295,6 +295,9 @@ steps:
       input_tsv_file: functional_annotation/ips_result
       flatfiles_path: gp_flatfiles_path
       GP_txt: {default: genomeProperties.txt}
+      name:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot).summary.gprops.tsv
     out: [ summary ]
 
 # << GFF (IPS, EggNOG) >>

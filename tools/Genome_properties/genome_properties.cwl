@@ -16,9 +16,6 @@ hints:
 baseCommand: [assign_genome_properties.pl]    # without docker
 
 arguments:
-  - position: 0
-    valueFrom: $(inputs.input_tsv_file.nameroot)
-    prefix: '-name'
   - position: 1
     valueFrom: "-all"
   - position: 2
@@ -51,6 +48,10 @@ inputs:
     type: string?
     inputBinding:
       prefix: "-outdir"
+  name:
+    type: string?
+    inputBinding:
+      prefix: "-name"
 
 stdout: stdout.txt
 stderr: stderr.txt
@@ -63,15 +64,15 @@ outputs:
   table:
     type: File?
     outputBinding:
-      glob: "TABLE*$(inputs.input_tsv_file.nameroot)"
+      glob: "TABLE*$(inputs.name)"
   json:
     type: File?
     outputBinding:
-      glob: "JSON*$(inputs.input_tsv_file.nameroot)"
+      glob: "JSON*$(inputs.name)"
   summary:
     type: File?
     outputBinding:
-      glob: "SUMMARY*$(inputs.input_tsv_file.nameroot)"
+      glob: "SUMMARY*$(inputs.name)"
 
 $namespaces:
  edam: http://edamontology.org/
