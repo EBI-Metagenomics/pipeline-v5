@@ -1,6 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
+# -*- coding: utf-8 -*-
 # Copyright 2019 EMBL - European Bioinformatics Institute
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,58 +14,91 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-import re
 import argparse
-from __future__ import print_function
+import re
+import subprocess
+import sys
+from urllib import parse
 
-class EggResult:
-    """
-    Simple representation of a EggNOG result row.
-    Current pipeline tsv columns
-        - query_name
-        - seed_eggNOG_ortholog
-        - seed_ortholog_evalue
-        - seed_ortholog_score
-        - predicted_gene_name
-        - GO_terms
-        - KEGG_KOs
-        - BiGG_reactions
-        - Annotation_tax_scope
-        - OGs
-        - bestOG|evalue|score
-        - COG cat
-        - eggNOG annot
-    """
 
+class Annotation:
+
+    @classmethod
+    def merge(cls, annotations):
+        """Merge the annotations.
+        For example if 2 files have the KEGG annotations the output should be:
+        - KEGG=KO001,KO002
+        and not KEGG=KO001;KEGG=KO002
+        """
+        result = {}
+        for ann in annotations:
+            for k, v in ann:
+                if k in result:
+                    result[k].update(v)
+                else:
+                    result[k] = set(v)
+        return result
+
+    @classmethod
+    def clean_seq_name(cls, name):
+        return re.sub(r'_\d+$', '', name)
+
+    def _split_line(self, line):
+        return line.replace('\n', ' ').replace('\r', '').split('\t')
+
+    def _get_value(self, value, split=True):
+        if split:
+            return list(filter(None, value.strip().split(',')))
+        else:
+            return [value.strip()] if value else []
+
+    def get(self):
+        """
+        Get the annotation in an array with [Key,Value] structure
+        """
+        return [[a, v] for a, v in sorted(self.__dict__.items()) if a != 'query_name' and len(v)]
+
+
+class EggResult(Annotation):
+    """EggNOG tsv result row.
+    """
     def __init__(self, line):
-        columns = line.split('\t')
+        """Lines parsed according to the documentation
+        https://github.com/eggnogdb/eggnog-mapper/wiki/eggNOG-mapper-v2#v200
+        """
+        columns = self._split_line(line)
         self.query_name = columns[0].strip()
-        # delete the faa number added on the annotation step
-        self.ID = re.sub(r'_\d+$', '', self.query_name)
-        self.seed_eggNOG_ortholog = columns[1]
-        self.seed_ortholog_evalue = columns[2]
-        self.seed_ortholog_score = columns[3]
-        self.preferred_name = columns[4]
-        self.GOs = columns[5]
-        self.KEGG_ko = columns[6]
-        self.BiGG_reactions = columns[7]
-        # self.best_tax_level = columns[8] # Annotation_tax_scope but renamed for API sake
-        self.OGs = columns[9]
-        # self.bestOG = columns[10] # should we include this?
-        self.COG = columns[11]
-        self.eggNOG = columns[12]
+        self.eggnog_ortholog = self._get_value(columns[1], split=False)
+        self.eggnog_score = self._get_value(columns[2], split=False)
+        self.eggnog_evalue = self._get_value(columns[3], split=False)
+        self.eggnog_tax = self._get_value(columns[5], split=False)
 
-    def get_annotations(self):
-        """
-        Get the annotation in an array
-        """
-        return ';'.join([a + '=' + v for a, v in self.__dict__.items() if v and a != 'query_name'])
+        self.go = self._get_value(columns[6])
+        self.ecnumber = self._get_value(columns[7])
+        self.kegg = self._get_value(columns[8])
+        self.brite = self._get_value(columns[13])
+        self.bigg_reaction = self._get_value(columns[16])
+        self.ogs = self._get_value(columns[19])
+        self.cog = self._get_value(columns[20])
+        self.eggnog = [parse.quote(columns[21])] if columns[21] else []
+
+
+class InterProResult(Annotation):
+    """InterPro scan result row.
+    """
+    def __init__(self, line):
+        columns = self._split_line(line)
+        self.query_name = columns[0].strip()
+        pfam = columns[4]
+        if re.match('PF\d+', pfam): # noqa
+            self.pfam = self._get_value(pfam)
+        if len(columns) > 11:
+            self.interpro = self._get_value(columns[11])
 
 
 def parse_fasta_header_mags(header):
     match = re.match(
-        '^\>(?P<contig>.+\-\-contig:-.*)\s\#\s(?P<start>\d+)\s\#\s(?P<end>\d+)\s\#\s(?P<strand>\-1|1)\s.*$', header)
+        '^\>(?P<contig>.+\-\-contig:-.*)\s\#\s(?P<start>\d+)\s\#\s(?P<end>\d+)\s\#\s(?P<strand>\-1|1)\s.*$', header) # noqa
     if match:
         groups = match.groupdict()
         return groups['contig'], groups['start'], groups['end'], groups['strand']
@@ -74,21 +107,38 @@ def parse_fasta_header_mags(header):
 
 def parse_fasta_header(header):
     # FIXME: add sanity check
+    # FIXME: what should we do with cases like :
+    #        ERZ477576.1085103-NODE-1085103-length-126-cov-0.633803_1_126_+ 
     splitted = header.replace('>', '').split(' # ')
     if len(splitted) < 4:
         return None, None, None, None
-    contig, start, end, strand = splitted[:4]
-    return contig, start, end, strand
+    return splitted[:4]
 
 
-def build_gff(egg, faa):
+def load_annotation(file, klass, annotations):
+    """Load the annotations of a TSV by `query_name` (contig name at the moment)
+    """
+    with open(file, 'rt') as ann_file:
+        for line in ann_file:
+            if '#' in line:
+                continue
+            parsed_line = klass(line)
+            if parsed_line.query_name in annotations:
+                annotations[parsed_line.query_name].append(parsed_line)
+            else:
+                annotations[parsed_line.query_name] = [parsed_line]
+
+
+def build_gff(annotations, faa):
     """
     The faa file will have each predirect CDS and
     on the head it has the positions on the fasta file.
     We need the position of the features to build the GFF.
-    EggNOG annotations are squeezed at the end of the GFF.
+
     GFF specification, tab separated file.
+
     ##gff-version 3 => first line
+
     Each row =>
         seqid      - name of the chromosome or scaffold
         source     - name of the program that generated this feature, or the data source (database or project name)
@@ -100,7 +150,7 @@ def build_gff(egg, faa):
         phase      - One of '0', '1' or '2'. '0' indicates that the first base of the feature is the first base of a codon,
                      '1' that the second base is the first base of a codon, and so on..
         attributes - a semicolon-separated list of tag-value pairs, providing additional
-                     information about each feature. Some of these tags are predefined,
+                     information about each feature. Some of these tags are predefined.
                      e.g. ID, Name, Alias, Parent - see the GFF documentation for more details.
     Example:
     ##gff-version 3
@@ -111,60 +161,72 @@ def build_gff(egg, faa):
     ctg123 . exon            5000  5500  .  +  .  ID=exon00004;Parent=mrna0001
     ctg123 . exon            7000  9000  .  +  .  ID=exon00005;Parent=mrna0001
     """
-    with open(egg, 'r') as egg_file:
-        eggNogAnnotations = {}
-        for line in egg_file:
-            if '#' in line:
-                continue
-            eggRes = EggResult(line)
-            if eggRes.query_name in eggNogAnnotations:
-                eggNogAnnotations[eggRes.query_name].append(eggRes)
-            else:
-                eggNogAnnotations[eggRes.query_name] = [eggRes]
-
-    records = []
-    with open(faa, 'r') as faa_file:
+    with open(faa, 'rt') as faa_file:
         for line in faa_file:
-            if not '>' in line:
+            if '>' not in line:
                 continue
 
             # each fasta is suffixed on the annotated faa if a prefix _INT (_1 .. _n)
             contig_name, start, end, strand = parse_fasta_header(line)
             if None in (contig_name, start, end, strand):
+                print(line, end='', file=sys.stderr)
                 continue
 
-            clean_name = re.sub(r'_\d+$', '', contig_name)
+            clean_name = Annotation.clean_seq_name(contig_name)
 
-            for annotation in eggNogAnnotations.get(contig_name, []):
-                eggAnn = annotation.get_annotations()
-                if eggAnn:
-                    row = [
-                        clean_name,
-                        'Prediction',
-                        'CDS',
-                        start,
-                        end,
-                        annotation.seed_ortholog_score,
-                        '+' if strand == '1' else '-',
-                        '.',
-                        eggAnn
-                    ]
-                    records.append(row)
+            row_annotations = Annotation.merge([ann.get() for ann in annotations.get(contig_name, [])])
 
-    return records
+            ann_string = ';'.join(['{}={}'.format(k, ','.join(v).strip()) for k, v in row_annotations.items()])
+
+            eggNOGScore = ''.join(row_annotations.get('eggNOG_score', []))
+
+            if len(ann_string):
+                yield [
+                    clean_name,
+                    'eggNOG-v2',
+                    'CDS',
+                    start,
+                    end,
+                    eggNOGScore or '.',
+                    '+' if strand == '1' else '-',
+                    '.',
+                    'ID=' + clean_name + ';' + ann_string
+                ]
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Build an assembly GFF file')
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='Build an assembly GFF file (sorted and indexed using samtools and tabix)')
     parser.add_argument(
-        '-e', dest='egg', help='EggNOG tsv results', required=True)
+        '-e', dest='egg', help='EggNOG tsv results. eggNOG version 2 required.', required=False)
+    parser.add_argument(
+        '-i', dest='interpro', help='InterProScan tsv results', required=False)
+    # FIXME: Are we going to use this?
+    # parser.add_argument(
+        # '-a', dest='antismash', help='antiSMASH tsv results (geneclusters.txt)', required=False)
+    # FIXME: Are we going to use this?
+    # parser.add_argument(
+    #     '-k', dest='keggmodule', help='KEGG Modules per contig annotation', required=False)
     parser.add_argument(
         '-f', dest='faa', help='FASTA with the CDS annotated (faa)', required=True)
     parser.add_argument(
         '-o', dest='out', help='Ouput GFF file name', required=True)
     args = parser.parse_args()
 
-    with open(args.out, 'w') as out_handle:
+    with open(args.out, 'w', buffering=1) as out_handle:
+
         print('##gff-version 3', file=out_handle)
-        for row in build_gff(args.egg, args.faa):
-            print('\t'.join(row), file=out_handle, end='')
+
+        annotations = {}
+        load_annotation(args.egg, EggResult, annotations)
+        load_annotation(args.interpro, InterProResult, annotations)
+
+        for row in build_gff(annotations, args.faa):
+            print('\t'.join(row), file=out_handle)
+
+    print('Sorting...')
+    subprocess.call('(grep ^"#" {0}; grep -v ^"#" {0} | sort -k1,1 -k4,4n)'.format(args.out) +
+                    ' | bgzip > {0}.gz'.format(args.out), shell=True)
+    print('Building the index...')
+    subprocess.call(['tabix', '-p', 'gff', '{}.gz'.format(args.out)])
+    print('Bye')

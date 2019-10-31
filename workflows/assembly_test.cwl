@@ -296,6 +296,7 @@ steps:
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
     out: [summaries, stats]
 
+# << GFF (IPS, EggNOG) >>
 
 # << FINAL STEPS >>
 

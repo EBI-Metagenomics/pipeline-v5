@@ -9,6 +9,10 @@ hints:
 baseCommand: [build_assembly_gff.py]
 
 inputs:
+  ips_results:
+    type: File
+    inputBinding:
+      prefix: -i
   eggnog_results:
     type: File
     inputBinding:
@@ -25,9 +29,12 @@ inputs:
 stdout: stdout.txt
 
 outputs:
-  output_gff:
+  output_gff_gz:
     type: File
     outputBinding:
-      glob: $(inputs.output_name)
-
+      glob: $(inputs.output_name).gz
+  output_gff_index:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_name).gz.tbi
   stdout: stdout
