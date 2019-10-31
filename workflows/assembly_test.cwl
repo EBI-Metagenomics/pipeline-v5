@@ -301,6 +301,7 @@ steps:
   gff:
     run: ../tools/Assembly/GFF/gff_generation.cwl
     in:
+      ips_results: functional_annotation/ips_result
       eggnog_results: functional_annotation/eggnog_annotations
       input_faa:
         source: cgc/results

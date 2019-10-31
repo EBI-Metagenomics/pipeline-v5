@@ -46,6 +46,7 @@ steps:
   gff:
     run: ../tools/Assembly/GFF/gff_generation.cwl
     in:
+      ips_results: ips_result
       eggnog_results: eggnog_ann
       input_faa: cds
       output_name:
@@ -53,7 +54,7 @@ steps:
         valueFrom: $(self.nameroot.split('_CDS')[0]).contigs.annotations.gff
     out: [ output_gff ]
 
- << GENOME PROPERTIES >>
+# << GENOME PROPERTIES >>
   genome_properties:
     run: ../tools/Genome_properties/genome_properties.cwl
     in:
