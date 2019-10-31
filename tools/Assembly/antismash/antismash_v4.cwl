@@ -7,25 +7,35 @@ label: "antiSMASH"
 requirements:
   InlineJavascriptRequirement: {}
 
-# !!!!!!!!!!!!!!!!!!! ADD --smcogs --transatpks_da --borderpredict --asf --inclusive
-
 inputs:
+  outdirname:
+    type: string
+    inputBinding:
+      position: 1
+      prefix: --outputfolder
+
   input_fasta:
     type: File
+    inputBinding:
+      position: 9
 
 baseCommand: [antismash]
 
 arguments:
-  - valueFrom: ..$(inputs.input_fasta.path)
-    position: 5
-
   - valueFrom: --knownclusterblast
-    position: 1
-  - valueFrom: $(runtime.outdir)/katya-antismash
-    prefix: --outputfolder
     position: 2
   - valueFrom: "-v"
     position: 3
+  - valueFrom: --smcogs
+    position: 4
+  - valueFrom: --transatpks_da
+    position: 5
+  - valueFrom: --borderpredict
+    position: 6
+  - valueFrom: --asf
+    position: 7
+  - valueFrom: --inclusive
+    position: 8
 
 stdout: stdout.txt
 stderr: stderr.txt
@@ -37,4 +47,4 @@ outputs:
   output_files:
     type: Directory
     outputBinding:
-      glob: katya-antismash
+      glob: $(inputs.outdirname)
