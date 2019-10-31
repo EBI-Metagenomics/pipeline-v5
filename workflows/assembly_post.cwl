@@ -49,3 +49,13 @@ steps:
         source: fasta
         valueFrom: $(self.nameroot).summary.gprops.tsv
     out: [ summary ]
+
+# change TSV to CSV
+  create_csv:
+    run: ../utils/make_csv.cwl
+    in:
+      tab_sep_table: genome_properties/summary
+      output_name:
+        source: genome_properties/summary
+        valueFrom: $(self.nameroot.split('SUMMARY_')[1])
+    out: [csv_result]
