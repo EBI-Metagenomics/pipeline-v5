@@ -78,9 +78,12 @@ inputs:
     pathways_names: File
     pathways_classes: File
 
+    # genome properties
+    gp_flatfiles_path: string
+
 outputs:
 
-  qc-statistics:
+  qc-statistics_folder:
     type: Directory
     outputSource: qc_stats/output_dir
   qc_summary:
@@ -102,27 +105,16 @@ outputs:
     type: File[]
     outputSource: compression/compressed_file
 
-  pathways:
-    type: File
-    outputSource: pathways/kegg_pathways_summary
-  contig_pathways:
-    type: File
-    outputSource: pathways/kegg_contigs_summary
-
-  go_summary:
-    outputSource: go_summary/go_summary
-    type: File
-  go_summary_slim:
-    outputSource: go_summary/go_summary_slim
-    type: File
-
-  summaries:
-    outputSource: write_summaries/summaries
-    type: File[]
+  functional_annotation_folder:
+    type: Directory
+    outputSource: move_to_functional_annotation_folder/out
   stats:
     outputSource: write_summaries/stats
     type: Directory
 
+  pathways_systems_folder:
+    type: Directory
+    outputSource: move_to_pathways_systems_folder/out
 
 steps:
 # << unzip contig file >>
@@ -296,7 +288,28 @@ steps:
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
     out: [summaries, stats]
 
+# << GENOME PROPERTIES >>
+  genome_properties:
+    run: ../tools/Genome_properties/genome_properties.cwl
+    in:
+      input_tsv_file: functional_annotation/ips_result
+      flatfiles_path: gp_flatfiles_path
+      GP_txt: {default: genomeProperties.txt}
+    out: [ summary ]
+
 # << GFF (IPS, EggNOG) >>
+  gff:
+    run: ../tools/Assembly/GFF/gff_generation.cwl
+    in:
+      eggnog_results: functional_annotation/eggnog_annotations
+      input_faa:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      output_name:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot).contigs.annotations.gff
+    out: [ output_gff_gz, output_gff_index ]
+
 
 # << FINAL STEPS >>
 
@@ -323,14 +336,51 @@ steps:
     in:
       uncompressed_file:
         source:
-          - rna_prediction/cmsearch_result              # cmsearch.all
-          - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
           - length_filter/filtered_file                 # _FASTA
+          - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
+          - rna_prediction/cmsearch_result              # cmsearch.all
           - cgc/results                                 # faa, ffn
-          - header_addition/output_table                # hmmscan, diamond, IPS
-          - functional_annotation/eggnog_annotations
-          - functional_annotation/eggnog_orthologs
         linkMerge: merge_flattened
     out: [compressed_file]
 
-# move
+# gzip functional annotation files
+  compression_func_ann:
+    run: ../utils/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file:
+        source:
+          - functional_annotation/eggnog_annotations
+          - functional_annotation/eggnog_orthologs
+          - header_addition/output_table                # hmmscan, diamond, IPS
+        linkMerge: merge_flattened
+    out: [compressed_file]
+
+# move FUNCTIONAL-ANNOTATION
+  move_to_functional_annotation_folder:
+    run: ../utils/return_directory.cwl
+    in:
+      list:
+        source:
+          - gff/output_gff_gz
+          - gff/output_gff_index
+          - compression_func_ann/compressed_file
+          - write_summaries/summaries
+          - go_summary/go_summary
+          - go_summary/go_summary_slim
+        linkMerge: merge_flattened
+      dir_name: { default: functional-annotation }
+    out: [ out ]
+
+# move PATHWAYS-SYSTEMS
+  move_to_pathways_systems_folder:
+    run: ../utils/return_directory.cwl
+    in:
+      list:
+        source:
+          - pathways/kegg_pathways_summary
+          - pathways/kegg_contigs_summary
+          - genome_properties/summary
+        linkMerge: merge_flattened
+      dir_name: { default: pathways-systems }
+    out: [ out ]

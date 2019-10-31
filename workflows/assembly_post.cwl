@@ -36,10 +36,9 @@ outputs:
     outputSource: gff/output_gff
     type: File
 
-
-#  gp_summary:
-#    outputSource: genome_properties/summary
-#    type: File
+  gp_summary:
+    outputSource: genome_properties/summary
+    type: File
 
 steps:
 
@@ -54,13 +53,11 @@ steps:
         valueFrom: $(self.nameroot.split('_CDS')[0]).contigs.annotations.gff
     out: [ output_gff ]
 
-
-
-# << GENOME PROPERTIES >>
-#  genome_properties:
-#    run: ../tools/Genome_properties/genome_properties.cwl
-#    in:
-#      input_tsv_file: ips_result
-#      flatfiles_path: gp_flatfiles_path
-#      GP_txt: {default: genomeProperties.txt}
-#    out: [ summary ]
+ << GENOME PROPERTIES >>
+  genome_properties:
+    run: ../tools/Genome_properties/genome_properties.cwl
+    in:
+      input_tsv_file: ips_result
+      flatfiles_path: gp_flatfiles_path
+      GP_txt: {default: genomeProperties.txt}
+    out: [ summary ]
