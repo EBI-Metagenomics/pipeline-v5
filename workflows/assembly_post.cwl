@@ -33,9 +33,11 @@ inputs:
 
 outputs:
   gff:
-    outputSource: gff/output_gff
+    outputSource: gff/output_gff_gz
     type: File
-
+  gff_tbi:
+    outputSource: gff/output_gff_index
+    type: File
   gp_summary:
     outputSource: genome_properties/summary
     type: File
@@ -52,7 +54,7 @@ steps:
       output_name:
         source: cds
         valueFrom: $(self.nameroot.split('_CDS')[0]).contigs.annotations.gff
-    out: [ output_gff ]
+    out: [ output_gff_gz, output_gff_index ]
 
 # << GENOME PROPERTIES >>
   genome_properties:
