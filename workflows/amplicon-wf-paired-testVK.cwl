@@ -103,7 +103,7 @@ steps:
 
 # run amplicon-single-pipeline
   amplicon-single:
-    run: amplicon-wf-single.cwl
+    run: amplicon-wf-single-testVK.cwl
     in:
       single_reads: overlap_reads/merged_reads
       forward_unmerged_reads: overlap_reads/forward_unmerged_reads
