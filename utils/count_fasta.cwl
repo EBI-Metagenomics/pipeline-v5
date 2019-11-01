@@ -3,6 +3,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   InlineJavascriptRequirement: {}
+  ShellCommandRequirement: {}
   ResourceRequirement:
     coresMax: 1
     ramMin: 100  # just a default, could be lowered
@@ -17,9 +18,15 @@ inputs:
     streamable: true
     # format: edam:format_1929  # FASTA
 
-stdin: $(inputs.sequences.path)
+baseCommand: []
 
-baseCommand: [ grep, -c, '^>' ]
+arguments:
+    - grep
+    - -c
+    - '^>'
+    - $(inputs.sequences)
+    - '|'
+    - cat
 
 stdout: count
 
