@@ -138,7 +138,7 @@ steps:
   QC-FLAG:
     run: ../utils/qc-flag.cwl
     in:
-        qc_counts: count_processed_reads/count
+        qc_count: count_processed_reads/count
     out: [ qc-flag ]
 
 # << deal with empty fasta files >>
