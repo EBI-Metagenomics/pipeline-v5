@@ -8,6 +8,6 @@ if [ "$count" = 0 ]; then
  echo $'>dummy_seq\nATCG' >> "$fasta" | mv "$fasta" 'empty_FASTQ.fasta'
 else
   echo 'output original files'
-  mv "$fasta" "$fasta"
+  mv "$fasta" .
 fi
 
