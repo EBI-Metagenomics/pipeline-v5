@@ -44,7 +44,19 @@ outputs:
   stdout: stdout
   stderr: stderr
 
-  output_files:
-    type: Directory
+  final_gbk:
+    type: File
     outputBinding:
-      glob: $(inputs.outdirname)
+      glob: $(inputs.outdirname)/*_final.gbk
+  final_embl:
+    type: File
+    outputBinding:
+      glob: $(inputs.outdirname)/*_final.embl
+  geneclusters_json:
+    type: File
+    outputBinding:
+      glob: $(inputs.outdirname)/geneclusters.js*
+  geneclusters_txt:
+    type: File
+    outputBinding:
+      glob: $(inputs.outdirname)/geneclusters.txt
