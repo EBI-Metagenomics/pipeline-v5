@@ -12,9 +12,14 @@ inputs:
     type: File
     inputBinding:
       prefix: -i
-arguments:
-  - valueFrom: $(inputs.infernal_matches.basename)
-    prefix: -n
+  name:
+    label: output file name
+    type: string?
+    inputBinding:
+        prefix: -n
+        valueFrom: |
+                $(self? self : inputs.infernal_matches.basename)
+    default: ""
 
 baseCommand: awk_tool
 
