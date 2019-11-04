@@ -69,27 +69,6 @@ steps:
       tab_sep_table: genome_properties/summary
       output_name:
         source: genome_properties/summary
-        valueFrom: $(self.nameroot.split('SUMMARY_')[1])
+        valueFrom: $(self.nameroot.split('SUMMARY_FILE_')[1])
     out: [csv_result]
-
-# << post-processing JS >>
-  antismash_json_generation:
-    run: ../tools/Assembly/antismash_json_generation.cwl
-    in:
-      input_js: antismash_js
-      outputname: {default: 'geneclusters.json'}
-    out: [output_json]
-
-# << GFF for antismash >>
-  antismash_gff:
-    run: ../tools/Assembly/GFF/antismash_to_gff.cwl
-    in:
-      antismash_geneclus: antismash_geneclusters_txt
-      antismash_embl: antismash_final_embl
-      antismash_gc_json: antismash_json_generation/output_json
-      output_name:
-        source: fasta
-        valueFrom: $(self.nameroot).antismash.gff
-    out: [output_gff_gz, output_gff_index]
-
 

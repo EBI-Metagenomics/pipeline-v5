@@ -37,11 +37,11 @@ outputs:
   summary_pathways:
     type: File
     outputBinding:
-      glob: "*summary.kegg_pathways"
+      glob: "*summary.kegg_pathways*"
 
   summary_contigs:
     type: File
     outputBinding:
-      glob: "*summary.kegg_contigs"
+      glob: "*summary.kegg_contigs*"
 
   stdout: stdout

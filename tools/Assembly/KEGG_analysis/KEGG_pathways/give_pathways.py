@@ -246,14 +246,14 @@ if __name__ == "__main__":
         name_output = args.outname + '.summary.kegg'
 
         # COMMON INFO
-        name_output_summary = name_output + '_pathways'
+        name_output_summary = name_output + '_pathways.tsv'
         file_out_summary = open(name_output_summary, "wt")
         set_headers(file_out_summary, False)
         sort_out_pathways(graphs, edges, pathway_names, pathway_classes, '', file_out_summary)
         file_out_summary.close()
 
         # BY CONTIGS
-        name_output_summary = name_output + '_contigs'
+        name_output_summary = name_output + '_contigs.tsv'
         file_out_summary = open(name_output_summary, "wt")
         set_headers(file_out_summary, True)
 

@@ -8,8 +8,8 @@ requirements:
   InlineJavascriptRequirement: {}
 
 hints:
-  class: DockerRequirement
-  dockerPull: 'alpine:3.7'
+  DockerRequirement:
+    dockerPull: 'alpine:3.7'
 
 inputs:
   outputname:

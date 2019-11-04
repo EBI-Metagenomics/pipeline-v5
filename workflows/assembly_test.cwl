@@ -322,6 +322,30 @@ steps:
 #      input_fasta: fasta
 #    out: [final_gbk, final_embl, geneclusters_json, geneclusters_txt]
 
+# << post-processing JS >>
+#  antismash_json_generation:
+#    run: ../tools/Assembly/antismash/antismash_json_generation.cwl
+#    in:
+#      input_js: antismash_js
+#      outputname: {default: 'geneclusters.json'}
+#    out: [output_json]
+
+# << GFF for antismash >>
+#  antismash_gff:
+#    run: ../tools/Assembly/GFF/antismash_to_gff.cwl
+#    in:
+#      antismash_geneclus: antismash_geneclusters_txt
+#      antismash_embl: antismash_final_embl
+#      antismash_gc_json: antismash_json_generation/output_json
+#      output_name:
+#        source: fasta
+#        valueFrom: $(self.nameroot).antismash.gff
+#    out: [output_gff_gz, output_gff_index]
+
+
+# << rename antismash files >>
+
+
 # << FINAL STEPS >>
 
 # add header
@@ -383,15 +407,40 @@ steps:
       dir_name: { default: functional-annotation }
     out: [ out ]
 
+# change TSV to CSV for genome_properties
+  create_csv_gp:
+    run: ../utils/make_csv.cwl
+    in:
+      tab_sep_table: genome_properties/summary
+      output_name:
+        source: genome_properties/summary
+        valueFrom: $(self.nameroot.split('SUMMARY_FILE_')[1])
+    out: [csv_result]
+
+# change TSV to CSV for kegg_pathways
+  create_csv_kp:
+    run: ../utils/make_csv.cwl
+    in:
+      tab_sep_table: pathways/kegg_pathways_summary
+      output_name:
+        source: pathways/kegg_pathways_summary
+        valueFrom: $(self.nameroot)
+    out: [csv_result]
+
 # move PATHWAYS-SYSTEMS
   move_to_pathways_systems_folder:
     run: ../utils/return_directory.cwl
     in:
       list:
         source:
-          - pathways/kegg_pathways_summary
-          - pathways/kegg_contigs_summary
-          - genome_properties/summary
+          - create_csv_kp/csv_result             # kegg pathways.csv
+          - pathways/kegg_contigs_summary        # kegg contigs.tsv -- not using
+          - create_csv_gp/csv_result             # genome properties.csv
+          # antismash embl
+          # antismash gbk
+          # antismash gff.gz
+          # antismash gff.tbi
+          # antismash summary
         linkMerge: merge_flattened
       dir_name: { default: pathways-systems }
     out: [ out ]
