@@ -13,7 +13,6 @@ inputs:
   input_sequences: {type: File, secondaryFiles: [.ssi] }
   other_ncRNA_ribosomal_models: File[]
   other_ncRNA_ribosomal_model_clans: File
-  script: File
 
 outputs:
   doverlapped_matches:
