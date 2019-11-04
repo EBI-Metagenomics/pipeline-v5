@@ -4,3 +4,4 @@ InterProScan_results:
 config:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/GO-slim/go_summary-config.json
+output_name: 'test-name'

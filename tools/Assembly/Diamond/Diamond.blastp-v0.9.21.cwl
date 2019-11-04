@@ -131,6 +131,7 @@ doc: |
 
   Releases can be downloaded from https://github.com/bbuchfink/diamond/releases
 label: Aligns DNA query sequences against a protein reference database
+
 arguments:
   - position: 0
     prefix: '--out'

@@ -56,7 +56,7 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.outdirname)/*final.embl
-  geneclusters_json:
+  geneclusters_js:
     type: File
     outputBinding:
       glob: $(inputs.outdirname)/geneclusters.js
