@@ -7,6 +7,10 @@ label: "antiSMASH"
 requirements:
   InlineJavascriptRequirement: {}
 
+hints:
+  DockerRequirement:
+    dockerPull: 'alpine:3.7'
+
 inputs:
   outdirname:
     type: string
@@ -55,7 +59,7 @@ outputs:
   geneclusters_json:
     type: File
     outputBinding:
-      glob: $(inputs.outdirname)/geneclusters.js*
+      glob: $(inputs.outdirname)/geneclusters.js
   geneclusters_txt:
     type: File
     outputBinding:

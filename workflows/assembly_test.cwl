@@ -314,6 +314,13 @@ steps:
         valueFrom: $(self.nameroot).contigs.annotations.gff
     out: [ output_gff_gz, output_gff_index ]
 
+# << ANTISMASH >>
+#  antismash:
+#    run: ../tools/Assembly/antismash/antismash_v4.cwl
+#    in:
+#      outdirname: {default: 'antismash_result'}
+#      input_fasta: fasta
+#    out: [final_gbk, final_embl, geneclusters_json, geneclusters_txt]
 
 # << FINAL STEPS >>
 

@@ -35,3 +35,13 @@ pfam:
 eggnog_ann:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.emapper.annotations
+
+antismash_js:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_antismash/katya-antismash/geneclusters.js
+antismash_geneclusters_txt:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_antismash/katya-antismash/geneclusters.txt
+antismash_final_embl:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_antismash/katya-antismash/c00001_ERZ4775...final.embl

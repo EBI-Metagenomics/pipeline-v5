@@ -1,3 +1,0 @@
-antismash_geneclus:
-  class: File
-  path: geneclusters.js

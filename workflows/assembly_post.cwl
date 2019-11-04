@@ -30,6 +30,9 @@ inputs:
   gp_flatfiles_path: string
   pfam: File
   eggnog_ann: File
+  antismash_js: File
+  antismash_geneclusters_txt: File
+  antismash_final_embl: File
 
 outputs:
   gp_summary:
@@ -38,18 +41,7 @@ outputs:
   gp_summary_csv:
     outputSource: create_csv/csv_result
     type: File
-  antismash_final_gbk:
-    outputSource: antismash/final_gbk
-    type: File
-  antismash_final_embl:
-    outputSource: antismash/final_embl
-    type: File
-  antismash_geneclusters_json:
-    outputSource: antismash/geneclusters_json
-    type: File
-  antismash_geneclusters_txt:
-    outputSource: antismash/geneclusters_txt
-    type: File
+
   antismash_gff_gz:
     outputSource: antismash_gff/output_gff_gz
     type: File
@@ -80,24 +72,21 @@ steps:
         valueFrom: $(self.nameroot.split('SUMMARY_')[1])
     out: [csv_result]
 
-# << ANTISMASH >>
-  antismash:
-    run: ../tools/Assembly/antismash/antismash_v4.cwl
+# << post-processing JS >>
+  antismash_json_generation:
+    run: ../tools/Assembly/antismash_json_generation.cwl
     in:
-      outdirname: {default: 'antismash_result'}
-      input_fasta: fasta
-    out: [final_gbk, final_embl, geneclusters_json, geneclusters_txt]
-
-# << post-processing JSON >>
-
+      input_js: antismash_js
+      outputname: {default: 'geneclusters.json'}
+    out: [output_json]
 
 # << GFF for antismash >>
   antismash_gff:
     run: ../tools/Assembly/GFF/antismash_to_gff.cwl
     in:
-      antismash_geneclus: antismash/geneclusters_txt
-      antismash_embl: antismash/final_embl
-      antismash_gc_json: antismash/geneclusters_json
+      antismash_geneclus: antismash_geneclusters_txt
+      antismash_embl: antismash_final_embl
+      antismash_gc_json: antismash_json_generation/output_json
       output_name:
         source: fasta
         valueFrom: $(self.nameroot).antismash.gff
