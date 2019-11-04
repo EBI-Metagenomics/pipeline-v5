@@ -2,7 +2,7 @@
 cwlVersion: v1.0
 class: Workflow
 
-label: "extract ncrnas!"
+label: "extract other ncrnas!"
 
 requirements:
   ScatterFeatureRequirement: {}
@@ -10,37 +10,45 @@ requirements:
   ShellCommandRequirement: {}
 
 inputs:
-  indexed_sequences: {type: File, secondaryFiles: [.ssi] }
+  input_sequences: {type: File, secondaryFiles: [.ssi] }
   other_ncRNA_ribosomal_models: File[]
   other_ncRNA_ribosomal_model_clans: File
   script: File
 
 outputs:
+  doverlapped_matches:
+    type: File
+    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
   ncrnas:
     type:
       type: array
       items: File
-    outputSource: get_ncrnas/ncrna_matches
+    outputSource: get_ncrnas/sequences
 
 steps:
 
   find_ribosomal_ncRNAs:
-    run: ../../../../../../pipeline_v5/pipeline-v5/workflows/cmsearch-multimodel-wf.cwl
+    run: ../../workflows/subworkflows/cmsearch-multimodel-wf.cwl
     in:
-      query_sequences: indexed_sequences
+      query_sequences: input_sequences
       covariance_models: other_ncRNA_ribosomal_models
       clan_info: other_ncRNA_ribosomal_model_clans
     out: [ deoverlapped_matches ]
 
-  get_ncrnas:
-    run: extract_ncrnas.cwl
-    scatter: model
+  get_coords:
+    run: pull_ncrnas.cwl
     in:
-      indexed_sequences: indexed_sequences
-      model: other_ncRNA_ribosomal_models
-      deoverlapped_matches: find_ribosomal_ncRNAs/deoverlapped_matches
-      script: script
-    out: [ ncrna_matches, ncrna_hits ]
+      hits: find_ribosomal_ncRNAs/deoverlapped_matches
+      models: other_ncRNA_ribosomal_models
+    out: [ matches ]
+
+  get_ncrnas:
+    run: ../easel/esl-sfetch-manyseqs.cwl
+    scatter: names_contain_subseq_coords
+    in:
+      names_contain_subseq_coords: get_coords/matches
+      indexed_sequences: input_sequences
+    out: [ sequences ]
 
 
 
