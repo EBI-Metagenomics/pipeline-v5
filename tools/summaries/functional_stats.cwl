@@ -30,6 +30,10 @@ inputs:
     type: File
     inputBinding:
         prefix: -c
+  antismash_file:
+    type: File?
+    inputBinding:
+        prefix: -a
 
 baseCommand: [functional_stats.py]
 
@@ -50,6 +54,10 @@ outputs:
     type: File
     outputBinding:
         glob: "pfam*.yaml"
+  antismash_yaml:
+    type: File?
+    outputBinding:
+        glob: "antismash*.yaml"
 
 hints:
   - class: DockerRequirement

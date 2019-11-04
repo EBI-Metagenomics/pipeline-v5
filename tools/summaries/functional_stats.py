@@ -107,6 +107,7 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--pfam", dest="pfam", help="pfam annotation predicted seqs", required=True)
     parser.add_argument("-r", "--rna", dest="cmsearch_deoverlap", help="cmsearch deoverlapped results", required=True)
     parser.add_argument("-c", "--cds", dest="cds_file", help="predicted coding sequences", required=True)
+    parser.add_argument("-a", "--antismash", dest="antismash", help="antismash gene clusters", required=False)
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -115,11 +116,12 @@ if __name__ == "__main__":
         final_folder = os.path.join('functional-annotation', 'stats')
         if not os.path.exists(final_folder): os.makedirs(final_folder)
 
-        cdsAccessions_list = {'KO': 3, 'pfam': 0, 'InterProScan': 0}
-        protein_column = {'KO': 0, 'pfam': 4, 'InterProScan': 11}
+        cdsAccessions_list = {'KO': 3, 'pfam': 0, 'InterProScan': 0, 'antismash': 1}
+        protein_column = {'KO': 0, 'pfam': 4, 'InterProScan': 11, 'antismash': 2}
 
-        files = [args.interproscan, args.hmmscan, args.pfam]
-        hashes = ['InterProScan', 'KO', 'pfam']
+
+        files = [args.interproscan, args.hmmscan, args.pfam, args.antismash]
+        hashes = ['InterProScan', 'KO', 'pfam', 'antismash']
 
         for file_annotation, num in zip(files, range(len(files))):
             print(file_annotation)
