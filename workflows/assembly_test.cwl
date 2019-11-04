@@ -453,9 +453,9 @@ steps:
     in:
       list:
         source:
-          - create_csv_kp/csv_result                            # kegg pathways.csv
+          - change_formats_and_names/kegg_summary_csv           # kegg pathways.csv
           - pathways/kegg_contigs_summary                       # kegg contigs.tsv -- not using
-          - create_csv_gp/csv_result                            # genome properties.csv
+          - change_formats_and_names/gp_summary_csv             # genome properties.csv
           - compression_pathways_systems/compressed_file        # antismash GBK and EMBL
           - antismash_gff/output_gff_gz                         # antismash gff.gz
           - antismash_gff/output_gff_index                      # antismash gff.tbi
