@@ -36,6 +36,15 @@ inputs:
     inputBinding:
       prefix: --pfam-name
 
+  antismash_entry_maps:
+    type: File?
+    inputBinding:
+        prefix: -a
+  antismash_outname:
+    type: string?
+    inputBinding:
+        prefix: ---antismash-name
+
 baseCommand: [write_summaries.py]
 
 outputs:
