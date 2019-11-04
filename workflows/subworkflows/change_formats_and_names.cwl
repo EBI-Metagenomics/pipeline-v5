@@ -54,7 +54,6 @@ steps:
 
 # rename (move) antismash gbk
   move_antismash_gbk:
-    scatter: initial_file
     run: ../../utils/move.cwl
     in:
       initial_file: antismash_gbk
@@ -65,7 +64,6 @@ steps:
 
 # rename (move) antismash embl
   move_antismash_embl:
-    scatter: initial_file
     run: ../../utils/move.cwl
     in:
       initial_file: antismash_embl
