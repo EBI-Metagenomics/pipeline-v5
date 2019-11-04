@@ -32,13 +32,14 @@ steps:
       query_sequences: input_sequences
       covariance_models: other_ncRNA_ribosomal_models
       clan_info: other_ncRNA_ribosomal_model_clans
+      targetFile: input_sequences
     out: [ deoverlapped_matches ]
 
   get_coords:
     run: pull_ncrnas.cwl
     in:
       hits: find_ribosomal_ncRNAs/deoverlapped_matches
-      models: other_ncRNA_ribosomal_models
+      model: other_ncRNA_ribosomal_models
     out: [ matches ]
 
   get_ncrnas:
