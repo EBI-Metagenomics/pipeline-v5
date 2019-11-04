@@ -47,11 +47,11 @@ outputs:
   final_gbk:
     type: File
     outputBinding:
-      glob: $(inputs.outdirname)/*_final.gbk
+      glob: $(inputs.outdirname)/*final.gbk
   final_embl:
     type: File
     outputBinding:
-      glob: $(inputs.outdirname)/*_final.embl
+      glob: $(inputs.outdirname)/*final.embl
   geneclusters_json:
     type: File
     outputBinding:

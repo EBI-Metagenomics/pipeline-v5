@@ -88,6 +88,9 @@ steps:
       input_fasta: fasta
     out: [final_gbk, final_embl, geneclusters_json, geneclusters_txt]
 
+# << post-processing JSON >>
+
+
 # << GFF for antismash >>
   antismash_gff:
     run: ../tools/Assembly/GFF/antismash_to_gff.cwl
@@ -99,3 +102,5 @@ steps:
         source: fasta
         valueFrom: $(self.nameroot).antismash.gff
     out: [output_gff_gz, output_gff_index]
+
+
