@@ -17,12 +17,11 @@ inputs:
     type: string
     inputBinding:
         prefix: -n
-    default:
-        valueFrom: $(inputs.infernal_matches.basename)
-
-#arguments:
-#  - valueFrom: $(inputs.infernal_matches.basename)
-#    prefix: -n
+        valueFrom: ${ if (self == null) {
+                   return inputs.infernal_matches.basename; }
+                   else {
+                   return self; }
+                   }
 
 baseCommand: awk_tool
 
