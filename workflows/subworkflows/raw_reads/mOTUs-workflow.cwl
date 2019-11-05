@@ -39,7 +39,7 @@ steps:
   clean_fasta_headers:
     run: ../../utils/clean_fasta_headers.cwl
     in:
-      sequences: convert_trimmed_reads_to_fasta/fasta
+      sequences: trim_quality_control/reads1_trimmed
     out: [ sequences_with_cleaned_headers ]
 
   run_quality_control_filtering:
