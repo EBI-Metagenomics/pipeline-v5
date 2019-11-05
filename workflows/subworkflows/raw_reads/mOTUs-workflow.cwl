@@ -53,7 +53,7 @@ steps:
     out: [ filtered_file, stats_summary_file ]
 
   motus_classification:
-    run: ../../../tools/mOTUs/mOTUs.cwl
+    run: ../../../tools/Raw_reads/mOTUs/mOTUs.cwl
     in:
       reads: run_quality_control_filtering/filtered_file
     out: [ motu_taxonomy ]
