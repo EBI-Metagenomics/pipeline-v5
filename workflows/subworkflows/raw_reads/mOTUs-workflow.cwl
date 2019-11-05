@@ -11,63 +11,53 @@ requirements:
 #        - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-    merged_reads: File
+    reads: File
+    fastq_count: int
 
 outputs:
-    motus_biom:
-        type: File
-        outputSource: motus_classification/motu_taxonomy
-#    krona_otus:
-#        type: File
-#        outputSource: biom_to_tsv/result
-#    krona_figure:
-#        type: File
-#        outputSource: krona_output/otu_visualization
-    motus_tsv:
-        type: File
-        outputSource: biom_to_tsv/result
+  motus_biom:
+    type: File
+    outputSource: motus_classification/motu_taxonomy
 
 steps:
 
-    trim:
-          trim_quality_control:
+  trim_quality_control:
     doc: |
       Low quality trimming (low quality ends and sequences with < quality scores
       less than 15 over a 4 nucleotide wide window are removed)
-    run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+    run: ../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
-      reads1: merged_reads
+      reads1: reads
       phred: { default: '33' }
       leading: { default: 3 }
       trailing: { default: 3 }
       end_mode: { default: SE }
       minlen: { default: 100 }
-      slidingwindow:
-        default:
-          windowSize: 4
-          requiredQuality: 15
+      slidingwindow: { default: '4:15' }
     out: [reads1_trimmed]
+
+  clean_fasta_headers:
+    run: ../../utils/clean_fasta_headers.cwl
+    in:
+      sequences: convert_trimmed_reads_to_fasta/fasta
+    out: [ sequences_with_cleaned_headers ]
+
+  run_quality_control_filtering:
+    run: ../tools/qc-filtering/qc-filtering.cwl
+    in:
+      seq_file: clean_fasta_headers/sequences_with_cleaned_headers
+      submitted_seq_count: fastq_count
+      stats_file_name: {default: 'fastq_qc_summary'}
+      min_length: { default: 100 }
+      input_file_format: { default: 'fastq' }
+    out: [ filtered_file, stats_summary_file ]
 
     motus_classification:
         run: ../tools/mOTUs/mOTUs.cwl
         in:
-          reads: trim/reads1_trimmed
-          threads: 4
+          reads: run_quality_control_filtering/filtered_file
         out: [motu_taxonomy]
 
-    biom_to_tsv:
-        run: ../tools/biom-convert/biom-convert.cwl
-        in:
-          biom: motus_classification/motu_taxonomy
-          tsv: { default: true }
-        out: [result]
-
-#enough hits for a krona visualisation??
-#    krona_output:
-#        run: ../tools/krona/krona.cwl
-#        in:
-#          otu_counts: biom_to_tsv/result
-#        out: [otu_visualization]
 
 $namespaces:
  edam: http://edamontology.org/
