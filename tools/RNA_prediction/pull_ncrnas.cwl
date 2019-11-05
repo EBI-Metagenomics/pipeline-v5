@@ -15,7 +15,7 @@ inputs:
   model:
     type:
         type: array
-        items: File
+        items: string
     inputBinding:
         position: 3
 

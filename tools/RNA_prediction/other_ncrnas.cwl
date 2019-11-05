@@ -14,8 +14,7 @@ requirements:
 inputs:
   input_sequences: {type: File, secondaryFiles: [.ssi] }
   cmsearch_file: File
-  other_ncRNA_ribosomal_models: File[]
-  other_ncRNA_ribosomal_model_clans: File
+  other_ncRNA_ribosomal_models: string[]
   name_string: string
 
 outputs:
