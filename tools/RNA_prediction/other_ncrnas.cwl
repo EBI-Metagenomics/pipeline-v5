@@ -8,6 +8,8 @@ requirements:
   ScatterFeatureRequirement: {}
   SubworkflowFeatureRequirement: {}
   ShellCommandRequirement: {}
+  InlineJavascriptRequirement: {}
+
 
 inputs:
   input_sequences: {type: File, secondaryFiles: [.ssi] }

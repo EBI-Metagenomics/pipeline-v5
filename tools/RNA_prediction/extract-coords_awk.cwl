@@ -6,6 +6,10 @@ hints:
  DockerRequirement:
    dockerPull: alpine:3.7
 
+requirements:
+  ShellCommandRequirement: {}
+  InlineJavascriptRequirement: {}
+
 inputs:
   infernal_matches:
     label: output from infernal cmsearch
