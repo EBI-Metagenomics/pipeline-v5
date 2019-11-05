@@ -13,6 +13,7 @@ inputs:
   input_sequences: {type: File, secondaryFiles: [.ssi] }
   other_ncRNA_ribosomal_models: File[]
   other_ncRNA_ribosomal_model_clans: File
+  name_string: string
 
 outputs:
   doverlapped_matches:
@@ -35,10 +36,17 @@ steps:
       targetFile: input_sequences
     out: [ deoverlapped_matches ]
 
+  extract_coords:
+    run: extract-coords_awk.cwl
+    in:
+      infernal_matches: find_ribosomal_ncRNAs/deoverlapped_matches
+      name: name_string
+    out: [ matched_seqs_with_coords ]
+
   get_coords:
     run: pull_ncrnas.cwl
     in:
-      hits: find_ribosomal_ncRNAs/deoverlapped_matches
+      hits: extract_coords/matched_seqs_with_coords
       model: other_ncRNA_ribosomal_models
     out: [ matches ]
 
