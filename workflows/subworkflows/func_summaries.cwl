@@ -13,6 +13,7 @@ inputs:
   interproscan_annotation: File
   hmmscan_annotation: File
   pfam_annotation: File
+  antismash_gene_clusters: File
   rna: File
   cds: File
 
@@ -20,9 +21,21 @@ outputs:
   stats:
     outputSource: functional_stats/stats
     type: Directory
-  summaries:
-    outputSource: write_summaries/summaries
-    type: File[]
+  summary_go:
+    outputSource: write_summaries/summary_go
+    type: File
+  summary_go_slim:
+    outputSource: write_summaries/summary_go_slim
+    type: File
+  summary_ko:
+    outputSource: write_summaries/summary_ko
+    type: File
+  summary_pfam:
+    outputSource: write_summaries/summary_pfam
+    type: File
+  summary_antismash:
+    outputSource: write_summaries/summary_antismash
+    type: File
 
 steps:
   functional_stats:
@@ -33,7 +46,8 @@ steps:
       pfam: pfam_annotation
       cmsearch_file: rna
       cds_file: cds
-    out: [stats, ips_yaml, ko_yaml, pfam_yaml]
+      antismash_file: antismash_gene_clusters
+    out: [stats, ips_yaml, ko_yaml, pfam_yaml, antismash_yaml]
 
   write_summaries:
     run: ../../tools/summaries/write_summaries.cwl
@@ -50,6 +64,10 @@ steps:
       pfam_outname:
         source: cds
         valueFrom: $(self.nameroot.split('_CDS')[0]).summary.pfam
-    out: [summaries]
+      antismash_entry_maps: functional_stats/antismash_yaml
+      antismash_outname:
+        source: cds
+        valueFrom: $(self.nameroot.split('_CDS')[0]).summary.antismash
+    out: [summary_go, summary_go_slim, summary_ko, summary_pfam, summary_antismash]
 
 

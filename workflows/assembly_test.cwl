@@ -300,11 +300,12 @@ steps:
        interproscan_annotation: functional_annotation/ips_result
        hmmscan_annotation: functional_annotation/hmmscan_result
        pfam_annotation: pfam/annotations
+       antismash_gene_clusters: antismash/geneclusters_txt
        rna: rna_prediction/ncRNA
        cds:
          source: cgc/results
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-    out: [summaries, stats]
+    out: [summary_go, summary_go_slim, summary_ko, summary_pfam, summary_antismash, stats]
 
 # << GENOME PROPERTIES >>
   genome_properties:
@@ -417,7 +418,10 @@ steps:
           - gff/output_gff_gz
           - gff/output_gff_index
           - compression_func_ann/compressed_file
-          - write_summaries/summaries
+          - write_summaries/summary_go
+          - write_summaries/summary_go_slim
+          - write_summaries/summary_ko
+          - write_summaries/summary_pfam
           - go_summary/go_summary
           - go_summary/go_summary_slim
         linkMerge: merge_flattened
@@ -459,7 +463,7 @@ steps:
           - compression_pathways_systems/compressed_file        # antismash GBK and EMBL
           - antismash_gff/output_gff_gz                         # antismash gff.gz
           - antismash_gff/output_gff_index                      # antismash gff.tbi
-          # antismash summary
+          - write_summaries/antismash_summary                   # antismash summary
         linkMerge: merge_flattened
       dir_name: { default: pathways-systems }
     out: [ out ]
