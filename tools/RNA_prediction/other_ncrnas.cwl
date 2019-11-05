@@ -11,35 +11,23 @@ requirements:
 
 inputs:
   input_sequences: {type: File, secondaryFiles: [.ssi] }
+  cmsearch_file: File
   other_ncRNA_ribosomal_models: File[]
   other_ncRNA_ribosomal_model_clans: File
   name_string: string
+  directory: string
 
 outputs:
-  doverlapped_matches:
-    type: File
-    outputSource: find_ribosomal_ncRNAs/deoverlapped_matches
   ncrnas:
-    type:
-      type: array
-      items: File
-    outputSource: get_ncrnas/sequences
+    type: Directory
+    outputSource: move_fastas/out
 
 steps:
-
-  find_ribosomal_ncRNAs:
-    run: ../../workflows/subworkflows/cmsearch-multimodel-wf.cwl
-    in:
-      query_sequences: input_sequences
-      covariance_models: other_ncRNA_ribosomal_models
-      clan_info: other_ncRNA_ribosomal_model_clans
-      targetFile: input_sequences
-    out: [ deoverlapped_matches ]
 
   extract_coords:
     run: extract-coords_awk.cwl
     in:
-      infernal_matches: find_ribosomal_ncRNAs/deoverlapped_matches
+      infernal_matches: cmsearch_file
       name: name_string
     out: [ matched_seqs_with_coords ]
 
@@ -57,6 +45,28 @@ steps:
       names_contain_subseq_coords: get_coords/matches
       indexed_sequences: input_sequences
     out: [ sequences ]
+
+  gzip_files:
+    run: ../../utils/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file: get_ncrnas/sequences
+    out: [compressed_file]
+
+  move_fastas:
+    run: ../../utils/return_directory.cwl
+    in:
+      list: gzip_files/compressed_file
+      dir_name: { default: 'sequence-categorisation-other' }
+    out: [out]
+
+
+
+
+
+
+
+
 
 
 
