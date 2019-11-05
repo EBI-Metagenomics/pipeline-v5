@@ -48,11 +48,26 @@ inputs:
 baseCommand: [write_summaries.py]
 
 outputs:
-  summaries:
-    type: File[]
+  summary_go:
+    type: File
     outputBinding:
-        glob: "*summary.*"
-
+        glob: "*summary.go"
+  summary_go_slim:
+    type: File
+    outputBinding:
+        glob: "*summary.go_slim"
+  summary_ko:
+    type: File
+    outputBinding:
+        glob: "*summary.ko"
+  summary_pfam:
+    type: File
+    outputBinding:
+        glob: "*summary.pfam"
+  summary_antismash:
+    type: File?
+    outputBinding:
+        glob: "*summary.antismash"
 hints:
   - class: DockerRequirement
     dockerPull: 'alpine:3.7'
