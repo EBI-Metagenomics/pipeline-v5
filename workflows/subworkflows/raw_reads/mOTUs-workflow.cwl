@@ -52,11 +52,11 @@ steps:
       input_file_format: { default: 'fastq' }
     out: [ filtered_file, stats_summary_file ]
 
-    motus_classification:
-        run: ../../../tools/mOTUs/mOTUs.cwl
-        in:
-          reads: run_quality_control_filtering/filtered_file
-        out: [motu_taxonomy]
+  motus_classification:
+      run: ../../../tools/mOTUs/mOTUs.cwl
+      in:
+        reads: run_quality_control_filtering/filtered_file
+      out: [motu_taxonomy]
 
 
 $namespaces:
