@@ -9,7 +9,7 @@ requirements:
   SubworkflowFeatureRequirement: {}
   ShellCommandRequirement: {}
   InlineJavascriptRequirement: {}
-
+  StepInputExpressionRequirement: {}
 
 inputs:
   input_sequences: {type: File, secondaryFiles: [.ssi] }
@@ -46,18 +46,27 @@ steps:
       indexed_sequences: input_sequences
     out: [ sequences ]
 
+  rename_ncrnas:
+    run: ../../utils/move.cwl
+    scatter: initial_file
+    in:
+      initial_file: get_ncrnas/sequences
+      out_file_name:
+        valueFrom: $(inputs.initial_file.split("_")[1:])
+    out: [ renamed_file ]
+
   gzip_files:
     run: ../../utils/gzip.cwl
     scatter: uncompressed_file
     in:
-      uncompressed_file: get_ncrnas/sequences
+      uncompressed_file: rename_ncrnas/renamed_file
     out: [compressed_file]
 
   move_fastas:
     run: ../../utils/return_directory.cwl
     in:
       list: gzip_files/compressed_file
-      dir_name: { default: 'sequence-categorisation-other' }
+      dir_name: { default: 'sequence-categorisation' }
     out: [out]
 
 
