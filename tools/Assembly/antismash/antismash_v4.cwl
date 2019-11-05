@@ -26,8 +26,8 @@ inputs:
 baseCommand: [antismash]
 
 arguments:
-  - valueFrom: --knownclusterblast
-    position: 2
+#  - valueFrom: --knownclusterblast
+#    position: 2
   - valueFrom: "-v"
     position: 3
   - valueFrom: --smcogs
