@@ -33,6 +33,7 @@ inputs:
     type: int
     inputBinding:
         prefix: -t
+    default: 4
 
 baseCommand: [motus]
 
