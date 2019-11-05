@@ -463,7 +463,7 @@ steps:
           - compression_pathways_systems/compressed_file        # antismash GBK and EMBL
           - antismash_gff/output_gff_gz                         # antismash gff.gz
           - antismash_gff/output_gff_index                      # antismash gff.tbi
-          - write_summaries/antismash_summary                   # antismash summary
+          - write_summaries/summary_antismash                   # antismash summary
         linkMerge: merge_flattened
       dir_name: { default: pathways-systems }
     out: [ out ]
