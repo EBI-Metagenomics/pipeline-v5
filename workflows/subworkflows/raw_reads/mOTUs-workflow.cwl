@@ -42,20 +42,20 @@ steps:
       sequences: trim_quality_control/reads1_trimmed
     out: [ sequences_with_cleaned_headers ]
 
-  run_quality_control_filtering:
-    run: ../../../tools/qc-filtering/qc-filtering.cwl
-    in:
-      seq_file: clean_fasta_headers/sequences_with_cleaned_headers
-      submitted_seq_count: fastq_count
-      stats_file_name: {default: 'fastq_qc_summary'}
-      min_length: { default: 100 }
-      input_file_format: { default: 'fastq' }
-    out: [ filtered_file, stats_summary_file ]
+#  run_quality_control_filtering:
+#    run: ../../../tools/qc-filtering/qc-filtering.cwl
+#    in:
+#      seq_file: clean_fasta_headers/sequences_with_cleaned_headers
+#      submitted_seq_count: fastq_count
+#      stats_file_name: {default: 'fastq_qc_summary'}
+#      min_length: { default: 100 }
+#      input_file_format: { default: 'fastq' }
+#    out: [ filtered_file, stats_summary_file ]
 
   motus_classification:
     run: ../../../tools/Raw_reads/mOTUs/mOTUs.cwl
     in:
-      reads: run_quality_control_filtering/filtered_file
+      reads: clean_fasta_headers/sequences_with_cleaned_headers
     out: [ motu_taxonomy ]
 
 
