@@ -5,8 +5,8 @@ model=${@:2}
 
 for x in $model
 do
-  if grep -q $x $hits; then
-    grep $string $hits > $string.hits
+  string=$(basename $x | cut -d. -f1)
+  if grep -q $string $hits; then
+    grep $string $hits > $x.hits
   fi
 done
-
