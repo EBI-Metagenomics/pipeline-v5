@@ -15,7 +15,6 @@ inputs:
   other_ncRNA_ribosomal_models: File[]
   other_ncRNA_ribosomal_model_clans: File
   name_string: string
-  directory: string
 
 outputs:
   ncrnas:
