@@ -52,7 +52,8 @@ steps:
     in:
       initial_file: get_ncrnas/sequences
       out_file_name:
-        valueFrom: $(inputs.initial_file.split("_")[1:])
+        source: get_ncrnas/sequences
+        valueFrom: $(self.split("_")[1:])
     out: [ renamed_file ]
 
   gzip_files:
