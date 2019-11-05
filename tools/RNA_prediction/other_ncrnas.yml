@@ -1,0 +1,29 @@
+input_sequences:
+  class: File
+  path: #path to indexed seqs
+cmsearch_file:
+  class: File
+  path: #path to deoverlapped cmsearch file
+other_ncRNA_ribosomal_models:
+  - 'alpha_tmRNA'
+  - 'Bacteria_large_SRP'
+  - 'beta_tmRNA'
+  - 'Dictyostelium_SRP'
+  - 'Metazoa_SRP'
+  - 'Protozoa_SRP'
+  - 'RNaseP_arch'
+  - 'RNaseP_bact_b'
+  - 'RNaseP_nuc'
+  - 'tRNA'
+  - 'Archaea_SRP'
+  - 'Bacteria_small_SRP'
+  - 'cyano_tmRNA'
+  - 'Fungi_SRP'
+  - 'mt-tmRNA'
+  - 'Plant_SRP'
+  - 'RNase_MRP'
+  - 'RNaseP_bact_a'
+  - 'RNase_P'
+  - 'tmRNA'
+  - 'tRNA-Sec'
+name_string: 'other_ncrna'
