@@ -7,7 +7,7 @@ while getopts i:o: option; do
 	esac
 done
 
-source activate antismash && \
+source ${CONDA_ENV} antismash && \
 antismash \
   -v \
   --smcogs  \

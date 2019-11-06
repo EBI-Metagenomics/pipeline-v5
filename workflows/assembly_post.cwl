@@ -35,40 +35,58 @@ inputs:
   antismash_final_embl: File
 
 outputs:
-  gp_summary:
-    outputSource: genome_properties/summary
+
+  antismash_json:
+    outputSource: antismash_json_generation/output_json
     type: File
-  gp_summary_csv:
-    outputSource: create_csv/csv_result
+  antismash_summary:
+    outputSource: write_summaries/summary_antismash
+    type: File
+  ko_summary:
+    outputSource: write_summaries/summary_ko
     type: File
 
-  antismash_gff_gz:
+  antismash_gff:
     outputSource: antismash_gff/output_gff_gz
     type: File
-  antismash_gff_tbi:
-    outputSource: antismash_gff/output_gff_index
-    type: File
+
 steps:
 
-# << GENOME PROPERTIES >>
-  genome_properties:
-    run: ../tools/Genome_properties/genome_properties.cwl
+# << ANTISMASH >>
+  antismash:
+    run: ../tools/Assembly/antismash/antismash_v4.cwl
     in:
-      input_tsv_file: ips_result
-      flatfiles_path: gp_flatfiles_path
-      GP_txt: {default: genomeProperties.txt}
-      name:
-        source: fasta
-        valueFrom: $(self.nameroot).summary.gprops.tsv
-    out: [ summary ]
+      outdirname: {default: 'antismash_result'}
+      input_fasta: fasta
+    out: [final_gbk, final_embl, geneclusters_js, geneclusters_txt]
 
-# change TSV to CSV
-  create_csv:
-    run: ../utils/make_csv.cwl
+# << post-processing JS >>
+  antismash_json_generation:
+    run: ../tools/Assembly/antismash/antismash_json_generation.cwl
     in:
-      tab_sep_table: genome_properties/summary
+      input_js: antismash/geneclusters_js
+      outputname: {default: 'geneclusters.json'}
+    out: [output_json]
+
+  write_summaries:
+    run: subworkflows/func_summaries.cwl
+    in:
+       interproscan_annotation: ips_result
+       hmmscan_annotation: hmmscan_result
+       pfam_annotation: pfam
+       antismash_gene_clusters: antismash/geneclusters_txt
+       rna: rna
+       cds: cds
+    out: [summary_go, summary_go_slim, summary_ko, summary_pfam, summary_antismash, stats]
+
+# << GFF for antismash >>
+  antismash_gff:
+    run: ../tools/Assembly/GFF/antismash_to_gff.cwl
+    in:
+      antismash_geneclus: antismash/geneclusters_txt
+      antismash_embl: antismash/final_embl
+      antismash_gc_json: antismash_json_generation/output_json
       output_name:
-        source: genome_properties/summary
-        valueFrom: $(self.nameroot.split('SUMMARY_FILE_')[1])
-    out: [csv_result]
-
+        source: fasta
+        valueFrom: $(self.nameroot).antismash.gff
+    out: [output_gff_gz, output_gff_index]
