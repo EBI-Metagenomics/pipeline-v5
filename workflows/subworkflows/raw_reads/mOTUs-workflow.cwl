@@ -5,19 +5,16 @@ class: Workflow
 label: Subworkflow for mOTUs classification
 
 requirements:
-  - class: InlineJavascriptRequirement
-#  - class: SchemaDefRequirement
-#    types:
-#        - $import: ../tools/biom-convert/biom-convert-table.yaml
+    SubworkflowFeatureRequirement: {}
+    InlineJavascriptRequirement: {}
 
 inputs:
     reads: File
-    fastq_count: int
 
 outputs:
-  motus_biom:
+  motus:
     type: File
-    outputSource: motus_classification/motu_taxonomy
+    outputSource: clean_classification/clean_annotations
 
 steps:
 
@@ -42,22 +39,17 @@ steps:
       sequences: trim_quality_control/reads1_trimmed
     out: [ sequences_with_cleaned_headers ]
 
-#  run_quality_control_filtering:
-#    run: ../../../tools/qc-filtering/qc-filtering.cwl
-#    in:
-#      seq_file: clean_fasta_headers/sequences_with_cleaned_headers
-#      submitted_seq_count: fastq_count
-#      stats_file_name: {default: 'fastq_qc_summary'}
-#      min_length: { default: 100 }
-#      input_file_format: { default: 'fastq' }
-#    out: [ filtered_file, stats_summary_file ]
-
   motus_classification:
     run: ../../../tools/Raw_reads/mOTUs/mOTUs.cwl
     in:
       reads: clean_fasta_headers/sequences_with_cleaned_headers
     out: [ motu_taxonomy ]
 
+  clean_classification:
+    run: ../../../tools/Raw_reads/mOTUs/clean_motus_output.cwl
+    in:
+      taxonomy: motus_classification/motu_taxonomy
+    out: [ clean_annotations ]
 
 $namespaces:
  edam: http://edamontology.org/
@@ -69,3 +61,4 @@ $schemas:
 's:author': 'Varsha Kale'
 's:copyrightHolder': EMBL - European Bioinformatics Institute
 's:license': "https://www.apache.org/licenses/LICENSE-2.0"
+
