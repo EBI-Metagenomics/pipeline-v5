@@ -48,14 +48,10 @@ inputs:
 baseCommand: [write_summaries.py]
 
 outputs:
-  summary_go:
+  summary_ips:
     type: File
     outputBinding:
-        glob: "*summary.go"
-  summary_go_slim:
-    type: File
-    outputBinding:
-        glob: "*summary.go_slim"
+        glob: "*summary.ips"
   summary_ko:
     type: File
     outputBinding:
@@ -68,6 +64,7 @@ outputs:
     type: File?
     outputBinding:
         glob: "*summary.antismash"
+
 hints:
   - class: DockerRequirement
     dockerPull: 'alpine:3.7'

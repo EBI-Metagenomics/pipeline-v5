@@ -77,7 +77,7 @@ steps:
        antismash_gene_clusters: antismash/geneclusters_txt
        rna: rna
        cds: cds
-    out: [summary_go, summary_go_slim, summary_ko, summary_pfam, summary_antismash, stats]
+    out: [summary_ips, summary_ko, summary_pfam, summary_antismash, stats]
 
 # << GFF for antismash >>
   antismash_gff:

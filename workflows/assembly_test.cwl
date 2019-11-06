@@ -305,7 +305,7 @@ steps:
        cds:
          source: cgc/results
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-    out: [summary_go, summary_go_slim, summary_ko, summary_pfam, summary_antismash, stats]
+    out: [summary_ips, summary_ko, summary_pfam, summary_antismash, stats]
 
 # << GENOME PROPERTIES >>
   genome_properties:
@@ -418,8 +418,7 @@ steps:
           - gff/output_gff_gz
           - gff/output_gff_index
           - compression_func_ann/compressed_file
-          - write_summaries/summary_go
-          - write_summaries/summary_go_slim
+          - write_summaries/summary_ips
           - write_summaries/summary_ko
           - write_summaries/summary_pfam
           - go_summary/go_summary

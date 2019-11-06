@@ -21,11 +21,8 @@ outputs:
   stats:
     outputSource: functional_stats/stats
     type: Directory
-  summary_go:
-    outputSource: write_summaries/summary_go
-    type: File
-  summary_go_slim:
-    outputSource: write_summaries/summary_go_slim
+  summary_ips:
+    outputSource: write_summaries/summary_ips
     type: File
   summary_ko:
     outputSource: write_summaries/summary_ko
@@ -68,6 +65,6 @@ steps:
       antismash_outname:
         source: cds
         valueFrom: $(self.nameroot.split('_CDS')[0]).summary.antismash
-    out: [summary_go, summary_go_slim, summary_ko, summary_pfam, summary_antismash]
+    out: [summary_ips, summary_ko, summary_pfam, summary_antismash]
 
 
