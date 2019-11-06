@@ -43,7 +43,7 @@ inputs:
   antismash_outname:
     type: string?
     inputBinding:
-        prefix: ---antismash-name
+        prefix: --antismash-name
 
 baseCommand: [write_summaries.py]
 
