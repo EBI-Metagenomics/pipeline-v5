@@ -16,30 +16,31 @@ inputs:
     type: string
     inputBinding:
       position: 1
-      prefix: --outputfolder
+      prefix: -o # --outputfolder
 
   input_fasta:
     type: File
     inputBinding:
-      position: 9
+      # position: 9
+      prefix: -i
 
-baseCommand: [antismash]
+baseCommand: [run_antismash.sh]
 
-arguments:
+#arguments:
 #  - valueFrom: --knownclusterblast
 #    position: 2
-  - valueFrom: "-v"
-    position: 3
-  - valueFrom: --smcogs
-    position: 4
-  - valueFrom: --transatpks_da
-    position: 5
-  - valueFrom: --borderpredict
-    position: 6
-  - valueFrom: --asf
-    position: 7
-  - valueFrom: --inclusive
-    position: 8
+#  - valueFrom: "-v"
+#    position: 3
+#  - valueFrom: --smcogs
+#    position: 4
+#  - valueFrom: --transatpks_da
+#    position: 5
+#  - valueFrom: --borderpredict
+#    position: 6
+#  - valueFrom: --asf
+#    position: 7
+#  - valueFrom: --inclusive
+#    position: 8
 
 stdout: stdout.txt
 stderr: stderr.txt
