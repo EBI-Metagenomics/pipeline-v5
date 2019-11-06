@@ -27,7 +27,7 @@ outputs:
       type: array
       items: File
     outputBinding:
-      glob: "*.hits"
+      glob: "*.RF*"
 
 $namespaces:
  s: http://schema.org/
