@@ -16,8 +16,10 @@
 import argparse
 import logging
 import sys
+import os
 
 from chunkTSVFileUtil import ChunkTSVFileUtil
+from chunkFastaResultFileUtil import ChunkFASTAResultFileUtil
 
 __author__ = 'Maxim Scheremetjew'
 
@@ -27,24 +29,26 @@ __author__ = 'Maxim Scheremetjew'
     i5UnchunkedFileSizeCutoffInMB = 2253
     chunkedFileSizeMaxInMB = 520
     chunkedFileSizeMinInMB = 480
-    interproscanFastaDefaultTargetSize = 1819
-    pCDSFastaDefaultTargetSize = 1847
-    noFunctionFastaDefaultTargetSize = 1853
-    nucleotideReadsFastaDefaultTargetSize = 1980
+    interproscanFastaDefaultTargetSize = 1819           # don't have, was for 'interproscan.fasta'
+    pCDSFastaDefaultTargetSize = 1847  
+    noFunctionFastaDefaultTargetSize = 1853             # don't have, was for 'noFunction.fasta' (LSU, SSU, models, mapseq ??)
+    nucleotideReadsFastaDefaultTargetSize = 1980        # ACC_FASTA.fasta.gz
     cdsFaaDefaultTargetSize = 1350
-    cdsUnannotatedFaaDefaultTargetSize = 1442
-    cdsUnannotatedFfnDefaultTargetSize = 1980
-    cdsAnnotatedFaaDefaultTargetSize = 1442
-    cdsAnnotatedFfnDefaultTargetSize = 1980
+    cdsUnannotatedFaaDefaultTargetSize = 1442           # don't have
+    cdsUnannotatedFfnDefaultTargetSize = 1980           # don't have
+    cdsAnnotatedFaaDefaultTargetSize = 1442             # don't have
+    cdsAnnotatedFfnDefaultTargetSize = 1980             # dont't have
 """
 
+DEFAULT_COMPRESSION_LEVEL = 6
+
 chunking_settings = {
-    'i5ChunkedFileLineNumber': 10000000,
-    'i5UnchunkedFileSizeCutoffInMB': 2253,
+    'TableChunkedFileLineNumber': 10000000,          # all tsv tables
+    'TableUnchunkedFileSizeCutoffInMB': 2253,
     'chunkedFileSizeMaxInMB': 520,
     'chunkedFileSizeMinInMB': 480,
-    'interproscanFastaDefaultTargetSize': 1819,
-    'pCDSFastaDefaultTargetSize': 1847,
+    'FaaFastaDefaultTargetSize': 1442,
+    'FfnFastaDefaultTargetSize': 1980
 }
 
 
@@ -53,62 +57,53 @@ def parse_args(argv):
         description='Tool which chunks different types of pipeline result files (e.g. FASTA or TSV formatted)')
     parser.add_argument('infile', help="Input file which needs chunking.")
     parser.add_argument('file-type', choices=['fasta', 'tsv'], default='fasta')
-    parser.add_argument('--compression-level', choices=['fasta', 'tsv'], default='fasta')
+    parser.add_argument('type', choices=['p', 'n'], default='n')
     parser.add_argument('-v', '--verbose', action='store_true')
     return parser.parse_args(argv)
 
 
-def chunk_tsv_file(analysisDirectory, interProScanOutputFileName, compression_level):
-    line_number = chunking_settings['i5ChunkedFileLineNumber']
-    cutoff = chunking_settings['i5UnchunkedFileSizeCutoffInMB']
-    tsv_file_chunker = ChunkTSVFileUtil(analysisDirectory, '_I5.tsv', line_number, float(cutoff))
+def chunk_tsv_file(infile, outdir):
+    line_number = chunking_settings['TableChunkedFileLineNumber']
+    cutoff = chunking_settings['TableUnchunkedFileSizeCutoffInMB']
+    tsv_file_chunker = ChunkTSVFileUtil(infile=infile, line_number=line_number,
+                                        cutoff=float(cutoff), outdir=outdir)
     tsv_file_chunker.chunk_tsv_result_file()
 
-    #   Perform compression of the InterProScan chunk files
-    #   1. Parse the InterProScan '.chunks' file to get the chunks
-    #   2. Iterate over the chunk files and compress them
-    #   3. Delete chunks at the end
 
-    #   Load chunk file names into a list
-    chunkFilePath = interProScanOutputFileName + '.chunks'
-    print
-    "Parsing the InterProScan chunk file located at: \n" + chunkFilePath
-    #   Load chunk file names into a list
-    #   Check first of all if file path exists
-    if checkFilePath(chunkFilePath):
-        chunkFile = putil.fileOpen(chunkFilePath, "r")
-        chunkFileNames = []
-        for line in chunkFile:
-            chunkFileNames.append(line.replace('.gz', '').rstrip("\r\n"))
-        chunkFile.close()
-
-        #   Iterate over the list of chunk files and run compression
-        #   Delete the chunk file when finished
-        for chunkFileName in chunkFileNames:
-            chunkFileFilePathAbsolute = os.path.join(analysisDirectory, chunkFileName)
-            runFileCompressionAndDelete(chunkFileFilePathAbsolute, compressionLevel)
+def chunk_fasta_file(infile, fasta_type, outdir):
+    if fasta_type == 'n':
+        cutoff = chunking_settings["FfnFastaDefaultTargetSize"]
     else:
-        print
-        "Chunked file does not exist. Skipping the compression step..."
+        cutoff = chunking_settings["FaaFastaDefaultTargetSize"]
+    tool_path = 'gt'
+    resultFileSuffix = os.path.basename(infile)
+    fasta_file_chunker = ChunkFASTAResultFileUtil(infile=infile,
+                                                  resultFileSuffix=resultFileSuffix,
+                                                  targetSize=cutoff,
+                                                  tool_path=tool_path,
+                                                  outdir=outdir)
+    fasta_file_chunker.chunkFASTAResultFile()
 
 
-def chunk_file(infile, file_type, compress_level):
-    # TODO: Implement
-    if file_type == 'tsv':
-        chunk_tsv_file(output_path, interProScanOutputFileName,
-                       chunking_settings['i5UnchunkedFileSizeCutoffInMB'],
-                       compress_level)
+def chunk_file(infile, file_format, fasta_type, outdir):
+    if file_format == 'tsv':
+        chunk_tsv_file(infile, outdir)
+    elif file_format == 'fasta':
+        chunk_fasta_file(infile, fasta_type, outdir)
+    else:
+        logging.warning("Unsupported file type.")
 
 
-def main(argv=sys.argv[1:]):
-    args = parse_args(argv)
-    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO)
-    infile = args['infile']
-    file_type = args['file_type']
-    default_compress_level = args['compression_level']
-
-    chunk_file(infile, file_type, default_compress_level)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Convert fastq to fasta")
+    parser.add_argument("-i", "--input", dest="input", help="Input fastq file", required=True)
+    parser.add_argument("-f", "--format", dest="format", help="Output fasta file", required=True)
+    parser.add_argument("-t", "--type", dest="type", help="-n for nucleotide fasta, -p for protein fasta")
+    parser.add_argument("-o", "--outdir", dest="outdir", help="Name of output folder", required=True)
 
 
-if __name__ == '__main__':
-    main()
+    if len(sys.argv) == 1:
+        parser.print_help()
+    else:
+        args = parser.parse_args()
+        chunk_file(args.input, args.format, args.type, args.outdir)

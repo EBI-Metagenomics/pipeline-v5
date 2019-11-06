@@ -8,53 +8,62 @@ __author__ = 'maxim'
 
 
 class ChunkTSVFileUtil:
-    _rootDir = None  # protected variable
 
-    _resultFileSuffix = None
+    def __init__(self, infile, line_number, cutoff, outdir):
+        """
 
-    _lineNumber = None
-
-    _cutoff = None  # type float
-
-    def __init__(self, rootDir, resultFileSuffix, lineNumber, cutoff):
-        self._rootDir = rootDir
-        self._resultFileSuffix = resultFileSuffix
-        self._lineNumber = str(lineNumber)
+        :param infile:
+        :param line_number:
+        :param cutoff: file size cutoff in MB for chunking.
+        :type cutoff: float
+        """
+        self._infile = infile
+        self._line_number = str(line_number)
         self._cutoff = cutoff
+        self._outdir = outdir
+
+
+    def print_setup(self):
+        print(vars(self))
+        # logging.info(
+        #     'Running the chunking program with the following settings:\nrootDir: {}\nresultFileSuffix: {}\nlineNumber: {}\ncutoff: {} MB'.format(
+        #         self._rootDir, self._resultFileSuffix, self._lineNumber, self._cutoff))
+
 
     def chunk_tsv_result_file(self):
-        logging.info(
-            'Running the chunking program with the following settings:\nrootDir: {}\nresultFileSuffix: {}\nlineNumber: {}\ncutoff: {} MB'.format(
-                self._rootDir, self._resultFileSuffix, self._lineNumber, self._cutoff))
-        for root, dirList, files in os.walk(self._rootDir):
-            for fileName in files:
-                # Check if that is a file we want to chunk
-                if cleaningUtils.isValidFileName(fileName, self._resultFileSuffix):
-                    try:
-                        absoluteFilePath = os.path.join(root, fileName)
-                        if cleaningUtils.checkIfAlreadyChunked(absoluteFilePath, 1):
-                            print("This file has already been chunked! Jumping to the next file.")
-                        else:
-                            fileSizeInBytes = float(os.path.getsize(absoluteFilePath))
-                            fileSizeInMegabytes = fileSizeInBytes / 1024 / 1024
-                            if fileSizeInMegabytes > self._cutoff:
-                                prefix = re.sub('\.tsv$', '', fileName) + '_'
-                                #    split -d -l 10000000 ERR599112_MERGED_FASTQ_I5.tsv ERR599112_MERGED_FASTQ_I5_
-                                cleaningUtils.split(absoluteFilePath, self._lineNumber, os.path.join(root, prefix))
-                                self.__moveChunkedFiles(root, prefix, absoluteFilePath)
-                            else:
-                                print(
-                                    'The size of the file is below the cutoff ( {} MB < {} MB). No chunking necessary!'.format(
-                                        str(fileSizeInMegabytes), self._cutoff))
-                                summaryOutput = open(absoluteFilePath + '.chunks', "w")
-                                summaryOutput.write(fileName + '.gz')
-                                summaryOutput.close()
-                    except:
-                        raise
+        self.print_setup()
+        basename = os.path.basename(self._infile)
+        nameroot = os.path.splitext(basename)[0]
+        abspath = os.path.abspath(self._infile)
+        dirpath = os.path.dirname(abspath)
+        outdirpath = self._outdir
+        try:
+            if cleaningUtils.checkIfAlreadyChunked(os.path.join(outdirpath, os.path.basename(self._infile)), 1):
+                logging.info("This file has already been chunked! Jumping to the next file.")
+            else:
+                print("File has not alredy chunked")
+                infile_size_bytes = float(os.path.getsize(self._infile))
+                infile_size_megabytes = infile_size_bytes / 1024 / 1024
+                if infile_size_megabytes > self._cutoff:
+                    prefix = nameroot + '_'
+                    print('prefix: ' + prefix)
+                    #    split -d -l 10000000 ERR599112_MERGED_FASTQ_I5.tsv ERR599112_MERGED_FASTQ_I5_
+                    cleaningUtils.split(self._infile, self._line_number, os.path.join(dirpath, prefix))
+                    print('split step done. Running moveChunkedFiles')
+                    self.__moveChunkedFiles(dirpath, prefix, self._infile, self._outdir)
                 else:
-                    pass
+                    print('The size of the file is below the cutoff ( {} MB < {} MB). No chunking necessary!'.format(
+                        str(infile_size_megabytes), self._cutoff))
 
-    def moveChunkedFiles(self, dir, prefix, summaryFilePath):
+                    if not os.path.exists(outdirpath):
+                        os.makedirs(outdirpath)
+                        print(outdirpath)
+                    with open(os.path.join(outdirpath, os.path.basename(self._infile) + '.chunks'), "w") as f:
+                        f.write(basename + '.gz')
+        except:
+            raise
+
+    def move_chunked_files(self, dir, prefix, summaryFilePath, outdir):
         options = {'00': '1', '01': '2', '02': '3', '03': '4', '04': '5', '05': '6', '06': '7', '07': '8', '08': '9',
                    '09': '10', '10': '11', '11': '12', '12': '13', '13': '14', '14': '15', '15': '16', '16': '17',
                    '17': '18', '18': '19', '19': '20', '20': '21', '21': '22', '22': '23', '23': '24', '24': '25',
@@ -76,20 +85,24 @@ class ChunkTSVFileUtil:
                     os.rename(source, newDestination)
                     chunkFileList.append(newDestination)
             chunkFileList.sort()
-            summaryOutput = open(summaryFilePath + '.chunks', "w")
-            for listItem in chunkFileList:
-                head, tail = os.path.split(listItem)
-                summaryOutput.write(tail + '.gz' + "\n")
-                summaryOutput.flush()
-            summaryOutput.close()
+
+            outdirpath = outdir  # os.path.join(dir, outdir)
+            if not os.path.exists(outdirpath):
+                os.makedirs(outdirpath)
+                print('out dir:' + str(outdirpath))
+            newSummaryFilePath = os.path.join(outdirpath, os.path.basename(summaryFilePath) + '.chunks')
+            with open(newSummaryFilePath, "w") as f:
+                for listItem in chunkFileList:
+                    head, tail = os.path.split(listItem)
+                    f.write(tail + '.gz' + "\n")
+                    f.flush()
+                    cleaningUtils.compress(filePath=listItem, tool='pigz', options=['-p', '16'])
+                    os.rename(listItem+'.gz', os.path.join(outdirpath, os.path.basename(listItem)+'.gz'))
         except IOError as e:
-            print
-            "Could not write summary file" + summaryFilePath
-            print
-            e
+            print("Could not write summary file: " + newSummaryFilePath)
+            print(e)
         except:
-            print
-            "Unexpected error:", sys.exc_info()[0]
+            print("Unexpected error:", sys.exc_info()[0])
             raise
 
-    __moveChunkedFiles = moveChunkedFiles  # private copy of original method
+    __moveChunkedFiles = move_chunked_files  # private copy of original method

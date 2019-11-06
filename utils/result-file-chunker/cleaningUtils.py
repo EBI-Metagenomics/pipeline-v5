@@ -96,7 +96,7 @@ def pathExists(path, delay=30):
 
 
 def checkIfAlreadyChunked(absoluteFilePath, delay):
-    print "Checking for the '.chunks' file"
+    print("Checking for the '.chunks' file")
     if pathExists(absoluteFilePath + ".chunks", delay):
         return True
     return False
@@ -104,48 +104,36 @@ def checkIfAlreadyChunked(absoluteFilePath, delay):
 
 def split(path, lineNumber, prefix):
     try:
+        print('--> run split')
         subprocess.check_output(['split', '-d', '-l', lineNumber, path, prefix], stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError, ex:
-        print "--------error------"
-        print ex.cmd
-        print ex.message
-        print ex.returncode
-        print ex.output
+    except subprocess.CalledProcessError as ex:
+        print("--------error------")
+        print(ex.cmd)
+        print('return code', ex.returncode)
+        print(ex.output)
 
 
 def splitfasta(path, targetSize, tool_path):
     try:
+        print('---> run fasta chunk')
         subprocess.check_output(
                 [tool_path, 'splitfasta',
                  '-targetsize', targetSize, path], stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError, ex:
-        print "--------error------"
-        print ex.cmd
-        print ex.message
-        print ex.returncode
-        print ex.output
+    except subprocess.CalledProcessError as ex:
+        print("--------error------")
+        print(ex.cmd)
+        print('return code', ex.returncode)
+        print(ex.output)
 
 
-def wc(path):
+def compress(filePath, tool, options):
     try:
-        return subprocess.check_output(['wc', '-l', path], stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError, ex:
-        print "--------error------"
-        print ex.cmd
-        print ex.message
-        print ex.returncode
-        print ex.output
-
-
-def grep(path, pattern):
-    try:
-        return subprocess.check_output(['grep', '-c', pattern, path], stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError, ex:
-        print "--------error------"
-        print ex.cmd
-        print ex.message
-        print ex.returncode
-        print ex.output
+        subprocess.check_output([tool] + options + [filePath], stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as ex:
+        print("--------error------")
+        print(ex.cmd)
+        print('return code', ex.returncode)
+        print(ex.output)
 
 
 def moveChunkedFiles(dir, prefix, summaryFilePath, fileExtension):
@@ -167,14 +155,15 @@ def moveChunkedFiles(dir, prefix, summaryFilePath, fileExtension):
                 chunkFileList.append(newDestination)
         chunkFileList.sort()
         summaryOutput = open(summaryFilePath + '.chunks', "w")
+        print(summaryOutput)
         for listItem in chunkFileList:
             head, tail = os.path.split(listItem)
             summaryOutput.write(tail + '.gz' + "\n")
             summaryOutput.flush()
         summaryOutput.close()
     except IOError as e:
-        print "Could not write summary file" + summaryFilePath
-        print e
+        print("Could not write summary file: " + summaryFilePath)
+        print(e)
     except:
-        print "Unexpected error:", sys.exc_info()[0]
+        print("Unexpected error:", sys.exc_info()[0])
         raise
