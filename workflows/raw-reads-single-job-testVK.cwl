@@ -28,8 +28,8 @@ inputs:
 
     rfam_models: File[]
     rfam_model_clans: File
-    other_ncrna_models: string[]
-    other_ncrnas_name: string
+    other_ncRNA_models: string[]
+    other_ncRNA_name: string
 
     ssu_label: string
     lsu_label: string
@@ -86,6 +86,9 @@ outputs:
   sequence-categorisation_folder_two:
     type: Directory
     outputSource: classify/sequence-categorisation_two
+  ncrnas_folder:
+    type: Directory
+    outputSource: other_ncrnas/ncrnas
 
   rna-count:
     type: File
@@ -93,7 +96,7 @@ outputs:
 
   motus_output:
     type: File
-    outputSource: motus/motus_biom
+    outputSource: motus_taxonomy/motus
 
   compressed_files:
     type: File[]
@@ -105,10 +108,6 @@ outputs:
   stats:
     outputSource: write_summaries/stats
     type: Directory
-
-  pathways_systems_folder:
-    type: Directory
-    outputSource: move_to_pathways_systems_folder/out
 
 steps:
 
@@ -129,7 +128,7 @@ steps:
     out: [ count ]
 
 # << mOTUs2 >>
-  motus:
+  motus_taxonomy:
     run: subworkflows/raw_reads/mOTUs-workflow.cwl
     in:
       reads: unzip_reads/unzipped_merged_reads
@@ -217,15 +216,15 @@ steps:
      input_sequences: validate_fasta/fasta_out
      cmsearch_file: classify/ncRNA
      other_ncRNA_ribosomal_models: other_ncRNA_models
-     name_string: other_ncrnas_name
+     name_string: other_ncRNA_name
     out: [ ncrnas ]
 
 # << COMBINED GENE CALLER >>
   cgc:
     in:
-      input_fasta: length_filter/filtered_file
+      input_fasta: validate_fasta/fasta_out
       seq_type: { default: 's' }
-      maskfile: rna_prediction/ncRNA
+      maskfile: classify/ncRNA
       config: CGC_config
       outdir: { default: 'CGC-output' }
       postfixes: CGC_postfixes
@@ -259,7 +258,7 @@ steps:
       InterProScan_results: functional_annotation/ips_result
       config: go_config
       output_name:
-        source: length_filter/filtered_file
+        source: validate_fasta/fasta_out
         valueFrom: $(self.nameroot).summary.go
     out: [go_summary, go_summary_slim]
 
@@ -269,7 +268,7 @@ steps:
     in:
       interpro: functional_annotation/ips_result
       outputname:
-        source: length_filter/filtered_file
+        source: validate_fasta/fasta_out
         valueFrom: $(self.nameroot).pfam
     out: [annotations]
 
@@ -280,7 +279,7 @@ steps:
        interproscan_annotation: functional_annotation/ips_result
        hmmscan_annotation: functional_annotation/hmmscan_result
        pfam_annotation: pfam/annotations
-       rna: rna_prediction/ncRNA
+       rna: classify/ncRNA
        cds:
          source: cgc/results
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
@@ -309,9 +308,9 @@ steps:
     in:
       uncompressed_file:
         source:
-          - length_filter/filtered_file                 # _FASTA
-          - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
-          - rna_prediction/cmsearch_result              # cmsearch.all
+          - validate_fasta/fasta_out                 # _FASTA
+          - classify/ncRNA                        # cmsearch.all.deoverlapped
+          - classify/cmsearch_result              # cmsearch.all
           - cgc/results                                 # faa, ffn
         linkMerge: merge_flattened
     out: [compressed_file]
@@ -332,8 +331,7 @@ steps:
       list:
         source:
           - compression_func_ann/compressed_file
-          - write_summaries/summary_go
-          - write_summaries/summary_go_slim
+          - write_summaries/summary_ips
           - write_summaries/summary_ko
           - write_summaries/summary_pfam
           - go_summary/go_summary
