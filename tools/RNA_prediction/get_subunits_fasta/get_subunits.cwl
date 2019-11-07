@@ -36,7 +36,8 @@ inputs:
       prefix: -e
   prefix:
     type: string?
-    inputBinding: -p
+    inputBinding:
+      prefix: -p
 
 
 baseCommand: get_subunits.py
