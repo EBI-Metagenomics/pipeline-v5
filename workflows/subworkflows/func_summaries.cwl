@@ -13,7 +13,7 @@ inputs:
   interproscan_annotation: File
   hmmscan_annotation: File
   pfam_annotation: File
-  antismash_gene_clusters: File
+  antismash_gene_clusters: File?
   rna: File
   cds: File
 
@@ -32,7 +32,7 @@ outputs:
     type: File
   summary_antismash:
     outputSource: write_summaries/summary_antismash
-    type: File
+    type: File?
 
 steps:
   functional_stats:

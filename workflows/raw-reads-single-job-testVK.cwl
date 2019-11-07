@@ -63,10 +63,6 @@ inputs:
 
 outputs:
 
-  gz_files:  # fasta.gz, cmsearch.gz, deoverlapped.gz
-    type: File[]
-    outputSource: gzip_files/compressed_file
-
   qc-statistics:
     type: Directory
     outputSource: qc_stats/output_dir
@@ -87,7 +83,6 @@ outputs:
   sequence-categorisation_folder:
     type: Directory
     outputSource: classify/sequence-categorisation
-
   sequence-categorisation_folder_two:
     type: Directory
     outputSource: classify/sequence-categorisation_two
@@ -99,6 +94,45 @@ outputs:
   motus_output:
     type: File
     outputSource: motus/motus_biom
+
+  compressed_files:
+    type: File[]
+    outputSource: compression/compressed_file
+
+  functional_annotation_folder:
+    type: Directory
+    outputSource: move_to_functional_annotation_folder/out
+  stats:
+    outputSource: write_summaries/stats
+    type: Directory
+
+  pathways_systems_folder:
+    type: Directory
+    outputSource: move_to_pathways_systems_folder/out
+
+
+outputs:
+
+  qc-statistics_folder:
+    type: Directory
+    outputSource: qc_stats/output_dir
+  qc_summary:
+    type: File
+    outputSource: length_filter/stats_summary_file
+  qc-status:
+    type: File
+    outputSource: QC-FLAG/qc-flag
+
+  LSU_folder:
+    type: Directory
+    outputSource: rna_prediction/LSU_folder
+  SSU_folder:
+    type: Directory
+    outputSource: rna_prediction/SSU_folder
+
+  sequence-categorisation_folder:
+    type: Directory
+    outputSource: rna_prediction/sequence-categorisation
 
   compressed_files:
     type: File[]
@@ -240,7 +274,7 @@ steps:
 
 # << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
   functional_annotation:
-    run: subworkflows/functional_annotation.cwl
+    run: subworkflows/raw_reads/functional_annotation_raw.cwl
     in:
       CGC_predicted_proteins:
         source: cgc/results
@@ -252,13 +286,10 @@ steps:
       HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
       HMMSCAN_name_database: HMMSCAN_name_database
       HMMSCAN_data: HMMSCAN_data
-      EggNOG_db: EggNOG_db
-      EggNOG_diamond_db: EggNOG_diamond_db
-      EggNOG_data_dir: EggNOG_data_dir
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
-    out: [ hmmscan_result, ips_result, eggnog_annotations, eggnog_orthologs ]
+    out: [ hmmscan_result, ips_result ]
 
 # << GO SUMMARY>>
   go_summary:
@@ -288,12 +319,11 @@ steps:
        interproscan_annotation: functional_annotation/ips_result
        hmmscan_annotation: functional_annotation/hmmscan_result
        pfam_annotation: pfam/annotations
-       antismash_gene_clusters: antismash/geneclusters_txt
        rna: rna_prediction/ncRNA
        cds:
          source: cgc/results
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-    out: [summary_ips, summary_ko, summary_pfam, summary_antismash, stats]
+    out: [summary_ips, summary_ko, summary_pfam, stats]
 
 # << FINAL STEPS >>
 
