@@ -378,7 +378,7 @@ steps:
     in:
      input_sequences: length_filter/filtered_file
      cmsearch_file: rna_prediction/ncRNA
-     other_ncRNA_ribosomal_models: other_ncRNA_models
+     other_ncRNA_ribosomal_models: other_ncrna_models
      name_string: other_ncrnas_name
     out: [ ncrnas ]
 
