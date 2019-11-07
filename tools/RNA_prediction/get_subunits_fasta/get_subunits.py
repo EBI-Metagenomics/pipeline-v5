@@ -25,12 +25,12 @@ FiveEightS_filename = directory + "/5_8S.fa"
 
 def set_model_names(prefix):
 
-    SSU_rRNA_archaea_name = directory + "/" + prefix + '_' + SSU_rRNA_archaea + '.RF01959.fa'
-    SSU_rRNA_bacteria_name = directory + "/" + prefix + '_' + SSU_rRNA_bacteria + '.RF00177.fa'
-    SSU_rRNA_eukarya_name = directory + "/" + prefix + '_' + SSU_rRNA_eukarya + '.RF01960.fa'
-    LSU_rRNA_archaea_name = directory + "/" + prefix + '_' + LSU_rRNA_archaea + '.RF02540.fa'
-    LSU_rRNA_bacteria_name = directory + "/" + prefix + '_' + LSU_rRNA_bacteria + '.RF02541.fa'
-    LSU_rRNA_eukarya_name = directory + "/" + prefix + '_' + LSU_rRNA_eukarya + '.RF02543.fa'
+    SSU_rRNA_archaea_name = directory + "/" + prefix + SSU_rRNA_archaea + '.RF01959.fa'
+    SSU_rRNA_bacteria_name = directory + "/" + prefix + SSU_rRNA_bacteria + '.RF00177.fa'
+    SSU_rRNA_eukarya_name = directory + "/" + prefix + SSU_rRNA_eukarya + '.RF01960.fa'
+    LSU_rRNA_archaea_name = directory + "/" + prefix + LSU_rRNA_archaea + '.RF02540.fa'
+    LSU_rRNA_bacteria_name = directory + "/" + prefix + LSU_rRNA_bacteria + '.RF02541.fa'
+    LSU_rRNA_eukarya_name = directory + "/" + prefix + LSU_rRNA_eukarya + '.RF02543.fa'
 
     return [SSU_rRNA_archaea_name, SSU_rRNA_bacteria_name, SSU_rRNA_eukarya_name, \
            LSU_rRNA_archaea_name, LSU_rRNA_bacteria_name, LSU_rRNA_eukarya_name]

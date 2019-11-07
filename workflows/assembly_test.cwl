@@ -103,6 +103,9 @@ outputs:
   sequence-categorisation_folder:
     type: Directory
     outputSource: rna_prediction/sequence-categorisation
+  sequence-categorisation_SSU_LSU:
+    type: Directory
+    outputSource: rna_prediction/sequence-categorisation_two
 
   compressed_files:
     type: File[]
@@ -206,6 +209,7 @@ steps:
       - SSU_folder
       - LSU_folder
       - sequence-categorisation
+      - sequence-categorisation_two
     run: subworkflows/rna_prediction-sub-wf.cwl
 
 # << COMBINED GENE CALLER >>
