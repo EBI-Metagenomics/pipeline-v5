@@ -1,9 +1,9 @@
-contigs:
+single_reads:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/ERZ477576_FASTA_1000.fasta.gz
+  path:
   format: edam:format_1929
 
-contig_min_length: 100
+qc_min_length: 100
 
 # RNA PREDICTION
 

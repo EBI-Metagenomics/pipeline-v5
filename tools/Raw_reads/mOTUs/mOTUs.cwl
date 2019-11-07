@@ -38,9 +38,8 @@ inputs:
 baseCommand: [motus]
 
 arguments: [profile, -c, -q]
-# -B]
 
-stdout: $(inputs.reads.nameroot).motus_biom
+stdout: $(inputs.reads.nameroot).motus
 
 outputs:
   motu_taxonomy:
