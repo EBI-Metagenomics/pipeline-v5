@@ -110,45 +110,6 @@ outputs:
     type: Directory
     outputSource: move_to_pathways_systems_folder/out
 
-
-outputs:
-
-  qc-statistics_folder:
-    type: Directory
-    outputSource: qc_stats/output_dir
-  qc_summary:
-    type: File
-    outputSource: length_filter/stats_summary_file
-  qc-status:
-    type: File
-    outputSource: QC-FLAG/qc-flag
-
-  LSU_folder:
-    type: Directory
-    outputSource: rna_prediction/LSU_folder
-  SSU_folder:
-    type: Directory
-    outputSource: rna_prediction/SSU_folder
-
-  sequence-categorisation_folder:
-    type: Directory
-    outputSource: rna_prediction/sequence-categorisation
-
-  compressed_files:
-    type: File[]
-    outputSource: compression/compressed_file
-
-  functional_annotation_folder:
-    type: Directory
-    outputSource: move_to_functional_annotation_folder/out
-  stats:
-    outputSource: write_summaries/stats
-    type: Directory
-
-  pathways_systems_folder:
-    type: Directory
-    outputSource: move_to_pathways_systems_folder/out
-
 steps:
 
 # << unzipping only >>
