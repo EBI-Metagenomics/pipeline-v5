@@ -12,7 +12,7 @@ requirements:
   StepInputExpressionRequirement: {}
 
 inputs:
-  input_sequences: {type: File, secondaryFiles: [.ssi] }
+  input_sequences: File
   cmsearch_file: File
   other_ncRNA_ribosomal_models: string[]
   name_string: string
@@ -23,6 +23,12 @@ outputs:
     outputSource: move_fastas/out
 
 steps:
+
+  index_reads:
+    run: ../../tools/easel/esl-sfetch-index.cwl
+    in:
+      sequences: input_sequences
+    out: [ sequences_with_index ]
 
   extract_coords:
     run: ../../tools/RNA_prediction/extract-coords_awk.cwl
@@ -43,7 +49,7 @@ steps:
     scatter: names_contain_subseq_coords
     in:
       names_contain_subseq_coords: get_coords/matches
-      indexed_sequences: input_sequences
+      indexed_sequences: index_reads/sequences_with_index
     out: [ sequences ]
 
   rename_ncrnas:

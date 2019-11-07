@@ -318,6 +318,7 @@ steps:
 # gzip functional annotation files
   compression_func_ann:
     run: ../utils/gzip.cwl
+    scatter: uncompressed_file
     in:
       uncompressed_file:
         source:
