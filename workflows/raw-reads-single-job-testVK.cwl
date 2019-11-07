@@ -29,7 +29,7 @@ inputs:
     rfam_models: File[]
     rfam_model_clans: File
     other_ncRNA_models: string[]
-    other_ncRNA_name: string
+    #other_ncRNA_name: string
 
     ssu_label: string
     lsu_label: string
@@ -216,7 +216,7 @@ steps:
      input_sequences: validate_fasta/fasta_out
      cmsearch_file: classify/ncRNA
      other_ncRNA_ribosomal_models: other_ncRNA_models
-     name_string: other_ncRNA_name
+     name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
 
 # << COMBINED GENE CALLER >>
