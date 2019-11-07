@@ -25,21 +25,21 @@ outputs:
 steps:
 
   extract_coords:
-    run: extract-coords_awk.cwl
+    run: ../../tools/RNA_prediction/extract-coords_awk.cwl
     in:
       infernal_matches: cmsearch_file
       name: name_string
     out: [ matched_seqs_with_coords ]
 
   get_coords:
-    run: pull_ncrnas.cwl
+    run: ../../tools/RNA_prediction/pull_ncrnas.cwl
     in:
       hits: extract_coords/matched_seqs_with_coords
       model: other_ncRNA_ribosomal_models
     out: [ matches ]
 
   get_ncrnas:
-    run: ../easel/esl-sfetch-manyseqs.cwl
+    run: ../../tools/easel/esl-sfetch-manyseqs.cwl
     scatter: names_contain_subseq_coords
     in:
       names_contain_subseq_coords: get_coords/matches
