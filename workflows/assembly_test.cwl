@@ -35,8 +35,12 @@ inputs:
     lsu_tax: File
     ssu_otus: File
     lsu_otus: File
+
     rfam_models: File[]
     rfam_model_clans: File
+    other_ncrna_models: string[]
+    other_ncrnas_name: string
+
     ssu_label: string
     lsu_label: string
     5s_pattern: string
@@ -106,6 +110,9 @@ outputs:
   sequence-categorisation_SSU_LSU:
     type: Directory
     outputSource: rna_prediction/sequence-categorisation_two
+  other_rna:
+    type: Directory
+    outputSource: other_ncrnas/ncrnas
 
   compressed_files:
     type: File[]
@@ -365,7 +372,15 @@ steps:
         valueFrom: $(self.nameroot).antismash.gff
     out: [output_gff_gz, output_gff_index]
 
-# << other RNAs >>
+# << other ncrnas >>
+  other_ncrnas:
+    run: subworkflows/other_ncrnas.cwl
+    in:
+     input_sequences: length_filter/filtered_file
+     cmsearch_file: classify/ncRNA
+     other_ncRNA_ribosomal_models: other_ncRNA_models
+     name_string: other_ncrnas_name
+    out: [ ncrnas ]
 
 
 # << FINAL STEPS >>
