@@ -63,14 +63,17 @@ if __name__ == "__main__":
         parser.print_help()
     else:
         args = parser.parse_args()
-
+        if not args.prefix:
+            prefix = ''
+        else:
+            prefix = args.prefix
         print('Start fasta mode')
         out_ssu = open(SSU_filename, 'wt')
         out_lsu = open(LSU_filename, 'wt')
         out_5S = open(FiveS_filename, 'wt')
         out_5_8S = open(FiveEightS_filename, 'wt')
 
-        names = set_model_names(args.prefix)
+        names = set_model_names(prefix)
 
         SSU_a_out, SSU_b_out, SSU_e_out, LSU_a_out, LSU_b_out, LSU_e_out = open_model_files(names)
 
