@@ -210,7 +210,7 @@ pathways_classes:
 gp_flatfiles_path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/genome-properties/flatfiles
 
 #other ncrna
-other_ncRNA_models:
+other_ncrna_models:
   - 'alpha_tmRNA.RF01849'
   - 'Bacteria_large_SRP.RF01854'
   - 'beta_tmRNA.RF01850'
