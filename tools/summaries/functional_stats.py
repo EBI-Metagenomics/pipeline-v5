@@ -121,7 +121,10 @@ if __name__ == "__main__":
 
 
         files = [args.interproscan, args.hmmscan, args.pfam, args.antismash]
-        hashes = ['InterProScan', 'KO', 'pfam', 'antismash']
+        hashes = ['InterProScan', 'KO', 'pfam']
+
+        if args.antismash:
+            hashes.append('antismash')
 
         for file_annotation, num in zip(files, range(len(files))):
             print(file_annotation)
