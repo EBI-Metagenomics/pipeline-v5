@@ -10,10 +10,10 @@ reverse_reads:
 qc_min_length: 100
 stats_file_name: 'qc_summary'
 
-ssu_label: 'SSU'
-lsu_label: 'LSU'
-5.8s_pattern: '5_8S'
-5s_pattern: '5S'
+ssu_label: 'SSU_rRNA'
+lsu_label: 'LSU_rRNA'
+5.8s_pattern: '5_8S_rRNA'
+5s_pattern: 'mtPerm-5S'
 
 unite_label: 'UNITE'
 itsonedb_label: 'ITSonedb'
