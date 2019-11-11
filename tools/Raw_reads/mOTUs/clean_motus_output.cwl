@@ -11,6 +11,8 @@ inputs:
   taxonomy:
     type: File
     label: motus classification
+    inputBinding:
+        position: 1
 
 baseCommand: [clean_motus_output.sh]
 
