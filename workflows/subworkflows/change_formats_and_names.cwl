@@ -14,6 +14,7 @@ inputs:
   kegg_summary: File
   antismash_gbk: File
   antismash_embl: File
+  antismash_geneclusters: File
   fasta: File
 
 outputs:
@@ -29,6 +30,9 @@ outputs:
   antismash_embl:
     type: File
     outputSource: move_antismash_embl/renamed_file
+  antismash_gclust:
+    type: File
+    outputSource: move_antismash_genclust/renamed_file
 
 steps:
 
@@ -70,4 +74,13 @@ steps:
       out_file_name:
         source: fasta
         valueFrom: $(self.nameroot)_antismash_final.embl
+    out: [renamed_file]
+
+  move_antismash_genclust:
+    run: ../../utils/move.cwl
+    in:
+      initial_file: antismash_geneclusters
+      out_file_name:
+        source: fasta
+        valueFrom: $(self.nameroot)_antismash_geneclusters.txt
     out: [renamed_file]

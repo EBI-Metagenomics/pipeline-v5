@@ -453,8 +453,9 @@ steps:
       kegg_summary: pathways/kegg_pathways_summary
       antismash_gbk: antismash/final_gbk
       antismash_embl: antismash/final_embl
+      antismash_geneclusters: antismash/geneclusters_txt
       fasta: length_filter/filtered_file
-    out: [gp_summary_csv, kegg_summary_csv, antismash_gbk, antismash_embl]
+    out: [gp_summary_csv, kegg_summary_csv, antismash_gbk, antismash_embl, antismash_gclust]
 
 # gzip pathways and systems files
   compression_pathways_systems:
@@ -475,6 +476,7 @@ steps:
       list:
         source:
           - change_formats_and_names/kegg_summary_csv           # kegg pathways.csv
+          - change_formats_and_names/antismash_gclust           # geneclusters.txt
           - pathways/kegg_contigs_summary                       # kegg contigs.tsv -- not using
           - change_formats_and_names/gp_summary_csv             # genome properties.csv
           - compression_pathways_systems/compressed_file        # antismash GBK and EMBL
