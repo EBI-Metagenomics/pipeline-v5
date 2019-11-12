@@ -14,15 +14,15 @@ inputs:
   fasta:
     type: File
     inputBinding:
-      position: 1
+      prefix: -f
 
-baseCommand: [ "samtools", "faidx" ]
+baseCommand: [ run_samtools.sh ]
 
 outputs:
   fasta_index:
     type: File
     outputBinding:
-      glob: $(inputs.fasta.basename).fai
+      glob: "index/$(inputs.fasta.basename).fai"
 
 $namespaces:
  edam: http://edamontology.org/
