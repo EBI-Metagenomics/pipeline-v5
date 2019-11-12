@@ -128,6 +128,10 @@ outputs:
     type: Directory
     outputSource: move_to_pathways_systems_folder/out
 
+  index_fasta_file:
+    type: File
+    outputSource: fasta_index/fasta_index
+
 steps:
 # << unzip contig file >>
   unzip:
@@ -383,6 +387,13 @@ steps:
 
 
 # << FINAL STEPS >>
+
+# index FASTA
+  fasta_index:
+    run: ../utils/fasta_index.cwl
+    in:
+      fasta: length_filter/filtered_file
+    out: [fasta_index]
 
 # add header
   header_addition:
