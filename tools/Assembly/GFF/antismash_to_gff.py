@@ -18,6 +18,7 @@ import argparse
 import subprocess
 from urllib import parse
 import json
+import re
 
 from Bio import SeqIO
 
@@ -42,15 +43,15 @@ def aggregate_clusters(geneclus_file):
     with open(geneclus_file, 'r') as reader:
         for line in reader:
             split = line.split('\t')
-            contig_id = ''
+            cluster = ''
+            entries = ''
             if len(split) == 5:
                 _, contig, cluster, entries, _ = split
-                contig_id = (contig + '-' + contig_1).replace(' ', '-')
             elif len(split) == 6:
-                _, contig, contig_1,  cluster, entries, _ = split
-                contig_id = (contig + '-' + contig_1).replace(' ', '-')
+                _, contig, _, cluster, entries, _ = split
             else:
                 raise ValueError('geneclusters.txt does not have 5 or 6 columns')
+            contig_id = contig.replace(' ', '-')
             if contig_id not in res:
                 res[contig_id] = []
             res[contig_id].extend(list(map(lambda f_id: (f_id, cluster),
@@ -106,6 +107,17 @@ def _clean_as_notes(value):
     else:
         return parse.quote(value)
 
+def _mags_name_clean(query_name):
+    """Clean the MAGs genome name.
+    MAGs .embl query_name is:
+    
+    GUT_GENOME096033_1-NZ_JH815228.1-Fusobacterium-ulcerans-ATCC-49185-genomic
+
+    That name is not proper for the .gff file so it is cleaned in order to return:
+    GUT_GENOME096033_1
+    """
+    return re.sub(r'[-].+', '', query_name)
+
 def build_attributes(entry_quals, gc_data, as_types):
     """Convert the CDS features to gff attributes field for an CDS entry
     """
@@ -132,12 +144,14 @@ def build_attributes(entry_quals, gc_data, as_types):
     attributes.append(['product', _get_value(entry_quals, 'product')])
     return ';'.join([name + '=' + ','.join(values) for name,values in attributes if len(values)])
 
-def build_gff(embl_file, gclusters, as_types):
+def build_gff(embl_file, gclusters, as_types, mag=False):
     """Build the GFF from the geneclusters and the EMBL file
     """
     entries = SeqIO.parse(embl_file, 'embl')
     for entry in entries:
         query_name = entry.description.replace(' ', '-')
+        if mag:
+            query_name = _mags_name_clean(query_name)
         # filter the embl file by the contigs that have a 
         # gene cluster entry in the geneclusters.txt file
         gc_data = gclusters.get(query_name, None)
@@ -182,6 +196,14 @@ if __name__ == '__main__':
         '-j', dest='gc_json', help='antiSMASH geneclusters.json file',
         required=True)
     parser.add_argument(
+        '--mag', help='MAGs use a specific naming convention on the EMBL file.' +
+                       'This flag will process the DESC field on the EMBL to correct that',
+        action='store_true')
+    parser.add_argument(
+        '--no-tabix', help='Disable the compressed gff build process.',
+        action='store_true'
+    )
+    parser.add_argument(
         '-o', dest='out', help='Ouput GFF file name', required=True)
     args = parser.parse_args()
 
@@ -192,13 +214,14 @@ if __name__ == '__main__':
         clusters_data = aggregate_clusters(args.geneclus)
         as_types = antismash_load_types(args.gc_json)        
 
-        for row in build_gff(args.embl, clusters_data, as_types):
+        for row in build_gff(args.embl, clusters_data, as_types, mag=args.mag):
             print('\t'.join(row), file=out_handle)
 
-    print('Sorting...')
-    grep = '(grep ^"#" {0}; grep -v ^"#" {0} | sort -k1,1 -k4,4n)'.format(args.out)
-    grep += '| bgzip > {0}.gz'.format(args.out)
-    print(grep)
-    subprocess.call(grep, shell=True)
-    print('Building index...')
-    subprocess.call(['tabix', '-p', 'gff', '{}.gz'.format(args.out)])
+    if not args.no_tabix:
+        print('Sorting...')
+        grep = '(grep ^"#" {0}; grep -v ^"#" {0} | sort -k1,1 -k4,4n)'.format(args.out)
+        grep += '| bgzip > {0}.gz'.format(args.out)
+        print(grep)
+        subprocess.call(grep, shell=True)
+        print('Building index...')
+        subprocess.call(['tabix', '-p', 'gff', '{}.gz'.format(args.out)])
