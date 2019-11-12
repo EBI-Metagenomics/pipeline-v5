@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env /hps/nobackup2/production/metagenomics/pipeline/tools-v4/miniconda2-4.0.5/bin/python2
 
 # nfs/seqdb/production/interpro/development/metagenomics/pipeline/tools/anaconda/bin/python
 
@@ -399,110 +399,118 @@ if __name__ == '__main__':
     iprscan_output_file = args['input_file']
     output_file = args['output_file']
 
-    # Get program configuration
-    configuration = json.load(args['config'])
-    temp_dir = configuration["temp_dir"]
-    # Create unique temporary file prefix
-    date_stamp = time.strftime("%Y%m%d%H%M%S")
-    random_word = GOSummaryUtils.random_word(8)
-    temp_file_prefix = date_stamp + "_" + random_word + "_"
+    if not os.stat(iprscan_output_file).st_size == 0:
+        # Get program configuration
+        configuration = json.load(args['config'])
+        temp_dir = configuration["temp_dir"]
+        # Create unique temporary file prefix
+        date_stamp = time.strftime("%Y%m%d%H%M%S")
+        random_word = GOSummaryUtils.random_word(8)
+        temp_file_prefix = date_stamp + "_" + random_word + "_"
 
-    # path to the latest version of the core gene ontology in OBO format
-    full_gene_ontology_obo_formatted = ''.join([script_full_path, '/', configuration["full_gene_ontology_obo_file"]])
+        # path to the latest version of the core gene ontology in OBO format
+        full_gene_ontology_obo_formatted = ''.join([script_full_path, '/', configuration["full_gene_ontology_obo_file"]])
 
-    # GO slim banding file
-    go_slim_banding_file = ''.join([script_full_path, '/', configuration["metagenomics_go_slim_banding_file"]])
+        # GO slim banding file
+        go_slim_banding_file = ''.join([script_full_path, '/', configuration["metagenomics_go_slim_banding_file"]])
 
-    # Map2Slim program parameters
-    metagenomics_go_slim_ids_file = ''.join([script_full_path, '/', configuration["metagenomics_go_slim_ids_file"]])
-    owltools_bin = ''.join([script_full_path, '/', configuration["owltools_bin_file"]])
+        # Map2Slim program parameters
+        metagenomics_go_slim_ids_file = ''.join([script_full_path, '/', configuration["metagenomics_go_slim_ids_file"]])
+        owltools_bin = ''.join([script_full_path, '/', configuration["owltools_bin_file"]])
 
-    # psutil is a library for retrieving information on running processes
-    process = psutil.Process(os.getpid())
-    print "Process id: " + str(os.getpid())
-    print "Initial memory: " + GOSummaryUtils.get_memory_info(process)
+        # psutil is a library for retrieving information on running processes
+        process = psutil.Process(os.getpid())
+        print "Process id: " + str(os.getpid())
+        print "Initial memory: " + GOSummaryUtils.get_memory_info(process)
 
-    # Create temporary file names, necessary to run map2slim
-    gaf_input_temp_file_path = temp_dir + temp_file_prefix + 'pipeline_input_annotations.gaf'
-    gaf_output_temp_file_path = temp_dir + temp_file_prefix + 'pipeline_mapped_annotations.gaf'
-    print "Creating temp files under: " + gaf_input_temp_file_path
+        # Create temporary file names, necessary to run map2slim
+        gaf_input_temp_file_path = temp_dir + temp_file_prefix + 'pipeline_input_annotations.gaf'
+        gaf_output_temp_file_path = temp_dir + temp_file_prefix + 'pipeline_mapped_annotations.gaf'
+        print "Creating temp files under: " + gaf_input_temp_file_path
 
-    # Parse InterProScan result file; map protein accessions and GO terms
-    print "Parsing the InterProScan result output file: " + iprscan_output_file
-    go2protein_count_dict, processing_stats = GOSummaryUtils.parseIprScanOutput(iprscan_output_file)
-    print "Finished parsing."
-    print "After parsing the InterProScan result file: " + GOSummaryUtils.get_memory_info(process)
+        # Parse InterProScan result file; map protein accessions and GO terms
+        print "Parsing the InterProScan result output file: " + iprscan_output_file
+        go2protein_count_dict, processing_stats = GOSummaryUtils.parseIprScanOutput(iprscan_output_file)
+        print "Finished parsing."
+        print "After parsing the InterProScan result file: " + GOSummaryUtils.get_memory_info(process)
 
-    # Generate GO summary
-    print "Loading full Gene ontology: " + full_gene_ontology_obo_formatted
-    core_gene_ontology_list = GOSummaryUtils.get_gene_ontology(full_gene_ontology_obo_formatted)
-    print "Finished loading."
-    print "After loading the full Gene ontology: " + GOSummaryUtils.get_memory_info(process)
+        # Generate GO summary
+        print "Loading full Gene ontology: " + full_gene_ontology_obo_formatted
+        core_gene_ontology_list = GOSummaryUtils.get_gene_ontology(full_gene_ontology_obo_formatted)
+        print "Finished loading."
+        print "After loading the full Gene ontology: " + GOSummaryUtils.get_memory_info(process)
 
-    print "Generating full GO summary..."
-    topLevelGoIds = ['GO:0008150', 'GO:0003674', 'GO:0005575']
-    full_go_summary = GOSummaryUtils.getFullGOSummary(core_gene_ontology_list, go2protein_count_dict, topLevelGoIds)
-    print "After generating the full GO summary: " + GOSummaryUtils.get_memory_info(process)
-    # delete core gene ontology list
-    del core_gene_ontology_list
-    print "Finished generation."
+        print "Generating full GO summary..."
+        topLevelGoIds = ['GO:0008150', 'GO:0003674', 'GO:0005575']
+        full_go_summary = GOSummaryUtils.getFullGOSummary(core_gene_ontology_list, go2protein_count_dict, topLevelGoIds)
+        print "After generating the full GO summary: " + GOSummaryUtils.get_memory_info(process)
+        # delete core gene ontology list
+        del core_gene_ontology_list
+        print "Finished generation."
 
-    print "Writing full GO summary to the following file: " + output_file
-    GOSummaryUtils.writeGoSummaryToFile(full_go_summary, output_file)
-    # delete full GO summary variable
-    del full_go_summary
-    print "Finished writing."
+        print "Writing full GO summary to the following file: " + output_file
+        GOSummaryUtils.writeGoSummaryToFile(full_go_summary, output_file)
+        # delete full GO summary variable
+        del full_go_summary
+        print "Finished writing."
 
-    # Generating the GAF input file for Map2Slim
-    print "Generating the GAF input file for Map2Slim..."
-    go_id_set = go2protein_count_dict.keys()
-    # delete GO to protein dictionary variable
-    del go2protein_count_dict
-    GOSummaryUtils.create_gaf_file(gaf_input_temp_file_path, go_id_set)
-    num_of_gaf_entries = len(go_id_set)
-    del go_id_set
-    print "Finished GAF file generation."
+        # Generating the GAF input file for Map2Slim
+        print "Generating the GAF input file for Map2Slim..."
+        go_id_set = go2protein_count_dict.keys()
+        # delete GO to protein dictionary variable
+        del go2protein_count_dict
+        GOSummaryUtils.create_gaf_file(gaf_input_temp_file_path, go_id_set)
+        num_of_gaf_entries = len(go_id_set)
+        del go_id_set
+        print "Finished GAF file generation."
 
-    # Generate GO slim
-    # Run Map2Slim for more information on how to use the tool see https://github.com/owlcollab/owltools/wiki/Map2Slim
-    print "Memory before running Map2Slim: " + GOSummaryUtils.get_memory_info(process)
-    print "Running Map2Slim now..."
-    run_map2slim(owltools_bin, full_gene_ontology_obo_formatted, metagenomics_go_slim_ids_file,
-                 gaf_input_temp_file_path, gaf_output_temp_file_path)
-    print "Map2Slim finished!"
+        # Generate GO slim
+        # Run Map2Slim for more information on how to use the tool see https://github.com/owlcollab/owltools/wiki/Map2Slim
+        print "Memory before running Map2Slim: " + GOSummaryUtils.get_memory_info(process)
+        print "Running Map2Slim now..."
+        run_map2slim(owltools_bin, full_gene_ontology_obo_formatted, metagenomics_go_slim_ids_file,
+                     gaf_input_temp_file_path, gaf_output_temp_file_path)
+        print "Map2Slim finished!"
 
-    print "Parsing mapped annotations..."
-    go2mapped_go = GOSummaryUtils.parse_mapped_gaf_file(gaf_output_temp_file_path)
-    print "Finished parsing."
+        print "Parsing mapped annotations..."
+        go2mapped_go = GOSummaryUtils.parse_mapped_gaf_file(gaf_output_temp_file_path)
+        print "Finished parsing."
 
-    print "Getting GO slim counts by parsing I5 TSV again"
-    go_slims_2_protein_count = GOSummaryUtils.parse_iprscan_output_goslim_counts(iprscan_output_file, go2mapped_go)
-    print "After getting GO slim counts: " + GOSummaryUtils.get_memory_info(process)
+        print "Getting GO slim counts by parsing I5 TSV again"
+        go_slims_2_protein_count = GOSummaryUtils.parse_iprscan_output_goslim_counts(iprscan_output_file, go2mapped_go)
+        print "After getting GO slim counts: " + GOSummaryUtils.get_memory_info(process)
 
-    go_slim_summary = GOSummaryUtils.get_go_slim_summary(go_slim_banding_file, go_slims_2_protein_count)
-    go_slim_output_file = output_file + '_slim'
-    print "Writing GO slim summary to the following file: " + go_slim_output_file
-    GOSummaryUtils.writeGoSummaryToFile(go_slim_summary, go_slim_output_file)
-    # delete full GO summary variable
-    del go_slim_summary
-    print "Finished writing."
+        go_slim_summary = GOSummaryUtils.get_go_slim_summary(go_slim_banding_file, go_slims_2_protein_count)
+        go_slim_output_file = output_file + '_slim'
+        print "Writing GO slim summary to the following file: " + go_slim_output_file
+        GOSummaryUtils.writeGoSummaryToFile(go_slim_summary, go_slim_output_file)
+        # delete full GO summary variable
+        del go_slim_summary
+        print "Finished writing."
 
-    # deleting temporary files
-    try:
-    	os.remove(gaf_input_temp_file_path)
-    	os.remove(gaf_output_temp_file_path)
-    except OSError:
-        pass
-    except:
-        raise
+        # deleting temporary files
+        try:
+            os.remove(gaf_input_temp_file_path)
+            os.remove(gaf_output_temp_file_path)
+        except OSError:
+            pass
+        except:
+            raise
 
-    "============Statistics============"
-    print "Parsed " + str(processing_stats.num_of_lines) + " lines in the InterProScan result file."
-    print "Found " + str(processing_stats.num_of_proteins) + " proteins in the InterProScan result file."
-    print str(processing_stats.proteins_with_go) + " out of " + str(
-            processing_stats.num_of_proteins) + " proteins do have GO annotations."
-    print "Found " + str(
-            processing_stats.num_of_unique_go_ids) + " unique GO identifiers in the InterProScan result file."
-    print "Created " + str(num_of_gaf_entries) + " GAF entries to feed Map2Slim."
+        "============Statistics============"
+        print "Parsed " + str(processing_stats.num_of_lines) + " lines in the InterProScan result file."
+        print "Found " + str(processing_stats.num_of_proteins) + " proteins in the InterProScan result file."
+        print str(processing_stats.proteins_with_go) + " out of " + str(
+                processing_stats.num_of_proteins) + " proteins do have GO annotations."
+        print "Found " + str(
+                processing_stats.num_of_unique_go_ids) + " unique GO identifiers in the InterProScan result file."
+        print "Created " + str(num_of_gaf_entries) + " GAF entries to feed Map2Slim."
 
-    print "Program finished."
+        print "Program finished."
+    else:
+        with open("empty.summary.go", "w") as empty_summary:
+            empty_summary.close()
+        with open("empty.summary.go_slim", "w") as empty_slim:
+            empty_slim.close()
+        sys.stdout.write("input file empty, writing empty output files")
+        sys.stderr.write("input file empty, writing empty output files")
