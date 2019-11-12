@@ -41,8 +41,16 @@ def aggregate_clusters(geneclus_file):
     res = {}
     with open(geneclus_file, 'r') as reader:
         for line in reader:
-            _, contig, cluster, entries, _ = line.split('\t')
-            contig_id = contig.replace(' ', '-')
+            split = line.split('\t')
+            contig_id = ''
+            if len(split) == 5:
+                _, contig, cluster, entries, _ = split
+                contig_id = (contig + '-' + contig_1).replace(' ', '-')
+            elif len(split) == 6:
+                _, contig, contig_1,  cluster, entries, _ = split
+                contig_id = (contig + '-' + contig_1).replace(' ', '-')
+            else:
+                raise ValueError('geneclusters.txt does not have 5 or 6 columns')
             if contig_id not in res:
                 res[contig_id] = []
             res[contig_id].extend(list(map(lambda f_id: (f_id, cluster),
@@ -73,6 +81,7 @@ def antismash_load_types(json_file):
     the html output of antiSMASH.
     To build the json file:
     echo ";var fs = require('fs'); fs.writeFileSync('./geneclusters.json', JSON.stringify(geneclusters));" >> geneclusters.js
+    node geneclusters.js # this will generate the geneclusters.json file
     """
     feature_types = {}
     with open(json_file) as f:
