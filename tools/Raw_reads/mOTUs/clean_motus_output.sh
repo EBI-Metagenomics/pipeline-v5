@@ -2,12 +2,14 @@
 
 motus=$1
 
+outfilename=$(basename -- "$motus").tsv
 echo 'clean files'
-grep -v "0$" $motus | tail -n+3 | sort -t$'\t' -k3,3n > $(basename -- $motus).tsv
-tail -n1 $motus | sed s'/-1/Unmapped/g' >> $(basename -- $motus).tsv
+grep -v "0$" $motus | tail -n+3 | sort -t$'\t' -k3,3n > $outfilename
+tail -n1 $motus | sed s'/-1/Unmapped/g' >> $outfilename
 
-y=$( wc -l $(basename -- $motus).tsv)
+y=$(cat $outfilename | wc -l)
+echo $y
 if [ $y -eq 2 ]; then
   echo 'rename file to empty'
-  mv $(basename -- $motus).tsv 'empty.motus.tsv'
+  mv $outfilename 'empty.motus.tsv'
 fi
