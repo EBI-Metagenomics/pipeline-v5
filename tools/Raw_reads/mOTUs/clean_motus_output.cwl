@@ -12,13 +12,9 @@ inputs:
     type: File
     label: motus classification
     inputBinding:
-        position: 2
-  script:
-    type: File
-    inputBinding:
         position: 1
 
-baseCommand: [sh]
+baseCommand: [clean_motus_output.sh]
 
 outputs:
   clean_annotations:
