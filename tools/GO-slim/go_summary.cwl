@@ -42,12 +42,12 @@ outputs:
     type: File
     format: iana:text/csv
     outputBinding:
-      glob: $(inputs.output_name)
+      glob: "*.go"
   go_summary_slim:
     type: File
     format: iana:text/csv
     outputBinding:
-      glob: $(inputs.output_name)_slim
+      glob: "*.go_slim"
   stderr: stderr
   stdout: stdout
 
