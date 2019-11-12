@@ -127,7 +127,6 @@ steps:
       pattern_LSU: pattern_LSU
       pattern_5S: pattern_5S
       pattern_5.8S: pattern_5.8S
-      prefix_file: input_sequences
     out: [SSU_seqs, LSU_seqs, fastas]
 
 # classify SSU

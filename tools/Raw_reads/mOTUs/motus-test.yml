@@ -2,5 +2,3 @@ reads:
   class: File
   path: merged-all.fq
   format: http://edamontology.org/format_1930
-
-threads: 4

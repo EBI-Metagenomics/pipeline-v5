@@ -1,42 +1,28 @@
-#!/usr/bin/env
 cwlVersion: v1.0
 class: CommandLineTool
+
 requirements:
-  InlineJavascriptRequirement: {}
-  ShellCommandRequirement: {}
   ResourceRequirement:
     coresMax: 1
     ramMin: 100  # just a default, could be lowered
 
 hints:
-  - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+  DockerRequirement:
+    dockerPull: alpine:3.7
 
 inputs:
-  sequences:
+  fasta:
     type: File
-    streamable: true
-    # format: edam:format_1929  # FASTA
+    inputBinding:
+      prefix: -f
 
-baseCommand: []
-
-arguments:
-    - grep
-    - -c
-    - '^>'
-    - $(inputs.sequences)
-    - '|'
-    - cat
-
-stdout: count
+baseCommand: [ run_samtools.sh ]
 
 outputs:
-  count:
-    type: int
+  fasta_index:
+    type: File
     outputBinding:
-      glob: count
-      loadContents: true
-      outputEval: $(Number(self[0].contents))
+      glob: "index/$(inputs.fasta.basename).fai"
 
 $namespaces:
  edam: http://edamontology.org/

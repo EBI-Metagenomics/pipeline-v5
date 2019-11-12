@@ -35,7 +35,7 @@ steps:
     label: "Analysis using profile HMM on db"
 
   make_tab_sep:
-    run: ../../utils/make_tab_sep.cwl
+    run: ../../utils/hmmscan_tab_modification/hmmscan_tab_modification.cwl
     in:
       input_table: hmmscan/output_table
     out: [ output_with_tabs ]

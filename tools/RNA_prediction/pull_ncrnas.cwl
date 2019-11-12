@@ -13,22 +13,21 @@ inputs:
     inputBinding:
         position: 2
   model:
-    type: File
+    type:
+        type: array
+        items: string
     inputBinding:
         position: 3
 
-  script:
-    type: File
-    inputBinding:
-        position: 1
-
-baseCommand: [sh]
-
-stdout: $(inputs.model.nameroot).hits  # helps with cwltool's --cache
+baseCommand: [pull_ncrnas.sh]
 
 outputs:
-    matches:
-        type: stdout
+  matches:
+    type:
+      type: array
+      items: File
+    outputBinding:
+      glob: "*.RF*"
 
 $namespaces:
  s: http://schema.org/

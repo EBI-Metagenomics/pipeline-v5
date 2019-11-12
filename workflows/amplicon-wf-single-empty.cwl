@@ -88,6 +88,10 @@ outputs:
     type: File
     outputSource: classify/LSU-SSU-count
 
+  qc-status:
+    type: File
+    outputSource: QC-FLAG/qc-flag
+
 steps:
 
 # << unzipping only >>
@@ -130,11 +134,26 @@ steps:
       sequences: run_quality_control_filtering/filtered_file
     out: [ count ]
 
+# << QC FLAG >>
+  QC-FLAG:
+    run: ../utils/qc-flag.cwl
+    in:
+        qc_count: count_processed_reads/count
+    out: [ qc-flag ]
+
+# << deal with empty fasta files >>
+  validate_fasta:
+    run: ../utils/empty_fasta.cwl
+    in:
+        fasta: run_quality_control_filtering/filtered_file
+        qc_count: count_processed_reads/count
+    out: [ fasta_out ]
+
 # << QC >>
   qc_stats:
     run: ../tools/qc-stats/qc-stats.cwl
     in:
-        QCed_reads: run_quality_control_filtering/filtered_file
+        QCed_reads: validate_fasta/fasta_out
         sequence_count: count_processed_reads/count
     out: [ output_dir, summary_out ]
 
@@ -142,7 +161,7 @@ steps:
   classify:
     run: subworkflows/rna_prediction-sub-wf.cwl
     in:
-      input_sequences: run_quality_control_filtering/filtered_file
+      input_sequences: validate_fasta/fasta_out
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
       silva_ssu_taxonomy: ssu_tax
@@ -170,7 +189,7 @@ steps:
   ITS:
     run: subworkflows/ITS/ITS-wf.cwl
     in:
-      query_sequences: run_quality_control_filtering/filtered_file
+      query_sequences: validate_fasta/fasta_out
       LSU_coordinates: classify/LSU_coords
       SSU_coordinates: classify/SSU_coords
       unite_database: unite_db
@@ -192,7 +211,7 @@ steps:
     scatter: uncompressed_file
     in:
       uncompressed_file:
-        - run_quality_control_filtering/filtered_file
+        - validate_fasta/fasta_out
         - classify/cmsearch_result
         - classify/ncRNA
     out: [compressed_file]

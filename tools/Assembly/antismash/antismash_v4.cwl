@@ -7,23 +7,40 @@ label: "antiSMASH"
 requirements:
   InlineJavascriptRequirement: {}
 
+hints:
+  DockerRequirement:
+    dockerPull: 'alpine:3.7'
+
 inputs:
+  outdirname:
+    type: string
+    inputBinding:
+      position: 1
+      prefix: -o # --outputfolder
+
   input_fasta:
     type: File
+    inputBinding:
+      # position: 9
+      prefix: -i
 
-baseCommand: [antismash]
+baseCommand: [run_antismash.sh]
 
-arguments:
-  - valueFrom: ..$(inputs.input_fasta.path)
-    position: 5
-
-  - valueFrom: --knownclusterblast
-    position: 1
-  - valueFrom: $(runtime.outdir)/katya-antismash
-    prefix: --outputfolder
-    position: 2
-  - valueFrom: "-v"
-    position: 3
+#arguments:
+#  - valueFrom: --knownclusterblast
+#    position: 2
+#  - valueFrom: "-v"
+#    position: 3
+#  - valueFrom: --smcogs
+#    position: 4
+#  - valueFrom: --transatpks_da
+#    position: 5
+#  - valueFrom: --borderpredict
+#    position: 6
+#  - valueFrom: --asf
+#    position: 7
+#  - valueFrom: --inclusive
+#    position: 8
 
 stdout: stdout.txt
 stderr: stderr.txt
@@ -32,7 +49,19 @@ outputs:
   stdout: stdout
   stderr: stderr
 
-  output_files:
-    type: Directory
+  final_gbk:
+    type: File
     outputBinding:
-      glob: katya-antismash
+      glob: $(inputs.outdirname)/*final.gbk
+  final_embl:
+    type: File
+    outputBinding:
+      glob: $(inputs.outdirname)/*final.embl
+  geneclusters_js:
+    type: File
+    outputBinding:
+      glob: $(inputs.outdirname)/geneclusters.js
+  geneclusters_txt:
+    type: File
+    outputBinding:
+      glob: $(inputs.outdirname)/geneclusters.txt

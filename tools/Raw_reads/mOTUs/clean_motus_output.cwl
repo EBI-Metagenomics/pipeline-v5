@@ -5,29 +5,22 @@ class: CommandLineTool
 requirements:
     - class: ShellCommandRequirement
 
-label: "Parse Pfam hits from Interpro annotation output"
+label: "remove empty rows and reformat motus"
 
 inputs:
-  interpro:
+  taxonomy:
     type: File
-    label: Interpro scan results in TSV format
-    #format: edam:format_3475
-  outputname: string
+    label: motus classification
+    inputBinding:
+        position: 1
 
-baseCommand: []
-
-arguments:
-  - awk
-  - '/Pfam/'
-  - $(inputs.interpro)
-
-stdout: $(inputs.outputname)
+baseCommand: [clean_motus_output.sh]
 
 outputs:
-  annotations:
-    type: stdout
-    label: Pfam results only
-    #format: edam:format_3475
+  clean_annotations:
+    type: File
+    outputBinding:
+        glob: "*.tsv"
 
 hints:
   - class: DockerRequirement

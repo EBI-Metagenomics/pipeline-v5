@@ -5,69 +5,51 @@ class: Workflow
 label: Subworkflow for mOTUs classification
 
 requirements:
-  - class: InlineJavascriptRequirement
-#  - class: SchemaDefRequirement
-#    types:
-#        - $import: ../tools/biom-convert/biom-convert-table.yaml
+    SubworkflowFeatureRequirement: {}
+    InlineJavascriptRequirement: {}
 
 inputs:
-    merged_reads: File
+    reads: File
 
 outputs:
-    motus_biom:
-        type: File
-        outputSource: motus_classification/motu_taxonomy
-#    krona_otus:
-#        type: File
-#        outputSource: biom_to_tsv/result
-#    krona_figure:
-#        type: File
-#        outputSource: krona_output/otu_visualization
-    motus_tsv:
-        type: File
-        outputSource: biom_to_tsv/result
+  motus:
+    type: File
+    outputSource: clean_classification/clean_annotations
 
 steps:
 
-    trim:
-          trim_quality_control:
+  trim_quality_control:
     doc: |
       Low quality trimming (low quality ends and sequences with < quality scores
       less than 15 over a 4 nucleotide wide window are removed)
-    run: ../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+    run: ../../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
-      reads1: merged_reads
+      reads1: reads
       phred: { default: '33' }
       leading: { default: 3 }
       trailing: { default: 3 }
       end_mode: { default: SE }
       minlen: { default: 100 }
-      slidingwindow:
-        default:
-          windowSize: 4
-          requiredQuality: 15
+      slidingwindow: { default: '4:15' }
     out: [reads1_trimmed]
 
-    motus_classification:
-        run: ../tools/mOTUs/mOTUs.cwl
-        in:
-          reads: trim/reads1_trimmed
-          threads: 4
-        out: [motu_taxonomy]
+  clean_fasta_headers:
+    run: ../../../utils/clean_fasta_headers.cwl
+    in:
+      sequences: trim_quality_control/reads1_trimmed
+    out: [ sequences_with_cleaned_headers ]
 
-    biom_to_tsv:
-        run: ../tools/biom-convert/biom-convert.cwl
-        in:
-          biom: motus_classification/motu_taxonomy
-          tsv: { default: true }
-        out: [result]
+  motus_classification:
+    run: ../../../tools/Raw_reads/mOTUs/mOTUs.cwl
+    in:
+      reads: clean_fasta_headers/sequences_with_cleaned_headers
+    out: [ motu_taxonomy ]
 
-#enough hits for a krona visualisation??
-#    krona_output:
-#        run: ../tools/krona/krona.cwl
-#        in:
-#          otu_counts: biom_to_tsv/result
-#        out: [otu_visualization]
+  clean_classification:
+    run: ../../../tools/Raw_reads/mOTUs/clean_motus_output.cwl
+    in:
+      taxonomy: motus_classification/motu_taxonomy
+    out: [ clean_annotations ]
 
 $namespaces:
  edam: http://edamontology.org/
@@ -79,3 +61,4 @@ $schemas:
 's:author': 'Varsha Kale'
 's:copyrightHolder': EMBL - European Bioinformatics Institute
 's:license': "https://www.apache.org/licenses/LICENSE-2.0"
+

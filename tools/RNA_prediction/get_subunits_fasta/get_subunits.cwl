@@ -34,16 +34,13 @@ inputs:
     type: string?
     inputBinding:
       prefix: -e
-  prefix_file:
-    type: File?
+  prefix:
+    type: string?
     inputBinding:
+      prefix: -p
 
 
 baseCommand: get_subunits.py
-
-arguments:
-  - valueFrom: $(inputs.prefix_file.nameroot)
-    prefix: '-p'
 
 stdout: stdout.txt
 

@@ -86,6 +86,10 @@ outputs:
     type: File
     outputSource: amplicon-single/rna-count
 
+  qc-status-out:
+    type: File
+    outputSource: amplicon-single/qc-status
+
 steps:
 
 # << SeqPrep >>
@@ -99,7 +103,7 @@ steps:
 
 # run amplicon-single-pipeline
   amplicon-single:
-    run: amplicon-wf-single.cwl
+    run: amplicon-wf-single-empty.cwl
     in:
       single_reads: overlap_reads/merged_reads
       forward_unmerged_reads: overlap_reads/forward_unmerged_reads
@@ -143,3 +147,4 @@ steps:
       - sequence-categorisation_masking
       - ITS_unite_results
       - ITS_itsonedb_results
+      - qc-status

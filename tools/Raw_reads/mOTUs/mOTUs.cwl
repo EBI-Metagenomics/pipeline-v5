@@ -27,25 +27,25 @@ inputs:
         position: 1
         prefix: -s
     label: merged and QC reads in fastq
-    format: edam:format_1930
+    #format: edam:format_1930
 
   threads:
     type: int
     inputBinding:
         prefix: -t
+    default: 4
 
 baseCommand: [motus]
 
 arguments: [profile, -c, -q]
-# -B]
 
-stdout: classifications.motus.biom
+stdout: $(inputs.reads.nameroot).motus
 
 outputs:
   motu_taxonomy:
     type: stdout
     label: motu classifications
-    format: edam:format_3746
+    #format: edam:format_3746
 
 $namespaces:
  edam: http://edamontology.org/

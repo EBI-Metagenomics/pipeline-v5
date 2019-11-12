@@ -1,0 +1,10 @@
+antismash_geneclus:
+  class: File
+  path:
+antismash_embl:
+  class: File
+  path:
+antismash_gc_json:
+  class: File
+  path:
+output_name: antismash.gff

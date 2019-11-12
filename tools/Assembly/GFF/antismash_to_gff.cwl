@@ -6,21 +6,21 @@ hints:
   DockerRequirement:
     dockerPull: alpine:3.9.4
 
-baseCommand: [build_assembly_gff.py]
+baseCommand: [antismash_to_gff.py]
 
 inputs:
-  ips_results:
+  antismash_geneclus:
     type: File
     inputBinding:
-      prefix: -i
-  eggnog_results:
+      prefix: -g
+  antismash_embl:
     type: File
     inputBinding:
       prefix: -e
-  input_faa:
+  antismash_gc_json:
     type: File
     inputBinding:
-      prefix: -f
+      prefix: -j
   output_name:
     type: string
     inputBinding:

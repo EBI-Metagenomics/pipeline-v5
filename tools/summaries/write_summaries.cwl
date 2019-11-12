@@ -9,18 +9,61 @@ requirements:
     ramMin: 9500  # just a default, could be lowered
 
 inputs:
-  entry_maps:
-    type: File[]
+  ips_entry_maps:
+    type: File
     inputBinding:
-        position: 0
+      prefix: -i
+  ips_outname:
+    type: string
+    inputBinding:
+      prefix: --ips-name
 
-baseCommand: ['write_summaries.py']
+  ko_entry_maps:
+    type: File
+    inputBinding:
+      prefix: -k
+  ko_outname:
+    type: string
+    inputBinding:
+      prefix: --ko-name
+
+  pfam_entry_maps:
+    type: File
+    inputBinding:
+      prefix: -p
+  pfam_outname:
+    type: string
+    inputBinding:
+      prefix: --pfam-name
+
+  antismash_entry_maps:
+    type: File?
+    inputBinding:
+        prefix: -a
+  antismash_outname:
+    type: string?
+    inputBinding:
+        prefix: --antismash-name
+
+baseCommand: [write_summaries.py]
 
 outputs:
-  summaries:
-    type: File[]
+  summary_ips:
+    type: File
     outputBinding:
-        glob: "summary.*"
+        glob: "*summary.ips"
+  summary_ko:
+    type: File
+    outputBinding:
+        glob: "*summary.ko"
+  summary_pfam:
+    type: File
+    outputBinding:
+        glob: "*summary.pfam"
+  summary_antismash:
+    type: File?
+    outputBinding:
+        glob: "*summary.antismash"
 
 hints:
   - class: DockerRequirement
