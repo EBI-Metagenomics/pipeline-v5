@@ -47,4 +47,5 @@ if __name__ == "__main__":
         write_summary(args.interproscan, args.ips_out_name)  # IPS
         write_summary(args.hmmscan, args.ko_out_name)  # KO
         write_summary(args.pfam, args.pfam_out_name)  # Pram
-        write_summary(args.antismash, args.antismash_out_name) #geneclusters
+        if args.antismash:
+            write_summary(args.antismash, args.antismash_out_name) #geneclusters

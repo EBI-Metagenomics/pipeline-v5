@@ -120,11 +120,12 @@ if __name__ == "__main__":
         protein_column = {'KO': 0, 'pfam': 4, 'InterProScan': 11, 'antismash': 2}
 
 
-        files = [args.interproscan, args.hmmscan, args.pfam, args.antismash]
+        files = [args.interproscan, args.hmmscan, args.pfam]
         hashes = ['InterProScan', 'KO', 'pfam']
 
         if args.antismash:
             hashes.append('antismash')
+            files.append(args.antismash)
 
         for file_annotation, num in zip(files, range(len(files))):
             print(file_annotation)
