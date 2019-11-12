@@ -12,4 +12,6 @@ echo $y
 if [ $y -eq 2 ]; then
   echo 'rename file to empty'
   mv $outfilename 'empty.motus.tsv'
+else
+  mv $outfilename .
 fi
