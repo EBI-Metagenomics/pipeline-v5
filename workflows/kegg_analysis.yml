@@ -1,3 +1,0 @@
-input_table_hmmscan:
-  class: File
-  path: ../tools/hmmscan/gene_caller_input_example.fa_hmmscan.tbl

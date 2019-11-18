@@ -1,0 +1,5 @@
+reads:
+  class: File
+  format: edam:format_1930  # FASTQ
+  path: >-
+    ../../../tools/Trimmomatic/test-input/A1_left_ok.fq.gz

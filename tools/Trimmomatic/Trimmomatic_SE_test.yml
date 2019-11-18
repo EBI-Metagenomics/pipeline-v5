@@ -1,0 +1,13 @@
+#cwltest
+
+- job: Trimmomatic-v0.36-SE.test.job.yaml
+  tool: Trimmomatic-v0.36.cwl
+  output:
+    log_file:
+      basename: "trim.log"
+      class: File
+      checksum: "sha1$3bd30acda1c1bd33f28be9840ca1b83d6ceb50a5"
+    reads1_trimmed:
+      basename: "A1_left_ok.fq.trimmed.fastq"
+      class: File
+      checksum: "sha1$4fe7b00dea11624ace0e83f775f33fc827680ebf"

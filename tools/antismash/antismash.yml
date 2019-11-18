@@ -1,3 +1,0 @@
-input_fasta:
-  class: File
-  path: ../Combined_gene_caller/gene_caller_input_example.fa

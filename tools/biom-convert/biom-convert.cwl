@@ -6,34 +6,35 @@ requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     coresMax: 1
-    ramMin: 100  # just a default, could be lowered
-  SchemaDefRequirement:
-    types:
-      - $import: biom-convert-table.yaml
+    ramMin: 5000  # just a default, could be lowered
+    ramMax: 5000
+#  SchemaDefRequirement:
+#    types:
+#      - $import: biom-convert-table.yaml
 
 hints:
-  SoftwareRequirement:
-    packages:
-      biom-format:
-        specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
-        version: [ "2.1.6" ]
   DockerRequirement:
     dockerPull: quay.io/biocontainers/biom-format:2.1.6--py36_0
+#  SoftwareRequirement:
+#    packages:
+#      biom-format:
+#        specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
+#        version: [ "2.1.6" ]
+#
 
 
 inputs:
   biom:
     type: File
-    format: edam:format_3746  # BIOM
     inputBinding:
       prefix: --input-fp
 
   table_type:
-    type: biom-convert-table.yaml#table_type?
+    type: string? #biom-convert-table.yaml#table_type?
     inputBinding:
-      prefix: --table-type=
-      separate: false
-      valueFrom: $('"' + inputs.table_type + '"')
+      prefix: --table-type  # --table-type=    <- worked for cwlexec
+      separate: true # false                                  <- worked for cwlexec
+      valueFrom: $(inputs.table_type)  # $('"' + inputs.table_type + '"')      <- worked for cwlexec
 
   json:
     type: boolean?
@@ -67,9 +68,9 @@ baseCommand: [ "biom", "convert" ]
 arguments:
   - valueFrom: |
      ${ var ext = "";
-        if (inputs.json) { ext = ".json"; }
-        if (inputs.hdf5) { ext = ".hdf5"; }
-        if (inputs.tsv) { ext = ".tsv"; }
+        if (inputs.json) { ext = "_json.biom"; }
+        if (inputs.hdf5) { ext = "_hdf5.biom"; }
+        if (inputs.tsv) { ext = "_tsv.biom"; }
         return inputs.biom.nameroot + ext; }
     prefix: --output-fp
   - valueFrom: "--collapsed-observations"
@@ -81,9 +82,9 @@ outputs:
     outputBinding:
       glob: |
        ${ var ext = "";
-       if (inputs.json) { ext = ".json"; }
-       if (inputs.hdf5) { ext = ".hdf5"; }
-       if (inputs.tsv) { ext = ".tsv"; }
+       if (inputs.json) { ext = "_json.biom"; }
+       if (inputs.hdf5) { ext = "_hdf5.biom"; }
+       if (inputs.tsv) { ext = "_tsv.biom"; }
        return inputs.biom.nameroot + ext; }
 
 $namespaces:

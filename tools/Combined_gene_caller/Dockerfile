@@ -23,7 +23,9 @@ RUN chmod a+x /bin/faselector
 
 
 # Combined Gene Caller
-COPY combined_gene_caller.py /
+COPY combined_gene_caller_docker.py /tools/combined_gene_caller_docker.py
+RUN chmod -R a+rwx /tools
+ENV PATH="/tools:${PATH}"
 
 
-CMD ["/usr/bin/python2.7 /combined_gene_caller.py"]
+CMD [combined_gene_caller_docker.py]

@@ -4,12 +4,20 @@ class: CommandLineTool
 
 label: "Combined Gene Caller"
 
-requirements:
-  DockerRequirement:
+hints:
+  - class: DockerRequirement
     dockerPull: gene_caller:latest
-  InlineJavascriptRequirement: {}
 
-baseCommand: ['/usr/bin/python2.7', '/combined_gene_caller.py']
+requirements:
+  ResourceRequirement:
+    ramMin: 7000
+    ramMax: 7000
+    coresMin: 4
+
+#  InlineJavascriptRequirement: {}
+# baseCommand: [combined_gene_caller_docker.py]
+
+baseCommand: [combined_gene_caller.py]
 arguments: ["-v"]
 
 inputs:
@@ -29,8 +37,13 @@ inputs:
     inputBinding:
         prefix: "-k"
 
+  outdir:
+    type: string
+    inputBinding:
+        prefix: "-o"
+
   config:
-    type: File?
+    type: File
     default:
       class: File
       location: combined_gene_caller_conf.json
@@ -50,15 +63,15 @@ outputs:
     format: 'edam:format_1929'
     type: File
     outputBinding:
-      glob: "$(inputs.input_fasta.basename).faa"
+      glob: "CGC-output/$(inputs.input_fasta.basename).faa"
   predicted_seq:
     type: File
     outputBinding:
-      glob: "$(inputs.input_fasta.basename).ffn"
-  gene_caller_out:
-    type: File
-    outputBinding:
-      glob: "$(inputs.input_fasta.basename).out"
+      glob: "CGC-output/$(inputs.input_fasta.basename).ffn"
+#  gene_caller_out:
+#    type: File
+#    outputBinding:
+#      glob: "$(inputs.input_fasta.basename).out"
 
 
 $namespaces:

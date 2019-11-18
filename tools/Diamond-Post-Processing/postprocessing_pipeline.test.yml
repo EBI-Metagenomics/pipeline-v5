@@ -1,9 +1,0 @@
-#cwltest
-
-- job: tools/Diamond-Post-Processing/postprocessing_pipeline.job.yml
-  tool: tools/Diamond-Post-Processing/postprocessing_pipeline.cwl
-  output:
-    output_sorted:
-      basename: "example_diamond_db_join"
-      class: File
-      checksum: "sha1$310fda6fcd4f9222112a186e7b42949c335ead87"

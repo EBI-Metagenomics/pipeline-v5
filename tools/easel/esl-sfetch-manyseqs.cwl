@@ -3,10 +3,15 @@ class: CommandLineTool
 label: extract by names from an indexed sequence file
 doc: "https://github.com/EddyRivasLab/easel"
 
-#hints:
-# DockerRequirement:
-#   dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
+hints:
+  DockerRequirement:
+    dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
+requirements:
+  ResourceRequirement:
+    ramMin: 25000
+    ramMax: 25000
+    coresMin: 2
 
 inputs:
   indexed_sequences:
@@ -15,9 +20,9 @@ inputs:
     inputBinding:
       prefix: -Cf
       position: 1
-    secondaryFiles:
-       - .ssi
-    format: edam:format_1929  # FASTA
+#    secondaryFiles:
+#       - .ssi
+#    format: edam:format_1929  # FASTA
 
 
   names_contain_subseq_coords:
@@ -30,12 +35,12 @@ inputs:
 
 baseCommand: [ esl-sfetch ]
 
-stdout: $(inputs.indexed_sequences.nameroot)_$(inputs.names_contain_subseq_coords.nameroot).fasta
+stdout: $(inputs.indexed_sequences.basename)_$(inputs.names_contain_subseq_coords.basename).fasta
 
 outputs:
   sequences:
     type: stdout
-    format: edam:format_1929  # FASTA
+#    format: edam:format_1929  # FASTA
 
 $namespaces:
  edam: http://edamontology.org/

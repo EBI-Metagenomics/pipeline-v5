@@ -13,22 +13,22 @@ inputs:
   sequences:
     type: File
     streamable: true
-    format: edam:format_1929  # FASTA
+    # format: edam:format_1929  # FASTA
 
 stdin: $(inputs.sequences.path)
 
 baseCommand: [ tr, '" /|<_;#"', '-------' ]
 
-stdout: $(inputs.sequences.nameroot).cleaned.fasta
+stdout: $(inputs.sequences.nameroot).unfiltered_fasta
 
 outputs:
   sequences_with_cleaned_headers:
     type: stdout
     format: edam:format_1929  # FASTA
 
-#hints:
-#  - class: DockerRequirement
-#    dockerPull: 'alpine:3.7'
+hints:
+  - class: DockerRequirement
+    dockerPull: 'alpine:3.7'
 
 $namespaces:
  edam: http://edamontology.org/

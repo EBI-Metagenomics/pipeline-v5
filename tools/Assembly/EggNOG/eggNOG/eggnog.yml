@@ -1,0 +1,19 @@
+fasta_file:
+  - path: /hps/nobackup2/production/metagenomics/pipeline/testing/eggnog/testCOG0515.chunk_00
+    class: File
+  - path: /hps/nobackup2/production/metagenomics/pipeline/testing/eggnog/testCOG0515.chunk_01
+    class: File
+  - path: /hps/nobackup2/production/metagenomics/pipeline/testing/eggnog/testCOG0515.chunk_02
+    class: File
+db:
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/eggnog.db
+  class: File
+db_diamond:
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/eggnog_proteins.dmnd
+  class: File
+data_dir: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/
+
+no_annot: true
+no_file_comments: true
+cpu: 16
+output: kate

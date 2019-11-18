@@ -6,9 +6,10 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 10240  # just a default, could be lowered
-  DockerRequirement:
-    dockerPull: go_slim:latest
+
 hints:
+ DockerRequirement:
+   dockerPull: go_slim:latest
  SoftwareRequirement:
    packages:
      owltools:
@@ -26,22 +27,29 @@ inputs:
     inputBinding:
       prefix: --config
 
+  output_name:
+    type: string
+    inputBinding:
+      prefix: --output-file
+
 baseCommand: ["go_summary_pipeline-1.0.py"]
 
-arguments:
-  - valueFrom: go-summary
-    prefix: --output-file
+stderr: stderr.txt
+stdout: stdout.txt
 
 outputs:
   go_summary:
     type: File
     format: iana:text/csv
-    outputBinding: { glob: go-summary }
+    outputBinding:
+      glob: "*.go"
   go_summary_slim:
     type: File
     format: iana:text/csv
-    outputBinding: { glob: go-summary_slim }
-
+    outputBinding:
+      glob: "*.go_slim"
+  stderr: stderr
+  stdout: stdout
 
 $namespaces:
  iana: https://www.iana.org/assignments/media-types/

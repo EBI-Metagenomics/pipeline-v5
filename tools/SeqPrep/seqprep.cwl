@@ -2,13 +2,15 @@
 cwlVersion: v1.0
 class: CommandLineTool
 requirements:
+  InlineJavascriptRequirement: {}
   ResourceRequirement:
     coresMax: 1
-    ramMin: 1024  # just a default, could be lowered
+    ramMin: 4096
+    ramMax: 4096
+
+hints:
   DockerRequirement:
     dockerPull: quay.io/biocontainers/seqprep:1.1--1
-
-#hints:
  #SoftwareRequirement:
    #packages:
      #seqprep:
@@ -36,8 +38,9 @@ arguments:
  - forward_unmerged.fastq.gz
  - "-2"
  - reverse_unmerged.fastq.gz
- - -s
- - merged.fastq.gz
+ - valueFrom: |
+     ${ return inputs.forward_reads.nameroot.split('_')[0] + '_MERGED.fastq.gz' }
+   prefix: "-s"
  # - "-3"
  # - forward_discarded.fastq.gz
  # - "-4"
@@ -49,7 +52,7 @@ outputs:
     type: File
     format: edam:format_1930  # FASTQ
     outputBinding:
-      glob: merged.fastq.gz
+      glob: '*_MERGED*'
   forward_unmerged_reads:
     type: File
     format: edam:format_1930  # FASTQ

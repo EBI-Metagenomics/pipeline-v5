@@ -5,9 +5,9 @@ class: CommandLineTool
 label: index a sequence file for use by esl-sfetch
 doc: "https://github.com/EddyRivasLab/easel"
 
-#hints:
-# DockerRequirement:
-#   dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
+hints:
+  DockerRequirement:
+    dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
 baseCommand: [esl-sfetch, --index]
 
@@ -23,7 +23,6 @@ inputs:
       position: 1
       valueFrom: $(self.basename)
     label: Input fasta file.
-    format: edam:format_1929  # FASTA
 
 outputs:
   sequences_with_index:

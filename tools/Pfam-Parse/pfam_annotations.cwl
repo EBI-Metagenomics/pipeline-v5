@@ -12,6 +12,7 @@ inputs:
     type: File
     label: Interpro scan results in TSV format
     #format: edam:format_3475
+  outputname: string
 
 baseCommand: []
 
@@ -20,7 +21,7 @@ arguments:
   - '/Pfam/'
   - $(inputs.interpro)
 
-stdout: $(inputs.interpro.nameroot).annotations.pfam
+stdout: $(inputs.outputname)
 
 outputs:
   annotations:

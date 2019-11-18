@@ -34,12 +34,14 @@ requirements:
     envDef:
       LC_ALL: C
   - class: ResourceRequirement
-    ramMin: 100
-    coresMax: 1
+    ramMin: 20000
+    ramMax: 20000
+    coresMax: 4
   - class: InitialWorkDirRequirement
     listing:
       - $(inputs.cmsearch_matches)
   - class: InlineJavascriptRequirement
+
 hints:
   - class: SoftwareRequirement
     packages:
@@ -48,8 +50,10 @@ hints:
           - 'https://github.com/nawrockie/cmsearch_tblout_deoverlap'
         version:
           - '0.02'
-#  - class: DockerRequirement
-#    dockerPull: biocrusoe/cmsearch-deoverlap
+
+  - class: DockerRequirement
+    dockerPull: biocrusoe/cmsearch-deoverlap
+
   - class: gx:interface
     gx:inputs:
       - gx:name: clan_information

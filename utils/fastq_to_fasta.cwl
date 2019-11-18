@@ -5,9 +5,10 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 100  # just a default, could be lowered
-#  DockerRequirement:
-#    dockerPull: biopython/biopython:latest
+
 hints:
+  DockerRequirement:
+    dockerPull: biopython/biopython:latest
   SoftwareRequirement:
     packages:
       biopython:
@@ -17,19 +18,21 @@ hints:
 inputs:
   fastq:
     type: File
-    streamable: true
-    format: edam:format_1930  # FASTQ
+    inputBinding:
+      prefix: '-i'
 
-stdin: $(inputs.fastq.path)
+arguments:
+  - valueFrom: $(inputs.fastq.nameroot).unclean
+    prefix: '-o'
 
 baseCommand: [ fastq_to_fasta.py ]
 
-stdout: $(inputs.fastq.nameroot).fasta  # helps with cwltool's cache
-
 outputs:
   fasta:
-    type: stdout
-    format: edam:format_1929  # FASTA
+    type: File
+    # format: edam:format_1929
+    outputBinding:
+      glob: "*.unclean"
 
 $namespaces:
  edam: http://edamontology.org/

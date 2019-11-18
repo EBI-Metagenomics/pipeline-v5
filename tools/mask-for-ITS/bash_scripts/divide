@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+coordinates=$1
+stats=$2
+fasta=$3
+
+filename="$(basename -- $fasta)"
+echo $filename
+
+y=($( wc -l $coordinates))
+x=($(grep -m1 "sequence_count" $stats | cut -f 2))
+
+proportion=($(bc <<< "scale=10; ($y/$x)"))
+num1=0.9
+
+echo $proportion
+
+standard=$((`echo "$proportion >= $num1"| bc`))
+if [ $standard -eq 1 ]
+then
+  echo 'create empty file'
+  touch "$filename.empty.fasta"
+#  mv "$fasta" "Empty.fasta"
+else
+  echo 'copy fasta file'
+  cp $fasta "$filename.not_empty.fasta"
+fi
+###

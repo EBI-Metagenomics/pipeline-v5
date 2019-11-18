@@ -16,7 +16,7 @@ env:
   - TOOL="Diamond blastP" TEST="Diamond_blastp_test.yml" CD="tools/Diamond"
   - TOOL="Diamond Post Processing Sorting" TEST="tools/Diamond-Post-Processing/diamond_sorting.test.yaml"
   - TOOL="Diamond Post Processing Joining" TEST="tools/Diamond-Post-Processing/diamond_join.test.yaml"
-  - TOOL="Diamond Post Processing workflow" TEST="tools/Diamond-Post-Processing/postprocessing_pipeline.test.yml"
+  - TOOL="Diamond Post Processing workflow" TEST="tools/Diamond-Post-Processing/postprocessing_subwf.test.yml"
   - TOOL="FASTA chunker" TEST="utils/fasta_chunker/fasta_chunker_test.yml"
 #  - TOOL="Workflow validation tests" SCRIPT="travis/workflow-cwl-validation-tests.sh"
 #  - TOOL="Utils validation tests" SCRIPT="travis/utils-validation-tests.sh"

@@ -1,0 +1,13 @@
+files:
+  - class: File
+    path: /Users/kates/Desktop/interpro_united
+  - class: File
+    path: /Users/kates/Desktop/hmm_united_tab
+  - class: File
+    path: /Users/kates/Desktop/interpo_united.annotations.pfam
+cmsearch_file:
+  class: File
+  path: /Users/kates/Desktop/result.deoverlapped
+cds_file:
+  class: File
+  path: /Users/kates/Desktop/ERZ477576_FASTA.fasta.faa

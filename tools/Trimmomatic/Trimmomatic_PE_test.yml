@@ -1,0 +1,25 @@
+#cwltest
+
+- job: Trimmomatic-v0.36-PE.test.job.yaml
+  tool: Trimmomatic-v0.36.cwl
+  output:
+    log_file:
+      basename: "trim.log"
+      class: File
+      checksum: "sha1$d78e9bbd9dedf28a1443f5b5504fff992074772c"
+    reads1_trimmed:
+      basename: "A1_left_ok.fq.trimmed.fastq"
+      class: File
+      checksum: "sha1$b915279e8c961b95e89c5211f8846af4647e592a"
+    reads1_trimmed_unpaired:
+      basename: "A1_left_ok.fq.trimmed.unpaired.fastq"
+      class: File
+      checksum: "sha1$bb3b8dad176e76bd88eb91ed326f4f033546af8a"
+    reads2_trimmed_paired:
+      basename: "A1_right_ok.fq.trimmed.fastq"
+      class: File
+      checksum: "sha1$813997953ba1c6b4579d83de5f8433e124fc75fb"
+    reads2_trimmed_unpaired:
+      basename: "A1_right_ok.fq.trimmed.unpaired.fastq"
+      class: File
+      checksum: "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709"

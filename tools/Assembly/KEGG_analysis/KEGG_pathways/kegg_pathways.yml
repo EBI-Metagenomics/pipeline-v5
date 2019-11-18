@@ -1,0 +1,15 @@
+input_table:
+  class: File
+  path: ../union_ko_contigs_10.txt
+graphs:
+  class: File
+  path: ../graphs.pkl
+pathways_names:
+  class: File
+  path: ../all_pathways_names.txt
+pathways_classes:
+  class: File
+  path: ../all_pathways_class.txt
+outputname: "memevr"
+  #../../Workflow/merged_complete_0.00001_625_parsed.txt
+  #../Parsing_hmmscan/ERR2098411_hmmscan_tab_parsed.txt

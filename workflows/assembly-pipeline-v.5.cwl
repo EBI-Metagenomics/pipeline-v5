@@ -9,14 +9,14 @@ $schemas:
   - 'https://schema.org/docs/schema_org_rdfa.html'
 
 requirements:
-  - class: SchemaDefRequirement
-    types:
-      - $import: ../tools/Diamond/Diamond-strand_values.yaml
-      - $import: ../tools/Diamond/Diamond-output_formats.yaml
-      - $import: ../tools/InterProScan/InterProScan-apps.yaml
-      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
+#  - class: SchemaDefRequirement
+#    types:
+#      - $import: ../tools/Diamond/Diamond-strand_values.yaml
+#      - $import: ../tools/Diamond/Diamond-output_formats.yaml
+#      - $import: ../tools/InterProScan/InterProScan-apps.yaml
+#      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
   - class: ResourceRequirement
-    ramMin: 1000
+    ramMin: 50000
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
@@ -24,371 +24,476 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  contigs:
-    type: File
-    format: edam:format_1929  # FASTA
 
-  rna_pred_silva_ssu_database: {type: File, secondaryFiles: [.mscluster] }
-  rna_pred_silva_lsu_database: {type: File, secondaryFiles: [.mscluster] }
-  rna_pred_silva_ssu_taxonomy: File
-  rna_pred_silva_lsu_taxonomy: File
-  rna_pred_silva_ssu_otus: File
-  rna_pred_silva_lsu_otus: File
-  rna_pred_ncRNA_ribosomal_models: File[]
-  rna_pred_ncRNA_ribosomal_model_clans: File
-  rna_pred_otu_ssu_label: string
-  rna_pred_otu_lsu_label: string
+    contigs: File
+    contig_min_length: int
 
-  CGC_seq_type: string
+    #rna prediction#
+    ssu_db: {type: File, secondaryFiles: [.mscluster] }
+    lsu_db: {type: File, secondaryFiles: [.mscluster] }
+    ssu_tax: File
+    lsu_tax: File
+    ssu_otus: File
+    lsu_otus: File
 
-  Diamond_databaseFile: File
-  Diamond_outFormat: ../tools/Diamond/Diamond-output_formats.yaml#output_formats?
-  Diamond_maxTargetSeqs: int
-  Diamond_postProcessingDB: File
+    rfam_models: File[]
+    rfam_model_clans: File
+    other_ncrna_models: string[]
 
-  InterProScan_applications: ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-  InterProScan_outputFormat: ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-  InterProScan_databases: Directory
+    ssu_label: string
+    lsu_label: string
+    5s_pattern: string
+    5.8s_pattern: string
 
-  go_summary_config: File
+    # cgc
+    CGC_config: File
+    CGC_postfixes: string[]
+    cgc_chunk_size: int
 
-  HMMSCAN_gathering_bit_score: boolean
-  HMMSCAN_omit_alignment: boolean
-  HMMSCAN_name_database: string
-  HMMSCAN_data: Directory
+    # functional annotation
+    fa_chunk_size: int
+    func_ann_names_ips: string
+    func_ann_names_hmmscan: string
+    HMMSCAN_gathering_bit_score: boolean
+    HMMSCAN_omit_alignment: boolean
+    HMMSCAN_name_database: string
+    HMMSCAN_data: Directory
+    hmmscan_header: string
+    EggNOG_db: File
+    EggNOG_diamond_db: File
+    EggNOG_data_dir: string
+    InterProScan_databases: Directory
+    InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
+    InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+    ips_header: string
 
-  viral_hmmscan_gathering_bit_score: boolean
-  viral_hmmscan_omit_alignment: boolean
-  viral_hmmscan_name_database: string
-  viral_hmmscan_folder_db: Directory
-  viral_hmmscan_filter_e_value: float
+    # diamond
+    Uniref90_db_txt: File
+    diamond_maxTargetSeqs: int
+    diamond_databaseFile: File
+    diamond_header: string
 
+    # GO
+    go_config: File
+
+    # Pathways
+    graphs: File
+    pathways_names: File
+    pathways_classes: File
+
+    # genome properties
+    gp_flatfiles_path: string
 
 outputs:
 
-  # << QC stats >>
-  qc_stats_summary:
+  qc-statistics_folder:
+    type: Directory
+    outputSource: qc_stats/output_dir
+  qc_summary:
     type: File
-    outputSource: sequence_stats/summary_out
-  qc_stats_seq_len_pcbin:
+    outputSource: length_filter/stats_summary_file
+  qc-status:
     type: File
-    outputSource: sequence_stats/seq_length_pcbin
-  qc_stats_seq_len_bin:
-    type: File
-    outputSource: sequence_stats/seq_length_bin
-  qc_stats_seq_len:
-    type: File
-    outputSource: sequence_stats/seq_length_out
-  qc_stats_nuc_dist:
-    type: File
-    outputSource: sequence_stats/nucleotide_distribution_out
-  qc_stats_gc_pcbin:
-    type: File
-    outputSource: sequence_stats/gc_sum_pcbin
-  qc_stats_gc_bin:
-    type: File
-    outputSource: sequence_stats/gc_sum_bin
-  qc_stats_gc:
-    type: File
-    outputSource: sequence_stats/gc_sum_out
+    outputSource: QC-FLAG/qc-flag
 
-  # << RNA prediction >>
-  ncRNAs:
-    type: File
-    outputSource: rna_prediction/ncRNAs
-  5S_fasta:
-    type: File
-    outputSource: rna_prediction/5S_fasta
-  SSU_fasta:
-    type: File
-    outputSource: rna_prediction/SSU_fasta
-  SSU_otu_tsv:
-    type: File
-    outputSource: rna_prediction/SSU_otu_tsv
-  SSU_krona_image:
-    type: File
-    outputSource: rna_prediction/SSU_krona_image
-  SSU_classifications:
-    type: File
-    outputSource: rna_prediction/SSU_classifications
-  ssu_json_classifications:
-    type: File
-    outputSource: rna_prediction/ssu_json_classifications
-  ssu_hdf5_classifications:
-    type: File
-    outputSource: rna_prediction/ssu_hdf5_classifications
-  LSU_fasta:
-    type: File
-    outputSource: rna_prediction/LSU_fasta
-  LSU_otu_tsv:
-    type: File
-    outputSource: rna_prediction/LSU_otu_tsv
-  LSU_krona_image:
-    type: File
-    outputSource: rna_prediction/LSU_krona_image
-  LSU_classifications:
-    type: File
-    outputSource: rna_prediction/LSU_classifications
-  lsu_json_classifications:
-    type: File
-    outputSource: rna_prediction/lsu_json_classifications
-  lsu_hdf5_classifications:
-    type: File
-    outputSource: rna_prediction/lsu_hdf5_classifications
+  LSU_folder:
+    type: Directory
+    outputSource: rna_prediction/LSU_folder
+  SSU_folder:
+    type: Directory
+    outputSource: rna_prediction/SSU_folder
 
-  # << Combined Gene Caller  >>
-  CGC_predicted_proteins:
-    outputSource: combined_gene_caller/predicted_proteins
-    type: File
-  CGC_predicted_seq:
-    outputSource: combined_gene_caller/predicted_seq
-    type: File
+  sequence-categorisation_folder:
+    type: Directory
+    outputSource: rna_prediction/sequence-categorisation
+  sequence-categorisation_SSU_LSU:
+    type: Directory
+    outputSource: rna_prediction/sequence-categorisation_two
+  other_rna:
+    type: Directory
+    outputSource: other_ncrnas/ncrnas
 
-  # << Diamond >>
-  Diamond_out:
-    outputSource: diamond_blastp/matches
-    type: File
-  Diamond_annotations:
-    outputSource: diamond_post_processing/join_out
-    type: File
+  compressed_files:
+    type: File[]
+    outputSource: compression/compressed_file
 
-  # << InterProScan >>
-  InterProScan_I5:
-    outputSource: interproscan/i5Annotations
-    type: File
-  # Genome properties
-  Genome_properties_json:
-    outputSource: genome_properties/json
-    type: File
-  Genome_properties_table:
-    outputSource: genome_properties/table
-    type: File
-  GO_summary:
-    type: File
-    outputSource: summarize_with_GO/go_summary
-  GO_summary_slim:
-    type: File
-    outputSource: summarize_with_GO/go_summary_slim
-  Pfam-parse_annotations:
-    type: File
-    outputSource: pfam_parse/pfam_annotations
-  Pfam-parse_summary:
-    type: File
-    outputSource: pfam_parse/pfam_summary
-
-  # << KEGG analysis >>
-  #hmmscan_table:
-  #  outputSource: hmmscan/output_table
-  #  type: File
-
-  # << Pathways analysis >>
-  #pathways_summary:
-  #  outputSource: kegg_analysis/kegg_pathways_summary
-  #  type: File
-  #pathways_matching:
-  #  outputSource: kegg_analysis/kegg_pathways_matching
-  #  type: File
-  #pathways_missing:
-  #  outputSource: kegg_analysis/kegg_pathways_missing
-  #  type: File
-  #pathways_contigs:
-  #  outputSource: kegg_analysis/kegg_contigs
-  #  type: Directory
-
-  # << antiSMASH >>
-  antiSMASH_results:
-    outputSource: antismash/output_files
+  functional_annotation_folder:
+    type: Directory
+    outputSource: move_to_functional_annotation_folder/out
+  stats:
+    outputSource: write_summaries/stats
     type: Directory
 
-  # << Viral pipeline >>
-  #viral_parsing:
-  #  outputSource: viral_pipeline/output_parsing
-  #  type:
-  #    type: array
-  #    items: Directory
+  pathways_systems_folder:
+    type: Directory
+    outputSource: move_to_pathways_systems_folder/out
+
+  index_fasta_file:
+    type: File
+    outputSource: fasta_index/fasta_index
 
 steps:
-
-  # << QC >>
-  sequence_stats:
+# << unzip contig file >>
+  unzip:
     in:
-      QCed_reads: contigs
-    out:
-      - summary_out
-      - seq_length_pcbin
-      - seq_length_bin
-      - seq_length_out
-      - nucleotide_distribution_out
-      - gc_sum_pcbin
-      - gc_sum_bin
-      - gc_sum_out
+      target_reads: contigs
+      assembly: {default: true}
+    out: [unzipped_merged_reads]
+    run: ../utils/multiple-gunzip.cwl
+
+# << count reads pre QC >>
+  count_reads:
+    in:
+      sequences: unzip/unzipped_merged_reads
+    out: [ count ]
+    run: ../utils/count_fasta.cwl
+
+# <<clean fasta headers??>>
+  clean_headers:
+    in:
+      sequences: unzip/unzipped_merged_reads
+    out: [ sequences_with_cleaned_headers ]
+    run: ../utils/clean_fasta_headers.cwl
+    label: "removes spaces in some headers"
+
+# << Length QC >>
+  length_filter:
+    in:
+      seq_file: unzip/unzipped_merged_reads
+      min_length: contig_min_length
+      submitted_seq_count: count_reads/count
+      stats_file_name: { default: 'qc_summary' }
+      input_file_format: { default: fasta }
+    out: [filtered_file, stats_summary_file]
+    run: ../tools/qc-filtering/qc-filtering.cwl
+
+# << count processed reads >>
+  count_processed_reads:
+    in:
+      sequences: length_filter/filtered_file
+    out: [ count ]
+    run: ../utils/count_fasta.cwl
+
+# << QC FLAG >>
+  QC-FLAG:
+    run: ../utils/qc-flag.cwl
+    in:
+        qc_count: count_processed_reads/count
+    out: [ qc-flag ]
+
+# << deal with empty fasta files >>
+  validate_fasta:
+    run: ../utils/empty_fasta.cwl
+    in:
+        fasta: length_filter/filtered_file
+        qc_count: count_processed_reads/count
+    out: [ fasta_out ]
+
+# << QC stats >>
+  qc_stats:
+    in:
+      QCed_reads: length_filter/filtered_file
+      sequence_count: count_processed_reads/count
+    out: [ output_dir ]
     run: ../tools/qc-stats/qc-stats.cwl
 
-  # << RNA prediction >>
+# << RNA prediction >>
   rna_prediction:
     in:
-      input_sequences: contigs
-      silva_ssu_database: rna_pred_silva_ssu_database
-      silva_lsu_database: rna_pred_silva_lsu_database
-      silva_ssu_taxonomy: rna_pred_silva_ssu_taxonomy
-      silva_lsu_taxonomy: rna_pred_silva_lsu_taxonomy
-      silva_ssu_otus: rna_pred_silva_ssu_otus
-      silva_lsu_otus: rna_pred_silva_lsu_otus
-      ncRNA_ribosomal_models: rna_pred_ncRNA_ribosomal_models
-      ncRNA_ribosomal_model_clans: rna_pred_ncRNA_ribosomal_model_clans
-      otu_ssu_label: rna_pred_otu_ssu_label
-      otu_lsu_label: rna_pred_otu_lsu_label
+      input_sequences: length_filter/filtered_file
+      silva_ssu_database: ssu_db
+      silva_lsu_database: lsu_db
+      silva_ssu_taxonomy: ssu_tax
+      silva_lsu_taxonomy: lsu_tax
+      silva_ssu_otus: ssu_otus
+      silva_lsu_otus: lsu_otus
+      ncRNA_ribosomal_models: rfam_models
+      ncRNA_ribosomal_model_clans: rfam_model_clans
+      pattern_SSU: ssu_label
+      pattern_LSU: lsu_label
+      pattern_5S: 5s_pattern
+      pattern_5.8S: 5.8s_pattern
     out:
-      - ncRNAs
-      - 5S_fasta
-      - SSU_fasta
-      - LSU_fasta
-      - SSU_classifications
-      - SSU_otu_tsv
-      - SSU_krona_image
-      - LSU_classifications
-      - LSU_otu_tsv
-      - LSU_krona_image
-      - ssu_hdf5_classifications
-      - ssu_json_classifications
-      - lsu_hdf5_classifications
-      - lsu_json_classifications
-    run: rna_prediction.cwl
+      - ncRNA
+      - cmsearch_result
+      - SSU_folder
+      - LSU_folder
+      - sequence-categorisation
+      - sequence-categorisation_two
+    run: subworkflows/rna_prediction-sub-wf.cwl
 
-  # << CombinedGeneCaller >>
-  combined_gene_caller:
+# << COMBINED GENE CALLER >>
+  cgc:
     in:
-      input_fasta: contigs
-      seq_type: CGC_seq_type
-    out:
-      - predicted_proteins
-      - predicted_seq
-      - gene_caller_out
-      - stderr
-      - stdout
-    run: ../tools/Combined_gene_caller/combined_gene_caller.cwl
-    label: "combine predictions of FragGeneScan and Prodigal with faselector"
+      input_fasta: length_filter/filtered_file
+      seq_type: { default: 'a' }
+      maskfile: rna_prediction/ncRNA
+      config: CGC_config
+      outdir: { default: 'CGC-output' }
+      postfixes: CGC_postfixes
+      chunk_size: cgc_chunk_size
+    out: [ results ]
+    run: ../tools/Combined_gene_caller/CGC-subwf.cwl
 
-  # << Functional annotation. InterProScan >>
-  interproscan:
+# << DIAMOND >>
+  diamond:
+    run: ../tools/Assembly/Diamond/diamond-subwf.cwl
     in:
-      applications: InterProScan_applications
-      inputFile: combined_gene_caller/predicted_proteins
-      outputFormat: InterProScan_outputFormat
-      databases: InterProScan_databases
-    out:
-      - i5Annotations
-    run: ../tools/InterProScan/InterProScan-v5.cwl
-    label: "InterProScan: protein sequence classifier"
+      queryInputFile:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      outputFormat: { default: '6' }
+      maxTargetSeqs: diamond_maxTargetSeqs
+      strand: { default: 'both'}
+      databaseFile: diamond_databaseFile
+      threads: { default: 32 }
+      Uniref90_db_txt: Uniref90_db_txt
+      filename: length_filter/filtered_file
+    out: [post-processing_output]
 
-  # << Functional annotation. KEGG >>
-  #hmmscan:
-  #  in:
-  #    seqfile: combined_gene_caller/predicted_proteins
-  #    gathering_bit_score: HMMSCAN_gathering_bit_score
-  #    name_database: HMMSCAN_name_database
-  #    data: HMMSCAN_data
-  #    omit_alignment: HMMSCAN_omit_alignment
-  #  out:
-  #    - output_table
-  #  run: ../tools/hmmscan/hmmscan.cwl
-  #  label: "Analysis using profile HMM on db"
+# << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
+  functional_annotation:
+    run: subworkflows/functional_annotation.cwl
+    in:
+      CGC_predicted_proteins:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      chunk_size: fa_chunk_size
+      name_ips: func_ann_names_ips
+      name_hmmscan: func_ann_names_hmmscan
+      HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
+      HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
+      HMMSCAN_name_database: HMMSCAN_name_database
+      HMMSCAN_data: HMMSCAN_data
+      EggNOG_db: EggNOG_db
+      EggNOG_diamond_db: EggNOG_diamond_db
+      EggNOG_data_dir: EggNOG_data_dir
+      InterProScan_databases: InterProScan_databases
+      InterProScan_applications: InterProScan_applications
+      InterProScan_outputFormat: InterProScan_outputFormat
+    out: [ hmmscan_result, ips_result, eggnog_annotations, eggnog_orthologs ]
 
-  # << Functional annotation. COGs >>
-  # make db
-  # run EggNOG
-
-  # << Functional annotation -- Results. GO-slim >>
-  summarize_with_GO:
-    doc: |
-      A summary of Gene Ontology (GO) terms derived from InterPro matches to
-      the sample. It is generated using a reduced list of GO terms called
-      GO slim (http://www.geneontology.org/ontology/subsets/goslim_metagenomics.obo)
+# << GO SUMMARY>>
+  go_summary:
     run: ../tools/GO-slim/go_summary.cwl
     in:
-      InterProScan_results: interproscan/i5Annotations
-      config: go_summary_config
-    out: [ go_summary, go_summary_slim ]
+      InterProScan_results: functional_annotation/ips_result
+      config: go_config
+      output_name:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot).summary.go
+    out: [go_summary, go_summary_slim]
 
-  # << Functional annotation -- Results. Pfam parsing >>
-  pfam_parse:
+# << KEGG PATHWAYS >>
+  pathways:
+    run: subworkflows/assembly/kegg_analysis.cwl
     in:
-      interpro_file: interproscan/i5Annotations
-    out:
-      - pfam_annotations
-      - pfam_summary
-    run: ../tools/Pfam-Parse/pfam_workflow.cwl
+      input_table_hmmscan: functional_annotation/hmmscan_result
+      outputname:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot)
+      graphs: graphs
+      pathways_names: pathways_names
+      pathways_classes: pathways_classes
+    out: [ kegg_pathways_summary, kegg_contigs_summary]
 
-  # << Systems. Genome Properties >>
+# << PFAM >>
+  pfam:
+    run: ../tools/Pfam-Parse/pfam_annotations.cwl
+    in:
+      interpro: functional_annotation/ips_result
+      outputname:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot).pfam
+    out: [annotations]
+
+# << summaries and stats IPS, HMMScan, Pfam >>
+  write_summaries:
+    run: subworkflows/func_summaries.cwl
+    in:
+       interproscan_annotation: functional_annotation/ips_result
+       hmmscan_annotation: functional_annotation/hmmscan_result
+       pfam_annotation: pfam/annotations
+       antismash_gene_clusters: antismash/geneclusters_txt
+       rna: rna_prediction/ncRNA
+       cds:
+         source: cgc/results
+         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+    out: [summary_ips, summary_ko, summary_pfam, summary_antismash, stats]
+
+# << GENOME PROPERTIES >>
   genome_properties:
-    in:
-      input_tsv_file: interproscan/i5Annotations
-    out:
-      - json
-      - table
-      - stderr
-      - stdout
     run: ../tools/Genome_properties/genome_properties.cwl
-    label: "Preparing summary file for genome properties"
+    in:
+      input_tsv_file: functional_annotation/ips_result
+      flatfiles_path: gp_flatfiles_path
+      GP_txt: {default: genomeProperties.txt}
+      name:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot).summary.gprops.tsv
+    out: [ summary ]
 
-  # << Systems. Pathways >>
-  #kegg_analysis:
-  #  in:
-  #    input_table_hmmscan: hmmscan/output_table
-  #  out:
-  #    - modification_out
-  #    - parsing_hmmscan_out
-  #    - kegg_pathways_summary
-  #    - kegg_pathways_matching
-  #    - kegg_pathways_missing
-  #    - kegg_contigs
-  #    - kegg_stdout
-  #  run: kegg_analysis.cwl
+# << GFF (IPS, EggNOG) >>
+  gff:
+    run: ../tools/Assembly/GFF/gff_generation.cwl
+    in:
+      ips_results: functional_annotation/ips_result
+      eggnog_results: functional_annotation/eggnog_annotations
+      input_faa:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      output_name:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot).contigs.annotations.gff
+    out: [ output_gff_gz, output_gff_index ]
 
-  # << Systems. Antismash >>
+# << ANTISMASH >>
   antismash:
+    run: ../tools/Assembly/antismash/antismash_v4.cwl
     in:
-      input_fasta: contigs
-    out:
-      - output_files
-    run: ../tools/antismash/antismash.cwl
-    label: "analysis of secondary metabolite biosynthesis gene clusters in bacterial and fungal genomes"
+      outdirname: {default: 'antismash_result'}
+      input_fasta: length_filter/filtered_file
+    out: [final_gbk, final_embl, geneclusters_js, geneclusters_txt]
 
-  # << Diamond >>
-  diamond_blastp:
+# << post-processing JS >>
+  antismash_json_generation:
+    run: ../tools/Assembly/antismash/antismash_json_generation.cwl
     in:
-      databaseFile: Diamond_databaseFile
-      outputFormat: Diamond_outFormat
-      queryInputFile: combined_gene_caller/predicted_proteins
-      maxTargetSeqs: Diamond_maxTargetSeqs
-    out:
-      - matches
-    run: ../tools/Diamond/Diamond.blastp-v0.9.21.cwl
-    label: "align DNA query sequences against a protein reference UniRef90 database"
+      input_js: antismash/geneclusters_js
+      outputname: {default: 'geneclusters.json'}
+    out: [output_json]
 
-  # << Diamond post-processing >>
-  diamond_post_processing:
+# << GFF for antismash >>
+  antismash_gff:
+    run: ../tools/Assembly/GFF/antismash_to_gff.cwl
     in:
-      input_diamond: diamond_blastp/matches
-      input_db: Diamond_postProcessingDB
-    out:
-      - join_out
-    run: ../tools/Diamond-Post-Processing/postprocessing_pipeline.cwl
-    label: "add additional annotation to diamond matches"
+      antismash_geneclus: antismash/geneclusters_txt
+      antismash_embl: antismash/final_embl
+      antismash_gc_json: antismash_json_generation/output_json
+      output_name:
+        source: length_filter/filtered_file
+        valueFrom: $(self.nameroot).antismash.gff
+    out: [output_gff_gz, output_gff_index]
 
-  # << Viral >>
-  #viral_pipeline:
-  #  in:
-  #    assembly: contigs
-  #    predicted_proteins: combined_gene_caller/predicted_proteins
-  #    hmmscan_gathering_bit_score: viral_hmmscan_gathering_bit_score
-  #    hmmscan_omit_alignment: viral_hmmscan_omit_alignment
-  #    hmmscan_name_database: viral_hmmscan_name_database
-  #    hmmscan_folder_db: viral_hmmscan_folder_db
-  #    hmmscan_filter_e_value: viral_hmmscan_filter_e_value
-  #  out:
-  #    - output_parsing
-  #    - output_final_mapping
-  #    - output_final_assign
-  #  run: viral_pipeline.cwl
-  #  label: "detecting and processing viral sequences"
+# << other ncrnas >>
+  other_ncrnas:
+    run: subworkflows/other_ncrnas.cwl
+    in:
+     input_sequences: length_filter/filtered_file
+     cmsearch_file: rna_prediction/ncRNA
+     other_ncRNA_ribosomal_models: other_ncrna_models
+     name_string: { default: 'other_ncrna' }
+    out: [ ncrnas ]
+
+
+# << FINAL STEPS >>
+
+# index FASTA
+  fasta_index:
+    run: ../utils/fasta_index.cwl
+    in:
+      fasta: length_filter/filtered_file
+    out: [fasta_index]
+
+# add header
+  header_addition:
+    scatter: [input_table, header]
+    scatterMethod: dotproduct
+    run: ../utils/add_header/add_header.cwl
+    in:
+      input_table:
+        - diamond/post-processing_output
+        - functional_annotation/hmmscan_result
+        - functional_annotation/ips_result
+      header:
+        - diamond_header
+        - hmmscan_header
+        - ips_header
+    out: [ output_table ]
+
+# gzip
+  compression:
+    run: ../utils/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file:
+        source:
+          - length_filter/filtered_file                 # _FASTA
+          - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
+          - rna_prediction/cmsearch_result              # cmsearch.all
+          - cgc/results                                 # faa, ffn
+        linkMerge: merge_flattened
+    out: [compressed_file]
+
+# gzip functional annotation files
+  compression_func_ann:
+    run: ../utils/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file:
+        source:
+          - functional_annotation/eggnog_annotations
+          - functional_annotation/eggnog_orthologs
+          - header_addition/output_table                # hmmscan, diamond, IPS
+        linkMerge: merge_flattened
+    out: [compressed_file]
+
+# move FUNCTIONAL-ANNOTATION
+  move_to_functional_annotation_folder:
+    run: ../utils/return_directory.cwl
+    in:
+      list:
+        source:
+          - gff/output_gff_gz
+          - gff/output_gff_index
+          - compression_func_ann/compressed_file
+          - write_summaries/summary_ips
+          - write_summaries/summary_ko
+          - write_summaries/summary_pfam
+          - go_summary/go_summary
+          - go_summary/go_summary_slim
+        linkMerge: merge_flattened
+      dir_name: { default: functional-annotation }
+    out: [ out ]
+
+# change TSV to CSV; move files
+  change_formats_and_names:
+    run: subworkflows/change_formats_and_names.cwl
+    in:
+      genome_properties_summary: genome_properties/summary
+      kegg_summary: pathways/kegg_pathways_summary
+      antismash_gbk: antismash/final_gbk
+      antismash_embl: antismash/final_embl
+      antismash_geneclusters: antismash/geneclusters_txt
+      fasta: length_filter/filtered_file
+    out: [gp_summary_csv, kegg_summary_csv, antismash_gbk, antismash_embl, antismash_gclust]
+
+# gzip pathways and systems files
+  compression_pathways_systems:
+    run: ../utils/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file:
+        source:
+          - change_formats_and_names/antismash_gbk
+          - change_formats_and_names/antismash_embl
+        linkMerge: merge_flattened
+    out: [compressed_file]
+
+# move PATHWAYS-SYSTEMS
+  move_to_pathways_systems_folder:
+    run: ../utils/return_directory.cwl
+    in:
+      list:
+        source:
+          - change_formats_and_names/kegg_summary_csv           # kegg pathways.csv
+          - change_formats_and_names/antismash_gclust           # geneclusters.txt
+          - pathways/kegg_contigs_summary                       # kegg contigs.tsv -- not using
+          - change_formats_and_names/gp_summary_csv             # genome properties.csv
+          - compression_pathways_systems/compressed_file        # antismash GBK and EMBL
+          - antismash_gff/output_gff_gz                         # antismash gff.gz
+          - antismash_gff/output_gff_index                      # antismash gff.tbi
+          - write_summaries/summary_antismash                   # antismash summary
+        linkMerge: merge_flattened
+      dir_name: { default: pathways-systems }
+    out: [ out ]

@@ -1,11 +1,14 @@
 applications:
   - PfamA
+  - TIGRFAM
+  - PRINTS
+  - PrositePatterns
+  - Gene3d
 inputFile:
   class: File
-  format: 'edam:format_1929'
-  path: test-input/test_single_protein.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-raw-reads/CGC-chunk/faa_combined_test
 outputFormat:
   - TSV
 databases:
   class: Directory
-  path: test-input/databases
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data

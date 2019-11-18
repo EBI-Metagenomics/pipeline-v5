@@ -12,25 +12,25 @@ inputs:
   all_coordinates:
     type: File
     inputBinding:
-      position: 2
+      position: 1
     label: LSU and SSU coordinates
 
   summary:
     type: File
     inputBinding:
-      position: 3
+      position: 2
     label: merged fasta files summary from qc-stats
 
-  script:
+  fasta:
     type: File
     inputBinding:
-      position: 1
-    label: bash script
+      position: 3
+    label: fasta file from trimming reads
 
-baseCommand: [sh]
-
-stdout: division
+baseCommand: [divide]
 
 outputs:
-  proportion:
-    type: stdout
+  fasta_output:
+    type: File
+    outputBinding:
+      glob: "*mpty.fasta"

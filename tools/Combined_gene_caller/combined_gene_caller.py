@@ -205,7 +205,7 @@ def output_fgs(predictions, files, output, temp_dir, faselector):
         p = subprocess.check_call([faselector, "-d", seq_list.name, "-i", files[1], "-k", output[1], "-a"])
         p = subprocess.check_call([faselector, "-d", seq_list.name, "-i", files[2], "-k", output[2], "-a"])
     except subprocess.CalledProcessError as e:
-        print >> sys.stderr, "ERROR: Failed to running " + ' '.join(e.cmd) + ' ' + str(e.returncode)
+        print >> sys.stderr, "ERROR: Failed to run " + ' '.join(e.cmd)
 
     return True
 
@@ -218,7 +218,6 @@ def run_prodigal(program, input, output):
 
 
 def run_fgs(program, complete, train, input, output):
-
     command = [program, '-s', input, '-o', output, '-t', train, '-w', '1' if complete else '0']
     run_command(command)
 
@@ -228,11 +227,10 @@ def run_command(command):
     :param command: Command to run -> list.
     :return:
     """
-    print('run_command:', command)
     try:
         subprocess.check_call(command)
     except subprocess.CalledProcessError as e:
-        print >> sys.stderr, "ERROR: Failed to run1 " + ' '.join(e.cmd) + ' ' +str(e.returncode)
+        print >> sys.stderr, "ERROR: Failed to run " + ' '.join(e.cmd)
         sys.exit(1)
 
 
@@ -245,7 +243,6 @@ def output_files(predictions, summary, files, temp_dir, faselector):
             os.remove(file)
 
     for caller in predictions:
-        print(caller)
         if caller == 'fgs':
             output_fgs(predictions['fgs'], files['fgs'], files['merged'], temp_dir, faselector)
         if caller == 'prodigal':
@@ -260,7 +257,7 @@ def output_files(predictions, summary, files, temp_dir, faselector):
 def get_regions_fgs(fn):
     """Parse FGS output"""
     regions = {}
-    with open(fn + '.out', 'r') as f:
+    with open(fn, 'r') as f:
         for line in f:
             if line[0] == '>':
                 id = line.split()[0][1:]
@@ -424,11 +421,13 @@ if __name__ == "__main__":
 
     output_dir = args['output_dir']
     if not output_dir:
-        output_file = input_file_basename  #input_file_path
+        output_file = input_file_path
     else:
         if not output_dir.endswith("/"):
             output_dir += "/"
         output_file = output_dir + input_file_basename
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
     files['merged'] = [output_file + ext for ext in ['.out', '.ffn', '.faa']]
     seq_type = args['seq_type']
     temp_dir = args['temp_dir']
@@ -484,7 +483,7 @@ if __name__ == "__main__":
             logging.info("Getting FragGeneScan regions ...")
             all_predictions['fgs'] = get_regions_fgs(fgs_output_file)
 
-            files['fgs'] = [fgs_output_file + ext for ext in ['.out', '.ffn', '.faa']]
+            files['fgs'] = [fgs_output_file + ext for ext in ['', '.ffn', '.faa']]
 
     summary['all'] = get_counts(all_predictions)
 
@@ -519,12 +518,9 @@ if __name__ == "__main__":
     # Output fasta files and summary (json)
     logging.info("Writing output files...")
     output_files(merged_predictions, summary, files, temp_dir, faselector_exec)
-    logging.info("Writing output done.")
 
     # Remove intermediate files
     for type in files:
-        print(type)
         if not type == 'merged':
             for fn in files[type]:
-                print(fn)
                 os.remove(fn)

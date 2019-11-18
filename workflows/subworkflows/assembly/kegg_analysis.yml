@@ -1,0 +1,12 @@
+input_table_hmmscan:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/hmmscan/hmm_united
+graphs:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/graphs.pkl
+pathways_names:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/all_pathways_names.txt
+pathways_classes:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/all_pathways_class.txt

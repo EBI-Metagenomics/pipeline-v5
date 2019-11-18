@@ -44,8 +44,7 @@ inputs:
       a bias composition filter is used after the F1 stage (with P=0.02
       survival threshold). Any hit that survives all stages and has an HMM
       E-value or bit score above the reporting threshold will be output.
-  - format: 'edam:format_1929'
-    id: query_sequences
+  - id: query_sequences
     type: File
     inputBinding:
       position: 2
@@ -62,12 +61,12 @@ outputs:
     label: 'target hits table, format 2'
     type: File
     outputBinding:
-      glob: $(inputs.query_sequences.basename).cmsearch_matches.tbl
+      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch_matches.tbl
   - id: programOutput
     label: 'direct output to file, not stdout'
     type: File
     outputBinding:
-      glob: $(inputs.query_sequences.basename).cmsearch.out
+      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch.out
 doc: >
   Infernal ("INFERence of RNA ALignment") is for searching DNA sequence
   databases for RNA structure and sequence similarities. It is an implementation
@@ -85,10 +84,10 @@ label: Search sequence(s) against a covariance model database
 arguments:
   - position: 0
     prefix: '--tblout'
-    valueFrom: $(inputs.query_sequences.basename).cmsearch_matches.tbl
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch_matches.tbl
   - position: 0
     prefix: '-o'
-    valueFrom: $(inputs.query_sequences.basename).cmsearch.out
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch.out
 hints:
   - class: SoftwareRequirement
     packages:
@@ -97,8 +96,8 @@ hints:
           - 'https://identifiers.org/rrid/RRID:SCR_011809'
         version:
           - 1.1.2
-#  - class: DockerRequirement
-#    dockerPull: 'quay.io/biocontainers/infernal:1.1.2--h470a237_1'
+  - class: DockerRequirement
+    dockerPull: 'quay.io/biocontainers/infernal:1.1.2--h470a237_1'
   - class: gx:interface
     gx:inputs:
       - gx:name: covariance_model_database
@@ -126,8 +125,8 @@ hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
-    ramMin: 2048
-    ramMax: 8192
+    ramMin: 50000
+    ramMax: 50000
     coresMin: 4
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'

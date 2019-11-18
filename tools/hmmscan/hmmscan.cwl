@@ -9,7 +9,11 @@ hints:
    dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
 requirements:
+  ResourceRequirement:
+    ramMin: 20000
+    coresMin: 32
   InlineJavascriptRequirement: {}
+  ScatterFeatureRequirement: {}
 
 baseCommand: ["hmmscan"]
 
@@ -17,6 +21,8 @@ arguments:
   - prefix: --domtblout
     valueFrom: $(inputs.seqfile.nameroot)_hmmscan.tbl
     position: 2
+  - prefix: --cpu
+    valueFrom: '32'
 
 inputs:
 
@@ -42,13 +48,7 @@ inputs:
     type: string
 
   data:
-    type: Directory?
-    default:
-      class: Directory
-      path:  db/
-      location: db/
-      listing: []
-      basename: db
+    type: Directory
     inputBinding:
       valueFrom: $(self.path)/$(inputs.name_database)
       position: 5

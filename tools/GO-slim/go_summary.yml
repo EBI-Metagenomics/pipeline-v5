@@ -1,6 +1,7 @@
 InterProScan_results:
   class: File
-  path: ../InterProScan/test_single_protein.fasta.tsv
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.I5.tsv
 config:
   class: File
-  path: go_summary-config.json
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/GO-slim/go_summary-config.json
+output_name: 'test-name'

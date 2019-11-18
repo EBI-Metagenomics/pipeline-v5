@@ -1,4 +1,0 @@
-interpro_file:
-  class: File
-  path: testfile_I5.tsv
-  #format: 'edam:format_3475'

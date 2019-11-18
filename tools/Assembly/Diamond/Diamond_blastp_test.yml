@@ -1,0 +1,9 @@
+#cwltest
+
+- job: Diamond.blastp-v0.9.21.test.job.yaml
+  tool: Diamond.blastp-v0.9.21.cwl
+  output:
+    matches:
+      location: "test_proteins.faa.diamond_matches"
+      class: File
+      checksum: "sha1$bf1dbd44b4fa6630105fe175cc3ae49d86fe85af"

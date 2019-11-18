@@ -4,9 +4,9 @@ cwlVersion: v1.0
 class: CommandLineTool
 label: combine LSU and SSU coords
 
-#requirements:
-#   DockerRequirement:
-#    dockerPull: alpine:3.7
+hints:
+  DockerRequirement:
+    dockerPull: alpine:3.7
 
 inputs:
 

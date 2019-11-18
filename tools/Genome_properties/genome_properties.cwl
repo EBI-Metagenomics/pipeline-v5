@@ -5,12 +5,28 @@ class: CommandLineTool
 label: "Genome properties https://genome-properties.readthedocs.io"
 
 requirements:
-  DockerRequirement:
-    dockerPull: genome_properties:latest
   InlineJavascriptRequirement: {}
 
-baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"]
-arguments: ["-name", "$(inputs.input_tsv_file.nameroot)", "-all", "-gpdir", "/genome-properties/flatfiles", "-outfiles", "table", "-outfiles", "web_json", "-gpff", "genomeProperties.txt"]
+hints:
+  DockerRequirement:
+    dockerPull: genome_properties:latest
+
+#baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"] # <--- for docker
+
+baseCommand: [assign_genome_properties.pl]    # without docker
+
+arguments:
+  - position: 1
+    valueFrom: "-all"
+  - position: 2
+    valueFrom: "table"
+    prefix: "-outfiles"
+  - position: 4
+    valueFrom: "summary"
+    prefix: "-outfiles"
+  - position: 3
+    valueFrom: "web_json"
+    prefix: "-outfiles"
 
 inputs:
   input_tsv_file:
@@ -19,10 +35,23 @@ inputs:
       separate: true
       prefix: "-matches"
 
+  flatfiles_path:
+    type: string
+    inputBinding:
+      prefix: "-gpdir"
+  GP_txt:
+    type: string
+    inputBinding:
+      prefix: "-gpff"
+
   out_dir:
     type: string?
     inputBinding:
       prefix: "-outdir"
+  name:
+    type: string?
+    inputBinding:
+      prefix: "-name"
 
 stdout: stdout.txt
 stderr: stderr.txt
@@ -33,14 +62,17 @@ outputs:
   stderr: stderr
 
   table:
-    type: File
+    type: File?
     outputBinding:
-      glob: "TABLE*$(inputs.input_tsv_file.nameroot)"
+      glob: "TABLE*$(inputs.name)"
   json:
-    type: File
+    type: File?
     outputBinding:
-      glob: "JSON*$(inputs.input_tsv_file.nameroot)"
-
+      glob: "JSON*$(inputs.name)"
+  summary:
+    type: File?
+    outputBinding:
+      glob: "SUMMARY*$(inputs.name)"
 
 $namespaces:
  edam: http://edamontology.org/

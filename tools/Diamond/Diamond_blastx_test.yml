@@ -1,9 +1,0 @@
-#cwltest
-
-- job: tools/Diamond/Diamond.blastx-v0.9.21.test.job.yaml
-  tool: tools/Diamond/Diamond.blastx-v0.9.21.cwl
-  output:
-    matches:
-      basename: "test_transcripts.fasta.diamond_matches"
-      class: File
-      checksum: "sha1$0a824ce1dd1627c19f4ef1c81b2526d42a91ec68"

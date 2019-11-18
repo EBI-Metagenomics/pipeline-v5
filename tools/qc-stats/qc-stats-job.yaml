@@ -1,5 +1,5 @@
 QCed_reads: 
   class: File
   format: http://edamontology.org/format_1929
-  path: ../../files/merged_with_unmerged_reads.trimmed.fastq.fasta
-
+  path: test-inputs/test.fasta
+sequence_count: 5000
