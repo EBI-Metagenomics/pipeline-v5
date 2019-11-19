@@ -4,7 +4,6 @@ from __future__ import print_function
 import yaml
 import argparse
 import sys
-import os
 
 def write_summary(maps, outputfilename):
 
@@ -15,15 +14,10 @@ def write_summary(maps, outputfilename):
     for item in entry2protein.items():
         entry = item[0]
         proteins = item[1]
-        if entry2name == {}:
-            tuple = (entry, len(proteins))
-            item_no = 1
-        else:
-            name = entry2name[entry]
-            tuple = (entry, name, len(proteins))
-            item_no = 2
+        name = entry2name[entry]
+        tuple = (len(proteins), entry, name)
         unsortedEntries.append(tuple)
-    sortedEntries = sorted(unsortedEntries, key=lambda item:item[item_no])
+    sortedEntries = sorted(unsortedEntries, key=lambda item: item[2])
     sortedEntries.reverse()
     with open(outputfilename, "w") as file_out:
         for entry in sortedEntries:
@@ -46,6 +40,6 @@ if __name__ == "__main__":
         args = parser.parse_args()
         write_summary(args.interproscan, args.ips_out_name)  # IPS
         write_summary(args.hmmscan, args.ko_out_name)  # KO
-        write_summary(args.pfam, args.pfam_out_name)  # Pram
+        write_summary(args.pfam, args.pfam_out_name)  # Pfam
         if args.antismash:
             write_summary(args.antismash, args.antismash_out_name) #geneclusters

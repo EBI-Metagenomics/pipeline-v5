@@ -28,6 +28,7 @@ def orf_stats(cds_file, cmsearch_deoverlap, outdir):
     with open(os.path.join(outdir, "orf.stats"), "w") as file_out:
         file_out.write("Predicted CDS\t" + str(numberOrfs) + "\nContigs with predicted CDS\t" + str(numberReadsWithOrf) + "\nContigs with predicted with rRNA\t" + str(numberReadswithRNA))
 
+
 '''
 def define_tool(input_file):
     filename = os.path.basename(input_file)
@@ -79,6 +80,9 @@ def stats(input_file, cds_column_number, protein_column_number, hash, outdir):
                     entry2name[entry] = " ".join(splitLine[22:])
                 elif hash == 'pfam':
                     entry2name[entry] = splitLine[5]
+                elif hash == 'antismash':
+                    entry2name[entry] = splitLine[5]
+
             match_count += 1
 
     CDS_with_match_count = len(cds)
@@ -108,6 +112,7 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--rna", dest="cmsearch_deoverlap", help="cmsearch deoverlapped results", required=True)
     parser.add_argument("-c", "--cds", dest="cds_file", help="predicted coding sequences", required=True)
     parser.add_argument("-a", "--antismash", dest="antismash", help="antismash gene clusters", required=False)
+    parser.add_argument("-g", "--glossary", dest="antismash_glossary", help="tsv mapping gene clusters to full names", required=False)
 
     if len(sys.argv) == 1:
         parser.print_help()

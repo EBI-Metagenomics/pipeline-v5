@@ -84,6 +84,9 @@ inputs:
     # genome properties
     gp_flatfiles_path: string
 
+    #antismash summary
+    clusters_glossary: File
+
 outputs:
 
   qc-statistics_folder:
@@ -314,7 +317,7 @@ steps:
        interproscan_annotation: functional_annotation/ips_result
        hmmscan_annotation: functional_annotation/hmmscan_result
        pfam_annotation: pfam/annotations
-       antismash_gene_clusters: antismash/geneclusters_txt
+       antismash_gene_clusters: antismash_summary/reformatted_clusters
        rna: rna_prediction/ncRNA
        cds:
          source: cgc/results
@@ -363,11 +366,19 @@ steps:
       outputname: {default: 'geneclusters.json'}
     out: [output_json]
 
+# << post-processing geneclusters.txt >>
+   antismash_summary:
+    run: ../tools/Assembly/antismash/reformat-geneclusters.cwl
+    in:
+      glossary: clusters_glossary
+      geneclusters: antismash/geneclusters_txt
+    out: [reformatted_clusters]
+
 # << GFF for antismash >>
   antismash_gff:
     run: ../tools/Assembly/GFF/antismash_to_gff.cwl
     in:
-      antismash_geneclus: antismash/geneclusters_txt
+      antismash_geneclus: antismash_summary/reformatted_clusters
       antismash_embl: antismash/final_embl
       antismash_gc_json: antismash_json_generation/output_json
       output_name:
@@ -464,7 +475,7 @@ steps:
       kegg_summary: pathways/kegg_pathways_summary
       antismash_gbk: antismash/final_gbk
       antismash_embl: antismash/final_embl
-      antismash_geneclusters: antismash/geneclusters_txt
+      antismash_geneclusters: antismash_summary/reformatted_clusters
       fasta: length_filter/filtered_file
     out: [gp_summary_csv, kegg_summary_csv, antismash_gbk, antismash_embl, antismash_gclust]
 

@@ -11,3 +11,8 @@ cmsearch_file:
 cds_file:
   class: File
   path: /Users/kates/Desktop/ERZ477576_FASTA.fasta.faa
+antismash_glossary:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/antismash_glossary.tsv
+  checksum: bd50e85246dc3609f7cab6fb4efe4845
+
