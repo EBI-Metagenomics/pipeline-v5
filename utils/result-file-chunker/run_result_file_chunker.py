@@ -96,7 +96,7 @@ def chunk_file(infile, file_format, fasta_type, outdir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert fastq to fasta")
-    parser.add_argument("-i", "--input", dest="input", help="Input fastq file", required=True)
+    parser.add_argument("-i", "--input", nargs='+', help="Input fastq file", required=True)
     parser.add_argument("-f", "--format", dest="format", help="Output fasta file", required=True)
     parser.add_argument("-t", "--type", dest="type", help="-n for nucleotide fasta, -p for protein fasta")
     parser.add_argument("-o", "--outdir", dest="outdir", help="Name of output folder", required=True)
@@ -106,4 +106,6 @@ if __name__ == "__main__":
         parser.print_help()
     else:
         args = parser.parse_args()
-        chunk_file(args.input, args.format, args.type, args.outdir)
+        for input_file in args.input:
+            print('Processing', input_file)
+            chunk_file(input_file, args.format, args.type, args.outdir)

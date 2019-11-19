@@ -3,6 +3,7 @@ import os
 import re
 import cleaningUtils as cleaningUtils
 import logging
+import shutil
 
 __author__ = 'maxim'
 
@@ -58,6 +59,12 @@ class ChunkTSVFileUtil:
                     if not os.path.exists(outdirpath):
                         os.makedirs(outdirpath)
                         print(outdirpath)
+
+                    # move and gzip initial file
+                    shutil.copyfile(self._infile, os.path.join(outdirpath, os.path.basename(self._infile)))
+                    cleaningUtils.compress(filePath=os.path.join(outdirpath, os.path.basename(self._infile)),
+                                           tool='pigz', options=['-p', '16'])
+
                     with open(os.path.join(outdirpath, os.path.basename(self._infile) + '.chunks'), "w") as f:
                         f.write(basename + '.gz')
         except:
@@ -90,6 +97,7 @@ class ChunkTSVFileUtil:
             if not os.path.exists(outdirpath):
                 os.makedirs(outdirpath)
                 print('out dir:' + str(outdirpath))
+
             newSummaryFilePath = os.path.join(outdirpath, os.path.basename(summaryFilePath) + '.chunks')
             with open(newSummaryFilePath, "w") as f:
                 for listItem in chunkFileList:

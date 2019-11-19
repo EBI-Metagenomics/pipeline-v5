@@ -45,7 +45,7 @@ outputs:
     type: File
     outputSource: find_ribosomal_ncRNAs/concatenate_matches
 
-  sequence-categorisation:  # LSU, SSU, 5S, 5.8S and models
+  sequence-categorisation:  # 5S, 5.8S and models
     type: Directory
     outputSource: move_fastas/out
 
@@ -75,6 +75,14 @@ outputs:
   LSU-SSU-count:
     type: File
     outputSource: extract_subunits_coords/counts
+
+  SSU_fasta_file:
+    type: File
+    outputSource: classify_SSUs/fasta_output
+
+  LSU_fasta_file:
+    type: File
+    outputSource: classify_LSUs/fasta_output
 
 steps:
 
@@ -140,7 +148,7 @@ steps:
       otu_label: pattern_SSU
       return_dirname: {default: 'taxonomy-summary/SSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, fasta_output ]
+    out: [ out_dir, compressed_fasta_output, fasta_output ]
 
 # classify LSU
   classify_LSUs:
@@ -153,7 +161,7 @@ steps:
       otu_label: pattern_LSU
       return_dirname: {default: 'taxonomy-summary/LSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, fasta_output ]
+    out: [ out_dir, compressed_fasta_output, fasta_output ]
 
 # gzip and chunk sequence-categorisation
   gzip_files:
@@ -175,7 +183,7 @@ steps:
     run: ../../utils/return_directory.cwl
     in:
       list:
-        - classify_SSUs/fasta_output
-        - classify_LSUs/fasta_output
+        - classify_SSUs/compressed_fasta_output
+        - classify_LSUs/compressed_fasta_output
       dir_name: { default: 'sequence-categorisation' }
     out: [out]

@@ -22,7 +22,11 @@ outputs:
   fasta_index:
     type: File
     outputBinding:
-      glob: "index/$(inputs.fasta.basename).fai"
+      glob: "index/$(inputs.fasta.basename).bgz.fai"
+  fasta_bgz:
+    type: File
+    outputBinding:
+      glob: "index/$(inputs.fasta.basename).bgz"
 
 $namespaces:
  edam: http://edamontology.org/
