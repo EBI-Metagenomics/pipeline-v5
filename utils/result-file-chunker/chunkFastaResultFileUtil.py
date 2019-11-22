@@ -1,6 +1,7 @@
 import sys
 import os
 import cleaningUtils as cleaningUtils
+import shutil
 
 __author__ = 'maxim'
 
@@ -50,6 +51,12 @@ class ChunkFASTAResultFileUtil:
                     if not os.path.exists(outdirpath):
                         os.makedirs(outdirpath)
                         print(outdirpath)
+
+                    # move and gzip initial file
+                    shutil.copyfile(absoluteFilePath, os.path.join(outdirpath, os.path.basename(absoluteFilePath)))
+                    cleaningUtils.compress(filePath=os.path.join(outdirpath, os.path.basename(absoluteFilePath)),
+                                           tool='pigz', options=['-p', '16'])
+
                     summaryOutput = open(os.path.join(outdirpath, os.path.basename(absoluteFilePath) + '.chunks'), "w")
                     summaryOutput.write(os.path.basename(absoluteFilePath) + '.gz')
                     summaryOutput.close()

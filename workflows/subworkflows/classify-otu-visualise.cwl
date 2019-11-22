@@ -52,9 +52,13 @@ outputs:
     type: Directory
     outputSource: return_output_dir/out
 
-  fasta_output:
+  compressed_fasta_output:
     type: File
     outputSource: compress_fasta/compressed_file
+
+  fasta_output:
+    type: File
+    outputSource: edit_empty_tax/fasta_out
 
 steps:
   mapseq:

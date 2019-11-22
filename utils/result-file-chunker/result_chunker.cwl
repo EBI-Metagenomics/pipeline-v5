@@ -13,7 +13,7 @@ hints:
 
 inputs:
   infile:
-    type: File
+    type: File[]
     inputBinding:
       prefix: -i
   format_file:
@@ -32,14 +32,10 @@ inputs:
 baseCommand: [run_result_file_chunker.py]
 
 outputs:
-  chunked_summary_file:
-    type: File
-    outputBinding:
-      glob: $(inputs.outdirname)/$(inputs.infile.basename).chunks
   chunks:
     type: File[]?
     outputBinding:
-      glob: $(inputs.outdirname)/$(inputs.infile.nameroot)*.gz
+      glob: $(inputs.outdirname)/*
 
 
 $namespaces:

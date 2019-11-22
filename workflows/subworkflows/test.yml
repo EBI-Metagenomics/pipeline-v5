@@ -1,0 +1,24 @@
+fasta:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/assembly_results/ERZ477576_FASTA_1000_FASTA.fasta
+ffn:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/assembly_results/ERZ477576_FASTA_1000_FASTA_CDS.ffn
+faa:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/assembly_results/ERZ477576_FASTA_1000_FASTA_CDS.faa
+diamond:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/assembly_results/ERZ477576_FASTA_1000_FASTA_summary.diamond
+hmm:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/assembly_results/ERZ477576_FASTA_1000_FASTA.hmm.tsv
+ips:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/assembly_results/ERZ477576_FASTA_1000_FASTA.I5.tsv
+LSU:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/assembly_results/sequence-categorisation/ERZ477576_FASTA_1000_FASTA_LSU_rRNA_bacteria.RF02541.fa
+SSU:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/assembly_results/sequence-categorisation/5S.fa

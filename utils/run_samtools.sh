@@ -5,4 +5,7 @@ while getopts f: option; do
 	esac
 done
 
-mkdir -p index && samtools faidx $FASTA && mv $FASTA.fai index/
+mkdir -p index && \
+cat ${FASTA} | bgzip -c > $FASTA.bgz && \
+samtools faidx $FASTA.bgz && mv $FASTA.bgz.fai index/ && \
+mv $FASTA.bgz index/

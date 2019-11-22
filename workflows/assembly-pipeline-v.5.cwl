@@ -28,7 +28,7 @@ inputs:
     contigs: File
     contig_min_length: int
 
-    #rna prediction#
+ # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
     ssu_tax: File
@@ -45,12 +45,12 @@ inputs:
     5s_pattern: string
     5.8s_pattern: string
 
-    # cgc
+ # << cgc >>
     CGC_config: File
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
-    # functional annotation
+ # << functional annotation >>
     fa_chunk_size: int
     func_ann_names_ips: string
     func_ann_names_hmmscan: string
@@ -67,21 +67,21 @@ inputs:
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ips_header: string
 
-    # diamond
+ # << diamond >>
     Uniref90_db_txt: File
     diamond_maxTargetSeqs: int
     diamond_databaseFile: File
     diamond_header: string
 
-    # GO
+ # << GO >>
     go_config: File
 
-    # Pathways
+ # << Pathways >>
     graphs: File
     pathways_names: File
     pathways_classes: File
 
-    # genome properties
+ # << genome properties >>
     gp_flatfiles_path: string
 
     #antismash summary
@@ -89,51 +89,68 @@ inputs:
 
 outputs:
 
-  qc-statistics_folder:
-    type: Directory
-    outputSource: qc_stats/output_dir
-  qc_summary:
-    type: File
-    outputSource: length_filter/stats_summary_file
-  qc-status:
-    type: File
-    outputSource: QC-FLAG/qc-flag
-
-  LSU_folder:
-    type: Directory
-    outputSource: rna_prediction/LSU_folder
-  SSU_folder:
-    type: Directory
-    outputSource: rna_prediction/SSU_folder
-
-  sequence-categorisation_folder:
-    type: Directory
-    outputSource: rna_prediction/sequence-categorisation
-  sequence-categorisation_SSU_LSU:
-    type: Directory
-    outputSource: rna_prediction/sequence-categorisation_two
-  other_rna:
-    type: Directory
-    outputSource: other_ncrnas/ncrnas
-
-  compressed_files:
+ # << root folder >>
+  compressed_files:                                          # [5] fasta, cmsearch, ncRNA, deoverlapped
     type: File[]
     outputSource: compression/compressed_file
+  index_fasta_file:                                          # [1] fasta.bgz.fai
+    type: File
+    outputSource: fasta_index/fasta_index
+  bgzip_fasta_file:                                          # [1] fasta.bgz
+    type: File
+    outputSource: fasta_index/fasta_bgz
+  chunking_nucleotides:                                      # [2] fasta, ffn
+    type: File[]
+    outputSource: chunking_final/nucleotide_fasta_chunks
+  chunking_proteins:                                         # [1] faa
+    type: File[]
+    outputSource: chunking_final/protein_fasta_chunks
+  qc-status:                                                 # [1]
+    type: File
+    outputSource: QC-FLAG/qc-flag
+  qc_summary:                                                # [1]
+    type: File
+    outputSource: length_filter/stats_summary_file
 
-  functional_annotation_folder:
+ # << qc-statistics >>
+  qc-statistics_folder:                                      # [8]
     type: Directory
-    outputSource: move_to_functional_annotation_folder/out
-  stats:
-    outputSource: write_summaries/stats
+    outputSource: qc_stats/output_dir
+
+ # << functional annotation >>
+  functional_annotation_folder:                              # [15]
+    type: Directory
+    outputSource: folder_functional_annotation/functional_annotation_folder
+  stats:                                                     # [6]
+    outputSource: folder_functional_annotation/stats
     type: Directory
 
-  pathways_systems_folder:
+ # << pathways and systems >>
+  pathways_systems_folder:                                   # [~10]
     type: Directory
     outputSource: move_to_pathways_systems_folder/out
 
-  index_fasta_file:
-    type: File
-    outputSource: fasta_index/fasta_index
+ # << sequence categorisation >>
+  sequence-categorisation_folder:                            # [6]
+    type: Directory
+    outputSource: rna_prediction/sequence-categorisation
+#  sequence-categorisation_SSU_LSU:                           # [2]
+#    type: Directory
+#    outputSource: rna_prediction/sequence-categorisation_two
+  sequence-categorisation_SSU_LSU_chunked:                   # [2]
+    type: Directory
+    outputSource: move_to_seq_cat_folder/out
+  other_rna:                                                 # [?]
+    type: Directory
+    outputSource: other_ncrnas/ncrnas
+
+ # << taxonomy summary >>
+  LSU_folder:                                                # [6]
+    type: Directory
+    outputSource: rna_prediction/LSU_folder
+  SSU_folder:                                                # [6]
+    type: Directory
+    outputSource: rna_prediction/SSU_folder
 
 steps:
 # << unzip contig file >>
@@ -200,7 +217,7 @@ steps:
     out: [ output_dir ]
     run: ../tools/qc-stats/qc-stats.cwl
 
-# << RNA prediction >>
+# -----------------------------------  << RNA PREDICTION >>  -----------------------------------
   rna_prediction:
     in:
       input_sequences: length_filter/filtered_file
@@ -222,10 +239,22 @@ steps:
       - SSU_folder
       - LSU_folder
       - sequence-categorisation
-      - sequence-categorisation_two
+#      - sequence-categorisation_two
+      - SSU_fasta_file
+      - LSU_fasta_file
     run: subworkflows/rna_prediction-sub-wf.cwl
 
-# << COMBINED GENE CALLER >>
+# << OTHER ncrnas >>
+  other_ncrnas:
+    run: subworkflows/other_ncrnas.cwl
+    in:
+     input_sequences: length_filter/filtered_file
+     cmsearch_file: rna_prediction/ncRNA
+     other_ncRNA_ribosomal_models: other_ncrna_models
+     name_string: { default: 'other_ncrna' }
+    out: [ ncrnas ]
+
+# -----------------------------------  << COMBINED GENE CALLER >>  -----------------------------------
   cgc:
     in:
       input_fasta: length_filter/filtered_file
@@ -238,23 +267,7 @@ steps:
     out: [ results ]
     run: ../tools/Combined_gene_caller/CGC-subwf.cwl
 
-# << DIAMOND >>
-  diamond:
-    run: ../tools/Assembly/Diamond/diamond-subwf.cwl
-    in:
-      queryInputFile:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      outputFormat: { default: '6' }
-      maxTargetSeqs: diamond_maxTargetSeqs
-      strand: { default: 'both'}
-      databaseFile: diamond_databaseFile
-      threads: { default: 32 }
-      Uniref90_db_txt: Uniref90_db_txt
-      filename: length_filter/filtered_file
-    out: [post-processing_output]
-
-# << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
+# -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
   functional_annotation:
     run: subworkflows/functional_annotation.cwl
     in:
@@ -276,16 +289,62 @@ steps:
       InterProScan_outputFormat: InterProScan_outputFormat
     out: [ hmmscan_result, ips_result, eggnog_annotations, eggnog_orthologs ]
 
-# << GO SUMMARY>>
-  go_summary:
-    run: ../tools/GO-slim/go_summary.cwl
+# -----------------------------------  << STEP GFF >>  -----------------------------------
+  gff:
+    run: ../tools/Assembly/GFF/gff_generation.cwl
     in:
-      InterProScan_results: functional_annotation/ips_result
-      config: go_config
+      ips_results: functional_annotation/ips_result
+      eggnog_results: functional_annotation/eggnog_annotations
+      input_faa:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
       output_name:
         source: length_filter/filtered_file
-        valueFrom: $(self.nameroot).summary.go
-    out: [go_summary, go_summary_slim]
+        valueFrom: $(self.nameroot).contigs.annotations.gff
+    out: [ output_gff_gz, output_gff_index ]
+
+# -----------------------------------  << FUNCTIONAL ANNOTATION FOLDER >>  -----------------------------------
+
+# << DIAMOND >>
+  diamond:
+    run: ../tools/Assembly/Diamond/diamond-subwf.cwl
+    in:
+      queryInputFile:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      outputFormat: { default: '6' }
+      maxTargetSeqs: diamond_maxTargetSeqs
+      strand: { default: 'both'}
+      databaseFile: diamond_databaseFile
+      threads: { default: 32 }
+      Uniref90_db_txt: Uniref90_db_txt
+      filename: length_filter/filtered_file
+    out: [post-processing_output]
+
+# << collect folder >>
+  folder_functional_annotation:
+    run: subworkflows/assembly/deal_with_functional_annotation.cwl
+    in:
+      fasta: length_filter/filtered_file
+      IPS_table: functional_annotation/ips_result
+      diamond_table: diamond/post-processing_output
+      hmmscan_table: functional_annotation/hmmscan_result
+      antismash_geneclusters_txt: antismash/geneclusters_txt
+      rna: rna_prediction/ncRNA
+      cds:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      go_config: go_config
+      eggnog_orthologs: functional_annotation/eggnog_orthologs
+      eggnog_annotations: functional_annotation/eggnog_annotations
+      diamond_header: diamond_header
+      hmmscan_header: hmmscan_header
+      ips_header: ips_header
+      output_gff_gz: gff/output_gff_gz
+      output_gff_index: gff/output_gff_index
+    out: [functional_annotation_folder, stats, summary_antismash]
+
+# ----------------------------------- << PATHWAYS and SYSTEMS >> -----------------------------------
 
 # << KEGG PATHWAYS >>
   pathways:
@@ -336,20 +395,6 @@ steps:
         valueFrom: $(self.nameroot).summary.gprops.tsv
     out: [ summary ]
 
-# << GFF (IPS, EggNOG) >>
-  gff:
-    run: ../tools/Assembly/GFF/gff_generation.cwl
-    in:
-      ips_results: functional_annotation/ips_result
-      eggnog_results: functional_annotation/eggnog_annotations
-      input_faa:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      output_name:
-        source: length_filter/filtered_file
-        valueFrom: $(self.nameroot).contigs.annotations.gff
-    out: [ output_gff_gz, output_gff_index ]
-
 # << ANTISMASH >>
   antismash:
     run: ../tools/Assembly/antismash/antismash_v4.cwl
@@ -386,88 +431,7 @@ steps:
         valueFrom: $(self.nameroot).antismash.gff
     out: [output_gff_gz, output_gff_index]
 
-# << other ncrnas >>
-  other_ncrnas:
-    run: subworkflows/other_ncrnas.cwl
-    in:
-     input_sequences: length_filter/filtered_file
-     cmsearch_file: rna_prediction/ncRNA
-     other_ncRNA_ribosomal_models: other_ncrna_models
-     name_string: { default: 'other_ncrna' }
-    out: [ ncrnas ]
-
-
-# << FINAL STEPS >>
-
-# index FASTA
-  fasta_index:
-    run: ../utils/fasta_index.cwl
-    in:
-      fasta: length_filter/filtered_file
-    out: [fasta_index]
-
-# add header
-  header_addition:
-    scatter: [input_table, header]
-    scatterMethod: dotproduct
-    run: ../utils/add_header/add_header.cwl
-    in:
-      input_table:
-        - diamond/post-processing_output
-        - functional_annotation/hmmscan_result
-        - functional_annotation/ips_result
-      header:
-        - diamond_header
-        - hmmscan_header
-        - ips_header
-    out: [ output_table ]
-
-# gzip
-  compression:
-    run: ../utils/gzip.cwl
-    scatter: uncompressed_file
-    in:
-      uncompressed_file:
-        source:
-          - length_filter/filtered_file                 # _FASTA
-          - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
-          - rna_prediction/cmsearch_result              # cmsearch.all
-          - cgc/results                                 # faa, ffn
-        linkMerge: merge_flattened
-    out: [compressed_file]
-
-# gzip functional annotation files
-  compression_func_ann:
-    run: ../utils/gzip.cwl
-    scatter: uncompressed_file
-    in:
-      uncompressed_file:
-        source:
-          - functional_annotation/eggnog_annotations
-          - functional_annotation/eggnog_orthologs
-          - header_addition/output_table                # hmmscan, diamond, IPS
-        linkMerge: merge_flattened
-    out: [compressed_file]
-
-# move FUNCTIONAL-ANNOTATION
-  move_to_functional_annotation_folder:
-    run: ../utils/return_directory.cwl
-    in:
-      list:
-        source:
-          - gff/output_gff_gz
-          - gff/output_gff_index
-          - compression_func_ann/compressed_file
-          - write_summaries/summary_ips
-          - write_summaries/summary_ko
-          - write_summaries/summary_pfam
-          - go_summary/go_summary
-          - go_summary/go_summary_slim
-        linkMerge: merge_flattened
-      dir_name: { default: functional-annotation }
-    out: [ out ]
-
-# change TSV to CSV; move files
+# << change TSV to CSV; move files for pathways & systems >>
   change_formats_and_names:
     run: subworkflows/change_formats_and_names.cwl
     in:
@@ -479,7 +443,7 @@ steps:
       fasta: length_filter/filtered_file
     out: [gp_summary_csv, kegg_summary_csv, antismash_gbk, antismash_embl, antismash_gclust]
 
-# gzip pathways and systems files
+# << gzip pathways and systems files >>
   compression_pathways_systems:
     run: ../utils/gzip.cwl
     scatter: uncompressed_file
@@ -491,7 +455,7 @@ steps:
         linkMerge: merge_flattened
     out: [compressed_file]
 
-# move PATHWAYS-SYSTEMS
+# << move PATHWAYS-SYSTEMS >>
   move_to_pathways_systems_folder:
     run: ../utils/return_directory.cwl
     in:
@@ -504,7 +468,56 @@ steps:
           - compression_pathways_systems/compressed_file        # antismash GBK and EMBL
           - antismash_gff/output_gff_gz                         # antismash gff.gz
           - antismash_gff/output_gff_index                      # antismash gff.tbi
-          - write_summaries/summary_antismash                   # antismash summary
+          - folder_functional_annotation/summary_antismash                   # antismash summary
         linkMerge: merge_flattened
       dir_name: { default: pathways-systems }
+    out: [ out ]
+
+# ----------------------------------- << FINAL STEPS ROOT FOLDER >> -----------------------------------
+
+# index FASTA
+  fasta_index:
+    run: ../utils/fasta_index.cwl
+    in:
+      fasta: length_filter/filtered_file
+    out: [fasta_index, fasta_bgz]
+
+# chunking
+  chunking_final:
+    run: subworkflows/final_chunking.cwl
+    in:
+      fasta: length_filter/filtered_file
+      ffn:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
+      faa:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      LSU: rna_prediction/LSU_fasta_file
+      SSU: rna_prediction/SSU_fasta_file
+    out:
+      - nucleotide_fasta_chunks                         # fasta, ffn
+      - protein_fasta_chunks                            # faa
+      - SC_fasta_chunks                                 # LSU, SSU
+
+# gzip
+  compression:
+    run: ../utils/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file:
+        source:
+          - length_filter/filtered_file                 # _FASTA
+          - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
+          - rna_prediction/cmsearch_result              # cmsearch.all
+        linkMerge: merge_flattened
+    out: [compressed_file]
+
+# ----------------------------------- << SEQUENCE CATEGORISATION FOLDER >> -----------------------------------
+# << move chunked files >>
+  move_to_seq_cat_folder:  # LSU and SSU
+    run: ../utils/return_directory.cwl
+    in:
+      list: chunking_final/SC_fasta_chunks
+      dir_name: { default: sequence-categorisation }
     out: [ out ]

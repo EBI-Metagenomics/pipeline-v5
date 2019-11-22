@@ -1,7 +1,7 @@
 infile:
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/chunking/very_big.fasta #ERR2237853_MERGED_FASTQ.fasta
-  #/hps/nobackup2/production/metagenomics/pipeline/testing/kate/chunking/ERZ477576_FASTA_1000_FASTA.summary.kegg_contigs.tsv
-  class: File
-type_fasta: 'n'
-format_file: "fasta"
+  - path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/chunking/ERZ477576_FASTA_1000_FASTA.summary.kegg_contigs.tsv
+   #/hps/nobackup2/production/metagenomics/pipeline/testing/kate/chunking/very_big.fasta #ERR2237853_MERGED_FASTQ.fasta
+    class: File
+#type_fasta: 'n'
+format_file: "tsv"
 outdirname: 'fasta_folder'

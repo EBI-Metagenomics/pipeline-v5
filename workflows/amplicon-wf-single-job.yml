@@ -1,6 +1,6 @@
 single_reads:
   class: File
-  path:
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/ERR1594332.fastq.gz
   format: http://edamontology.org/format_1930
 
 qc_min_length: 100
