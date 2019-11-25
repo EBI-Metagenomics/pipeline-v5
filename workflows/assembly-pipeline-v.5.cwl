@@ -412,8 +412,8 @@ steps:
     out: [output_json]
 
 # << post-processing geneclusters.txt >>
-   antismash_summary:
-    run: ../tools/Assembly/antismash/reformat-geneclusters.cwl
+  antismash_summary:
+    run: ../tools/Assembly/antismash/reformat-antismash.cwl
     in:
       glossary: clusters_glossary
       geneclusters: antismash/geneclusters_txt
