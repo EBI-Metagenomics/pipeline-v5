@@ -12,7 +12,7 @@ export WORK_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_wor
 export OUT_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_out
 export MEMORY=20G
 
-export NAME_RUN=assembly_new_chunking
+export NAME_RUN=run_singularity_biom
 export CWL=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tools/biom-convert/biom-convert.cwl
 export YML=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tools/biom-convert/biom-convert-test.job-input.yml
 
