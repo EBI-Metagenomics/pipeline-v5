@@ -13,8 +13,8 @@ export OUT_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_out
 export MEMORY=20G
 
 export NAME_RUN=assembly_new_chunking
-export CWL=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/workflows/assembly-pipeline-v.5.cwl
-export YML=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/workflows/assembly-pipeline-v.5.yml
+export CWL=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tools/biom-convert/biom-convert.cwl
+export YML=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tools/biom-convert/biom-convert-test.job-input.yml
 
 
 export JOB_TOIL_FOLDER=$WORK_DIR/$NAME_RUN/
@@ -27,7 +27,8 @@ mkdir -p $JOB_TOIL_FOLDER $LOG_DIR $TMPDIR $OUT_TOOL && \
 cd $WORK_DIR && \
 rm -rf $JOB_TOIL_FOLDER $OUT_TOOL/* $LOG_DIR/* && \
 time cwltoil \
-  --no-container \
+  --singularity \
+  --defaultCores 8 \
   --batchSystem LSF \
   --disableCaching \
   --logDebug \
@@ -36,5 +37,4 @@ time cwltoil \
   --outdir $OUT_TOOL \
   --logFile $LOG_DIR/${NAME_RUN}.log \
   --writeLogs $LOG_DIR \
-  --defaultCores 8 \
 $CWL $YML
