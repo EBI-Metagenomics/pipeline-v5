@@ -1,7 +1,7 @@
 single_reads:
   class: File
   path:
-  format: edam:format_1929
+  format: http://edamontology.org/format_1930
 
 qc_min_length: 100
 

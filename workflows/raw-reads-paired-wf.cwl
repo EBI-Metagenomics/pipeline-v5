@@ -120,7 +120,7 @@ steps:
     out: [ merged_reads, forward_unmerged_reads, reverse_unmerged_reads ]
 
 # << Run raw reads single pipeline >>
-   single:
+  single:
     label: run single pipeline on merged reads
     run: raw-reads-single-wf.cwl
     in:
@@ -139,7 +139,7 @@ steps:
 
       rfam_models: rfam_models
       rfam_model_clans: rfam_model_clans
-      other_ncRNA_models: other_ncRNA_model
+      other_ncRNA_models: other_ncRNA_models
 
       ssu_label: ssu_label
       lsu_label: lsu_label
