@@ -112,7 +112,6 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--rna", dest="cmsearch_deoverlap", help="cmsearch deoverlapped results", required=True)
     parser.add_argument("-c", "--cds", dest="cds_file", help="predicted coding sequences", required=True)
     parser.add_argument("-a", "--antismash", dest="antismash", help="antismash gene clusters", required=False)
-    parser.add_argument("-g", "--glossary", dest="antismash_glossary", help="tsv mapping gene clusters to full names", required=False)
 
     if len(sys.argv) == 1:
         parser.print_help()
