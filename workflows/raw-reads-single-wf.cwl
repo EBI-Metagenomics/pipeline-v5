@@ -82,9 +82,9 @@ outputs:
   sequence-categorisation_folder:
     type: Directory
     outputSource: classify/sequence-categorisation
-  sequence-categorisation_folder_two:
+  compressed_sequence_categorisation:
     type: Directory
-    outputSource: classify/sequence-categorisation_two
+    outputSource: move_to_seq_cat_folder/out
   ncrnas_folder:
     type: Directory
     outputSource: other_ncrnas/ncrnas
@@ -204,9 +204,8 @@ steps:
       - SSU_folder
       - LSU_folder
       - sequence-categorisation
-      - sequence-categorisation_two
-      - SSU_coords
-      - LSU_coords
+      - LSU_fasta_file
+      - SSU_fasta_file
 
 # << other ncrnas >>
   other_ncrnas:
@@ -286,6 +285,50 @@ steps:
 
 # << FINAL STEPS >>
 
+# << TAXONOMY FORMATTING AND CHUNKING >>
+
+# gzip
+  compression:
+    run: ../utils/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file:
+        source:
+          - validate_fasta/fasta_out                 # _FASTA
+          - classify/ncRNA                        # cmsearch.all.deoverlapped
+          - classify/cmsearch_result              # cmsearch.all
+        linkMerge: merge_flattened
+    out: [compressed_file]
+
+# << chunking >>
+  chunking_final:
+    run: subworkflows/final_chunking.cwl
+    in:
+      fasta: validate_fasta/fasta_out
+      ffn:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
+      faa:
+        source: cgc/results
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      LSU: classify/LSU_fasta_file
+      SSU: classify/SSU_fasta_file
+    out:
+      - nucleotide_fasta_chunks                         # fasta, ffn
+      - protein_fasta_chunks                            # faa
+      - SC_fasta_chunks                                 # LSU, SSU
+
+# << move to sequence categorisation >>
+  move_to_seq_cat_folder:  # LSU and SSU
+    run: ../utils/return_directory.cwl
+    in:
+      list: chunking_final/SC_fasta_chunks
+      dir_name: { default: sequence-categorisation }
+    out: [ out ]
+
+
+# << FUNCTIONAL FORMATTING AND CHUNKING >>
+
 # add header
   header_addition:
     scatter: [input_table, header]
@@ -300,42 +343,28 @@ steps:
         - ips_header
     out: [ output_table ]
 
-# gzip
-  compression:
-    run: ../utils/gzip.cwl
-    scatter: uncompressed_file
+# << chunking TSVs >>
+  chunking_tsv:
+    run: ../../../utils/result-file-chunker/result_chunker.cwl
     in:
-      uncompressed_file:
-        source:
-          - validate_fasta/fasta_out                 # _FASTA
-          - classify/ncRNA                        # cmsearch.all.deoverlapped
-          - classify/cmsearch_result              # cmsearch.all
-          - cgc/results                                 # faa, ffn
-        linkMerge: merge_flattened
-    out: [compressed_file]
+      infile: header_addition/output_table
+      format_file: { default: tsv }
+      outdirname: { default: table }
+    out: [chunks]
 
-# gzip functional annotation files
-  compression_func_ann:
-    run: ../utils/gzip.cwl
-    scatter: uncompressed_file
-    in:
-      uncompressed_file:
-        source:
-          - header_addition/output_table                # hmmscan, IPS
-    out: [compressed_file]
-
-# move FUNCTIONAL-ANNOTATION
+# << move to fucntional annotation >>
   move_to_functional_annotation_folder:
-    run: ../utils/return_directory.cwl
+    run: ../../../utils/return_directory.cwl
     in:
       list:
         source:
-          - compression_func_ann/compressed_file
           - write_summaries/summary_ips
           - write_summaries/summary_ko
           - write_summaries/summary_pfam
           - go_summary/go_summary
           - go_summary/go_summary_slim
+          - chunking_tsv/chunks
         linkMerge: merge_flattened
       dir_name: { default: functional-annotation }
     out: [ out ]
+
