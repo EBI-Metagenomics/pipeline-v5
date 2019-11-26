@@ -178,7 +178,7 @@ steps:
       - LSU_folder
       - SSU_folder
       - sequence-categorisation_folder
-      - sequence-categorisation_folder_two
+      - compressed_sequence_categorisation
       - ncrnas_folder
       - rna-count
       - motus_output
