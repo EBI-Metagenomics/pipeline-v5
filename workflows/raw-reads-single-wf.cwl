@@ -345,7 +345,7 @@ steps:
 
 # << chunking TSVs >>
   chunking_tsv:
-    run: ../../../utils/result-file-chunker/result_chunker.cwl
+    run: ../utils/result-file-chunker/result_chunker.cwl
     in:
       infile: header_addition/output_table
       format_file: { default: tsv }
@@ -354,7 +354,7 @@ steps:
 
 # << move to fucntional annotation >>
   move_to_functional_annotation_folder:
-    run: ../../../utils/return_directory.cwl
+    run: ../utils/return_directory.cwl
     in:
       list:
         source:
