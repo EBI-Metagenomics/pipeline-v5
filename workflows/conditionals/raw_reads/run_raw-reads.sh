@@ -21,9 +21,10 @@ export PIPELINE_FOLDER=/hps/nobackup2/production/metagenomics/pipeline/tools-v5/
 # --> run files
 export YML=$PIPELINE_FOLDER/workflows/raw-reads-single-job.yml
 export PARSER_SCRIPT=$PIPELINE_FOLDER/workflows/conditionals/out_json_parser.py
+
 export NAME_RUN=wgs-qc
 export CWL_1=$PIPELINE_FOLDER/workflows/conditionals/raw_reads/raw-reads-single-1.cwl
-export CWL_2=$PIPELINE_FOLDER/workflows/conditionals/
+export CWL_2=$PIPELINE_FOLDER/workflows/conditionals/raw_reads/raw-reads-2.cwl
 
 # < set up folders >
 export JOB_TOIL_FOLDER=$WORK_DIR/$NAME_RUN/

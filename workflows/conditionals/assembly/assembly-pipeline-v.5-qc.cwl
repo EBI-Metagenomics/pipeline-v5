@@ -156,7 +156,6 @@ steps:
 
   before-qc:
     in:
-      filtered_fasta: filtered_fasta
       contigs: contigs
       contig_min_length: contig_min_length
       ssu_db: ssu_db
@@ -210,7 +209,7 @@ steps:
 
   after-qc:
     in:
-      filtered_fasta: filtered_fasta
+      filtered_fasta: before-qc/filtered_fasta
       contigs: contigs
       contig_min_length: contig_min_length
       ssu_db: ssu_db

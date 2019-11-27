@@ -1,14 +1,44 @@
 Basic concepts
 
------------ Assembly ------------
+--------------------------------------- Assembly --------------------------------------------------
 
 Assembly folder has 2 files: assembly-1.cwl (before qc) and assembly-2.cwl (after qc)
+assembly-pipeline-v.5-qc.cwl == assembly-1.cwl + assembly-2.cwl
 
-1) Run steps to QC
-2) Check qc-status
+>>>>>> Schema:
+
+   Run assembly-1.cwl
+           |
+    Check qc-status
     /                \
  QC-PASSED          QC-FAILED
-   |                  |
- run main part        /
-   |                 /
+   |                      |
+ run assembly-2.cwl      /
+   |                    /
   move first part to output folder
+   |
+  move second part to output folder
+
+
+---------------------------------------- Raw reads ------------------------------------------------
+raw-reads-paired-1.cwl == seq-prep + raw-reads-single-1.cwl
+raw-reads-2.cwl - common for paired and single pipeline
+
+raw-reads-single-pipeline-v.5-qc.cwl == raw-reads-single-1.cwl + raw-reads-2.cwl
+raw-reads-paired-pipeline-v.5-qc.cwl == raw-reads-paired-1.cwl + raw-reads-2.cwl
+
+>>>>>> Schema:
+
+single                              paired
+  |                                    |
+raw-reads-single-1.cwl            raw-reads-paired-1.cwl
+                \                    /
+                    check qc-status
+                      /         \
+             QC-PASSED         QC-FAILED
+                 |                |
+         raw-reads-2.cwl          |
+                  \              /
+            move first part to output folder
+                   |
+            move second part to output folder
