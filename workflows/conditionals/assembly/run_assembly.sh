@@ -73,7 +73,7 @@ else
 fi
 
 echo "move first part"
-mkdir ${OUT_DIR}/${NAME_RUN}
+mkdir -p ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_DIR}/${NAME_RUN}/*
 mv ${OUT_TOOL_1}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_1}
 if [ -d ${OUT_TOOL_2} ]
 then
