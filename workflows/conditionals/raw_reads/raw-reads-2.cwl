@@ -13,6 +13,7 @@ requirements:
 #      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
+    motus_input: File
     filtered_fasta: File
 
     single_reads: File?
@@ -63,6 +64,9 @@ inputs:
     go_config: File
 
 outputs:
+  motus_output:
+    type: File
+    outputSource: motus_taxonomy/motus
 
   LSU_folder:
     type: Directory
@@ -97,6 +101,13 @@ outputs:
     type: Directory
 
 steps:
+# << mOTUs2 >>
+  motus_taxonomy:
+    run: ../../subworkflows/raw_reads/mOTUs-workflow.cwl
+    in:
+      reads: motus_input
+    out: [ motus ]
+
 # << Get RNA >>
   classify:
     run: ../../subworkflows/rna_prediction-sub-wf.cwl

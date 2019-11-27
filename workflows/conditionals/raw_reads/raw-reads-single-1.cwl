@@ -72,14 +72,12 @@ outputs:
     type: File
     outputSource: QC-FLAG/qc-flag
 
-  motus_output:
-    type: File
-    outputSource: motus_taxonomy/motus
-
   filtered_fasta:
     type: File
     outputSource: length_filter/filtered_file
-
+  motus_input:
+    type: File
+    outputSource: unzip_reads/unzipped_merged_reads
 
 steps:
 
@@ -98,13 +96,6 @@ steps:
     in:
       sequences: unzip_reads/unzipped_merged_reads
     out: [ count ]
-
-# << mOTUs2 >>
-  motus_taxonomy:
-    run: ../../subworkflows/raw_reads/mOTUs-workflow.cwl
-    in:
-      reads: unzip_reads/unzipped_merged_reads
-    out: [ motus ]
 
 # << Trim and Reformat >>
   trimming:

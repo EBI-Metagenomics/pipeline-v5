@@ -95,7 +95,7 @@ outputs:
 
   motus_output:
     type: File
-    outputSource: before-qc/motus_output
+    outputSource: after-qc/motus_output
 
   compressed_files:
     type: File[]
@@ -163,12 +163,13 @@ steps:
       - qc-statistics
       - qc_summary
       - qc-status
-      - motus_output
+      - motus_input
       - filtered_fasta
 
   after-qc:
     run: raw-reads-2.cwl
     in:
+      motus_input: before-qc/motus_input
       filtered_fasta: before-qc/filtered_fasta
       forward_unmerged_reads: forward_unmerged_reads
       reverse_unmerged_reads: reverse_unmerged_reads
@@ -225,4 +226,5 @@ steps:
       - compressed_files
       - functional_annotation_folder
       - stats
+      - motus_output
 

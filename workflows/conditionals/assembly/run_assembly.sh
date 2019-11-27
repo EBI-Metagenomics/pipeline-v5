@@ -45,7 +45,7 @@ time cwltoil \
 $CWL_1 $YML > $OUT_TOOL_1/out1.json
 
 echo "first part done. Parsing output json"
-python3 $PARSER_SCRIPT -j $OUT_TOOL_1/out1.json -y $YML
+python3 $PARSER_SCRIPT -j $OUT_TOOL_1/out1.json -y $YML -m assembly
 
 if [ $? -eq 1 ]
 then

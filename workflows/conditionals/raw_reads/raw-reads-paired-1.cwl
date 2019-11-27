@@ -71,9 +71,9 @@ outputs:
   qc-status:
     type: File
     outputSource: single/qc-status
-  motus_output:
+  motus_input:
     type: File
-    outputSource: single/motus_output
+    outputSource: single/motus_input
   filtered_fasta:
     type: File
     outputSource: single/filtered_fasta
@@ -145,5 +145,5 @@ steps:
       - qc-statistics
       - qc_summary
       - qc-status
-      - motus_output
       - filtered_fasta
+      - motus_input

@@ -1,5 +1,14 @@
 Basic concepts
 
+--------------------------------------- out_json_parser.py --------------------------------------
+Script out_json_parser.py parses output JSON structure after first step.
+If QC-PASSED file was found, script adds extra lines to YML file (that would be used for second part of pipeline)
+
+For assembly (mode (-m) "assembly")
+  + filtered_fasta
+For raw-reads (mode (-m) "raw-reads")
+  + filtered_fasta
+  + motus_input
 --------------------------------------- Assembly --------------------------------------------------
 
 Assembly folder has 2 files: assembly-1.cwl (before qc) and assembly-2.cwl (after qc)
