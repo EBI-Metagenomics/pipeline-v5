@@ -76,9 +76,10 @@ else
     echo "failed"
 fi
 
-echo "move first part"
-mkdir -p ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_DIR}/${NAME_RUN}/*
-mv ${OUT_TOOL_1}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_1}
+echo "create dir" && \
+mkdir -p ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_DIR}/${NAME_RUN}/* && \
+echo "move first part" && \
+mv ${OUT_TOOL_1}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_1} && \
 if [ -d ${OUT_TOOL_2} ]
 then
     echo "move second part"
