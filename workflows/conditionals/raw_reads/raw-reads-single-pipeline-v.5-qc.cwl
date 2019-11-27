@@ -168,7 +168,7 @@ steps:
       - filtered_fasta
 
   after-qc:
-    run: raw-reads-2-test.cwl
+    run: raw-reads-2.cwl
     in:
       motus_input: before-qc/motus_input
       filtered_fasta: before-qc/filtered_fasta
@@ -224,7 +224,7 @@ steps:
       - sequence-categorisation_folder
       - ncrnas_folder
       - rna-count
-#      - compressed_sequence_categorisation
-#      - compressed_files
-#      - functional_annotation_folder
-#      - stats
+      - compressed_sequence_categorisation
+      - compressed_files
+      - functional_annotation_folder
+      - stats

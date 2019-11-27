@@ -24,7 +24,7 @@ export PARSER_SCRIPT=$PIPELINE_FOLDER/workflows/conditionals/out_json_parser.py
 
 export NAME_RUN=test-wgs-qc
 export CWL_1=$PIPELINE_FOLDER/workflows/conditionals/raw_reads/raw-reads-single-1.cwl
-export CWL_2=$PIPELINE_FOLDER/workflows/conditionals/raw_reads/raw-reads-2.cwl
+export CWL_2=$PIPELINE_FOLDER/workflows/conditionals/raw_reads/raw-reads-2-test.cwl
 
 # < set up folders >
 export JOB_TOIL_FOLDER=$WORK_DIR/$NAME_RUN/
