@@ -7,8 +7,9 @@ source /hps/nobackup2/production/metagenomics/pipeline/testing/varsha/test_env.r
 export PATH=$PATH:/homes/emgpr/.nvm/versions/node/v12.10.0/bin/
 export PATH=/hps/nobackup2/production/metagenomics/pipeline/tools-v5/miniconda2-4.6.14/bin:$PATH
 export CONDA_ENV=/hps/nobackup2/production/metagenomics/pipeline/tools-v5/miniconda2-4.6.14/bin/activate
+source /hps/nobackup2/production/metagenomics/pipeline/testing/kate/toil-3.19.0/bin/activate # 3.19 for profiling
 #source /hps/nobackup2/production/metagenomics/pipeline/testing/kate/toil-memory/bin/activate
-source /hps/nobackup2/production/metagenomics/pipeline/tools-v5/toil-user-env/bin/activate
+#source /hps/nobackup2/production/metagenomics/pipeline/tools-v5/toil-user-env/bin/activate
 
 export WORK_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_work
 export OUT_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_out
