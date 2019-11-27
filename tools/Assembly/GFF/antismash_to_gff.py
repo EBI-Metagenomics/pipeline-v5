@@ -42,15 +42,8 @@ def aggregate_clusters(geneclus_file):
     res = {}
     with open(geneclus_file, 'r') as reader:
         for line in reader:
-            split = line.split('\t')
-            cluster = ''
-            entries = ''
-            if len(split) == 5:
-                _, contig, cluster, entries, _ = split
-            elif len(split) == 6:
-                _, contig, _, cluster, entries, _ = split
-            else:
-                raise ValueError('geneclusters.txt does not have 5 or 6 columns')
+            split = line.split('\t')            
+            _, contig, cluster, entries, *_ = split
             contig_id = contig.replace(' ', '-')
             if contig_id not in res:
                 res[contig_id] = []
@@ -116,7 +109,7 @@ def _mags_name_clean(query_name):
     That name is not proper for the .gff file so it is cleaned in order to return:
     GUT_GENOME096033_1
     """
-    return re.sub(r'[-].+', '', query_name)
+    return re.sub(r'[-|\s].+', '', query_name)
 
 def build_attributes(entry_quals, gc_data, as_types):
     """Convert the CDS features to gff attributes field for an CDS entry
@@ -149,9 +142,10 @@ def build_gff(embl_file, gclusters, as_types, mag=False):
     """
     entries = SeqIO.parse(embl_file, 'embl')
     for entry in entries:
-        query_name = entry.description.replace(' ', '-')
+        query_name = entry.description
         if mag:
             query_name = _mags_name_clean(query_name)
+        query_name = query_name.replace(' ', '-')
         # filter the embl file by the contigs that have a 
         # gene cluster entry in the geneclusters.txt file
         gc_data = gclusters.get(query_name, None)
