@@ -81,4 +81,5 @@ then
     mv ${OUT_TOOL_2}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_2}
 fi
 
+# TODO remove filtered_fasta
 echo "PIPELINE DONE"

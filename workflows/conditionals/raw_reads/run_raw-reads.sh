@@ -22,7 +22,7 @@ export PIPELINE_FOLDER=/hps/nobackup2/production/metagenomics/pipeline/tools-v5/
 export YML=$PIPELINE_FOLDER/workflows/raw-reads-single-job.yml
 export PARSER_SCRIPT=$PIPELINE_FOLDER/workflows/conditionals/out_json_parser.py
 
-export NAME_RUN=wgs-qc
+export NAME_RUN=test-wgs-qc
 export CWL_1=$PIPELINE_FOLDER/workflows/conditionals/raw_reads/raw-reads-single-1.cwl
 export CWL_2=$PIPELINE_FOLDER/workflows/conditionals/raw_reads/raw-reads-2.cwl
 
@@ -76,14 +76,15 @@ else
     echo "failed"
 fi
 
-echo "create dir" && \
-mkdir -p ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_DIR}/${NAME_RUN}/* && \
-echo "move first part" && \
-mv ${OUT_TOOL_1}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_1} && \
-if [ -d ${OUT_TOOL_2} ]
-then
-    echo "move second part"
-    mv ${OUT_TOOL_2}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_2}
-fi
+#echo "create dir" && \
+#mkdir -p ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_DIR}/${NAME_RUN}/* && \
+#echo "move first part" && \
+#mv ${OUT_TOOL_1}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_1} && \
+#if [ -d ${OUT_TOOL_2} ]
+#then
+#    echo "move second part"
+#    mv ${OUT_TOOL_2}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_2}
+#fi
 
+# TODO remove motus_input and filtered_fasta
 echo "PIPELINE DONE"

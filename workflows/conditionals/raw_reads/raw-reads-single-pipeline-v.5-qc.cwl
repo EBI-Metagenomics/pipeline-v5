@@ -168,7 +168,7 @@ steps:
       - filtered_fasta
 
   after-qc:
-    run: raw-reads-2.cwl
+    run: raw-reads-2-test.cwl
     in:
       motus_input: before-qc/motus_input
       filtered_fasta: before-qc/filtered_fasta
@@ -218,13 +218,13 @@ steps:
       # GO
       go_config: go_config
     out:
+      - motus_output
       - LSU_folder
       - SSU_folder
       - sequence-categorisation_folder
-      - compressed_sequence_categorisation
       - ncrnas_folder
       - rna-count
-      - compressed_files
-      - functional_annotation_folder
-      - stats
-      - motus_output
+#      - compressed_sequence_categorisation
+#      - compressed_files
+#      - functional_annotation_folder
+#      - stats
