@@ -1,0 +1,14 @@
+Basic concepts
+
+----------- Assembly ------------
+
+Assembly folder has 2 files: assembly-1.cwl (before qc) and assembly-2.cwl (after qc)
+
+1) Run steps to QC
+2) Check qc-status
+    /                \
+ QC-PASSED          QC-FAILED
+   |                  |
+ run main part        /
+   |                 /
+  move first part to output folder
