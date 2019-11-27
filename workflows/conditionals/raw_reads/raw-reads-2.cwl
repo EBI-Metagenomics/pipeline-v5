@@ -99,7 +99,7 @@ outputs:
 steps:
 # << Get RNA >>
   classify:
-    run: subworkflows/rna_prediction-sub-wf.cwl
+    run: ../../subworkflows/rna_prediction-sub-wf.cwl
     in:
       input_sequences: filtered_fasta
       silva_ssu_database: ssu_db
@@ -126,7 +126,7 @@ steps:
 
 # << other ncrnas >>
   other_ncrnas:
-    run: subworkflows/other_ncrnas.cwl
+    run: ../../subworkflows/other_ncrnas.cwl
     in:
      input_sequences: filtered_fasta
      cmsearch_file: classify/ncRNA
@@ -145,11 +145,11 @@ steps:
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
     out: [ results ]
-    run: ../tools/Combined_gene_caller/CGC-subwf.cwl
+    run: ../../../tools/Combined_gene_caller/CGC-subwf.cwl
 
 # << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
   functional_annotation:
-    run: subworkflows/raw_reads/functional_annotation_raw.cwl
+    run: ../../subworkflows/raw_reads/functional_annotation_raw.cwl
     in:
       CGC_predicted_proteins:
         source: cgc/results
@@ -168,7 +168,7 @@ steps:
 
 # << GO SUMMARY>>
   go_summary:
-    run: ../tools/GO-slim/go_summary.cwl
+    run: ../../../tools/GO-slim/go_summary.cwl
     in:
       InterProScan_results: functional_annotation/ips_result
       config: go_config
@@ -179,7 +179,7 @@ steps:
 
 # << PFAM >>
   pfam:
-    run: ../tools/Pfam-Parse/pfam_annotations.cwl
+    run: ../../../tools/Pfam-Parse/pfam_annotations.cwl
     in:
       interpro: functional_annotation/ips_result
       outputname:
@@ -189,7 +189,7 @@ steps:
 
 # << summaries and stats IPS, HMMScan, Pfam >>
   write_summaries:
-    run: subworkflows/func_summaries.cwl
+    run: ../../subworkflows/func_summaries.cwl
     in:
        interproscan_annotation: functional_annotation/ips_result
        hmmscan_annotation: functional_annotation/hmmscan_result
@@ -206,7 +206,7 @@ steps:
 
 # gzip
   compression:
-    run: ../utils/gzip.cwl
+    run: ../../../utils/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:
@@ -219,7 +219,7 @@ steps:
 
 # << chunking >>
   chunking_final:
-    run: subworkflows/final_chunking.cwl
+    run: ../../subworkflows/final_chunking.cwl
     in:
       fasta: filtered_fasta
       ffn:
@@ -237,7 +237,7 @@ steps:
 
 # << move to sequence categorisation >>
   move_to_seq_cat_folder:  # LSU and SSU
-    run: ../utils/return_directory.cwl
+    run: ../../../utils/return_directory.cwl
     in:
       list: chunking_final/SC_fasta_chunks
       dir_name: { default: sequence-categorisation }
@@ -250,7 +250,7 @@ steps:
   header_addition:
     scatter: [input_table, header]
     scatterMethod: dotproduct
-    run: ../utils/add_header/add_header.cwl
+    run: ../../../utils/add_header/add_header.cwl
     in:
       input_table:
         - functional_annotation/hmmscan_result
@@ -262,7 +262,7 @@ steps:
 
 # << chunking TSVs >>
   chunking_tsv:
-    run: ../utils/result-file-chunker/result_chunker.cwl
+    run: ../../../utils/result-file-chunker/result_chunker.cwl
     in:
       infile: header_addition/output_table
       format_file: { default: tsv }
@@ -271,7 +271,7 @@ steps:
 
 # << move to fucntional annotation >>
   move_to_functional_annotation_folder:
-    run: ../utils/return_directory.cwl
+    run: ../../../utils/return_directory.cwl
     in:
       list:
         source:

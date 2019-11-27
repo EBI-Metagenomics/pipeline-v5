@@ -85,7 +85,7 @@ steps:
 
 # << unzipping only >>
   unzip_reads:
-    run: ../utils/multiple-gunzip.cwl
+    run: ../../../utils/multiple-gunzip.cwl
     in:
       target_reads: single_reads
       forward_unmerged_reads: forward_unmerged_reads
@@ -94,28 +94,28 @@ steps:
     out: [ unzipped_merged_reads ]
 
   count_submitted_reads:
-    run: ../utils/count_fastq.cwl
+    run: ../../../utils/count_fastq.cwl
     in:
       sequences: unzip_reads/unzipped_merged_reads
     out: [ count ]
 
 # << mOTUs2 >>
   motus_taxonomy:
-    run: subworkflows/raw_reads/mOTUs-workflow.cwl
+    run: ../../subworkflows/raw_reads/mOTUs-workflow.cwl
     in:
       reads: unzip_reads/unzipped_merged_reads
     out: [ motus ]
 
 # << Trim and Reformat >>
   trimming:
-    run: subworkflows/trim_and_reformat_reads.cwl
+    run: ../../subworkflows/trim_and_reformat_reads.cwl
     in:
       reads: unzip_reads/unzipped_merged_reads
     out: [ trimmed_and_reformatted_reads ]
 
 # << QC filtering >>
   length_filter:
-    run: ../tools/qc-filtering/qc-filtering.cwl
+    run: ../../../tools/qc-filtering/qc-filtering.cwl
     in:
       seq_file: trimming/trimmed_and_reformatted_reads
       submitted_seq_count: count_submitted_reads/count
@@ -125,21 +125,21 @@ steps:
     out: [ filtered_file, stats_summary_file ]
 
   count_processed_reads:
-    run: ../utils/count_fasta.cwl
+    run: ../../../utils/count_fasta.cwl
     in:
       sequences: length_filter/filtered_file
     out: [ count ]
 
 # << QC FLAG >>
   QC-FLAG:
-    run: ../utils/qc-flag.cwl
+    run: ../../../utils/qc-flag.cwl
     in:
         qc_count: count_processed_reads/count
     out: [ qc-flag ]
 
 # << deal with empty fasta files >>
   validate_fasta:
-    run: ../utils/empty_fasta.cwl
+    run: ../../../utils/empty_fasta.cwl
     in:
         fasta: length_filter/filtered_file
         qc_count: count_processed_reads/count
@@ -147,7 +147,7 @@ steps:
 
 # << QC >>
   qc_stats:
-    run: ../tools/qc-stats/qc-stats.cwl
+    run: ../../../tools/qc-stats/qc-stats.cwl
     in:
         QCed_reads: validate_fasta/fasta_out
         sequence_count: count_processed_reads/count

@@ -83,7 +83,7 @@ steps:
 # << SeqPrep >>
   overlap_reads:
     label: Paired-end overlapping reads are merged
-    run: ../tools/SeqPrep/seqprep.cwl
+    run: ../../../tools/SeqPrep/seqprep.cwl
     in:
       forward_reads: forward_reads
       reverse_reads: reverse_reads
