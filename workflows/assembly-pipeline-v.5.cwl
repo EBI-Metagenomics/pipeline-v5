@@ -329,7 +329,7 @@ steps:
       IPS_table: functional_annotation/ips_result
       diamond_table: diamond/post-processing_output
       hmmscan_table: functional_annotation/hmmscan_result
-      antismash_geneclusters_txt: antismash/geneclusters_txt
+      antismash_geneclusters_txt: antismash_summary/reformatted_clusters
       rna: rna_prediction/ncRNA
       cds:
         source: cgc/results
@@ -358,30 +358,6 @@ steps:
       pathways_names: pathways_names
       pathways_classes: pathways_classes
     out: [ kegg_pathways_summary, kegg_contigs_summary]
-
-# << PFAM >>
-  pfam:
-    run: ../tools/Pfam-Parse/pfam_annotations.cwl
-    in:
-      interpro: functional_annotation/ips_result
-      outputname:
-        source: length_filter/filtered_file
-        valueFrom: $(self.nameroot).pfam
-    out: [annotations]
-
-# << summaries and stats IPS, HMMScan, Pfam >>
-  write_summaries:
-    run: subworkflows/func_summaries.cwl
-    in:
-       interproscan_annotation: functional_annotation/ips_result
-       hmmscan_annotation: functional_annotation/hmmscan_result
-       pfam_annotation: pfam/annotations
-       antismash_gene_clusters: antismash_summary/reformatted_clusters
-       rna: rna_prediction/ncRNA
-       cds:
-         source: cgc/results
-         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-    out: [summary_ips, summary_ko, summary_pfam, summary_antismash, stats]
 
 # << GENOME PROPERTIES >>
   genome_properties:

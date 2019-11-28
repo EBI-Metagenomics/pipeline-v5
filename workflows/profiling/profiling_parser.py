@@ -2,6 +2,7 @@
 
 import sys
 import argparse
+import os
 
 def memory_convert(memory):
 
@@ -32,6 +33,7 @@ def memory_convert(memory):
 def get_profiling(file_name):
     # parsing
     list_profiling = []
+    prefix = os.path.basename(file_name)
     with open(file_name, 'r') as file_in:
         for line in file_in:
             line = line.strip()
@@ -41,7 +43,7 @@ def get_profiling(file_name):
             cur_position = line.find('.cwl')
             while line[cur_position] != '/':
                 cur_position -= 1
-            statistics = '\t'.join([line[cur_position+1:position+3], memory_line])
+            statistics = '\t'.join([line[cur_position+1:position+4], memory_line])
             list_profiling.append(statistics)
     list_profiling = set(list_profiling)
 
@@ -56,12 +58,14 @@ def get_profiling(file_name):
             dict_steps[step] = int(memory_step)
 
     # write summary for each step
-    with open('profiling_final_all.tsv', 'w') as file_out:
+    print('writting profiling_final_all')
+    with open(prefix + '_profiling_final_all.tsv', 'w') as file_out:
         for item in sorted(list(list_profiling)):
             file_out.write(item + '\n')
 
     # write summary with max memory
-    with open('profiling_final_maximum.tsv', 'w') as file_out:
+    print('writting profiling_final_maximum')
+    with open(prefix + '_profiling_final_maximum.tsv', 'w') as file_out:
         for item in sorted(dict_steps):
             file_out.write('\t'.join([item, str(dict_steps[item]), 'MiB']) + '\n')
 
