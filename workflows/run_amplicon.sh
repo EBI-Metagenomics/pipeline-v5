@@ -13,7 +13,7 @@ source /hps/nobackup2/production/metagenomics/pipeline/testing/kate/toil-3.19.0/
 
 export WORK_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_work
 export OUT_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_out
-export MEMORY=40G
+export MEMORY=30G
 
 export NAME_RUN_1=profiling_amplicon
 export CWL_1=/hps/nobackup2/production/metagenomics/pipeline/tools-v5/kate_test/pipeline-v5/workflows/amplicon-wf-single-empty.cwl

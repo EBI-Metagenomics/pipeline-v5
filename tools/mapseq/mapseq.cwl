@@ -14,7 +14,7 @@ requirements:
   ResourceRequirement:
     ramMin: 3000
     ramMax: 4000
-    coresMin: 2
+    coresMin: 8
 
 inputs:
 
@@ -40,7 +40,7 @@ inputs:
       position: 3
 
 baseCommand: mapseq
-arguments: ['-nthreads', '1', '-tophits', '80', '-topotus', '40', '-outfmt', 'simple']
+arguments: ['-nthreads', '8', '-tophits', '80', '-topotus', '40', '-outfmt', 'simple']
 
 stdout: $(inputs.prefix.nameroot)_$(inputs.database.basename).mseq  # helps with cwltool's --cache
 

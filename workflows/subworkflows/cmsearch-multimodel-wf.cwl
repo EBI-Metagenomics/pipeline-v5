@@ -32,7 +32,7 @@ steps:
     run: ../../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
     in:
       covariance_model_database: covariance_models
-      #cpu: cores
+      cpu: { default: 8 }
       omit_alignment_section:
         default: true
       only_hmm:
