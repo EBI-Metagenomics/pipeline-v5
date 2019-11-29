@@ -116,49 +116,7 @@ steps:
     in:
       forward_unmerged_reads: forward_unmerged_reads
       reverse_unmerged_reads: reverse_unmerged_reads
-
       qc_min_length: qc_min_length
-
-      ssu_db: ssu_db
-      lsu_db: lsu_db
-      ssu_tax: ssu_tax
-      lsu_tax: lsu_tax
-      ssu_otus: ssu_otus
-      lsu_otus: lsu_otus
-
-      rfam_models: rfam_models
-      rfam_model_clans: rfam_model_clans
-      other_ncRNA_models: other_ncRNA_models
-
-      ssu_label: ssu_label
-      lsu_label: lsu_label
-      5s_pattern: 5s_pattern
-      5.8s_pattern: 5.8s_pattern
-
-      # cgc
-      CGC_config: CGC_config
-      CGC_postfixes: CGC_postfixes
-      cgc_chunk_size: cgc_chunk_size
-
-      # functional annotation
-      fa_chunk_size: fa_chunk_size
-      func_ann_names_ips: func_ann_names_ips
-      func_ann_names_hmmscan: func_ann_names_hmmscan
-      HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
-      HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
-      HMMSCAN_name_database: HMMSCAN_name_database
-      HMMSCAN_data: HMMSCAN_data
-      hmmscan_header: hmmscan_header
-      EggNOG_db: EggNOG_db
-      EggNOG_diamond_db: EggNOG_diamond_db
-      EggNOG_data_dir: EggNOG_data_dir
-      InterProScan_databases: InterProScan_databases
-      InterProScan_applications: InterProScan_applications
-      InterProScan_outputFormat: InterProScan_outputFormat
-      ips_header: ips_header
-
-      # GO
-      go_config: go_config
     out:
       - qc-statistics
       - qc_summary
@@ -171,33 +129,22 @@ steps:
     in:
       motus_input: before-qc/motus_input
       filtered_fasta: before-qc/filtered_fasta
-      forward_unmerged_reads: forward_unmerged_reads
-      reverse_unmerged_reads: reverse_unmerged_reads
-
-      qc_min_length: qc_min_length
-
       ssu_db: ssu_db
       lsu_db: lsu_db
       ssu_tax: ssu_tax
       lsu_tax: lsu_tax
       ssu_otus: ssu_otus
       lsu_otus: lsu_otus
-
       rfam_models: rfam_models
       rfam_model_clans: rfam_model_clans
       other_ncRNA_models: other_ncRNA_models
-
       ssu_label: ssu_label
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
       5.8s_pattern: 5.8s_pattern
-
-      # cgc
       CGC_config: CGC_config
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
-
-      # functional annotation
       fa_chunk_size: fa_chunk_size
       func_ann_names_ips: func_ann_names_ips
       func_ann_names_hmmscan: func_ann_names_hmmscan
@@ -213,8 +160,6 @@ steps:
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
       ips_header: ips_header
-
-      # GO
       go_config: go_config
     out:
       - LSU_folder

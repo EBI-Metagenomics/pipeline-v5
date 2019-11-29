@@ -14,51 +14,7 @@ requirements:
 
 inputs:
     single_reads: File
-    forward_unmerged_reads: File?
-    reverse_unmerged_reads: File?
-
     qc_min_length: int
-
-    ssu_db: {type: File, secondaryFiles: [.mscluster] }
-    lsu_db: {type: File, secondaryFiles: [.mscluster] }
-    ssu_tax: File
-    lsu_tax: File
-    ssu_otus: File
-    lsu_otus: File
-
-    rfam_models: File[]
-    rfam_model_clans: File
-    other_ncRNA_models: string[]
-
-    ssu_label: string
-    lsu_label: string
-    5s_pattern: string
-    5.8s_pattern: string
-
-    # cgc
-    CGC_config: File
-    CGC_postfixes: string[]
-    cgc_chunk_size: int
-
-    # functional annotation
-    fa_chunk_size: int
-    func_ann_names_ips: string
-    func_ann_names_hmmscan: string
-    HMMSCAN_gathering_bit_score: boolean
-    HMMSCAN_omit_alignment: boolean
-    HMMSCAN_name_database: string
-    HMMSCAN_data: Directory
-    hmmscan_header: string
-    EggNOG_db: File?
-    EggNOG_diamond_db: File?
-    EggNOG_data_dir: string?
-    InterProScan_databases: Directory
-    InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-    InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-    ips_header: string
-
-    # GO
-    go_config: File
 
 outputs:
 
@@ -86,8 +42,6 @@ steps:
     run: ../../../utils/multiple-gunzip.cwl
     in:
       target_reads: single_reads
-      forward_unmerged_reads: forward_unmerged_reads
-      reverse_unmerged_reads: reverse_unmerged_reads
       reads: { default: true }
     out: [ unzipped_merged_reads ]
 

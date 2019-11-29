@@ -16,12 +16,6 @@ inputs:
     motus_input: File
     filtered_fasta: File
 
-    single_reads: File?
-    forward_unmerged_reads: File?
-    reverse_unmerged_reads: File?
-
-    qc_min_length: int
-
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
     ssu_tax: File
