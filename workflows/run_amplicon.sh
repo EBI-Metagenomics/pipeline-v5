@@ -15,14 +15,16 @@ export WORK_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_wor
 export OUT_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_out
 export MEMORY=30G
 
-export NAME_RUN_1=profiling_amplicon
-export CWL_1=/hps/nobackup2/production/metagenomics/pipeline/tools-v5/kate_test/pipeline-v5/workflows/amplicon-wf-single-empty.cwl
-export YML=/hps/nobackup2/production/metagenomics/pipeline/tools-v5/kate_test/pipeline-v5/workflows/amplicon-wf-single-job.yml
+export TYPE=single
+now=$(date +"%m_%d_%Y")
+export NAME_RUN=amplicon-qc-${TYPE}_${now}
+export CWL=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/test_profiling/pipeline-v5/workflows/amplicon-wf-${TYPE}-v.5-qc.cwl
+export YML=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/test_profiling/pipeline-v5/workflows/amplicon-wf-${TYPE}-job.yml
 
-export JOB_TOIL_FOLDER=$WORK_DIR/$NAME_RUN_1/
-export LOG_DIR=${OUT_DIR}/logs_${NAME_RUN_1}
-export TMPDIR=${WORK_DIR}/global-temp-dir_${NAME_RUN_1}
-export OUT_TOOL=${OUT_DIR}/${NAME_RUN_1}
+export JOB_TOIL_FOLDER=$WORK_DIR/$NAME_RUN/
+export LOG_DIR=${OUT_DIR}/logs_${NAME_RUN}
+export TMPDIR=${WORK_DIR}/global-temp-dir_${NAME_RUN}
+export OUT_TOOL=${OUT_DIR}/${NAME_RUN}
 
 ###  RUN
 echo "pipeline"
@@ -38,8 +40,8 @@ time toil-cwl-runner \
   --defaultMemory $MEMORY \
   --jobStore $JOB_TOIL_FOLDER \
   --outdir $OUT_TOOL \
-  --logFile $LOG_DIR/${NAME_RUN_1}.log \
+  --logFile $LOG_DIR/${NAME_RUN}.log \
   --defaultCores 8 \
-$CWL_1 $YML > $OUT_TOOL/out.json
+$CWL $YML > $OUT_TOOL/out.json
 
 echo "pipeline done"

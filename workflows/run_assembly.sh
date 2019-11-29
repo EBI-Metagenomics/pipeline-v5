@@ -12,8 +12,9 @@ export WORK_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_wor
 export OUT_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_out
 export MEMORY=20G
 
-export NAME_RUN=assembly_new_chunking
-export CWL=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/workflows/assembly-pipeline-v.5.cwl
+now=$(date +"%m_%d_%Y")
+export NAME_RUN=assembly_${now}
+export CWL=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/workflows/assembly-pipeline-v.5-qc.cwl
 export YML=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/workflows/assembly-pipeline-v.5.yml
 
 

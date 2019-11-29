@@ -92,19 +92,19 @@ outputs:
  # << root folder >>
   compressed_files:                                          # [5] fasta, cmsearch, ncRNA, deoverlapped
     type: File[]
-    outputSource: after-qc/compressed_file
+    outputSource: after-qc/compressed_files
   index_fasta_file:                                          # [1] fasta.bgz.fai
     type: File
-    outputSource: after-qc/fasta_index
+    outputSource: after-qc/index_fasta_file
   bgzip_fasta_file:                                          # [1] fasta.bgz
     type: File
-    outputSource: after-qc/fasta_bgz
+    outputSource: after-qc/bgzip_fasta_file
   chunking_nucleotides:                                      # [2] fasta, ffn
     type: File[]
-    outputSource: after-qc/nucleotide_fasta_chunks
+    outputSource: after-qc/chunking_nucleotides
   chunking_proteins:                                         # [1] faa
     type: File[]
-    outputSource: after-qc/protein_fasta_chunks
+    outputSource: after-qc/chunking_proteins
   qc-status:                                                 # [1]
     type: File
     outputSource: before-qc/qc-status
@@ -128,21 +128,21 @@ outputs:
  # << pathways and systems >>
   pathways_systems_folder:                                   # [~10]
     type: Directory
-    outputSource: after-qc/out
+    outputSource: after-qc/pathways_systems_folder
 
  # << sequence categorisation >>
   sequence-categorisation_folder:                            # [6]
     type: Directory
-    outputSource: after-qc/sequence-categorisation
+    outputSource: after-qc/sequence-categorisation_folder
 #  sequence-categorisation_SSU_LSU:                           # [2]
 #    type: Directory
-#    outputSource: after-qc/sequence-categorisation_two
+#    outputSource: after-qc/sequence-categorisation_SSU_LSU
   sequence-categorisation_SSU_LSU_chunked:                   # [2]
     type: Directory
-    outputSource: after-qc/out
+    outputSource: after-qc/sequence-categorisation_SSU_LSU_chunked
   other_rna:                                                 # [?]
     type: Directory
-    outputSource: after-qc/ncrnas
+    outputSource: after-qc/other_rna
 
  # << taxonomy summary >>
   LSU_folder:                                                # [6]
@@ -163,7 +163,7 @@ steps:
       - qc_summary
       - qc-statistics_folder
       - filtered_fasta
-    run: assembly-1.cwl
+    run: conditionals/assembly/assembly-1.cwl
 
 
   after-qc:
@@ -224,4 +224,4 @@ steps:
       - other_rna
       - LSU_folder
       - SSU_folder
-    run: assembly-2.cwl
+    run: conditionals/assembly/assembly-2.cwl

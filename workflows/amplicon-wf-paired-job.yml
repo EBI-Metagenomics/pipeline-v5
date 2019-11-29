@@ -1,10 +1,10 @@
 forward_reads:
   class: File
-  path:
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/ERR2237853_1.fastq.gz
   format: http://edamontology.org/format_1930
 reverse_reads:
   class: File
-  path:
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/amplicon-test/ERR2237853_2.fastq.gz
   format: http://edamontology.org/format_1930
 
 qc_min_length: 100

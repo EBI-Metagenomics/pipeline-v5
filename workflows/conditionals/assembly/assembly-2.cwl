@@ -145,7 +145,7 @@ steps:
 # -----------------------------------  << RNA PREDICTION >>  -----------------------------------
   rna_prediction:
     in:
-      input_sequences: length_filter/filtered_file
+      input_sequences: filtered_fasta
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
       silva_ssu_taxonomy: ssu_tax
@@ -167,13 +167,13 @@ steps:
 #      - sequence-categorisation_two
       - SSU_fasta_file
       - LSU_fasta_file
-    run: subworkflows/rna_prediction-sub-wf.cwl
+    run: ../../subworkflows/rna_prediction-sub-wf.cwl
 
 # << OTHER ncrnas >>
   other_ncrnas:
-    run: subworkflows/other_ncrnas.cwl
+    run: ../../subworkflows/other_ncrnas.cwl
     in:
-     input_sequences: length_filter/filtered_file
+     input_sequences: filtered_fasta
      cmsearch_file: rna_prediction/ncRNA
      other_ncRNA_ribosomal_models: other_ncrna_models
      name_string: { default: 'other_ncrna' }
@@ -182,7 +182,7 @@ steps:
 # -----------------------------------  << COMBINED GENE CALLER >>  -----------------------------------
   cgc:
     in:
-      input_fasta: length_filter/filtered_file
+      input_fasta: filtered_fasta
       seq_type: { default: 'a' }
       maskfile: rna_prediction/ncRNA
       config: CGC_config
@@ -190,11 +190,11 @@ steps:
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
     out: [ results ]
-    run: ../tools/Combined_gene_caller/CGC-subwf.cwl
+    run: ../../../tools/Combined_gene_caller/CGC-subwf.cwl
 
 # -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
   functional_annotation:
-    run: subworkflows/functional_annotation.cwl
+    run: ../../subworkflows/functional_annotation.cwl
     in:
       CGC_predicted_proteins:
         source: cgc/results
@@ -216,7 +216,7 @@ steps:
 
 # -----------------------------------  << STEP GFF >>  -----------------------------------
   gff:
-    run: ../tools/Assembly/GFF/gff_generation.cwl
+    run: ../../../tools/Assembly/GFF/gff_generation.cwl
     in:
       ips_results: functional_annotation/ips_result
       eggnog_results: functional_annotation/eggnog_annotations
@@ -224,7 +224,7 @@ steps:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
       output_name:
-        source: length_filter/filtered_file
+        source: filtered_fasta
         valueFrom: $(self.nameroot).contigs.annotations.gff
     out: [ output_gff_gz, output_gff_index ]
 
@@ -232,7 +232,7 @@ steps:
 
 # << DIAMOND >>
   diamond:
-    run: ../tools/Assembly/Diamond/diamond-subwf.cwl
+    run: ../../../tools/Assembly/Diamond/diamond-subwf.cwl
     in:
       queryInputFile:
         source: cgc/results
@@ -243,14 +243,14 @@ steps:
       databaseFile: diamond_databaseFile
       threads: { default: 32 }
       Uniref90_db_txt: Uniref90_db_txt
-      filename: length_filter/filtered_file
+      filename: filtered_fasta
     out: [post-processing_output]
 
 # << collect folder >>
   folder_functional_annotation:
-    run: subworkflows/assembly/deal_with_functional_annotation.cwl
+    run: ../../subworkflows/assembly/deal_with_functional_annotation.cwl
     in:
-      fasta: length_filter/filtered_file
+      fasta: filtered_fasta
       IPS_table: functional_annotation/ips_result
       diamond_table: diamond/post-processing_output
       hmmscan_table: functional_annotation/hmmscan_result
@@ -273,11 +273,11 @@ steps:
 
 # << KEGG PATHWAYS >>
   pathways:
-    run: subworkflows/assembly/kegg_analysis.cwl
+    run: ../../subworkflows/assembly/kegg_analysis.cwl
     in:
       input_table_hmmscan: functional_annotation/hmmscan_result
       outputname:
-        source: length_filter/filtered_file
+        source: filtered_fasta
         valueFrom: $(self.nameroot)
       graphs: graphs
       pathways_names: pathways_names
@@ -286,27 +286,27 @@ steps:
 
 # << GENOME PROPERTIES >>
   genome_properties:
-    run: ../tools/Genome_properties/genome_properties.cwl
+    run: ../../../tools/Genome_properties/genome_properties.cwl
     in:
       input_tsv_file: functional_annotation/ips_result
       flatfiles_path: gp_flatfiles_path
       GP_txt: {default: genomeProperties.txt}
       name:
-        source: length_filter/filtered_file
+        source: filtered_fasta
         valueFrom: $(self.nameroot).summary.gprops.tsv
     out: [ summary ]
 
 # << ANTISMASH >>
   antismash:
-    run: ../tools/Assembly/antismash/antismash_v4.cwl
+    run: ../../../tools/Assembly/antismash/antismash_v4.cwl
     in:
       outdirname: {default: 'antismash_result'}
-      input_fasta: length_filter/filtered_file
+      input_fasta: filtered_fasta
     out: [final_gbk, final_embl, geneclusters_js, geneclusters_txt]
 
 # << post-processing JS >>
   antismash_json_generation:
-    run: ../tools/Assembly/antismash/antismash_json_generation.cwl
+    run: ../../../tools/Assembly/antismash/antismash_json_generation.cwl
     in:
       input_js: antismash/geneclusters_js
       outputname: {default: 'geneclusters.json'}
@@ -314,7 +314,7 @@ steps:
 
 # << post-processing geneclusters.txt >>
   antismash_summary:
-    run: ../tools/Assembly/antismash/reformat-antismash.cwl
+    run: ../../../tools/Assembly/antismash/reformat-antismash.cwl
     in:
       glossary: clusters_glossary
       geneclusters: antismash/geneclusters_txt
@@ -322,31 +322,31 @@ steps:
 
 # << GFF for antismash >>
   antismash_gff:
-    run: ../tools/Assembly/GFF/antismash_to_gff.cwl
+    run: ../../../tools/Assembly/GFF/antismash_to_gff.cwl
     in:
       antismash_geneclus: antismash_summary/reformatted_clusters
       antismash_embl: antismash/final_embl
       antismash_gc_json: antismash_json_generation/output_json
       output_name:
-        source: length_filter/filtered_file
+        source: filtered_fasta
         valueFrom: $(self.nameroot).antismash.gff
     out: [output_gff_gz, output_gff_index]
 
 # << change TSV to CSV; move files for pathways & systems >>
   change_formats_and_names:
-    run: subworkflows/change_formats_and_names.cwl
+    run: ../../subworkflows/change_formats_and_names.cwl
     in:
       genome_properties_summary: genome_properties/summary
       kegg_summary: pathways/kegg_pathways_summary
       antismash_gbk: antismash/final_gbk
       antismash_embl: antismash/final_embl
       antismash_geneclusters: antismash_summary/reformatted_clusters
-      fasta: length_filter/filtered_file
+      fasta: filtered_fasta
     out: [gp_summary_csv, kegg_summary_csv, antismash_gbk, antismash_embl, antismash_gclust]
 
 # << gzip pathways and systems files >>
   compression_pathways_systems:
-    run: ../utils/gzip.cwl
+    run: ../../../utils/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:
@@ -358,7 +358,7 @@ steps:
 
 # << move PATHWAYS-SYSTEMS >>
   move_to_pathways_systems_folder:
-    run: ../utils/return_directory.cwl
+    run: ../../../utils/return_directory.cwl
     in:
       list:
         source:
@@ -378,16 +378,16 @@ steps:
 
 # index FASTA
   fasta_index:
-    run: ../utils/fasta_index.cwl
+    run: ../../../utils/fasta_index.cwl
     in:
-      fasta: length_filter/filtered_file
+      fasta: filtered_fasta
     out: [fasta_index, fasta_bgz]
 
 # chunking
   chunking_final:
-    run: subworkflows/final_chunking.cwl
+    run: ../../subworkflows/final_chunking.cwl
     in:
-      fasta: length_filter/filtered_file
+      fasta: filtered_fasta
       ffn:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
@@ -403,12 +403,12 @@ steps:
 
 # gzip
   compression:
-    run: ../utils/gzip.cwl
+    run: ../../../utils/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:
         source:
-          - length_filter/filtered_file                 # _FASTA
+          - filtered_fasta                              # _FASTA
           - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
           - rna_prediction/cmsearch_result              # cmsearch.all
         linkMerge: merge_flattened
@@ -417,7 +417,7 @@ steps:
 # ----------------------------------- << SEQUENCE CATEGORISATION FOLDER >> -----------------------------------
 # << move chunked files >>
   move_to_seq_cat_folder:  # LSU and SSU
-    run: ../utils/return_directory.cwl
+    run: ../../../utils/return_directory.cwl
     in:
       list: chunking_final/SC_fasta_chunks
       dir_name: { default: sequence-categorisation }

@@ -12,15 +12,15 @@ export WORK_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_wor
 export OUT_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_out
 export MEMORY=20G
 export NUM_CORES=8
-export PIPELINE_FOLDER=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5
+export PIPELINE_FOLDER=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/test_profiling/pipeline-v5
 
-export YML=$PIPELINE_FOLDER/workflows/assembly-pipeline-v.5.yml
+export TYPE=paired
+export YML=$PIPELINE_FOLDER/workflows/amplicon-wf-${TYPE}-job.yml
 export PARSER_SCRIPT=$PIPELINE_FOLDER/workflows/conditionals/out_json_parser.py
-export NAME_RUN=assembly-qc-test
+export NAME_RUN=amplicon-qc-${TYPE}
 
-
-export CWL_1=$PIPELINE_FOLDER/workflows/conditionals/assembly/assembly-1.cwl
-export CWL_2=$PIPELINE_FOLDER/workflows/conditionals/assembly/assembly-2.cwl
+export CWL_1=$PIPELINE_FOLDER/workflows/conditionals/amplicon/amplicon-${TYPE}-1.cwl
+export CWL_2=$PIPELINE_FOLDER/workflows/conditionals/amplicon/amplicon-2.cwl
 
 export JOB_TOIL_FOLDER=$WORK_DIR/$NAME_RUN/
 export LOG_DIR=${OUT_DIR}/logs_${NAME_RUN}
@@ -45,7 +45,7 @@ time cwltoil \
 $CWL_1 $YML > $OUT_TOOL_1/out1.json
 
 echo "first part done. Parsing output json"
-python3 $PARSER_SCRIPT -j $OUT_TOOL_1/out1.json -y $YML -m assembly
+python3 $PARSER_SCRIPT -j $OUT_TOOL_1/out1.json -y $YML -m amplicon
 
 if [ $? -eq 1 ]
 then
