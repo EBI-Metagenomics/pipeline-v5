@@ -12,7 +12,7 @@ export WORK_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_wor
 export OUT_DIR=/hps/nobackup2/production/metagenomics/pipeline/testing/kate_out
 export MEMORY=20G
 export NUM_CORES=8
-export PIPELINE_FOLDER=/hps/nobackup2/production/metagenomics/pipeline/tools-v5/kate_test/pipeline-v5
+export PIPELINE_FOLDER=/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5
 
 export YML=$PIPELINE_FOLDER/workflows/assembly-pipeline-v.5.yml
 export PARSER_SCRIPT=$PIPELINE_FOLDER/workflows/conditionals/out_json_parser.py
@@ -45,7 +45,7 @@ time cwltoil \
 $CWL_1 $YML > $OUT_TOOL_1/out1.json
 
 echo "first part done. Parsing output json"
-python3 $PARSER_SCRIPT -j $OUT_TOOL_1/out1.json -y $YML
+python3 $PARSER_SCRIPT -j $OUT_TOOL_1/out1.json -y $YML -m assembly
 
 if [ $? -eq 1 ]
 then
