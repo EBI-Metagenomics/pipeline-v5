@@ -92,15 +92,15 @@ steps:
   QC-FLAG:
     run: ../../../utils/qc-flag.cwl
     in:
-        qc_count: count_processed_reads/count
+      qc_count: count_processed_reads/count
     out: [ qc-flag ]
 
 # << deal with empty fasta files >>
   validate_fasta:
-    run: ../utils/empty_fasta.cwl
+    run: ../../../utils/empty_fasta.cwl
     in:
-        fasta: length_filter/filtered_file
-        qc_count: count_processed_reads/count
+      fasta: length_filter/filtered_file
+      qc_count: count_processed_reads/count
     out: [ fasta_out ]
 
 # << QC stats >>
