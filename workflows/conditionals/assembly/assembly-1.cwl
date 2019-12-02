@@ -24,69 +24,8 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-
-    filtered_fasta: File?
     contigs: File
     contig_min_length: int
-
- # << rna prediction >>
-    ssu_db: {type: File, secondaryFiles: [.mscluster] }
-    lsu_db: {type: File, secondaryFiles: [.mscluster] }
-    ssu_tax: File
-    lsu_tax: File
-    ssu_otus: File
-    lsu_otus: File
-
-    rfam_models: File[]
-    rfam_model_clans: File
-    other_ncrna_models: string[]
-
-    ssu_label: string
-    lsu_label: string
-    5s_pattern: string
-    5.8s_pattern: string
-
- # << cgc >>
-    CGC_config: File
-    CGC_postfixes: string[]
-    cgc_chunk_size: int
-
- # << functional annotation >>
-    fa_chunk_size: int
-    func_ann_names_ips: string
-    func_ann_names_hmmscan: string
-    HMMSCAN_gathering_bit_score: boolean
-    HMMSCAN_omit_alignment: boolean
-    HMMSCAN_name_database: string
-    HMMSCAN_data: Directory
-    hmmscan_header: string
-    EggNOG_db: File
-    EggNOG_diamond_db: File
-    EggNOG_data_dir: string
-    InterProScan_databases: Directory
-    InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
-    InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-    ips_header: string
-
- # << diamond >>
-    Uniref90_db_txt: File
-    diamond_maxTargetSeqs: int
-    diamond_databaseFile: File
-    diamond_header: string
-
- # << GO >>
-    go_config: File
-
- # << Pathways >>
-    graphs: File
-    pathways_names: File
-    pathways_classes: File
-
- # << genome properties >>
-    gp_flatfiles_path: string
-
-    #antismash summary
-    clusters_glossary: File
 
 outputs:
 
@@ -156,10 +95,18 @@ steps:
         qc_count: count_processed_reads/count
     out: [ qc-flag ]
 
+# << deal with empty fasta files >>
+  validate_fasta:
+    run: ../utils/empty_fasta.cwl
+    in:
+        fasta: length_filter/filtered_file
+        qc_count: count_processed_reads/count
+    out: [ fasta_out ]
+
 # << QC stats >>
   qc_stats:
     in:
-      QCed_reads: length_filter/filtered_file
+      QCed_reads: validate_fasta/fasta_out
       sequence_count: count_processed_reads/count
     out: [ output_dir ]
     run: ../../../tools/qc-stats/qc-stats.cwl

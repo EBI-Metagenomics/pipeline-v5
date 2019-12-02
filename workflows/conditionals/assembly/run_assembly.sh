@@ -16,7 +16,7 @@ export PIPELINE_FOLDER=/hps/nobackup2/production/metagenomics/pipeline/tools-v5/
 
 export YML=$PIPELINE_FOLDER/workflows/assembly-pipeline-v.5.yml
 export PARSER_SCRIPT=$PIPELINE_FOLDER/workflows/conditionals/out_json_parser.py
-export NAME_RUN=assembly-qc
+export NAME_RUN=assembly-qc-test
 
 
 export CWL_1=$PIPELINE_FOLDER/workflows/conditionals/assembly/assembly-1.cwl
@@ -72,13 +72,13 @@ else
     echo "failed"
 fi
 
-echo "move first part"
-mkdir ${OUT_DIR}/${NAME_RUN}
-mv ${OUT_TOOL_1}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_1}
-if [ -d ${OUT_TOOL_2} ]
-then
-    echo "move second part"
-    mv ${OUT_TOOL_2}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_2}
-fi
+#echo "move first part"
+#mkdir ${OUT_DIR}/${NAME_RUN}
+#mv ${OUT_TOOL_1}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_1}
+#if [ -d ${OUT_TOOL_2} ]
+#then
+#    echo "move second part"
+#    mv ${OUT_TOOL_2}/* ${OUT_DIR}/${NAME_RUN} && rm -rf ${OUT_TOOL_2}
+#fi
 
 echo "PIPELINE DONE"
