@@ -144,10 +144,10 @@ CGC_config:
 CGC_postfixes:
   - '_CDS.faa'
   - '_CDS.ffn'
-cgc_chunk_size: 2000  # 100000
+cgc_chunk_size: 100000
 
 # functional annotation
-fa_chunk_size: 3000 # 100000
+fa_chunk_size: 100000
 func_ann_names_ips: .I5.tsv.without_header
 func_ann_names_hmmscan: .hmm.tsv.without_header
 
