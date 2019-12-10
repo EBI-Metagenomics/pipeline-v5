@@ -4,6 +4,10 @@ cwlVersion: v1.0
 class: CommandLineTool
 label: combine LSU and SSU coords
 
+requirements:
+  ResourceRequirement:
+    ramMin: 100
+
 hints:
   DockerRequirement:
     dockerPull: alpine:3.7

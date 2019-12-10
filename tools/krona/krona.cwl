@@ -6,12 +6,10 @@ label: visualize using krona
 
 #edited from ebi-metagenomics-cwl/tools/krona.cwl
 
-#requirements:
-#  ResourceRequirement:
-#    ramMin: 15000
-#    ramMax: 15000
-#    tmpdirMin: 15000
-#    coresMin: 2
+requirements:
+  ResourceRequirement:
+    ramMin: 200
+    coresMin: 2
 
 inputs:
   otu_counts:

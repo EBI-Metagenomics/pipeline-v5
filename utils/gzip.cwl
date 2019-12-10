@@ -5,8 +5,8 @@ class: CommandLineTool
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    coresMax: 16
-    ramMin: 5000
+    coresMin: 16
+    ramMin: 4000
 
 inputs:
   uncompressed_file:

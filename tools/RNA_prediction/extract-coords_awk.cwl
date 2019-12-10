@@ -9,6 +9,9 @@ hints:
 requirements:
   ShellCommandRequirement: {}
   InlineJavascriptRequirement: {}
+  ResourceRequirement:
+    coresMin: 2
+    ramMin: 1000
 
 inputs:
   infernal_matches:

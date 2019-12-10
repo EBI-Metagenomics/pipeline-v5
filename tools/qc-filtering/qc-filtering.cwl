@@ -9,9 +9,8 @@ hints:
 
 requirements:
   ResourceRequirement:
-    coresMax: 4
-    ramMin: 100
-    ramMax: 2000
+    coresMin: 4
+    ramMin: 200
   InlineJavascriptRequirement: {}
 
 baseCommand: ["run_quality_filtering.py" ]

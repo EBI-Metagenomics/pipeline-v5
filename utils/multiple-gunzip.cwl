@@ -4,8 +4,8 @@ class: CommandLineTool
 label: "merges output of seqprep and unzips for paired end reads, or unzips file for single end"
 requirements:
   ResourceRequirement:
-    coresMax: 1
-    ramMin: 100  # just a default, could be lowered
+    coresMin: 2
+    ramMin: 200  # just a default, could be lowered
 
 hints:
  DockerRequirement:

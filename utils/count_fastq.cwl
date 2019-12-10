@@ -4,8 +4,8 @@ class: CommandLineTool
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    coresMax: 1
-    ramMin: 100  # just a default, could be lowered
+    coresMin: 2
+    ramMin: 200  # just a default, could be lowered
 
 hints:
   - class: DockerRequirement

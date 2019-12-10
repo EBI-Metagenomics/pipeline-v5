@@ -6,6 +6,8 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
+  ResourceRequirement:
+    ramMin: 100
 inputs:
   list: File[]
   dir_name: string

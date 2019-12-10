@@ -12,6 +12,9 @@ hints:
 baseCommand: [esl-sfetch, --index]
 
 requirements:
+  ResourceRequirement:
+    coresMin: 4
+    ramMin: 1000
   InitialWorkDirRequirement:
     listing:
         - $(inputs.sequences)

@@ -4,7 +4,7 @@ class: CommandLineTool
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    coresMax: 1
+    coresMin: 2
     ramMin: 4096
     ramMax: 4096
 

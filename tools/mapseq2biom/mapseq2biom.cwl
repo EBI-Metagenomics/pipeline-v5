@@ -6,12 +6,11 @@ hints:
   DockerRequirement:
     dockerPull: mapseq2biom:latest
 
-#requirements:
-#  ResourceRequirement:
-#    ramMin: 10000
-#    ramMax: 10000
-#    tmpdirMin: 15000
-#    coresMin: 2
+requirements:
+  ResourceRequirement:
+    ramMin: 8000
+    tmpdirMin: 8000
+    coresMin: 2
 
 inputs:
   otu_table:

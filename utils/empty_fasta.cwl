@@ -5,6 +5,10 @@ class: CommandLineTool
 label: create dummy for empty fasta files
 #this to avoid errors with empty files further down the pipeline
 
+requirements:
+  ResourceRequirement:
+    ramMin: 100  # just a default, could be lowered
+
 hints:
   - class: DockerRequirement
     dockerPull: alpine:3.7
