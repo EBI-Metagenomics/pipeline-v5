@@ -82,13 +82,19 @@ outputs:
   sequence-categorisation_folder:
     type: Directory
     outputSource: single/sequence-categorisation_folder
-  sequence-categorisation_folder_two:
+  compressed_sequence_categorisation:
     type: Directory
-    outputSource: single/sequence-categorisation_folder_two
+    outputSource: single/compressed_sequence_categorisation
   ncrnas_folder:
     type: Directory
     outputSource: single/ncrnas_folder
 
+  chunking_nucleotides:
+    type: File[]
+    outputSource: single/chunking_nucleotides
+  chunking_proteins:
+    type: File[]
+    outputSource: single/chunking_proteins
   rna-count:
     type: File
     outputSource: single/rna-count
