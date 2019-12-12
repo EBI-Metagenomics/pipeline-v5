@@ -7,7 +7,7 @@ class: CommandLineTool
 
 requirements:
   ResourceRequirement:
-    ramMin: 8000
+    ramMin: 200
     coresMin: 2
 
 inputs:

@@ -5,7 +5,7 @@ class: CommandLineTool
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    ramMin: 4000
+    ramMin: 300
 #  SchemaDefRequirement:
 #    types:
 #      - $import: biom-convert-table.yaml

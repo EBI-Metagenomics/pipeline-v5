@@ -8,8 +8,8 @@ hints:
 
 requirements:
   ResourceRequirement:
-    ramMin: 8000
-    tmpdirMin: 8000
+    ramMin: 200
+    tmpdirMin: 200
     coresMin: 2
 
 inputs:

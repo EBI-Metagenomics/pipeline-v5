@@ -6,7 +6,7 @@ requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     coresMin: 16
-    ramMin: 4000
+    ramMin: 200
 
 inputs:
   uncompressed_file:

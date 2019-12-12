@@ -8,7 +8,7 @@ doc: "https://bedtools.readthedocs.io/en/latest/content/tools/maskfasta.html"
 requirements:
   ResourceRequirement:
     coresMin: 4
-    ramMin: 4000
+    ramMin: 200
 
 hints:
  DockerRequirement:

@@ -11,7 +11,7 @@ requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     coresMin: 2
-    ramMin: 1000
+    ramMin: 200
 
 inputs:
   infernal_matches:
