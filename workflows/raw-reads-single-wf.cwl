@@ -89,6 +89,12 @@ outputs:
     type: Directory
     outputSource: other_ncrnas/ncrnas
 
+  chunking_nucleotides:
+    type: File[]
+    outputSource: chunking_final/nucleotide_fasta_chunks
+  chunking_proteins:
+    type: File[]
+    outputSource: chunking_final/protein_fasta_chunks
   rna-count:
     type: File
     outputSource: classify/LSU-SSU-count

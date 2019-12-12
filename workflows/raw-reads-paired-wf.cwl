@@ -179,6 +179,8 @@ steps:
       - SSU_folder
       - sequence-categorisation_folder
       - compressed_sequence_categorisation
+      - chunking_nucleotides
+      - chunking_proteins
       - ncrnas_folder
       - rna-count
       - motus_output
