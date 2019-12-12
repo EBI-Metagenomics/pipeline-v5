@@ -81,18 +81,10 @@ steps:
         qc_count: count_processed_reads/count
     out: [ qc-flag ]
 
-# << deal with empty fasta files >>
-  validate_fasta:
-    run: ../../../utils/empty_fasta.cwl
-    in:
-        fasta: run_quality_control_filtering/filtered_file
-        qc_count: count_processed_reads/count
-    out: [ fasta_out ]
-
 # << QC >>
   qc_stats:
     run: ../../../tools/qc-stats/qc-stats.cwl
     in:
-        QCed_reads: validate_fasta/fasta_out
+        QCed_reads: run_quality_control_filtering/filtered_file
         sequence_count: count_processed_reads/count
     out: [ output_dir, summary_out ]
