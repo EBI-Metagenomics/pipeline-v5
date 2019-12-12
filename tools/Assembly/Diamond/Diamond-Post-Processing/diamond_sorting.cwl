@@ -2,7 +2,10 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-#requirements:
+requirements:
+  ResourceRequirement:
+    coresMax: 1
+    ramMin: 200
 #  DockerRequirement:
 #    dockerPull: alpine:3.9.4
 

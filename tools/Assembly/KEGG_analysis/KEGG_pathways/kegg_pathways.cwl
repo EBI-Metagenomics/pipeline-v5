@@ -2,6 +2,11 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
+requirements:
+  ResourceRequirement:
+    coresMax: 1
+    ramMin: 300
+
 hints:
   DockerRequirement:
     dockerPull: kegg_test:latest

@@ -6,6 +6,9 @@ label: "Genome properties https://genome-properties.readthedocs.io"
 
 requirements:
   InlineJavascriptRequirement: {}
+  ResourceRequirement:
+    coresMax: 1
+    ramMin: 500
 
 hints:
   DockerRequirement:

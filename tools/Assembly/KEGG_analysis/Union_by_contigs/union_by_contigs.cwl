@@ -11,6 +11,9 @@ hints:
 
 requirements:
   InlineJavascriptRequirement: {}
+  ResourceRequirement:
+    coresMax: 1
+    ramMin: 200
 
 baseCommand: [union_by_contigs.py]
 

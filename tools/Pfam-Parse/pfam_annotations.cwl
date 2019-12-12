@@ -3,7 +3,10 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 requirements:
-    - class: ShellCommandRequirement
+  ShellCommandRequirement: {}
+  ResourceRequirement:
+    coresMax: 1
+    ramMin: 200
 
 label: "Parse Pfam hits from Interpro annotation output"
 

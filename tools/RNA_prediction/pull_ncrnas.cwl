@@ -5,7 +5,9 @@ class: CommandLineTool
 requirements:
   ScatterFeatureRequirement: {}
   ShellCommandRequirement: {}
-
+  ResourceRequirement:
+    coresMax: 1
+    ramMin: 200
 
 inputs:
   hits:

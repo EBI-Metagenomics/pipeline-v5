@@ -4,6 +4,11 @@ cwlVersion: v1.0
 class: CommandLineTool
 label: "reformat coords file for masking with bedtools"
 
+requirements:
+  ResourceRequirement:
+    coresMax: 1
+    ramMin: 100
+
 hints:
    DockerRequirement:
       dockerPull: alpine:3.7
