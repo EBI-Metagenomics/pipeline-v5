@@ -10,7 +10,7 @@ def memory_convert(memory):
 
     number = ''
     for i in range(len(memory)):
-        if memory[i].isdigit():
+        if memory[i].isdigit() or memory[i] == '.':
             number += memory[i]
             index = i
     if memory[index+1] == ' ':
@@ -22,11 +22,10 @@ def memory_convert(memory):
     out_str = '\t'.join([number, units]) + '\t'
 
     if units in memory_dict:
-        size = int(int(number) * memory_dict[units] / 1048576)  # in MiB
+        size = int(float(number) * memory_dict[units] / 1048576)  # in MiB
         out_str += '\t'.join([str(size), 'MiB'])
     else:
         out_str += '\t'.join([number, units])
-        print(out_str)
     return out_str
 
 
