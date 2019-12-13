@@ -6,7 +6,7 @@ label: combine LSU and SSU coords
 
 requirements:
   ResourceRequirement:
-    ramMin: 100
+    ramMin: 200
 
 hints:
   DockerRequirement:

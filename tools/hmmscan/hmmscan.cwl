@@ -10,7 +10,7 @@ hints:
 
 requirements:
   ResourceRequirement:
-    ramMin: 20000
+    ramMin: 6000
     coresMin: 32
   InlineJavascriptRequirement: {}
   ScatterFeatureRequirement: {}

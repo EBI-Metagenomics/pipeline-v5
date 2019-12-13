@@ -7,7 +7,7 @@ label: rename empty tax files and add mock bacteria to empty otu table
 
 requirements:
   ResourceRequirement:
-    ramMin: 100
+    ramMin: 200
 
 hints:
   - class: DockerRequirement

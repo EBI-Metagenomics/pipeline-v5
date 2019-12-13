@@ -8,7 +8,7 @@ requirements:
   StepInputExpressionRequirement: {}
   ResourceRequirement:
     coresMax: 1
-    ramMin: 100  # just a default, could be lowered
+    ramMin: 200  # just a default, could be lowered
 
 inputs:
     qc_count:

@@ -10,8 +10,7 @@ hints:
 
 requirements:
   ResourceRequirement:
-    ramMin: 7000
-    ramMax: 7000
+    ramMin: 2000
     coresMin: 4
 
 #  InlineJavascriptRequirement: {}

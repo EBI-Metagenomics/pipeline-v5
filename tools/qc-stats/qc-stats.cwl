@@ -13,7 +13,7 @@ hints:
 requirements:
   ResourceRequirement:
     coresMin: 4
-    ramMin: 200
+    ramMin: 400
   InlineJavascriptRequirement: {}
   InitialWorkDirRequirement:
     listing:

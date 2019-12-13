@@ -5,8 +5,7 @@ requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     coresMin: 2
-    ramMin: 4096
-    ramMax: 4096
+    ramMin: 500
 
 hints:
   DockerRequirement:

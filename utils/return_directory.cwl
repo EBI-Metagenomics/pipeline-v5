@@ -7,7 +7,7 @@ requirements:
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
   ResourceRequirement:
-    ramMin: 100
+    ramMin: 200
 inputs:
   list: File[]
   dir_name: string

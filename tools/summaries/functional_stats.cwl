@@ -7,7 +7,7 @@ label: "generate all functional stats and orf stats"
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 10000  # just a default, could be lowered
+    ramMin: 8000  # just a default, could be lowered
 
 inputs:
   interproscan:
