@@ -46,3 +46,4 @@ if __name__ == "__main__":
         args = parser.parse_args()
         print('Exit code == 1, if QC PASSED\nExit code == 2, if QC FAILED')
         parse_json(args.json, args.yml, args.mode)
+

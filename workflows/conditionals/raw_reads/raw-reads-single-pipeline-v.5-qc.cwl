@@ -13,9 +13,7 @@ requirements:
 #      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-    forward_reads: File
-    reverse_reads: File
-
+    single_reads: File
     qc_min_length: int
 
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -64,100 +62,86 @@ outputs:
 
   qc-statistics:
     type: Directory
-    outputSource: single/qc-statistics
+    outputSource: before-qc/qc-statistics
   qc_summary:
     type: File
-    outputSource: single/qc_summary
+    outputSource: before-qc/qc_summary
   qc-status:
     type: File
-    outputSource: single/qc-status
+    outputSource: before-qc/qc-status
 
   LSU_folder:
     type: Directory
-    outputSource: single/LSU_folder
+    outputSource: after-qc/LSU_folder
   SSU_folder:
     type: Directory
-    outputSource: single/SSU_folder
+    outputSource: after-qc/SSU_folder
 
   sequence-categorisation_folder:
     type: Directory
-    outputSource: single/sequence-categorisation_folder
-  compressed_sequence_categorisation:
+    outputSource: after-qc/sequence-categorisation_folder
+  sequence-categorisation_folder_two:
     type: Directory
-    outputSource: single/compressed_sequence_categorisation
+    outputSource: after-qc/sequence-categorisation_folder_two
   ncrnas_folder:
     type: Directory
-    outputSource: single/ncrnas_folder
+    outputSource: after-qc/ncrnas_folder
 
-  chunking_nucleotides:
-    type: File[]
-    outputSource: single/chunking_nucleotides
-  chunking_proteins:
-    type: File[]
-    outputSource: single/chunking_proteins
   rna-count:
     type: File
-    outputSource: single/rna-count
+    outputSource: after-qc/rna-count
 
   motus_output:
     type: File
-    outputSource: single/motus_output
+    outputSource: after-qc/motus_output
 
   compressed_files:
     type: File[]
-    outputSource: single/compressed_files
+    outputSource: after-qc/compressed_files
 
   functional_annotation_folder:
     type: Directory
-    outputSource: single/functional_annotation_folder
+    outputSource: after-qc/functional_annotation_folder
   stats:
-    outputSource: single/stats
+    outputSource: after-qc/stats
     type: Directory
 
 steps:
 
-# << SeqPrep >>
-  overlap_reads:
-    label: Paired-end overlapping reads are merged
-    run: ../tools/SeqPrep/seqprep.cwl
+# << First part >>
+  before-qc:
+    run: raw-reads-single-1.cwl
     in:
-      forward_reads: forward_reads
-      reverse_reads: reverse_reads
-    out: [ merged_reads, forward_unmerged_reads, reverse_unmerged_reads ]
-
-# << Run raw reads single pipeline >>
-  single:
-    label: run single pipeline on merged reads
-    run: raw-reads-single-wf.cwl
-    in:
-      single_reads: overlap_reads/merged_reads
-      forward_unmerged_reads: overlap_reads/forward_unmerged_reads
-      reverse_unmerged_reads: overlap_reads/reverse_unmerged_reads
-
+      single_reads: single_reads
       qc_min_length: qc_min_length
+    out:
+      - qc-statistics
+      - qc_summary
+      - qc-status
+      - motus_input
+      - filtered_fasta
 
+  after-qc:
+    run: raw-reads-2.cwl
+    in:
+      motus_input: before-qc/motus_input
+      filtered_fasta: before-qc/filtered_fasta
       ssu_db: ssu_db
       lsu_db: lsu_db
       ssu_tax: ssu_tax
       lsu_tax: lsu_tax
       ssu_otus: ssu_otus
       lsu_otus: lsu_otus
-
       rfam_models: rfam_models
       rfam_model_clans: rfam_model_clans
       other_ncRNA_models: other_ncRNA_models
-
       ssu_label: ssu_label
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
       5.8s_pattern: 5.8s_pattern
-
-      # cgc
       CGC_config: CGC_config
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
-
-      # functional annotation
       fa_chunk_size: fa_chunk_size
       func_ann_names_ips: func_ann_names_ips
       func_ann_names_hmmscan: func_ann_names_hmmscan
@@ -173,27 +157,15 @@ steps:
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
       ips_header: ips_header
-
-      # GO
       go_config: go_config
-
     out:
-      - qc-statistics
-      - qc_summary
-      - qc-status
+      - motus_output
       - LSU_folder
       - SSU_folder
       - sequence-categorisation_folder
-      - compressed_sequence_categorisation
-      - chunking_nucleotides
-      - chunking_proteins
       - ncrnas_folder
       - rna-count
-      - motus_output
+      - compressed_sequence_categorisation
       - compressed_files
       - functional_annotation_folder
       - stats
-
-
-
-

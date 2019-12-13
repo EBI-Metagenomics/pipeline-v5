@@ -1,0 +1,53 @@
+Basic concepts
+
+--------------------------------------- out_json_parser.py --------------------------------------
+Script out_json_parser.py parses output JSON structure after first step.
+If QC-PASSED file was found, script adds extra lines to YML file (that would be used for second part of pipeline)
+
+For assembly (mode (-m) "assembly")
+  + filtered_fasta
+For raw-reads (mode (-m) "raw-reads")
+  + filtered_fasta
+  + motus_input
+--------------------------------------- Assembly --------------------------------------------------
+
+Assembly folder has 2 files: assembly-1.cwl (before qc) and assembly-2.cwl (after qc)
+assembly-pipeline-v.5-qc.cwl == assembly-1.cwl + assembly-2.cwl
+
+>>>>>> Schema:
+
+   Run assembly-1.cwl
+           |
+    Check qc-status
+    /                \
+ QC-PASSED          QC-FAILED
+   |                      |
+ run assembly-2.cwl      /
+   |                    /
+  move first part to output folder
+   |
+  move second part to output folder
+
+
+---------------------------------------- Raw reads ------------------------------------------------
+raw-reads-paired-1.cwl == seq-prep + raw-reads-single-1.cwl
+raw-reads-2.cwl - common for paired and single pipeline
+
+raw-reads-single-pipeline-v.5-qc.cwl == raw-reads-single-1.cwl + raw-reads-2.cwl
+raw-reads-paired-pipeline-v.5-qc.cwl == raw-reads-paired-1.cwl + raw-reads-2.cwl
+
+>>>>>> Schema:
+
+single                              paired
+  |                                    |
+raw-reads-single-1.cwl            raw-reads-paired-1.cwl
+                \                    /
+                    check qc-status
+                      /         \
+             QC-PASSED         QC-FAILED
+                 |                |
+         raw-reads-2.cwl          |
+                  \              /
+            move first part to output folder
+                   |
+            move second part to output folder

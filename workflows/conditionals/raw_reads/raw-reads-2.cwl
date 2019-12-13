@@ -13,11 +13,8 @@ requirements:
 #      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-    single_reads: File
-    forward_unmerged_reads: File?
-    reverse_unmerged_reads: File?
-
-    qc_min_length: int
+    motus_input: File
+    filtered_fasta: File
 
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -61,16 +58,9 @@ inputs:
     go_config: File
 
 outputs:
-
-  qc-statistics:
-    type: Directory
-    outputSource: qc_stats/output_dir
-  qc_summary:
+  motus_output:
     type: File
-    outputSource: length_filter/stats_summary_file
-  qc-status:
-    type: File
-    outputSource: QC-FLAG/qc-flag
+    outputSource: motus_taxonomy/motus
 
   LSU_folder:
     type: Directory
@@ -99,10 +89,6 @@ outputs:
     type: File
     outputSource: classify/LSU-SSU-count
 
-  motus_output:
-    type: File
-    outputSource: motus_taxonomy/motus
-
   compressed_files:
     type: File[]
     outputSource: compression/compressed_file
@@ -115,82 +101,18 @@ outputs:
     type: Directory
 
 steps:
-
-# << unzipping only >>
-  unzip_reads:
-    run: ../utils/multiple-gunzip.cwl
-    in:
-      target_reads: single_reads
-      forward_unmerged_reads: forward_unmerged_reads
-      reverse_unmerged_reads: reverse_unmerged_reads
-      reads: { default: true }
-    out: [ unzipped_merged_reads ]
-
-  count_submitted_reads:
-    run: ../utils/count_fastq.cwl
-    in:
-      sequences: unzip_reads/unzipped_merged_reads
-    out: [ count ]
-
 # << mOTUs2 >>
   motus_taxonomy:
-    run: subworkflows/raw_reads/mOTUs-workflow.cwl
+    run: ../../subworkflows/raw_reads/mOTUs-workflow.cwl
     in:
-      reads: unzip_reads/unzipped_merged_reads
+      reads: motus_input
     out: [ motus ]
-
-# << Trim and Reformat >>
-  trimming:
-    run: subworkflows/trim_and_reformat_reads.cwl
-    in:
-      reads: unzip_reads/unzipped_merged_reads
-    out: [ trimmed_and_reformatted_reads ]
-
-# << QC filtering >>
-  length_filter:
-    run: ../tools/qc-filtering/qc-filtering.cwl
-    in:
-      seq_file: trimming/trimmed_and_reformatted_reads
-      submitted_seq_count: count_submitted_reads/count
-      stats_file_name: {default: 'qc_summary'}
-      min_length: qc_min_length
-      input_file_format: { default: 'fasta' }
-    out: [ filtered_file, stats_summary_file ]
-
-  count_processed_reads:
-    run: ../utils/count_fasta.cwl
-    in:
-      sequences: length_filter/filtered_file
-    out: [ count ]
-
-# << QC FLAG >>
-  QC-FLAG:
-    run: ../utils/qc-flag.cwl
-    in:
-        qc_count: count_processed_reads/count
-    out: [ qc-flag ]
-
-# << deal with empty fasta files >>
-  validate_fasta:
-    run: ../utils/empty_fasta.cwl
-    in:
-        fasta: length_filter/filtered_file
-        qc_count: count_processed_reads/count
-    out: [ fasta_out ]
-
-# << QC >>
-  qc_stats:
-    run: ../tools/qc-stats/qc-stats.cwl
-    in:
-        QCed_reads: validate_fasta/fasta_out
-        sequence_count: count_processed_reads/count
-    out: [ output_dir, summary_out ]
 
 # << Get RNA >>
   classify:
-    run: subworkflows/rna_prediction-sub-wf.cwl
+    run: ../../subworkflows/rna_prediction-sub-wf.cwl
     in:
-      input_sequences: validate_fasta/fasta_out
+      input_sequences: filtered_fasta
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
       silva_ssu_taxonomy: ssu_tax
@@ -215,9 +137,9 @@ steps:
 
 # << other ncrnas >>
   other_ncrnas:
-    run: subworkflows/other_ncrnas.cwl
+    run: ../../subworkflows/other_ncrnas.cwl
     in:
-     input_sequences: validate_fasta/fasta_out
+     input_sequences: filtered_fasta
      cmsearch_file: classify/ncRNA
      other_ncRNA_ribosomal_models: other_ncRNA_models
      name_string: { default: 'other_ncrna' }
@@ -226,7 +148,7 @@ steps:
 # << COMBINED GENE CALLER >>
   cgc:
     in:
-      input_fasta: validate_fasta/fasta_out
+      input_fasta: filtered_fasta
       seq_type: { default: 's' }
       maskfile: classify/ncRNA
       config: CGC_config
@@ -234,11 +156,11 @@ steps:
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
     out: [ results ]
-    run: ../tools/Combined_gene_caller/CGC-subwf.cwl
+    run: ../../../tools/Combined_gene_caller/CGC-subwf.cwl
 
 # << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
   functional_annotation:
-    run: subworkflows/raw_reads/functional_annotation_raw.cwl
+    run: ../../subworkflows/raw_reads/functional_annotation_raw.cwl
     in:
       CGC_predicted_proteins:
         source: cgc/results
@@ -257,28 +179,28 @@ steps:
 
 # << GO SUMMARY>>
   go_summary:
-    run: ../tools/GO-slim/go_summary.cwl
+    run: ../../../tools/GO-slim/go_summary.cwl
     in:
       InterProScan_results: functional_annotation/ips_result
       config: go_config
       output_name:
-        source: validate_fasta/fasta_out
+        source: filtered_fasta
         valueFrom: $(self.nameroot).summary.go
     out: [go_summary, go_summary_slim]
 
 # << PFAM >>
   pfam:
-    run: ../tools/Pfam-Parse/pfam_annotations.cwl
+    run: ../../../tools/Pfam-Parse/pfam_annotations.cwl
     in:
       interpro: functional_annotation/ips_result
       outputname:
-        source: validate_fasta/fasta_out
+        source: filtered_fasta
         valueFrom: $(self.nameroot).pfam
     out: [annotations]
 
 # << summaries and stats IPS, HMMScan, Pfam >>
   write_summaries:
-    run: subworkflows/func_summaries.cwl
+    run: ../../subworkflows/func_summaries.cwl
     in:
        interproscan_annotation: functional_annotation/ips_result
        hmmscan_annotation: functional_annotation/hmmscan_result
@@ -295,12 +217,12 @@ steps:
 
 # gzip
   compression:
-    run: ../utils/gzip.cwl
+    run: ../../../utils/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:
         source:
-          - validate_fasta/fasta_out                 # _FASTA
+          - filtered_fasta                        # _FASTA
           - classify/ncRNA                        # cmsearch.all.deoverlapped
           - classify/cmsearch_result              # cmsearch.all
         linkMerge: merge_flattened
@@ -308,9 +230,9 @@ steps:
 
 # << chunking >>
   chunking_final:
-    run: subworkflows/final_chunking.cwl
+    run: ../../subworkflows/final_chunking.cwl
     in:
-      fasta: validate_fasta/fasta_out
+      fasta: filtered_fasta
       ffn:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
@@ -326,7 +248,7 @@ steps:
 
 # << move to sequence categorisation >>
   move_to_seq_cat_folder:  # LSU and SSU
-    run: ../utils/return_directory.cwl
+    run: ../../../utils/return_directory.cwl
     in:
       list: chunking_final/SC_fasta_chunks
       dir_name: { default: sequence-categorisation }
@@ -339,7 +261,7 @@ steps:
   header_addition:
     scatter: [input_table, header]
     scatterMethod: dotproduct
-    run: ../utils/add_header/add_header.cwl
+    run: ../../../utils/add_header/add_header.cwl
     in:
       input_table:
         - functional_annotation/hmmscan_result
@@ -351,7 +273,7 @@ steps:
 
 # << chunking TSVs >>
   chunking_tsv:
-    run: ../utils/result-file-chunker/result_chunker.cwl
+    run: ../../../utils/result-file-chunker/result_chunker.cwl
     in:
       infile: header_addition/output_table
       format_file: { default: tsv }
@@ -360,7 +282,7 @@ steps:
 
 # << move to fucntional annotation >>
   move_to_functional_annotation_folder:
-    run: ../utils/return_directory.cwl
+    run: ../../../utils/return_directory.cwl
     in:
       list:
         source:
