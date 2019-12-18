@@ -18,25 +18,10 @@ outputs:
 
 steps:
 
-  trim_quality_control:
-    doc: |
-      Low quality trimming (low quality ends and sequences with < quality scores
-      less than 15 over a 4 nucleotide wide window are removed)
-    run: ../../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
-    in:
-      reads1: reads
-      phred: { default: '33' }
-      leading: { default: 3 }
-      trailing: { default: 3 }
-      end_mode: { default: SE }
-      minlen: { default: 100 }
-      slidingwindow: { default: '4:15' }
-    out: [reads1_trimmed]
-
   clean_fasta_headers:
     run: ../../../utils/clean_fasta_headers.cwl
     in:
-      sequences: trim_quality_control/reads1_trimmed
+      sequences: reads
     out: [ sequences_with_cleaned_headers ]
 
   motus_classification:

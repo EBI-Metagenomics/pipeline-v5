@@ -106,11 +106,17 @@ outputs:
     outputSource: after-qc/stats
     type: Directory
 
+  chunking_nucleotides:
+    type: File[]
+    outputSource: after-qc/chunking_nucleotides
+  chunking_proteins:
+    type: File[]
+    outputSource: after-qc/chunking_proteins
 steps:
 
 # << First part >>
   before-qc:
-    run: raw-reads-single-1.cwl
+    run: conditionals/raw_reads/raw-reads-single-1.cwl
     in:
       single_reads: single_reads
       qc_min_length: qc_min_length
@@ -122,7 +128,7 @@ steps:
       - filtered_fasta
 
   after-qc:
-    run: raw-reads-2.cwl
+    run: conditionals/raw_reads/raw-reads-2.cwl
     in:
       motus_input: before-qc/motus_input
       filtered_fasta: before-qc/filtered_fasta
@@ -169,3 +175,6 @@ steps:
       - compressed_files
       - functional_annotation_folder
       - stats
+      - chunking_nucleotides
+      - chunking_proteins
+
