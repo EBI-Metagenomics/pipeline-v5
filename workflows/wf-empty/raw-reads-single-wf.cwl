@@ -132,25 +132,48 @@ steps:
       sequences: unzip_reads/unzipped_merged_reads
     out: [ count ]
 
+# << Trim and Reformat >>
+  trim_quality_control:
+    doc: |
+      Low quality trimming (low quality ends and sequences with < quality scores
+      less than 15 over a 4 nucleotide wide window are removed)
+    run: ../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+    in:
+      reads1: unzip_reads/unzipped_merged_reads
+      phred: { default: '33' }
+      leading: { default: 3 }
+      trailing: { default: 3 }
+      end_mode: { default: SE }
+      minlen: { default: 100 }
+      slidingwindow: { default: '4:15' }
+    out: [reads1_trimmed]
+
+  #fastq
+  clean_fasta_headers:
+    run: ../../utils/clean_fasta_headers.cwl
+    in:
+      sequences: trim_quality_control/reads1_trimmed
+    out: [ sequences_with_cleaned_headers ]
+
+  #fasta
+  convert_trimmed_reads_to_fasta:
+    run: ../../utils/fastq_to_fasta.cwl
+    in:
+      fastq: clean_fasta_headers/sequences_with_cleaned_headers
+    out: [ fasta ]
+
 # << mOTUs2 >>
   motus_taxonomy:
     run: subworkflows/raw_reads/mOTUs-workflow.cwl
     in:
-      reads: unzip_reads/unzipped_merged_reads
+      reads: clean_fasta_headers/sequences_with_cleaned_headers
     out: [ motus ]
-
-# << Trim and Reformat >>
-  trimming:
-    run: subworkflows/trim_and_reformat_reads.cwl
-    in:
-      reads: unzip_reads/unzipped_merged_reads
-    out: [ trimmed_and_reformatted_reads ]
 
 # << QC filtering >>
   length_filter:
     run: ../tools/qc-filtering/qc-filtering.cwl
     in:
-      seq_file: trimming/trimmed_and_reformatted_reads
+      seq_file: convert_trimmed_reads_to_fasta/fasta
       submitted_seq_count: count_submitted_reads/count
       stats_file_name: {default: 'qc_summary'}
       min_length: qc_min_length

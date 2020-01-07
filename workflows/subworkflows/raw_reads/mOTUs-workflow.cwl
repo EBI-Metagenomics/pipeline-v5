@@ -18,16 +18,10 @@ outputs:
 
 steps:
 
-  clean_fasta_headers:
-    run: ../../../utils/clean_fasta_headers.cwl
-    in:
-      sequences: reads
-    out: [ sequences_with_cleaned_headers ]
-
   motus_classification:
     run: ../../../tools/Raw_reads/mOTUs/mOTUs.cwl
     in:
-      reads: clean_fasta_headers/sequences_with_cleaned_headers
+      reads: reads
     out: [ motu_taxonomy ]
 
   clean_classification:
