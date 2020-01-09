@@ -26,6 +26,7 @@ requirements:
 inputs:
 
     filtered_fasta: File
+    qc_stats_summary: File
 
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -114,9 +115,17 @@ outputs:
     type: Directory
 
  # << pathways and systems >>
-  pathways_systems_folder:                                   # [~10]
+  pathways_systems_folder:
     type: Directory
     outputSource: move_to_pathways_systems_folder/out
+
+ # << pathways and systems from antismash >>
+  pathways_systems_folder_antismash:
+    type: Directory
+    outputSource: antismash/antismash_folder
+  pathways_systems_folder_antismash_summary:
+    type: Directory
+    outputSource:  move_antismash_summary_to_pathways_systems_folder/summary_in_folder
 
  # << sequence categorisation >>
   sequence-categorisation_folder:                            # [6]
@@ -254,7 +263,7 @@ steps:
       IPS_table: functional_annotation/ips_result
       diamond_table: diamond/post-processing_output
       hmmscan_table: functional_annotation/hmmscan_result
-      antismash_geneclusters_txt: antismash_summary/reformatted_clusters
+      antismash_geneclusters_txt: antismash/antismash_clusters
       rna: rna_prediction/ncRNA
       cds:
         source: cgc/results
@@ -297,64 +306,26 @@ steps:
     out: [ summary ]
 
 # << ANTISMASH >>
+
   antismash:
-    run: ../../../tools/Assembly/antismash/antismash_v4.cwl
+    run: ../../../tools/Assembly/antismash/wf_antismash.cwl
     in:
-      outdirname: {default: 'antismash_result'}
-      input_fasta: filtered_fasta
-    out: [final_gbk, final_embl, geneclusters_js, geneclusters_txt]
+      filtered_fasta: filtered_fasta
+      clusters_glossary: clusters_glossary
+      final_folder_name: { default: pathways-systems }
+    out:
+      - antismash_folder
+      - antismash_clusters
 
-# << post-processing JS >>
-  antismash_json_generation:
-    run: ../../../tools/Assembly/antismash/antismash_json_generation.cwl
-    in:
-      input_js: antismash/geneclusters_js
-      outputname: {default: 'geneclusters.json'}
-    out: [output_json]
 
-# << post-processing geneclusters.txt >>
-  antismash_summary:
-    run: ../../../tools/Assembly/antismash/reformat-antismash.cwl
-    in:
-      glossary: clusters_glossary
-      geneclusters: antismash/geneclusters_txt
-    out: [reformatted_clusters]
-
-# << GFF for antismash >>
-  antismash_gff:
-    run: ../../../tools/Assembly/GFF/antismash_to_gff.cwl
-    in:
-      antismash_geneclus: antismash_summary/reformatted_clusters
-      antismash_embl: antismash/final_embl
-      antismash_gc_json: antismash_json_generation/output_json
-      output_name:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).antismash.gff
-    out: [output_gff_gz, output_gff_index]
-
-# << change TSV to CSV; move files for pathways & systems >>
+# << change TSV to CSV >>
   change_formats_and_names:
     run: ../../subworkflows/change_formats_and_names.cwl
     in:
       genome_properties_summary: genome_properties/summary
       kegg_summary: pathways/kegg_pathways_summary
-      antismash_gbk: antismash/final_gbk
-      antismash_embl: antismash/final_embl
-      antismash_geneclusters: antismash_summary/reformatted_clusters
       fasta: filtered_fasta
-    out: [gp_summary_csv, kegg_summary_csv, antismash_gbk, antismash_embl, antismash_gclust]
-
-# << gzip pathways and systems files >>
-  compression_pathways_systems:
-    run: ../../../utils/gzip.cwl
-    scatter: uncompressed_file
-    in:
-      uncompressed_file:
-        source:
-          - change_formats_and_names/antismash_gbk
-          - change_formats_and_names/antismash_embl
-        linkMerge: merge_flattened
-    out: [compressed_file]
+    out: [gp_summary_csv, kegg_summary_csv]
 
 # << move PATHWAYS-SYSTEMS >>
   move_to_pathways_systems_folder:
@@ -362,18 +333,20 @@ steps:
     in:
       list:
         source:
-          - change_formats_and_names/kegg_summary_csv           # kegg pathways.csv
-          - change_formats_and_names/antismash_gclust           # geneclusters.txt
           - pathways/kegg_contigs_summary                       # kegg contigs.tsv -- not using
+          - change_formats_and_names/kegg_summary_csv           # kegg pathways.csv
           - change_formats_and_names/gp_summary_csv             # genome properties.csv
-          - compression_pathways_systems/compressed_file        # antismash GBK and EMBL
-          - antismash_gff/output_gff_gz                         # antismash gff.gz
-          - antismash_gff/output_gff_index                      # antismash gff.tbi
-          - folder_functional_annotation/summary_antismash                   # antismash summary
         linkMerge: merge_flattened
       dir_name: { default: pathways-systems }
     out: [ out ]
 
+# << move PATHWAYS-SYSTEMS antismash summary>>
+  move_antismash_summary_to_pathways_systems_folder:
+    run: ../../../tools/Assembly/antismash/cwl-s/move_antismash_summary.cwl
+    in:
+      antismash_summary: folder_functional_annotation/summary_antismash
+      folder_name: { default: pathways-systems }
+    out: [ summary_in_folder ]
 # ----------------------------------- << FINAL STEPS ROOT FOLDER >> -----------------------------------
 
 # index FASTA

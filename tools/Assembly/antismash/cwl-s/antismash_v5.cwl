@@ -41,3 +41,20 @@ outputs:
     type: Directory
     outputBinding:
       glob: output
+
+# from V4
+#arguments:
+#  - valueFrom: --knownclusterblast
+#    position: 2
+#  - valueFrom: "-v"
+#    position: 3
+#  - valueFrom: --smcogs
+#    position: 4
+#  - valueFrom: --transatpks_da
+#    position: 5
+#  - valueFrom: --borderpredict
+#    position: 6
+#  - valueFrom: --asf
+#    position: 7
+#  - valueFrom: --inclusive
+#    position: 8

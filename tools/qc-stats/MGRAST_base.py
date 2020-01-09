@@ -149,8 +149,12 @@ def count_sequences(infile, sequence_type):
         exit(1)
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = proc.communicate()
-    if proc.returncode != 0:
-        raise IOError("%s\n%s" % (" ".join(cmd), stderr))
+    if sequence_type == 'fasta':
+        if proc.returncode > 1:
+            raise IOError("%s\n%s" % (" ".join(cmd), stderr))
+    else:
+        if proc.returncode != 0:
+            raise IOError("%s\n%s" % (" ".join(cmd), stderr))
     slen = stdout.strip()
     if not slen:
         sys.stderr.write("%s is invalid %s file\n" % (infile, sequence_type))

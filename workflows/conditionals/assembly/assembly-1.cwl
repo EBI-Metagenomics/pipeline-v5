@@ -41,6 +41,11 @@ outputs:
     type: Directory
     outputSource: qc_stats/output_dir
 
+ # qc stats for antismash
+  qc_stats_summary:
+    type: File
+    outputSource: qc_stats/summary_out
+
  # fasta
   filtered_fasta:
     type: File
@@ -100,5 +105,5 @@ steps:
     in:
       QCed_reads: length_filter/filtered_file
       sequence_count: count_processed_reads/count
-    out: [ output_dir ]
+    out: [ output_dir, summary_out ]
     run: ../../../tools/qc-stats/qc-stats.cwl

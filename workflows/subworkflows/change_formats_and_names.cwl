@@ -12,9 +12,6 @@ requirements:
 inputs:
   genome_properties_summary: File
   kegg_summary: File
-  antismash_gbk: File
-  antismash_embl: File
-  antismash_geneclusters: File
   fasta: File
 
 outputs:
@@ -24,15 +21,6 @@ outputs:
   kegg_summary_csv:
     type: File
     outputSource: create_csv_kp/csv_result
-  antismash_gbk:
-    type: File
-    outputSource: move_antismash_gbk/renamed_file
-  antismash_embl:
-    type: File
-    outputSource: move_antismash_embl/renamed_file
-  antismash_gclust:
-    type: File
-    outputSource: move_antismash_genclust/renamed_file
 
 steps:
 
@@ -55,32 +43,3 @@ steps:
         source: kegg_summary
         valueFrom: $(self.nameroot)
     out: [csv_result]
-
-# rename (move) antismash gbk
-  move_antismash_gbk:
-    run: ../../utils/move.cwl
-    in:
-      initial_file: antismash_gbk
-      out_file_name:
-        source: fasta
-        valueFrom: $(self.nameroot)_antismash_final.gbk
-    out: [renamed_file]
-
-# rename (move) antismash embl
-  move_antismash_embl:
-    run: ../../utils/move.cwl
-    in:
-      initial_file: antismash_embl
-      out_file_name:
-        source: fasta
-        valueFrom: $(self.nameroot)_antismash_final.embl
-    out: [renamed_file]
-
-  move_antismash_genclust:
-    run: ../../utils/move.cwl
-    in:
-      initial_file: antismash_geneclusters
-      out_file_name:
-        source: fasta
-        valueFrom: $(self.nameroot)_antismash_geneclusters.txt
-    out: [renamed_file]

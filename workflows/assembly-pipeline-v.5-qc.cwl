@@ -129,6 +129,13 @@ outputs:
   pathways_systems_folder:                                   # [~10]
     type: Directory
     outputSource: after-qc/pathways_systems_folder
+  pathways_systems_folder_antismash:
+    type: Directory
+    outputSource: after-qc/pathways_systems_folder_antismash
+  pathways_systems_folder_antismash_summary:
+    type: Directory
+    outputSource:  after-qc/pathways_systems_folder_antismash_summary
+
 
  # << sequence categorisation >>
   sequence-categorisation_folder:                            # [6]
@@ -163,12 +170,14 @@ steps:
       - qc_summary
       - qc-statistics_folder
       - filtered_fasta
+      - qc_stats_summary
     run: conditionals/assembly/assembly-1.cwl
 
 
   after-qc:
     in:
       filtered_fasta: before-qc/filtered_fasta
+      qc_stats_summary: before-qc/qc_stats_summary
       ssu_db: ssu_db
       lsu_db: lsu_db
       ssu_tax: ssu_tax
@@ -219,6 +228,8 @@ steps:
       - functional_annotation_folder
       - stats
       - pathways_systems_folder
+      - pathways_systems_folder_antismash
+      - pathways_systems_folder_antismash_summary
       - sequence-categorisation_folder
       - sequence-categorisation_SSU_LSU_chunked
       - other_rna

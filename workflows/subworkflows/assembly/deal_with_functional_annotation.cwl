@@ -14,7 +14,7 @@ inputs:
   IPS_table: File
   diamond_table: File
   hmmscan_table: File
-  antismash_geneclusters_txt: File
+  antismash_geneclusters_txt: File?
   rna: File
   cds: File
   go_config: File
@@ -34,7 +34,7 @@ outputs:
     type: Directory
     outputSource: write_summaries/stats
   summary_antismash:
-    type: File
+    type: File?
     outputSource: write_summaries/summary_antismash
 
 steps:
