@@ -35,7 +35,22 @@ outputs:
     type: File
     outputSource: single/filtered_fasta
 
+   md5sum_input:
+     type: File
+     outputSource: md5sum/md5sum
+
 steps:
+
+# << calculate md5sum >>
+  md5sum:
+    run: ../../../utils/generate_checksum.cwl
+    in:
+      input_file:
+        source:
+          - forward_reads
+          - reverse_reads
+      outputname: { default: md5sum_input.tsv }
+    out: [ md5sum ]
 
 # << SeqPrep >>
   overlap_reads:

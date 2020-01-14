@@ -114,6 +114,11 @@ outputs:
   chunking_proteins:
     type: File[]
     outputSource: after-qc/chunking_proteins
+
+  md5sum_input:
+     type: File
+     outputSource: before-qc/md5sum_input
+
 steps:
 
 # << First part >>
@@ -129,6 +134,7 @@ steps:
       - qc-status
       - motus_input
       - filtered_fasta
+      - md5sum_input
 
   after-qc:
     run: conditionals/raw_reads/raw-reads-2.cwl

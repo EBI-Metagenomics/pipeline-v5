@@ -34,7 +34,21 @@ outputs:
     type: File
     outputSource: run_quality_control_filtering/filtered_file
 
+   md5sum_input:
+     type: File
+     outputSource: md5sum/md5sum
+
 steps:
+# << calculate md5sum >>
+  md5sum:
+    run: ../../../utils/generate_checksum.cwl
+    in:
+      input_file:
+        source:
+          - single_reads
+        linkMerge: merge_nested
+      outputname: { default: md5sum_input.tsv }
+    out: [ md5sum ]
 
 # << unzipping only >>
   unzip_reads:

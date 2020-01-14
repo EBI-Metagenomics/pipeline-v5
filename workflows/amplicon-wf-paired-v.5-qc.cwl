@@ -89,6 +89,10 @@ outputs:
     type: File
     outputSource: after-qc/rna-count
 
+   md5sum_input:
+     type: File
+     outputSource: before-qc/md5sum_input
+
 steps:
 
   before-qc:
@@ -103,6 +107,7 @@ steps:
       - qc-statistics
       - qc_summary
       - qc-status
+      - md5sum_input
 
   after-qc:
     run: conditionals/amplicon/amplicon-2.cwl
