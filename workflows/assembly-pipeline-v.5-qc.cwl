@@ -159,10 +159,10 @@ outputs:
     type: Directory
     outputSource: after-qc/SSU_folder
 
- # md5sum file
-   md5sum_input:
+ # sha1sum file
+   hashsum_input:
      type: File
-     outputSource: before-qc/md5sum_input
+     outputSource: before-qc/hashsum_input
 
 steps:
 
@@ -176,7 +176,7 @@ steps:
       - qc-statistics_folder
       - filtered_fasta
       - qc_stats_summary
-      - md5sum_input
+      - hashsum_input
     run: conditionals/assembly/assembly-1.cwl
 
 

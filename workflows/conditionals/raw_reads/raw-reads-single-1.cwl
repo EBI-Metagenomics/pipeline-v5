@@ -34,22 +34,22 @@ outputs:
   motus_input:
     type: File
     outputSource: clean_fasta_headers/sequences_with_cleaned_headers
-   md5sum_input:
+   hashsum_input:
      type: File
-     outputSource: md5sum/md5sum
+     outputSource: hashsum/hashsum
 
 steps:
 
-# << calculate md5sum >>
-  md5sum:
+# << calculate hashsum >>
+  hashsum:
     run: ../../../utils/generate_checksum.cwl
     in:
       input_file:
         source:
           - single_reads
         linkMerge: merge_nested
-      outputname: { default: md5sum_input.tsv }
-    out: [ md5sum ]
+      outputname: { default: sha1sum_input.tsv }
+    out: [ hashsum ]
 
 # << unzipping only >>
   unzip_reads:

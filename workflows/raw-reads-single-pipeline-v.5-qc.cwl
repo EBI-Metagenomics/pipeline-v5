@@ -113,9 +113,9 @@ outputs:
     type: File[]
     outputSource: after-qc/chunking_proteins
 
-  md5sum_input:
+  hashsum_input:
      type: File
-     outputSource: before-qc/md5sum_input
+     outputSource: before-qc/hashsum_input
 steps:
 
 # << First part >>
@@ -130,7 +130,7 @@ steps:
       - qc-status
       - motus_input
       - filtered_fasta
-      - md5sum_input
+      - hashsum_input
 
   after-qc:
     run: conditionals/raw_reads/raw-reads-2.cwl

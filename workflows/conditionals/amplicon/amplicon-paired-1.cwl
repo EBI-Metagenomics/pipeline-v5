@@ -35,23 +35,23 @@ outputs:
     type: File
     outputSource: amplicon-single/filtered_fasta
 
- # md5sum file
-   md5sum_input:
+ # hashsum file
+   hashsum_input:
      type: File
-     outputSource: md5sum/md5sum
+     outputSource: hashsum/hashsum
 
 steps:
 
-# << calculate md5sum >>
-  md5sum:
+# << calculate hashsum >>
+  hashsum:
     run: ../../../utils/generate_checksum.cwl
     in:
       input_file:
         source:
           - forward_reads
           - reverse_reads
-      outputname: { default: md5sum_input.tsv }
-    out: [ md5sum ]
+      outputname: { default: sha1sum_input.tsv }
+    out: [ hashsum ]
 
 
 # << SeqPrep >>

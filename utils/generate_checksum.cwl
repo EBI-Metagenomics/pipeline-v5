@@ -23,7 +23,7 @@ inputs:
 baseCommand: [ generate_checksum.py ]
 
 outputs:
-  md5sum:
+  hashsum:
     type: File
     outputBinding:
       glob: $(inputs.outputname)
