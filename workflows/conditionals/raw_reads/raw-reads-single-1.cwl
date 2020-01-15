@@ -34,9 +34,9 @@ outputs:
   motus_input:
     type: File
     outputSource: clean_fasta_headers/sequences_with_cleaned_headers
-   hashsum_input:
-     type: File
-     outputSource: hashsum/hashsum
+  hashsum_input:
+    type: File
+    outputSource: hashsum/hashsum
 
 steps:
 
