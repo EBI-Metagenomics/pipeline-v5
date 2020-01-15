@@ -34,9 +34,9 @@ outputs:
     type: File
     outputSource: run_quality_control_filtering/filtered_file
 
-   hashsum_input:
-     type: File
-     outputSource: hashsum/hashsum
+  hashsum_input:
+    type: File
+    outputSource: hashsum/hashsum
 
 steps:
 # << calculate hashsum >>
