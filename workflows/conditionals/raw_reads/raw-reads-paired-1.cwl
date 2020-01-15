@@ -35,9 +35,9 @@ outputs:
     type: File
     outputSource: single/filtered_fasta
 
-   hashsum_input:
-     type: File
-     outputSource: hashsum/hashsum
+  hashsum_input:
+    type: File
+    outputSource: hashsum/hashsum
 
 steps:
 
