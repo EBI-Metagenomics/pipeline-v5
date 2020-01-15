@@ -52,9 +52,9 @@ outputs:
     outputSource: length_filter/filtered_file
 
  # hashsum file
-   hashsum_input:
-     type: File
-     outputSource: hashsum/hashsum
+  hashsum_input:
+    type: File
+    outputSource: hashsum/hashsum
 
 steps:
 
