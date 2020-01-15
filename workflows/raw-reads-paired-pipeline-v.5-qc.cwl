@@ -116,8 +116,8 @@ outputs:
     outputSource: after-qc/chunking_proteins
 
   hashsum_input:
-     type: File
-     outputSource: before-qc/hashsum_input
+    type: File
+    outputSource: before-qc/hashsum_input
 
 steps:
 
