@@ -89,9 +89,9 @@ outputs:
     type: File
     outputSource: after-qc/rna-count
 
-   hashsum_input:
-     type: File
-     outputSource: before-qc/hashsum_input
+  hashsum_input:
+    type: File
+    outputSource: before-qc/hashsum_input
 
 steps:
 
