@@ -160,9 +160,9 @@ outputs:
     outputSource: after-qc/SSU_folder
 
  # sha1sum file
-   hashsum_input:
-     type: File
-     outputSource: before-qc/hashsum_input
+  hashsum_input:
+    type: File
+    outputSource: before-qc/hashsum_input
 
 steps:
 
