@@ -36,9 +36,9 @@ outputs:
     outputSource: amplicon-single/filtered_fasta
 
  # hashsum file
-   hashsum_input:
-     type: File
-     outputSource: hashsum/hashsum
+  hashsum_input:
+    type: File
+    outputSource: hashsum/hashsum
 
 steps:
 
