@@ -90,7 +90,7 @@ inputs:
 outputs:
 
  # << root folder >>
-  compressed_files:                                          # [5] fasta, cmsearch, ncRNA, deoverlapped
+  compressed_files:                                          # [2] cmsearch, ncRNA
     type: File[]
     outputSource: compression/compressed_file
   index_fasta_file:                                          # [1] fasta.bgz.fai
@@ -381,7 +381,6 @@ steps:
     in:
       uncompressed_file:
         source:
-          - filtered_fasta                              # _FASTA
           - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
           - rna_prediction/cmsearch_result              # cmsearch.all
         linkMerge: merge_flattened
