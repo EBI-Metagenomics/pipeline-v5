@@ -175,7 +175,6 @@ steps:
       - qc_summary
       - qc-statistics_folder
       - filtered_fasta
-      - qc_stats_summary
       - hashsum_input
     run: conditionals/assembly/assembly-1.cwl
 
@@ -183,7 +182,6 @@ steps:
   after-qc:
     in:
       filtered_fasta: before-qc/filtered_fasta
-      qc_stats_summary: before-qc/qc_stats_summary
       ssu_db: ssu_db
       lsu_db: lsu_db
       ssu_tax: ssu_tax

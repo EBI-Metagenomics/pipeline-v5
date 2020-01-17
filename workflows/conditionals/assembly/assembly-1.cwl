@@ -41,11 +41,6 @@ outputs:
     type: Directory
     outputSource: qc_stats/output_dir
 
- # qc stats for antismash
-  qc_stats_summary:
-    type: File
-    outputSource: qc_stats/summary_out
-
  # fasta
   filtered_fasta:
     type: File

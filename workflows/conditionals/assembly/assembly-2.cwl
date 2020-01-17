@@ -26,7 +26,6 @@ requirements:
 inputs:
 
     filtered_fasta: File
-    qc_stats_summary: File
 
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
