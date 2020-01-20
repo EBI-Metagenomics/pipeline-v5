@@ -43,11 +43,7 @@ steps:
   hashsum:
     run: ../../../utils/generate_checksum.cwl
     in:
-      input_file:
-        source:
-          - single_reads
-        linkMerge: merge_nested
-      outputname: { default: sha1sum_input.tsv }
+      input_file: single_reads
     out: [ hashsum ]
 
 # << unzipping only >>

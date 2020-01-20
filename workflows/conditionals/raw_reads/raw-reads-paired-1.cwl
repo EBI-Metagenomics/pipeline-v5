@@ -35,21 +35,26 @@ outputs:
     type: File
     outputSource: single/filtered_fasta
 
-  hashsum_input:
+ # hashsum file
+  hashsum_forward:
     type: File
-    outputSource: hashsum/hashsum
+    outputSource: hashsum_forward/hashsum
+  hashsum_reverse:
+    type: File
+    outputSource: hashsum_reverse/hashsum
 
 steps:
 
 # << calculate hashsum >>
-  hashsum:
+  hashsum_forward:
     run: ../../../utils/generate_checksum.cwl
     in:
-      input_file:
-        source:
-          - forward_reads
-          - reverse_reads
-      outputname: { default: sha1sum_input.tsv }
+      input_file: forward_reads
+    out: [ hashsum ]
+  hashsum_reverse:
+    run: ../../../utils/generate_checksum.cwl
+    in:
+      input_file: reverse_reads
     out: [ hashsum ]
 
 # << SeqPrep >>

@@ -10,15 +10,10 @@ requirements:
 
 inputs:
   input_file:
-    type: File[]
+    type: File
     inputBinding:
       position: 1
-      prefix: '-i'
-  outputname:
-    type: string
-    inputBinding:
-      position: 2
-      prefix: '-o'
+      prefix: "-i"
 
 baseCommand: [ generate_checksum.py ]
 
@@ -26,7 +21,7 @@ outputs:
   hashsum:
     type: File
     outputBinding:
-      glob: $(inputs.outputname)
+      glob: "*sha1"
 
 hints:
   - class: DockerRequirement

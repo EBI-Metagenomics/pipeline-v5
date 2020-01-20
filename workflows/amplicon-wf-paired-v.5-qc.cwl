@@ -89,9 +89,12 @@ outputs:
     type: File
     outputSource: after-qc/rna-count
 
-  hashsum_input:
+  hashsum_forward:
     type: File
-    outputSource: before-qc/hashsum_input
+    outputSource: before-qc/hashsum_forward
+  hashsum_reverse:
+    type: File
+    outputSource: before-qc/hashsum_reverse
 
 steps:
 
@@ -107,7 +110,8 @@ steps:
       - qc-statistics
       - qc_summary
       - qc-status
-      - hashsum_input
+      - hashsum_forward
+      - hashsum_reverse
 
   after-qc:
     run: conditionals/amplicon/amplicon-2.cwl

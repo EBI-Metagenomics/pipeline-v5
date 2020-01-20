@@ -12,15 +12,14 @@ def file_as_bytes(file):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert table to CSV")
-    parser.add_argument("-i", "--input", dest="input", nargs='+', required=True)
-    parser.add_argument("-o", "--output", dest="output", help="Output filename", required=True)
+    parser.add_argument("-i", "--input", dest="input", required=True)
 
     if len(sys.argv) == 1:
         parser.print_help()
     else:
         args = parser.parse_args()
-        with open(args.output, 'w') as file_out:
-            for file_in in args.input:
-                #md5sum = hashlib.md5(file_as_bytes(open(file_in, 'rb'))).hexdigest()
-                sha1sum = hashlib.sha1(file_as_bytes(open(file_in, 'rb'))).hexdigest()
-                file_out.write('\t'.join([sha1sum, os.path.basename(file_in)]) + '\n')
+        output_name = os.path.basename(args.input) + '.sha1'
+        with open(output_name, 'w') as file_out:
+            #md5sum = hashlib.md5(file_as_bytes(open(file_in, 'rb'))).hexdigest()
+            sha1sum = hashlib.sha1(file_as_bytes(open(args.input, 'rb'))).hexdigest()
+            file_out.write('  '.join([sha1sum, os.path.basename(args.input)]) + '\n')

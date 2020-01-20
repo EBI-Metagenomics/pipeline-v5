@@ -115,9 +115,13 @@ outputs:
     type: File[]
     outputSource: after-qc/chunking_proteins
 
-  hashsum_input:
+  hashsum_forward:
     type: File
-    outputSource: before-qc/hashsum_input
+    outputSource: before-qc/hashsum_forward
+  hashsum_reverse:
+    type: File
+    outputSource: before-qc/hashsum_reverse
+
 
 steps:
 
@@ -134,7 +138,8 @@ steps:
       - qc-status
       - motus_input
       - filtered_fasta
-      - hashsum_input
+      - hashsum_forward
+      - hashsum_reverse
 
   after-qc:
     run: conditionals/raw_reads/raw-reads-2.cwl
