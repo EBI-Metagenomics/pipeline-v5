@@ -20,8 +20,7 @@ if __name__ == "__main__":
     else:
         args = parser.parse_args()
         with open(args.output, 'w') as file_out:
-            file_out.write('\t'.join(['basename', 'HashSum']) + '\n')
             for file_in in args.input:
                 #md5sum = hashlib.md5(file_as_bytes(open(file_in, 'rb'))).hexdigest()
                 sha1sum = hashlib.sha1(file_as_bytes(open(file_in, 'rb'))).hexdigest()
-                file_out.write('\t'.join([os.path.basename(file_in), sha1sum]) + '\n')
+                file_out.write('\t'.join([sha1sum, os.path.basename(file_in)]) + '\n')
