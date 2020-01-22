@@ -67,22 +67,6 @@ steps:
       maskfile: reformat_coords/maskfile
     out: [masked_sequences]
 
-  gzip_masking:
-    run: ../../../utils/gzip.cwl
-    in:
-      uncompressed_file: mask_for_ITS/masked_sequences
-    out: [compressed_file]
-
-  move_masking_file:
-    run: ../../../utils/return_directory.cwl
-    in:
-      list:
-        source:
-          - gzip_masking/compressed_file
-        linkMerge: merge_nested
-      dir_name: { default: 'sequence-categorisation' }
-    out: [out]
-
 #run unite and ITSonedb
 
   run_unite:
@@ -107,4 +91,15 @@ steps:
       otu_label: otu_itsone_label
       return_dirname: {default: 'taxonomy-summary/its/itsonedb'}
       file_for_prefix: query_sequences
-    out: [ out_dir ]
+    out: [ out_dir, compressed_fasta_output ]
+
+  move_masking_file:
+    run: ../../../utils/return_directory.cwl
+    in:
+      list:
+        source:
+          - run_itsonedb/compressed_fasta_output
+        linkMerge: merge_nested
+      dir_name: { default: 'sequence-categorisation' }
+    out: [out]
+

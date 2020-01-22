@@ -23,31 +23,6 @@ inputs:
 
 outputs:
 
-  mapseq_classifications:
-    type: File
-    outputSource: edit_empty_tax/mapseq_out
-
-  krona_tsv:
-    type: File
-    outputSource: edit_empty_tax/otu_out
-
-  krona_txt:
-    type: File
-    outputSource: edit_empty_tax/biom_out
-
-  krona_image:
-    type: File
-    outputSource: edit_empty_tax/krona_out
-    format: iana:text/html
-
-  mapseq_json:
-    type: File
-    outputSource: counts_to_json/result
-
-  mapseq_hdf5:
-    type: File
-    outputSource: counts_to_hdf5/result
-
   out_dir:
     type: Directory
     outputSource: return_output_dir/out
