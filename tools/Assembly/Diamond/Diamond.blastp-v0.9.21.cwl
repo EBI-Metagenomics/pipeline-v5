@@ -142,8 +142,9 @@ requirements:
 #      - $import: Diamond-strand_values.yaml
 #      - $import: Diamond-output_formats.yaml
   - class: ResourceRequirement
-    ramMin: 10000
-    coresMin: 32
+    ramMin: 15000
+    tmpdirMin: 20000
+    coresMin: 16
   - class: InlineJavascriptRequirement
 
 hints:

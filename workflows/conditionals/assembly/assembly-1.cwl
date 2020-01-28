@@ -86,7 +86,7 @@ steps:
 # << Length QC >>
   length_filter:
     in:
-      seq_file: unzip/unzipped_merged_reads
+      seq_file: clean_headers/sequences_with_cleaned_headers
       min_length: contig_min_length
       submitted_seq_count: count_reads/count
       stats_file_name: { default: 'qc_summary' }
