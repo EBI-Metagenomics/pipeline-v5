@@ -70,14 +70,14 @@ outputs:
     outputSource: return_tax_dir/out
 
   chunking_nucleotides:
-    type: File[]
+    type: File[]?
     outputSource: chunking_final/nucleotide_fasta_chunks
   chunking_proteins:
-    type: File[]
+    type: File[]?
     outputSource: chunking_final/protein_fasta_chunks
   rna-count:
     type: File
-    outputSource: classify/LSU-SSU-count
+    outputSource: rna_prediction/LSU-SSU-count
 
   compressed_files:
     type: File[]
@@ -99,7 +99,7 @@ steps:
     out: [ motus ]
 
 # << Get RNA >>
-  classify:
+  rna_prediction:
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
     in:
       input_sequences: filtered_fasta
@@ -130,7 +130,7 @@ steps:
     run: ../../subworkflows/other_ncrnas.cwl
     in:
      input_sequences: filtered_fasta
-     cmsearch_file: classify/ncRNA
+     cmsearch_file: rna_prediction/ncRNA
      other_ncRNA_ribosomal_models: other_ncRNA_models
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
@@ -140,7 +140,7 @@ steps:
     in:
       input_fasta: filtered_fasta
       seq_type: { default: 's' }
-      maskfile: classify/ncRNA
+      maskfile: rna_prediction/ncRNA
       config: CGC_config
       outdir: { default: 'CGC-output' }
       postfixes: CGC_postfixes
@@ -195,7 +195,7 @@ steps:
        interproscan_annotation: functional_annotation/ips_result
        hmmscan_annotation: functional_annotation/hmmscan_result
        pfam_annotation: pfam/annotations
-       rna: classify/ncRNA
+       rna: rna_prediction/ncRNA
        cds:
          source: cgc/results
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
@@ -213,8 +213,8 @@ steps:
       uncompressed_file:
         source:
           - filtered_fasta                        # _FASTA
-          - classify/ncRNA                        # cmsearch.all.deoverlapped
-          - classify/cmsearch_result              # cmsearch.all
+          - rna_prediction/ncRNA                        # cmsearch.all.deoverlapped
+          - rna_prediction/cmsearch_result              # cmsearch.all
         linkMerge: merge_flattened
     out: [compressed_file]
 
@@ -229,8 +229,8 @@ steps:
       faa:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      LSU: classify/LSU_fasta_file
-      SSU: classify/SSU_fasta_file
+      LSU: rna_prediction/LSU_fasta_file
+      SSU: rna_prediction/SSU_fasta_file
     out:
       - nucleotide_fasta_chunks                         # fasta, ffn
       - protein_fasta_chunks                            # faa
@@ -254,8 +254,8 @@ steps:
     run: ../../../utils/return_directory.cwl
     in:
       dir_list:
-        - classify/SSU_folder
-        - classify/LSU_folder
+        - rna_prediction/SSU_folder
+        - rna_prediction/LSU_folder
       dir_name: { default: 'taxonomy-summary' }
     out: [out]
 

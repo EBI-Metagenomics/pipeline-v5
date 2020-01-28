@@ -27,7 +27,7 @@ inputs:
         position: 1
         prefix: -s
     label: merged and QC reads in fastq
-    #format: edam:format_1930
+    format: edam:format_1930  # FASTQ
 
   threads:
     type: int
@@ -45,7 +45,7 @@ outputs:
   motu_taxonomy:
     type: stdout
     label: motu classifications
-    #format: edam:format_3746
+    format: edam:format_3746
 
 $namespaces:
  edam: http://edamontology.org/

@@ -1,6 +1,9 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
 hints:
  DockerRequirement:
@@ -16,6 +19,7 @@ requirements:
 inputs:
   infernal_matches:
     label: output from infernal cmsearch
+    format: edam:format_3475
     type: File
     inputBinding:
       prefix: -i
@@ -33,6 +37,7 @@ baseCommand: awk_tool
 outputs:
   matched_seqs_with_coords:
     type: File
+    format: edam:format_3475
     outputBinding:
       glob: "*matched_seqs_with_coords*"
 
@@ -57,9 +62,8 @@ doc: |
   output using) is a concatenation of the original name, the sequence
   number, and the coordinates.
 
-$namespaces:
- s: http://schema.org/
 $schemas:
+ - http://edamontology.org/EDAM_1.20.owl
  - https://schema.org/docs/schema_org_rdfa.html
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"

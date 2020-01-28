@@ -1,10 +1,13 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
-#hints:
-#  DockerRequirement:
-#    dockerPull: 'alpine:3.7'
+hints:
+  DockerRequirement:
+    dockerPull: 'alpine:3.7'
 
 requirements:
   ResourceRequirement:
@@ -16,6 +19,7 @@ baseCommand: [ add_header ]
 
 inputs:
   input_table:
+    #format: [edam:format_3475, edam:format_2333]
     type: File
     inputBinding:
       prefix: -i
@@ -29,3 +33,12 @@ stdout: $(inputs.input_table.nameroot)
 outputs:
   output_table:
     type: stdout
+    format: ${if ("format" in inputs.input_table) return inputs.input_table.format; else return 'undefined'}
+
+
+$schemas:
+ - http://edamontology.org/EDAM_1.16.owl
+ - https://schema.org/docs/schema_org_rdfa.html
+
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"
+s:copyrightHolder: "EMBL - European Bioinformatics Institute"

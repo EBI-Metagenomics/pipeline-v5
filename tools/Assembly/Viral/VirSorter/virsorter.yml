@@ -1,6 +1,0 @@
-fasta_file:
-  class: File
-  path: ../../Files/ERR575691_host_filtered_filt300bp.fasta
-data:
-  class: Directory
-  path: virsorter-data

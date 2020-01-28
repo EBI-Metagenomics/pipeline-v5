@@ -26,7 +26,7 @@ baseCommand: ["MGRAST_base.py" ]
 inputs:
   QCed_reads:
     type: File
-    # format: edam:format_1929  # FASTA
+    format: edam:format_1929  # FASTA
     inputBinding:
       prefix: -i
   length_sum:

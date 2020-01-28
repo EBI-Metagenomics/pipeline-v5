@@ -1,7 +1,8 @@
 class: CommandLineTool
 cwlVersion: v1.0
 $namespaces:
-  s: 'http://schema.org/'
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
 hints:
   - class: DockerRequirement
@@ -12,6 +13,7 @@ baseCommand:
 inputs:
   files:
     type: 'File[]'
+    format: edam:format_3475
     inputBinding:
       position: 1
     streamable: true
@@ -22,6 +24,8 @@ stdout: $(inputs.targetFile.nameroot).cmsearch.all.tblout
 outputs:
   - id: result
     type: stdout
+    format: edam:format_3475
+
 #    File - ! doesn't work for CWLEXEC !
 #    outputBinding:
 #      glob: $(inputs.outputFileName)

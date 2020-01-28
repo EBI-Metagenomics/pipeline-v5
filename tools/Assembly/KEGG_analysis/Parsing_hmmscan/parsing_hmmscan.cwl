@@ -1,9 +1,11 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
-
-label: "Biosequence analysis using profile hidden Markov models"
+label: "Taking KOs corresponding contigs from hmmscan result"
 
 hints:
   DockerRequirement:
@@ -16,6 +18,7 @@ baseCommand: ['parsing_hmmscan.py']
 
 inputs:
   table:
+    format: edam:format_3475
     type: File
     inputBinding:
       separate: true
@@ -33,5 +36,14 @@ outputs:
 
   output_table:
     type: File
+    format: edam:format_3475 # TXT
     outputBinding:
       glob: "*_parsed*"
+
+
+$schemas:
+ - http://edamontology.org/EDAM_1.16.owl
+ - https://schema.org/docs/schema_org_rdfa.html
+'s:author': 'Ekaterina Sakharova'
+'s:copyrightHolder': EMBL - European Bioinformatics Institute
+'s:license': "https://www.apache.org/licenses/LICENSE-2.0"

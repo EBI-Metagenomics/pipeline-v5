@@ -23,15 +23,14 @@ inputs:
     type: File
     inputBinding:
       position: 1
-    #format: edam:format_1929  # FASTA
+    format: edam:format_1929  # FASTA
 
   database:
     type: File
     inputBinding:
         position: 2
-    secondaryFiles:
-       - .mscluster
-    #format: edam:format_1929  # FASTA
+    secondaryFiles: .mscluster
+    format: edam:format_1929  # FASTA
 
   taxonomy:
     type: File
@@ -46,7 +45,7 @@ stdout: $(inputs.prefix.nameroot)_$(inputs.database.basename).mseq  # helps with
 outputs:
   classifications:
     type: stdout
-
+    format: iana:text/tab-separated-values
 
 hints:
   - class: DockerRequirement

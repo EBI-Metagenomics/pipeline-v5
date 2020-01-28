@@ -18,6 +18,7 @@ hints:
 inputs:
   fastq:
     type: File
+    # format: edam:format_1930  # FASTQ
     inputBinding:
       prefix: '-i'
 
@@ -30,7 +31,7 @@ baseCommand: [ fastq_to_fasta.py ]
 outputs:
   fasta:
     type: File
-    # format: edam:format_1929
+    format: edam:format_1929  # FASTA
     outputBinding:
       glob: "*.unclean"
 

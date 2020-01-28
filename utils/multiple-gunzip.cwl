@@ -1,11 +1,13 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
+
 class: CommandLineTool
 label: "merges output of seqprep and unzips for paired end reads, or unzips file for single end"
 requirements:
   ResourceRequirement:
     coresMin: 2
     ramMin: 200  # just a default, could be lowered
+  InlineJavascriptRequirement: {}
 
 hints:
  DockerRequirement:
@@ -17,19 +19,19 @@ inputs:
 
  target_reads:
    type: File
-   #format: edam:format_1930  # FASTQ
+   # <<doesn't support by cwltoil>> format: [ edam:format_1929, edam:format_1930 ]  # FASTA or FASTQ
    inputBinding: { position: 1 }
    label: "merged seq prep output"
 
  forward_unmerged_reads:
    type: File?
-   #format: edam:format_1930  # FASTQ
+   format: edam:format_1930  # FASTQ
    inputBinding: { position: 2 }
    label: "for seqprep result: unmerged forward seqprep output or single end reads"
 
  reverse_unmerged_reads:
    type: File?
-   #format: edam:format_1930  # FASTQ
+   format: edam:format_1930  # FASTQ
    inputBinding: { position: 3 }
    label: " unmerged reverse seqprep output"
 
@@ -46,6 +48,7 @@ baseCommand: [ gunzip, -c ]
 outputs:
   unzipped_merged_reads:
     type: stdout
+    # <<doesn't support by cwltoil>> format: $(inputs.target_reads.format)
 
 stdout: ${ var ext = "";
        if (inputs.assembly) { ext = inputs.target_reads.nameroot.split('.')[0] + '_FASTA.unfiltered'; }
@@ -53,11 +56,12 @@ stdout: ${ var ext = "";
        return ext; }
 
 $namespaces:
- edam: http://edamontology.org/
- s: http://schema.org/
+  s: https://schema.org/
+  edam: http://edamontology.org/
+
 $schemas:
- - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/docs/schema_org_rdfa.html
+ - http://edamontology.org/EDAM_1.16.owl
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:copyrightHolder: "EMBL - European Bioinformatics Institute"

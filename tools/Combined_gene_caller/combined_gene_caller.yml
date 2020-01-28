@@ -1,13 +1,13 @@
 input_fasta:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/ERZ782910_unzip_unspace.fasta
+  path: assembly.fasta
 seq_type: "a"
 maskfile:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/QC_RNA_PRED/qc_rna2/result.deoverlapped # /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/QC_RNA_PRED/qc-rna/result.deoverlapped
+  path: result.deoverlapped
 config:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/utils/combined_gene_caller_conf.json
+  path: combined_gene_caller_conf.json
 outdir: CGC-output
 postfixes:
   - '_CDS.faa'

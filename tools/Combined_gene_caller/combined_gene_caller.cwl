@@ -21,6 +21,7 @@ arguments: ["-v"]
 
 inputs:
   input_fasta:
+    format: 'edam:format_1929'
     type: File
     inputBinding:
       separate: true
@@ -64,6 +65,7 @@ outputs:
     outputBinding:
       glob: "CGC-output/$(inputs.input_fasta.basename).faa"
   predicted_seq:
+    format: 'edam:format_1929'
     type: File
     outputBinding:
       glob: "CGC-output/$(inputs.input_fasta.basename).ffn"

@@ -117,17 +117,8 @@ requirements:
 hints:
   - class: DockerRequirement
     dockerPull: 'biocontainers/interproscan:v5.30-69.0_cv1'
-  - class: gx:interface
-    gx:inputs:
-      - gx:name: applications
-        gx:type: text
-        gx:optional: True
-      - gx:name: proteinFile
-        gx:type: data
-        gx:format: 'txt'
 
 $namespaces:
-  gx: "http://galaxyproject.org/cwl#"
   edam: 'http://edamontology.org/'
   iana: 'https://www.iana.org/assignments/media-types/'
   s: 'http://schema.org/'

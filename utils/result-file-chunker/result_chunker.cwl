@@ -33,7 +33,7 @@ baseCommand: [run_result_file_chunker.py]
 
 outputs:
   chunks:
-    type: File[]?
+    type: File[]
     outputBinding:
       glob: $(inputs.outdirname)/*
 

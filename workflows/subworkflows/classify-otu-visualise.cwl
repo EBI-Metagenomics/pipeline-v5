@@ -13,7 +13,9 @@ requirements:
 
 inputs:
   fasta: File
-  mapseq_ref: {type: File, secondaryFiles: [.mscluster] }
+  mapseq_ref:
+    type: File
+    secondaryFiles: [.mscluster]
   mapseq_taxonomy: File
   otu_ref: File
   otu_label:

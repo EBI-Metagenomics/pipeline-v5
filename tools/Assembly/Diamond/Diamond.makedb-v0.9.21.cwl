@@ -1,7 +1,6 @@
 class: CommandLineTool
 cwlVersion: v1.0
 $namespaces:
-  gx: "http://galaxyproject.org/cwl#"
   edam: 'http://edamontology.org/'
   s: 'http://schema.org/'
 baseCommand:
@@ -88,22 +87,7 @@ requirements:
 hints:
   - class: DockerRequirement
     dockerPull: 'buchfink/diamond:version0.9.21'
-  - class: gx:interface
-    gx:inputs:
-      - gx:name: inputRefDBFile
-        gx:type: data
-        gx:format: 'txt'
-      - gx:name: taxonMapFile
-        gx:type: data
-        gx:format: 'txt'
-        gx:optional: True
-      - gx:name: taxonNodesFiles
-        gx:type: data
-        gx:format: 'txt'
-        gx:optional: True
-      - gx:name: threads
-        gx:type: integer
-        gx:optional: True
+
 $schemas:
   - 'http://edamontology.org/EDAM_1.20.owl'
   - 'https://schema.org/docs/schema_org_rdfa.html'

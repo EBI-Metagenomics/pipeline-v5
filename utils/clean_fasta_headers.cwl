@@ -8,12 +8,13 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 1024  # just a default, could be lowered
+  InlineJavascriptRequirement: {}
 
 inputs:
   sequences:
     type: File
-    streamable: true
-    # format: edam:format_1929  # FASTA
+    # streamable: true
+    # <<doesn't support by cwltoil>> format: [ edam:format_1929, edam:format_1930]  # FASTA or FASTQ
 
 stdin: $(inputs.sequences.path)
 
@@ -24,7 +25,7 @@ stdout: $(inputs.sequences.nameroot).unfiltered_fasta
 outputs:
   sequences_with_cleaned_headers:
     type: stdout
-    format: edam:format_1929  # FASTA
+    # format: $(inputs.sequences.format)
 
 hints:
   - class: DockerRequirement
@@ -37,5 +38,5 @@ $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/docs/schema_org_rdfa.html
 
-s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+'s:copyrightHolder': "EMBL - European Bioinformatics Institute"

@@ -24,13 +24,15 @@ def parse_json(filename, yml, mode):
             print('Add line to yml')
             location_fasta = data[NAME_FILT_FASTA]["location"].split('file://')[1]
             print('location fasta: ', location_fasta)
-            fasta_filtered = '\n' + NAME_FILT_FASTA + ': \n' + '  path: ' + location_fasta + '\n  class: File'
+            fasta_filtered = '\n' + NAME_FILT_FASTA + ': \n' + '  path: ' + location_fasta + '\n  class: File' \
+                             + '\n  format: edam:format_1929  # FASTA'
             with open(yml, 'a') as yml_file:
                 yml_file.write(fasta_filtered)
                 if mode == 'raw-reads':
                     print('add motus_input')
                     location_motus_input = data[NAME_MOTUS]["location"].split('file://')[1]
-                    motus_input = '\n' + NAME_MOTUS + ': \n' + '  path: ' + location_motus_input + '\n  class: File'
+                    motus_input = '\n' + NAME_MOTUS + ': \n' + '  path: ' + location_motus_input + '\n  class: File' \
+                                  + '\n  format: edam:format_1930  # FASTQ'
                     yml_file.write(motus_input)
             sys.exit(1)
         else:

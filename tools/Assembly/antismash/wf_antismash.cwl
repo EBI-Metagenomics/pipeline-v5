@@ -1,12 +1,7 @@
 class: Workflow
 cwlVersion: v1.0
 
-$namespaces:
-  edam: 'http://edamontology.org/'
-  s: 'http://schema.org/'
-$schemas:
-  - 'http://edamontology.org/EDAM_1.20.owl'
-  - 'https://schema.org/docs/schema_org_rdfa.html'
+label: "WF leaves sequences that length is more than 1000bp, run antismash + gene clusters post-processing, GFF generation"
 
 requirements:
   - class: ResourceRequirement
@@ -77,9 +72,7 @@ steps:
     out: [ summary_in_folder ]
 
 
-
-
-
+# ______________________________________________
 # << post-processing JS >>
 #  antismash_json_generation:
 #    run: ../../../tools/Assembly/antismash/antismash_json_generation.cwl
@@ -107,3 +100,17 @@ steps:
 #        source: filtered_fasta
 #        valueFrom: $(self.nameroot).antismash.gff
 #    out: [output_gff_gz, output_gff_index]
+# ______________________________________________
+
+
+
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+$schemas:
+ - http://edamontology.org/EDAM_1.20.owl
+ - https://schema.org/docs/schema_org_rdfa.html
+
+'s:author': 'Ekaterina Sakharova'
+'s:copyrightHolder': EMBL - European Bioinformatics Institute
+'s:license': "https://www.apache.org/licenses/LICENSE-2.0"

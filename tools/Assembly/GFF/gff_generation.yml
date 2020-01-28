@@ -1,10 +1,10 @@
 ips_results:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.I5.tsv
+  path: ips.tsv
 eggnog_results:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.emapper.annotations
+  path: emapper.annotations
 input_faa:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA_CDS.faa
+  path: assembly_CDS.faa
 output_name: result.gff

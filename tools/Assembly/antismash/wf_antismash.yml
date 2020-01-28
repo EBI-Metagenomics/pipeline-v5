@@ -1,0 +1,10 @@
+filtered_fasta:
+  class: File
+  path: ../../../input_examples/assembly/example.filtered.fasta
+
+clusters_glossary:
+  class: File
+  path: ref-dbs/antismash_glossary.tsv
+  checksum: bd50e85246dc3609f7cab6fb4efe4845
+
+final_folder_name: pathways-systems

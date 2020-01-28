@@ -6,9 +6,9 @@ applications:
   - Gene3d
 inputFile:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-raw-reads/CGC-chunk/faa_combined_test
+  path: faa_combined_test
 outputFormat:
   - TSV
 databases:
   class: Directory
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data
+  path: interproscan-5.36-75.0/data

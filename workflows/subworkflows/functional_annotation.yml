@@ -1,6 +1,6 @@
 CGC_predicted_proteins:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results/CGC_assembly/ERZ477576_100_FASTA.fasta.faa
+  path: assmbly.fasta.faa
 
 names:
   - I5.tsv.without_header
@@ -11,15 +11,15 @@ HMMSCAN_omit_alignment: true
 HMMSCAN_name_database: db_kofam.hmm
 HMMSCAN_data:
   class: Directory
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs
+  path: ref-dbs
 
 EggNOG_db:
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/eggnog.db
+  path: eggnog-mapper/data/eggnog.db
   class: File
 EggNOG_diamond_db:
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/eggnog_proteins.dmnd
+  path: eggnog-mapper/data/eggnog_proteins.dmnd
   class: File
-EggNOG_data_dir: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/data/
+EggNOG_data_dir: eggnog-mapper/data/
 
 InterProScan_applications:
   - PfamA
@@ -27,4 +27,4 @@ InterProScan_outputFormat:
   - TSV
 InterProScan_databases:
   class: Directory
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/interproscan-5.36-75.0/data
+  path: interproscan-5.36-75.0/data

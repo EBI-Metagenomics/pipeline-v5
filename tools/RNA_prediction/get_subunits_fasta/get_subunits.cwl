@@ -5,6 +5,9 @@ class: CommandLineTool
 # In fasta mode:
 # this script returns LSU, SSU, 5S, 5.8S and models fasta-s.gz
 
+hints:
+  - class: DockerRequirement
+    dockerPull: alpine:3.7
 requirements:
   ResourceRequirement:
     ramMin: 200
@@ -48,10 +51,12 @@ outputs:
 
   SSU_seqs:
     type: File
+    format: edam:format_1929  # FASTA
     outputBinding:
       glob: "sequence-categorisation/*SSU.fasta*"
   LSU_seqs:
     type: File
+    format: edam:format_1929  # FASTA
     outputBinding:
       glob: "sequence-categorisation/*LSU.fasta*"
 
@@ -65,15 +70,13 @@ outputs:
     outputBinding:
       glob: "sequence-categorisation"
 
-hints:
-  - class: DockerRequirement
-    dockerPull: alpine:3.7
-
 $namespaces:
+ edam: http://edamontology.org/
  s: http://schema.org/
 $schemas:
+ - http://edamontology.org/EDAM_1.20.owl
  - https://schema.org/docs/schema_org_rdfa.html
 
-s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
-
+'s:author': 'Ekaterina Sakharova, Varsha Kale'
+'s:copyrightHolder': EMBL - European Bioinformatics Institute
+'s:license': "https://www.apache.org/licenses/LICENSE-2.0"

@@ -50,7 +50,7 @@ inputs:
       to 20 for sequences of length below 100, and set to 40 otherwise. Setting
       this option to 1 will disable this feature.
   - id: queryInputFile
-    # format: 'edam:format_1929'
+    format: 'edam:format_1929'
     type: File
     inputBinding:
       position: 0

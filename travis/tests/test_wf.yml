@@ -1,0 +1,7 @@
+#cwltest
+
+- job: workflows/amplicon-wf-single-job.yml
+  tool: ../../workflows/amplicon-wf-single-job.cwl
+  short_name: amplicon-single.cwl
+  doc: "Workflow"
+  output:

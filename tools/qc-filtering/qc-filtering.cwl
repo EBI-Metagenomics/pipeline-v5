@@ -48,7 +48,7 @@ inputs:
 outputs:
   filtered_file:
     label: Filtered output file
-    # format: edam:format_1929  # FASTA
+    format: edam:format_1929  # FASTA
     type: File
     outputBinding:
       glob: $(inputs.seq_file.nameroot).fasta

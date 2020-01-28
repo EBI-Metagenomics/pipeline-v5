@@ -49,17 +49,17 @@ arguments:
 outputs:
   merged_reads:
     type: File
-    format: edam:format_1930  # FASTQ
+    format: $(inputs.forward_reads.format)  # format: edam:format_1930  # FASTQ
     outputBinding:
       glob: '*_MERGED*'
   forward_unmerged_reads:
     type: File
-    format: edam:format_1930  # FASTQ
+    format: $(inputs.forward_reads.format)  # format: edam:format_1930  # FASTQ
     outputBinding:
       glob: forward_unmerged.fastq.gz
   reverse_unmerged_reads:
     type: File
-    format: edam:format_1930  # FASTQ
+    format: $(inputs.forward_reads.format)  # format: edam:format_1930  # FASTQ
     outputBinding:
       glob: reverse_unmerged.fastq.gz
 

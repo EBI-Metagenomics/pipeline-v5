@@ -20,6 +20,7 @@ inputs:
 outputs:
   output_table:
     type: File
+    format: edam:format_3475
     outputSource: make_tab_sep/output_with_tabs
 
 steps:

@@ -1,9 +1,0 @@
-input_file:
-  class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/NAR-results-assembly2/CGC/ERZ782910_unzip_unspace.fasta.faa
-gathering_bit_score: true
-omit_alignment: true
-name_database: db_kofam.hmm
-data:
-  class: Directory
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs

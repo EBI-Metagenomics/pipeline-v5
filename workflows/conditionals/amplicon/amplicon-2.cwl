@@ -51,7 +51,7 @@ outputs:
 
   rna-count:
     type: File
-    outputSource: classify/LSU-SSU-count
+    outputSource: rna_prediction/LSU-SSU-count
 
   gz_files:  # fasta.gz, cmsearch.gz, deoverlapped.gz
     type: File[]
@@ -60,7 +60,7 @@ outputs:
 steps:
 
 # << Get RNA >>
-  classify:
+  rna_prediction:
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
     in:
       input_sequences: filtered_fasta
@@ -93,8 +93,8 @@ steps:
     run: ../../subworkflows/ITS/ITS-wf.cwl
     in:
       query_sequences: filtered_fasta
-      LSU_coordinates: classify/LSU_coords
-      SSU_coordinates: classify/SSU_coords
+      LSU_coordinates: rna_prediction/LSU_coords
+      SSU_coordinates: rna_prediction/SSU_coords
       unite_database: unite_db
       unite_taxonomy: unite_tax
       unite_otus: unite_otu_file
@@ -115,8 +115,8 @@ steps:
     in:
       uncompressed_file:
         - filtered_fasta
-        - classify/cmsearch_result
-        - classify/ncRNA
+        - rna_prediction/cmsearch_result
+        - rna_prediction/ncRNA
     out: [compressed_file]
 
 # return ITS dir
@@ -134,8 +134,8 @@ steps:
     run: ../../../utils/return_directory.cwl
     in:
       dir_list:
-        - classify/SSU_folder
-        - classify/LSU_folder
+        - rna_prediction/SSU_folder
+        - rna_prediction/LSU_folder
         - return_its_dir/out
       dir_name: { default: 'taxonomy-summary' }
     out: [out]
@@ -146,9 +146,9 @@ steps:
     in:
       file_list:
         source:
-          - classify/compressed_SSU_fasta
-          - classify/compressed_LSU_fasta
-          - classify/compressed_rnas
+          - rna_prediction/compressed_SSU_fasta
+          - rna_prediction/compressed_LSU_fasta
+          - rna_prediction/compressed_rnas
           - ITS/masking_file
         linkMerge: merge_flattened
       dir_name: { default: 'sequence-categorisation' }

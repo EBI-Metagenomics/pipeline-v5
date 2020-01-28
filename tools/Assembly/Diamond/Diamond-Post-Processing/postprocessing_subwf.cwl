@@ -45,4 +45,4 @@ $schemas:
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:copyrightHolder: "EMBL - European Bioinformatics Institute, 2019"
-s:author: "Ekaterina Sakharova"
+s:author: "Ekaterina Sakharova, Maxim Scheremetjew"

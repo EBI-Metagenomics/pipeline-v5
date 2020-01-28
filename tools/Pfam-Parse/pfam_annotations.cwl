@@ -14,7 +14,7 @@ inputs:
   interpro:
     type: File
     label: Interpro scan results in TSV format
-    #format: edam:format_3475
+    format: edam:format_3475
   outputname: string
 
 baseCommand: []
@@ -30,16 +30,18 @@ outputs:
   annotations:
     type: stdout
     label: Pfam results only
-    #format: edam:format_3475
+    format: edam:format_3475
 
 hints:
   - class: DockerRequirement
     dockerPull: 'alpine:3.7'
 
-#$namespaces:
-  #edam:http://edamontology.org/
-#$schemas:
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+$schemas:
+ - http://edamontology.org/EDAM_1.16.owl
+ - https://schema.org/docs/schema_org_rdfa.html
 
-#'s:author': ''
-#'s:copyrightHolder': EMBL - European Bioinformatics Institute
-#'s:license': ''
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"
+s:copyrightHolder:   "EMBL - European Bioinformatics Institute"

@@ -1,9 +1,5 @@
 input_tsv_file:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/assembly/output-dir/test_assembly_results/ERZ477576_FASTA_1000_FASTA.I5.tsv
-  #/hps/nobackup2/production/metagenomics/pipeline/NAR-results/interpro/interpo_united_100
-flatfiles_path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/genome-properties/flatfiles
-  #/genome-properties/flatfiles
+  path: tests/InterProScan.tsv
+flatfiles_path: genome-properties/flatfiles
 GP_txt: genomeProperties.txt
-  # genomeProperties.txt #/hps/nobackup2/production/metagenomics/pipeline/tools-v5/pipeline-v5/tools/genome-properties/flatfiles/genomeProperties.txt
-

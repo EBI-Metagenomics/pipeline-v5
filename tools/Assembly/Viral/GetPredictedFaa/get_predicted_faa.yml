@@ -1,6 +1,0 @@
-wanted_folder:
-  class: Directory
-  path: ../tools/Viral/ParsingPredictions/Putative_prophages
-predicted_file:
-  class: File
-  path: ../input/chunk_1.faa

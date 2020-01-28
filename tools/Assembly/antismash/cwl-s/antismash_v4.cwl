@@ -3,6 +3,11 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 label: "antiSMASH"
+doc: |
+  antiSMASH allows the rapid genome-wide identification, annotation and analysis
+  of secondary metabolite biosynthesis gene clusters in bacterial and fungal genomes.
+  It integrates and cross-links with a large number of in silico secondary metabolite analysis tools
+
 
 requirements:
   InlineJavascriptRequirement: {}
@@ -22,6 +27,7 @@ inputs:
       prefix: -o
 
   input_fasta:
+    format: edam:format_1929  # FASTA
     type: File
     inputBinding:
       prefix: -i
@@ -59,3 +65,14 @@ outputs:
     type: File?
     outputBinding:
       glob: $(inputs.final_folder)/$(inputs.outname)_antismash_geneclusters.txt
+
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+$schemas:
+ - http://edamontology.org/EDAM_1.20.owl
+ - https://schema.org/docs/schema_org_rdfa.html
+
+'s:author': 'Ekaterina Sakharova'
+'s:copyrightHolder': EMBL - European Bioinformatics Institute
+'s:license': "https://www.apache.org/licenses/LICENSE-2.0"

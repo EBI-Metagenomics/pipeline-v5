@@ -22,6 +22,7 @@ stdout: $(inputs.outputFileName)$(inputs.postfix)
 outputs:
   - id: result
     type: stdout
+    format: ${if ("format" in inputs.files[0]) return inputs.files[0].format; else return 'undefined'}
 #    File - ! doesn't work for CWLEXEC !
 #    outputBinding:
 #      glob: $(inputs.outputFileName)

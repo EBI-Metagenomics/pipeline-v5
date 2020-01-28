@@ -4,7 +4,6 @@ class: CommandLineTool
 
 label: split FASTA by number of records
 doc: based upon code by Maxim Scheremetjew, EMBL-EBI
-#copied from ebi-metagenomics-cwl/tools/fasta_chunker.cwl and fixed
 
 
 requirements:
@@ -23,6 +22,7 @@ hints:
 
 inputs:
   seqs:
+    # format: edam:format_1929  # collision with concatenate.cwl
     type: File
     inputBinding:
       prefix: -i

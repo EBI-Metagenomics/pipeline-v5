@@ -1,6 +1,0 @@
-input_faa:
-  class: File
-  path: ../../../workflows/_viral/Files_viral/Low_confidence_filtered.faa
-input_table:
-  class: File
-  path: ../../../workflows/_viral/Files_viral/Low_confidence_filtered_hmmscan_modified_informative.tsv

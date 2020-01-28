@@ -2,6 +2,8 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
+label: "Script builds GFF-file based on IPS and EggNOG results"
+
 requirements:
   ResourceRequirement:
     coresMax: 1
@@ -11,18 +13,21 @@ hints:
   DockerRequirement:
     dockerPull: alpine:3.9.4
 
-baseCommand: [build_assembly_gff.py]
+baseCommand: [ build_assembly_gff.py ]
 
 inputs:
   ips_results:
     type: File
+    format: edam:format_3475
     inputBinding:
       prefix: -i
   eggnog_results:
+    format: edam:format_3475
     type: File
     inputBinding:
       prefix: -e
   input_faa:
+    format: edam:format_1929
     type: File
     inputBinding:
       prefix: -f
@@ -36,6 +41,7 @@ stdout: stdout.txt
 outputs:
   output_gff_gz:
     type: File
+    format: edam:format_2306  # GTF/GFF
     outputBinding:
       glob: $(inputs.output_name).gz
   output_gff_index:
@@ -43,3 +49,14 @@ outputs:
     outputBinding:
       glob: $(inputs.output_name).gz.tbi
   stdout: stdout
+
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+$schemas:
+ - http://edamontology.org/EDAM_1.20.owl
+ - https://schema.org/docs/schema_org_rdfa.html
+
+'s:author': 'Martin Beracochea, Ekaterina Sakharova, Varsha Kale'
+'s:copyrightHolder': EMBL - European Bioinformatics Institute
+'s:license': "https://www.apache.org/licenses/LICENSE-2.0"

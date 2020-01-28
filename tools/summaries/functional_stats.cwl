@@ -20,6 +20,7 @@ inputs:
         prefix: -k
   pfam:
     type: File
+    format: edam:format_3475
     inputBinding:
         prefix: -p
   cmsearch_file:
@@ -44,18 +45,22 @@ outputs:
         glob: "functional-annotation"
   ips_yaml:
     type: File
+    format: edam:format_3750
     outputBinding:
         glob: "InterProScan*.yaml"
   ko_yaml:
     type: File
+    format: edam:format_3750
     outputBinding:
         glob: "KO*.yaml"
   pfam_yaml:
     type: File
+    format: edam:format_3750
     outputBinding:
         glob: "pfam*.yaml"
   antismash_yaml:
     type: File?
+    format: edam:format_3750
     outputBinding:
         glob: "antismash*.yaml"
 
@@ -65,10 +70,12 @@ hints:
 
 
 $namespaces:
- s: http://schema.org/
+ edam: http://edamontology.org/
  iana: https://www.iana.org/assignments/media-types/
+ s: http://schema.org/
 $schemas:
+ - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/docs/schema_org_rdfa.html
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:   "EMBL - European Bioinformatics Institute"

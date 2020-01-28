@@ -2,17 +2,22 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
+label: "Script do join of prepared uniref90 DB and Diamond annotations"
+
 requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 200
-#  DockerRequirement:
-#    dockerPull: linux_docker_diamond:latest
+
+hints:
+  DockerRequirement:
+    dockerPull: 'alpine:3.7'
 
 baseCommand: [diamond_post_run_join.sh]
 
 inputs:
   input_diamond:
+    format: edam:format_2333
     type: File
     inputBinding:
       separate: true
@@ -29,3 +34,16 @@ stdout: $(inputs.filename.nameroot)_summary.diamond.without_header
 outputs:
   output_join:
     type: stdout
+    format: edam:format_2333
+
+
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+$schemas:
+ - http://edamontology.org/EDAM_1.20.owl
+ - https://schema.org/docs/schema_org_rdfa.html
+
+'s:author': 'Ekaterina Sakharova, Maxim Scheremetjew'
+'s:copyrightHolder': EMBL - European Bioinformatics Institute
+'s:license': "https://www.apache.org/licenses/LICENSE-2.0"

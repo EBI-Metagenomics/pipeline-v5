@@ -2,6 +2,10 @@
 class: Workflow
 cwlVersion: v1.0
 
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
 requirements:
   SubworkflowFeatureRequirement: {}
   MultipleInputFeatureRequirement: {}
@@ -19,8 +23,12 @@ inputs:
     qc_min_length: int
     stats_file_name: string
 
-    ssu_db: {type: File, secondaryFiles: [.mscluster] }
-    lsu_db: {type: File, secondaryFiles: [.mscluster] }
+    ssu_db:
+      type: File
+      secondaryFiles: [ .mscluster ]
+    lsu_db:
+      type: File
+      secondaryFiles: [ .mscluster ]
     ssu_tax: File
     lsu_tax: File
     ssu_otus: File

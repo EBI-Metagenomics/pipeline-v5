@@ -6,13 +6,16 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 200
-#  DockerRequirement:
-#    dockerPull: alpine:3.9.4
+
+hints:
+  DockerRequirement:
+    dockerPull: 'alpine:3.7'
 
 baseCommand: ['sort', '-k2,2']
 
 inputs:
   input_table:
+    format: edam:format_2333
     type: File # Diamond's tabular format.
     inputBinding:
       separate: true
@@ -23,10 +26,13 @@ stdout: $(inputs.input_table.nameroot).sorted
 outputs:
   output_sorted:
     type: stdout
+    format: edam:format_2333
 
 $namespaces:
- s: http://schema.org/
+  s: http://schema.org/
+  edam: http://edamontology.org/
 $schemas:
+ - 'http://edamontology.org/EDAM_1.20.owl'
  - https://schema.org/docs/schema_org_rdfa.html
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"

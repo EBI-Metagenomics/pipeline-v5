@@ -1,8 +1,7 @@
 cwlVersion: v1.0
 class: Workflow
-$namespaces:
-  edam: 'http://edamontology.org/'
-  s: 'http://schema.org/'
+
+label: "First scatter to find seed orthologs, unite them, find annotations"
 
 requirements:
   - class: ScatterFeatureRequirement
@@ -62,6 +61,10 @@ steps:
         valueFrom: $(self.split('_CDS')[0])
     out: [ output_annotations ]
 
+
+$namespaces:
+  edam: 'http://edamontology.org/'
+  s: 'http://schema.org/'
 
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'

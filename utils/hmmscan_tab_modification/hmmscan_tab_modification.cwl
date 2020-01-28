@@ -1,5 +1,8 @@
 cwlVersion: v1.0
 class: CommandLineTool
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
 requirements:
   ResourceRequirement:
@@ -12,6 +15,7 @@ hints:
 
 inputs:
   input_table:
+    format: edam:format_3475
     type: File
     inputBinding:
       prefix: '-i'
@@ -25,5 +29,15 @@ arguments:
 outputs:
   output_with_tabs:
     type: File
+    format: edam:format_3475  # TXT
     outputBinding:
       glob: "*.tsv"
+
+
+$schemas:
+  - https://schema.org/docs/schema_org_rdfa.html
+  - http://edamontology.org/EDAM_1.16.owl
+
+'s:author': 'Ekaterina Sakharova'
+'s:copyrightHolder': EMBL - European Bioinformatics Institute
+'s:license': "https://www.apache.org/licenses/LICENSE-2.0"

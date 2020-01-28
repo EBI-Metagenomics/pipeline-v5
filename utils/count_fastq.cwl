@@ -1,5 +1,9 @@
 #!/usr/bin/env
 cwlVersion: v1.0
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
 class: CommandLineTool
 requirements:
   InlineJavascriptRequirement: {}
@@ -15,6 +19,7 @@ inputs:
   sequences:
     type: File
     streamable: true
+    # format: edam:format_1930  # FASTQ
 
 baseCommand: [ bash ]
 
@@ -33,12 +38,9 @@ outputs:
       loadContents: true
       outputEval: $(Number(self[0].contents))
 
-$namespaces:
- edam: http://edamontology.org/
- s: http://schema.org/
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/docs/schema_org_rdfa.html
 
-s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+'s:copyrightHolder': "EMBL - European Bioinformatics Institute"

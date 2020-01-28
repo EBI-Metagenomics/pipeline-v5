@@ -13,6 +13,7 @@ hints:
 inputs:
   fasta:
     type: File
+    format: edam:format_1929
     inputBinding:
       prefix: -f
 

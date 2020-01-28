@@ -14,6 +14,7 @@ inputs:
     inputBinding:
       position: 1
       prefix: "-i"
+    # format: fasta / fastq
 
 baseCommand: [ generate_checksum.py ]
 

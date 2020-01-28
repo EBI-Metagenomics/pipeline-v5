@@ -1,6 +1,9 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
 requirements:
   ResourceRequirement:
@@ -19,6 +22,7 @@ hints:
 inputs:
   InterProScan_results:
     type: File
+    format: edam:format_3475
     inputBinding:
       prefix: --input-file
 
@@ -40,21 +44,19 @@ stdout: stdout.txt
 outputs:
   go_summary:
     type: File
-    format: iana:text/csv
+    format: edam:format_3752
     outputBinding:
       glob: "*.go"
   go_summary_slim:
     type: File
-    format: iana:text/csv
+    format: edam:format_3752
     outputBinding:
       glob: "*.go_slim"
   stderr: stderr
   stdout: stdout
 
-$namespaces:
- iana: https://www.iana.org/assignments/media-types/
- s: http://schema.org/
 $schemas:
+ - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/docs/schema_org_rdfa.html
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"

@@ -75,7 +75,7 @@ outputs:
 
   sequence-categorisation_folder:
     type: Directory
-    outputSource: after-qc/sequence-categorisation_folder
+    outputSource: after-qc/sequence_categorisation_folder
   taxonomy-summary_folder:
     type: Directory
     outputSource: after-qc/taxonomy-summary_folder
@@ -109,7 +109,7 @@ steps:
 
 # << First part >>
   before-qc:
-    run: conditionals/raw_reads/raw-reads-single-1.cwl
+    run: conditionals/raw-reads/raw-reads-single-1.cwl
     in:
       single_reads: single_reads
       qc_min_length: qc_min_length
@@ -122,7 +122,7 @@ steps:
       - hashsum_input
 
   after-qc:
-    run: conditionals/raw_reads/raw-reads-2.cwl
+    run: conditionals/raw-reads/raw-reads-2.cwl
     in:
       motus_input: before-qc/motus_input
       filtered_fasta: before-qc/filtered_fasta
@@ -160,7 +160,7 @@ steps:
       go_config: go_config
     out:
       - motus_output
-      - sequence-categorisation_folder
+      - sequence_categorisation_folder
       - taxonomy-summary_folder
       - rna-count
       - compressed_files

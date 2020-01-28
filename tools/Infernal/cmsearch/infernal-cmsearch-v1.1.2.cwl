@@ -1,9 +1,9 @@
 class: CommandLineTool
 cwlVersion: v1.0
 $namespaces:
-  gx: "http://galaxyproject.org/cwl#"
   edam: 'http://edamontology.org/'
   s: 'http://schema.org/'
+
 baseCommand:
   - cmsearch
 inputs:
@@ -46,27 +46,32 @@ inputs:
       E-value or bit score above the reporting threshold will be output.
   - id: query_sequences
     type: File
+    format: edam:format_1929  # FASTA
     inputBinding:
       position: 2
-    streamable: true
+    # streamable: true
   - id: search_space_size
     type: int
     inputBinding:
       position: 0
       prefix: '-Z'
     label: search space size in *Mb* to <x> for E-value calculations
+
 outputs:
   - id: matches
     doc: 'http://eddylab.org/infernal/Userguide.pdf#page=60'
     label: 'target hits table, format 2'
     type: File
+    format: edam:format_3475
     outputBinding:
       glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch_matches.tbl
   - id: programOutput
     label: 'direct output to file, not stdout'
     type: File
+    format: edam:format_3475
     outputBinding:
       glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch.out
+
 doc: >
   Infernal ("INFERence of RNA ALignment") is for searching DNA sequence
   databases for RNA structure and sequence similarities. It is an implementation
@@ -81,6 +86,7 @@ doc: >
   Version 1.1.2 can be downloaded from
   http://eddylab.org/infernal/infernal-1.1.2.tar.gz
 label: Search sequence(s) against a covariance model database
+
 arguments:
   - position: 0
     prefix: '--tblout'
@@ -88,6 +94,7 @@ arguments:
   - position: 0
     prefix: '-o'
     valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch.out
+
 hints:
   - class: SoftwareRequirement
     packages:
@@ -98,30 +105,7 @@ hints:
           - 1.1.2
   - class: DockerRequirement
     dockerPull: 'quay.io/biocontainers/infernal:1.1.2--h470a237_1'
-  - class: gx:interface
-    gx:inputs:
-      - gx:name: covariance_model_database
-        gx:type: data
-        gx:format: 'txt'
-      - gx:name: cpu
-        gx:type: integer
-        gx:optional: True
-      - gx:name: cut_ga
-        gx:type: boolean
-        gx:optional: True
-      - gx:name: omit_alignment_section
-        gx:type: boolean
-        gx:optional: True
-      - gx:name: only_hmm
-        gx:type: boolean
-        gx:optional: True
-      - gx:name: query_sequences
-        gx:type: data
-        gx:format: 'txt'
-      - gx:name: search_space_size
-        gx:type: integer
-        gx:default_value: 1000
-        gx:optional: True
+
 requirements:
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement

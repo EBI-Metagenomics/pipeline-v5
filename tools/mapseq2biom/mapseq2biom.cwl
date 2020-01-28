@@ -24,6 +24,7 @@ inputs:
   query:
     type: File
     label: the output from the MAPseq that assigns a taxonomy to a sequence
+    format: iana:text/tab-separated-values
     inputBinding:
       prefix: --query
 
@@ -39,7 +40,7 @@ inputs:
     inputBinding:
         prefix: --taxid
 
-baseCommand: ['mapseq2biom.pl'] # or perl /hps/nobackup/production/metagenomics/production-scripts/current/mgportal/analysis-pipeline/python/tools/taxonomy_summary/scripts/mapseq2biom.pl
+baseCommand: ['mapseq2biom.pl']
 
 arguments:
   - valueFrom: $(inputs.query.basename).tsv
@@ -52,16 +53,19 @@ arguments:
 outputs:
   otu_tsv:
     type: File
+    format: edam:format_3746  # BIOM
     outputBinding:
       glob: $(inputs.query.basename).tsv
 
   otu_txt:
     type: File
+    format: iana:text/tab-separated-values
     outputBinding:
       glob: $(inputs.query.basename).txt
 
   otu_tsv_notaxid:
     type: File?
+    format: edam:format_3746  # BIOM
     outputBinding:
         glob: $(inputs.query.basename).notaxid.tsv
 

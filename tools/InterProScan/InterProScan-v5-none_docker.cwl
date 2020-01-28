@@ -9,6 +9,7 @@ baseCommand: interproscan.sh
 inputs:
   - id: inputFile
     type: File
+    format: edam:format_1929
     inputBinding:
       position: 8
       prefix: '--input'
@@ -64,6 +65,7 @@ inputs:
       The default sequence type is protein.
 outputs:
   - id: i5Annotations
+    format: edam:format_3475
     type: File
     outputBinding:
       glob: $(inputs.inputFile.nameroot).f*.tsv

@@ -1,6 +1,9 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
 label: "Genome properties https://genome-properties.readthedocs.io"
 
@@ -34,6 +37,7 @@ arguments:
 inputs:
   input_tsv_file:
     type: File
+    format: edam:format_3475
     inputBinding:
       separate: true
       prefix: "-matches"
@@ -66,20 +70,20 @@ outputs:
 
   table:
     type: File?
+    format: edam:format_3475
     outputBinding:
       glob: "TABLE*$(inputs.name)"
   json:
     type: File?
+    format: edam:format_3464
     outputBinding:
       glob: "JSON*$(inputs.name)"
   summary:
-    type: File?
+    type: File
+    format: edam:format_3475
     outputBinding:
       glob: "SUMMARY*$(inputs.name)"
 
-$namespaces:
- edam: http://edamontology.org/
- s: http://schema.org/
 $schemas:
  - http://edamontology.org/EDAM_1.20.owl
  - https://schema.org/docs/schema_org_rdfa.html
