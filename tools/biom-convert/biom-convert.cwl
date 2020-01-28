@@ -69,21 +69,24 @@ arguments:
         if (inputs.json) { ext = "_json.biom"; }
         if (inputs.hdf5) { ext = "_hdf5.biom"; }
         if (inputs.tsv) { ext = "_tsv.biom"; }
-        return inputs.biom.nameroot + ext; }
+        var pre = inputs.biom.nameroot.split('.');
+        pre.pop()
+        return pre.join('.') + ext; }
     prefix: --output-fp
   - valueFrom: "--collapsed-observations"
-
 
 outputs:
   result:
     type: File
     outputBinding:
       glob: |
-       ${ var ext = "";
-       if (inputs.json) { ext = "_json.biom"; }
-       if (inputs.hdf5) { ext = "_hdf5.biom"; }
-       if (inputs.tsv) { ext = "_tsv.biom"; }
-       return inputs.biom.nameroot + ext; }
+        ${ var ext = "";
+        if (inputs.json) { ext = "_json.biom"; }
+        if (inputs.hdf5) { ext = "_hdf5.biom"; }
+        if (inputs.tsv) { ext = "_tsv.biom"; }
+        var pre = inputs.biom.nameroot.split('.');
+        pre.pop()
+        return pre.join('.') + ext; }
 
 $namespaces:
  edam: http://edamontology.org/

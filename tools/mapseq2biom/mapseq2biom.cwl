@@ -33,13 +33,21 @@ inputs:
     inputBinding:
       prefix: --label
 
-baseCommand: ['mapseq2biom.pl'] # or perl /hps/nobackup/production/metagenomics/production-scripts/current/mgportal/analysis-pipeline/python/tools/taxonomy_summary/scripts/mapseq2biom.pl
+  taxid_flag:
+    type: boolean?
+    label: output NCBI taxids for all databases bar UNITE
+    inputBinding:
+        prefix: --taxid
+
+baseCommand: ['mapseq2biom-test.pl'] # or perl /hps/nobackup/production/metagenomics/production-scripts/current/mgportal/analysis-pipeline/python/tools/taxonomy_summary/scripts/mapseq2biom.pl
 
 arguments:
   - valueFrom: $(inputs.query.basename).tsv
     prefix: --outfile
   - valueFrom: $(inputs.query.basename).txt
     prefix: --krona
+  - valueFrom: $(inputs.query.basename).notaxid.tsv
+    prefix: --notaxidfile
 
 outputs:
   otu_tsv:
@@ -51,6 +59,11 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.query.basename).txt
+
+  otu_tsv_notaxid:
+    type: File?
+    outputBinding:
+        glob: $(inputs.query.basename).notaxid.tsv
 
 $namespaces:
  edam: http://edamontology.org/

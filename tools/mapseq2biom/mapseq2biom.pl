@@ -5,14 +5,17 @@ use strict;
 use warnings;
 use Getopt::Long;
 
-my($otuFile, $mFile, $outputFile, $label, $krona, $help, @fds, @new_tax);
+my($otuFile, $mFile, $outputFile, $notaxidFile, $label, $krona, $help, @fds, @new_tax);
+my $taxid = 0;
 
-GetOptions( "otuTable=s"  => \$otuFile, 
+GetOptions( "otuTable=s"  => \$otuFile,
             "query=s"     => \$mFile,
             "outfile=s"   => \$outputFile,
             "krona=s"     => \$krona,
             "label=s"     => \$label,
-            "h|help"      => \$help       ) or die "Unknown option.\n";
+            "h|help"      => \$help,
+            "taxid!"      => \$taxid,
+            "notaxidfile:s" => \$notaxidFile,    ) or die "Unknown option.\n";
 
 if($help){
   help();
@@ -47,14 +50,14 @@ if(!defined($outputFile)){
 
 # mapseq v1.0 (Nov 13 2016)
 #query	dbhit	bitscore	identity	matches	mismatches	gaps	query_start	query_end	dbhit_start	dbhit_end		SILVA
-#contig--1213616/899-1048	AY664005.1.1223	141	0.98666668	148	1	1	0	150	170	319		D_0__Bacteria;D_1__Cyanobacteria;D_2__Cyanobacteria;D_3__SubsectionI;D_4__FamilyI;D_5__Synechococcus;D_6__uncultured Synechococcus sp.	
-#contig--1126892/723-858	EU805193.1.1293	134	0.99264705	135	1	0	0	136	821	957		D_0__Bacteria	
-#contig--243158/4-340	JQ611080.1.910	325	0.9910714	333	2	1	1	337	0	335		D_0__Archaea;D_1__Euryarchaeota;D_2__Thermoplasmata;D_3__Thermoplasmatales;D_4__Marine Group II;D_5__uncultured archaeon;D_6__uncultured archaeon	
-#contig--1205795/1003-7	EU802400.1.1495	981	0.9939577	987	6	0	4	997	0	993		D_0__Bacteria;D_1__Proteobacteria;D_2__Gammaproteobacteria;D_3__Oceanospirillales;D_4__SAR86 clade	
-#contig--1213616/623-456	EU802790.1.1266	141	0.94674557	160	6	3	1	168	146	314		D_0__Bacteria;D_1__Cyanobacteria;D_2__Cyanobacteria;D_3__SubsectionI;D_4__FamilyI	
-#contig--2489731/672-501	LURT01000153.4866.6321	141	0.95061731	154	7	1	0	162	1295	1456		D_0__Archaea;D_1__Euryarchaeota;D_2__Thermoplasmata;D_3__Thermoplasmatales;D_4__Marine Group II	
-#contig--151250/871-2	AACY020187844.576.1995	843	0.98504025	856	13	0	1	870	0	869		D_0__Archaea;D_1__Euryarchaeota;D_2__Thermoplasmata;D_3__Thermoplasmatales;D_4__Marine Group II	
-#contig--1206060/3-639	EF574940.1.1450	608	0.99836063	609	1	0	0	610	840	1450		D_0__Bacteria;D_1__Cyanobacteria;D_2__Cyanobacteria;D_3__SubsectionI;D_4__FamilyI	
+#contig--1213616/899-1048	AY664005.1.1223	141	0.98666668	148	1	1	0	150	170	319		D_0__Bacteria;D_1__Cyanobacteria;D_2__Cyanobacteria;D_3__SubsectionI;D_4__FamilyI;D_5__Synechococcus;D_6__uncultured Synechococcus sp.
+#contig--1126892/723-858	EU805193.1.1293	134	0.99264705	135	1	0	0	136	821	957		D_0__Bacteria
+#contig--243158/4-340	JQ611080.1.910	325	0.9910714	333	2	1	1	337	0	335		D_0__Archaea;D_1__Euryarchaeota;D_2__Thermoplasmata;D_3__Thermoplasmatales;D_4__Marine Group II;D_5__uncultured archaeon;D_6__uncultured archaeon
+#contig--1205795/1003-7	EU802400.1.1495	981	0.9939577	987	6	0	4	997	0	993		D_0__Bacteria;D_1__Proteobacteria;D_2__Gammaproteobacteria;D_3__Oceanospirillales;D_4__SAR86 clade
+#contig--1213616/623-456	EU802790.1.1266	141	0.94674557	160	6	3	1	168	146	314		D_0__Bacteria;D_1__Cyanobacteria;D_2__Cyanobacteria;D_3__SubsectionI;D_4__FamilyI
+#contig--2489731/672-501	LURT01000153.4866.6321	141	0.95061731	154	7	1	0	162	1295	1456		D_0__Archaea;D_1__Euryarchaeota;D_2__Thermoplasmata;D_3__Thermoplasmatales;D_4__Marine Group II
+#contig--151250/871-2	AACY020187844.576.1995	843	0.98504025	856	13	0	1	870	0	869		D_0__Archaea;D_1__Euryarchaeota;D_2__Thermoplasmata;D_3__Thermoplasmatales;D_4__Marine Group II
+#contig--1206060/3-639	EF574940.1.1450	608	0.99836063	609	1	0	0	610	840	1450		D_0__Bacteria;D_1__Cyanobacteria;D_2__Cyanobacteria;D_3__SubsectionI;D_4__FamilyI
 
 #Need to count up when we see a taxonomy string multiple times.
 open(M, "<", $mFile) or die "Could not open mapseq results file $mFile:[$!]\n";
@@ -92,11 +95,14 @@ open(O, "<", $otuFile) or die "Could not open OTU file $otuFile:[$!]\n";
 while(<O>){
   chomp;
   #Simple two column table, OTU code and taxonomy string.
-  my ($otu, $tax) = split(/\t/, $_, 2);
+  my ($otu, $tax, $taxid) = split(/\t/, $_, 3);
   #print "$otu | $tax";
   #Have we seen this tax string? Store the OTU
   if (defined($taxCount->{$tax})){
     $taxCount->{$tax}->{otu} = $otu;
+    if ($taxid){
+        $taxCount->{$tax}->{taxid} = $taxid;
+    }
   }
 }
 close(O) or die "Failed to close filehande on OTU table.\n";
@@ -112,14 +118,28 @@ foreach my $tax (keys %{$taxCount}){
   }
 }
 
-
+if ($taxid){
+open(T, ">", $outputFile) or die "Could not open 'taxid_file':[$!]\n";
+print T "# Constructed from biom file\n# OTU ID\t".$label."\ttaxonomy\ttaxid\n";
+open(R, ">", $notaxidFile ) or die "Could not open $outputFile:[$!]\n";
+print R "# Constructed from biom file\n# OTU ID\t".$label."\ttaxonomy\n";
+}else{
 open(R, ">", $outputFile ) or die "Could not open $outputFile:[$!]\n";
 print R "# Constructed from biom file\n# OTU ID\t".$label."\ttaxonomy\n";
+}
+
 #Print the file out
 foreach my $tax (sort{$a cmp $b} keys %{$taxCount}){
+   if ($taxid){
+   print T $taxCount->{$tax}->{otu}."\t".sprintf("%.1f", $taxCount->{$tax}->{count})."\t".$tax."\t".$taxCount->{$tax}->{taxid}."\n";
    print R $taxCount->{$tax}->{otu}."\t".sprintf("%.1f", $taxCount->{$tax}->{count})."\t".$tax."\n";
+   }else{
+   print R $taxCount->{$tax}->{otu}."\t".sprintf("%.1f", $taxCount->{$tax}->{count})."\t".$tax."\n";
+   }
 }
+
 close(R) or die "Failed to close open filehandle on outputfile\n";
+close(T) or die "Failed to close open filehandle on notaxidfile\n";
 
 if($krona){
   open(K, ">", $krona ) or die "Could not open $krona:[$!]\n";

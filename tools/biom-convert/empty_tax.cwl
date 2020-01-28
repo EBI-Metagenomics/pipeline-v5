@@ -42,7 +42,12 @@ inputs:
     inputBinding:
       position: 5
 
-baseCommand: [empty_tax.sh]
+  otunotaxid:
+    type: File
+    inputBinding:
+        position: 6
+
+baseCommand: [empty_tax-test.sh]
 
 outputs:
   mapseq_out:
@@ -53,7 +58,7 @@ outputs:
   otu_out:
     type: File
     outputBinding:
-      glob: "*.tsv"
+      glob: "*.mseq.tsv"
 
   biom_out:
     type: File
@@ -69,3 +74,8 @@ outputs:
     type: File
     outputBinding:
       glob: "*.fasta"
+
+  otunotaxid_out:
+    type: File
+    outputBinding:
+        glob: "*.notaxid.tsv"

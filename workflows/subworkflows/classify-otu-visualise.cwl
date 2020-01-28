@@ -51,7 +51,8 @@ steps:
        otu_table: otu_ref
        label: otu_label
        query: mapseq/classifications
-    out: [ otu_tsv, otu_txt ]
+       taxid_flag: { default: true }
+    out: [ otu_tsv, otu_txt, otu_tsv_notaxid ]
 
   visualize_otu_counts:
     run: ../../tools/krona/krona.cwl
@@ -67,12 +68,13 @@ steps:
       biomtable: classifications_to_otu_counts/otu_txt
       krona: visualize_otu_counts/otu_visualization
       fasta: fasta
-    out: [mapseq_out, otu_out, biom_out, krona_out, fasta_out]
+      otunotaxid: classifications_to_otu_counts/otu_tsv_notaxid
+    out: [mapseq_out, otu_out, biom_out, krona_out, fasta_out, otunotaxid_out]
 
   counts_to_hdf5:
     run: ../../tools/biom-convert/biom-convert.cwl
     in:
-       biom: edit_empty_tax/otu_out
+       biom: edit_empty_tax/otunotaxid_out
        hdf5: { default: true }
        table_type: { default: 'OTU table' }
     out: [ result ]
@@ -80,7 +82,7 @@ steps:
   counts_to_json:
     run: ../../tools/biom-convert/biom-convert.cwl
     in:
-       biom: edit_empty_tax/otu_out
+       biom: edit_empty_tax/otunotaxid_out
        json: { default: true }
        table_type: { default: 'OTU table' }
     out: [ result ]
