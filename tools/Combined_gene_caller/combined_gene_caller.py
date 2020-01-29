@@ -312,8 +312,7 @@ def get_regions_prodigal(fn):
                 regions[id]['-'] = []
             else:
                 r = line[1:].rstrip().split('_')
-                n = int(r[
-                            0])  # also store the index of the fragment - prodigal uses these (rather than coords) to identify sequences in the fasta output
+                n = int(r[0])  # also store the index of the fragment - prodigal uses these (rather than coords) to identify sequences in the fasta output
                 s = int(r[1])
                 e = int(r[2])
                 regions[id][r[3]].append(NumberedRegion(s, e, n))
