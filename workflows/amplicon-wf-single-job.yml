@@ -18,27 +18,27 @@ itsonedb_label: 'ITSonedb'
 ssu_db:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/SSU.fasta
-  checksum: 6f1eef56ade33ef01d7446b1ab3b9622
+  checksum: 6b0580823a8c6860a0674428745fb943
 lsu_db:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/LSU.fasta
-  checksum: 49ed3e24d82235bbbfdb049bf21abc05
+  checksum: 96dc05a4ab2933ec6f443a1a0ce0d225
 ssu_tax:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/slv_ssu_filtered2.txt
-  checksum: 293c7f6f2380433b2b132a9e48485f50
+  checksum: f4e7019da9e4c9e38cf3bbd8d304bf0c
 lsu_tax:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/slv_lsu_filtered2.txt
-  checksum: 6ae872750f3e4adc37f91630a8bcbf5f
+  checksum: d521ce911cb9b94f4d304286ed9f8c3e
 ssu_otus:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/ssu2.otu
-  checksum: 9a338f42e8734a10549dc5fbc633311a
+  checksum: 75d6cb73018a4f969063de6927cfb1ab
 lsu_otus:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_lsu/lsu2.otu
-  checksum: 578b6a6ca012cec60c83707f0f77b635
+  checksum: 515df01f33ed8d5741fbe0e55e4780b9
 
 rfam_models:
   - class: File
@@ -92,12 +92,12 @@ unite_otu_file:
 itsonedb:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/ITSonedb/itsonedb.fasta
-  checksum: ec708551a65b2fbdcd4a68892dd22f17
+  checksum: 8e7288095fdf80925608dc1871676344
 itsonedb_tax:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/ITSonedb/ITSonedb-tax.txt
-  checksum: 7a9cd4d50231fdee9b3ec7daf478769d
+  checksum: 2407aae69f77faf6690cae1571d2b33d
 itsonedb_otu_file:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/ITSonedb/ITSonedb.otu
-  checksum: 8888d590e25ebe33f263d72710bf2258
+  checksum: e1f7350bfdfece0384f52072d45211f0
