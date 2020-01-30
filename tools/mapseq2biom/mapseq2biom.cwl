@@ -39,7 +39,7 @@ inputs:
     inputBinding:
         prefix: --taxid
 
-baseCommand: ['mapseq2biom-test.pl'] # or perl /hps/nobackup/production/metagenomics/production-scripts/current/mgportal/analysis-pipeline/python/tools/taxonomy_summary/scripts/mapseq2biom.pl
+baseCommand: ['mapseq2biom.pl'] # or perl /hps/nobackup/production/metagenomics/production-scripts/current/mgportal/analysis-pipeline/python/tools/taxonomy_summary/scripts/mapseq2biom.pl
 
 arguments:
   - valueFrom: $(inputs.query.basename).tsv
