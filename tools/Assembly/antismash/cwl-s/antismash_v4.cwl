@@ -55,30 +55,7 @@ outputs:
   stdout: stdout
   stderr: stderr
 
-  final_gbk:
-    type: File?
-    outputBinding:
-      glob: $(inputs.final_folder)/$(inputs.outname)_antismash_final.gbk.gz
-  final_embl:
-    type: File?
-    outputBinding:
-      glob: $(inputs.final_folder)/$(inputs.outname)_antismash_final.embl.gz
-
   reformated_clusters:
     type: File?
     outputBinding:
       glob: $(inputs.final_folder)/$(inputs.outname)_antismash_geneclusters.txt
-
-  gff_antismash:
-    type: File?
-    outputBinding:
-      glob: $(inputs.final_folder)/$(inputs.outname).antismash.gff.gz
-  gff_antismash_index:
-    type: File?
-    outputBinding:
-      glob: $(inputs.final_folder)/$(inputs.outname).antismash.gff.gz.tbi
-
-  no_antismash:
-    type: File?
-    outputBinding:
-      glob: $(inputs.final_folder)/no_antismash
