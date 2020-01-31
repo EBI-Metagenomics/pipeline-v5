@@ -16,7 +16,7 @@ if [ $y -eq 2 ]; then
   mv $biomtable 'empty.txt'
   mv $krona 'empty.html'
   mv $fasta 'empty.fasta'
-  mv $otunotaxid 'empty.notaxid.tsv'
+  echo -e "1\t1\tsk__NONE" >> $otunotaxid | mv $otunotaxid 'empty.notaxid.tsv'
 else
   echo 'output original files'
   mv $mapseq $otutable $biomtable $krona $fasta $otunotaxid .
