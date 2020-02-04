@@ -11,7 +11,7 @@ hints:
 requirements:
   ResourceRequirement:
     ramMin: 6000
-    coresMin: 32
+    coresMin: 4
   InlineJavascriptRequirement: {}
   ScatterFeatureRequirement: {}
 
@@ -22,7 +22,7 @@ arguments:
     valueFrom: $(inputs.seqfile.nameroot)_hmmscan.tbl
     position: 2
   - prefix: --cpu
-    valueFrom: '32'
+    valueFrom: '4'
 
 inputs:
 
