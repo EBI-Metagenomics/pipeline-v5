@@ -480,9 +480,9 @@ if __name__ == "__main__":
             filter_output_file(fgs_output_file, 's/\*/X/g')
 
             logging.info("Getting FragGeneScan regions ...")
-            all_predictions['fgs'] = get_regions_fgs(fgs_output_file)
+            all_predictions['fgs'] = get_regions_fgs(fgs_output_file + 'out')
 
-            files['fgs'] = [fgs_output_file + ext for ext in ['', '.ffn', '.faa']]
+            files['fgs'] = [fgs_output_file + ext for ext in ['out', '.ffn', '.faa']]
 
     summary['all'] = get_counts(all_predictions)
 

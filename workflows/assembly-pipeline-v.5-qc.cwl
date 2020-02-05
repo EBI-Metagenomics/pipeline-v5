@@ -176,7 +176,7 @@ steps:
       - qc-statistics_folder
       - filtered_fasta
       - hashsum_input
-    run: conditionals/assembly/assembly-1.cwl
+    run: conditionals/assembly/assembly--1.cwl
 
 
   after-qc:
