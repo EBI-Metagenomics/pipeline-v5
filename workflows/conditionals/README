@@ -11,12 +11,12 @@ For raw-reads (mode (-m) "raw-reads")
   + motus_input
 --------------------------------------- Assembly --------------------------------------------------
 
-Assembly folder has 2 files: assembly-1.cwl (before qc) and assembly-2.cwl (after qc)
-assembly-pipeline-v.5-qc.cwl == assembly-1.cwl + assembly-2.cwl
+Assembly folder has 2 files: assembly--1.cwl (before qc) and assembly-2.cwl (after qc)
+assembly-pipeline-v.5-qc.cwl == -.cwl + assembly-2.cwl
 
 >>>>>> Schema:
 
-   Run assembly-1.cwl
+   Run assembly--1.cwl
            |
     Check qc-status
     /                \
