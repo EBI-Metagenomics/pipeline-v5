@@ -66,7 +66,7 @@ steps:
     doc: |
       Low quality trimming (low quality ends and sequences with < quality scores
       less than 15 over a 4 nucleotide wide window are removed)
-    run: ../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+    run: ../../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
       reads1: unzip_reads/unzipped_merged_reads
       phred: { default: '33' }
@@ -79,14 +79,14 @@ steps:
 
   #fastq
   clean_fasta_headers:
-    run: ../../utils/clean_fasta_headers.cwl
+    run: ../../../utils/clean_fasta_headers.cwl
     in:
       sequences: trim_quality_control/reads1_trimmed
     out: [ sequences_with_cleaned_headers ]
 
   #fasta
   convert_trimmed_reads_to_fasta:
-    run: ../../utils/fastq_to_fasta.cwl
+    run: ../../../utils/fastq_to_fasta.cwl
     in:
       fastq: clean_fasta_headers/sequences_with_cleaned_headers
     out: [ fasta ]
