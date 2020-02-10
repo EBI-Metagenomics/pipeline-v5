@@ -41,13 +41,6 @@ inputs:
 
 outputs:
 
-  LSU_folder:
-    type: Directory
-    outputSource: classify/LSU_folder
-  SSU_folder:
-    type: Directory
-    outputSource: classify/SSU_folder
-
   sequence-categorisation_folder:
     type: Directory
     outputSource: classify/sequence-categorisation
@@ -60,13 +53,9 @@ outputs:
     type: Directory
     outputSource: ITS/masking_file
 
-  ITS_unite_results:
+  taxonomy-summary_folder:
     type: Directory
-    outputSource: ITS/unite_folder
-
-  ITS_itsonedb_results:
-    type: Directory
-    outputSource: ITS/itsonedb_folder
+    outputSource: return_directory/out
 
   rna-count:
     type: File
@@ -136,3 +125,15 @@ steps:
         - classify/cmsearch_result
         - classify/ncRNA
     out: [compressed_file]
+
+# return taxonomy-summary
+  return_directory:
+    run: ../../../utils/return_directory.cwl
+    in:
+      dir_list:
+        - classify/SSU_folder
+        - classify/LSU_folder
+        - ITS/unite_folder
+        - ITS/itsonedb_folder
+      dir_name: { default: 'taxonomy-summary' }
+    out: [out]

@@ -146,7 +146,7 @@ steps:
       mapseq_taxonomy: silva_ssu_taxonomy
       otu_ref: silva_ssu_otus
       otu_label: pattern_SSU
-      return_dirname: {default: 'taxonomy-summary/SSU'}
+      return_dirname: {default: 'SSU'}
       file_for_prefix: input_sequences
     out: [ out_dir, compressed_fasta_output, fasta_output ]
 
@@ -159,7 +159,7 @@ steps:
       mapseq_taxonomy: silva_lsu_taxonomy
       otu_ref: silva_lsu_otus
       otu_label: pattern_LSU
-      return_dirname: {default: 'taxonomy-summary/LSU'}
+      return_dirname: {default: 'LSU'}
       file_for_prefix: input_sequences
     out: [ out_dir, compressed_fasta_output, fasta_output ]
 
