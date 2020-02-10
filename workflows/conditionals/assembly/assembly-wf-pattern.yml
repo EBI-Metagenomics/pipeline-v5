@@ -182,7 +182,7 @@ Uniref90_db_txt:
 diamond_maxTargetSeqs: 1
 diamond_databaseFile:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/uniref90_diamond-v0.9.21.dmnd
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/uniref90_v2019_11_diamond-v0.9.25.dmnd
 diamond_header: 'uniref90_ID\tcontig_name\tpercentage_of_identical_matches\tlenght\tmismatch\tgapopen\tqstart\tqend\tsstart\tsend\tevalue\tbitscore\tprotein_name\tnum_in_cluster\ttaxonomy\ttax_id\trep_id'
 
 # GO
