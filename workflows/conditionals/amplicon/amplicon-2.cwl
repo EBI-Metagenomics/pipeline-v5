@@ -57,6 +57,10 @@ outputs:
     type: File[]
     outputSource: gzip_files/compressed_file
 
+  ITS-length:
+    type: File
+    outputSource: suppress_tax/stdout
+
 steps:
 
 # << Get RNA >>
@@ -129,16 +133,17 @@ steps:
       dir_name: { default: 'its' }
     out: [out]
 
-# return taxonomy-summary
-  return_tax_dir:
-    run: ../../../utils/return_directory.cwl
+# suppress irrelevant rRNA/ITS tax folders
+  suppress_tax:
+    run: ../../../tools/mask-for-ITS/suppress_tax.cwl
     in:
-      dir_list:
-        - rna_prediction/SSU_folder
-        - rna_prediction/LSU_folder
-        - return_its_dir/out
-      dir_name: { default: 'taxonomy-summary' }
-    out: [out]
+      ssu_file: rna_prediction/compressed_SSU_fasta
+      lsu_file: rna_prediction/compressed_LSU_fasta
+      its_file: ITS/masking_file
+      lsu_dir: rna_prediction/LSU_folder
+      ssu_dir: rna_prediction/SSU_folder
+      its_dir: return_its_dir/out
+    out: [stdout, out_lsu, out_ssu, out_its, out_fasta]
 
 # return sequence-categorisation:
   return_seq_dir:
@@ -149,9 +154,18 @@ steps:
           - rna_prediction/compressed_SSU_fasta
           - rna_prediction/compressed_LSU_fasta
           - rna_prediction/compressed_rnas
-          - ITS/masking_file
+          - suppress_tax/out_fasta
         linkMerge: merge_flattened
       dir_name: { default: 'sequence-categorisation' }
     out: [out]
 
-
+# return taxonomy-summary
+  return_tax_dir:
+    run: ../../../utils/return_directory.cwl
+    in:
+      dir_list:
+        - suppress_tax/out_lsu
+        - suppress_tax/out_ssu
+        - suppress_tax/out_its
+      dir_name: { default: 'taxonomy-summary' }
+    out: [out]

@@ -1,0 +1,18 @@
+ssu_file:
+  class: File
+  path: SSU.fasta.gz
+lsu_file:
+  class: File
+  path: LSU.fasta.gz
+its_file:
+  class: File
+  path: ITS_masked.fasta.gz
+lsu_dir:
+  class: Directory
+  path: taxonomy-summary/LSU
+ssu_dir:
+  class: Directory
+  path: taxonomy-summary/SSU
+its_dir:
+  class: Directory
+  path: taxonomy-summary/its
