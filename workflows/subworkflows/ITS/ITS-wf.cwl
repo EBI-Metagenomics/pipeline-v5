@@ -79,7 +79,7 @@ steps:
       otu_label: otu_unite_label
       return_dirname: {default: 'taxonomy-summary/its/unite'}
       file_for_prefix: query_sequences
-    out: [ out_dir ]
+    out: [ out_dir, compressed_fasta_output, fasta_output ]
 
   run_itsonedb:
     run: ../classify-otu-visualise.cwl
@@ -91,7 +91,7 @@ steps:
       otu_label: otu_itsone_label
       return_dirname: {default: 'taxonomy-summary/its/itsonedb'}
       file_for_prefix: query_sequences
-    out: [ out_dir, compressed_fasta_output ]
+    out: [ out_dir, compressed_fasta_output, fasta_output ]
 
   move_masking_file:
     run: ../../../utils/return_directory.cwl
