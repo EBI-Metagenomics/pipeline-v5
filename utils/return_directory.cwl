@@ -15,17 +15,18 @@ inputs:
 
 outputs:
   out: Directory
+
 expression: |
   ${
-    var listing = "";
+    var in_list = "";
     if (inputs.file_list) {
-      listing = inputs.file_list;
+      in_list = inputs.file_list;
     } else {
-      listing = inputs.dir_list;
+      in_list = inputs.dir_list;
     }
     return {"out": {
       "class": "Directory",
       "basename": inputs.dir_name,
-      "listing": listing
+      "listing": in_list
       }
-    } };
+    }; }
