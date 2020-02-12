@@ -96,7 +96,7 @@ steps:
   move_masking_file:
     run: ../../../utils/return_directory.cwl
     in:
-      list:
+      file_list:
         source:
           - run_itsonedb/compressed_fasta_output
         linkMerge: merge_nested

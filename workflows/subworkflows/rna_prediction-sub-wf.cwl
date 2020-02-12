@@ -175,14 +175,14 @@ steps:
   move_fastas:
     run: ../../utils/return_directory.cwl
     in:
-      list: gzip_files/compressed_file
+      file_list: gzip_files/compressed_file
       dir_name: { default: 'sequence-categorisation' }
     out: [out]
 
   move_fastas_two:
     run: ../../utils/return_directory.cwl
     in:
-      list:
+      file_list:
         - classify_SSUs/compressed_fasta_output
         - classify_LSUs/compressed_fasta_output
       dir_name: { default: 'sequence-categorisation' }
