@@ -321,7 +321,7 @@ steps:
   move_to_pathways_systems_folder:
     run: ../../../utils/return_directory.cwl
     in:
-      list:
+      file_list:
         source:
           - pathways/kegg_contigs_summary                       # kegg contigs.tsv -- not using
           - change_formats_and_names/kegg_summary_csv           # kegg pathways.csv
