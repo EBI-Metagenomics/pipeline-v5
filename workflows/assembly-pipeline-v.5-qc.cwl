@@ -239,4 +239,5 @@ steps:
       - other_rna
       - LSU_folder
       - SSU_folder
+      - rna-count
     run: conditionals/assembly/assembly-2.cwl

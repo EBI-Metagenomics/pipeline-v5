@@ -147,6 +147,9 @@ outputs:
   SSU_folder:                                                # [6]
     type: Directory
     outputSource: rna_prediction/SSU_folder
+  rna-count:
+    type: File
+    outputSource: classify/LSU-SSU-count
 
 steps:
 
@@ -175,6 +178,7 @@ steps:
 #      - sequence-categorisation_two
       - SSU_fasta_file
       - LSU_fasta_file
+      - LSU-SSU-count
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
 
 # << OTHER ncrnas >>
