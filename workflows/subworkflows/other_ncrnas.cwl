@@ -19,7 +19,7 @@ inputs:
 
 outputs:
   ncrnas:
-    type: Directory
+    type: File[]
     outputSource: gzip_files/compressed_file
 
 steps:
