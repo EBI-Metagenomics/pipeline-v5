@@ -135,12 +135,9 @@ outputs:
     outputSource: other_ncrnas/ncrnas
 
  # << taxonomy summary >>
-  LSU_folder:                                                # [6]
+  taxonomy-summary_folder:
     type: Directory
-    outputSource: rna_prediction/LSU_folder
-  SSU_folder:                                                # [6]
-    type: Directory
-    outputSource: rna_prediction/SSU_folder
+    outputSource: return_tax_dir/out
 
 steps:
 
@@ -390,3 +387,13 @@ steps:
         linkMerge: merge_flattened
       dir_name: { default: sequence-categorisation }
     out: [ out ]
+
+# return taxonomy-summary
+  return_tax_dir:
+    run: ../../../utils/return_directory.cwl
+    in:
+      dir_list:
+        - rna_prediction/SSU_folder
+        - rna_prediction/LSU_folder
+      dir_name: { default: 'taxonomy-summary' }
+    out: [out]
