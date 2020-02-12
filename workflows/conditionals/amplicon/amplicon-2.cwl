@@ -133,6 +133,7 @@ steps:
       dir_list:
         - ITS/unite_folder
         - ITS/itsonedb_folder
+      dir_name: { default: 'its' }
     out: [out]
 
 # return taxonomy-summary
