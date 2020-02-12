@@ -127,13 +127,7 @@ outputs:
     outputSource:  move_antismash_summary_to_pathways_systems_folder/summary_in_folder
 
  # << sequence categorisation >>
-  sequence-categorisation_folder:                            # [6]
-    type: Directory
-    outputSource: rna_prediction/sequence-categorisation
-#  sequence-categorisation_SSU_LSU:                           # [2]
-#    type: Directory
-#    outputSource: rna_prediction/sequence-categorisation_two
-  sequence-categorisation_SSU_LSU_chunked:                   # [2]
+  sequence-categorisation_folder:                   # [2]
     type: Directory
     outputSource: move_to_seq_cat_folder/out
   other_rna:                                                 # [?]
@@ -171,10 +165,9 @@ steps:
       - cmsearch_result
       - SSU_folder
       - LSU_folder
-      - sequence-categorisation
-#      - sequence-categorisation_two
       - SSU_fasta_file
       - LSU_fasta_file
+      - compressed_rnas
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
 
 # << OTHER ncrnas >>
@@ -390,6 +383,10 @@ steps:
   move_to_seq_cat_folder:  # LSU and SSU
     run: ../../../utils/return_directory.cwl
     in:
-      list: chunking_final/SC_fasta_chunks
+      file_list:
+        source:
+          - chunking_final/SC_fasta_chunks
+          - rna_prediction/compressed_rnas
+        linkMerge: merge_flattened
       dir_name: { default: sequence-categorisation }
     out: [ out ]

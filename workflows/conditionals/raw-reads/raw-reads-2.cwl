@@ -69,10 +69,7 @@ outputs:
     type: Directory
     outputSource: classify/SSU_folder
 
-  sequence-categorisation_folder:
-    type: Directory
-    outputSource: classify/sequence-categorisation
-  compressed_sequence_categorisation:
+  sequence_categorisation_folder:
     type: Directory
     outputSource: move_to_seq_cat_folder/out
   ncrnas_folder:
@@ -131,9 +128,9 @@ steps:
       - LSU-SSU-count
       - SSU_folder
       - LSU_folder
-      - sequence-categorisation
       - LSU_fasta_file
       - SSU_fasta_file
+      - compressed_rnas
 
 # << other ncrnas >>
   other_ncrnas:
@@ -246,14 +243,17 @@ steps:
       - protein_fasta_chunks                            # faa
       - SC_fasta_chunks                                 # LSU, SSU
 
-# << move to sequence categorisation >>
+# << move chunked files >>
   move_to_seq_cat_folder:  # LSU and SSU
     run: ../../../utils/return_directory.cwl
     in:
-      list: chunking_final/SC_fasta_chunks
+      file_list:
+        source:
+          - chunking_final/SC_fasta_chunks
+          - rna_prediction/compressed_rnas
+        linkMerge: merge_flattened
       dir_name: { default: sequence-categorisation }
     out: [ out ]
-
 
 # << FUNCTIONAL FORMATTING AND CHUNKING >>
 
