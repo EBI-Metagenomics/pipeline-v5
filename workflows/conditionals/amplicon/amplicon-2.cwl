@@ -126,6 +126,15 @@ steps:
         - classify/ncRNA
     out: [compressed_file]
 
+# return ITS dir
+  return_its_dir:
+    run: ../../../utils/return_directory.cwl
+    in:
+      dir_list:
+        - ITS/unite_folder
+        - ITS/itsonedb_folder
+    out: [out]
+
 # return taxonomy-summary
   return_directory:
     run: ../../../utils/return_directory.cwl
@@ -133,7 +142,6 @@ steps:
       dir_list:
         - classify/SSU_folder
         - classify/LSU_folder
-        - ITS/unite_folder
-        - ITS/itsonedb_folder
+        - return_its_dir/out
       dir_name: { default: 'taxonomy-summary' }
     out: [out]
