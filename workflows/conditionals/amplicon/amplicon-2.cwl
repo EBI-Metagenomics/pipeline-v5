@@ -149,11 +149,11 @@ steps:
     run: ../../../utils/return_directory.cwl
     in:
       file_list:
-        - classify/compressed_SSU_fasta
-        - classify/compressed_LSU_fasta
-        - source:
-            classify/compressed_rnas
-          linkMerge: merge_nested
+        source:
+          - classify/compressed_SSU_fasta
+          - classify/compressed_LSU_fasta
+          - classify/compressed_rnas
+        linkMerge: merge_nested
       dir_name: { default: 'sequence-categorisation' }
     out: [out]
 
