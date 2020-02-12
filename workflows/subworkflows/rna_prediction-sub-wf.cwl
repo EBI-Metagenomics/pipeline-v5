@@ -45,14 +45,6 @@ outputs:
     type: File
     outputSource: find_ribosomal_ncRNAs/concatenate_matches
 
-  sequence-categorisation:  # 5S, 5.8S and models
-    type: Directory
-    outputSource: move_fastas/out
-
-  sequence-categorisation_two:  # LSU, SSU or empty
-    type: Directory
-    outputSource: move_fastas_two/out
-
   SSU_coords:  # for ITS
     type: File
     outputSource: extract_subunits_coords/SSU_seqs
@@ -83,6 +75,16 @@ outputs:
   LSU_fasta_file:
     type: File
     outputSource: classify_LSUs/fasta_output
+
+  compressed_SSU_fasta:
+    type: File
+    outputSource: classify_SSUs/compressed_fasta_output
+  compressed_LSU_fasta:
+    type: File
+    outputSource: classify_LSUs/compressed_fasta_output
+  compressed_rnas:
+    type: File[]
+    outputSource: gzip_files/compressed_file
 
 steps:
 

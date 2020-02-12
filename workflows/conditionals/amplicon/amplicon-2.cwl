@@ -41,21 +41,17 @@ inputs:
 
 outputs:
 
-  sequence-categorisation_folder:
-    type: Directory
-    outputSource: classify/sequence-categorisation
-
-  sequence-categorisation_folder_two:
-    type: Directory
-    outputSource: classify/sequence-categorisation_two
-
   sequence-categorisation_masking:
     type: Directory
     outputSource: ITS/masking_file
 
   taxonomy-summary_folder:
     type: Directory
-    outputSource: return_directory/out
+    outputSource: return_tax_dir/out
+
+  sequence-categorisation_folder:
+    type: Directory
+    outputSource: return_seq_dir/out
 
   rna-count:
     type: File
@@ -90,10 +86,11 @@ steps:
       - LSU-SSU-count
       - SSU_folder
       - LSU_folder
-      - sequence-categorisation
-      - sequence-categorisation_two
       - SSU_coords
       - LSU_coords
+      - compressed_SSU_fasta
+      - compressed_LSU_fasta
+      - compressed_rnas
 
 # << ITS >>
   ITS:
@@ -137,7 +134,7 @@ steps:
     out: [out]
 
 # return taxonomy-summary
-  return_directory:
+  return_tax_dir:
     run: ../../../utils/return_directory.cwl
     in:
       dir_list:
@@ -146,3 +143,16 @@ steps:
         - return_its_dir/out
       dir_name: { default: 'taxonomy-summary' }
     out: [out]
+
+# return sequence-categorisation:
+  return_seq_dir:
+    run: ../../../utils/return_directory.cwl
+    in:
+      file_list:
+        - classify/compressed_SSU_fasta
+        - classify/compressed_LSU_fasta
+        - classify/compressed_rnas
+      dir_name: { default: 'sequence-categorisation' }
+    out: [out]
+
+
