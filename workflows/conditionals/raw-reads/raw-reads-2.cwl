@@ -246,7 +246,7 @@ steps:
           - rna_prediction/compressed_rnas
           - other_ncrnas/ncrnas
         linkMerge: merge_flattened
-      dir_name: { default: sequence-categorisation }
+      dir_name: { default: 'sequence-categorisation' }
     out: [ out ]
 
 # return taxonomy summary dir
