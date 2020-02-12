@@ -69,24 +69,16 @@ outputs:
   qc-status:
     type: File
     outputSource: before-qc/qc-status
-
-  LSU_folder:
-    type: Directory
-    outputSource: after-qc/LSU_folder
-  SSU_folder:
-    type: Directory
-    outputSource: after-qc/SSU_folder
+  hashsum_input:
+    type: File
+    outputSource: before-qc/hashsum_input
 
   sequence-categorisation_folder:
     type: Directory
     outputSource: after-qc/sequence-categorisation_folder
-  sequence-categorisation_folder_two:
+  taxonomy-summary_folder:
     type: Directory
-    outputSource: after-qc/sequence-categorisation_folder_two
-  ncrnas_folder:
-    type: Directory
-    outputSource: after-qc/ncrnas_folder
-
+    outputSource: after-qc/taxonomy-summary_folder
   rna-count:
     type: File
     outputSource: after-qc/rna-count
@@ -113,9 +105,6 @@ outputs:
     type: File[]
     outputSource: after-qc/chunking_proteins
 
-  hashsum_input:
-    type: File
-    outputSource: before-qc/hashsum_input
 steps:
 
 # << First part >>
@@ -171,15 +160,13 @@ steps:
       go_config: go_config
     out:
       - motus_output
-      - LSU_folder
-      - SSU_folder
       - sequence-categorisation_folder
-      - ncrnas_folder
+      - taxonomy-summary_folder
       - rna-count
-      - compressed_sequence_categorisation
       - compressed_files
       - functional_annotation_folder
       - stats
       - chunking_nucleotides
       - chunking_proteins
+
 

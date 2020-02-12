@@ -141,23 +141,9 @@ outputs:
   sequence-categorisation_folder:                            # [6]
     type: Directory
     outputSource: after-qc/sequence-categorisation_folder
-#  sequence-categorisation_SSU_LSU:                           # [2]
-#    type: Directory
-#    outputSource: after-qc/sequence-categorisation_SSU_LSU
-  sequence-categorisation_SSU_LSU_chunked:                   # [2]
+  taxonomy-summary_folder:                   # [2]
     type: Directory
-    outputSource: after-qc/sequence-categorisation_SSU_LSU_chunked
-  other_rna:                                                 # [?]
-    type: Directory
-    outputSource: after-qc/other_rna
-
- # << taxonomy summary >>
-  LSU_folder:                                                # [6]
-    type: Directory
-    outputSource: after-qc/LSU_folder
-  SSU_folder:                                                # [6]
-    type: Directory
-    outputSource: after-qc/SSU_folder
+    outputSource: after-qc/taxonomy-summary_folder
 
  # sha1sum file
   hashsum_input:
@@ -235,8 +221,6 @@ steps:
       - pathways_systems_folder_antismash
       - pathways_systems_folder_antismash_summary
       - sequence-categorisation_folder
-      - sequence-categorisation_SSU_LSU_chunked
-      - other_rna
-      - LSU_folder
-      - SSU_folder
+      - taxonomy-summary_folder
     run: conditionals/assembly/assembly-2.cwl
+

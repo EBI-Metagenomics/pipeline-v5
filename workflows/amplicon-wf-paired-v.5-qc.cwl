@@ -53,48 +53,29 @@ outputs:
   qc-status:
     type: File
     outputSource: before-qc/qc-status
-
-  gz_files:  # fasta.gz, cmsearch.gz, deoverlapped.gz
-    type: File[]
-    outputSource: after-qc/gz_files
-
-  LSU_folder:
-    type: Directory
-    outputSource: after-qc/LSU_folder
-  SSU_folder:
-    type: Directory
-    outputSource: after-qc/SSU_folder
-
-  sequence-categorisation_folder:
-    type: Directory
-    outputSource: after-qc/sequence-categorisation_folder
-
-  sequence-categorisation_folder_two:
-    type: Directory
-    outputSource: after-qc/sequence-categorisation_folder_two
-
-  sequence-categorisation_masking:
-    type: Directory
-    outputSource: after-qc/sequence-categorisation_masking
-
-  ITS_unite_results:
-    type: Directory
-    outputSource: after-qc/ITS_unite_results
-
-  ITS_itsonedb_results:
-    type: Directory
-    outputSource: after-qc/ITS_itsonedb_results
-
-  rna-count:
-    type: File
-    outputSource: after-qc/rna-count
-
   hashsum_forward:
     type: File
     outputSource: before-qc/hashsum_forward
   hashsum_reverse:
     type: File
     outputSource: before-qc/hashsum_reverse
+
+  gz_files:  # fasta.gz, cmsearch.gz, deoverlapped.gz
+    type: File[]
+    outputSource: after-qc/gz_files
+  sequence-categorisation_folder:
+    type: Directory
+    outputSource: after-qc/sequence-categorisation_folder
+  taxonomy-summary_folder:
+    type: Directory
+    outputSource: after-qc/taxonomy-summary_folder
+  sequence-categorisation_masking:
+    type: Directory
+    outputSource: after-qc/sequence-categorisation_masking
+  rna-count:
+    type: File
+    outputSource: after-qc/rna-count
+
 
 steps:
 
@@ -140,10 +121,6 @@ steps:
     out:
       - gz_files
       - rna-count
-      - LSU_folder
-      - SSU_folder
-      - sequence-categorisation_folder
-      - sequence-categorisation_folder_two
       - sequence-categorisation_masking
-      - ITS_unite_results
-      - ITS_itsonedb_results
+      - taxonomy-summary_folder
+      - sequence-categorisation_folder

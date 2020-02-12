@@ -20,7 +20,7 @@ inputs:
 outputs:
   ncrnas:
     type: Directory
-    outputSource: move_fastas/out
+    outputSource: gzip_files/compressed_file
 
 steps:
 
@@ -68,12 +68,6 @@ steps:
       uncompressed_file: rename_ncrnas/renamed_file
     out: [compressed_file]
 
-  move_fastas:
-    run: ../../utils/return_directory.cwl
-    in:
-      file_list: gzip_files/compressed_file
-      dir_name: { default: 'sequence-categorisation' }
-    out: [out]
 
 
 

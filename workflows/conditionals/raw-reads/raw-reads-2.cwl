@@ -62,19 +62,12 @@ outputs:
     type: File
     outputSource: motus_taxonomy/motus
 
-  LSU_folder:
-    type: Directory
-    outputSource: classify/LSU_folder
-  SSU_folder:
-    type: Directory
-    outputSource: classify/SSU_folder
-
   sequence_categorisation_folder:
     type: Directory
     outputSource: move_to_seq_cat_folder/out
-  ncrnas_folder:
+  taxonomy-summary_folder:
     type: Directory
-    outputSource: other_ncrnas/ncrnas
+    outputSource: return_tax_dir/out
 
   chunking_nucleotides:
     type: File[]
@@ -251,9 +244,21 @@ steps:
         source:
           - chunking_final/SC_fasta_chunks
           - rna_prediction/compressed_rnas
+          - other_ncrnas/ncrnas
         linkMerge: merge_flattened
       dir_name: { default: sequence-categorisation }
     out: [ out ]
+
+# return taxonomy summary dir
+  return_tax_dir:
+    run: ../../../utils/return_directory.cwl
+    in:
+      dir_list:
+        - classify/SSU_folder
+        - classify/LSU_folder
+      dir_name: { default: 'taxonomy-summary' }
+    out: [out]
+
 
 # << FUNCTIONAL FORMATTING AND CHUNKING >>
 

@@ -130,9 +130,9 @@ outputs:
   sequence-categorisation_folder:                   # [2]
     type: Directory
     outputSource: move_to_seq_cat_folder/out
-  other_rna:                                                 # [?]
-    type: Directory
-    outputSource: other_ncrnas/ncrnas
+  rna-count:
+    type: File
+    outputSource: rna_prediction/LSU-SSU-count
 
  # << taxonomy summary >>
   taxonomy-summary_folder:
@@ -162,6 +162,7 @@ steps:
       - cmsearch_result
       - SSU_folder
       - LSU_folder
+      - LSU-SSU-count
       - SSU_fasta_file
       - LSU_fasta_file
       - compressed_rnas
@@ -384,6 +385,7 @@ steps:
         source:
           - chunking_final/SC_fasta_chunks
           - rna_prediction/compressed_rnas
+          - other_ncrnas/ncrnas
         linkMerge: merge_flattened
       dir_name: { default: sequence-categorisation }
     out: [ out ]
