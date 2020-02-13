@@ -149,7 +149,7 @@ outputs:
     outputSource: rna_prediction/SSU_folder
   rna-count:
     type: File
-    outputSource: classify/LSU-SSU-count
+    outputSource: rna_prediction/LSU-SSU-count
 
 steps:
 
