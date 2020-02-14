@@ -20,15 +20,16 @@ inputs:
     inputBinding:
       separate: true
       prefix: -i
+  fasta:
+    type: File
+    inputBinding:
+      separate: true
+      prefix: -f
 
 stdout: stdout.txt
-
 stderr: stderr.txt
 
-
 outputs:
-  stdout: stdout
-  stderr: stderr
 
   output_table:
     type: File

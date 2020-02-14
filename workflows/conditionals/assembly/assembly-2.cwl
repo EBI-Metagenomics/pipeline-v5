@@ -276,6 +276,7 @@ steps:
     run: ../../subworkflows/assembly/kegg_analysis.cwl
     in:
       input_table_hmmscan: functional_annotation/hmmscan_result
+      filtered_fasta: filtered_fasta
       outputname:
         source: filtered_fasta
         valueFrom: $(self.nameroot)
