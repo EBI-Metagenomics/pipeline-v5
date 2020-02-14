@@ -83,7 +83,7 @@ rfam_model_clans:
 unite_db:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/UNITE/unite.fasta
-  checksum: 477b0afce997ff56251e59a6c4f939e0
+  checksum: ddb2105cb1f1ffa8941b44c19022b5a3
 unite_tax:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/UNITE/UNITE-tax.txt
@@ -95,7 +95,7 @@ unite_otu_file:
 itsonedb:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/ITSonedb/itsonedb.fasta
-  checksum: 8e7288095fdf80925608dc1871676344
+  checksum: ec369f9fe6818482ce0ab184461ac116
 itsonedb_tax:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/ITSonedb/ITSonedb-tax.txt
