@@ -21,12 +21,12 @@ if (( $LENGTH > 0 )); then
     antismash \
       -v \
       --smcogs  \
-      --transatpks_da  \
+      -c 4  \
       --borderpredict  \
       --asf  \
       --inclusive  \
       --outputfolder ${OUTFOLDER} \
-      ${INPUT}
+      ${INPUT}  # --transatpks_da
 
     if [ $? -eq 0 ]
     then
