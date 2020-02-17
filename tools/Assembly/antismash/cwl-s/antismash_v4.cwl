@@ -7,8 +7,8 @@ label: "antiSMASH"
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    coresMax: 1
-    ramMin: 35000
+    coresMax: 80
+    ramMin: 40000
 
 hints:
   DockerRequirement:
