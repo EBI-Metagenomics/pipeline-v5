@@ -7,7 +7,7 @@ label: "antiSMASH"
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    coresMax: 80
+    coresMax: 4
     ramMin: 40000
 
 hints:
