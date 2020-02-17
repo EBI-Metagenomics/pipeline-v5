@@ -113,7 +113,7 @@ steps:
   move_to_functional_annotation_folder:
     run: ../../../utils/return_directory.cwl
     in:
-      list:
+      file_list:
         source:
           - output_gff_gz
           - output_gff_index

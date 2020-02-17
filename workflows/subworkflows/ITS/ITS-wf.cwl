@@ -77,7 +77,7 @@ steps:
       mapseq_taxonomy: unite_taxonomy
       otu_ref: unite_otus
       otu_label: otu_unite_label
-      return_dirname: {default: 'taxonomy-summary/its/unite'}
+      return_dirname: {default: 'unite'}
       file_for_prefix: query_sequences
     out: [ out_dir, compressed_fasta_output, fasta_output ]
 
@@ -89,14 +89,14 @@ steps:
       mapseq_taxonomy: itsone_taxonomy
       otu_ref: itsone_otus
       otu_label: otu_itsone_label
-      return_dirname: {default: 'taxonomy-summary/its/itsonedb'}
+      return_dirname: {default: 'itsonedb'}
       file_for_prefix: query_sequences
     out: [ out_dir, compressed_fasta_output, fasta_output ]
 
   move_masking_file:
     run: ../../../utils/return_directory.cwl
     in:
-      list:
+      file_list:
         source:
           - run_itsonedb/compressed_fasta_output
         linkMerge: merge_nested

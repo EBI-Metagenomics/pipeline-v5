@@ -105,7 +105,7 @@ steps:
     run: ../../utils/return_directory.cwl
     in:
       dir_name: return_dirname
-      list:
+      file_list:
         - compress_mapseq/compressed_file
         - edit_empty_tax/otu_out
         - edit_empty_tax/biom_out

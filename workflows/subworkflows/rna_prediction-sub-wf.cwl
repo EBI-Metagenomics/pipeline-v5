@@ -45,14 +45,6 @@ outputs:
     type: File
     outputSource: find_ribosomal_ncRNAs/concatenate_matches
 
-  sequence-categorisation:  # 5S, 5.8S and models
-    type: Directory
-    outputSource: move_fastas/out
-
-  sequence-categorisation_two:  # LSU, SSU or empty
-    type: Directory
-    outputSource: move_fastas_two/out
-
   SSU_coords:  # for ITS
     type: File
     outputSource: extract_subunits_coords/SSU_seqs
@@ -83,6 +75,16 @@ outputs:
   LSU_fasta_file:
     type: File
     outputSource: classify_LSUs/fasta_output
+
+  compressed_SSU_fasta:
+    type: File
+    outputSource: classify_SSUs/compressed_fasta_output
+  compressed_LSU_fasta:
+    type: File
+    outputSource: classify_LSUs/compressed_fasta_output
+  compressed_rnas:
+    type: File[]
+    outputSource: gzip_files/compressed_file
 
 steps:
 
@@ -146,7 +148,7 @@ steps:
       mapseq_taxonomy: silva_ssu_taxonomy
       otu_ref: silva_ssu_otus
       otu_label: pattern_SSU
-      return_dirname: {default: 'taxonomy-summary/SSU'}
+      return_dirname: {default: 'SSU'}
       file_for_prefix: input_sequences
     out: [ out_dir, compressed_fasta_output, fasta_output ]
 
@@ -159,7 +161,7 @@ steps:
       mapseq_taxonomy: silva_lsu_taxonomy
       otu_ref: silva_lsu_otus
       otu_label: pattern_LSU
-      return_dirname: {default: 'taxonomy-summary/LSU'}
+      return_dirname: {default: 'LSU'}
       file_for_prefix: input_sequences
     out: [ out_dir, compressed_fasta_output, fasta_output ]
 
@@ -170,20 +172,3 @@ steps:
     in:
       uncompressed_file: extract_subunits/fastas
     out: [compressed_file]
-
-# wrap fastas to sequence-categorisation folder
-  move_fastas:
-    run: ../../utils/return_directory.cwl
-    in:
-      list: gzip_files/compressed_file
-      dir_name: { default: 'sequence-categorisation' }
-    out: [out]
-
-  move_fastas_two:
-    run: ../../utils/return_directory.cwl
-    in:
-      list:
-        - classify_SSUs/compressed_fasta_output
-        - classify_LSUs/compressed_fasta_output
-      dir_name: { default: 'sequence-categorisation' }
-    out: [out]

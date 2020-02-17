@@ -41,32 +41,17 @@ inputs:
 
 outputs:
 
-  LSU_folder:
-    type: Directory
-    outputSource: classify/LSU_folder
-  SSU_folder:
-    type: Directory
-    outputSource: classify/SSU_folder
-
-  sequence-categorisation_folder:
-    type: Directory
-    outputSource: classify/sequence-categorisation
-
-  sequence-categorisation_folder_two:
-    type: Directory
-    outputSource: classify/sequence-categorisation_two
-
   sequence-categorisation_masking:
     type: Directory
     outputSource: ITS/masking_file
 
-  ITS_unite_results:
+  taxonomy-summary_folder:
     type: Directory
-    outputSource: ITS/unite_folder
+    outputSource: return_tax_dir/out
 
-  ITS_itsonedb_results:
+  sequence-categorisation_folder:
     type: Directory
-    outputSource: ITS/itsonedb_folder
+    outputSource: return_seq_dir/out
 
   rna-count:
     type: File
@@ -101,10 +86,11 @@ steps:
       - LSU-SSU-count
       - SSU_folder
       - LSU_folder
-      - sequence-categorisation
-      - sequence-categorisation_two
       - SSU_coords
       - LSU_coords
+      - compressed_SSU_fasta
+      - compressed_LSU_fasta
+      - compressed_rnas
 
 # << ITS >>
   ITS:
@@ -136,3 +122,39 @@ steps:
         - classify/cmsearch_result
         - classify/ncRNA
     out: [compressed_file]
+
+# return ITS dir
+  return_its_dir:
+    run: ../../../utils/return_directory.cwl
+    in:
+      dir_list:
+        - ITS/unite_folder
+        - ITS/itsonedb_folder
+      dir_name: { default: 'its' }
+    out: [out]
+
+# return taxonomy-summary
+  return_tax_dir:
+    run: ../../../utils/return_directory.cwl
+    in:
+      dir_list:
+        - classify/SSU_folder
+        - classify/LSU_folder
+        - return_its_dir/out
+      dir_name: { default: 'taxonomy-summary' }
+    out: [out]
+
+# return sequence-categorisation:
+  return_seq_dir:
+    run: ../../../utils/return_directory.cwl
+    in:
+      file_list:
+        source:
+          - classify/compressed_SSU_fasta
+          - classify/compressed_LSU_fasta
+          - classify/compressed_rnas
+        linkMerge: merge_flattened
+      dir_name: { default: 'sequence-categorisation' }
+    out: [out]
+
+

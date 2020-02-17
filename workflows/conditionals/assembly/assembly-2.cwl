@@ -127,29 +127,18 @@ outputs:
     outputSource:  move_antismash_summary_to_pathways_systems_folder/summary_in_folder
 
  # << sequence categorisation >>
-  sequence-categorisation_folder:                            # [6]
-    type: Directory
-    outputSource: rna_prediction/sequence-categorisation
-#  sequence-categorisation_SSU_LSU:                           # [2]
-#    type: Directory
-#    outputSource: rna_prediction/sequence-categorisation_two
-  sequence-categorisation_SSU_LSU_chunked:                   # [2]
+  sequence-categorisation_folder:                   # [2]
     type: Directory
     outputSource: move_to_seq_cat_folder/out
-  other_rna:                                                 # [?]
-    type: Directory
-    outputSource: other_ncrnas/ncrnas
-
- # << taxonomy summary >>
-  LSU_folder:                                                # [6]
-    type: Directory
-    outputSource: rna_prediction/LSU_folder
-  SSU_folder:                                                # [6]
-    type: Directory
-    outputSource: rna_prediction/SSU_folder
   rna-count:
     type: File
     outputSource: rna_prediction/LSU-SSU-count
+
+ # << taxonomy summary >>
+  taxonomy-summary_folder:
+    type: Directory
+    outputSource: return_tax_dir/out
+
 
 steps:
 
@@ -174,11 +163,10 @@ steps:
       - cmsearch_result
       - SSU_folder
       - LSU_folder
-      - sequence-categorisation
-#      - sequence-categorisation_two
+      - LSU-SSU-count
       - SSU_fasta_file
       - LSU_fasta_file
-      - LSU-SSU-count
+      - compressed_rnas
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
 
 # << OTHER ncrnas >>
@@ -334,7 +322,7 @@ steps:
   move_to_pathways_systems_folder:
     run: ../../../utils/return_directory.cwl
     in:
-      list:
+      file_list:
         source:
           - pathways/kegg_contigs_summary                       # kegg contigs.tsv -- not using
           - change_formats_and_names/kegg_summary_csv           # kegg pathways.csv
@@ -394,6 +382,22 @@ steps:
   move_to_seq_cat_folder:  # LSU and SSU
     run: ../../../utils/return_directory.cwl
     in:
-      list: chunking_final/SC_fasta_chunks
-      dir_name: { default: sequence-categorisation }
+      file_list:
+        source:
+          - chunking_final/SC_fasta_chunks
+          - rna_prediction/compressed_rnas
+          - other_ncrnas/ncrnas
+        linkMerge: merge_flattened
+      dir_name: { default: 'sequence-categorisation' }
     out: [ out ]
+
+# return taxonomy-summary
+  return_tax_dir:
+    run: ../../../utils/return_directory.cwl
+    in:
+      dir_list:
+        - rna_prediction/SSU_folder
+        - rna_prediction/LSU_folder
+      dir_name: { default: 'taxonomy-summary' }
+    out: [out]
+

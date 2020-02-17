@@ -71,24 +71,19 @@ outputs:
   qc-status:
     type: File
     outputSource: before-qc/qc-status
-
-  LSU_folder:
-    type: Directory
-    outputSource: after-qc/LSU_folder
-  SSU_folder:
-    type: Directory
-    outputSource: after-qc/SSU_folder
+  hashsum_forward:
+    type: File
+    outputSource: before-qc/hashsum_forward
+  hashsum_reverse:
+    type: File
+    outputSource: before-qc/hashsum_reverse
 
   sequence-categorisation_folder:
     type: Directory
     outputSource: after-qc/sequence-categorisation_folder
-  sequence-categorisation_folder_two:
+  taxonomy-summary_folder:
     type: Directory
-    outputSource: after-qc/sequence-categorisation_folder_two
-  ncrnas_folder:
-    type: Directory
-    outputSource: after-qc/ncrnas_folder
-
+    outputSource: after-qc/taxonomy-summary_folder
   rna-count:
     type: File
     outputSource: after-qc/rna-count
@@ -114,14 +109,6 @@ outputs:
   chunking_proteins:
     type: File[]
     outputSource: after-qc/chunking_proteins
-
-  hashsum_forward:
-    type: File
-    outputSource: before-qc/hashsum_forward
-  hashsum_reverse:
-    type: File
-    outputSource: before-qc/hashsum_reverse
-
 
 steps:
 
@@ -179,16 +166,12 @@ steps:
       ips_header: ips_header
       go_config: go_config
     out:
-      - LSU_folder
-      - SSU_folder
+      - motus_output
       - sequence-categorisation_folder
-      - compressed_sequence_categorisation
-      - ncrnas_folder
+      - taxonomy-summary_folder
       - rna-count
       - compressed_files
       - functional_annotation_folder
       - stats
-      - motus_output
       - chunking_nucleotides
       - chunking_proteins
-
