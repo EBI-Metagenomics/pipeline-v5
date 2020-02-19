@@ -29,7 +29,7 @@ inputs:
 
 outputs:
   masking_file:
-    type: Directory
+    type: File
     outputSource: run_itsonedb/compressed_fasta_output
 
   unite_folder:
