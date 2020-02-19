@@ -30,7 +30,7 @@ inputs:
 outputs:
   masking_file:
     type: Directory
-    outputSource: move_masking_file/out
+    outputSource: run_itsonedb/compressed_fasta_output
 
   unite_folder:
     type: Directory
@@ -92,14 +92,4 @@ steps:
       return_dirname: {default: 'itsonedb'}
       file_for_prefix: query_sequences
     out: [ out_dir, compressed_fasta_output, fasta_output ]
-
-  move_masking_file:
-    run: ../../../utils/return_directory.cwl
-    in:
-      file_list:
-        source:
-          - run_itsonedb/compressed_fasta_output
-        linkMerge: merge_nested
-      dir_name: { default: 'sequence-categorisation' }
-    out: [out]
 

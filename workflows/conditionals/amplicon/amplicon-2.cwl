@@ -41,10 +41,6 @@ inputs:
 
 outputs:
 
-  sequence-categorisation_masking:
-    type: Directory
-    outputSource: ITS/masking_file
-
   taxonomy-summary_folder:
     type: Directory
     outputSource: return_tax_dir/out
@@ -153,6 +149,7 @@ steps:
           - classify/compressed_SSU_fasta
           - classify/compressed_LSU_fasta
           - classify/compressed_rnas
+          - ITS/masking_file
         linkMerge: merge_flattened
       dir_name: { default: 'sequence-categorisation' }
     out: [out]

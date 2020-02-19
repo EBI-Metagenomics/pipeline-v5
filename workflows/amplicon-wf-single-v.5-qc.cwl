@@ -65,9 +65,6 @@ outputs:
   taxonomy-summary_folder:
     type: Directory
     outputSource: after-qc/taxonomy-summary_folder
-  sequence-categorisation_masking:
-    type: Directory
-    outputSource: after-qc/sequence-categorisation_masking
   rna-count:
     type: File
     outputSource: after-qc/rna-count
@@ -114,7 +111,6 @@ steps:
     out:
       - gz_files
       - rna-count
-      - sequence-categorisation_masking
       - taxonomy-summary_folder
       - sequence-categorisation_folder
 
