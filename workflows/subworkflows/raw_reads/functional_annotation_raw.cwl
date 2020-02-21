@@ -67,7 +67,7 @@ steps:
         valueFrom: $(self.nameroot.split('_CDS')[0])
       postfix: name_ips
     out: [result]
-    run: ../../../tools/chunks/concatenate.cwl
+    run: ../../../utils/concatenate.cwl
 
   # << hmmscan >>
   hmmscan:
@@ -90,4 +90,4 @@ steps:
         valueFrom: $(self.nameroot.split('_CDS')[0])
       postfix: name_hmmscan
     out: [result]
-    run: ../../../tools/chunks/concatenate.cwl
+    run: ../../../utils/concatenate.cwl

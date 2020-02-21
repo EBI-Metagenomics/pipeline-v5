@@ -1,0 +1,5 @@
+interpro:
+  path: test-input/testfile.tsv
+  class: File
+  format: edam:format_3475
+outputname: testfile.annotations.pfam

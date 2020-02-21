@@ -6,7 +6,7 @@ applications:
   - Gene3d
 inputFile:
   class: File
-  path: faa_combined_test
+  path: ../Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
 outputFormat:
   - TSV
 databases:

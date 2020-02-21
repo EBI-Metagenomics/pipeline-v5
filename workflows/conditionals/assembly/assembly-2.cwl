@@ -287,7 +287,7 @@ steps:
 
 # << GENOME PROPERTIES >>
   genome_properties:
-    run: ../../../tools/Genome_properties/genome_properties.cwl
+    run: ../../../tools/Assembly/Genome_properties/genome_properties.cwl
     in:
       input_tsv_file: functional_annotation/ips_result
       flatfiles_path: gp_flatfiles_path
@@ -343,7 +343,7 @@ steps:
 
 # index FASTA
   fasta_index:
-    run: ../../../utils/fasta_index.cwl
+    run: ../../../tools/Assembly/index_fasta/fasta_index.cwl
     in:
       fasta: filtered_fasta
     out: [fasta_index, fasta_bgz]

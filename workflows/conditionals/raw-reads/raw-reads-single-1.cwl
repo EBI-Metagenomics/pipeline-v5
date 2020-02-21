@@ -42,7 +42,7 @@ steps:
 
 # << calculate hashsum >>
   hashsum:
-    run: ../../../utils/generate_checksum.cwl
+    run: ../../../utils/generate_checksum/generate_checksum.cwl
     in:
       input_file: single_reads
     out: [ hashsum ]
@@ -86,7 +86,7 @@ steps:
 
   #fasta
   convert_trimmed_reads_to_fasta:
-    run: ../../../utils/fastq_to_fasta.cwl
+    run: ../../../utils/fastq_to_fasta/fastq_to_fasta.cwl
     in:
       fastq: clean_fasta_headers/sequences_with_cleaned_headers
     out: [ fasta ]

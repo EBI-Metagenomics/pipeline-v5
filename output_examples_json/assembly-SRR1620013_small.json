@@ -1,0 +1,679 @@
+{
+    "qc-status": {
+        "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "basename": "QC-PASSED",
+        "nameext": "",
+        "nameroot": "QC-PASSED",
+        "class": "File",
+        "size": 0
+    },
+    "qc_summary": {
+        "checksum": "sha1$47937d2eecaa039287522b1ed86269a1fa9193b0",
+        "basename": "qc_summary",
+        "nameext": "",
+        "nameroot": "qc_summary",
+        "class": "File",
+        "size": 199
+    },
+    "qc-statistics_folder": {
+        "basename": "qc-statistics",
+        "nameext": "",
+        "nameroot": "qc-statistics",
+        "listing": [
+            {
+                "checksum": "sha1$69fa61cdc14ea636b96510ab3ed2d32d8eddf6be",
+                "basename": "GC-distribution.out.full",
+                "size": 574,
+                "class": "File",
+            },
+            {
+                "checksum": "sha1$1c2e5a6dc01089d25c00d0d83d7a0dfd2d4fbb7d",
+                "basename": "summary.out",
+                "size": 309,
+                "class": "File",
+            },
+            {
+                "checksum": "sha1$fe85d81977b64a3471aa6224140ad6b8718e6637",
+                "basename": "seq-length.out.full_bin",
+                "size": 62,
+                "class": "File",
+            },
+            {
+                "checksum": "sha1$d73d3d879daf0dd1a45ca508603307fa2e09d4aa",
+                "basename": "GC-distribution.out.full_bin",
+                "size": 42,
+                "class": "File",
+            },
+            {
+                "checksum": "sha1$09b4d53601c7dd42b73c2b958bc72438e5b2ec0c",
+                "basename": "GC-distribution.out.full_pcbin",
+                "size": 57,
+                "class": "File",
+            },
+            {
+                "checksum": "sha1$1614477d9359216f1343c9d2b954bf9a6f605b58",
+                "basename": "seq-length.out.full",
+                "size": 714,
+                "class": "File",
+            },
+            {
+                "checksum": "sha1$5f9db78f534f1f906019c8a740679401ae426598",
+                "basename": "nucleotide-distribution.out.full",
+                "size": 15241,
+                "class": "File",
+            },
+            {
+                "checksum": "sha1$91beda908adef798629d1f6d25911a4bf320514b",
+                "basename": "seq-length.out.full_pcbin",
+                "size": 80,
+                "class": "File",
+            }
+        ],
+        "class": "Directory"
+    },
+    "filtered_fasta": {
+        "format": "http://edamontology.org/format_1929",
+        "checksum": "sha1$aaf509ca6fc1badcd2f98b9a61c46d7c183be340",
+        "basename": "assembly-SRR1620013_small_FASTA_FASTA.fasta",
+        "nameroot": "assembly-SRR1620013_small_FASTA_FASTA",
+        "nameext": ".fasta",
+        "class": "File",
+        "size": 105390
+    },
+    "hashsum_input": {
+        "checksum": "sha1$0489199e36146eb404d533e10d7a78b4de6d1789",
+        "basename": "assembly-SRR1620013_small_FASTA.fasta.gz.sha1",
+        "nameext": ".sha1",
+        "nameroot": "assembly-SRR1620013_small_FASTA.fasta.gz",
+        "class": "File",
+        "size": 83
+    },
+    "chunking_proteins": [
+        {
+            "checksum": "sha1$f3e1cd92f651c8e566738c216d39334541eecc87", 
+            "basename": "assembly-SRR1620013_small_FASTA_FASTA_CDS.faa.chunks", 
+            "nameext": ".chunks", 
+            "nameroot": "assembly-SRR1620013_small_FASTA_FASTA_CDS.faa", 
+            "class": "File", 
+            "size": 48
+        }, 
+        {
+            "checksum": "sha1$05c9ce53417624b150164673626e38e3519421f2", 
+            "basename": "assembly-SRR1620013_small_FASTA_FASTA_CDS.faa.gz", 
+            "nameext": ".gz", 
+            "nameroot": "assembly-SRR1620013_small_FASTA_FASTA_CDS.faa", 
+            "class": "File", 
+            "size": 23105
+        }, 
+        {
+            "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a", 
+            "basename": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA_CDS.faa", 
+            "nameext": ".faa", 
+            "nameroot": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA_CDS", 
+            "class": "File", 
+            "size": 4
+        }
+    ], 
+    "compressed_files": [
+        {
+            "checksum": "sha1$f86eddc23c8d3ce69022f37fca211febfa7cd806", 
+            "basename": "assembly-SRR1620013_small_FASTA_FASTA.cmsearch.all.tblout.deoverlapped.gz", 
+            "nameext": ".gz", 
+            "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.cmsearch.all.tblout.deoverlapped", 
+            "class": "File", 
+            "size": 256
+        }, 
+        {
+            "checksum": "sha1$ff16449b6c618e79462d337e4c8313f3e3367f64", 
+            "basename": "assembly-SRR1620013_small_FASTA_FASTA.cmsearch.all.tblout.gz", 
+            "nameext": ".gz", 
+            "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.cmsearch.all.tblout", 
+            "class": "File", 
+            "size": 3858
+        }
+    ], 
+    "stats": {
+        "basename": "functional-annotation", 
+        "nameext": "", 
+        "nameroot": "functional-annotation", 
+        "listing": [
+            {
+                "class": "Directory", 
+                "basename": "stats", 
+                "listing": [
+                    {
+                        "checksum": "sha1$84d9af02829837ce70477f57d1620c09ec1f05ec", 
+                        "basename": "antismash.stats", 
+                        "size": 93, 
+                        "class": "File", 
+                    }, 
+                    {
+                        "checksum": "sha1$3d4b7c091f688c3ffef952c11bf324d163bb55de", 
+                        "basename": "ko.stats", 
+                        "size": 75, 
+                        "class": "File", 
+                    }, 
+                    {
+                        "checksum": "sha1$075f25c95599731a2040a6a8d1aaed290e98caab", 
+                        "basename": "pfam.stats", 
+                        "size": 84, 
+                        "class": "File", 
+                    }, 
+                    {
+                        "checksum": "sha1$c7f5980bf1f56c52e0cdd668b2d5503b119e019d", 
+                        "basename": "go.stats", 
+                        "size": 76, 
+                        "class": "File", 
+                    }, 
+                    {
+                        "checksum": "sha1$b51f526b52b3731a5e905f9432c5ed86910eb338", 
+                        "basename": "interproscan.stats", 
+                        "size": 108, 
+                        "class": "File", 
+                    }, 
+                    {
+                        "checksum": "sha1$e1cc1673d202c7a21e4e8083a494c97a1ba6a43b", 
+                        "basename": "orf.stats", 
+                        "size": 83, 
+                        "class": "File", 
+                    }
+                ]
+            }
+        ], 
+        "class": "Directory"
+    }, 
+    "index_fasta_file": {
+        "checksum": "sha1$7a780227f6fa3231406def90080d1c0b4a7a2465", 
+        "basename": "assembly-SRR1620013_small_FASTA_FASTA.fasta.bgz.fai", 
+        "nameext": ".fai", 
+        "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.fasta.bgz", 
+        "class": "File", 
+        "size": 7337
+    }, 
+    "bgzip_fasta_file": {
+        "checksum": "sha1$0fc8f0ced9f8864ae5f1ba7d7abd4bf721b9ea7c", 
+        "basename": "assembly-SRR1620013_small_FASTA_FASTA.fasta.bgz", 
+        "nameext": ".bgz", 
+        "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.fasta", 
+        "class": "File", 
+        "size": 32215
+    }, 
+    "pathways_systems_folder": {
+        "basename": "pathways-systems", 
+        "listing": [
+            {
+                "format": "http://edamontology.org/format_3475", 
+                "checksum": "sha1$8518af7b1fef758f0277571aec1058acd39331f7", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.summary.kegg_contigs.tsv", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.summary.kegg_contigs", 
+                "nameext": ".tsv", 
+                "class": "File", 
+                "size": 3834
+            }, 
+            {
+                "format": "http://edamontology.org/format_3752", 
+                "checksum": "sha1$cdd0d20cf6247509e14d82b2e417c2f0decb406f", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.summary.kegg_pathways", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.summary", 
+                "nameext": ".kegg_pathways", 
+                "class": "File", 
+                "size": 3483
+            }, 
+            {
+                "format": "http://edamontology.org/format_3752", 
+                "checksum": "sha1$48747fc827f051acf658a77523404858a62bc5e3", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.summary.gprops", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.summary", 
+                "nameext": ".gprops", 
+                "class": "File", 
+                "size": 70672
+            }
+        ], 
+        "class": "Directory"
+    }, 
+    "pathways_systems_folder_antismash": {
+        "basename": "pathways-systems", 
+        "nameext": "", 
+        "nameroot": "pathways-systems", 
+        "listing": [
+            {
+                "checksum": "sha1$d2942e153cee5c403e306625659f49c101cc7034", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.antismash.gff.gz", 
+                "size": 72, 
+                "class": "File", 
+            }, 
+            {
+                "checksum": "sha1$fd2eb344b5c7702fa656a33cb576f439ec76c9a0", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.antismash.gff.gz.tbi", 
+                "size": 73, 
+                "class": "File", 
+            }, 
+            {
+                "checksum": "sha1$46ddd66c77a05ba9597440f5ca08b32ea30193b8", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA_antismash_final.embl.gz", 
+                "size": 10362, 
+                "class": "File", 
+            }, 
+            {
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA_antismash_geneclusters.txt", 
+                "size": 0, 
+                "class": "File", 
+            }, 
+            {
+                "checksum": "sha1$f7de0a827c6b3cc28fd9b3059b780f45be59b29a", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA_antismash_final.gbk.gz", 
+                "size": 10111, 
+                "class": "File", 
+            }
+        ], 
+        "class": "Directory"
+    }, 
+    "functional_annotation_folder": {
+        "class": "Directory", 
+        "basename": "functional-annotation", 
+        "listing": [
+            {
+                "format": "http://edamontology.org/format_2306", 
+                "checksum": "sha1$ca750a57ed5ca3d202e50edec2e3b684f7ff41e8", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.contigs.annotations.gff.gz", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.contigs.annotations.gff", 
+                "nameext": ".gz", 
+                "class": "File", 
+                "size": 25030
+            }, 
+            {
+                "checksum": "sha1$b6b2c953d4ed569d4861386102acbae9716640ab", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.contigs.annotations.gff.gz.tbi", 
+                "nameext": ".tbi", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.contigs.annotations.gff.gz", 
+                "class": "File", 
+                "size": 3065
+            }, 
+            {
+                "checksum": "sha1$23c2065407b4364f0a6c8c96ab3a044963b55200", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.emapper.annotations.gz", 
+                "nameext": ".gz", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.emapper.annotations", 
+                "class": "File", 
+                "size": 24548
+            }, 
+            {
+                "checksum": "sha1$ed40ca2175d5d08df09059dc51a202ca62307503", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.emapper.seed_orthologs.gz", 
+                "nameext": ".gz", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.emapper.seed_orthologs", 
+                "class": "File", 
+                "size": 3438
+            }, 
+            {
+                "checksum": "sha1$3e272b0459fafe9dcd7ead44f1de349ba94dba3e", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.summary.ips", 
+                "nameext": ".ips", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.summary", 
+                "class": "File", 
+                "size": 11059
+            }, 
+            {
+                "checksum": "sha1$d44673a69cf68883122cb978be742afd6c5bfeda", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.summary.ko", 
+                "nameext": ".ko", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.summary", 
+                "class": "File", 
+                "size": 2141
+            }, 
+            {
+                "checksum": "sha1$92376501c2d299fcbdda0a8f43198552a2879bf2", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.summary.pfam", 
+                "nameext": ".pfam", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.summary", 
+                "class": "File", 
+                "size": 5921
+            }, 
+            {
+                "format": "http://edamontology.org/format_3752", 
+                "checksum": "sha1$84a1d0612907fee51e1a198c679d2d5198a5e6ab", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.summary.go", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.summary", 
+                "nameext": ".go", 
+                "class": "File", 
+                "size": 9354
+            }, 
+            {
+                "format": "http://edamontology.org/format_3752", 
+                "checksum": "sha1$350c9b96de4fa8f7b425e077f24190b9db66c2c3", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.summary.go_slim", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.summary", 
+                "nameext": ".go_slim", 
+                "class": "File", 
+                "size": 7307
+            }, 
+            {
+                "checksum": "sha1$dbdcba78eb45388a63f35ad52dd626bcd0fafe4c", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.I5.tsv.chunks", 
+                "nameext": ".chunks", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.I5.tsv", 
+                "class": "File", 
+                "size": 47
+            }, 
+            {
+                "checksum": "sha1$7be9a8b63f6ef052a4564dfe4abf8b7dc24193c2", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.I5.tsv.gz", 
+                "nameext": ".gz", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.I5.tsv", 
+                "class": "File", 
+                "size": 17400
+            }, 
+            {
+                "checksum": "sha1$e2c9dba2771b50e7160398ef98f01c226ef5f3f5", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.hmm.tsv.chunks", 
+                "nameext": ".chunks", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.hmm.tsv", 
+                "class": "File", 
+                "size": 48
+            }, 
+            {
+                "checksum": "sha1$a5b8fa7fb7304cc67ab077f1b7603c916f6a8072", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.hmm.tsv.gz", 
+                "nameext": ".gz", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.hmm.tsv", 
+                "class": "File", 
+                "size": 2970
+            }, 
+            {
+                "checksum": "sha1$cc451f613860b13675c9677646ef08bfa021e2be", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA_summary.diamond.chunks", 
+                "nameext": ".chunks", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA_summary.diamond", 
+                "class": "File", 
+                "size": 56
+            }, 
+            {
+                "checksum": "sha1$425d240a529e4c1ca9749552f8047c6e1c711d49", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA_summary.diamond.gz", 
+                "nameext": ".gz", 
+                "nameroot": "assembly-SRR1620013_small_FASTA_FASTA_summary.diamond", 
+                "class": "File", 
+                "size": 10237
+            }, 
+            {
+                "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a", 
+                "basename": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA.I5.tsv", 
+                "nameext": ".tsv", 
+                "nameroot": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA.I5", 
+                "class": "File", 
+                "size": 4
+            }, 
+            {
+                "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a", 
+                "basename": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA.hmm.tsv", 
+                "nameext": ".tsv", 
+                "nameroot": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA.hmm", 
+                "class": "File", 
+                "size": 4
+            }, 
+            {
+                "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a", 
+                "basename": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA_summary.diamond", 
+                "nameext": ".diamond", 
+                "nameroot": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA_summary", 
+                "class": "File", 
+                "size": 4
+            }
+        ]
+    }, 
+    "chunking_nucleotides": [
+        {
+            "checksum": "sha1$f29443c588eb45a48b88c8d00931272b181eebad", 
+            "basename": "assembly-SRR1620013_small_FASTA_FASTA.fasta.chunks", 
+            "nameext": ".chunks", 
+            "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.fasta", 
+            "class": "File", 
+            "size": 46
+        }, 
+        {
+            "checksum": "sha1$9f6b87ab883dee81b9f7f05fb4517d1607ebc319", 
+            "basename": "assembly-SRR1620013_small_FASTA_FASTA.fasta.gz", 
+            "nameext": ".gz", 
+            "nameroot": "assembly-SRR1620013_small_FASTA_FASTA.fasta", 
+            "class": "File", 
+            "size": 31983
+        }, 
+        {
+            "checksum": "sha1$a34a878b22ec6b5345239018012f13d1bdd55428", 
+            "basename": "assembly-SRR1620013_small_FASTA_FASTA_CDS.ffn.chunks", 
+            "nameext": ".chunks", 
+            "nameroot": "assembly-SRR1620013_small_FASTA_FASTA_CDS.ffn", 
+            "class": "File", 
+            "size": 48
+        }, 
+        {
+            "checksum": "sha1$2f711538ac4909c70bbbd5f083ea45cdae106715", 
+            "basename": "assembly-SRR1620013_small_FASTA_FASTA_CDS.ffn.gz", 
+            "nameext": ".gz", 
+            "nameroot": "assembly-SRR1620013_small_FASTA_FASTA_CDS.ffn", 
+            "class": "File", 
+            "size": 32565
+        }, 
+        {
+            "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a", 
+            "basename": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA.fasta", 
+            "nameext": ".fasta", 
+            "nameroot": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA", 
+            "class": "File", 
+            "size": 4
+        }, 
+        {
+            "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a", 
+            "basename": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA_CDS.ffn", 
+            "nameext": ".ffn", 
+            "nameroot": "from_chunking_assembly-SRR1620013_small_FASTA_FASTA_CDS", 
+            "class": "File", 
+            "size": 4
+        }
+    ], 
+    "taxonomy-summary_folder": {
+        "basename": "taxonomy-summary", 
+        "listing": [
+            {
+                "basename": "SSU", 
+                "listing": [
+                    {
+                        "checksum": "sha1$96fa2a81da414ff2c3f42c1631ca88a9f4a9d466", 
+                        "basename": "empty.mseq.gz", 
+                        "nameext": ".gz", 
+                        "nameroot": "empty.mseq", 
+                        "class": "File", 
+                        "size": 143
+                    }, 
+                    {
+                        "format": "http://edamontology.org/format_3746", 
+                        "checksum": "sha1$d73b166386523d4a0aef4ede3b6a5d388929e81a", 
+                        "basename": "empty.mseq.tsv", 
+                        "nameroot": "empty.mseq", 
+                        "nameext": ".tsv", 
+                        "class": "File", 
+                        "size": 75
+                    }, 
+                    {
+                        "format": "https://www.iana.org/assignments/media-types/text/tab-separated-values", 
+                        "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709", 
+                        "basename": "empty.txt", 
+                        "nameroot": "empty", 
+                        "nameext": ".txt", 
+                        "class": "File", 
+                        "size": 0
+                    }, 
+                    {
+                        "format": "https://www.iana.org/assignments/media-types/text/html", 
+                        "checksum": "sha1$14eb967dd1aba969badd1c9d7a33a8f4148d6d8f", 
+                        "basename": "empty.html", 
+                        "nameroot": "empty", 
+                        "nameext": ".html", 
+                        "class": "File", 
+                        "size": 226183
+                    }, 
+                    {
+                        "checksum": "sha1$c784d991eb3ae1915fa7bb265990c47f4ac66969", 
+                        "basename": "empty_hdf5.biom", 
+                        "nameext": ".biom", 
+                        "nameroot": "empty_hdf5", 
+                        "class": "File", 
+                        "size": 37040
+                    }, 
+                    {
+                        "checksum": "sha1$bad45278da3c250c79e86638dee154efb540fcf2", 
+                        "basename": "empty_json.biom", 
+                        "nameext": ".biom", 
+                        "nameroot": "empty_json", 
+                        "class": "File", 
+                        "size": 395
+                    }
+                ], 
+                "class": "Directory", 
+            }, 
+            {
+                "basename": "LSU", 
+                "listing": [
+                    {
+                        "checksum": "sha1$8f3d2b3e923658dc4cea3750a14c41691cf2db21", 
+                        "basename": "empty.mseq.gz", 
+                        "nameext": ".gz", 
+                        "nameroot": "empty.mseq", 
+                        "class": "File", 
+                        "size": 143
+                    }, 
+                    {
+                        "format": "http://edamontology.org/format_3746", 
+                        "checksum": "sha1$2b5c98fb8b3e61f0ef520674d889d3e7dbdecbdf", 
+                        "basename": "empty.mseq.tsv", 
+                        "nameroot": "empty.mseq", 
+                        "nameext": ".tsv", 
+                        "class": "File", 
+                        "size": 75
+                    }, 
+                    {
+                        "format": "https://www.iana.org/assignments/media-types/text/tab-separated-values", 
+                        "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709", 
+                        "basename": "empty.txt", 
+                        "nameroot": "empty", 
+                        "nameext": ".txt", 
+                        "class": "File", 
+                        "size": 0
+                    }, 
+                    {
+                        "format": "https://www.iana.org/assignments/media-types/text/html", 
+                        "checksum": "sha1$d442b02b0e5001c183e18ffc9eca2dbe44644504", 
+                        "basename": "empty.html", 
+                        "nameroot": "empty", 
+                        "nameext": ".html", 
+                        "class": "File", 
+                        "size": 226183
+                    }, 
+                    {
+                        "checksum": "sha1$947d56d73e196c624f19c35369f0bcdacc8393fd", 
+                        "basename": "empty_hdf5.biom", 
+                        "nameext": ".biom", 
+                        "nameroot": "empty_hdf5", 
+                        "class": "File", 
+                        "size": 37040
+                    }, 
+                    {
+                        "checksum": "sha1$63578e9eeee49ccbbd12a06b0089b0350203b28a", 
+                        "basename": "empty_json.biom", 
+                        "nameext": ".biom", 
+                        "nameroot": "empty_json", 
+                        "class": "File", 
+                        "size": 395
+                    }
+                ], 
+                "class": "Directory", 
+            }
+        ], 
+        "class": "Directory"
+    }, 
+    "sequence-categorisation_folder": {
+        "basename": "sequence-categorisation", 
+        "listing": [
+            {
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709", 
+                "basename": "empty.fasta", 
+                "nameext": ".fasta", 
+                "nameroot": "empty", 
+                "class": "File", 
+                "size": 0
+            }, 
+            {
+                "checksum": "sha1$e9efa002c5c9b811eb93996546d35c7374f5f1f7", 
+                "basename": "empty.fasta.chunks", 
+                "nameext": ".chunks", 
+                "nameroot": "empty.fasta", 
+                "class": "File", 
+                "size": 14
+            }, 
+            {
+                "checksum": "sha1$40f9cc258b4f24eae5557a4ad7d3c7149b13a752", 
+                "basename": "empty.fasta.gz", 
+                "nameext": ".gz", 
+                "nameroot": "empty.fasta", 
+                "class": "File", 
+                "size": 32
+            }, 
+            {
+                "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a", 
+                "basename": "from_chunking_empty.fasta", 
+                "nameext": ".fasta", 
+                "nameroot": "from_chunking_empty", 
+                "class": "File", 
+                "size": 4
+            }, 
+            {
+                "checksum": "sha1$47f354bfbb94b304ea6103dd0b6de061a06ec5bf", 
+                "basename": "cyano_tmRNA.RF01851.fasta.gz", 
+                "nameext": ".gz", 
+                "nameroot": "cyano_tmRNA.RF01851.fasta", 
+                "class": "File", 
+                "size": 156
+            }, 
+            {
+                "checksum": "sha1$70849edf20afb5f521b3e0facee0a7026abd99b7", 
+                "basename": "tRNA.RF00005.fasta.gz", 
+                "nameext": ".gz", 
+                "nameroot": "tRNA.RF00005.fasta", 
+                "class": "File", 
+                "size": 130
+            }, 
+            {
+                "checksum": "sha1$45bbb0aab1c73f0ae2a50b62e4b4bebd5e5bf82d", 
+                "basename": "tmRNA.RF00023.fasta.gz", 
+                "nameext": ".gz", 
+                "nameroot": "tmRNA.RF00023.fasta", 
+                "class": "File", 
+                "size": 150
+            }
+        ], 
+        "class": "Directory"
+    }, 
+    "pathways_systems_folder_antismash_summary": {
+        "basename": "pathways-systems", 
+        "nameext": "", 
+        "nameroot": "pathways-systems", 
+        "listing": [
+            {
+                "checksum": "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709", 
+                "basename": "assembly-SRR1620013_small_FASTA_FASTA.summary.antismash", 
+                "size": 0, 
+                "class": "File", 
+            }
+        ], 
+        "class": "Directory"
+    }, 
+    "rna-count": {
+        "checksum": "sha1$f7c75811a4e3f59335b46ca84a44af8d0f717f4d", 
+        "basename": "RNA-counts", 
+        "nameext": "", 
+        "nameroot": "RNA-counts", 
+        "class": "File", 
+        "size": 23
+    }
+}

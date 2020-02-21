@@ -1,5 +1,5 @@
 seqs:
   format: edam:format_1929
   class: File
-  path: assembly.fasta.faa
-chunk_size: 1000
+  path: ../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.fasta
+chunk_size: 100

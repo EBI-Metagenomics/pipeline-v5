@@ -1,6 +1,6 @@
 filtered_fasta:
   class: File
-  path: ../../../input_examples/assembly/example.filtered.fasta
+  path: ../../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.fasta
 
 clusters_glossary:
   class: File

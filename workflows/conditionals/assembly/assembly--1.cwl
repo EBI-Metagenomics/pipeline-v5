@@ -55,7 +55,7 @@ steps:
 
 # << calculate hashsum >>
   hashsum:
-    run: ../../../utils/generate_checksum.cwl
+    run: ../../../utils/generate_checksum/generate_checksum.cwl
     in:
       input_file: contigs
     out: [ hashsum ]

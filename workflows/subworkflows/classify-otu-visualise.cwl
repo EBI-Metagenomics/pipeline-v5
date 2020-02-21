@@ -39,7 +39,7 @@ outputs:
 
 steps:
   mapseq:
-    run: ../../tools/mapseq/mapseq.cwl
+    run: ../../tools/RNA_prediction/mapseq/mapseq.cwl
     in:
       prefix: file_for_prefix
       sequences: fasta
@@ -48,7 +48,7 @@ steps:
     out: [ classifications ]
 
   classifications_to_otu_counts:
-    run: ../../tools/mapseq2biom/mapseq2biom.cwl
+    run: ../../tools/RNA_prediction/mapseq2biom/mapseq2biom.cwl
     in:
        otu_table: otu_ref
        label: otu_label
@@ -57,13 +57,13 @@ steps:
     out: [ otu_tsv, otu_txt, otu_tsv_notaxid ]
 
   visualize_otu_counts:
-    run: ../../tools/krona/krona.cwl
+    run: ../../tools/RNA_prediction/krona/krona.cwl
     in:
       otu_counts: classifications_to_otu_counts/otu_txt
     out: [ otu_visualization ]
 
   edit_empty_tax:
-    run: ../../tools/biom-convert/empty_tax.cwl
+    run: ../../tools/RNA_prediction/biom-convert/empty_tax.cwl
     in:
       mapseq: mapseq/classifications
       otutable: classifications_to_otu_counts/otu_tsv
@@ -74,7 +74,7 @@ steps:
     out: [mapseq_out, otu_out, biom_out, krona_out, fasta_out, otunotaxid_out]
 
   counts_to_hdf5:
-    run: ../../tools/biom-convert/biom-convert.cwl
+    run: ../../tools/RNA_prediction/biom-convert/biom-convert.cwl
     in:
        biom: edit_empty_tax/otunotaxid_out
        hdf5: { default: true }
@@ -82,7 +82,7 @@ steps:
     out: [ result ]
 
   counts_to_json:
-    run: ../../tools/biom-convert/biom-convert.cwl
+    run: ../../tools/RNA_prediction/biom-convert/biom-convert.cwl
     in:
        biom: edit_empty_tax/otunotaxid_out
        json: { default: true }

@@ -1,6 +1,6 @@
 seqfile:
   class: File
-  path: test-input/ERZ477576_100_FASTA.fasta.faa
+  path: ../Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
 
 gathering_bit_score: true
 

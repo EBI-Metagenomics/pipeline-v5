@@ -1,5 +1,0 @@
-input_tsv_file:
-  class: File
-  path: tests/InterProScan.tsv
-flatfiles_path: genome-properties/flatfiles
-GP_txt: genomeProperties.txt

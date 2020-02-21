@@ -47,12 +47,12 @@ steps:
 
 # << calculate hashsum >>
   hashsum_forward:
-    run: ../../../utils/generate_checksum.cwl
+    run: ../../../utils/generate_checksum/generate_checksum.cwl
     in:
       input_file: forward_reads
     out: [ hashsum ]
   hashsum_reverse:
-    run: ../../../utils/generate_checksum.cwl
+    run: ../../../utils/generate_checksum/generate_checksum.cwl
     in:
       input_file: reverse_reads
     out: [ hashsum ]

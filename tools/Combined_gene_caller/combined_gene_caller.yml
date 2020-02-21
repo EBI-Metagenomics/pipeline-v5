@@ -1,10 +1,10 @@
 input_fasta:
   class: File
-  path: assembly.fasta
+  path: ../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.fasta
 seq_type: "a"
 maskfile:
   class: File
-  path: result.deoverlapped
+  path: ../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.cmsearch.all.tblout.deoverlapped
 config:
   class: File
   path: combined_gene_caller_conf.json

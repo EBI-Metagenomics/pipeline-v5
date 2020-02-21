@@ -1,6 +1,6 @@
 queryInputFile:
   class: File
-  path: assembly.fasta.faa
+  path: ../../../tools/Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
 outputFormat: '6'
 maxTargetSeqs: 1
 strand: both

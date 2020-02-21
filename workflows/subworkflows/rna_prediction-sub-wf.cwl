@@ -89,7 +89,7 @@ outputs:
 steps:
 
   index_reads:
-    run: ../../tools/easel/esl-sfetch-index.cwl
+    run: ../../tools/RNA_prediction/easel/esl-sfetch-index.cwl
     in:
       sequences: input_sequences
     out: [ sequences_with_index ]
@@ -106,7 +106,7 @@ steps:
 
 # extract coordinates for everything
   extract_coords:
-    run: ../../tools/RNA_prediction/extract-coords_awk.cwl
+    run: ../../tools/RNA_prediction/extract-coords/extract-coords_awk.cwl
     in:
       infernal_matches: find_ribosomal_ncRNAs/deoverlapped_matches
     out: [ matched_seqs_with_coords ]
@@ -122,7 +122,7 @@ steps:
 
 # extract sequences
   extract_sequences:
-    run: ../../tools/easel/esl-sfetch-manyseqs.cwl
+    run: ../../tools/RNA_prediction/easel/esl-sfetch-manyseqs.cwl
     in:
       indexed_sequences: index_reads/sequences_with_index
       names_contain_subseq_coords: extract_coords/matched_seqs_with_coords

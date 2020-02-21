@@ -40,7 +40,7 @@ steps:
     out: [ output_orthologs ]
 
   unite_seed_orthologs:
-    run: ../../chunks/concatenate.cwl
+    run: ../../../utils/concatenate.cwl
     in:
       files: eggnog_homology_searches/output_orthologs
       outputFileName:

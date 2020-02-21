@@ -1,14 +1,13 @@
 blockSize: null
 databaseFile:
   class: File
-  path: >-
-    diamond_test-input/uniref90_subset.dmnd
+  path: uniref90_subset.dmnd
 outputFormat: '6'
 queryGeneticCode: null
 queryInputFile:
   class: File
   format: 'edam:format_1929'
-  path: diamond_test-input/test_transcripts.fasta
+  path: ../../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.fasta
 strand: both
 taxonList: null
 threads: null

@@ -61,5 +61,5 @@ steps:
         valueFrom: $(self.nameroot)
       postfix: postfixes
     out: [result]
-    run: ../chunks/concatenate.cwl
+    run: ../../utils/concatenate.cwl
 

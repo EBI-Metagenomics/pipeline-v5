@@ -1,0 +1,3 @@
+infernal_matches:
+  class: File
+  path: ../expected-input/test-cmsearch.txt

@@ -29,7 +29,7 @@ outputs:
 steps:
   cmsearch:
     label: Search sequence(s) against a covariance model database
-    run: ../../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
+    run: ../../tools/RNA_prediction/cmsearch/infernal-cmsearch-v1.1.2.cwl
     in:
       covariance_model_database: covariance_models
       cpu: { default: 8 }
@@ -44,15 +44,19 @@ steps:
     out: [ matches, programOutput ]
 
   run_concatenate_matches:
-    run: ../../tools/RNA_prediction/concatenate_cmsearch.cwl
+    run: ../../utils/concatenate.cwl
     in:
-      files: cmsearch/matches
-      targetFile: targetFile
+      files:
+        - cmsearch/matches
+      outputFileName:
+        source: targetFile
+        valueFrom: $(self.nameroot)
+      postfix: { default: ".cmsearch.all.tblout" }
     out: [ result ]
 
   remove_overlaps:
     label: Remove lower scoring overlaps from cmsearch --tblout files.
-    run: ../../tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
+    run: ../../tools/RNA_prediction/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
     in:
       clan_information: clan_info
       cmsearch_matches: run_concatenate_matches/result

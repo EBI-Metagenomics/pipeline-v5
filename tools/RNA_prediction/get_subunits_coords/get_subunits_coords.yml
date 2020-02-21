@@ -1,8 +1,5 @@
 input:
   class: File
-  path: test.get_subunits
+  path: test-input/matched_seqs_with_coords
 pattern_SSU: SSU
 pattern_LSU: LSU
-pattern_5S: 5S
-mode: fasta
-prefix: 'prefix_'

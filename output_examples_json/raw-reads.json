@@ -3,54 +3,63 @@
         "basename": "qc-statistics",
         "nameext": "",
         "nameroot": "qc-statistics",
+        "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc-statistics",
         "listing": [
             {
                 "checksum": "sha1$29bd2f29c456abf218f2071acc8ddb4081a4eecd",
                 "basename": "GC-distribution.out.full",
                 "size": 4600,
                 "class": "File",
+                "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc-statistics/GC-distribution.out.full"
             },
             {
                 "checksum": "sha1$4e0af43cb5ab11f5bcea3d3f325d6eb21ee75e57",
                 "basename": "summary.out",
                 "size": 313,
                 "class": "File",
+                "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc-statistics/summary.out"
             },
             {
                 "checksum": "sha1$774bc959c507658e21aaa498cbd5992365b45fb4",
                 "basename": "seq-length.out.full_bin",
                 "size": 143,
                 "class": "File",
+                "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc-statistics/seq-length.out.full_bin"
             },
             {
                 "checksum": "sha1$395a67c2e213b2079b710897d0883f7a2b780489",
                 "basename": "GC-distribution.out.full_bin",
                 "size": 110,
                 "class": "File",
+                "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc-statistics/GC-distribution.out.full_bin"
             },
             {
                 "checksum": "sha1$b881b509818bb0260b4cf660310b397913f3d754",
                 "basename": "GC-distribution.out.full_pcbin",
                 "size": 121,
                 "class": "File",
+                "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc-statistics/GC-distribution.out.full_pcbin"
             },
             {
                 "checksum": "sha1$3f62a34cac4598503ff32180625df72d6f8ef117",
                 "basename": "seq-length.out.full",
                 "size": 647,
                 "class": "File",
+                "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc-statistics/seq-length.out.full"
             },
             {
                 "checksum": "sha1$2b629878c984776e76e766475ddc02757b142929",
                 "basename": "nucleotide-distribution.out.full",
                 "size": 5802,
                 "class": "File",
+                "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc-statistics/nucleotide-distribution.out.full"
             },
             {
                 "checksum": "sha1$d6ee0aeeb7e0b02a146319ab8bdcc036f04ea6c6",
                 "basename": "seq-length.out.full_pcbin",
                 "size": 147,
                 "class": "File",
+                "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc-statistics/seq-length.out.full_pcbin"
             }
         ],
         "class": "Directory"
@@ -60,14 +69,26 @@
         "basename": "SRR1620013_1_small.fastq.gz.sha1",
         "nameext": ".sha1",
         "nameroot": "SRR1620013_1_small.fastq.gz",
+        "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/SRR1620013_1_small.fastq.gz.sha1",
         "class": "File",
         "size": 70
+    },
+    "motus_input": {
+        "format": "http://edamontology.org/format_1930",
+        "checksum": "sha1$5055d03614c9d00ab302b4648a81330efb79d92c",
+        "basename": "SRR1620013_MERGED_FASTQ.unfiltered_fasta",
+        "nameroot": "SRR1620013_MERGED_FASTQ",
+        "nameext": ".unfiltered_fasta",
+        "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/SRR1620013_MERGED_FASTQ.unfiltered_fasta",
+        "class": "File",
+        "size": 2461543
     },
     "hashsum_reverse": {
         "checksum": "sha1$ba296cb897d3c1e74375e7b63994d2eb69df84e7",
         "basename": "SRR1620013_2_small.fastq.gz.sha1",
         "nameext": ".sha1",
         "nameroot": "SRR1620013_2_small.fastq.gz",
+        "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/SRR1620013_2_small.fastq.gz.sha1",
         "class": "File",
         "size": 70
     },
@@ -76,6 +97,7 @@
         "basename": "QC-PASSED",
         "nameext": "",
         "nameroot": "QC-PASSED",
+        "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/QC-PASSED",
         "class": "File",
         "size": 0
     },
@@ -84,471 +106,17 @@
         "basename": "qc_summary",
         "nameext": "",
         "nameroot": "qc_summary",
+        "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/qc_summary",
         "class": "File",
         "size": 204
     },
-    "chunking_proteins": [
-        {
-            "checksum": "sha1$7c2547fecb887d2910cd2220af5a54c0ba70c1eb",
-            "basename": "SRR1620013_MERGED_FASTQ_CDS.faa.chunks",
-            "nameext": ".chunks",
-            "nameroot": "SRR1620013_MERGED_FASTQ_CDS.faa",
-            "class": "File",
-            "size": 34
-        },
-        {
-            "checksum": "sha1$0e4f8145d14e1b0af866a2bfd1471e95ca7d05f8",
-            "basename": "SRR1620013_MERGED_FASTQ_CDS.faa.gz",
-            "nameext": ".gz",
-            "nameroot": "SRR1620013_MERGED_FASTQ_CDS.faa",
-            "class": "File",
-            "size": 302865
-        },
-        {
-            "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a",
-            "basename": "from_chunking_SRR1620013_MERGED_FASTQ_CDS.faa",
-            "nameext": ".faa",
-            "nameroot": "from_chunking_SRR1620013_MERGED_FASTQ_CDS",
-            "class": "File",
-            "size": 4
-        }
-    ],
-    "compressed_files": [
-        {
-            "checksum": "sha1$b5ba89624181472a65f43be3024a01b6a30ecbe3",
-            "basename": "SRR1620013_MERGED_FASTQ.fasta.gz",
-            "nameext": ".gz",
-            "nameroot": "SRR1620013_MERGED_FASTQ.fasta",
-            "class": "File",
-            "size": 439840
-        },
-        {
-            "checksum": "sha1$59356f3c80ee4011cdc10c1a1a2f9df20415f7ba",
-            "basename": "SRR1620013_MERGED_FASTQ.cmsearch.all.tblout.deoverlapped.gz",
-            "nameext": ".gz",
-            "nameroot": "SRR1620013_MERGED_FASTQ.cmsearch.all.tblout.deoverlapped",
-            "class": "File",
-            "size": 1798
-        },
-        {
-            "checksum": "sha1$76e7db296d4b1e84a70d6bdf5fc3dea8d4bebe1f",
-            "basename": "SRR1620013_MERGED_FASTQ.cmsearch.all.tblout.gz",
-            "nameext": ".gz",
-            "nameroot": "SRR1620013_MERGED_FASTQ.cmsearch.all.tblout",
-            "class": "File",
-            "size": 7487
-        }
-    ],
-    "compressed_sequence_categorisation": {
-        "basename": "sequence-categorisation",
-        "listing": [
-            {
-                "checksum": "sha1$77c26fd0c07ecf2141c1d6474d0ea421ced6a7ed",
-                "basename": "LSU.fasta.chunks",
-                "nameext": ".chunks",
-                "nameroot": "LSU.fasta",
-                "class": "File",
-                "size": 12
-            },
-            {
-                "checksum": "sha1$b0f5104adac95627a0a2f35801b6ff090da96dbb",
-                "basename": "LSU.fasta.gz",
-                "nameext": ".gz",
-                "nameroot": "LSU.fasta",
-                "class": "File",
-                "size": 1510
-            },
-            {
-                "checksum": "sha1$e8350a233281602dde29cfa42682a23c76ec6676",
-                "basename": "SSU.fasta.chunks",
-                "nameext": ".chunks",
-                "nameroot": "SSU.fasta",
-                "class": "File",
-                "size": 12
-            },
-            {
-                "checksum": "sha1$55577a3654f2933670d0297e2d2366a3d60e83b5",
-                "basename": "SSU.fasta.gz",
-                "nameext": ".gz",
-                "nameroot": "SSU.fasta",
-                "class": "File",
-                "size": 906
-            },
-            {
-                "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a",
-                "basename": "from_chunking_LSU.fasta",
-                "nameext": ".fasta",
-                "nameroot": "from_chunking_LSU",
-                "class": "File",
-                "size": 4
-            },
-            {
-                "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a",
-                "basename": "from_chunking_SSU.fasta",
-                "nameext": ".fasta",
-                "nameroot": "from_chunking_SSU",
-                "class": "File",
-                "size": 4
-            }
-        ],
-        "class": "Directory"
-    },
-    "rna-count": {
-        "checksum": "sha1$b3ffa009af94c5eaa3dae7ecdeca84e2c4bdd969",
-        "basename": "RNA-counts",
-        "nameext": "",
-        "nameroot": "RNA-counts",
+    "filtered_fasta": {
+        "format": "http://edamontology.org/format_1929",
+        "checksum": "sha1$3f187b06fd5b961f1a5edf2a6c85b893a9c76e67",
+        "basename": "SRR1620013_MERGED_FASTQ.fasta",
+        "nameroot": "SRR1620013_MERGED_FASTQ",
+        "nameext": ".fasta",
+        "location": "file:///hps/nobackup2/production/metagenomics/pipeline/testing/kate/results/version_5.0/edam_raw-reads_1/SRR1620013_MERGED_FASTQ.fasta",
         "class": "File",
-        "size": 25
-    },
-    "SSU_folder": {
-        "basename": "taxonomy-summary/SSU",
-        "listing": [
-            {
-                "checksum": "sha1$73f833f74cd6d171fe82abc57952d21457703c86",
-                "basename": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq.gz",
-                "nameext": ".gz",
-                "nameroot": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq",
-                "class": "File",
-                "size": 1038
-            },
-            {
-                "checksum": "sha1$07009154f08586ec944ca37275f502e6d19c4681",
-                "basename": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq.tsv",
-                "nameext": ".tsv",
-                "nameroot": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq",
-                "class": "File",
-                "size": 1040
-            },
-            {
-                "checksum": "sha1$1f3829197884fb86e09b3f45009713c55a81fe7f",
-                "basename": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq.txt",
-                "nameext": ".txt",
-                "nameroot": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq",
-                "class": "File",
-                "size": 839
-            },
-            {
-                "checksum": "sha1$f56096d435855fecae4051dbcae328e739984343",
-                "basename": "krona.html",
-                "nameext": ".html",
-                "nameroot": "krona",
-                "class": "File",
-                "size": 228807
-            },
-            {
-                "checksum": "sha1$8d41704cf1bf0ffbaf66b63a4bf76db03749e1db",
-                "basename": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq_hdf5.biom",
-                "nameext": ".biom",
-                "nameroot": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq_hdf5",
-                "class": "File",
-                "size": 37040
-            },
-            {
-                "checksum": "sha1$e18b40c57a470490aa9967f8de7ecc5e00929e8b",
-                "basename": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq_json.biom",
-                "nameext": ".biom",
-                "nameroot": "SRR1620013_MERGED_FASTQ_SSU.fasta.mseq_json",
-                "class": "File",
-                "size": 1709
-            }
-        ],
-        "class": "Directory",
-    },
-    "LSU_folder": {
-        "basename": "taxonomy-summary/LSU",
-        "listing": [
-            {
-                "checksum": "sha1$f2d4ce7511a1f2e227be3ef58109518ae755b34a",
-                "basename": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq.gz",
-                "nameext": ".gz",
-                "nameroot": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq",
-                "class": "File",
-                "size": 1582
-            },
-            {
-                "checksum": "sha1$94fc6faee0d249b9ccee5993ac74e8117d44e024",
-                "basename": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq.tsv",
-                "nameext": ".tsv",
-                "nameroot": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq",
-                "class": "File",
-                "size": 1433
-            },
-            {
-                "checksum": "sha1$ea7da0bbb787088e1458c47521d3098e1cee8d12",
-                "basename": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq.txt",
-                "nameext": ".txt",
-                "nameroot": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq",
-                "class": "File",
-                "size": 1195
-            },
-            {
-                "checksum": "sha1$c07e9ae7809181b5c4fc88ee905e1bf8e8e8b547",
-                "basename": "krona.html",
-                "nameext": ".html",
-                "nameroot": "krona",
-                "class": "File",
-                "size": 230130
-            },
-            {
-                "checksum": "sha1$1f11d9aab1acc86879ab23d8cd622df9ba8db872",
-                "basename": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq_hdf5.biom",
-                "nameext": ".biom",
-                "nameroot": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq_hdf5",
-                "class": "File",
-                "size": 37040
-            },
-            {
-                "checksum": "sha1$05503df1a05a2bd5931fb2939a6341de338c8ff7",
-                "basename": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq_json.biom",
-                "nameext": ".biom",
-                "nameroot": "SRR1620013_MERGED_FASTQ_LSU.fasta.mseq_json",
-                "class": "File",
-                "size": 2272
-            }
-        ],
-        "class": "Directory",
-    },
-    "functional_annotation_folder": {
-        "basename": "functional-annotation",
-        "listing": [
-            {
-                "checksum": "sha1$8edd16fad88c0cbd73ff62466208823bbde54eee",
-                "basename": "SRR1620013_MERGED_FASTQ.summary.ips",
-                "nameext": ".ips",
-                "nameroot": "SRR1620013_MERGED_FASTQ.summary",
-                "class": "File",
-                "size": 71844
-            },
-            {
-                "checksum": "sha1$fab700dd36af66c2fd3237341a13391efde330a3",
-                "basename": "SRR1620013_MERGED_FASTQ.summary.ko",
-                "nameext": ".ko",
-                "nameroot": "SRR1620013_MERGED_FASTQ.summary",
-                "class": "File",
-                "size": 3631
-            },
-            {
-                "checksum": "sha1$c60d7c8b668dc53f56843889b3ee1546056a33ce",
-                "basename": "SRR1620013_MERGED_FASTQ.summary.pfam",
-                "nameext": ".pfam",
-                "nameroot": "SRR1620013_MERGED_FASTQ.summary",
-                "class": "File",
-                "size": 43775
-            },
-            {
-                "format": "https://www.iana.org/assignments/media-types/text/csv",
-                "checksum": "sha1$f17c672ac974c4b15645cd90c39a948a57ee8f52",
-                "basename": "SRR1620013_MERGED_FASTQ.summary.go",
-                "nameroot": "SRR1620013_MERGED_FASTQ.summary",
-                "nameext": ".go",
-                "class": "File",
-                "size": 36145
-            },
-            {
-                "format": "https://www.iana.org/assignments/media-types/text/csv",
-                "checksum": "sha1$009b93acc5c553d885f0459f46d94c2c85a3fd1c",
-                "basename": "SRR1620013_MERGED_FASTQ.summary.go_slim",
-                "nameroot": "SRR1620013_MERGED_FASTQ.summary",
-                "nameext": ".go_slim",
-                "class": "File",
-                "size": 7349
-            },
-            {
-                "checksum": "sha1$2be5be06b3fef6d1fcbe35ea1cfea47d7f72e3d5",
-                "basename": "SRR1620013_MERGED_FASTQ.I5.tsv.chunks",
-                "nameext": ".chunks",
-                "nameroot": "SRR1620013_MERGED_FASTQ.I5.tsv",
-                "class": "File",
-                "size": 33
-            },
-            {
-                "checksum": "sha1$28a317ab9d3616021ec79e00dfe9bff580fafc99",
-                "basename": "SRR1620013_MERGED_FASTQ.I5.tsv.gz",
-                "nameext": ".gz",
-                "nameroot": "SRR1620013_MERGED_FASTQ.I5.tsv",
-                "class": "File",
-                "size": 191340
-            },
-            {
-                "checksum": "sha1$ab458088e853b54965a769ca07ea06be7e55fb00",
-                "basename": "SRR1620013_MERGED_FASTQ.hmm.tsv.chunks",
-                "nameext": ".chunks",
-                "nameroot": "SRR1620013_MERGED_FASTQ.hmm.tsv",
-                "class": "File",
-                "size": 34
-            },
-            {
-                "checksum": "sha1$fa4f3138703e72f5d426d6021413f01485d02b0b",
-                "basename": "SRR1620013_MERGED_FASTQ.hmm.tsv.gz",
-                "nameext": ".gz",
-                "nameroot": "SRR1620013_MERGED_FASTQ.hmm.tsv",
-                "class": "File",
-                "size": 5288
-            },
-            {
-                "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a",
-                "basename": "from_chunking_SRR1620013_MERGED_FASTQ.I5.tsv",
-                "nameext": ".tsv",
-                "nameroot": "from_chunking_SRR1620013_MERGED_FASTQ.I5",
-                "class": "File",
-                "size": 4
-            },
-            {
-                "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a",
-                "basename": "from_chunking_SRR1620013_MERGED_FASTQ.hmm.tsv",
-                "nameext": ".tsv",
-                "nameroot": "from_chunking_SRR1620013_MERGED_FASTQ.hmm",
-                "class": "File",
-                "size": 4
-            }
-        ],
-        "class": "Directory"
-    },
-    "chunking_nucleotides": [
-        {
-            "checksum": "sha1$666c398e2bb4e778727801d23cefa9f42d490dd2",
-            "basename": "SRR1620013_MERGED_FASTQ.fasta.chunks",
-            "nameext": ".chunks",
-            "nameroot": "SRR1620013_MERGED_FASTQ.fasta",
-            "class": "File",
-            "size": 32
-        },
-        {
-            "checksum": "sha1$671b2370cf79ee86a1580aa3c0a246626ef1482a",
-            "basename": "SRR1620013_MERGED_FASTQ.fasta.gz",
-            "nameext": ".gz",
-            "nameroot": "SRR1620013_MERGED_FASTQ.fasta",
-            "class": "File",
-            "size": 439840
-        },
-        {
-            "checksum": "sha1$fef1039af96d834674da40859b83412c4cf1da95",
-            "basename": "SRR1620013_MERGED_FASTQ_CDS.ffn.chunks",
-            "nameext": ".chunks",
-            "nameroot": "SRR1620013_MERGED_FASTQ_CDS.ffn",
-            "class": "File",
-            "size": 34
-        },
-        {
-            "checksum": "sha1$e18dfcb8b5c0aec8fd96fd38d61224a7d0d7078a",
-            "basename": "SRR1620013_MERGED_FASTQ_CDS.ffn.gz",
-            "nameext": ".gz",
-            "nameroot": "SRR1620013_MERGED_FASTQ_CDS.ffn",
-            "class": "File",
-            "size": 397267
-        },
-        {
-            "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a",
-            "basename": "from_chunking_SRR1620013_MERGED_FASTQ.fasta",
-            "nameext": ".fasta",
-            "nameroot": "from_chunking_SRR1620013_MERGED_FASTQ",
-            "class": "File",
-            "size": 4
-        },
-        {
-            "checksum": "sha1$e5fd9cfe0e8039111d54b588e77b2bb0cad41c3a",
-            "basename": "from_chunking_SRR1620013_MERGED_FASTQ_CDS.ffn",
-            "nameext": ".ffn",
-            "nameroot": "from_chunking_SRR1620013_MERGED_FASTQ_CDS",
-            "class": "File",
-            "size": 4
-        }
-    ],
-    "ncrnas_folder": {
-        "class": "Directory",
-        "basename": "sequence-categorisation",
-        "listing": [
-            {
-                "checksum": "sha1$63368bd578beb4be979b34d78803d6f06ecd3053",
-                "basename": "Bacteria_large_SRP.RF01854.fasta.gz",
-                "nameext": ".gz",
-                "nameroot": "Bacteria_large_SRP.RF01854.fasta",
-                "class": "File",
-                "size": 167
-            },
-            {
-                "checksum": "sha1$4e704fe34fc5e22dc00c46cdbd886b87b14d78ff",
-                "basename": "tRNA.RF00005.fasta.gz",
-                "nameext": ".gz",
-                "nameroot": "tRNA.RF00005.fasta",
-                "class": "File",
-                "size": 356
-            }
-        ]
-    },
-    "sequence-categorisation_folder": {
-        "class": "Directory",
-        "basename": "sequence-categorisation",
-        "listing": [
-            {
-                "checksum": "sha1$145ae926ac5f0512814073999a6b383e54b59e43",
-                "basename": "LSU_rRNA_bacteria.RF02541.fa.gz",
-                "nameext": ".gz",
-                "nameroot": "LSU_rRNA_bacteria.RF02541.fa",
-                "class": "File",
-                "size": 1529
-            },
-            {
-                "checksum": "sha1$700e88df57392c0c476588a199e8fd4a320e739f",
-                "basename": "SSU_rRNA_bacteria.RF00177.fa.gz",
-                "nameext": ".gz",
-                "nameroot": "SSU_rRNA_bacteria.RF00177.fa",
-                "class": "File",
-                "size": 925
-            }
-        ]
-    },
-    "motus_output": {
-        "checksum": "sha1$ec3ddc59fc91c27ac98b5c18a94570cb23f0e0a3",
-        "basename": "SRR1620013_MERGED_FASTQ.motus.tsv",
-        "nameext": ".tsv",
-        "nameroot": "SRR1620013_MERGED_FASTQ.motus",
-        "class": "File",
-        "size": 2249
-    },
-    "stats": {
-        "basename": "functional-annotation",
-        "nameext": "",
-        "nameroot": "functional-annotation",
-        "listing": [
-            {
-                "basename": "stats",
-                "listing": [
-                    {
-                        "checksum": "sha1$0c86e515fdefc6c80a5fcb5221bf66b1d4524213",
-                        "basename": "ko.stats",
-                        "size": 75,
-                        "class": "File",
-                    },
-                    {
-                        "checksum": "sha1$0fc681bf3c0eb9c5e2eeef3afdfb02ac2d163c5b",
-                        "basename": "pfam.stats",
-                        "size": 87,
-                        "class": "File",
-                    },
-                    {
-                        "checksum": "sha1$071b03ae0dda8536054a0c4f2fb08f2f764d2c43",
-                        "basename": "go.stats",
-                        "size": 79,
-                        "class": "File",
-                    },
-                    {
-                        "checksum": "sha1$afe765df8458c4df0a656bb93afe2c1a79353a75",
-                        "basename": "interproscan.stats",
-                        "size": 111,
-                        "class": "File",
-                    },
-                    {
-                        "checksum": "sha1$7e96e88ee9b1875222060cf7edb4735a13156f0d",
-                        "basename": "orf.stats",
-                        "size": 86,
-                        "class": "File",
-                    }
-                ],
-                "class": "Directory"
-            }
-        ],
-        "class": "Directory"
+        "size": 1438043
     }
-}

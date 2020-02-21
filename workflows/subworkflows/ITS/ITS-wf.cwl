@@ -45,11 +45,14 @@ outputs:
 
 steps:
   cat:
-    run: ../../../tools/mask-for-ITS/cat-SSU-LSU.cwl
+    run: ../../../utils/concatenate.cwl
     in:
-      SSU_coords: SSU_coordinates
-      LSU_coords: LSU_coordinates
-    out: [ all-coordinates ]
+      files:
+        - SSU_coordinates
+        - LSU_coordinates
+      outputFileName: { default: "SSU-and" }
+      postfix: { default: "-LSU" }
+    out: [ result ]
 
   #if proportion < 0.90 then carry on, update with potential "conditional"
   #mask SSU/LSU
@@ -57,7 +60,7 @@ steps:
   reformat_coords:
     run: ../../../tools/mask-for-ITS/format-bedfile.cwl
     in:
-      all_coordinates: cat/all-coordinates
+      all_coordinates: cat/result
     out: [ maskfile ]
 
   mask_for_ITS:

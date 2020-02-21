@@ -31,7 +31,7 @@ steps:
     out: [reads1_trimmed]
 
   convert_trimmed_reads_to_fasta:
-    run: ../../utils/fastq_to_fasta.cwl
+    run: ../../utils/fastq_to_fasta/fastq_to_fasta.cwl
     in:
       fastq: trim_quality_control/reads1_trimmed
     out: [ fasta ]

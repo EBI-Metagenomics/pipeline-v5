@@ -1,0 +1,12 @@
+sequences:
+  class: File
+  path: ../../input_examples/amplicon/ERR2237853_MERGED_FASTQ.fasta.gz
+database:
+  class: File
+  path: ref-dbs/silva_lsu/LSU.fasta
+taxonomy:
+  class: File
+  path: ref-dbs/silva_lsu/slv_lsu_filtered2.txt
+prefix:
+  class: File
+  path: ../../input_examples/amplicon/ERR2237853_MERGED_FASTQ.fasta.gz

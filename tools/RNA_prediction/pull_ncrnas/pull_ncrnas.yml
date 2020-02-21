@@ -1,0 +1,6 @@
+hits:
+  class: File
+  path: ../../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.cmsearch.all.tblout.deoverlapped
+
+model:
+  - 'cyano_tmRNA.RF01851'
