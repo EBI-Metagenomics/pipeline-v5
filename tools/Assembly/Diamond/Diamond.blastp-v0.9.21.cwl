@@ -3,6 +3,7 @@ cwlVersion: v1.0
 $namespaces:
   edam: 'http://edamontology.org/'
   s: 'http://schema.org/'
+
 # TODO: Combine the 2 Diamond commands blastp and blastx into a single CWL tool description using Custome types
 # TODO: https://www.commonwl.org/user_guide/19-custom-types/index.html
 baseCommand:
@@ -50,7 +51,7 @@ inputs:
       to 20 for sequences of length below 100, and set to 40 otherwise. Setting
       this option to 1 will disable this feature.
   - id: queryInputFile
-    format: 'edam:format_1929'
+    format: edam:format_1929
     type: File
     inputBinding:
       position: 0
@@ -116,7 +117,7 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.queryInputFile.basename).diamond_matches
-    format: 'edam:format_2333'
+    format: edam:format_2333
 doc: |
   DIAMOND is a sequence aligner for protein and translated DNA searches,
   designed for high performance analysis of big sequence data.
@@ -137,10 +138,10 @@ arguments:
     prefix: '--out'
     valueFrom: $(inputs.queryInputFile.basename).diamond_matches
 requirements:
-#  - class: SchemaDefRequirement
-#    types:
-#      - $import: Diamond-strand_values.yaml
-#      - $import: Diamond-output_formats.yaml
+  - class: SchemaDefRequirement
+    types:
+      - $import: Diamond-strand_values.yaml
+      - $import: Diamond-output_formats.yaml
   - class: ResourceRequirement
     ramMin: 15000
     tmpdirMin: 20000

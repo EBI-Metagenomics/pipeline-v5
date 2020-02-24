@@ -1,0 +1,18 @@
+input_fasta:
+  class: File
+  format: edam:format_1929
+  path: Combined_gene_caller/files/100000_130095.fasta
+maskfile:
+  class: File
+  path: Combined_gene_caller/files/ERR3414571_FASTA.cmsearch.all.tblout.deoverlapped
+postfixes:
+  - '_CDS.faa'
+  - '_CDS.ffn'
+chunk_size: 100000
+diamond_maxTargetSeqs: 1
+diamond_databaseFile:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/uniref90_v2019_11_diamond-v0.9.25.dmnd
+Uniref90_db_txt:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/db_uniref90_v2019_11.txt

@@ -1,0 +1,11 @@
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
+input_fasta:
+  class: File
+  path: files/100000_130095.fasta
+  format: edam:format_1929
+maskfile:
+  class: File
+  path: files/ERR3414571_FASTA.cmsearch.all.tblout.deoverlapped

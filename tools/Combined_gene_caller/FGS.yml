@@ -1,0 +1,10 @@
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
+input_fasta:
+  format: 'edam:format_1929'
+  class: File
+  path: files/100000_130095.fasta
+output: fasta_file.fgs
+seq_type: "1"

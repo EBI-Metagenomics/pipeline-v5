@@ -139,14 +139,11 @@ steps:
   cgc:
     in:
       input_fasta: filtered_fasta
-      seq_type: { default: 's' }
       maskfile: rna_prediction/ncRNA
-      config: CGC_config
-      outdir: { default: 'CGC-output' }
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
     out: [ results ]
-    run: ../../../tools/Combined_gene_caller/CGC-subwf.cwl
+    run: ../../subworkflows/raw_reads/CGC-subwf.cwl
 
 # << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
   functional_annotation:

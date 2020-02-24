@@ -1,0 +1,7 @@
+{
+  "faselector_path": "/bin/faselector",
+  "GeneDetectionTools": {
+    "FragGeneScan": "/FragGeneScan",
+    "Prodigal": "/Prodigal/prodigal"
+  }
+}

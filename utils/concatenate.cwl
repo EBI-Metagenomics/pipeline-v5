@@ -36,6 +36,7 @@ requirements:
     ramMin: 200
     coresMax: 1
   - class: InlineJavascriptRequirement
+  - class: StepInputExpressionRequirement
 $schemas:
   - 'https://schema.org/docs/schema_org_rdfa.html'
 s:copyrightHolder: "EMBL - European Bioinformatics Institute, 2018"
