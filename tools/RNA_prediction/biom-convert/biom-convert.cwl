@@ -20,6 +20,7 @@ hints:
 #        version: [ "2.1.6" ]
 #
 
+baseCommand: [ "biom-convert.sh" ]
 
 inputs:
   biom:
@@ -61,8 +62,6 @@ inputs:
       included.
     inputBinding:
       prefix: --header-key
-
-baseCommand: [ "biom", "convert" ]
 
 arguments:
   - valueFrom: |
