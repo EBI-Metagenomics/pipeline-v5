@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/EBI-Metagenomics/pipeline-v5.svg?token=Fx66TMEyQXwD4SBCCvpz&branch=master)](https://travis-ci.org/EBI-Metagenomics/pipeline-v5)
+[![Build Status](https://travis-ci.org/EBI-Metagenomics/pipeline-v5.svg?branch=master)](https://travis-ci.com/EBI-Metagenomics/pipeline-v5)
 
 # pipeline-v5
 
