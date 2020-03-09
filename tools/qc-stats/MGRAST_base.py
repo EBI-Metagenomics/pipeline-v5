@@ -166,6 +166,31 @@ def count_sequences(infile, sequence_type):
     return slenNum
 
 
+def empty_statistics(output, fast, seq_type, prefix_map):
+    value = 0
+    stat_text = ["bp_count\t%d" % value,
+                 "sequence_count\t%d" % value,
+                 "average_length\t%.3f" % value,
+                 "standard_deviation_length\t%.3f" % value,
+                 "length_min\t%d" % value,
+                 "length_max\t%d" % value]
+
+    if not fast:
+        stat_text.extend(["average_gc_content\t%.3f" % value,
+                          "standard_deviation_gc_content\t%.3f" % value,
+                          "average_gc_ratio\t%.3f" % value,
+                          "standard_deviation_gc_ratio\t%.3f" % value,
+                          "ambig_char_count\t%d" % value,
+                          "ambig_sequence_count\t%d" % value,
+                          "average_ambig_chars\t%.3f" % value ])
+    if seq_type:
+        seq_type_guess = get_seq_type(value, prefix_map)
+        stat_text.append("sequence_type\t%s" % seq_type_guess)
+    out_hdl = open(output, "w")
+    out_hdl.write("\n".join(stat_text) + "\n")
+    out_hdl.close()
+
+
 usage = "usage: %prog [options] -i input_fasta" + __doc__
 
 
@@ -231,7 +256,8 @@ def main(args):
     first_char = in_hdl.read(1)
     if (opts.type == 'fasta') and (first_char != '>'):
         sys.stderr.write("[error] invalid fasta file, first character must be '>'\n")
-        os._exit(1)
+        empty_statistics(opts.output, opts.fast, opts.seq_type, prefix_map)
+        os._exit(0)
     elif (opts.type == 'fastq') and (first_char != '@'):
         sys.stderr.write("[error] invalid fastq file, first character must be '@'\n")
         os._exit(1)
