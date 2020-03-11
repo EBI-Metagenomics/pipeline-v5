@@ -69,7 +69,7 @@ def suppress_dir(flag, lsu, ssu, its, its_file):  # rename dir by tag
         [os.rename(x, y) for x, y in [(lsu, 'LSU'), (ssu, 'SSU'), (its, new_its_folder), (its_file, new_its_file)]]
         return [os.path.relpath(x) for x in [lsu, ssu, new_its_folder, new_its_file]]
     elif flag == 'both':
-        [os.rename(x, y) for x, y in [(lsu, 'LSU'), (ssu, 'SSU'), (its, 'its'), (its_file, )]]
+        [os.rename(x, y) for x, y in [(lsu, 'LSU'), (ssu, 'SSU'), (its, 'its'), (its_file, 'ITS_masked.fasta.gz')]]
         return [os.path.relpath(x) for x in [lsu, ssu, its, its_file]]
 
 
