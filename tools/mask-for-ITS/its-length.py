@@ -61,7 +61,7 @@ def validate_hits(ssu_fasta, lsu_fasta, ssu_folder, lsu_folder, len_avg):  # che
 
 def suppress_dir(flag, lsu, ssu, its, its_file):  # rename dir by tag
     new_ssu_folder, new_lsu_folder, new_its_folder, new_its_file = \
-        [x for x in ['suppressed_SSU', 'suppressed_LSU', 'suppressed_its', 'empty.fasta.gz']]
+        [x for x in ['suppressed_SSU', 'suppressed_LSU', 'suppressed_its', 'empty_its.fasta.gz']]
     if flag == 'ITS':
         [os.rename(x, y) for x, y in [(lsu, new_lsu_folder), (ssu, new_ssu_folder), (its, 'its'), (its_file, 'ITS_masked.fasta.gz')]]
         return [os.path.relpath(x) for x in [new_lsu_folder, new_ssu_folder, its, its_file]]
