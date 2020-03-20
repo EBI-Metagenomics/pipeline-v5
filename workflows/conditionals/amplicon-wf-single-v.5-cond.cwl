@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev2
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -56,23 +56,31 @@ outputs:
     type: File
     outputSource: before-qc/hashsum_input
 
-  gz_files:  # fasta.gz, cmsearch.gz, deoverlapped.gz
+  gz_files:
     type: File[]
     outputSource: after-qc/gz_files
+    pickValue: all_non_null
   sequence-categorisation_folder:
     type: Directory
     outputSource: after-qc/sequence-categorisation_folder
+    pickValue: all_non_null
   taxonomy-summary_folder:
     type: Directory
     outputSource: after-qc/taxonomy-summary_folder
+    pickValue: all_non_null
   rna-count:
     type: File
     outputSource: after-qc/rna-count
+    pickValue: all_non_null
+  ITS-length:
+    type: File
+    outputSource: after-qc/ITS-length
+    pickValue: all_non_null
 
 steps:
 
   before-qc:
-    run: conditionals/amplicon/amplicon-single-1.cwl
+    run: amplicon/amplicon-single-1.cwl
     in:
       single_reads: single_reads
       qc_min_length: qc_min_length
@@ -85,7 +93,8 @@ steps:
       - hashsum_input
 
   after-qc:
-    run: conditionals/amplicon/amplicon-2.cwl
+    run: amplicon/amplicon-2.cwl
+    when: $(inputs.status.basename == 'QC-PASSED')
     in:
       status: before-qc/qc-status
       filtered_fasta: before-qc/filtered_fasta
@@ -114,3 +123,5 @@ steps:
       - rna-count
       - taxonomy-summary_folder
       - sequence-categorisation_folder
+      - ITS-length
+

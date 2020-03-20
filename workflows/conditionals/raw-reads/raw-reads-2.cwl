@@ -13,6 +13,7 @@ requirements:
 #      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
+    status: File
     motus_input: File
     filtered_fasta: File
 

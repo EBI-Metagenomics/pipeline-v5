@@ -6,17 +6,17 @@ set -e
 # run a conformance test for all CWL workflows descriptions
 for i in $(find workflows -name "*.cwl"); do
  echo "Testing: ${i}"
- cwltool --validate ${i}
+ cwltool --enable-dev --validate ${i}
 done
 
 # run a conformance test for all CWL tool descriptions
 for i in $(find tools -name "*.cwl"); do
  echo "Testing: ${i}"
- cwltool --validate ${i}
+ cwltool --enable-dev --validate ${i}
 done
 
 # run a conformance test for all CWL util descriptions
 for i in $(find utils -name "*.cwl"); do
  echo "Testing: ${i}"
- cwltool --validate ${i}
+ cwltool --enable-dev --validate ${i}
 done

@@ -24,7 +24,7 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-
+    status: File
     filtered_fasta: File
 
  # << rna prediction >>

@@ -101,6 +101,7 @@ steps:
   after-qc:
     run: conditionals/amplicon/amplicon-2.cwl
     in:
+      status: before-qc/qc-status
       filtered_fasta: before-qc/filtered_fasta
       ssu_db: ssu_db
       lsu_db: lsu_db

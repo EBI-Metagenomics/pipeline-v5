@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev2
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -13,9 +13,7 @@ requirements:
 #      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-    forward_reads: File
-    reverse_reads: File
-
+    single_reads: File
     qc_min_length: int
 
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -71,53 +69,58 @@ outputs:
   qc-status:
     type: File
     outputSource: before-qc/qc-status
-  hashsum_forward:
+  hashsum_input:
     type: File
-    outputSource: before-qc/hashsum_forward
-  hashsum_reverse:
-    type: File
-    outputSource: before-qc/hashsum_reverse
+    outputSource: before-qc/hashsum_input
 
   sequence-categorisation_folder:
     type: Directory
     outputSource: after-qc/sequence_categorisation_folder
+    pickValue: all_non_null
   taxonomy-summary_folder:
     type: Directory
     outputSource: after-qc/taxonomy-summary_folder
+    pickValue: all_non_null
   rna-count:
     type: File
     outputSource: after-qc/rna-count
+    pickValue: all_non_null
 
   motus_output:
     type: File
     outputSource: after-qc/motus_output
+    pickValue: all_non_null
 
   compressed_files:
     type: File[]
     outputSource: after-qc/compressed_files
+    pickValue: all_non_null
 
   functional_annotation_folder:
     type: Directory
     outputSource: after-qc/functional_annotation_folder
+    pickValue: all_non_null
   stats:
     outputSource: after-qc/stats
     type: Directory
+    pickValue: all_non_null
 
   chunking_nucleotides:
     type: File[]
     outputSource: after-qc/chunking_nucleotides
+    pickValue: all_non_null
   chunking_proteins:
     type: File[]
     outputSource: after-qc/chunking_proteins
+    pickValue: all_non_null
 
 steps:
 
 # << First part >>
   before-qc:
-    run: conditionals/raw-reads/raw-reads-paired-1.cwl
+    run: raw-reads/raw-reads-single-1.cwl
     in:
-      forward_reads: forward_reads
-      reverse_reads: reverse_reads
+      single_reads: single_reads
       qc_min_length: qc_min_length
     out:
       - qc-statistics
@@ -125,11 +128,11 @@ steps:
       - qc-status
       - motus_input
       - filtered_fasta
-      - hashsum_forward
-      - hashsum_reverse
+      - hashsum_input
 
   after-qc:
-    run: conditionals/raw-reads/raw-reads-2.cwl
+    run: raw-reads/raw-reads-2.cwl
+    when: $(inputs.status.basename == 'QC-PASSED')
     in:
       status: before-qc/qc-status
       motus_input: before-qc/motus_input
@@ -176,3 +179,5 @@ steps:
       - stats
       - chunking_nucleotides
       - chunking_proteins
+
+

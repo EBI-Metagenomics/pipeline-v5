@@ -124,6 +124,7 @@ steps:
   after-qc:
     run: conditionals/raw-reads/raw-reads-2.cwl
     in:
+      status: before-qc/qc-status
       motus_input: before-qc/motus_input
       filtered_fasta: before-qc/filtered_fasta
       ssu_db: ssu_db
@@ -168,5 +169,3 @@ steps:
       - stats
       - chunking_nucleotides
       - chunking_proteins
-
-
