@@ -59,18 +59,17 @@ def validate_hits(ssu_fasta, lsu_fasta, ssu_folder, lsu_folder, len_avg):  # che
         return 'rRNA'
 
 
-def suppress_dir(flag, lsu, ssu, its, its_file):  # rename dir by tag
-    new_ssu_folder, new_lsu_folder, new_its_folder, new_its_file = \
-        [x for x in ['suppressed_SSU', 'suppressed_LSU', 'suppressed_its', 'empty_its.fasta.gz']]
+def suppress_dir(flag, lsu, ssu, its, its_file, ssu_file, lsu_file):  # rename dir by tag
+    new_ssu_folder, new_lsu_folder, new_its_folder, new_its_file, new_ssu_file, new_lsu_file = \
+        [x for x in ['suppressed_SSU', 'suppressed_LSU', 'suppressed_its', 'ITS_merged.suppressed.fasta.gz', 'SSU.suppressed.fasta.gz', 'LSU.suppressed.fasta.gz']]
     if flag == 'ITS':
-        [os.rename(x, y) for x, y in [(lsu, new_lsu_folder), (ssu, new_ssu_folder), (its, 'its'), (its_file, 'ITS_masked.fasta.gz')]]
-        return [os.path.relpath(x) for x in [new_lsu_folder, new_ssu_folder, its, its_file]]
+        [os.rename(x, y) for x, y in [(lsu, new_lsu_folder), (ssu, new_ssu_folder), (ssu_file, new_ssu_file, (lsu_file, new_lsu_file))]]
+        return [os.path.relpath(x) for x in [new_lsu_folder, new_ssu_folder, new_lsu_file, new_ssu_file, its, its_file]]
     elif flag == 'rRNA':
-        [os.rename(x, y) for x, y in [(lsu, 'LSU'), (ssu, 'SSU'), (its, new_its_folder), (its_file, new_its_file)]]
-        return [os.path.relpath(x) for x in [lsu, ssu, new_its_folder, new_its_file]]
+        [os.rename(x, y) for x, y in [(its, new_its_folder), (its_file, new_its_file)]]
+        return [os.path.relpath(x) for x in [lsu, ssu, lsu_file, ssu_file, new_its_folder, new_its_file]]
     elif flag == 'both':
-        [os.rename(x, y) for x, y in [(lsu, 'LSU'), (ssu, 'SSU'), (its, 'its'), (its_file, 'ITS_masked.fasta.gz')]]
-        return [os.path.relpath(x) for x in [lsu, ssu, its, its_file]]
+        return [os.path.relpath(x) for x in [lsu, ssu, lsu_file, ssu_file, its, its_file]]
 
 
 if __name__ == '__main__':
@@ -91,5 +90,5 @@ if __name__ == '__main__':
         print('average ITS length is ' + str(avg))
         print('suppressing...')
         suppress_flag = validate_hits(args.ssu_file, args.lsu_file, args.ssu_directory, args.lsu_directory, avg)
-        suppress_dir(suppress_flag, args.lsu_directory, args.ssu_directory, args.its_directory, args.its_file)
+        suppress_dir(suppress_flag, args.lsu_directory, args.ssu_directory, args.its_directory, args.its_file, args.ssu_file, args.lsu_file)
 

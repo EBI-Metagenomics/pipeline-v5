@@ -56,8 +56,10 @@ outputs:
        type: Directory
        outputBinding:
         glob: "*its"
-    out_fasta:
-       type: File
+    out_fastas:
+       type:
+        type: array
+        items: File
        outputBinding:
         glob: "*.fasta.gz"
 
