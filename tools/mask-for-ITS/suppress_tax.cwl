@@ -44,18 +44,14 @@ stdout: ITS_LENGTH
 
 outputs:
     stdout: stdout
-    out_lsu:
+    out_tax:
        type: Directory
        outputBinding:
-        glob: "*LSU*"
-    out_ssu:
+        glob: "taxonomy-summary"
+    out_suppress:
        type: Directory
        outputBinding:
-        glob: "*SSU*"
-    out_its:
-       type: Directory
-       outputBinding:
-        glob: "*its"
+        glob: "suppressed"
     out_fastas:
        type:
         type: array
