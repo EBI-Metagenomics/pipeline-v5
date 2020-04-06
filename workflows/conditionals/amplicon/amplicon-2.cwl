@@ -43,7 +43,11 @@ outputs:
 
   taxonomy-summary_folder:
     type: Directory
-    outputSource: return_tax_dir/out
+    outputSource: suppress_tax/out_tax
+
+  suppressed_upload:
+    type: Directory
+    outputSource: suppress_tax/out_suppress
 
   sequence-categorisation_folder:
     type: Directory
@@ -143,7 +147,7 @@ steps:
       lsu_dir: rna_prediction/LSU_folder
       ssu_dir: rna_prediction/SSU_folder
       its_dir: return_its_dir/out
-    out: [stdout, out_lsu, out_ssu, out_its, out_fastas]
+    out: [stdout, out_tax, out_suppress, out_fastas]
 
 # return sequence-categorisation:
   return_seq_dir:
@@ -157,13 +161,3 @@ steps:
       dir_name: { default: 'sequence-categorisation' }
     out: [out]
 
-# return taxonomy-summary
-  return_tax_dir:
-    run: ../../../utils/return_directory.cwl
-    in:
-      dir_list:
-        - suppress_tax/out_lsu
-        - suppress_tax/out_ssu
-        - suppress_tax/out_its
-      dir_name: { default: 'taxonomy-summary' }
-    out: [out]

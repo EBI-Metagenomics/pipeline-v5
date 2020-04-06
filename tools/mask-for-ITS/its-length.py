@@ -60,22 +60,20 @@ def validate_hits(ssu_fasta, lsu_fasta, ssu_folder, lsu_folder, len_avg):  # che
 
 
 def suppress_dir(flag, lsu, ssu, its, its_file, ssu_file, lsu_file):
-    suppressed_folder, taxonomy_summary, new_ssu_folder, new_lsu_folder, new_its_folder, new_its_file, new_ssu_file, new_lsu_file = \
-        [x for x in ['suppressed', 'taxonomy-summary']]
+    suppressed_folder, taxonomy_summary, its_filename, lsu_filename, ssu_filename = \
+        [x for x in ['suppressed', 'taxonomy-summary', os.path.basename(its_file), os.path.basename(lsu_file), os.path.basename(ssu_file)]]
     os.mkdir('suppressed')
     os.mkdir('taxonomy-summary')
     # move dir by tag
     if flag == 'ITS':
         [shutil.copytree(src, dest) for src, dest in [(lsu, suppressed_folder + '/LSU'), (ssu, suppressed_folder + '/SSU'), (its, taxonomy_summary + '/its')]]
-        [shutil.copy(src, dest) for src, dest in [(lsu_file, suppressed_folder), (ssu_file, suppressed_folder)]]
-        return os.path.relpath(its_file)
+        [shutil.copy(src, dest) for src, dest in [(lsu_file, suppressed_folder), (ssu_file, suppressed_folder), (its_file, its_filename)]]
     elif flag == 'rRNA':
         [shutil.copytree(src, dest) for src, dest in [(lsu, taxonomy_summary + '/LSU'), (ssu, taxonomy_summary + '/SSU'), (its, suppressed_folder + '/its')]]
-        shutil.copy(its_file, suppressed_folder)
-        return [os.path.relpath(x) for x in [lsu_file, ssu_file]]
+        [shutil.copy(src, dest) for src, dest in [(lsu_file, lsu_filename), (ssu_file, ssu_filename), (its_file, suppressed_folder)]]
     elif flag == 'both':
         [shutil.copytree(src, taxonomy_summary + dest) for src, dest in [(lsu, '/LSU'), (ssu, '/SSU'), (its, '/its')]]
-        return [os.path.relpath(x) for x in [lsu_file, ssu_file, its_file]]
+        [shutil.copy(src, dest) for src, dest in [(lsu_file, lsu_filename), (ssu_file, ssu_filename), (its_file, its_filename)]]
 
 
 if __name__ == '__main__':
