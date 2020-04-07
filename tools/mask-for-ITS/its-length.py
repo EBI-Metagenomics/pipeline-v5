@@ -59,18 +59,21 @@ def validate_hits(ssu_fasta, lsu_fasta, ssu_folder, lsu_folder, len_avg):  # che
         return 'rRNA'
 
 
-def suppress_dir(flag, lsu, ssu, its, its_file):  # rename dir by tag
-    new_ssu_folder, new_lsu_folder, new_its_folder, new_its_file = \
-        [x for x in ['suppressed_SSU', 'suppressed_LSU', 'suppressed_its', 'empty_its.fasta.gz']]
+def suppress_dir(flag, lsu, ssu, its, its_file, ssu_file, lsu_file):
+    suppressed_folder, taxonomy_summary, its_filename, lsu_filename, ssu_filename = \
+        [x for x in ['suppressed', 'taxonomy-summary', os.path.basename(its_file), os.path.basename(lsu_file), os.path.basename(ssu_file)]]
+    os.mkdir('suppressed')
+    os.mkdir('taxonomy-summary')
+    # move dir by tag
     if flag == 'ITS':
-        [os.rename(x, y) for x, y in [(lsu, new_lsu_folder), (ssu, new_ssu_folder), (its, 'its'), (its_file, 'ITS_masked.fasta.gz')]]
-        return [os.path.relpath(x) for x in [new_lsu_folder, new_ssu_folder, its, its_file]]
+        [shutil.copytree(src, dest) for src, dest in [(lsu, suppressed_folder + '/LSU'), (ssu, suppressed_folder + '/SSU'), (its, taxonomy_summary + '/its')]]
+        [shutil.copy(src, dest) for src, dest in [(lsu_file, suppressed_folder), (ssu_file, suppressed_folder), (its_file, its_filename)]]
     elif flag == 'rRNA':
-        [os.rename(x, y) for x, y in [(lsu, 'LSU'), (ssu, 'SSU'), (its, new_its_folder), (its_file, new_its_file)]]
-        return [os.path.relpath(x) for x in [lsu, ssu, new_its_folder, new_its_file]]
+        [shutil.copytree(src, dest) for src, dest in [(lsu, taxonomy_summary + '/LSU'), (ssu, taxonomy_summary + '/SSU'), (its, suppressed_folder + '/its')]]
+        [shutil.copy(src, dest) for src, dest in [(lsu_file, lsu_filename), (ssu_file, ssu_filename), (its_file, suppressed_folder)]]
     elif flag == 'both':
-        [os.rename(x, y) for x, y in [(lsu, 'LSU'), (ssu, 'SSU'), (its, 'its'), (its_file, 'ITS_masked.fasta.gz')]]
-        return [os.path.relpath(x) for x in [lsu, ssu, its, its_file]]
+        [shutil.copytree(src, taxonomy_summary + dest) for src, dest in [(lsu, '/LSU'), (ssu, '/SSU'), (its, '/its')]]
+        [shutil.copy(src, dest) for src, dest in [(lsu_file, lsu_filename), (ssu_file, ssu_filename), (its_file, its_filename)]]
 
 
 if __name__ == '__main__':
@@ -83,13 +86,14 @@ if __name__ == '__main__':
     parser.add_argument("--its-dir", dest="its_directory", help="directory in path taxonomy-summary/its")
 
 
-    if len(sys.argv) < 1:
+    if len(sys.argv) < 6:
         parser.print_help()
     else:
         args = parser.parse_args()
         avg = get_avg_length(args.its_file)
         print('average ITS length is ' + str(avg))
+        validate_hits(args.ssu_file, args.lsu_file, args.ssu_directory, args.lsu_directory, avg)
         print('suppressing...')
         suppress_flag = validate_hits(args.ssu_file, args.lsu_file, args.ssu_directory, args.lsu_directory, avg)
-        suppress_dir(suppress_flag, args.lsu_directory, args.ssu_directory, args.its_directory, args.its_file)
+        suppress_dir(suppress_flag, args.lsu_directory, args.ssu_directory, args.its_directory, args.its_file, args.ssu_file, args.lsu_file)
 
