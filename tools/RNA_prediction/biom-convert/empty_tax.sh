@@ -7,7 +7,7 @@ krona=$4
 fasta=$5
 otunotaxid=$6
 
-db=$(echo "$filename" | cut -f 1 -d '.')
+db=$(echo "$fasta" | cut -f 1 -d '.')
 y=($( wc -l $mapseq))
 if [ $y -eq 2 ]; then
  echo 'create empty files'
