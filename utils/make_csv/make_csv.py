@@ -10,11 +10,19 @@ import argparse
 
 
 def convert_table(table, outputname):
+    num = 0
     with open(table, 'r') as file_in, open(outputname, 'w') as file_out:
         for line in file_in:
             line = line.strip().split('\t')
-            output_line = '"' + '","'.join(line) + '"\n'
+            if num == 0:
+                columns_num = len(line)
+            if len(line) != columns_num:
+                additional = ',' + ','.join(['""' for _ in range(columns_num-len(line))])
+            else:
+                additional = ''
+            output_line = '"' + '","'.join(line) + '"' + additional + '\n'
             file_out.write(output_line)
+            num += 1
 
 
 if __name__ == "__main__":
