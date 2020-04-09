@@ -31,7 +31,7 @@ steps:
       less than 15 over a 4 nucleotide wide window are removed)
     run: ../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
-      reads1: chunks
+      reads1: split_seqs/chunks
       phred: { default: '33' }
       leading: { default: 3 }
       trailing: { default: 3 }
@@ -46,8 +46,8 @@ steps:
       files: trim_quality_control
       outputFileName:
         source: reads
-        valueFrom: $(self.nameroot.split).trimmed
-      postfix: name_ips
+        valueFrom: $(self.nameroot.split)
+      postfix: { default: '.trimmed' }
     out: [result]
     run: ../../utils/concatenate.cwl
 
