@@ -5,7 +5,7 @@ class: CommandLineTool
 label: "merges output of seqprep and unzips for paired end reads, or unzips file for single end"
 requirements:
   ResourceRequirement:
-    coresMin: 2
+    coresMin: 1
     ramMin: 200  # just a default, could be lowered
   InlineJavascriptRequirement: {}
 

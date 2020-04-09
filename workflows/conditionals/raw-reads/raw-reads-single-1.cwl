@@ -56,7 +56,7 @@ steps:
     out: [ unzipped_merged_reads ]
 
   count_submitted_reads:
-    run: ../../../utils/count_fastq.cwl
+    run: ../../../utils/count_fastq/count_fastq.cwl
     in:
       sequences: unzip_reads/unzipped_merged_reads
     out: [ count ]

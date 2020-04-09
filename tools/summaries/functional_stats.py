@@ -9,7 +9,7 @@ import re
 
 
 '''script to generate stats for each funtional analysis and orf stats. Each function pulls out total number of matches, number of predicted coding sequences with match
-and number of contigs with match. ORF stats gives number of CDS, contigs with CDS and Contigs with RNA. Outputs in TSV format.
+and number of contigs with match. ORF stats gives number of CDS, contigs with CDS and Reads with RNA. Outputs in TSV format.
 Entry map is generated for InterProScan as input to write IPR summary'''
 
 def orf_stats(cds_file, cmsearch_deoverlap, outdir):
@@ -26,7 +26,7 @@ def orf_stats(cds_file, cmsearch_deoverlap, outdir):
         readsWithRNA.add(RNAaccession)
     numberReadswithRNA = len(readsWithRNA)
     with open(os.path.join(outdir, "orf.stats"), "w") as file_out:
-        file_out.write("Predicted CDS\t" + str(numberOrfs) + "\nContigs with predicted CDS\t" + str(numberReadsWithOrf) + "\nContigs with predicted rRNA\t" + str(numberReadswithRNA))
+        file_out.write("Predicted CDS\t" + str(numberOrfs) + "\nReads with predicted CDS\t" + str(numberReadsWithOrf) + "\nReads with predicted rRNA\t" + str(numberReadswithRNA))
 
 
 '''
@@ -97,11 +97,11 @@ def stats(input_file, cds_column_number, protein_column_number, hash, outdir):
     with open(os.path.join(outdir, hash.lower() + ".stats"), "w") as file_out:
         file_out.write("Total " + hash + " matches\t" + str(match_count) +
                        "\nPredicted CDS with " + hash + " match\t" + str(CDS_with_match_count) +
-                       "\nContigs with " + hash + " match\t"+str(reads_with_match_count))
+                       "\nReads with " + hash + " match\t"+str(reads_with_match_count))
     if hash == 'InterProScan':
         with open(os.path.join(outdir, "go.stats"), "w") as file_out:
             file_out.write("Total GO matches\t" + str(go_match_count) + "\nPredicted CDS with GO match\t" + str(
-                go_CDS_match) + "\nContigs with GO match\t" + str(go_reads_match))
+                go_CDS_match) + "\nReads with GO match\t" + str(go_reads_match))
 
 
 if __name__ == "__main__":

@@ -1,42 +1,35 @@
-#!/usr/bin/env
-cwlVersion: v1.0
+#!/usr/bin/env cwl-runner
+class: CommandLineTool
+cwlVersion: "v1.0"
 $namespaces:
  edam: http://edamontology.org/
  s: http://schema.org/
 
-class: CommandLineTool
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     coresMin: 2
     ramMin: 200  # just a default, could be lowered
 
-hints:
-  - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+baseCommand: [ count_fastq.py ]
 
 inputs:
   sequences:
     type: File
-    streamable: true
-    # format: edam:format_1930  # FASTQ
-
-baseCommand: [ bash ]
-
-arguments:
-  - valueFrom: |
-      expr \$(cat $(inputs.sequences.path) | wc -l) / 4
-    prefix: -c
-
-stdout: count
+    inputBinding:
+      prefix: -f
 
 outputs:
   count:
     type: int
     outputBinding:
-      glob: count
+      glob: data.txt
       loadContents: true
-      outputEval: $(Number(self[0].contents))
+      outputEval: $(parseInt(self[0].contents))
+
+hints:
+  - class: DockerRequirement
+    dockerPull: 'alpine:3.7'
 
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
