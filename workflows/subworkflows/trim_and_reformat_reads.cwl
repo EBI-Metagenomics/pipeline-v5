@@ -3,7 +3,8 @@ class: Workflow
 label: Trim and reformat reads (single and paired end version)
 
 requirements:
- - class: SubworkflowFeatureRequirement
+  SubworkflowFeatureRequirement: {}
+  ScatterFeatureRequirement: {}
 
 inputs:
   reads:
