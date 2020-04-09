@@ -15,25 +15,45 @@ outputs:
     outputSource: clean_fasta_headers/sequences_with_cleaned_headers
  
 steps:
+
+  # << Chunk faa file >>
+  split_seqs:
+    in:
+      seqs: reads
+      chunk_size: { default: '2000000' }
+    out: [ chunks ]
+    run: ../../tools/chunks/fasta_chunker.cwl
+
   trim_quality_control:
     doc: |
       Low quality trimming (low quality ends and sequences with < quality scores
       less than 15 over a 4 nucleotide wide window are removed)
     run: ../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
-      reads1: reads
+      reads1: chunks
       phred: { default: '33' }
       leading: { default: 3 }
       trailing: { default: 3 }
       end_mode: { default: SE }
       minlen: { default: 100 }
       slidingwindow: { default: '4:15' }
+    scatter: reads1
     out: [reads1_trimmed]
+
+  combine_trimmed:
+    in:
+      files: trim_quality_control
+      outputFileName:
+        source: reads
+        valueFrom: $(self.nameroot.split).trimmed
+      postfix: name_ips
+    out: [result]
+    run: ../../utils/concatenate.cwl
 
   convert_trimmed_reads_to_fasta:
     run: ../../utils/fastq_to_fasta/fastq_to_fasta.cwl
     in:
-      fastq: trim_quality_control/reads1_trimmed
+      fastq: combine_trimmed/result
     out: [ fasta ]
 
   clean_fasta_headers:
