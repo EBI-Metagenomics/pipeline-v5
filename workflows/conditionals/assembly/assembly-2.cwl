@@ -98,6 +98,9 @@ outputs:
   bgzip_fasta_file:                                          # [1] fasta.bgz
     type: File
     outputSource: fasta_index/fasta_bgz
+  bgzip_index:                                               # [1] fasta.bgz.gzi
+    type: File
+    outputSource: fasta_index/bgz_index
   chunking_nucleotides:                                      # [2] fasta, ffn
     type: File[]
     outputSource: chunking_final/nucleotide_fasta_chunks
@@ -222,7 +225,7 @@ steps:
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
       output_name:
         source: filtered_fasta
-        valueFrom: $(self.nameroot).contigs.annotations.gff
+        valueFrom: $(self.nameroot).annotations.gff
     out: [ output_gff_gz, output_gff_index ]
 
 # -----------------------------------  << FUNCTIONAL ANNOTATION FOLDER >>  -----------------------------------
@@ -343,7 +346,7 @@ steps:
     run: ../../../tools/Assembly/index_fasta/fasta_index.cwl
     in:
       fasta: filtered_fasta
-    out: [fasta_index, fasta_bgz]
+    out: [fasta_index, fasta_bgz, bgz_index]
 
 # chunking
   chunking_final:

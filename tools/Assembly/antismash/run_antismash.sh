@@ -48,7 +48,7 @@ if (( $LENGTH > 0 )); then
         gzip ${OUTNAME}_antismash_final.gbk ${OUTNAME}_antismash_final.embl
 
         echo "move to pathways-systems"
-        mv ${OUTNAME}_antismash_final.embl.gz ${OUTNAME}_antismash_final.gbk.gz ${OUTNAME}_antismash_geneclusters.txt ${OUTNAME}.antismash.gff.gz ${OUTNAME}.antismash.gff.gz.tbi ${FINAL_FOLDER}
+        mv ${OUTNAME}_antismash_final.embl.gz ${OUTNAME}_antismash_final.gbk.gz ${OUTNAME}_antismash_geneclusters.txt ${OUTNAME}.antismash.gff.bgz ${OUTNAME}.antismash.gff.bgz.tbi ${FINAL_FOLDER}
     else
         touch ${FINAL_FOLDER}/antismash_failed
     fi

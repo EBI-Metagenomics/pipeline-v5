@@ -7,5 +7,5 @@ done
 
 mkdir -p index && \
 cat ${FASTA} | bgzip -c > $FASTA.bgz && \
-samtools faidx $FASTA.bgz && mv $FASTA.bgz.fai index/ && \
+samtools faidx $FASTA.bgz && mv $FASTA.bgz.fai $FASTA.bgz.gzi index/ && \
 mv $FASTA.bgz index/

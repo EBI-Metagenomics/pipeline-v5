@@ -24,6 +24,10 @@ outputs:
     type: File
     outputBinding:
       glob: "index/$(inputs.fasta.basename).bgz.fai"
+  bgz_index:
+    type: File
+    outputBinding:
+      glob: "index/$(inputs.fasta.basename).bgz.gzi"
   fasta_bgz:
     type: File
     outputBinding:

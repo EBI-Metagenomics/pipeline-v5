@@ -214,8 +214,8 @@ if __name__ == '__main__':
     if not args.no_tabix:
         print('Sorting...')
         grep = '(grep ^"#" {0}; grep -v ^"#" {0} | sort -k1,1 -k4,4n)'.format(args.out)
-        grep += '| bgzip > {0}.gz'.format(args.out)
+        grep += '| bgzip > {0}.bgz'.format(args.out)
         print(grep)
         subprocess.call(grep, shell=True)
         print('Building index...')
-        subprocess.call(['tabix', '-p', 'gff', '{}.gz'.format(args.out)])
+        subprocess.call(['tabix', '-p', 'gff', '{}.bgz'.format(args.out)])
