@@ -21,7 +21,8 @@ steps:
   split_seqs:
     in:
       seqs: reads
-      chunk_size: { default: '2000000' }
+      chunk_size: { default: 2000000 }
+      file_format: { default: 'fastq' }
     out: [ chunks ]
     run: ../../tools/chunks/fasta_chunker.cwl
 
@@ -30,6 +31,7 @@ steps:
       Low quality trimming (low quality ends and sequences with < quality scores
       less than 15 over a 4 nucleotide wide window are removed)
     run: ../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+    scatter: reads1
     in:
       reads1: split_seqs/chunks
       phred: { default: '33' }
@@ -38,15 +40,14 @@ steps:
       end_mode: { default: SE }
       minlen: { default: 100 }
       slidingwindow: { default: '4:15' }
-    scatter: reads1
     out: [reads1_trimmed]
 
   combine_trimmed:
     in:
-      files: trim_quality_control
+      files: trim_quality_control/reads1_trimmed
       outputFileName:
         source: reads
-        valueFrom: $(self.nameroot.split)
+        valueFrom: $(self.nameroot)
       postfix: { default: '.trimmed' }
     out: [result]
     run: ../../utils/concatenate.cwl

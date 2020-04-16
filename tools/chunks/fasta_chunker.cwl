@@ -30,6 +30,10 @@ inputs:
     type: int
     inputBinding:
       prefix: -s
+  file_format:
+    type: string?
+    inputBinding:
+      prefix: -f
 
 baseCommand: [ split_to_chunks.py ]
 
