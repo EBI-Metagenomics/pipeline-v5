@@ -26,7 +26,7 @@ def orf_stats(cds_file, cmsearch_deoverlap, outdir):
         readsWithRNA.add(RNAaccession)
     numberReadswithRNA = len(readsWithRNA)
     with open(os.path.join(outdir, "orf.stats"), "w") as file_out:
-        file_out.write("Predicted CDS\t" + str(numberOrfs) + "\nContigs with predicted CDS\t" + str(numberReadsWithOrf) + "\nContigs with predicted with rRNA\t" + str(numberReadswithRNA))
+        file_out.write("Predicted CDS\t" + str(numberOrfs) + "\nContigs with predicted CDS\t" + str(numberReadsWithOrf) + "\nContigs with predicted rRNA\t" + str(numberReadswithRNA))
 
 
 '''
