@@ -17,7 +17,7 @@ def write_summary(maps, outputfilename):
         name = entry2name[entry]
         tuple = (len(proteins), entry, name)
         unsortedEntries.append(tuple)
-    sortedEntries = sorted(unsortedEntries, key=lambda item: item[2])
+    sortedEntries = sorted(unsortedEntries, key=lambda item: item[0])
     sortedEntries.reverse()
     with open(outputfilename, "w") as file_out:
         for entry in sortedEntries:
