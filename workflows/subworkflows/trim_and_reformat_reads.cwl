@@ -5,6 +5,7 @@ label: Trim and reformat reads (single and paired end version)
 requirements:
   SubworkflowFeatureRequirement: {}
   ScatterFeatureRequirement: {}
+  StepInputExpressionRequirement: {}
 
 inputs:
   reads:
