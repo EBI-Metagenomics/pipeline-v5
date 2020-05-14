@@ -7,14 +7,12 @@ label: rename empty tax files and add mock bacteria to empty otu table
 
 requirements:
   ResourceRequirement:
-    ramMin: 200
+    ramMin: 1000
+  ShellCommandRequirement: {}
 
 hints:
   - class: DockerRequirement
     dockerPull: alpine:3.7
-
-#requirements:
-#    - class: ShellCommandRequirement
 
 inputs:
   mapseq:
