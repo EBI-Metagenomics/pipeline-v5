@@ -1,0 +1,6 @@
+seqs:
+  format: edam:format_1930
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/varsha/amplicon/ERP016841-test/ERR1589707_FASTQ.fastq
+chunk_size: 2000000
+file_format: fastq
