@@ -35,7 +35,7 @@ inputs:
     inputBinding:
       prefix: -f
 
-baseCommand: [ split_to_chunks.py ]
+baseCommand: [ "python3", "/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tools/chunks/split_to_chunks.py" ]
 
 outputs:
   chunks:
