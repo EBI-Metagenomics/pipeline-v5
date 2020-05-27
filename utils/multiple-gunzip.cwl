@@ -7,7 +7,6 @@ requirements:
   ResourceRequirement:
     coresMin: 1
     ramMin: 200  # just a default, could be lowered
-    outdirMax: 5000
   InlineJavascriptRequirement: {}
 
 hints:
