@@ -35,7 +35,7 @@ inputs:
     inputBinding:
       prefix: -f
 
-baseCommand: [ split_to_chunks.py ]
+baseCommand: [ "/hps/nobackup2/production/metagenomics/pipeline/tools-v5/miniconda3-4.6.14/bin/python3", "/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tools/chunks/split_to_chunks.py" ]
 
 outputs:
   chunks:

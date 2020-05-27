@@ -9,7 +9,7 @@ requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     coresMin: 1
-    ramMin: 200
+    ramMin: 500
 
 inputs:
   input_file:
