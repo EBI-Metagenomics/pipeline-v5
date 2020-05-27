@@ -11,7 +11,7 @@ requirements:
     coresMin: 2
     ramMin: 200  # just a default, could be lowered
 
-baseCommand: [bash, /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/utils/count_fastq/count_fastq.sh]
+baseCommand: [/hps/nobackup2/production/metagenomics/pipeline/tools-v5/miniconda3-4.6.14/bin/python3, /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/utils/count_fastq/count_fastq.py]
 
 inputs:
   sequences:
