@@ -10,6 +10,7 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 1000  # just a default, could be lowered
+    outdirMax: 5000
 hints:
   DockerRequirement:
     dockerPull: 'alpine:3.7'
