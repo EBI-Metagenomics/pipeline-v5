@@ -19,7 +19,6 @@ requirements:
 #    types:
 #      - $import: trimmomatic-sliding_window.yaml
   ResourceRequirement:
-    ramMin: 8192
     ramMax: 16384
     coresMin: 8
   InlineJavascriptRequirement: {}
