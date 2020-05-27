@@ -10,7 +10,7 @@ requirements:
   ResourceRequirement:
     coresMin: 2
     ramMin: 200  # just a default, could be lowered
-    outdirMax: 5000
+    # outdirMax: 5000
 hints:
   - class: DockerRequirement
     dockerPull: 'alpine:3.7'
@@ -18,7 +18,7 @@ hints:
 inputs:
   sequences:
     type: File
-    streamable: true
+    # streamable: true
     # format: edam:format_1930  # FASTQ
 
 baseCommand: [ bash ]

@@ -21,7 +21,7 @@ requirements:
   ResourceRequirement:
     ramMax: 16384
     coresMin: 8
-    outdirMax: 5000
+
   InlineJavascriptRequirement: {}
   ShellCommandRequirement: {}
 
