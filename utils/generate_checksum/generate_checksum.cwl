@@ -8,7 +8,7 @@ $namespaces:
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    coresMin: 16
+    coresMin: 1
     ramMin: 200
 
 inputs:
