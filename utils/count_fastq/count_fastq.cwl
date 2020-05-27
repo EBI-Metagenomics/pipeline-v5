@@ -20,7 +20,7 @@ inputs:
       prefix: -f
 
 outputs:
-  value:
+  count:
     type: int
     outputBinding:
       glob: data.txt
