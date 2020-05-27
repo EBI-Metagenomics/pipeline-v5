@@ -10,6 +10,7 @@ requirements:
   ResourceRequirement:
     coresMin: 2
     ramMin: 200  # just a default, could be lowered
+    outdirMax: 5000
 
 hints:
   - class: DockerRequirement
