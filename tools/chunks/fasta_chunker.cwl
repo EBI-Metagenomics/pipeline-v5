@@ -9,7 +9,7 @@ doc: based upon code by Maxim Scheremetjew, EMBL-EBI
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 1000  # just a default, could be lowered
+    ramMin: 5000
 
 hints:
   DockerRequirement:
@@ -36,7 +36,7 @@ inputs:
     inputBinding:
       prefix: -f
 
-baseCommand: [ "/hps/nobackup2/production/metagenomics/pipeline/tools-v5/miniconda3-4.6.14/bin/python3", "/hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tools/chunks/split_to_chunks.py" ]
+baseCommand: [ split_to_chunks.py ]
 
 outputs:
   chunks:
