@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env /hps/nobackup2/production/metagenomics/pipeline/tools-v5/miniconda3-4.6.14/bin/python3
 # -*- coding: utf-8 -*-
 
 import sys
