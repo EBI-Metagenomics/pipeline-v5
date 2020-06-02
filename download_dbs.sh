@@ -110,7 +110,6 @@ if [ "${ASSEMBLY_PIPELINE}" == "True" ]; then
     echo 'antismash_glossary'
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/antismash_glossary.tsv.gz
     gunzip antismash_glossary.tsv.gz
-
 fi
 
 # GO-config

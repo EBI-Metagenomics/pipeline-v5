@@ -163,7 +163,7 @@ steps:
       lsu_otus: lsu_otus
       rfam_models: rfam_models
       rfam_model_clans: rfam_model_clans
-      other_ncRNA_models: other_ncRNA_models
+      other_ncrna_models: other_ncrna_models
       ssu_label: ssu_label
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
