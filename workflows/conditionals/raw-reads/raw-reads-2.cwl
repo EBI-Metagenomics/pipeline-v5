@@ -34,7 +34,7 @@ inputs:
     5.8s_pattern: string
 
     # cgc
-    CGC_config: string
+    CGC_config: string?
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -59,7 +59,8 @@ inputs:
 
     ko_file: string
 
-    go_config: string
+    go_config: string?
+
 
 outputs:
   motus_output:
@@ -158,7 +159,7 @@ steps:
     in:
      input_sequences: filtered_fasta
      cmsearch_file: rna_prediction/ncRNA
-     other_ncRNA_ribosomal_models: other_ncRNA_models
+     other_ncRNA_ribosomal_models: other_ncrna_models
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
 

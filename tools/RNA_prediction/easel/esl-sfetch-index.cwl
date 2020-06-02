@@ -7,7 +7,7 @@ doc: "https://github.com/EddyRivasLab/easel"
 
 hints:
   DockerRequirement:
-    dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
+    dockerPull: mgnify/pipeline-v5.easel:latest
 
 baseCommand: [ esl-index.sh ]
 
@@ -25,8 +25,7 @@ inputs:
     format: edam:format_1929  # FASTA
     inputBinding:
       prefix: -f
-      position: 1
-      valueFrom: $(self.basename)
+      position: 2
     label: Input fasta file.
 
 outputs:

@@ -1,0 +1,11 @@
+3       sk__Eukaryota
+1       sk__Eukaryota   k__Fungi
+3       sk__Eukaryota   k__Fungi        p__Ascomycota
+1       sk__Eukaryota   k__Fungi        p__Ascomycota   c__Eurotiomycetes
+2       sk__Eukaryota   k__Fungi        p__Ascomycota   c__Eurotiomycetes       o__Chaetothyriales
+3       sk__Eukaryota   k__Fungi        p__Ascomycota   c__Leotiomycetes
+3       sk__Eukaryota   k__Fungi        p__Ascomycota   c__Leotiomycetes        o__Helotiales
+1       sk__Eukaryota   k__Fungi        p__Ascomycota   c__Sordariomycetes
+2       sk__Eukaryota   k__Fungi        p__Basidiomycota
+23      sk__Eukaryota   k__Fungi        p__Basidiomycota        c__Agaricomycetes
+2       sk__Eukaryota   k__Fungi        p__Basidiomycota        c__Agaricomycetes       o__Sebacinales

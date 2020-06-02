@@ -12,7 +12,7 @@ requirements:
 
 hints:
  DockerRequirement:
-   dockerPull: go_slim:latest
+   dockerPull: mgnify/pipeline-v5.go-summary
  SoftwareRequirement:
    packages:
      owltools:
@@ -27,9 +27,12 @@ inputs:
       prefix: --input-file
 
   config:
-    type: string
+    type: string?
     inputBinding:
       prefix: --config
+    default:
+      class: File
+      path: 'go_summary-config.json'
 
   output_name:
     type: string

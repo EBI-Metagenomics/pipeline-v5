@@ -1,7 +1,0 @@
-chunk_size: 1
-seqs:
-  class: File
-  format: 'edam:format_1929'
-  metadata: {}
-  path: ../test-inputs/test_seqs.fasta
-  secondaryFiles: []

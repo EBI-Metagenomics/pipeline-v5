@@ -8,5 +8,8 @@ while getopts i:o:g:n:f: option; do
 done
 
 echo "run antismash"
-source ${CONDA_ENV} antismash && \
-antismash --genefinding prodigal-m --smcogs --asf --disable-svg --knownclusterblast --outputfolder ${OUTFOLDER} ${INPUT}  # --subclusterblast -v
+if [ -z "$CONDA_ENV" ]; then
+    echo "conda enviroment is empty = using docker"
+else
+    source ${CONDA_ENV} antismash
+antismash --genefinding prodigal-m --smcogs --asf --disable-svg --knownclusterblast --outputfolder ${OUTFOLDER} ${INPUT}

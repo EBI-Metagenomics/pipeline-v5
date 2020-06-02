@@ -1,17 +1,31 @@
-FROM python:2
-FROM centos:centos7
+FROM alpine:3.7
 
-##### Dependances
-RUN yum -y update; yum clean all
-RUN yum -y install curl wget tar
+LABEL Maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 
+########################################################################
+# Dockerfile Version:   19.03.1
+# Software:             eggNOG
+# Software Version:     2.0.0
+# Description:          functional annotation of novel sequences
+########################################################################
 
-COPY eggnogmapper /tools/eggnogmapper
-COPY emapper.py /tools/emapper.py
+ENV VERSION=2.0.0
+ENV VERSION_DIAMOND=0.9.24
 
-RUN wget https://github.com/bbuchfink/diamond/releases/download/v0.9.24/diamond-linux64.tar.gz && tar -xzvf diamond-linux64.tar.gz  && cp diamond /bin/diamond
+RUN apk add --no-cache bash git
+RUN apk add --no-cache build-base
+RUN apk add --no-cache zlib-dev
 
-RUN chmod -R a+rwx /tools
-ENV PATH="/tools:${PATH}"
+# install diamond
+RUN wget https://github.com/bbuchfink/diamond/archive/v$VERSION_DIAMOND.tar.gz && \
+    tar -xzvf v$VERSION_DIAMOND.tar.gz && \
+    cd diamond-$VERSION_DIAMOND && bash build_simple.sh
+ENV PATH="/diamond-$VERSION_DIAMOND:${PATH}"
 
+# eggnog
+RUN wget https://github.com/eggnogdb/eggnog-mapper/archive/$VERSION.tar.gz && tar -xzvf $VERSION.tar.gz
+ENV PATH="/eggnog-mapper-$VERSION/eggnogmapper:/eggnog-mapper-$VERSION:${PATH}"
+RUN apk add --no-cache python
+
+RUN rm /eggnog-mapper-$VERSION/bin/diamond && ln -s /diamond-$VERSION_DIAMOND/diamond /eggnog-mapper-$VERSION/bin/diamond
 CMD [emapper.py]

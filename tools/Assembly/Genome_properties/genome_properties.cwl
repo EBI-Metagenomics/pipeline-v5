@@ -15,9 +15,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: genome_properties:latest
-
-#baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"] # <--- for docker
+    dockerPull: mgnify/pipeline-v5.genome-properties:latest
 
 baseCommand: [assign_genome_properties.pl]    # without docker
 
@@ -43,13 +41,15 @@ inputs:
       prefix: "-matches"
 
   flatfiles_path:
-    type: string
+    type: string?
     inputBinding:
       prefix: "-gpdir"
+    default: "/genome-properties/flatfiles"
   GP_txt:
-    type: string
+    type: string?
     inputBinding:
       prefix: "-gpff"
+    default: "genomeProperties.txt"
 
   out_dir:
     type: string?

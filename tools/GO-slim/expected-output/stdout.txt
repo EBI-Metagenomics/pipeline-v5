@@ -1,0 +1,32 @@
+INFO: Go slim pipeline.
+Process id: 1
+Initial memory: Resident memory: 13MB. Virtual memory: 47MB
+Creating temp files under: /tmp/20200427201853_NVJQADRG_pipeline_input_annotations.gaf
+Parsing the InterProScan result output file: /var/lib/cwl/stg561dd487-3431-4f12-9246-50d44ef2a3a7/ips_out.tsv
+Finished parsing.
+After parsing the InterProScan result file: Resident memory: 13MB. Virtual memory: 47MB
+Loading full Gene ontology: /tools/go-basic-metagenomics_release_20160705.obo
+Finished loading.
+After loading the full Gene ontology: Resident memory: 25MB. Virtual memory: 59MB
+Generating full GO summary...
+After generating the full GO summary: Resident memory: 25MB. Virtual memory: 59MB
+Finished generation.
+Writing full GO summary to the following file: test-name.go
+Finished writing.
+Generating the GAF input file for Map2Slim...
+Finished GAF file generation.
+Memory before running Map2Slim: Resident memory: 14MB. Virtual memory: 48MB
+Running Map2Slim now...
+Map2Slim finished!
+Parsing mapped annotations...
+Finished parsing.
+Getting GO slim counts by parsing I5 TSV again
+After getting GO slim counts: Resident memory: 14MB. Virtual memory: 48MB
+Writing GO slim summary to the following file: test-name.go_slim
+Finished writing.
+Parsed 200 lines in the InterProScan result file.
+Found 40 proteins in the InterProScan result file.
+27 out of 40 proteins do have GO annotations.
+Found 74 unique GO identifiers in the InterProScan result file.
+Created 74 GAF entries to feed Map2Slim.
+Program finished.

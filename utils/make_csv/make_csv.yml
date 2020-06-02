@@ -1,0 +1,5 @@
+tab_sep_table:
+  path: test-input/test.txt
+  class: File
+  format: http://edamontology.org/format_3475
+output_name: output-test

@@ -9,6 +9,10 @@ requirements:
     coresMax: 1
     ramMin: 200
 
+hints:
+  - class: DockerRequirement
+    dockerPull: mgnify/pipeline-v5.bash-scripts:latest
+
 inputs:
   hits:
     type: File

@@ -9,7 +9,7 @@ doc: |
 
 hints:
   DockerRequirement:
-    dockerPull: eggnog_pipeline:latest
+    dockerPull: mgnify/pipeline-v5.eggnog
 
 requirements:
   ResourceRequirement:
@@ -40,7 +40,7 @@ inputs:
     label: Path to DIAMOND-compatible database
 
   data_dir:
-    type: string?  # data/
+    type: Directory # string?  # data/
     inputBinding:
       prefix: --data_dir
     label: Directory to use for DATA_PATH

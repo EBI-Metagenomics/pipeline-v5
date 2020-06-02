@@ -1,13 +1,15 @@
 fasta_file:
   - class: File
-    path: ../../../tools/Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
+    path: ../../Combined_gene_caller/expected-output/100000_130095.fasta.prodigal.faa
 db_diamond:
   class: File
   path: eggnog-mapper/data/eggnog_proteins.dmnd
 db:
   class: File
   path: eggnog-mapper/data/eggnog.db
-data_dir: string
+data_dir:
+  class: Directory
+  path: eggnog-mapper/data
 
 cpu: 8
-file_acc: assembly-SRR1620013_small
+file_acc: assembly_small

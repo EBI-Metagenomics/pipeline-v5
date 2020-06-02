@@ -178,7 +178,7 @@ hints:
         version:
           - 1.1.2
   - class: DockerRequirement
-    dockerPull: 'quay.io/biocontainers/infernal:1.1.2--h470a237_1'
+    dockerPull: mgnify/pipeline-v5.cmsearch:latest
 
 requirements:
   - class: InlineJavascriptRequirement

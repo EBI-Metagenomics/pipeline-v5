@@ -14,7 +14,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: kegg_pathways:latest
+    dockerPull: mgnify/pipeline-v5.python3
 
 baseCommand: [give_pathways.py]
 

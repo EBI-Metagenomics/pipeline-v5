@@ -9,7 +9,7 @@ label: "Taking KOs corresponding contigs from hmmscan result"
 
 hints:
   DockerRequirement:
-    dockerPull: kegg_analysis:latest
+    dockerPull: mgnify/pipeline-v5.python3
 
 requirements:
   InlineJavascriptRequirement: {}

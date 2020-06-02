@@ -1,3 +1,4 @@
 infernal_matches:
   class: File
-  path: ../expected-input/test-cmsearch.txt
+  path: test-input/test-cmsearch.txt
+  format: http://edamontology.org/format_3475

@@ -8,7 +8,8 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.2
+    dockerPull: mgnify/pipeline-v5.bash-scripts:latest
+
 
 inputs:
   fasta:
