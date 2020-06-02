@@ -8,7 +8,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: alpine:3.7
+    dockerPull: mgnify/pipeline-v5.bash-scripts:latest
 
 inputs:
   fasta:
@@ -17,21 +17,23 @@ inputs:
     inputBinding:
       prefix: -f
 
-baseCommand: [ run_samtools.sh ]
+arguments: ["-n", $(inputs.fasta.basename)]
+
+baseCommand: [ "run_samtools.sh" ]
 
 outputs:
   fasta_index:
     type: File
     outputBinding:
-      glob: "index/$(inputs.fasta.basename).bgz.fai"
+      glob: "$(inputs.fasta.basename).bgz.fai"
   bgz_index:
     type: File
     outputBinding:
-      glob: "index/$(inputs.fasta.basename).bgz.gzi"
+      glob: "$(inputs.fasta.basename).bgz.gzi"
   fasta_bgz:
     type: File
     outputBinding:
-      glob: "index/$(inputs.fasta.basename).bgz"
+      glob: "$(inputs.fasta.basename).bgz"
 
 $namespaces:
  edam: http://edamontology.org/

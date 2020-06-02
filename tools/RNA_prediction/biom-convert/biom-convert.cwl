@@ -1,6 +1,9 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
 requirements:
   InlineJavascriptRequirement: {}
@@ -12,13 +15,13 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: quay.io/biocontainers/biom-format:2.1.6--py36_0
-#  SoftwareRequirement:
-#    packages:
-#      biom-format:
-#        specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
-#        version: [ "2.1.6" ]
-#
+    dockerPull: mgnify/pipeline-v5.biom-convert:latest
+  SoftwareRequirement:
+    packages:
+      biom-format:
+        specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
+        version: [ "2.1.6" ]
+
 
 baseCommand: [ "biom-convert.sh" ]
 
@@ -88,9 +91,6 @@ outputs:
         pre.pop()
         return pre.join('.') + ext; }
 
-$namespaces:
- edam: http://edamontology.org/
- s: http://schema.org/
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schema.rdf

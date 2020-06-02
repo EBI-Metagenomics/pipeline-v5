@@ -64,7 +64,7 @@ steps:
     out: [ maskfile ]
 
   mask_for_ITS:
-    run: ../../../tools/mask-for-ITS/bedtools.cwl
+    run: ../../../tools/mask-for-ITS/bedtools/bedtools.cwl
     in:
       sequences: query_sequences
       maskfile: reformat_coords/maskfile

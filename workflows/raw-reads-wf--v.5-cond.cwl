@@ -28,7 +28,7 @@ inputs:
 
     rfam_models: File[]
     rfam_model_clans: File
-    other_ncRNA_models: string[]
+    other_ncrna_models: string[]
     #other_ncRNA_name: string
 
     ssu_label: string
@@ -37,7 +37,6 @@ inputs:
     5.8s_pattern: string
 
     # cgc
-    CGC_config: File
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -52,14 +51,14 @@ inputs:
     hmmsearch_header: string
     EggNOG_db: File?
     EggNOG_diamond_db: File?
-    EggNOG_data_dir: string?
+    EggNOG_data_dir: Directory?
     InterProScan_databases: Directory
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ips_header: string
 
     # GO
-    go_config: File
+    go_config: File?
 
 outputs:
 
@@ -152,12 +151,11 @@ steps:
       lsu_otus: lsu_otus
       rfam_models: rfam_models
       rfam_model_clans: rfam_model_clans
-      other_ncRNA_models: other_ncRNA_models
+      other_ncrna_models: other_ncrna_models
       ssu_label: ssu_label
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
       5.8s_pattern: 5.8s_pattern
-      CGC_config: CGC_config
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
       protein_chunk_size_hmm: protein_chunk_size_hmm

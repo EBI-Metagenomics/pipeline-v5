@@ -1,5 +1,15 @@
 FROM ubuntu:18.04
 
+LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
+##############################################################
+# Dockerfile Version:   19.03.1
+# Software:             biom convert
+# Software Version:     2.1.6
+# Description:          Tool to convert mapseq to biom
+##############################################################
+
+ENV VERSION=2.1.6
+
 # Install dependencies
 RUN apt-get update
 
@@ -13,10 +23,11 @@ RUN apt-get update && apt-get install -y \
     python-dev
 
 RUN pip install numpy
-RUN pip install biom-format
 RUN pip install h5py
+RUN pip install biom-format==$VERSION
 
-COPY test-mapseq.tsv /test-mapseq.tsv
-COPY test.txt /test.txt
+COPY biom-convert.sh /tools/
+RUN chmod -R a+rwx /tools
+ENV PATH="/tools:${PATH}"
 
-CMD ["biom", "convert"]
+CMD ["biom-convert.sh"]

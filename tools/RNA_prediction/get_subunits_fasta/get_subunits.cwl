@@ -7,7 +7,7 @@ class: CommandLineTool
 
 hints:
   - class: DockerRequirement
-    dockerPull: alpine:3.7
+    dockerPull: mgnify/pipeline-v5.python3:latest
 requirements:
   ResourceRequirement:
     ramMin: 200

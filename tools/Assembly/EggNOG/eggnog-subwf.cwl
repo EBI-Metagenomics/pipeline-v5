@@ -11,7 +11,7 @@ inputs:
   fasta_file: File[]
   db_diamond: File
   db: File
-  data_dir: string
+  data_dir: Directory
 
   cpu: int
   file_acc: string

@@ -10,7 +10,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: quay.io/biocontainers/motus:2.1.1--py37_3
+    dockerPull: mgnify/pipeline-v5.motus
   SoftwareRequirement:
     packages:
       mOTUs2:
@@ -35,17 +35,25 @@ inputs:
         prefix: -t
     default: 4
 
+  db:
+    type: string
+    inputBinding:
+        prefix: -db
+    default: /mOTUs_v2-2.5.1/db_mOTU/
+
 baseCommand: [motus]
 
 arguments: [profile, -c, -q]
 
 stdout: $(inputs.reads.nameroot).motus
+stderr: stderr.txt
 
 outputs:
   motu_taxonomy:
     type: stdout
     label: motu classifications
     format: edam:format_3746
+  stderr: stderr
 
 $namespaces:
  edam: http://edamontology.org/

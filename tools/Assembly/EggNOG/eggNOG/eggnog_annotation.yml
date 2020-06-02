@@ -1,0 +1,12 @@
+annotate_hits_table:
+  path: ../expected-output/output_acc.emapper.seed_orthologs
+  class: File
+
+data_dir:
+  path: ../../../../../dbs/
+  class: Directory
+
+no_file_comments: true
+cpu: 16
+
+output: eggnog-annotation

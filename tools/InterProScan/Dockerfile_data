@@ -1,0 +1,27 @@
+FROM busybox AS builddata
+
+MAINTAINER Ola Tarkowska (EMBL-EBI) <olat@ebi.ac.uk>
+
+ARG IPR=5
+ENV IPR $IPR
+ARG IPRSCAN=5.36-75.0
+ENV IPRSCAN $IPRSCAN
+
+RUN mkdir -p /opt
+
+
+RUN wget -O /opt/interproscan-data-$IPRSCAN.tar.gz ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/$IPR/$IPRSCAN/alt/interproscan-data-$IPRSCAN.tar.gz
+RUN wget -O /opt/interproscan-data-$IPRSCAN.tar.gz.md5 ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/$IPR/$IPRSCAN/alt/interproscan-data-$IPRSCAN.tar.gz.md5
+
+
+WORKDIR /opt
+
+RUN md5sum -c interproscan-data-$IPRSCAN.tar.gz.md5
+
+RUN mkdir -p /opt/interproscan
+
+RUN  tar -pxvzf interproscan-data-$IPRSCAN.tar.gz \
+    -C /opt/interproscan --strip-components=1 \
+    && rm -f interproscan-data-$IPRSCAN.tar.gz interproscan-data-$IPRSCAN.tar.gz.md5
+
+

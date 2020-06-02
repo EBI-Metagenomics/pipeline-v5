@@ -11,7 +11,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: 'alpine:3.7'
+    dockerPull: mgnify/pipeline-v5.bash-scripts
 
 baseCommand: [diamond_post_run_join.sh]
 

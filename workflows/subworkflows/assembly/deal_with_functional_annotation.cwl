@@ -17,7 +17,7 @@ inputs:
   antismash_geneclusters_txt: File?
   rna: File
   cds: File
-  go_config: File
+  go_config: File?
   eggnog_orthologs: File
   eggnog_annotations: File
   diamond_header: string
@@ -90,7 +90,7 @@ steps:
 
 # << gzip functional annotation files >>
   compression_func_ann:
-    run: ../../../utils/gzip.cwl
+    run: ../../../utils/pigz/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:

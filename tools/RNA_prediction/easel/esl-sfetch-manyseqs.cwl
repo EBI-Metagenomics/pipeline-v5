@@ -5,7 +5,7 @@ doc: "https://github.com/EddyRivasLab/easel"
 
 hints:
   DockerRequirement:
-    dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
+    dockerPull: mgnify/pipeline-v5.easel:latest
 
 requirements:
   ResourceRequirement:

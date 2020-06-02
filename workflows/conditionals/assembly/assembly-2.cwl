@@ -44,7 +44,6 @@ inputs:
     5.8s_pattern: string
 
  # << cgc >>
-    CGC_config: File
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -60,7 +59,7 @@ inputs:
     hmmsearch_header: string
     EggNOG_db: File
     EggNOG_diamond_db: File
-    EggNOG_data_dir: string
+    EggNOG_data_dir: Directory
     InterProScan_databases: Directory
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
@@ -73,7 +72,7 @@ inputs:
     diamond_header: string
 
  # << GO >>
-    go_config: File
+    go_config: File?
 
  # << Pathways >>
     graphs: File
@@ -81,7 +80,7 @@ inputs:
     pathways_classes: File
 
  # << genome properties >>
-    gp_flatfiles_path: string
+    gp_flatfiles_path: string?
 
  # << antismash summary >>
     clusters_glossary: File
@@ -335,7 +334,7 @@ steps:
 
 # << move PATHWAYS-SYSTEMS antismash summary>>
   move_antismash_summary_to_pathways_systems_folder:
-    run: ../../../tools/Assembly/antismash/cwl-s/move_antismash_summary.cwl
+    run: ../../../tools/Assembly/antismash/move_antismash_summary.cwl
     in:
       antismash_summary: folder_functional_annotation/summary_antismash
       folder_name: { default: pathways-systems }
@@ -369,7 +368,7 @@ steps:
 
 # gzip
   compression:
-    run: ../../../utils/gzip.cwl
+    run: ../../../utils/pigz/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:

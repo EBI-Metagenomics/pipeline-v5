@@ -31,7 +31,7 @@ outputs:
 
 hints:
   DockerRequirement:
-    dockerPull: alpine:3.7
+    dockerPull: mgnify/pipeline-v5.python3:latest
 
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl

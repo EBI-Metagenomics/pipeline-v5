@@ -38,7 +38,7 @@ steps:
       databaseFile: databaseFile
       threads: threads
     out: [ matches ]
-    run: Diamond.blastp-v0.9.21.cwl
+    run: Diamond.blastp.cwl
 
   post_processing_uniref90:
     in:

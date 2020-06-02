@@ -19,11 +19,11 @@ arguments:
       $(runtime.outdir)/interproscan/data;
 # TODO: The following solution will work for cwl-runner but not for cwlexec
 #  This solution avoids the symbolic link creating warnings for the freemarker files
-#  - position: 1
-#    shellQuote: false
-#    valueFrom: >-
-#      find $(inputs.databases.path)/data/ -maxdepth 1 -mindepth 1
-#      -type d -not -iname '*freemarker' -exec cp -rs '{}' '$(runtime.outdir)/interproscan/data' \\;;
+  - position: 1
+    shellQuote: false
+    valueFrom: >-
+      find $(inputs.databases.path)/data/ -maxdepth 1 -mindepth 1
+      -type d -not -iname '*freemarker' -exec cp -rs '{}' '$(runtime.outdir)/interproscan/data' \\;;
   - position: 2
     shellQuote: false
     valueFrom: $(runtime.outdir)/interproscan/interproscan.sh
@@ -49,7 +49,7 @@ inputs:
       Optional, path to fasta file that should be loaded on Master startup.
       Alternatively, in CONVERT mode, the InterProScan 5 XML file to convert.
   - id: applications
-    type: string  # InterProScan-apps.yaml#apps[]?
+    type: string[]?  # InterProScan-apps.yaml#apps[]?
     inputBinding:
       position: 9
       itemSeparator: ','
@@ -59,7 +59,7 @@ inputs:
       Optional, comma separated list of analyses. If this option is not set, ALL
       analyses will be run.
   - id: outputFormat
-    type: string  # InterProScan-protein_formats.yaml#protein_formats[]?
+    type: string[]?  # InterProScan-protein_formats.yaml#protein_formats[]?
     default: TSV
     inputBinding:
       position: 10
@@ -116,7 +116,7 @@ requirements:
 
 hints:
   - class: DockerRequirement
-    dockerPull: 'biocontainers/interproscan:v5.30-69.0_cv1'
+    dockerPull: mgnify/pipeline-v5.interproscan:latest
 
 $namespaces:
   edam: 'http://edamontology.org/'

@@ -140,9 +140,9 @@ rfam_model_clans:
   checksum: 4dffaadeaac92821c19bd0e5a152f370
 
 # Combined gene caller
-CGC_config:
-  class: File
-  path: ../tools/Combined_gene_caller/combined_gene_caller_conf.json
+#CGC_config:
+#  class: File
+#  path: ../tools/Combined_gene_caller/combined_gene_caller_conf.json
 CGC_postfixes:
   - '_CDS.faa'
   - '_CDS.ffn'

@@ -4,7 +4,7 @@ class: CommandLineTool
 
 hints:
   DockerRequirement:
-    dockerPull: mapseq2biom:latest
+    dockerPull: mgnify/pipeline-v5.mapseq2biom:latest
 
 requirements:
   ResourceRequirement:
@@ -50,7 +50,11 @@ arguments:
   - valueFrom: $(inputs.query.basename).notaxid.tsv
     prefix: --notaxidfile
 
+stderr: stderr.txt
+
 outputs:
+  stderr:
+    type: stderr
   otu_tsv:
     type: File
     format: edam:format_3746  # BIOM
@@ -67,7 +71,7 @@ outputs:
     type: File?
     format: edam:format_3746  # BIOM
     outputBinding:
-        glob: $(inputs.query.basename).notaxid.tsv
+      glob: $(inputs.query.basename).notaxid.tsv
 
 $namespaces:
  edam: http://edamontology.org/

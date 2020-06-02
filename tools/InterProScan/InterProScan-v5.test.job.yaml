@@ -6,9 +6,9 @@ applications:
   - Gene3d
 inputFile:
   class: File
-  path: ../Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
+  path: ../Combined_gene_caller/expected-output/100000_130095.fasta.fgs.faa
 outputFormat:
   - TSV
 databases:
   class: Directory
-  path: interproscan-5.36-75.0/data
+  path: /data/pipeline/dbs/interproscan-5.36-75.0

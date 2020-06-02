@@ -5,7 +5,7 @@ class: CommandLineTool
 
 hints:
   - class: DockerRequirement
-    dockerPull: 'quay.io/biocontainers/trimmomatic:0.36--6'
+    dockerPull: mgnify/pipeline-v5.trimmomatic:latest
 #  - class: SoftwareRequirement
 #    packages:
 #      trimmomatic:

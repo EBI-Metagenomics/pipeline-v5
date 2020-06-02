@@ -145,7 +145,7 @@ rfam_model_clans:
   path: ref-dbs/rRNA.claninfo
   checksum: 4dffaadeaac92821c19bd0e5a152f370
 
-other_ncRNA_models:
+other_ncrna_models:
   - 'alpha_tmRNA.RF01849'
   - 'Bacteria_large_SRP.RF01854'
   - 'beta_tmRNA.RF01850'
@@ -169,9 +169,9 @@ other_ncRNA_models:
   - 'tRNA-Sec.RF01852'
 
 # Combined gene caller
-CGC_config:
-  class: File
-  path: ../tools/Combined_gene_caller/combined_gene_caller_conf.json
+#CGC_config:
+#  class: File
+#  path: ../tools/Combined_gene_caller/combined_gene_caller_conf.json
 CGC_postfixes:
   - '_CDS.faa'
   - '_CDS.ffn'

@@ -1,5 +1,7 @@
 input_tsv_file:
   class: File
   path: test-input/InterProScan.tsv
-flatfiles_path: genome-properties/flatfiles
-GP_txt: genomeProperties.txt
+  format: http://edamontology.org/format_3475
+#flatfiles_path: genome-properties/flatfiles
+#GP_txt: genomeProperties.txt
+name: test

@@ -167,7 +167,7 @@ steps:
 
 # gzip and chunk sequence-categorisation
   gzip_files:
-    run: ../../utils/gzip.cwl
+    run: ../../utils/pigz/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file: extract_subunits/fastas

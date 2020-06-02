@@ -63,7 +63,7 @@ steps:
     out: [ otu_visualization ]
 
   edit_empty_tax:
-    run: ../../tools/RNA_prediction/biom-convert/empty_tax.cwl
+    run: ../../tools/RNA_prediction/biom-convert/empty_tax/empty_tax.cwl
     in:
       mapseq: mapseq/classifications
       otutable: classifications_to_otu_counts/otu_tsv
@@ -90,14 +90,14 @@ steps:
     out: [ result ]
 
   compress_mapseq:
-    run: ../../utils/gzip.cwl
+    run: ../../utils/pigz/gzip.cwl
     in:
       uncompressed_file: edit_empty_tax/mapseq_out
     out: [compressed_file]
     label: "gzip mapseq output"
 
   compress_fasta:
-    run: ../../utils/gzip.cwl
+    run: ../../utils/pigz/gzip.cwl
     in:
       uncompressed_file: edit_empty_tax/fasta_out
     out: [compressed_file]

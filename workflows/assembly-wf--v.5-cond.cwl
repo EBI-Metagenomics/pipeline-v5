@@ -40,7 +40,6 @@ inputs:
     5.8s_pattern: string
 
  # << cgc >>
-    CGC_config: File
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -56,7 +55,7 @@ inputs:
     hmmsearch_header: string
     EggNOG_db: File
     EggNOG_diamond_db: File
-    EggNOG_data_dir: string
+    EggNOG_data_dir: Directory?
     InterProScan_databases: Directory
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
@@ -69,7 +68,7 @@ inputs:
     diamond_header: string
 
  # << GO >>
-    go_config: File
+    go_config: File?
 
  # << Pathways >>
     graphs: File
@@ -77,7 +76,7 @@ inputs:
     pathways_classes: File
 
  # << genome properties >>
-    gp_flatfiles_path: string
+    gp_flatfiles_path: string?
 
  # << antismash summary >>
     clusters_glossary: File
@@ -187,7 +186,6 @@ steps:
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
       5.8s_pattern: 5.8s_pattern
-      CGC_config: CGC_config
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
       protein_chunk_size_eggnog: protein_chunk_size_eggnog

@@ -26,7 +26,7 @@ inputs:
 
     rfam_models: File[]
     rfam_model_clans: File
-    other_ncRNA_models: string[]
+    other_ncrna_models: string[]
 
     ssu_label: string
     lsu_label: string
@@ -34,7 +34,6 @@ inputs:
     5.8s_pattern: string
 
     # cgc
-    CGC_config: File
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -49,14 +48,14 @@ inputs:
     hmmsearch_header: string
     EggNOG_db: File?
     EggNOG_diamond_db: File?
-    EggNOG_data_dir: string?
+    EggNOG_data_dir: Directory?
     InterProScan_databases: Directory
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ips_header: string
 
     # GO
-    go_config: File
+    go_config: File?
 
 outputs:
   motus_output:
@@ -132,7 +131,7 @@ steps:
     in:
      input_sequences: filtered_fasta
      cmsearch_file: rna_prediction/ncRNA
-     other_ncRNA_ribosomal_models: other_ncRNA_models
+     other_ncRNA_ribosomal_models: other_ncrna_models
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
 
@@ -205,7 +204,7 @@ steps:
 
 # gzip
   compression:
-    run: ../../../utils/gzip.cwl
+    run: ../../../utils/pigz/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:

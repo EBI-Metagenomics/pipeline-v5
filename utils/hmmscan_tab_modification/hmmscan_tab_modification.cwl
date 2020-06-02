@@ -11,7 +11,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: biopython/biopython:latest
+    dockerPull: mgnify/pipeline-v5.python3:latest
 
 inputs:
   input_table:

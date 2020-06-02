@@ -9,6 +9,9 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 200  # just a default, could be lowered
+hints:
+  DockerRequirement:
+    dockerPull: 'alpine:3.7'
 
 inputs:
     qc_count:

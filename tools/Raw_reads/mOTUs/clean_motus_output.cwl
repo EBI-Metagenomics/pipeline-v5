@@ -28,7 +28,7 @@ outputs:
 
 hints:
   - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+    dockerPull: mgnify/pipeline-v5.bash-scripts
 
 
 $namespaces:

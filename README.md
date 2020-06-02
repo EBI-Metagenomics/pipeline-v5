@@ -4,78 +4,86 @@
 
 This repository contains all CWL descriptions of the MGnify pipeline version 5.0.
 
+## Documentation
 
-### Download necessary dbs
+https://emg-docs.readthedocs.io/en/latest/analysis.html#overview
+
+We recommend you use our pre-build docker containers. 
+## Requirements to run pipeline 
+
+- python3 [v 3.6+]
+- docker [v 19.+] or singularity
+- cwltool [v 3.+]
+
+- memory for databases ~133G
+
+## Installation
 ```bash
-# ---------------- common files:
-mkdir ref-dbs && cd ref-dbs && 
-# download silva dbs
-mkdir silva_ssu silva_lsu
-wget \
-  ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/silva_ssu-20200130.tar.gz \
-  ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/silva_lsu-20200130.tar.gz 
-tar --extract --gzip --directory=silva_ssu silva_ssu-20200130.tar.gz
-tar --extract --gzip --directory=silva_lsu silva_lsu-20200130.tar.gz
-# download Pfam ribosomal models
-mkdir ribosomal
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/ribosomal_models/RF*.cm \
-  ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/ribosomal_models/ribo.claninfo \
-  -P ribosomal 
-  
-  
-# ----------------- AMPLICON -----------------
-mkdir UNITE
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/UNITE-20200214.tar.gz
-tar --extract --gzip --directory=UNITE UNITE-20200214.tar.gz
-
-mkdir ITSonedb
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/ITSoneDB-20200214.tar.gz
-tar --extract --gzip --directory=ITSonedb ITSoneDB-20200214.tar.gz
-
-
-# ----------------- WGS -----------------
-# rRNA.claninfo
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rRNA.claninfo
-# other Rfam models
-mkdir other
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/other_models/*.cm \
-  -P other 
-# kofam db  
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3?.gz
-# InterProScan
-wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.36-75.0/interproscan-5.36-75.0.tar.gz
-tar --extract --gzip interproscan-5.36-75.0.tar.gz
-
-
-# ----------------- ASSEMBLY -----------------
-# rRNA.claninfo
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rRNA.claninfo
-# other Rfam models
-mkdir other
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/other_models/*.cm \
-  -P other 
-# kofam db  
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3?.gz
-# InterProScan
-wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.36-75.0/interproscan-5.36-75.0.tar.gz
-tar --extract --gzip interproscan-5.36-75.0.tar.gz
-# Diamond
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_uniref90_result.txt.gz \
-    ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/uniref90_v2019_08_diamond-v0.9.25.dmnd.gz
-gunzip db_uniref90_result.txt.gz uniref90_v2019_08_diamond-v0.9.25.dmnd.gz
-# KEGG pathways
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/graphs.pkl.gz \
-   ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/all_pathways_class.txt.gz \
-   ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/all_pathways_names.txt.gz
-gunzip graphs.pkl.gz all_pathways_class.txt.gz all_pathways_names.txt.gz
-# antismash summary
-wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/antismash_glossary.tsv.gz
-gunzip antismash_glossary.tsv.gz
-# EggNOG ??
-#eggnog-mapper/data/eggnog.db, eggnog-mapper/data/eggnog_proteins.dmnd
-# Genome Properties ??
-# flatfiles?
-
-
+git clone https://github.com/EBI-Metagenomics/pipeline-v5.git 
+cd pipeline-v5
 ```
+#### Download necessary dbs
+We have 3 pipelines (amplicon, assembly and wgs) in one repository. You can download dbs for single or multiple analysis types. <br>
+Script **download_dbs.sh** has 3 arguments: -m (amplicon), -a (assembly), -w (raw reads / WGS). <br>
+To download only amplicon databases do ```-m True -a False -w False```.
+```bash
+bash download_dbs.sh -a True -m True -w True  # for all types
+```
+
+#### Create yml-file
+Set DIRECTORY as path to the same directory where you downloaded all databases. <br>
+TYPE: assembly/raw-reads/amplicon
+```bash
+python3 create_yml.py --dir <DIRECTORY> --type <TYPE> 
+```
+If you need to generate several YML-files, run this script several times with different TYPEs.
+
+## Run
+Before running the pipeline, you need to add lines to the YML files detailing the sequence type and path to FASTA/FASTQ file(-s). <br>
+**Amplicon** and **Raw reads** analysis can be performed on single-end or paired-end FASTQ file(-s). <br>
+**Assembly** pipeline requires a contig FASTA file.
+
+- If you are running amplicon or raw-reads **single** analysis - you need to add to generated YML-file:
+```bash
+single_reads:  
+  format: edam:format_1930
+  class: File
+  path: <path to FASTQ file>
+```
+- If you are running amplicon or raw-reads **paired** analysis - you need to add to generated YML-file:
+```bash
+forward_reads:  
+  format: edam:format_1930
+  class: File
+  path: <path to forward reads FASTQ file>
+reverse_reads:  
+  format: edam:format_1930
+  class: File
+  path: <path to reverse reads FASTQ file>
+```
+- If you are running **assembly** analysis - you need to add to generated YML-file:
+```bash
+contigs:  
+  format: edam:format_1929
+  class: File
+  path: <path to FASTA file>
+```
+
+#### cwltool
+```bash
+export ANALYSIS=[amplicon/assembly/raw-reads]
+export TYPE=[single/paired/""]
+cwltool workflows/conditionals/${ANALYSIS}-wf-${TYPE}-v.5-cond.cwl ${ANALYSIS}.yml
+```
+#### Other cwl-supported tools
+https://www.commonwl.org/#Implementations
+
+
+## Docker 
+Pipeline uses dockers from MGnify DockerHub. <br>
+If you have problems with pulling dockers, you can re-build them with:
+```bash
+bash docker/docker_build.sh
+```
+
 

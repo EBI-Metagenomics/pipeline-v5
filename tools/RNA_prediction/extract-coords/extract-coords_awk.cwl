@@ -7,7 +7,7 @@ $namespaces:
 
 hints:
  DockerRequirement:
-   dockerPull: alpine:3.7
+   dockerPull: mgnify/pipeline-v5.bash-scripts:latest
 
 requirements:
   ShellCommandRequirement: {}

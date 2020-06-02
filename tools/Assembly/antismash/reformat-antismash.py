@@ -1,10 +1,11 @@
+#!/usr/bin/env python3
 from __future__ import print_function
 import argparse
 import sys
 
 def cluster_dict(glossary):
     cluster_glossary = {}
-    with open(glossary, "r") as long_names:
+    with open(glossary, "r", encoding="utf-8") as long_names:
         for line in long_names:
             if not line.startswith("Label"):
                 splitName = line.strip().split("\t")
@@ -19,7 +20,7 @@ def reformat(input_file, glossary, outfile):
             bgc = splitLine[2]
             bgc = bgc.replace("cf_fatty_acid", "fatty_acid")
             bgc = bgc.replace("cf_saccharide", "saccharide")
-            print (bgc)
+            print(bgc)
             if bgc in glossary:
                 outfile.write("\t".join(splitLine[:2]) + "\t" + bgc + "\t" + "\t".join(splitLine[3:]) + "\t" + glossary[bgc] + "\n")
             else:
