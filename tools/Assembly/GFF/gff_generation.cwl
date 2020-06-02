@@ -55,7 +55,7 @@ $namespaces:
  s: http://schema.org/
 $schemas:
  - http://edamontology.org/EDAM_1.20.owl
- - https://schema.org/docs/schema_org_rdfa.html
+ - https://schema.org/version/latest/schema.rdf
 
 's:author': 'Martin Beracochea, Ekaterina Sakharova, Varsha Kale'
 's:copyrightHolder': EMBL - European Bioinformatics Institute
