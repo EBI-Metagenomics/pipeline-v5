@@ -35,7 +35,7 @@ outputs:
 
 
 $schemas:
-  - https://schema.org/version/latest/schemaorg-current-http.rdf
+  - https://schema.org/version/latest/schema.rdf
   - http://edamontology.org/EDAM_1.16.owl
 
 's:author': 'Ekaterina Sakharova'
