@@ -37,7 +37,7 @@ inputs:
     5.8s_pattern: string
 
  # << cgc >>
-    CGC_config: string
+    CGC_config: string?
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -67,7 +67,7 @@ inputs:
     diamond_header: string
 
  # << GO >>
-    go_config: string
+    go_config: string?
 
  # << Pathways >>
     graphs: string
@@ -75,7 +75,7 @@ inputs:
     pathways_classes: string
 
  # << genome properties >>
-    gp_flatfiles_path: string
+    gp_flatfiles_path: string?
 
  # << antismash summary >>
     clusters_glossary: string
@@ -366,7 +366,7 @@ steps:
 
 # gzip
   compression:
-    run: ../../../utils/gzip.cwl
+    run: ../../../utils/pigz/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:

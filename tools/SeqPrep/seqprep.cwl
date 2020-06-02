@@ -9,7 +9,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: quay.io/biocontainers/seqprep:1.1--1
+    dockerPull: mgnify/pipeline-v5.seqprep:latest
  #SoftwareRequirement:
    #packages:
      #seqprep:

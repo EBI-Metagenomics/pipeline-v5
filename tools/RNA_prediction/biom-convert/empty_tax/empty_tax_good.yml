@@ -1,0 +1,29 @@
+mapseq:
+  class: File
+  format: iana:text/tab-separated-values
+  path: input/good/test.fasta.mseq #input/LSU.mseq
+
+otutable:
+  class: File
+  format: edam:format_3746  # BIOM
+  path: input/good/test.mseq.tsv #input/LSU_json.biom
+
+biomtable:
+  class: File
+  format: iana:text/tab-separated-values  # TXT
+  path: input/good/test.mseq.txt #input/LSU.txt
+
+krona:
+  class: File
+  format: iana:text/html  # HTML
+  path: input/good/krona.html #input/LSU.html
+
+fasta:
+  class: File
+  format: edam:format_1929  # FASTA
+  path: input/good/test.fasta #input/LSU.fasta
+
+otunotaxid:
+  class: File
+  format: edam:format_3746
+  path: input/good/test.fasta.mseq.notaxid.tsv

@@ -12,7 +12,6 @@ inputs:
   db_diamond: string
   db: string
   data_dir: string
-
   cpu: int
   file_acc: string
 

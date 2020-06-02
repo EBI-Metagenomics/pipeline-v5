@@ -1,0 +1,69 @@
+# cmsearch :: search CM(s) against a sequence database
+# INFERNAL 1.1.2 (July 2016)
+# Copyright (C) 2016 Howard Hughes Medical Institute.
+# Freely distributed under a BSD open source license.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query CM file:                         /var/lib/cwl/stgb0ec8980-144f-4eaf-ba6f-a98cff13d343/tRNA5.c.cm
+# target sequence database:              /var/lib/cwl/stga1bdf9f3-23af-4f6d-81d2-f45f8882987c/mrum-genome.fa
+# database size is set to:               1000.0 Mb
+# output directed to file:               mrum-genome.fa.tRNA5.c.cmsearch.out
+# tabular output of hits:                mrum-genome.fa.tRNA5.c.cmsearch_matches.tbl
+# show alignments in output:             no
+# HMM-only mode (for all models):        on [CM will not be used]
+# number of worker threads:              4 [--cpu]
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       tRNA5  [CLEN=72]
+Hit scores:
+ rank     E-value  score  bias  sequence      start     end   mdl trunc   gc  description
+ ----   --------- ------ -----  ----------- ------- -------   --- ----- ----  -----------
+  (1) !   2.5e-07   39.5   0.0  NC_013790.1  362023  361959 - hmm     - 0.48  Methanobrevibacter ruminantium M1 chromosome, complete genome
+  (2) !   3.6e-05   32.7   0.0  NC_013790.1  762495  762559 + hmm     - 0.65  Methanobrevibacter ruminantium M1 chromosome, complete genome
+  (3) !   3.6e-05   32.7   0.0  NC_013790.1 2041699 2041635 - hmm     - 0.65  Methanobrevibacter ruminantium M1 chromosome, complete genome
+  (4) !     9e-05   31.4   0.0  NC_013790.1 2585264 2585201 - hmm     - 0.56  Methanobrevibacter ruminantium M1 chromosome, complete genome
+  (5) !   0.00017   30.6   0.0  NC_013790.1 2351248 2351187 - hmm     - 0.58  Methanobrevibacter ruminantium M1 chromosome, complete genome
+  (6) !   0.00029   29.8   0.0  NC_013790.1  662192  662251 + hmm     - 0.63  Methanobrevibacter ruminantium M1 chromosome, complete genome
+  (7) !   0.00076   28.5   0.0  NC_013790.1 2585183 2585118 - hmm     - 0.56  Methanobrevibacter ruminantium M1 chromosome, complete genome
+  (8) !     0.002   27.2   0.0  NC_013790.1  735142  735198 + hmm     - 0.60  Methanobrevibacter ruminantium M1 chromosome, complete genome
+  (9) !     0.003   26.6   0.0  NC_013790.1 2186009 2185950 - hmm     - 0.52  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (10) !    0.0066   25.6   0.0  NC_013790.1  360882  360824 - hmm     - 0.51  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (11) !    0.0067   25.5   0.0  NC_013790.1 2350588 2350527 - hmm     - 0.60  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (12) !    0.0095   25.1   0.0  NC_013790.1 1873882 1873821 - hmm     - 0.65  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ ------ inclusion threshold ------
+ (13) ?     0.011   24.9   0.0  NC_013790.1  361910  361851 - hmm     - 0.38  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (14) ?     0.024   23.8   0.0  NC_013790.1 2130421 2130351 - hmm     - 0.59  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (15) ?     0.096   21.9   0.0  NC_013790.1  995341  995267 - hmm     - 0.51  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (16) ?      0.11   21.7   0.0  NC_013790.1 2151677 2151737 + hmm     - 0.57  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (17) ?      0.12   21.6   0.0  NC_013790.1 2186083 2186024 - hmm     - 0.50  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (18) ?      0.13   21.5   0.0  NC_013790.1  361056  360995 - hmm     - 0.39  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (19) ?      0.14   21.4   0.0  NC_013790.1 2585070 2585001 - hmm     - 0.60  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (20) ?      0.17   21.1   0.0  NC_013790.1   97728   97789 + hmm     - 0.48  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (21) ?      0.19   20.9   0.0  NC_013790.1 2680165 2680228 + hmm     - 0.62  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (22) ?      0.19   20.9   0.0  NC_013790.1 1160527 1160608 + hmm     - 0.59  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (23) ?      0.52   19.6   0.0  NC_013790.1  361744  361689 - hmm     - 0.52  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (24) ?      0.53   19.6   0.0  NC_013790.1 1064777 1064857 + hmm     - 0.63  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (25) ?      0.55   19.5   0.0  NC_013790.1 2350715 2350650 - hmm     - 0.65  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (26) ?      0.63   19.3   0.0  NC_013790.1 2350982 2350915 - hmm     - 0.50  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (27) ?       0.7   19.2   0.0  NC_013790.1  360727  360670 - hmm     - 0.43  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (28) ?      0.79   19.0   0.0  NC_013790.1  917728  917785 + hmm     - 0.60  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (29) ?       1.1   18.5   0.0  NC_013790.1 2327123 2327043 - hmm     - 0.62  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (30) ?       1.5   18.1   0.0  NC_013790.1 2749939 2749884 - hmm     - 0.48  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (31) ?       1.5   18.1   0.0  NC_013790.1 2749833 2749778 - hmm     - 0.48  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (32) ?       1.6   18.0   0.0  NC_013790.1  360974  360920 - hmm     - 0.55  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (33) ?       1.9   17.8   0.0  NC_013790.1  361672  361607 - hmm     - 0.50  Methanobrevibacter ruminantium M1 chromosome, complete genome
+ (34) ?       6.8   16.1   0.0  NC_013790.1  361440  361393 - hmm     - 0.48  Methanobrevibacter ruminantium M1 chromosome, complete genome
+
+
+Internal HMM-only pipeline statistics summary: (--hmmonly used)
+---------------------------------------------------------------
+Query model(s):                                          1  (72 consensus positions)
+Target sequences:                                        1  (5874406 residues searched)
+Windows passing local HMM SSV      filter:             490  (0.00885); expected (0.02)
+Windows passing local HMM MSV bias filter:             451  (0.008134); expected (0.02)
+Windows passing local HMM Viterbi  filter:              55  (0.0009758); expected (0.001)
+Windows passing local HMM Forward  filter:              42  (0.000758); expected (1e-05)
+Total HMM hits reported:                                34  (0.0003682)
+
+# CPU time: 0.31u 0.02s 00:00:00.33 Elapsed: 00:00:00.17
+//
+[ok]

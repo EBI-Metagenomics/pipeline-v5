@@ -1,7 +1,5 @@
 InterProScan_results:
   class: File
   path: test-input/ips_out.tsv
-config:
-  class: File
-  path: go_summary-config.json
-output_name: 'test-name'
+  format: http://edamontology.org/format_3475
+output_name: 'test-name.go'

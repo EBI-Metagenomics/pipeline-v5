@@ -21,6 +21,7 @@ COPY go-basic-metagenomics_release_20160705.obo /tools/go-basic-metagenomics_rel
 COPY metagenomics_go_slim_banding.txt /tools/metagenomics_go_slim_banding.txt
 COPY metagenomics_go_slim_ids.txt /tools/metagenomics_go_slim_ids.txt
 COPY owltools/* /tools/owltools/
+COPY go_summary-config.json go_summary-config.json
 RUN chmod -R a+rwx /tools/owltools
 
 COPY go_summary_pipeline-1.0.py /tools/go_summary_pipeline-1.0.py

@@ -1,3 +1,6 @@
+$namespaces:
+ iana: https://www.iana.org/assignments/media-types/
+
 otu_table:
   class: File
   path: test-input/test-otu
@@ -5,4 +8,6 @@ otu_table:
 query:
   class: File
   path: test-input/test-mapseq
+  format: iana:text/tab-separated-values
 label: 'test'
+taxid_flag: true

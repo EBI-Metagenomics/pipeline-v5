@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+##############################################################
+# Dockerfile Version:   19.03.1
+# Software:             esl-ssplit.pl
+# Software Version:     1.0.0
+# Description:          Chunking DNA files
+##############################################################
+>>>>>>> add dockers to pipeline
 FROM alpine:3.12.0
 RUN apk add --no-cache build-base autoconf curl perl perl-dev
 RUN mkdir -p /opt

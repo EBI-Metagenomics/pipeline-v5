@@ -1,18 +1,18 @@
 ssu_file:
   class: File
-  path: SSU.fasta.gz
+  path: test-input/taxonomy-summary/SSU/empty.fasta.gz
 lsu_file:
   class: File
-  path: LSU.fasta.gz
+  path: test-input/taxonomy-summary/LSU/LSU.fasta.gz
 its_file:
   class: File
-  path: ITS_masked.fasta.gz
+  path: test-input/taxonomy-summary/its/ITS_masked.fasta.gz
 lsu_dir:
   class: Directory
-  path: taxonomy-summary/LSU
+  path: test-input/taxonomy-summary/LSU
 ssu_dir:
   class: Directory
-  path: taxonomy-summary/SSU
+  path: test-input/taxonomy-summary/SSU
 its_dir:
   class: Directory
-  path: taxonomy-summary/its
+  path: test-input/taxonomy-summary/its

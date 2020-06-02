@@ -49,7 +49,7 @@ outputs:
 
 hints:
   - class: DockerRequirement
-    dockerPull: mapseq:latest
+    dockerPull: mgnify/pipeline-v5.mapseq
 
 $namespaces:
  edam: http://edamontology.org/

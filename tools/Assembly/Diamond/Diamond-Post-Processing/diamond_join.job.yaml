@@ -1,6 +1,13 @@
+$namespaces:
+ edam: http://edamontology.org/
+
 input_diamond:
   class: File
   path: Files/example_diamond_10_sorted
+  format: edam:format_2333
 input_db:
   class: File
   path: Files/example_diamond_db
+filename:
+  class: File
+  path: Files/filename

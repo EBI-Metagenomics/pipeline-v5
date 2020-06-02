@@ -62,7 +62,7 @@ steps:
     out: [ renamed_file ]
 
   gzip_files:
-    run: ../../utils/gzip.cwl
+    run: ../../utils/pigz/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file: rename_ncrnas/renamed_file

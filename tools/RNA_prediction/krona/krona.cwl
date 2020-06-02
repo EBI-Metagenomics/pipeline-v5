@@ -33,7 +33,7 @@ outputs:
 
 hints:
   DockerRequirement:
-    dockerPull: kronav2.7.1:1.0
+    dockerPull: mgnify/pipeline-v5.krona:latest
 
 $namespaces:
  edam: http://edamontology.org/

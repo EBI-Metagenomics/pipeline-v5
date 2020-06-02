@@ -7,9 +7,9 @@ $namespaces:
 
 label: "Combined Gene Caller: post-processing of FGS and Prodigal"
 
-#hints:
-#  - class: DockerRequirement
-#    dockerPull:
+hints:
+  - class: DockerRequirement
+    dockerPull: mgnify/pipeline-v5.protein-post-processing:latest
 
 requirements:
   ResourceRequirement:

@@ -1,15 +1,17 @@
+$namespaces:
+ edam: http://edamontology.org/
+
 input_table:
   class: File
-  path: ../union_ko_contigs_10.txt
+  path: ../test-input/test_table
+  format: edam:format_3475
 graphs:
   class: File
-  path: ../graphs.pkl
+  path: help_files/graphs.pkl
 pathways_names:
   class: File
-  path: ../all_pathways_names.txt
+  path: help_files/all_pathways_names.txt
 pathways_classes:
   class: File
-  path: ../all_pathways_class.txt
-outputname: "memevr"
-  #../../Workflow/merged_complete_0.00001_625_parsed.txt
-  #../Parsing_hmmscan/ERR2098411_hmmscan_tab_parsed.txt
+  path: help_files/all_pathways_class.txt
+outputname: "test_output"

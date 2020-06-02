@@ -1,0 +1,19 @@
+$namespaces:
+  edam: 'http://edamontology.org/'
+
+queryInputFile:
+  class: File
+  path: ../../../tools/Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
+  format: edam:format_1929
+outputFormat: '6'
+maxTargetSeqs: 1
+strand: both
+databaseFile:
+  class: File
+  path: ref-dbs/uniref90_v2019_11_diamond-v0.9.25.dmnd
+threads: 32
+
+blockSize: null
+queryGeneticCode: null
+taxonList: null
+top: null

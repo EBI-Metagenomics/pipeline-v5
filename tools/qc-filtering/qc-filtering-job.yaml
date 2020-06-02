@@ -3,4 +3,4 @@ seq_file:
   format: http://edamontology.org/format_1929
   path: test-input/test_seqs.fasta
 submitted_seq_count: 10
-
+input_file_format: fasta
