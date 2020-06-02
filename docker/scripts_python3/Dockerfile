@@ -34,4 +34,3 @@ COPY antismash_to_gff_nojson.py \
 RUN chmod a+x /tools/*
 
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/tools
-
