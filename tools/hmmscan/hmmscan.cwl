@@ -26,6 +26,8 @@ arguments:
     position: 2
   - prefix: --cpu
     valueFrom: '4'
+  - prefix: -o
+    valueFrom: '/dev/null'
 
 inputs:
 
