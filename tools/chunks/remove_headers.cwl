@@ -32,7 +32,7 @@ outputs:
   stderr: stderr
 
 $schemas:
-  - 'https://schema.org/docs/schema_org_rdfa.html'
+  - 'https://schema.org/version/latest/schema.rdf'
 s:copyrightHolder: "EMBL - European Bioinformatics Institute, 2018"
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:author: "Ekaterina Sakharova"
