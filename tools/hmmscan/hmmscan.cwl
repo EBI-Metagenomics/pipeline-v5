@@ -12,6 +12,7 @@ hints:
     dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
 requirements:
+  ShellCommandRequirement: {}
   ResourceRequirement:
     ramMin: 6000
     coresMin: 4
@@ -21,6 +22,12 @@ requirements:
 baseCommand: ["hmmscan"]
 
 arguments:
+  - valueFrom: '> /dev/null'
+    shellQuote: false
+    position: 10
+  - valueFrom: '2> /dev/null'
+    shellQuote: false
+    position: 11
   - prefix: --domtblout
     valueFrom: $(inputs.seqfile.nameroot)_hmmscan.tbl
     position: 2
