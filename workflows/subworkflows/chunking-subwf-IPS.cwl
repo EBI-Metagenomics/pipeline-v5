@@ -31,7 +31,7 @@ steps:
       seqs: CGC_predicted_proteins
       chunk_size: chunk_size
     out: [ chunks ]
-    run: ../../../tools/chunks/fasta_chunker.cwl
+    run: ../../tools/chunks/fasta_chunker.cwl
 
   # << InterProScan >>
   interproscan:
@@ -42,7 +42,7 @@ steps:
       outputFormat: InterProScan_outputFormat
       databases: InterProScan_databases
     out: [ i5Annotations ]
-    run: ../../../tools/InterProScan/InterProScan-v5-none_docker.cwl
+    run: ../../tools/InterProScan/InterProScan-v5-none_docker.cwl
     label: "InterProScan: protein sequence classifier"
 
   combine_ips:
@@ -53,4 +53,4 @@ steps:
         valueFrom: $(self.nameroot.split('_CDS')[0])
       postfix: name_ips
     out: [result]
-    run: ../../../utils/concatenate.cwl
+    run: ../../utils/concatenate.cwl
