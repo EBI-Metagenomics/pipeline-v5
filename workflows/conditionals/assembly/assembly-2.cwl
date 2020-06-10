@@ -194,7 +194,7 @@ steps:
 
 # -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
   functional_annotation:
-    run: ../../subworkflows/functional_annotation.cwl
+    run: ../../subworkflows/assembly/functional_annotation.cwl
     in:
       CGC_predicted_proteins:
         source: cgc/results
@@ -312,7 +312,7 @@ steps:
 
 # << change TSV to CSV >>
   change_formats_and_names:
-    run: ../../subworkflows/change_formats_and_names.cwl
+    run: ../../subworkflows/assembly/change_formats_and_names.cwl
     in:
       genome_properties_summary: genome_properties/summary
       kegg_summary: pathways/kegg_pathways_summary

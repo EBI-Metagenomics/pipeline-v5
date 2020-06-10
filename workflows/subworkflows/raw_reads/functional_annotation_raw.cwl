@@ -4,14 +4,10 @@ cwlVersion: v1.0
 
 requirements:
   ResourceRequirement:
-      ramMin: 5000
-      coresMin: 8
+      ramMin: 1000
+      coresMin: 1
   SubworkflowFeatureRequirement: {}
   ScatterFeatureRequirement: {}
-#  - class: SchemaDefRequirement
-#    types:
-#      - $import: ../tools/InterProScan/InterProScan-apps.yaml
-#      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
 
 inputs:
 
@@ -32,62 +28,32 @@ inputs:
 outputs:
   hmmscan_result:
     type: File
-    outputSource: combine_hmmscan/result
+    outputSource: run_hmmscan/hmmscan_result
   ips_result:
     type: File
-    outputSource: combine_ips/result
+    outputSource: run_IPS/ips_result
 
 steps:
 
-  # << Chunk faa file >>
-  split_seqs:
+  run_hmmscan:
+    run: ../chunking-subwf-hmmscan.cwl
     in:
-      seqs: CGC_predicted_proteins
+      CGC_predicted_proteins: CGC_predicted_proteins
       chunk_size: chunk_size
-    out: [ chunks ]
-    run: ../../../tools/chunks/fasta_chunker.cwl
+      name_hmmscan: name_hmmscan
+      HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
+      HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
+      HMMSCAN_name_database: HMMSCAN_name_database
+      HMMSCAN_data: HMMSCAN_data
+    out: [ hmmscan_result ]
 
-  # << InterProScan >>
-  interproscan:
-    scatter: inputFile
+  run_IPS:
+    run: ../chunking-subwf-IPS.cwl
     in:
-      applications: InterProScan_applications
-      inputFile: split_seqs/chunks
-      outputFormat: InterProScan_outputFormat
-      databases: InterProScan_databases
-    out: [ i5Annotations ]
-    run: ../../../tools/InterProScan/InterProScan-v5-none_docker.cwl
-    label: "InterProScan: protein sequence classifier"
-
-  combine_ips:
-    in:
-      files: interproscan/i5Annotations
-      outputFileName:
-        source: CGC_predicted_proteins
-        valueFrom: $(self.nameroot.split('_CDS')[0])
-      postfix: name_ips
-    out: [result]
-    run: ../../../utils/concatenate.cwl
-
-  # << hmmscan >>
-  hmmscan:
-    scatter: seqfile
-    in:
-      seqfile: split_seqs/chunks
-      gathering_bit_score: HMMSCAN_gathering_bit_score
-      name_database: HMMSCAN_name_database
-      data: HMMSCAN_data
-      omit_alignment: HMMSCAN_omit_alignment
-    out: [ output_table ]
-    run: ../../../tools/hmmscan/hmmscan-subwf.cwl
-    label: "Analysis using profile HMM on db"
-
-  combine_hmmscan:
-    in:
-      files: hmmscan/output_table
-      outputFileName:
-        source: CGC_predicted_proteins
-        valueFrom: $(self.nameroot.split('_CDS')[0])
-      postfix: name_hmmscan
-    out: [result]
-    run: ../../../utils/concatenate.cwl
+      CGC_predicted_proteins: CGC_predicted_proteins
+      chunk_size: chunk_size
+      name_ips: name_ips
+      InterProScan_databases: InterProScan_databases
+      InterProScan_applications: InterProScan_applications
+      InterProScan_outputFormat: InterProScan_outputFormat
+    out: [ ips_result ]
