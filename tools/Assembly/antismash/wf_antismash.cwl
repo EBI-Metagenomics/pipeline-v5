@@ -42,7 +42,7 @@ steps:
     run: ../../qc-filtering/qc-filtering.cwl
     in:
       seq_file: filtered_fasta
-      min_length: { default: 1000 }
+      min_length: { default: 5000 }
       submitted_seq_count: count_reads/count
       stats_file_name: { default: 'qc_summary_antismash' }
       input_file_format: { default: fasta }
