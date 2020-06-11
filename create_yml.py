@@ -93,7 +93,7 @@ def itsone_db(file_yml, dir):
 
 
 def other_rna(file_yml):
-    file_yml.write("\n\nother_ncRNA_models:\n  "
+    file_yml.write("\n\nother_ncrna_models:\n  "
                    "- 'alpha_tmRNA.RF01849'\n  - 'Bacteria_large_SRP.RF01854'\n  "  
                    "- 'beta_tmRNA.RF01850'\n  - 'Dictyostelium_SRP.RF01570'\n  - 'Metazoa_SRP.RF00017'\n"
                    "  - 'Protozoa_SRP.RF01856'\n  - 'RNaseP_arch.RF00373'\n  - 'RNaseP_bact_b.RF00011'\n"
