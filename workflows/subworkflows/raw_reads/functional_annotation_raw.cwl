@@ -45,6 +45,7 @@ steps:
       HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
       HMMSCAN_name_database: HMMSCAN_name_database
       HMMSCAN_data: HMMSCAN_data
+      previous_step_result: run_IPS/ips_result
     out: [ hmmscan_result ]
 
   run_IPS:

@@ -4,7 +4,8 @@ class: Workflow
 label: "First scatter to find seed orthologs, unite them, find annotations"
 
 requirements:
-  - class: ScatterFeatureRequirement
+  ScatterFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
 
 inputs:
   fasta_file: File[]
