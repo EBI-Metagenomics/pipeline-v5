@@ -25,7 +25,7 @@ steps:
       chunk_size: { default: 2000000 }
       file_format: { default: 'fastq' }
     out: [ chunks ]
-    run: ../../tools/chunks/fasta_chunker.cwl
+    run: ../../tools/chunks/protein_chunker.cwl
 
   trim_quality_control:
     doc: |

@@ -29,7 +29,7 @@ steps:
       seqs: input_fasta
       chunk_size: chunk_size
     out: [ chunks ]
-    run: ../../../tools/chunks/fasta_chunker.cwl
+    run: ../../../tools/chunks/dna_chunker/fasta_chunker.cwl
 
 
   # << CGC >>

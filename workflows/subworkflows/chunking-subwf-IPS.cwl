@@ -31,7 +31,7 @@ steps:
       seqs: CGC_predicted_proteins
       chunk_size: chunk_size
     out: [ chunks ]
-    run: ../../tools/chunks/fasta_chunker.cwl
+    run: ../../tools/chunks/protein_chunker.cwl
 
   # << InterProScan >>
   interproscan:

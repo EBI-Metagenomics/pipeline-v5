@@ -13,37 +13,27 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: 'alpine:3.7'
-
-  SoftwareRequirement:
-    packages:
-      biopython:
-        specs: [ "https://identifiers.org/rrid/RRID:SCR_007173" ]
-        version: [ "1.65", "1.66", "1.69" ]
+    dockerPull: mgnify/pipeline-v5.dna_chunking:latest
 
 inputs:
   seqs:
     # format: edam:format_1929  # collision with concatenate.cwl
     type: File
     inputBinding:
-      prefix: -i
+      position: 1
   chunk_size:
     type: int
     inputBinding:
-      prefix: -s
-  file_format:
-    type: string?
-    inputBinding:
-      prefix: -f
+      position: 2
 
-baseCommand: [ split_to_chunks.py ]
+baseCommand: [ esl-ssplit.pl ]
 
 outputs:
   chunks:
     format: edam:format_1929  # FASTA
     type: File[]
     outputBinding:
-      glob: '*_*'
+      glob: "$(inputs.seqs.basename).*"
 
 $namespaces:
  edam: http://edamontology.org/
