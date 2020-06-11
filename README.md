@@ -32,7 +32,7 @@ bash download_dbs.sh -a True -m True -w True  # for all types
 
 #### Create yml-file
 Set DIRECTORY as path to the same directory where you downloaded all databases. <br>
-TYPE: assembly/raw-reads/amplicon
+TYPE: assembly/wgs/amplicon
 ```bash
 python3 create_yml.py --dir <DIRECTORY> --type <TYPE> 
 ```

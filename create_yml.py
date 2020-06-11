@@ -106,7 +106,7 @@ def other_rna(file_yml):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parsing first sub-wf of pipeline")
     parser.add_argument("-d", "--dir", dest="dir", help="dir with all dbs", required=True)
-    parser.add_argument("-t", "--type", dest="type", help="type of analysis: assembly/raw-reads/amplicon", required=True)
+    parser.add_argument("-t", "--type", dest="type", help="type of analysis: assembly/wgs/amplicon", required=True)
 
     if len(sys.argv) == 1:
         parser.print_help()
