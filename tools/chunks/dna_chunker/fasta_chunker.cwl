@@ -7,6 +7,8 @@ doc: based upon code by Maxim Scheremetjew, EMBL-EBI
 
 
 requirements:
+  InitialWorkDirRequirement:
+    listing: [$(inputs.seqs)]
   ResourceRequirement:
     coresMax: 1
     ramMin: 5000

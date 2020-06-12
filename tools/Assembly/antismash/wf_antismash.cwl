@@ -48,11 +48,19 @@ steps:
       input_file_format: { default: fasta }
     out: [filtered_file]
 
+  chunking_fasta:
+    run: ../../chunks/dna_chunker/fasta_chunker.cwl
+    in:
+      seqs: filter_contigs_antismash/filtered_file
+      chunk_size: { default: 100000 }
+    out: [ chunks ]
+
   antismash:
     run: cwl-s/antismash_v4.cwl
+    scatter: input_fasta
     in:
       outdirname: {default: 'antismash_result'}
-      input_fasta: filter_contigs_antismash/filtered_file
+      input_fasta: chunking_fasta/chunks
       glossary: clusters_glossary
       outname:
         source: filtered_fasta
