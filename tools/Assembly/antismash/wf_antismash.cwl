@@ -25,9 +25,6 @@ outputs:
   antismash_clusters:
     type: File?
     outputSource: antismash/reformated_clusters
-  add:
-    type: Directory
-    outputSource: move_antismash_summary_to_pathways_systems_folder/summary_in_folder
 
 steps:
 
@@ -71,13 +68,6 @@ steps:
       - reformated_clusters
       - stderr
       - stdout
-
-  move_antismash_summary_to_pathways_systems_folder:
-    run: cwl-s/move_antismash_summary.cwl
-    in:
-      antismash_summary: antismash/reformated_clusters
-      folder_name: final_folder_name
-    out: [ summary_in_folder ]
 
 
 # ______________________________________________
