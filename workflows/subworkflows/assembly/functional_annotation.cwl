@@ -71,18 +71,6 @@ steps:
         valueFrom: $(self.nameroot)
     out: [ annotations, orthologs ]
 
-  run_hmmscan:
-    run: ../chunking-subwf-hmmscan.cwl
-    in:
-      CGC_predicted_proteins: CGC_predicted_proteins
-      chunk_size: chunk_size
-      name_hmmscan: name_hmmscan
-      HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
-      HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
-      HMMSCAN_name_database: HMMSCAN_name_database
-      HMMSCAN_data: HMMSCAN_data
-    out: [ hmmscan_result ]
-
   run_IPS:
     run: ../chunking-subwf-IPS.cwl
     in:
@@ -93,3 +81,16 @@ steps:
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
     out: [ ips_result ]
+
+  run_hmmscan:
+    run: ../chunking-subwf-hmmscan.cwl
+    in:
+      CGC_predicted_proteins: CGC_predicted_proteins
+      chunk_size: chunk_size
+      name_hmmscan: name_hmmscan
+      HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
+      HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
+      HMMSCAN_name_database: HMMSCAN_name_database
+      HMMSCAN_data: HMMSCAN_data
+      previous_step_result: run_IPS/ips_result
+    out: [ hmmscan_result ]

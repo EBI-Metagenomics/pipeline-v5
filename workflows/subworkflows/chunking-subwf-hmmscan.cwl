@@ -21,6 +21,8 @@ inputs:
   HMMSCAN_name_database: string
   HMMSCAN_data: Directory
 
+  previous_step_result: File?
+
 outputs:
   hmmscan_result:
     type: File
