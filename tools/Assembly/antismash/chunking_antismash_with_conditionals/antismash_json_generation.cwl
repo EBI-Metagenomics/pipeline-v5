@@ -26,16 +26,14 @@ inputs:
 
   input_js:
     type: File
-    format: edam:format_3475  # TXT
     inputBinding:
       prefix: -i
 
-baseCommand: [antismash_json_generation]
+baseCommand: [ antismash_json_generation ]
 
 outputs:
   output_json:
     type: File
-    format: edam:format_3475  # TXT
     outputBinding:
       glob: $(inputs.outputname)
 

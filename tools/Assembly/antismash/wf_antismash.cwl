@@ -14,7 +14,7 @@ requirements:
 
 inputs:
 
-    filtered_fasta: File
+    input_filtered_fasta: File
     clusters_glossary: File
     final_folder_name: string
 
@@ -31,36 +31,28 @@ steps:
 # << count reads pre QC >>
   count_reads:
     in:
-      sequences: filtered_fasta
+      sequences: input_filtered_fasta
     out: [ count ]
     run: ../../../utils/count_fasta.cwl
 
   filter_contigs_antismash:
     run: ../../qc-filtering/qc-filtering.cwl
     in:
-      seq_file: filtered_fasta
-      min_length: { default: 5000 }
+      seq_file: input_filtered_fasta
+      min_length: { default: 1000 }
       submitted_seq_count: count_reads/count
       stats_file_name: { default: 'qc_summary_antismash' }
       input_file_format: { default: fasta }
     out: [filtered_file]
 
-  chunking_fasta:
-    run: ../../chunks/dna_chunker/fasta_chunker.cwl
-    in:
-      seqs: filter_contigs_antismash/filtered_file
-      chunk_size: { default: 100000 }
-    out: [ chunks ]
-
   antismash:
-    run: cwl-s/antismash_v4.cwl
-    scatter: input_fasta
+    run: cwl-s/antismash_v4_with_postprocessing.cwl
     in:
       outdirname: {default: 'antismash_result'}
-      input_fasta: chunking_fasta/chunks
+      input_fasta: filter_contigs_antismash/filtered_file
       glossary: clusters_glossary
       outname:
-        source: filtered_fasta
+        source: input_filtered_fasta
         valueFrom: $(self.nameroot)
       final_folder: final_folder_name
     out:
@@ -68,38 +60,6 @@ steps:
       - reformated_clusters
       - stderr
       - stdout
-
-
-# ______________________________________________
-# << post-processing JS >>
-#  antismash_json_generation:
-#    run: ../../../tools/Assembly/antismash/antismash_json_generation.cwl
-#    in:
-#      input_js: antismash/geneclusters_js
-#      outputname: {default: 'geneclusters.json'}
-#    out: [output_json]
-
-# << post-processing geneclusters.txt >>
-#  antismash_summary:
-#    run: ../../../tools/Assembly/antismash/reformat-antismash.cwl
-#    in:
-#      glossary: clusters_glossary
-#      geneclusters: antismash/geneclusters_txt
-#    out: [reformatted_clusters]
-
-# << GFF for antismash >>
-#  antismash_gff:
-#    run: ../../../tools/Assembly/GFF/antismash_to_gff.cwl
-#    in:
-#      antismash_geneclus: antismash_summary/reformatted_clusters
-#      antismash_embl: antismash/final_embl
-#      antismash_gc_json: antismash_json_generation/output_json
-#      output_name:
-#        source: filtered_fasta
-#        valueFrom: $(self.nameroot).antismash.gff
-#    out: [output_gff_gz, output_gff_index]
-# ______________________________________________
-
 
 
 $namespaces:

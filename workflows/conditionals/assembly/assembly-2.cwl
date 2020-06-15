@@ -300,9 +300,9 @@ steps:
 # << ANTISMASH >>
 
   antismash:
-    run: ../../../tools/Assembly/antismash/wf_antismash.cwl
+    run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
     in:
-      filtered_fasta: filtered_fasta
+      input_filtered_fasta: filtered_fasta
       clusters_glossary: clusters_glossary
       final_folder_name: { default: pathways-systems }
     out:
