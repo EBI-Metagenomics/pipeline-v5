@@ -9,7 +9,7 @@ hints:
   DockerRequirement:
     dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
-baseCommand: [esl-sfetch, --index]
+baseCommand: [ esl-index.sh ]
 
 requirements:
   ResourceRequirement:
@@ -24,6 +24,7 @@ inputs:
     type: File
     format: edam:format_1929  # FASTA
     inputBinding:
+      prefix: -f
       position: 1
       valueFrom: $(self.basename)
     label: Input fasta file.
@@ -34,7 +35,7 @@ outputs:
     secondaryFiles:
         - .ssi
     outputBinding:
-      glob: $(inputs.sequences.basename)
+      glob: "folder/$(inputs.sequences.basename)"
     label: The index file
     format: edam:format_1929  # FASTA
 

@@ -94,3 +94,4 @@ steps:
       HMMSCAN_data: HMMSCAN_data
       previous_step_result: run_IPS/ips_result
     out: [ hmmscan_result ]
+

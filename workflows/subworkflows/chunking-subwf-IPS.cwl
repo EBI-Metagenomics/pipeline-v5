@@ -8,6 +8,7 @@ requirements:
       coresMin: 1
   SubworkflowFeatureRequirement: {}
   ScatterFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
 
 inputs:
 
