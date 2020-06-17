@@ -42,7 +42,7 @@ steps:
     run: filtering_fasta_for_antismash.cwl
     in:
       fasta: input_filtered_fasta
-      contig_min_limit: contig_min_limit
+      contig_min_limit: { default: 5000 }
     out:
       - filtered_fasta_for_antismash
       - count_after_filtering
@@ -63,6 +63,6 @@ steps:
       filtered_fasta: filtering/filtered_fasta_for_antismash
       clusters_glossary: clusters_glossary
       final_folder_name: final_folder_name
-      chunk_size: chunk_size
+      chunk_size: { default: 100000 }
       value: filtering/count_after_filtering
     out: [ antismash_folder_chunking, antismash_clusters ]
