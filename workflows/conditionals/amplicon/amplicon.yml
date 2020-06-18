@@ -5,7 +5,9 @@ reverse_reads:
   class: File
   path: ../../../input_examples/wgs-paired-SRR1620013_2_small.fastq.gz
 
-#single_reads: File?
+#single_reads:
+#  class: File
+#  path: ../../../input_examples/wgs-paired-SRR1620013_1_small.fastq.gz
 
 qc_min_length: 500
 stats_file_name: stats

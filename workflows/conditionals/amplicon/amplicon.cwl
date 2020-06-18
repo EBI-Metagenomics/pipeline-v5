@@ -24,18 +24,20 @@ inputs:
 outputs:
 
  # hashsum files
-  input_files_hashsum:
-    type: File[]
+  input_files_hashsum_paired:
+    type: File[]?
     outputSource: hashsum_paired/hashsum
     pickValue: all_non_null
-
+  input_files_hashsum_single:
+    type: File?
+    outputSource: hashsum_single/hashsum
 
 steps:
 
 # << calculate hashsum >>
   hashsum_paired:
     run: ../../../utils/generate_checksum/generate_checksum.cwl
-    when: $(inputs.single != null)
+    when: $(inputs.single == null)
     scatter: input_file
     in:
       single: single_reads
@@ -44,5 +46,12 @@ steps:
         - reverse_reads
     out: [ hashsum ]
 
+  hashsum_single:
+    run: ../../../utils/generate_checksum/generate_checksum.cwl
+    when: $(inputs.single != null)
+    in:
+      single: single_reads
+      input_file: single_reads
+    out: [ hashsum ]
 
 
