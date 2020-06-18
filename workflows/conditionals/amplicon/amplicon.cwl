@@ -33,14 +33,15 @@ outputs:
 steps:
 
 # << calculate hashsum >>
-  hashsum_step:
+  hashsum_paired:
     run: ../../../utils/generate_checksum/generate_checksum.cwl
+    when: $(inputs.single != null)
     scatter: input_file
     in:
+      single: single_reads
       input_file:
         - forward_reads
         - reverse_reads
-        - single_reads
     out: [ hashsum ]
 
 
