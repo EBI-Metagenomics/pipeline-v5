@@ -13,7 +13,6 @@ requirements:
 #      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-    status: File
     filtered_fasta: File
 
     ssu_db: {type: File, secondaryFiles: [.mscluster] }

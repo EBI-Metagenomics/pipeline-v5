@@ -1,5 +1,5 @@
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev2
 
 $namespaces:
   edam: 'http://edamontology.org/'
@@ -9,12 +9,6 @@ $schemas:
   - 'https://schema.org/version/latest/schema.rdf'
 
 requirements:
-#  - class: SchemaDefRequirement
-#    types:
-#      - $import: ../tools/Diamond/Diamond-strand_values.yaml
-#      - $import: ../tools/Diamond/Diamond-output_formats.yaml
-#      - $import: ../tools/InterProScan/InterProScan-apps.yaml
-#      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
   - class: ResourceRequirement
     ramMin: 50000
   - class: SubworkflowFeatureRequirement
@@ -88,71 +82,89 @@ inputs:
     clusters_glossary: File
 
 outputs:
-
- # << root folder >>
-  compressed_files:                                          # [5] fasta, cmsearch, ncRNA, deoverlapped
-    type: File[]
-    outputSource: after-qc/compressed_files
-  index_fasta_file:                                          # [1] fasta.bgz.fai
-    type: File
-    outputSource: after-qc/index_fasta_file
-  bgzip_fasta_file:                                          # [1] fasta.bgz
-    type: File
-    outputSource: after-qc/bgzip_fasta_file
-  chunking_nucleotides:                                      # [2] fasta, ffn
-    type: File[]
-    outputSource: after-qc/chunking_nucleotides
-  chunking_proteins:                                         # [1] faa
-    type: File[]
-    outputSource: after-qc/chunking_proteins
   qc-status:                                                 # [1]
     type: File
     outputSource: before-qc/qc-status
   qc_summary:                                                # [1]
     type: File
     outputSource: before-qc/qc_summary
-
+  hashsum_input:
+    type: File
+    outputSource: before-qc/hashsum_input
  # << qc-statistics >>
   qc-statistics_folder:                                      # [8]
     type: Directory
     outputSource: before-qc/qc-statistics_folder
 
- # << functional annotation >>
+# << root folder >>
+  compressed_files:                                          # [5] fasta, cmsearch, ncRNA, deoverlapped
+    type: File[]
+    outputSource: after-qc/compressed_files
+    pickValue: all_non_null
+  index_fasta_file:                                          # [1] fasta.bgz.fai
+    type: File
+    outputSource: after-qc/index_fasta_file
+    pickValue: all_non_null
+  bgzip_index:                                               # [1] fasta.bgz.gzi
+    type: File
+    outputSource: after-qc/bgz_index
+    pickValue: all_non_null
+  bgzip_fasta_file:                                          # [1] fasta.bgz
+    type: File
+    outputSource: after-qc/bgzip_fasta_file
+    pickValue: all_non_null
+  chunking_nucleotides:                                      # [2] fasta, ffn
+    type: File[]
+    outputSource: after-qc/chunking_nucleotides
+    pickValue: all_non_null
+  chunking_proteins:                                         # [1] faa
+    type: File[]
+    outputSource: after-qc/chunking_proteins
+    pickValue: all_non_null
+
+# << functional annotation >>
   functional_annotation_folder:                              # [15]
     type: Directory
     outputSource: after-qc/functional_annotation_folder
+    pickValue: all_non_null
   stats:                                                     # [6]
     outputSource: after-qc/stats
     type: Directory
+    pickValue: all_non_null
 
- # << pathways and systems >>
+# << pathways and systems >>
   pathways_systems_folder:                                   # [~10]
     type: Directory
     outputSource: after-qc/pathways_systems_folder
+    pickValue: all_non_null
   pathways_systems_folder_antismash:
     type: Directory
     outputSource: after-qc/pathways_systems_folder_antismash
+    pickValue: all_non_null
   pathways_systems_folder_antismash_summary:
     type: Directory
     outputSource:  after-qc/pathways_systems_folder_antismash_summary
+    pickValue: all_non_null
 
-
- # << sequence categorisation >>
+# << sequence categorisation >>
   sequence-categorisation_folder:                            # [6]
     type: Directory
     outputSource: after-qc/sequence-categorisation_folder
+    pickValue: all_non_null
   taxonomy-summary_folder:                   # [2]
     type: Directory
     outputSource: after-qc/taxonomy-summary_folder
+    pickValue: all_non_null
 
- # sha1sum file
-  hashsum_input:
+  rna-count:
     type: File
-    outputSource: before-qc/hashsum_input
+    outputSource: after-qc/rna-count
+    pickValue: all_non_null
 
 steps:
 
   before-qc:
+    run: assembly/assembly--1.cwl
     in:
       contigs: contigs
       contig_min_length: contig_min_length
@@ -162,10 +174,10 @@ steps:
       - qc-statistics_folder
       - filtered_fasta
       - hashsum_input
-    run: conditionals/assembly/assembly--1.cwl
-
 
   after-qc:
+    run: assembly/assembly-2.cwl
+    when: $(inputs.status.basename == 'QC-PASSED')
     in:
       status: before-qc/qc-status
       filtered_fasta: before-qc/filtered_fasta
@@ -214,6 +226,7 @@ steps:
       - compressed_files
       - index_fasta_file
       - bgzip_fasta_file
+      - bgzip_index
       - chunking_nucleotides
       - chunking_proteins
       - functional_annotation_folder
@@ -222,5 +235,8 @@ steps:
       - pathways_systems_folder_antismash
       - pathways_systems_folder_antismash_summary
       - sequence-categorisation_folder
+      - rna-count
       - taxonomy-summary_folder
-    run: conditionals/assembly/assembly-2.cwl
+
+
+

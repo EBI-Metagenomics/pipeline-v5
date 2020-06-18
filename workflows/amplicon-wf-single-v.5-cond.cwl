@@ -76,6 +76,9 @@ outputs:
     type: File
     outputSource: after-qc/ITS-length
     pickValue: all_non_null
+  suppressed_upload:
+    type: Directory
+    outputSource: after-qc/suppressed_upload
 
 steps:
 
@@ -119,9 +122,10 @@ steps:
       itsonedb_otu_file: itsonedb_otu_file
       itsonedb_label: itsonedb_label
     out:
-      - gz_files
-      - rna-count
       - taxonomy-summary_folder
+      - suppressed_upload
       - sequence-categorisation_folder
+      - rna-count
+      - gz_files
       - ITS-length
 
