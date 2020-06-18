@@ -2,24 +2,31 @@
 class: Workflow
 cwlVersion: v1.2.0-dev2
 
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
 requirements:
   SubworkflowFeatureRequirement: {}
   MultipleInputFeatureRequirement: {}
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
-#  SchemaDefRequirement:
-#    types:
-#      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
-    single_reads: File
+    single_reads: File?
+    forward_reads: File?
+    reverse_reads: File?
 
     qc_min_length: int
     stats_file_name: string
 
-    ssu_db: {type: File, secondaryFiles: [.mscluster] }
-    lsu_db: {type: File, secondaryFiles: [.mscluster] }
+    ssu_db:
+      type: File
+      secondaryFiles: [ .mscluster ]
+    lsu_db:
+      type: File
+      secondaryFiles: [ .mscluster ]
     ssu_tax: File
     lsu_tax: File
     ssu_otus: File
@@ -52,9 +59,12 @@ outputs:
   qc-status:
     type: File
     outputSource: before-qc/qc-status
-  hashsum_input:
-    type: File
-    outputSource: before-qc/hashsum_input
+  hashsum_paired:
+    type: File[]?
+    outputSource: before-qc/input_files_hashsum_paired
+  hashsum_single:
+    type: File?
+    outputSource: before-qc/input_files_hashsum_single
 
   gz_files:
     type: File[]
@@ -79,8 +89,10 @@ outputs:
 steps:
 
   before-qc:
-    run: conditionals/amplicon/amplicon-single-1.cwl
+    run: conditionals/amplicon/amplicon-1.cwl
     in:
+      forward_reads: forward_reads
+      reverse_reads: reverse_reads
       single_reads: single_reads
       qc_min_length: qc_min_length
       stats_file_name: stats_file_name
@@ -89,7 +101,8 @@ steps:
       - qc-statistics
       - qc_summary
       - qc-status
-      - hashsum_input
+      - input_files_hashsum_paired
+      - input_files_hashsum_single
 
   after-qc:
     run: conditionals/amplicon/amplicon-2.cwl
@@ -124,4 +137,3 @@ steps:
       - rna-count
       - gz_files
       - ITS-length
-

@@ -1,7 +1,13 @@
-single_reads:
+forward_reads:
   class: File
-  path: ../input_examples/wgs-single-ERR1995312_small.fastq.gz
+  path: ../input_examples/wgs-paired-SRR1620013_1_small.fastq.gz
   format: http://edamontology.org/format_1930
+reverse_reads:
+  class: File
+  path: ../input_examples/wgs-paired-SRR1620013_2_small.fastq.gz
+  format: http://edamontology.org/format_1930
+
+#single_reads:
 
 qc_min_length: 100
 
