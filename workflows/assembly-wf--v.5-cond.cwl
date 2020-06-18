@@ -106,7 +106,7 @@ outputs:
     outputSource: after-qc/index_fasta_file
   bgzip_index:                                               # [1] fasta.bgz.gzi
     type: File
-    outputSource: after-qc/bgz_index
+    outputSource: after-qc/bgzip_index
   bgzip_fasta_file:                                          # [1] fasta.bgz
     type: File
     outputSource: after-qc/bgzip_fasta_file
