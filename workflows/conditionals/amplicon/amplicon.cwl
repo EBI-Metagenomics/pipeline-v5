@@ -26,7 +26,7 @@ outputs:
  # hashsum files
   input_files_hashsum:
     type: File[]
-    outputSource: hashsum_step/hashsum
+    outputSource: hashsum_paired/hashsum
     pickValue: all_non_null
 
 
