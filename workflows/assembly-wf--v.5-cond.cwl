@@ -104,15 +104,12 @@ outputs:
   index_fasta_file:                                          # [1] fasta.bgz.fai
     type: File
     outputSource: after-qc/index_fasta_file
-    pickValue: all_non_null
   bgzip_index:                                               # [1] fasta.bgz.gzi
     type: File
     outputSource: after-qc/bgz_index
-    pickValue: all_non_null
   bgzip_fasta_file:                                          # [1] fasta.bgz
     type: File
     outputSource: after-qc/bgzip_fasta_file
-    pickValue: all_non_null
   chunking_nucleotides:                                      # [2] fasta, ffn
     type: File[]
     outputSource: after-qc/chunking_nucleotides
@@ -126,45 +123,37 @@ outputs:
   functional_annotation_folder:                              # [15]
     type: Directory
     outputSource: after-qc/functional_annotation_folder
-    pickValue: all_non_null
   stats:                                                     # [6]
     outputSource: after-qc/stats
     type: Directory
-    pickValue: all_non_null
 
 # << pathways and systems >>
   pathways_systems_folder:                                   # [~10]
     type: Directory
     outputSource: after-qc/pathways_systems_folder
-    pickValue: all_non_null
   pathways_systems_folder_antismash:
     type: Directory
     outputSource: after-qc/pathways_systems_folder_antismash
-    pickValue: all_non_null
   pathways_systems_folder_antismash_summary:
     type: Directory
     outputSource:  after-qc/pathways_systems_folder_antismash_summary
-    pickValue: all_non_null
 
 # << sequence categorisation >>
   sequence-categorisation_folder:                            # [6]
     type: Directory
     outputSource: after-qc/sequence-categorisation_folder
-    pickValue: all_non_null
   taxonomy-summary_folder:                   # [2]
     type: Directory
     outputSource: after-qc/taxonomy-summary_folder
-    pickValue: all_non_null
 
   rna-count:
     type: File
     outputSource: after-qc/rna-count
-    pickValue: all_non_null
 
 steps:
 
   before-qc:
-    run: assembly/assembly--1.cwl
+    run: conditionals/assembly/assembly--1.cwl
     in:
       contigs: contigs
       contig_min_length: contig_min_length
@@ -176,7 +165,7 @@ steps:
       - hashsum_input
 
   after-qc:
-    run: assembly/assembly-2.cwl
+    run: conditionals/assembly/assembly-2.cwl
     when: $(inputs.status.basename == 'QC-PASSED')
     in:
       status: before-qc/qc-status

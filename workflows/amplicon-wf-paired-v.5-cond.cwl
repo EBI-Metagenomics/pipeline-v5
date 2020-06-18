@@ -72,19 +72,15 @@ outputs:
   sequence-categorisation_folder:
     type: Directory
     outputSource: after-qc/sequence-categorisation_folder
-    pickValue: all_non_null
   taxonomy-summary_folder:
     type: Directory
     outputSource: after-qc/taxonomy-summary_folder
-    pickValue: all_non_null
   rna-count:
     type: File
     outputSource: after-qc/rna-count
-    pickValue: all_non_null
   ITS-length:
     type: File
     outputSource: after-qc/ITS-length
-    pickValue: all_non_null
   suppressed_upload:
     type: Directory
     outputSource: after-qc/suppressed_upload
@@ -92,7 +88,7 @@ outputs:
 steps:
 
   before-qc:
-    run: amplicon/amplicon-paired-1.cwl
+    run: conditionals/amplicon/amplicon-paired-1.cwl
     in:
       forward_reads: forward_reads
       reverse_reads: reverse_reads
@@ -107,7 +103,7 @@ steps:
       - hashsum_reverse
 
   after-qc:
-    run: amplicon/amplicon-2.cwl
+    run: conditionals/amplicon/amplicon-2.cwl
     when: $(inputs.status.basename == 'QC-PASSED')
     in:
       status: before-qc/qc-status
