@@ -13,7 +13,7 @@ reverse_reads:
 
 #single_reads:
 #  class: File
-#  path: ../../../input_examples/wgs-paired-SRR1620013_1_small.fastq.gz
+#  path: ../../input_examples/wgs-paired-SRR1620013_1_small.fastq.gz
 #  format: http://edamontology.org/format_1930
 
 qc_min_length: 100

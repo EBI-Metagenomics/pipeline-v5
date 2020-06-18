@@ -60,7 +60,7 @@ outputs:
     type: File
     outputSource: before-qc/qc-status
   hashsum_paired:
-    type: File?
+    type: File[]?
     outputSource: before-qc/input_files_hashsum_paired
   hashsum_single:
     type: File?
