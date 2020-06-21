@@ -1,7 +1,7 @@
 CGC_predicted_proteins:
   class: File
   path: ../../tools/Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
-chunk_size: int
+chunk_size: 100000
 
 name_hmmscan: output_table
 
