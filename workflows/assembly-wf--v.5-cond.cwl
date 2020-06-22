@@ -153,7 +153,7 @@ outputs:
 steps:
 
   before-qc:
-    run: conditionals/assembly/assembly--1.cwl
+    run: conditionals/assembly/assembly-1.cwl
     in:
       contigs: contigs
       contig_min_length: contig_min_length
