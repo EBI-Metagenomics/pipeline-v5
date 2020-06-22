@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev2
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -42,15 +42,15 @@ inputs:
 outputs:
 
   taxonomy-summary_folder:
-    type: Directory
+    type: Directory?
     outputSource: suppress_tax/out_tax
 
   suppressed_upload:
-    type: Directory
+    type: Directory?
     outputSource: suppress_tax/out_suppress
 
   sequence-categorisation_folder:
-    type: Directory
+    type: Directory?
     outputSource: return_seq_dir/out
 
   rna-count:
@@ -63,7 +63,7 @@ outputs:
 
   ITS-length:
     type: File
-    outputSource: suppress_tax/stdout
+    outputSource: suppress_tax/its_length
 
 steps:
 
@@ -129,8 +129,11 @@ steps:
 
 # return ITS dir
   return_its_dir:
+    when: $(inputs.unite_folder != null && inputs.itsonedb_folder != null)
     run: ../../../utils/return_directory.cwl
     in:
+      unite_folder: ITS/unite_folder
+      itsonedb_folder: ITS/itsonedb_folder
       dir_list:
         - ITS/unite_folder
         - ITS/itsonedb_folder
@@ -147,16 +150,19 @@ steps:
       lsu_dir: rna_prediction/LSU_folder
       ssu_dir: rna_prediction/SSU_folder
       its_dir: return_its_dir/out
-    out: [stdout, out_tax, out_suppress, out_fastas]
+    out: [its_length, out_tax, out_suppress, out_fastas_tax]
 
 # return sequence-categorisation:
   return_seq_dir:
     run: ../../../utils/return_directory.cwl
+    when: $(inputs.rna != null || inputs.tax != null )
     in:
+      rna: rna_prediction/compressed_rnas
+      tax: suppress_tax/out_fastas_tax
       file_list:
         source:
           - rna_prediction/compressed_rnas
-          - suppress_tax/out_fastas
+          - suppress_tax/out_fastas_tax
         linkMerge: merge_flattened
       dir_name: { default: 'sequence-categorisation' }
     out: [out]

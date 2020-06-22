@@ -1,0 +1,12 @@
+# Constructed from biom file
+# OTU ID	LSU_rRNA	taxonomy	taxid
+25676	3.0	sk__Eukaryota	2759
+16424	1.0	sk__Eukaryota;k__Fungi	4751
+20472	2.0	sk__Eukaryota;k__Fungi;p__Ascomycota;c__Leotiomycetes	147548
+1400	1.0	sk__Eukaryota;k__Fungi;p__Ascomycota;c__Sordariomycetes	147550
+4544	2.0	sk__Eukaryota;k__Fungi;p__Ascomycota;c__Sordariomycetes;o__Hypocreales	5125
+15497	6.0	sk__Eukaryota;k__Fungi;p__Basidiomycota;c__Agaricomycetes	155619
+2195	1.0	sk__Eukaryota;k__Fungi;p__Mucoromycota;c__Glomeromycetes	214506
+14320	1.0	sk__Eukaryota;k__Fungi;p__Mucoromycota;c__Glomeromycetes;o__Glomerales;f__Glomeraceae;g__Rhizophagus	1129544
+19603	1.0	sk__Eukaryota;k__Fungi;p__Mucoromycota;c__Glomeromycetes;o__Glomerales;f__Glomeraceae;g__Rhizophagus;s__Rhizophagus_intraradices	4876
+17712	3.0	sk__Eukaryota;k__Viridiplantae;p__Streptophyta;c__Magnoliopsida	3398

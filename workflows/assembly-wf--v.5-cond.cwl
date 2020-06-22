@@ -98,57 +98,56 @@ outputs:
     outputSource: after-qc/compressed_files
     pickValue: all_non_null
   index_fasta_file:                                          # [1] fasta.bgz.fai
-    type: File
+    type: File?
     outputSource: after-qc/index_fasta_file
   bgzip_index:                                               # [1] fasta.bgz.gzi
-    type: File
+    type: File?
     outputSource: after-qc/bgzip_index
   bgzip_fasta_file:                                          # [1] fasta.bgz
-    type: File
+    type: File?
     outputSource: after-qc/bgzip_fasta_file
   chunking_nucleotides:                                      # [2] fasta, ffn
-    type: File[]
+    type: File[]?
     outputSource: after-qc/chunking_nucleotides
-    pickValue: all_non_null
   chunking_proteins:                                         # [1] faa
-    type: File[]
+    type: File[]?
     outputSource: after-qc/chunking_proteins
-    pickValue: all_non_null
 
 # << functional annotation >>
   functional_annotation_folder:                              # [15]
-    type: Directory
+    type: Directory?
     outputSource: after-qc/functional_annotation_folder
   stats:                                                     # [6]
     outputSource: after-qc/stats
-    type: Directory
+    type: Directory?
 
 # << pathways and systems >>
   pathways_systems_folder:                                   # [~10]
-    type: Directory
+    type: Directory?
     outputSource: after-qc/pathways_systems_folder
   pathways_systems_folder_antismash:
-    type: Directory
+    type: Directory?
     outputSource: after-qc/pathways_systems_folder_antismash
   pathways_systems_folder_antismash_summary:
-    type: Directory
+    type: Directory?
     outputSource:  after-qc/pathways_systems_folder_antismash_summary
 
 # << sequence categorisation >>
   sequence-categorisation_folder:                            # [6]
-    type: Directory
+    type: Directory?
     outputSource: after-qc/sequence-categorisation_folder
   taxonomy-summary_folder:                   # [2]
-    type: Directory
+    type: Directory?
     outputSource: after-qc/taxonomy-summary_folder
 
   rna-count:
-    type: File
+    type: File?
     outputSource: after-qc/rna-count
 
   completed_flag_file:
-    type: File
+    type: File?
     outputSource: touch_file_flag/created_file
+
 steps:
 
   before-qc:

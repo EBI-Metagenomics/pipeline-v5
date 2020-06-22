@@ -96,10 +96,10 @@ outputs:
     type: File
     outputSource: fasta_index/bgz_index
   chunking_nucleotides:                                      # [2] fasta, ffn
-    type: File[]
+    type: File[]?
     outputSource: chunking_final/nucleotide_fasta_chunks
   chunking_proteins:                                         # [1] faa
-    type: File[]
+    type: File[]?
     outputSource: chunking_final/protein_fasta_chunks
 
  # << functional annotation >>
@@ -161,8 +161,8 @@ steps:
       - SSU_folder
       - LSU_folder
       - LSU-SSU-count
-      - SSU_fasta_file
-      - LSU_fasta_file
+      - compressed_SSU_fasta
+      - compressed_LSU_fasta
       - compressed_rnas
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
 
@@ -357,8 +357,8 @@ steps:
       faa:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      LSU: rna_prediction/LSU_fasta_file
-      SSU: rna_prediction/SSU_fasta_file
+      LSU: rna_prediction/compressed_LSU_fasta
+      SSU: rna_prediction/compressed_SSU_fasta
     out:
       - nucleotide_fasta_chunks                         # fasta, ffn
       - protein_fasta_chunks                            # faa
