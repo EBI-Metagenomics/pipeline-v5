@@ -66,7 +66,6 @@ steps:
       otu_counts: classifications_to_otu_counts/otu_txt
     out: [ otu_visualization ]
 
-
   count_lines_mapseq:
     run: ../../utils/count_number_lines.cwl
     in:
@@ -95,7 +94,6 @@ steps:
        json: { default: true }
        table_type: { default: 'OTU table' }
     out: [ result ]
-
 
   return_output_dir:
     when: $(inputs.count > 2)

@@ -70,6 +70,7 @@ outputs:
   LSU_fasta:
     type: File?
     outputSource: extract_subunits/LSU_seqs
+
   compressed_rnas:
     type: File[]
     outputSource: gzip_files/compressed_file

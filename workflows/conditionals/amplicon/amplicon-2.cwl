@@ -1,6 +1,10 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
+<<<<<<< HEAD
 cwlVersion: v1.2.0-dev4
+=======
+cwlVersion: v1.2.0-dev2
+>>>>>>> 553d9dd... add cond to suppress wf and remove empty.sh
 
 requirements:
   SubworkflowFeatureRequirement: {}

@@ -1,0 +1,27 @@
+fasta:
+  class: File
+  path: ../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.fasta
+  format: edam:format_1929  # FASTA
+
+mapseq_ref:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/SSU.fasta
+  format: edam:format_1929  # FASTA
+  checksum: 6b0580823a8c6860a0674428745fb943
+mapseq_taxonomy:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/slv_ssu_filtered2.txt
+  checksum: f4e7019da9e4c9e38cf3bbd8d304bf0c
+otu_ref:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/silva_ssu/ssu2.otu
+  checksum: 75d6cb73018a4f969063de6927cfb1ab
+
+otu_label: SSU
+
+return_dirname: output-dir
+
+file_for_prefix:
+  class: File
+  path: ../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.fasta
+  format: edam:format_1929  # FASTA
