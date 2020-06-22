@@ -67,28 +67,28 @@ outputs:
     outputSource: after-qc/gz_files
     pickValue: all_non_null
   sequence-categorisation_folder:
-    type: Directory
+    type: Directory?
     outputSource: after-qc/sequence-categorisation_folder
   taxonomy-summary_folder:
-    type: Directory
+    type: Directory?
     outputSource: after-qc/taxonomy-summary_folder
   rna-count:
-    type: File
+    type: File?
     outputSource: after-qc/rna-count
   ITS-length:
-    type: File
+    type: File?
     outputSource: after-qc/ITS-length
   suppressed_upload:
-    type: Directory
+    type: Directory?
     outputSource: after-qc/suppressed_upload
 
   completed_flag_file:
-    type: File
+    type: File?
     outputSource: touch_file_flag/created_file
 
-  #no_tax_flag_file:
-  #  type: File?
-  #  outputSource: after-qc/optional_tax_file_flag
+  no_tax_flag_file:
+    type: File?
+    outputSource: after-qc/optional_tax_file_flag
 
 steps:
 
@@ -141,7 +141,7 @@ steps:
       - rna-count
       - gz_files
       - ITS-length
-      # - optional_tax_file_flag
+      - optional_tax_file_flag
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")

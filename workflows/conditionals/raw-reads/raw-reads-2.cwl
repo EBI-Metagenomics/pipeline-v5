@@ -134,8 +134,8 @@ steps:
       - LSU-SSU-count
       - SSU_folder
       - LSU_folder
-      - LSU_fasta_file
-      - SSU_fasta_file
+      - compressed_SSU_fasta
+      - compressed_LSU_fasta
       - compressed_rnas
       - number_LSU_mapseq
       - number_SSU_mapseq
@@ -216,7 +216,7 @@ steps:
 # << ------------------ FINAL STEPS -------------------------- >>
 # gzip
   compression:
-    run: ../../../utils/gzip.cwl
+    run: ../../../utils/pigz/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:
@@ -240,8 +240,8 @@ steps:
       faa:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      LSU: rna_prediction/LSU_fasta_file
-      SSU: rna_prediction/SSU_fasta_file
+      LSU: rna_prediction/compressed_LSU_fasta
+      SSU: rna_prediction/compressed_SSU_fasta
     out:
       - nucleotide_fasta_chunks                         # fasta, ffn
       - protein_fasta_chunks                            # faa

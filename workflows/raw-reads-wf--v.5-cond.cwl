@@ -81,17 +81,17 @@ outputs:
     outputSource: before-qc/input_files_hashsum_single
 
   sequence-categorisation_folder:
-    type: Directory
+    type: Directory?
     outputSource: after-qc/sequence_categorisation_folder
   taxonomy-summary_folder:
-    type: Directory
+    type: Directory?
     outputSource: after-qc/taxonomy-summary_folder
   rna-count:
-    type: File
+    type: File?
     outputSource: after-qc/rna-count
 
   motus_output:
-    type: File
+    type: File?
     outputSource: after-qc/motus_output
 
   compressed_files:
@@ -107,16 +107,14 @@ outputs:
     type: Directory?
 
   chunking_nucleotides:
-    type: File[]
+    type: File[]?
     outputSource: after-qc/chunking_nucleotides
-    pickValue: all_non_null
   chunking_proteins:
-    type: File[]
+    type: File[]?
     outputSource: after-qc/chunking_proteins
-    pickValue: all_non_null
 
   completed_flag_file:
-    type: File
+    type: File?
     outputSource: touch_file_flag/created_file
 
   no_cds_flag_file:

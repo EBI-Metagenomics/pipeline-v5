@@ -24,7 +24,7 @@ baseCommand: [ "biom-convert.sh" ]
 
 inputs:
   biom:
-    type: File
+    type: File?
     format: edam:format_3746  # BIOM
     inputBinding:
       prefix: --input-fp

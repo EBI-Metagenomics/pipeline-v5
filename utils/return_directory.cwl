@@ -9,7 +9,11 @@ requirements:
   ResourceRequirement:
     ramMin: 200
 inputs:
-  file_list: File[]?
+  file_list:
+    type:
+    - "null"
+    - type: array
+      items: ["null", "File"]
   dir_list: Directory[]?
   dir_name: string
 
@@ -19,8 +23,12 @@ outputs:
 expression: |
   ${
     var in_list = "";
-    if (inputs.file_list) {
-      in_list = inputs.file_list;
+    var list2 = [];
+    if (inputs.file_list != null) {
+      for (const item in inputs.file_list) {
+        if (inputs.file_list[item] != null) {
+            list2.push(inputs.file_list[item]) }; }
+      in_list = list2;
     } else {
       in_list = inputs.dir_list;
     }

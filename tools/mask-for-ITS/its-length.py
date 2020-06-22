@@ -1,4 +1,4 @@
-#!/usr/bin/env /hps/nobackup2/production/metagenomics/pipeline/tools-v5/miniconda3-4.6.14/bin/python3
+#!/usr/bin/python3
 import glob
 import argparse
 import sys
@@ -25,7 +25,7 @@ def get_avg_length(masked_its):  # get average length of longest ITS sequences -
     else:
         return 0
 
-def hits_to_num_ratio(fasta, input_folder):  # ratio of mapseq hits to number of total seqs LSU/SSU                 
+def hits_to_num_ratio(fasta, input_folder):  # ratio of mapseq hits to number of total seqs LSU/SSU
     rna_sum, rna_num = [0 for _ in range(2)]
     rna = os.path.join(input_folder, '*.tsv')
     if 'empty' not in os.path.relpath(fasta):
@@ -94,4 +94,3 @@ if __name__ == '__main__':
         print('suppressing...')
         suppress_flag = validate_hits(args.ssu_file, args.lsu_file, args.ssu_directory, args.lsu_directory, avg)
         suppress_dir(suppress_flag, args.lsu_directory, args.ssu_directory, args.its_directory, args.its_file, args.ssu_file, args.lsu_file)
-

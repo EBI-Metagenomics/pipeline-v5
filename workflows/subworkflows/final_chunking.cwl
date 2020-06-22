@@ -1,5 +1,5 @@
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev2
 
 $namespaces:
   edam: 'http://edamontology.org/'
@@ -21,8 +21,8 @@ inputs:
     fasta: File
     ffn: File
     faa: File
-    LSU: File
-    SSU: File
+    LSU: File?
+    SSU: File?
 
 outputs:
   nucleotide_fasta_chunks:
@@ -64,8 +64,11 @@ steps:
       - chunks
 
   chinking_SC_fasta_nucleotide:
+    when: $(inputs.lsu != null && inputs.ssu != null)
     run: ../../utils/result-file-chunker/result_chunker.cwl
     in:
+      lsu: LSU
+      ssu: SSU
       infile:
         - LSU
         - SSU

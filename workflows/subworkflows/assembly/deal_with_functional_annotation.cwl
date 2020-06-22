@@ -92,7 +92,7 @@ steps:
 
 # << gzip functional annotation files >>
   compression_func_ann:
-    run: ../../../utils/gzip.cwl
+    run: ../../../utils/pigz/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file:

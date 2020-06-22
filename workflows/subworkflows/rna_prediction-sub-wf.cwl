@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev2
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -45,6 +45,17 @@ outputs:
     type: File
     outputSource: find_ribosomal_ncRNAs/concatenate_matches
 
+  LSU-SSU-count:
+    type: File
+    outputSource: extract_subunits_coords/counts
+
+  SSU_folder:  # for visualisation
+    type: Directory?
+    outputSource: classify_SSUs/out_dir
+  LSU_folder:  # for visualisation
+    type: Directory?
+    outputSource: classify_LSUs/out_dir
+
   SSU_coords:  # for ITS
     type: File
     outputSource: extract_subunits_coords/SSU_seqs
@@ -52,35 +63,11 @@ outputs:
     type: File
     outputSource: extract_subunits_coords/LSU_seqs
 
-  SSU_folder:  # for visualisation
-    type: Directory
-    outputSource: classify_SSUs/out_dir
-
-  LSU_folder:  # for visualisation
-    type: Directory
-    outputSource: classify_LSUs/out_dir
-
-  extract_sequences:
-    type: File
-    outputSource: extract_sequences/sequences
-
-  LSU-SSU-count:
-    type: File
-    outputSource: extract_subunits_coords/counts
-
-  SSU_fasta_file:
-    type: File
-    outputSource: classify_SSUs/fasta_output
-
-  LSU_fasta_file:
-    type: File
-    outputSource: classify_LSUs/fasta_output
-
   compressed_SSU_fasta:
-    type: File
+    type: File?
     outputSource: classify_SSUs/compressed_fasta_output
   compressed_LSU_fasta:
-    type: File
+    type: File?
     outputSource: classify_LSUs/compressed_fasta_output
   compressed_rnas:
     type: File[]
@@ -146,10 +133,19 @@ steps:
       pattern_5.8S: pattern_5.8S
     out: [SSU_seqs, LSU_seqs, fastas]
 
+  count_ssu_fasta:
+    run: ../../utils/count_fasta.cwl
+    in:
+      sequences: extract_subunits/SSU_seqs
+      number: { default: 1 }
+    out: [ count ]
+
 # classify SSU
   classify_SSUs:
+    when: $(inputs.fasta_count > 0)
     run: classify-otu-visualise.cwl
     in:
+      fasta_count: count_ssu_fasta/count
       fasta: extract_subunits/SSU_seqs
       mapseq_ref: silva_ssu_database
       mapseq_taxonomy: silva_ssu_taxonomy
@@ -157,12 +153,21 @@ steps:
       otu_label: pattern_SSU
       return_dirname: {default: 'SSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, compressed_fasta_output, fasta_output, number_lines_mapseq ]
+    out: [ out_dir, compressed_fasta_output, number_lines_mapseq ]
+
+  count_lsu_fasta:
+    run: ../../utils/count_fasta.cwl
+    in:
+      sequences: extract_subunits/LSU_seqs
+      number: { default: 1 }
+    out: [ count ]
 
 # classify LSU
   classify_LSUs:
+    when: $(inputs.fasta_count > 0)
     run: classify-otu-visualise.cwl
     in:
+      fasta_count: count_lsu_fasta/count
       fasta: extract_subunits/LSU_seqs
       mapseq_ref: silva_lsu_database
       mapseq_taxonomy: silva_lsu_taxonomy
@@ -170,11 +175,11 @@ steps:
       otu_label: pattern_LSU
       return_dirname: {default: 'LSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, compressed_fasta_output, fasta_output, number_lines_mapseq ]
+    out: [ out_dir, compressed_fasta_output, number_lines_mapseq ]
 
 # gzip and chunk sequence-categorisation
   gzip_files:
-    run: ../../utils/gzip.cwl
+    run: ../../utils/pigz/gzip.cwl
     scatter: uncompressed_file
     in:
       uncompressed_file: extract_subunits/fastas

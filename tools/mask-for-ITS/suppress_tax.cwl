@@ -11,51 +11,49 @@ requirements:
 
 inputs:
     ssu_file:
-      type: File
+      type: File?
       inputBinding:
         prefix: --ssu-file
     lsu_file:
-      type: File
+      type: File?
       inputBinding:
         prefix: --lsu-file
     its_file:
-      type: File
+      type: File?
       inputBinding:
         prefix: --its-file
     lsu_dir:
-      type: Directory
-      default: "LSU"
+      type: Directory?
+      # default: "LSU"
       inputBinding:
         prefix: --lsu-dir
     ssu_dir:
-      type: Directory
-      default: "SSU"
+      type: Directory?
+      # default: "SSU"
       inputBinding:
         prefix: --ssu-dir
     its_dir:
-      type: Directory
-      default: "its"
+      type: Directory?
+      # default: "its"
       inputBinding:
         prefix: --its-dir
 
 
-baseCommand: [its-length.py]
+baseCommand: [ its-length-new.py ]
 stdout: ITS_LENGTH
 
 outputs:
-    stdout: stdout
+    its_length: stdout
     out_tax:
-       type: Directory
+       type: Directory?
        outputBinding:
         glob: "taxonomy-summary"
     out_suppress:
-       type: Directory
+       type: Directory?
        outputBinding:
         glob: "suppressed"
-    out_fastas:
-       type:
-        type: array
-        items: File
+    out_fastas_tax:
+       type: File[]?
        outputBinding:
         glob: "*.fasta.gz"
 

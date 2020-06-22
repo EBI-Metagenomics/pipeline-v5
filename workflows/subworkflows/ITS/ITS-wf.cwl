@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev2
 class: Workflow
 label: "ITS SubWorkflow"
 
@@ -29,15 +29,15 @@ inputs:
 
 outputs:
   masking_file:
-    type: File
+    type: File?
     outputSource: run_itsonedb/compressed_fasta_output
 
   unite_folder:
-    type: Directory
+    type: Directory?
     outputSource: run_unite/out_dir
 
   itsonedb_folder:
-    type: Directory
+    type: Directory?
     outputSource: run_itsonedb/out_dir
 
   number_ITS_seqs:
@@ -77,9 +77,18 @@ steps:
 
 #run unite and ITSonedb
 
+  count_masked_fasta:
+    run: ../../../utils/count_fasta.cwl
+    in:
+      sequences: mask_for_ITS/masked_sequences
+      number: { default: 1 }
+    out: [ count ]
+
   run_unite:
+    when: $(inputs.fasta_count > 0)
     run: ../classify-otu-visualise.cwl
     in:
+      fasta_count: count_masked_fasta/count
       fasta: mask_for_ITS/masked_sequences
       mapseq_ref: unite_database
       mapseq_taxonomy: unite_taxonomy
@@ -87,11 +96,13 @@ steps:
       otu_label: otu_unite_label
       return_dirname: {default: 'unite'}
       file_for_prefix: query_sequences
-    out: [ out_dir, compressed_fasta_output, fasta_output ]
+    out: [ out_dir, compressed_fasta_output ]
 
   run_itsonedb:
+    when: $(inputs.fasta_count > 0)
     run: ../classify-otu-visualise.cwl
     in:
+      fasta_count: count_masked_fasta/count
       fasta: mask_for_ITS/masked_sequences
       mapseq_ref: itsone_database
       mapseq_taxonomy: itsone_taxonomy
@@ -99,7 +110,7 @@ steps:
       otu_label: otu_itsone_label
       return_dirname: {default: 'itsonedb'}
       file_for_prefix: query_sequences
-    out: [ out_dir, compressed_fasta_output, fasta_output ]
+    out: [ out_dir, compressed_fasta_output ]
 
 # count IPS seqs
   count_ITS_seqs:

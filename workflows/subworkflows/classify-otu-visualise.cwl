@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev2
 class: Workflow
 label: "Run taxonomic classification, create OTU table and krona visualisation"
 
@@ -26,22 +26,25 @@ inputs:
 outputs:
 
   out_dir:
-    type: Directory
+    type: Directory?
     outputSource: return_output_dir/out
 
   compressed_fasta_output:
     type: File
     outputSource: compress_fasta/compressed_file
 
-  fasta_output:
-    type: File
-    outputSource: edit_empty_tax/fasta_out
-
   number_lines_mapseq:
     type: int
     outputSource: count_lines_mapseq/number
 
 steps:
+  compress_fasta:
+    run: ../../utils/pigz/gzip.cwl
+    in:
+      uncompressed_file: fasta
+    out: [ compressed_file ]
+    label: "compressed fasta file"
+
   mapseq:
     run: ../../tools/RNA_prediction/mapseq/mapseq.cwl
     in:
@@ -50,6 +53,13 @@ steps:
       database: mapseq_ref
       taxonomy: mapseq_taxonomy
     out: [ classifications ]
+
+  compress_mapseq:
+    run: ../../utils/pigz/gzip.cwl
+    in:
+      uncompressed_file: mapseq/classifications
+    out: [ compressed_file ]
+    label: "gzip mapseq output"
 
   classifications_to_otu_counts:
     run: ../../tools/RNA_prediction/mapseq2biom/mapseq2biom.cwl
@@ -72,64 +82,48 @@ steps:
       input_file: mapseq/classifications
     out: [ number ]
 
-  edit_empty_tax:
-    run: ../../tools/RNA_prediction/biom-convert/empty_tax.cwl
-    in:
-      mapseq: mapseq/classifications
-      otutable: classifications_to_otu_counts/otu_tsv
-      biomtable: classifications_to_otu_counts/otu_txt
-      krona: visualize_otu_counts/otu_visualization
-      fasta: fasta
-      otunotaxid: classifications_to_otu_counts/otu_tsv_notaxid
-    out: [mapseq_out, otu_out, biom_out, krona_out, fasta_out, otunotaxid_out]
+
+# if mapseq output has more than 2 lines - return folder, else return null
 
   counts_to_hdf5:
+    when: $(inputs.count > 2)
     run: ../../tools/RNA_prediction/biom-convert/biom-convert.cwl
     in:
-       biom: edit_empty_tax/otunotaxid_out
+       count: count_lines_mapseq/number
+       biom: classifications_to_otu_counts/otu_tsv_notaxid
        hdf5: { default: true }
        table_type: { default: 'OTU table' }
     out: [ result ]
 
   counts_to_json:
+    when: $(inputs.count > 2)
     run: ../../tools/RNA_prediction/biom-convert/biom-convert.cwl
     in:
-       biom: edit_empty_tax/otunotaxid_out
+       count: count_lines_mapseq/number
+       biom: classifications_to_otu_counts/otu_tsv_notaxid
        json: { default: true }
        table_type: { default: 'OTU table' }
     out: [ result ]
 
-  compress_mapseq:
-    run: ../../utils/gzip.cwl
-    in:
-      uncompressed_file: edit_empty_tax/mapseq_out
-    out: [compressed_file]
-    label: "gzip mapseq output"
-
-  compress_fasta:
-    run: ../../utils/gzip.cwl
-    in:
-      uncompressed_file: edit_empty_tax/fasta_out
-    out: [compressed_file]
-    label: "compressed fasta file, original or empty.fasta"
-
   return_output_dir:
+    when: $(inputs.count > 2)
     run: ../../utils/return_directory.cwl
     in:
+      count: count_lines_mapseq/number
       dir_name: return_dirname
       file_list:
         - compress_mapseq/compressed_file
-        - edit_empty_tax/otu_out
-        - edit_empty_tax/biom_out
-        - edit_empty_tax/krona_out
+        - classifications_to_otu_counts/otu_tsv
+        - classifications_to_otu_counts/otu_txt
+        - visualize_otu_counts/otu_visualization
         - counts_to_hdf5/result
         - counts_to_json/result
     out: [ out ]
     label: "return all files in one folder"
 
+
 $namespaces:
  edam: http://edamontology.org/
- iana: https://www.iana.org/assignments/media-types/
  s: http://schema.org/
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
