@@ -188,7 +188,10 @@ steps:
       - chunking_proteins
 
   touch_file_flag:
+    when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")
     run: ../utils/touch_file.cwl
     in:
+      status: before-qc/qc-status
+      count: after-qc/rna-count
       filename: { default: 'wf-completed' }
     out: [ created_file ]

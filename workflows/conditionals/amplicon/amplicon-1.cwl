@@ -63,7 +63,7 @@ steps:
 
   hashsum_single:
     run: ../../../utils/generate_checksum/generate_checksum.cwl
-    when: $(inputs.single !== undefined)
+    when: $(inputs.single != undefined)
     in:
       single: single_reads
       input_file: single_reads

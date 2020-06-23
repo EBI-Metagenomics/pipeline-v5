@@ -18,13 +18,13 @@ hints:
 
 inputs:
  forward_reads:
-   type: File
+   type: File?
    format: edam:format_1930  # FASTQ
    label: first read input fastq
    inputBinding:
      prefix: -f
  reverse_reads:
-   type: File
+   type: File?
    format: edam:format_1930  # FASTQ
    label: second read input fastq
    inputBinding:

@@ -13,7 +13,7 @@ requirements:
 
 inputs:
   input_file:
-    type: File
+    type: File?
     inputBinding:
       position: 1
       prefix: "-i"
