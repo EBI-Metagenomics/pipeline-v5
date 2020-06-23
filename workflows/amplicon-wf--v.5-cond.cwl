@@ -86,6 +86,10 @@ outputs:
     type: Directory
     outputSource: after-qc/suppressed_upload
 
+  completed_flag_file:
+    type: File
+    outputSource: touch_file_flag/created_file
+
 steps:
 
   before-qc:
@@ -137,3 +141,9 @@ steps:
       - rna-count
       - gz_files
       - ITS-length
+
+  touch_file_flag:
+    run: ../utils/touch_file.cwl
+    in:
+      filename: { default: 'wf-completed' }
+    out: [ created_file ]

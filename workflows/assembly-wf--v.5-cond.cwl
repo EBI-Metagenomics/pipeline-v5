@@ -150,6 +150,9 @@ outputs:
     type: File
     outputSource: after-qc/rna-count
 
+  completed_flag_file:
+    type: File
+    outputSource: touch_file_flag/created_file
 steps:
 
   before-qc:
@@ -227,5 +230,8 @@ steps:
       - rna-count
       - taxonomy-summary_folder
 
-
-
+  touch_file_flag:
+    run: ../utils/touch_file.cwl
+    in:
+      filename: { default: 'wf-completed' }
+    out: [ created_file ]

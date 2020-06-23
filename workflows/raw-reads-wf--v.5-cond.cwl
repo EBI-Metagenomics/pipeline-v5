@@ -114,6 +114,10 @@ outputs:
     outputSource: after-qc/chunking_proteins
     pickValue: all_non_null
 
+  completed_flag_file:
+    type: File
+    outputSource: touch_file_flag/created_file
+
 steps:
 
 # << First part >>
@@ -182,3 +186,9 @@ steps:
       - stats
       - chunking_nucleotides
       - chunking_proteins
+
+  touch_file_flag:
+    run: ../utils/touch_file.cwl
+    in:
+      filename: { default: 'wf-completed' }
+    out: [ created_file ]
