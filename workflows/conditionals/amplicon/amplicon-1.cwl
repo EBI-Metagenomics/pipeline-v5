@@ -52,7 +52,7 @@ steps:
 # << calculate hashsum >>
   hashsum_paired:
     run: ../../../utils/generate_checksum/generate_checksum.cwl
-    when: $(inputs.single == null)
+    when: $(inputs.single == undefined)
     scatter: input_file
     in:
       single: single_reads
@@ -63,7 +63,7 @@ steps:
 
   hashsum_single:
     run: ../../../utils/generate_checksum/generate_checksum.cwl
-    when: $(inputs.single != null)
+    when: $(inputs.single !== undefined)
     in:
       single: single_reads
       input_file: single_reads
@@ -74,7 +74,7 @@ steps:
   overlap_reads:
     label: Paired-end overlapping reads are merged
     run: ../../../tools/SeqPrep/seqprep.cwl
-    when: $(inputs.single == null)
+    when: $(inputs.single == undefined)
     in:
       single: single_reads
       forward_reads: forward_reads
