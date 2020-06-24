@@ -11,7 +11,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: alpine:3.9.4
+    dockerPull: mgnify/pipeline-v5.python3
 
 baseCommand: [antismash_to_gff.py]
 

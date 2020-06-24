@@ -110,7 +110,7 @@ steps:
 
 # << GFF for antismash >>
   antismash_gff:
-    run: ../../GFF/antismash_to_gff.cwl
+    run: ../GFF_antismash/antismash_to_gff.cwl
     in:
       antismash_geneclus: antismash_summary/reformatted_clusters
       antismash_embl: unite_embl/result

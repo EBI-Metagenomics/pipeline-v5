@@ -13,10 +13,9 @@ requirements:
     coresMax: 1
     ramMin: 200  # just a default, could be lowered
 
-
 hints:
   DockerRequirement:
-    dockerPull: 'alpine:3.7'
+    dockerPull: mgnify/pipeline-v5.bash-scripts
 
 inputs:
   outputname:

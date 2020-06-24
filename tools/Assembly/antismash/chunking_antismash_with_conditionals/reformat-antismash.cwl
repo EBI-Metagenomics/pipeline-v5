@@ -9,6 +9,9 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 200
+hints:
+  DockerRequirement:
+    dockerPull:  mgnify/pipeline-v5.python3
 
 inputs:
   glossary:

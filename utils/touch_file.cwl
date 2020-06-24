@@ -3,7 +3,7 @@ class: CommandLineTool
 
 hints:
   DockerRequirement:
-    dockerPull: ubuntu:latest
+    dockerPull: 'alpine:3.7'
   ResourceRequirement:
     coresMin: 1
     ramMin: 1000

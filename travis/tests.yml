@@ -883,8 +883,8 @@
       size: 87
 
 # hmmscan_tab_modification
-- job: ../utils/hmmscan_tab_modification/hmmscan_tab_modification.yml
-  tool: ../utils/hmmscan_tab_modification/hmmscan_tab_modification.cwl
+- job: ../tools/hmmscan/hmmscan_tab_modification/hmmscan_tab_modification.yml
+  tool: ../tools/hmmscan/hmmscan_tab_modification/hmmscan_tab_modification.cwl
   short_name: hmmscan_tab_modification.cwl
   doc: "make hmmscan output table tab-separated"
     csv_result:
