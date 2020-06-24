@@ -139,7 +139,7 @@ steps:
 
 # gzip gbk
   gzipped_gbk:
-    run: ../../../../utils/gzip.cwl
+    run: ../../../../utils/pigz/gzip.cwl
     in:
       uncompressed_file: unite_gbk/result
     out: [ compressed_file ]
