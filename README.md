@@ -27,14 +27,17 @@ We have 3 pipelines (amplicon, assembly and wgs) in one repository. You can down
 Script **download_dbs.sh** has 3 arguments: -m (amplicon), -a (assembly), -w (raw reads / WGS). <br>
 To download only amplicon databases do ```-m True -a False -w False```.
 ```bash
-bash download_dbs.sh -a True -m True -w True  # for all types
+mkdir ref-dbs && cd ref-dbs
+bash ../download_dbs.sh -a True -m True -w True  # for all types
+cd ..
 ```
 
 #### Create yml-file
-Set DIRECTORY as path to the same directory where you downloaded all databases. <br>
+Set DIRECTORY as path to the same directory where you downloaded all databases (ref-dbs). <br>
 TYPE: assembly/wgs/amplicon
 ```bash
 python3 create_yml.py --dir <DIRECTORY> --type <TYPE> 
+# example: python3 create_yml.py --dir ref-dbs --type assembly
 ```
 If you need to generate several YML-files, run this script several times with different TYPEs.
 
