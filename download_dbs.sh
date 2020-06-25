@@ -23,6 +23,7 @@ done
 # ====== download
 
 # SILVA
+echo 'SILVA db'
 wget \
   ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/silva_ssu-$SILVA_VERSION.tar.gz \
   ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/silva_lsu-$SILVA_VERSION.tar.gz
@@ -32,38 +33,46 @@ rm silva_ssu-$SILVA_VERSION.tar.gz silva_lsu-$SILVA_VERSION.tar.gz
 rm -rf silva_ssu-$SILVA_VERSION silva_lsu-$SILVA_VERSION
 
 # download Pfam ribosomal models
+echo 'ribosomal models RF*.cm'
 mkdir ribosomal
 wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/ribosomal_models/RF*.cm \
   -P ribosomal
 
 # ----------------- AMPLICON -----------------
 if [ "${AMPLICON_PIPELINE}" == "True" ]; then
-    mkdir UNITE
+    echo ' ---> AMPLICON'
+    echo 'UNITE' && mkdir UNITE
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/UNITE-$AMPLICON_DB_VERSION.tar.gz
     tar -xvzf UNITE-$AMPLICON_DB_VERSION.tar.gz && rm UNITE-$AMPLICON_DB_VERSION.tar.gz
     mv UNITE-$AMPLICON_DB_VERSION/* UNITE && rm -rf UNITE-$AMPLICON_DB_VERSION
 
-    mkdir ITSoneDB
+    echo 'ITSoneDB' && mkdir ITSoneDB
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/ITSoneDB-$AMPLICON_DB_VERSION.tar.gz
     tar -xvzf ITSoneDB-$AMPLICON_DB_VERSION.tar.gz && rm ITSoneDB-$AMPLICON_DB_VERSION.tar.gz
     mv ITSoneDB-$AMPLICON_DB_VERSION/* ITSoneDB && rm -rf ITSoneDB-$AMPLICON_DB_VERSION
 
+    echo 'ribosomal models ribo.claninfo'
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/ribosomal_models/ribo.claninfo \
   -P ribosomal
 fi
 
-if [ "${AMPLICON_PIPELINE}" == "False" ]; then
+if [[ "${ASSEMBLY_PIPELINE}" == "True" || "${WGS_PIPELINE}" == "True" ]]; then
     # IPS
+    echo ' ---> ASSEMBLY or WGS'
+    echo 'IPS'
     wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/$IPR/$IPRSCAN/alt/interproscan-data-$IPRSCAN.tar.gz && \
          tar -pxvzf interproscan-data-$IPRSCAN.tar.gz && \
          rm -f interproscan-data-$IPRSCAN.tar.gz
     # rRNA.claninfo
+    echo 'rRNA.claninfo'
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rRNA.claninfo
     # other Rfam models
+    echo 'other models'
     mkdir other
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/other_models/*.cm \
      -P other
     # kofam db
+    echo 'db KOfam'
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3?.gz
     gunzip db_kofam.hmm.h3?.gz
     mkdir db_kofam && mv db_kofam.hmm.h3? db_kofam
@@ -71,17 +80,21 @@ fi
 
 if [ "${ASSEMBLY_PIPELINE}" == "True" ]; then
     # eggnog 2.0.0 on diamond 0.9.24
+    echo ' ---> ASSEMBLY'
+    echo 'eggnog dbs'
     wget $FTP_DBS/eggnog_proteins.dmnd
     wget $FTP_DBS/eggnog.db
     mkdir eggnog && mv eggnog_proteins.dmnd eggnog.db eggnog
 
     # Diamond
+    echo 'diamond dbs'
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_uniref90_result.txt.gz \
         ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/uniref90_${UNIREF90_VERSION}_diamond-v${DIAMOND_VERSION}.dmnd.gz
     gunzip db_uniref90_result.txt.gz uniref90_${UNIREF90_VERSION}_diamond-v${DIAMOND_VERSION}.dmnd.gz
     mkdir diamond && mv db_uniref90_result.txt uniref90_${UNIREF90_VERSION}_diamond-v${DIAMOND_VERSION}.dmnd diamond
 
     # KEGG pathways
+    echo 'pathways data'
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/graphs.pkl.gz \
        ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/all_pathways_class.txt.gz \
        ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/all_pathways_names.txt.gz
@@ -89,6 +102,7 @@ if [ "${ASSEMBLY_PIPELINE}" == "True" ]; then
     mkdir kegg_pathways && mv graphs.pkl all_pathways_class.txt all_pathways_names.txt kegg_pathways
 
     # antismash summary - doesn't need for docker version
+    echo 'antismash_glossary'
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/antismash_glossary.tsv.gz
     gunzip antismash_glossary.tsv.gz
 fi
