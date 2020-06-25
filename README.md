@@ -79,7 +79,7 @@ contigs:
 #### cwltool
 ```bash
 export ANALYSIS=[amplicon/assembly/raw-reads]
-cwltool workflows/${ANALYSIS}-wf--v.5-cond.cwl ${ANALYSIS}.yml
+cwltool --enable-dev workflows/${ANALYSIS}-wf--v.5-cond.cwl ${ANALYSIS}.yml
 ```
 #### Other cwl-supported tools
 https://www.commonwl.org/#Implementations
