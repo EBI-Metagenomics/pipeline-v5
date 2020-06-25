@@ -8,7 +8,11 @@ This repository contains all CWL descriptions of the MGnify pipeline version 5.0
 
 https://emg-docs.readthedocs.io/en/latest/analysis.html#overview
 
-We recommend you use our pre-build docker containers. 
+### We kindly recommend to our resource https://www.ebi.ac.uk/metagenomics/ fot data processing.
+
+If you want to run pipeline locally, we recommend you use our pre-build docker containers. 
+
+**! We alert you that some dockers for assembly pipeline are now in a stage of update.**
 ## Requirements to run pipeline 
 
 - python3 [v 3.6+]
