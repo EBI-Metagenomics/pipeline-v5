@@ -79,8 +79,7 @@ contigs:
 #### cwltool
 ```bash
 export ANALYSIS=[amplicon/assembly/raw-reads]
-export TYPE=[single/paired/""]
-cwltool workflows/conditionals/${ANALYSIS}-wf-${TYPE}-v.5-cond.cwl ${ANALYSIS}.yml
+cwltool workflows/${ANALYSIS}-wf--v.5-cond.cwl ${ANALYSIS}.yml
 ```
 #### Other cwl-supported tools
 https://www.commonwl.org/#Implementations
