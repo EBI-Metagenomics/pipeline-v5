@@ -73,9 +73,12 @@ if [[ "${ASSEMBLY_PIPELINE}" == "True" || "${WGS_PIPELINE}" == "True" ]]; then
      -P other
     # kofam db
     echo 'db KOfam'
-    wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3?.gz
-    gunzip db_kofam.hmm.h3?.gz
-    mkdir db_kofam && mv db_kofam.hmm.h3? db_kofam
+    mkdir db_kofam
+    wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3f.gz -P db_kofam
+    wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3i.gz -P db_kofam
+    wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3m.gz -P db_kofam
+    wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3p.gz -P db_kofam
+    gunzip db_kofam/db_kofam.hmm.h3f.gz db_kofam/db_kofam.hmm.h3i.gz db_kofam/db_kofam.hmm.h3m.gz db_kofam/db_kofam.hmm.h3p.gz
 fi
 
 if [ "${ASSEMBLY_PIPELINE}" == "True" ]; then
