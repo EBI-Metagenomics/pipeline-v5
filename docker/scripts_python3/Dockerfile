@@ -6,21 +6,24 @@ RUN pip install --upgrade pip
 RUN pip install -q biopython pandas networkx
 RUN pip install -q pyyaml
 
-COPY build_assembly_gff.py \
+COPY antismash_to_gff.py \
+     build_assembly_gff.py \
+     count_fastq.py \
+     fastq_to_fasta.py \
+     functional_stats.py \
+     generate_checksum.py \
      give_pathways.py  \
      get_subunits_coords.py \
      get_subunits.py \
-     functional_stats.py \
-     write_summaries.py \
+     hmmscan_tab.py \
      its-length.py \
+     make_csv.py \
+     move_antismash_summary.py \
+     parsing_hmmscan.py \
+     reformat-antismash.py \
      split_to_chunks.py \
      run_result_file_chunker.py chunkFastaResultFileUtil.py chunkTSVFileUtil.py cleaningUtils.py \
-     make_csv.py \
-     hmmscan_tab.py \
-     generate_checksum.py \
-     fastq_to_fasta.py \
-     parsing_hmmscan.py \
-     count_fastq.py \
+     write_summaries.py \
 /tools/
 
 RUN chmod a+x /tools/*

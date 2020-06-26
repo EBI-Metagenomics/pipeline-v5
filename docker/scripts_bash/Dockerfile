@@ -3,15 +3,17 @@ FROM alpine:3.7
 LABEL Maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 RUN apk add --no-cache bash
 
-COPY awk_tool \
+COPY add_header \
+     antismash_json_generation \
+     awk_tool \
      biom-convert.sh \
-     empty_tax.sh \
-     pull_ncrnas.sh \
-     format_bedfile \
-     add_header \
-     run_samtools.sh \
-     diamond_post_run_join.sh \
      clean_motus_output.sh \
+     diamond_post_run_join.sh \
+     empty_tax.sh \
+     format_bedfile \
+     pull_ncrnas.sh \
+     run_antismash_short.sh \
+     run_samtools.sh \
 /tools/
 
 RUN chmod a+x /tools/*
