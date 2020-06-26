@@ -19,4 +19,9 @@ RUN cd easel-easel-$VERSION && chmod a+x * && autoconf && ./configure && make
 
 ENV PATH="/easel-easel-$VERSION/miniapps:${PATH}"
 
-CMD [ "esl-sfetch" ]
+RUN mkdir /tools
+COPY esl-index.sh /tools/esl-index.sh
+RUN chmod -R a+rwx /tools
+ENV PATH="/tools:${PATH}"
+
+CMD [ "esl-index.sh" ]
