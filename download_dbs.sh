@@ -46,10 +46,10 @@ if [ "${AMPLICON_PIPELINE}" == "True" ]; then
     tar -xvzf UNITE-$AMPLICON_DB_VERSION.tar.gz && rm UNITE-$AMPLICON_DB_VERSION.tar.gz
     mv UNITE-$AMPLICON_DB_VERSION/* UNITE && rm -rf UNITE-$AMPLICON_DB_VERSION
 
-    echo 'ITSoneDB' && mkdir ITSoneDB
+    echo 'ITSonedb' && mkdir ITSonedb
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/ITSoneDB-$AMPLICON_DB_VERSION.tar.gz
     tar -xvzf ITSoneDB-$AMPLICON_DB_VERSION.tar.gz && rm ITSoneDB-$AMPLICON_DB_VERSION.tar.gz
-    mv ITSoneDB-$AMPLICON_DB_VERSION/* ITSoneDB && rm -rf ITSoneDB-$AMPLICON_DB_VERSION
+    mv ITSoneDB-$AMPLICON_DB_VERSION/* ITSonedb && rm -rf ITSoneDB-$AMPLICON_DB_VERSION
 
     echo 'ribosomal models ribo.claninfo'
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/ribosomal_models/ribo.claninfo \
