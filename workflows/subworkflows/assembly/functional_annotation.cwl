@@ -21,7 +21,7 @@ inputs:
   chunk_size_hmm: int
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
-  HMM_name_database: string
+  HMM_database: string
 
   chunk_size_eggnog: int
   EggNOG_db: File
