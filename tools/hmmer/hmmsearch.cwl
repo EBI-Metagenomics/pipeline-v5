@@ -51,7 +51,7 @@ inputs:
       prefix: "--cut_ga"
 
   path_database:
-    type: string
+    type: File
     inputBinding:
       position: 5
 
