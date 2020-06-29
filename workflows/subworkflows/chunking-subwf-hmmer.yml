@@ -1,13 +1,10 @@
 CGC_predicted_proteins:
   class: File
   path: ../../tools/Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
-chunk_size: 100000
+chunk_size: 50000
 
-name_hmmscan: output_table
+name_hmmer: output_table
 
-HMMSCAN_gathering_bit_score: true
-HMMSCAN_omit_alignment: true
-HMMSCAN_name_database: db_kofam.hmm
-HMMSCAN_data:
-  class: Directory
-  path: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs
+HMM_gathering_bit_score: true
+HMM_omit_alignment: true
+HMM_name_database: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/db_kofam.hmm
