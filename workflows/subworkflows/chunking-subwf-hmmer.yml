@@ -7,4 +7,4 @@ name_hmmer: output_table
 
 HMM_gathering_bit_score: true
 HMM_omit_alignment: true
-HMM_name_database: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/db_kofam.hmm
+HMM_database: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/ref-dbs/db_kofam.hmm
