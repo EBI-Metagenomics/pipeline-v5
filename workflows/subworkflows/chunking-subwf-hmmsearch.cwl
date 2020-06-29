@@ -19,7 +19,7 @@ inputs:
 
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
-  HMM_database: File
+  HMM_database: string
   previous_step_result: File?
 
 outputs:
