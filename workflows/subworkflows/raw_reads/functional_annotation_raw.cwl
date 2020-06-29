@@ -12,23 +12,23 @@ requirements:
 inputs:
 
   CGC_predicted_proteins: File
-  chunk_size: int
+
+  name_hmmer: string
+  chunk_size_hmm: int
+  HMM_gathering_bit_score: boolean
+  HMM_omit_alignment: boolean
+  HMM_database: string
+
+  chunk_size_IPS: int
   name_ips: string
-  name_hmmscan: string
-
-  HMMSCAN_gathering_bit_score: boolean
-  HMMSCAN_omit_alignment: boolean
-  HMMSCAN_name_database: string
-  HMMSCAN_data: Directory
-
   InterProScan_databases: Directory
   InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
   InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
 outputs:
-  hmmscan_result:
+  hmm_result:
     type: File
-    outputSource: run_hmmscan/hmmscan_result
+    outputSource: run_hmmer/hmm_result
   ips_result:
     type: File
     outputSource: run_IPS/ips_result
@@ -39,22 +39,21 @@ steps:
     run: ../chunking-subwf-IPS.cwl
     in:
       CGC_predicted_proteins: CGC_predicted_proteins
-      chunk_size: chunk_size
+      chunk_size: chunk_size_IPS
       name_ips: name_ips
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
     out: [ ips_result ]
 
-  run_hmmscan:
-    run: ../chunking-subwf-hmmscan.cwl
+  run_hmmer:
+    run: ../chunking-subwf-hmmsearch.cwl
     in:
       CGC_predicted_proteins: CGC_predicted_proteins
-      chunk_size: chunk_size
-      name_hmmscan: name_hmmscan
-      HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
-      HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
-      HMMSCAN_name_database: HMMSCAN_name_database
-      HMMSCAN_data: HMMSCAN_data
+      chunk_size: chunk_size_hmm
+      name_hmmer: name_hmmer
+      HMM_gathering_bit_score: HMM_gathering_bit_score
+      HMM_omit_alignment: HMM_omit_alignment
+      HMM_database: HMM_database
       previous_step_result: run_IPS/ips_result
-    out: [ hmmscan_result ]
+    out: [ hmm_result ]

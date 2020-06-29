@@ -49,13 +49,14 @@ inputs:
     cgc_chunk_size: int
 
  # << functional annotation >>
-    fa_chunk_size: int
+    protein_chunk_size_eggnog: int
+    protein_chunk_size_hmm: int
+    protein_chunk_size_IPS: int
     func_ann_names_ips: string
-    func_ann_names_hmmscan: string
-    HMMSCAN_gathering_bit_score: boolean
-    HMMSCAN_omit_alignment: boolean
-    HMMSCAN_name_database: string
-    HMMSCAN_data: Directory
+    func_ann_names_hmmer: string
+    HMM_gathering_bit_score: boolean
+    HMM_omit_alignment: boolean
+    HMM_name_database: string
     hmmscan_header: string
     EggNOG_db: File
     EggNOG_diamond_db: File
@@ -198,20 +199,21 @@ steps:
       CGC_predicted_proteins:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      chunk_size: fa_chunk_size
+      chunk_size_eggnog: protein_chunk_size_eggnog
+      chunk_size_hmm: protein_chunk_size_hmm
+      chunk_size_IPS: protein_chunk_size_IPS
       name_ips: func_ann_names_ips
-      name_hmmscan: func_ann_names_hmmscan
-      HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
-      HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
-      HMMSCAN_name_database: HMMSCAN_name_database
-      HMMSCAN_data: HMMSCAN_data
+      name_hmmer: func_ann_names_hmmer
+      HMM_gathering_bit_score: HMM_gathering_bit_score
+      HMM_omit_alignment: HMM_omit_alignment
+      HMM_database: HMM_name_database
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
-    out: [ hmmscan_result, ips_result, eggnog_annotations, eggnog_orthologs ]
+    out: [ hmm_result, ips_result, eggnog_annotations, eggnog_orthologs ]
 
 # -----------------------------------  << STEP GFF >>  -----------------------------------
   gff:
@@ -252,7 +254,7 @@ steps:
       fasta: filtered_fasta
       IPS_table: functional_annotation/ips_result
       diamond_table: diamond/post-processing_output
-      hmmscan_table: functional_annotation/hmmscan_result
+      hmmscan_table: functional_annotation/hmm_result
       antismash_geneclusters_txt: antismash/antismash_clusters
       rna: rna_prediction/ncRNA
       cds:
@@ -274,7 +276,7 @@ steps:
   pathways:
     run: ../../subworkflows/assembly/kegg_analysis.cwl
     in:
-      input_table_hmmscan: functional_annotation/hmmscan_result
+      input_table_hmmscan: functional_annotation/hmm_result
       filtered_fasta: filtered_fasta
       outputname:
         source: filtered_fasta
