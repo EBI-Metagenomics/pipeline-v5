@@ -45,13 +45,14 @@ inputs:
     cgc_chunk_size: int
 
  # << functional annotation >>
-    fa_chunk_size: int
+    protein_chunk_size_eggnog: int
+    protein_chunk_size_hmm: int
+    protein_chunk_size_IPS: int
     func_ann_names_ips: string
-    func_ann_names_hmmscan: string
-    HMMSCAN_gathering_bit_score: boolean
-    HMMSCAN_omit_alignment: boolean
-    HMMSCAN_name_database: string
-    HMMSCAN_data: Directory
+    func_ann_names_hmmer: string
+    HMM_gathering_bit_score: boolean
+    HMM_omit_alignment: boolean
+    HMM_name_database: string
     hmmscan_header: string
     EggNOG_db: File
     EggNOG_diamond_db: File
@@ -189,13 +190,14 @@ steps:
       CGC_config: CGC_config
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
-      fa_chunk_size: fa_chunk_size
+      protein_chunk_size_eggnog: protein_chunk_size_eggnog
+      protein_chunk_size_hmm: protein_chunk_size_hmm
+      protein_chunk_size_IPS: protein_chunk_size_IPS
       func_ann_names_ips: func_ann_names_ips
-      func_ann_names_hmmscan: func_ann_names_hmmscan
-      HMMSCAN_gathering_bit_score: HMMSCAN_gathering_bit_score
-      HMMSCAN_omit_alignment: HMMSCAN_omit_alignment
-      HMMSCAN_name_database: HMMSCAN_name_database
-      HMMSCAN_data: HMMSCAN_data
+      func_ann_names_hmmer: func_ann_names_hmmer
+      HMM_gathering_bit_score: HMM_gathering_bit_score
+      HMM_omit_alignment: HMM_omit_alignment
+      HMM_name_database: HMM_name_database
       hmmscan_header: hmmscan_header
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
