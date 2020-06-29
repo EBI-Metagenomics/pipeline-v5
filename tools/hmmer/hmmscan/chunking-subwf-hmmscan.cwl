@@ -37,7 +37,7 @@ steps:
       seqs: CGC_predicted_proteins
       chunk_size: chunk_size
     out: [ chunks ]
-    run: ../../tools/chunks/protein_chunker.cwl
+    run: ../../chunks/protein_chunker.cwl
 
   # << hmmscan >>
   hmmscan:
@@ -49,7 +49,7 @@ steps:
       data: HMMSCAN_data
       omit_alignment: HMMSCAN_omit_alignment
     out: [ output_table ]
-    run: ../../tools/hmmscan/hmmscan-subwf.cwl
+    run: hmmscan-subwf.cwl
     label: "Analysis using profile HMM on db"
 
   combine_hmmscan:
@@ -60,4 +60,4 @@ steps:
         valueFrom: $(self.nameroot.split('_CDS')[0])
       postfix: name_hmmscan
     out: [result]
-    run: ../../utils/concatenate.cwl
+    run: ../../../utils/concatenate.cwl
