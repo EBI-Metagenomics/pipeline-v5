@@ -22,7 +22,7 @@ RUN mkdir -p src && cd src && curl -k -L -o easel-Bio-Easel-0.12.zip https://git
 RUN cd src && unzip easel-Bio-Easel-0.12.zip && mv easel-Bio-Easel-0.12 easel && rm easel-Bio-Easel-0.12.zip && cd ..
 
 RUN cpan install Inline
-RUN cpan install File::ShareDir::Install
+RUN cpan install File::ShareDir  #::Install
 
 RUN cpan install Inline::C
 
