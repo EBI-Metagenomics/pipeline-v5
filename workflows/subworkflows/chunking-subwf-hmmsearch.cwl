@@ -61,7 +61,7 @@ steps:
     run: ../../utils/concatenate.cwl
 
   make_tab_sep:
-    run: ../../utils/hmmscan_tab_modification/hmmscan_tab_modification.cwl
+    run: ../../tools/hmmer/hmmscan_tab_modification/hmmscan_tab_modification.cwl
     in:
       input_table: combine/result
     out: [ output_with_tabs ]
