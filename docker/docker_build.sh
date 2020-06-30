@@ -89,3 +89,6 @@ docker build -t mgnify/pipeline-v5.antismash ${PIPELINE}/tools/Assembly/antismas
 
 # IPS: biocontainers/interproscan:v5.30-69.0_cv1
 docker build -t mgnify/pipeline-v5.interproscan ${PIPELINE}/tools/InterProScan
+
+# DNA chunking (perl)
+docker build -t mgnify/pipeline-v5.dna_chunking ${PIPELINE}/tools/chunks/dna_chunker
