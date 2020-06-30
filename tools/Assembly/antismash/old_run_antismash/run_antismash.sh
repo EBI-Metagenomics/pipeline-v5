@@ -35,10 +35,10 @@ if (( $LENGTH > 0 )); then
     if [ $? -eq 0 ]
     then
         echo "run json generation"
-        antismash_json_generation -o geneclusters.json -i ${OUTFOLDER}/geneclusters.js
+        ../json_generation/antismash_json_generation -o geneclusters.json -i ${OUTFOLDER}/geneclusters.js
 
         echo "run reformat clusters"
-        reformat-antismash.py -g ${GLOSSARY} -a ${OUTFOLDER}/geneclusters.txt
+        ../reformat-antismash.py -g ${GLOSSARY} -a ${OUTFOLDER}/geneclusters.txt
 
         echo "GFF generation"
         antismash_to_gff.py -g geneclusters-summary.txt -e ${OUTFOLDER}/*final.embl -j geneclusters.json -o ${OUTNAME}.antismash.gff

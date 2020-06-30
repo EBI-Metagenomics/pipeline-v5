@@ -8,7 +8,11 @@ while getopts i:o:g:n:f: option; do
 done
 
 echo "run antismash"
-source ${CONDA_ENV} antismash && \
+if [ -z "$CONDA_ENV" ]; then
+    echo "conda enviroment is empty = using docker"
+else
+    source ${CONDA_ENV} antismash
+fi
 antismash \
   -v \
   --smcogs  \

@@ -1,0 +1,4 @@
+outputname: geneclusters.json
+input_js:
+  class: File
+  path: input/geneclusters.js

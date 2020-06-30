@@ -85,7 +85,7 @@ docker build -t mgnify/pipeline-v5.diamond ${PIPELINE}/tools/Assembly/Diamond
 docker build -t mgnify/pipeline-v5.eggnog ${PIPELINE}/tools/Assembly/EggNOG/eggNOG
 
 # antismash
-docker build -t mgnify/pipeline-v5.antismash ${PIPELINE}/tools/Assembly/antismash
+docker build -t mgnify/pipeline-v5.antismash ${PIPELINE}/tools/Assembly/antismash/chunking_antismash_with_conditionals
 
 # IPS: biocontainers/interproscan:v5.30-69.0_cv1
 docker build -t mgnify/pipeline-v5.interproscan ${PIPELINE}/tools/InterProScan

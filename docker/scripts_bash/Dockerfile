@@ -34,5 +34,9 @@ RUN cd htslib-1.2.1 && make && make install
 # pigz
 RUN apk add --no-cache pigz
 
+# NodeJS
+RUN apk add nodejs
+
 RUN apk add --no-cache coreutils
+
 ENV PATH="/tools:${PATH}"
