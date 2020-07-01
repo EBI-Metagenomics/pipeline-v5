@@ -20,8 +20,8 @@ def parsing(dict_contigs, input_file, outdir):
     with open(input_file, 'r') as file_in:
         for line in file_in:
             line = line.strip().split('\t')
-            contig = line[3]
-            kegg_annotation = line[0]
+            contig = line[0]  # for hmmscan:3
+            kegg_annotation = line[3]  # for hmmscan:0
             contig_in_fasta = [name for name in dict_contigs if name in contig]
             if len(contig_in_fasta) == 0:
                 print(contig)
