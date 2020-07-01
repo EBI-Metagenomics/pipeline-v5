@@ -57,7 +57,7 @@ inputs:
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
     HMM_name_database: string
-    hmmscan_header: string
+    hmmsearch_header: string
     EggNOG_db: File
     EggNOG_diamond_db: File
     EggNOG_data_dir: string
@@ -264,7 +264,7 @@ steps:
       eggnog_orthologs: functional_annotation/eggnog_orthologs
       eggnog_annotations: functional_annotation/eggnog_annotations
       diamond_header: diamond_header
-      hmmscan_header: hmmscan_header
+      hmmsearch_header: hmmsearch_header
       ips_header: ips_header
       output_gff_gz: gff/output_gff_gz
       output_gff_index: gff/output_gff_index

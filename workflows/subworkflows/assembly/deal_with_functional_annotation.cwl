@@ -21,7 +21,7 @@ inputs:
   eggnog_orthologs: File
   eggnog_annotations: File
   diamond_header: string
-  hmmscan_header: string
+  hmmsearch_header: string
   ips_header: string
   output_gff_gz: File
   output_gff_index: File
@@ -84,7 +84,7 @@ steps:
         - IPS_table
       header:
         - diamond_header
-        - hmmscan_header
+        - hmmsearch_header
         - ips_header
     out: [ output_table ]
 

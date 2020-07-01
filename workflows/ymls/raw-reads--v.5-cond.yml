@@ -188,7 +188,7 @@ HMMSCAN_name_database: db_kofam.hmm
 HMMSCAN_data:
   class: Directory
   path: ref-dbs
-hmmscan_header: 'target_name\ttarget_accession\ttlen\tquery_name\tquery_accession\tqlen\tfull_sequence_e-value\tfull_sequence_score\tfull_sequence_bias\t#\tof\tc-evalue\ti-evalue\tdomain_score\tdomain_bias\thmm_coord_from\thmm_coord_to\tali_coord_from\tali_coord_to\tenv_coord_from\tenv_coord_to\tacc\tdescription_of_target'
+hmmsearch_header: 'target_name\ttarget_accession\ttlen\tquery_name\tquery_accession\tqlen\tfull_sequence_e-value\tfull_sequence_score\tfull_sequence_bias\t#\tof\tc-evalue\ti-evalue\tdomain_score\tdomain_bias\thmm_coord_from\thmm_coord_to\tali_coord_from\tali_coord_to\tenv_coord_from\tenv_coord_to\tacc\tdescription_of_target'
 
 InterProScan_applications:
   - PfamA

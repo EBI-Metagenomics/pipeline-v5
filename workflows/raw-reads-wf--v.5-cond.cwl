@@ -49,7 +49,7 @@ inputs:
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
     HMM_name_database: string
-    hmmscan_header: string
+    hmmsearch_header: string
     EggNOG_db: File?
     EggNOG_diamond_db: File?
     EggNOG_data_dir: string?
@@ -167,7 +167,7 @@ steps:
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
       HMM_name_database: HMM_name_database
-      hmmscan_header: hmmscan_header
+      hmmsearch_header: hmmsearch_header
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
