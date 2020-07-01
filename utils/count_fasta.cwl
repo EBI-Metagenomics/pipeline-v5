@@ -22,6 +22,8 @@ inputs:
     type: File
     streamable: true
     # format: edam:format_1929  # FASTA
+  number:
+    type: int
 
 baseCommand: []
 
@@ -41,7 +43,7 @@ outputs:
     outputBinding:
       glob: count
       loadContents: true
-      outputEval: $(Number(self[0].contents))
+      outputEval: $(Number(self[0].contents)/inputs.number)
 
 
 $schemas:

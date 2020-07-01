@@ -16,7 +16,7 @@ inputs:
     filtered_fasta: File
     clusters_glossary: File
     final_folder_name: string
-    chunk_size: int
+    split_size: int
 
 outputs:
 
@@ -29,11 +29,20 @@ outputs:
 
 steps:
 
+  calc_chunking_number:
+    run: ../../../../utils/count_fasta.cwl
+    in:
+      sequences: filtered_fasta
+      number: split_size
+    out: [ count ]
+
   chunking_fasta:
     run: ../../../chunks/dna_chunker/fasta_chunker.cwl
     in:
       seqs: filtered_fasta
-      chunk_size: chunk_size
+      chunk_size: calc_chunking_number/count
+      number_of_output_files: { default: True }
+      same_number_of_residues: { default: True }
     out: [ chunks ]
 
   run_antismash:

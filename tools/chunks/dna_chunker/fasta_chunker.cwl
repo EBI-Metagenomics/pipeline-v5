@@ -18,15 +18,29 @@ hints:
     dockerPull: mgnify/pipeline-v5.dna_chunking:latest
 
 inputs:
+
+  number_of_output_files:
+    type: boolean?
+    inputBinding:
+      position: 1
+      prefix: "-n"
+
+  same_number_of_residues:
+    type: boolean?
+    inputBinding:
+      position: 2
+      prefix: "-r"
+
   seqs:
     # format: edam:format_1929  # collision with concatenate.cwl
     type: File
     inputBinding:
-      position: 1
+      position: 3
   chunk_size:
     type: int
     inputBinding:
-      position: 2
+      position: 4
+
 
 baseCommand: [ esl-ssplit.pl ]
 

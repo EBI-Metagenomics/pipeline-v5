@@ -94,9 +94,10 @@ steps:
     out: [ unzipped_merged_reads ]
 
   count_submitted_reads:
-    run: ../../../utils/count_fastq/count_fastq.cwl
+    run: ../../../utils/count_lines/count_lines.cwl
     in:
       sequences: unzip_reads/unzipped_merged_reads
+      number: { default: 4 }
     out: [ count ]
 
 # << Trim and Reformat >>
@@ -121,6 +122,7 @@ steps:
     run: ../../../utils/count_fasta.cwl
     in:
       sequences: run_quality_control_filtering/filtered_file
+      number: { default: 1 }
     out: [ count ]
 
 # << QC FLAG >>

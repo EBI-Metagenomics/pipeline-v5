@@ -1,0 +1,4 @@
+sequences:
+  class: File
+  path: ../../tools/Raw_reads/mOTUs/test-input/unpaired.fq
+number: 4

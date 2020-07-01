@@ -31,6 +31,7 @@ steps:
   count_reads:
     in:
       sequences: fasta
+      number: { default: 1 }
     out: [ count ]
     run: ../../../../utils/count_fasta.cwl
 
@@ -47,5 +48,6 @@ steps:
   count_reads_after_filtering:
     in:
       sequences: filter_contigs_antismash/filtered_file
+      number: { default: 1 }
     out: [ count ]
     run: ../../../../utils/count_fasta.cwl

@@ -72,6 +72,7 @@ steps:
   count_reads:
     in:
       sequences: unzip/unzipped_merged_reads
+      number: { default: 1 }
     out: [ count ]
     run: ../../../utils/count_fasta.cwl
 
@@ -98,6 +99,7 @@ steps:
   count_processed_reads:
     in:
       sequences: length_filter/filtered_file
+      number: { default: 1 }
     out: [ count ]
     run: ../../../utils/count_fasta.cwl
 

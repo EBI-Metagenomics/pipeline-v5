@@ -32,6 +32,7 @@ steps:
   count_reads:
     in:
       sequences: input_filtered_fasta
+      number: { default: 1 }
     out: [ count ]
     run: ../../../utils/count_fasta.cwl
 

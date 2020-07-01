@@ -63,6 +63,6 @@ steps:
       filtered_fasta: filtering/filtered_fasta_for_antismash
       clusters_glossary: clusters_glossary
       final_folder_name: final_folder_name
-      chunk_size: { default: 100000 }
+      split_size: { default: 1000 }
       value: filtering/count_after_filtering
     out: [ antismash_folder_chunking, antismash_clusters ]

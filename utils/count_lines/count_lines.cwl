@@ -11,13 +11,17 @@ requirements:
     coresMin: 2
     ramMin: 200  # just a default, could be lowered
 
-baseCommand: [ count_fastq.py ]
+baseCommand: [ count_lines.py ]
 
 inputs:
   sequences:
     type: File
     inputBinding:
       prefix: -f
+  number:
+    type: int
+    inputBinding:
+      prefix: -n
 
 outputs:
   count:
