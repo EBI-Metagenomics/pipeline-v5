@@ -1,30 +1,24 @@
-FROM ubuntu:18.04
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y libimage-magick-perl
-
 ##############################################################
 # Dockerfile Version:   19.03.1
 # Software:             esl-ssplit.pl
 # Software Version:     1.0.0
 # Description:          Chunking DNA files
 ##############################################################
-
-RUN mkdir /tools
-COPY esl-ssplit.pl /tools
-
-RUN chmod -R a+rwx /tools
-ENV PATH="/tools:${PATH}"
-
-RUN apt-get install -y curl unzip autoconf
-
-RUN mkdir -p src && cd src && curl -k -L -o easel-Bio-Easel-0.12.zip https://github.com/EddyRivasLab/easel/archive/Bio-Easel-0.12.zip
-RUN cd src && unzip easel-Bio-Easel-0.12.zip && mv easel-Bio-Easel-0.12 easel && rm easel-Bio-Easel-0.12.zip && cd ..
-
-RUN cpan install Inline
-RUN cpan install File::ShareDir  #::Install
-
-RUN cpan install Inline::C
-
-#RUN cd src/easel && autoconf && ./configure && make
+FROM alpine:3.12.0
+RUN apk add --no-cache build-base autoconf curl perl perl-dev
+RUN mkdir -p /opt
+WORKDIR /opt
+# easl
+RUN mkdir src && cd src && \
+    curl -L -o easel-Bio-Easel-0.12.tar.gz https://github.com/EddyRivasLab/easel/archive/Bio-Easel-0.12.tar.gz && \
+    tar -xvzf easel-Bio-Easel-0.12.tar.gz && \
+    mv easel-Bio-Easel-0.12 easel && \
+    rm easel-Bio-Easel-0.12.tar.gz
+RUN cpan install -T Inline Inline::C
+RUN curl -L -o bio-easel.tar.gz https://github.com/nawrockie/Bio-Easel/archive/vadr-1.1.tar.gz && \
+    tar -xvzf bio-easel.tar.gz && \
+    mv Bio-Easel-vadr-1.1/* . && \
+    chmod +x scripts/esl-ssplit.pl
+RUN perl Makefile.PL && make && make test && make install
+ENV PATH="/opt/scripts/:${PATH}"
 CMD ["esl-ssplit.pl"]
