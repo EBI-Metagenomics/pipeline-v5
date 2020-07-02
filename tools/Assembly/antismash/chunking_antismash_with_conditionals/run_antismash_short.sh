@@ -9,12 +9,4 @@ done
 
 echo "run antismash"
 source ${CONDA_ENV} antismash && \
-antismash \
-  -v \
-  --smcogs  \
-  -c 4  \
-  --borderpredict  \
-  --asf  \
-  --inclusive  \
-  --outputfolder ${OUTFOLDER} \
-  ${INPUT}  # --transatpks_da
+antismash -v --smcogs --asf --disable-svg --knownclusterblast --subclusterblast --outfolder ${OUTFOLDER} ${INPUT}
