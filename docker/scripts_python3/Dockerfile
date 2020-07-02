@@ -9,6 +9,7 @@ RUN pip install -q pyyaml
 COPY antismash_to_gff.py \
      build_assembly_gff.py \
      count_fastq.py \
+     count_lines.py \
      fastq_to_fasta.py \
      functional_stats.py \
      generate_checksum.py \
