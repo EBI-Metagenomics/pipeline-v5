@@ -36,45 +36,66 @@ steps:
       number: split_size
     out: [ count ]
 
+  check_value:
+    run: check_value/check_value.cwl
+    in:
+      number: calc_chunking_number/count
+    out: [ out ]
+
   chunking_fasta:
     run: ../../../chunks/dna_chunker/fasta_chunker.cwl
     in:
       seqs: filtered_fasta
-      chunk_size: calc_chunking_number/count
+      chunk_size: check_value/out
       number_of_output_files: { default: "True" }
       same_number_of_residues: { default: "True" }
     out: [ chunks ]
 
-  run_antismash:
-    run: antismash_v4.cwl
-    scatter: input_fasta
+  rename_contigs:
+    run: rename_contigs/rename_contigs.cwl
+    scatter: chunks
     in:
-      input_fasta: chunking_fasta/chunks
-      outdirname: { default: antismash_result}
-    out:
-      - geneclusters_js
-      - geneclusters_txt
-      - embl_file
-      - gbk_file
+      full_fasta: filtered_fasta
+      chunks: chunking_fasta/chunks
+      accession:
+        source: filtered_fasta
+        valueFrom: $(self.nameroot)
+    out: [ renamed_contigs_in_chunks, names_table ]
 
-  unite_geneclusters_js:
-    run: ../../../../utils/concatenate.cwl
+  run_antismash:
+    run: antismash-subwf.cwl
+    scatter: [fasta_file, input_names_table]
+    scatterMethod: dotproduct
     in:
-      files: run_antismash/geneclusters_js
-      outputFileName: { default: geneclusters.js }
-    out:  [ result ]
+      fasta_file: rename_contigs/renamed_contigs_in_chunks
+      input_names_table: rename_contigs/names_table
+      accession:
+        source: filtered_fasta
+        valueFrom: $(self.nameroot)
+    out:
+      - antismash_js
+      - antismash_txt
+      - antismash_gbk
+      - antismash_embl
+
+  unite_geneclusters_json:
+    run: post-processing/json_generation/json_fix_subwf.cwl
+    in:
+      jsons: run_antismash/antismash_js
+      filtered_fasta: filtered_fasta
+    out: [ antismash_result_json ]
 
   unite_geneclusters_txt:
     run: ../../../../utils/concatenate.cwl
     in:
-      files: run_antismash/geneclusters_txt
+      files: run_antismash/antismash_txt
       outputFileName: { default: geneclusters.txt }
     out:  [ result ]
 
   unite_embl:
     run: ../../../../utils/concatenate.cwl
     in:
-      files: run_antismash/embl_file
+      files: run_antismash/antismash_embl
       outputFileName:
         source: filtered_fasta
         valueFrom: $(self.nameroot)
@@ -84,25 +105,16 @@ steps:
   unite_gbk:
     run: ../../../../utils/concatenate.cwl
     in:
-      files: run_antismash/gbk_file
+      files: run_antismash/antismash_gbk
       outputFileName:
         source: filtered_fasta
         valueFrom: $(self.nameroot)
       postfix: { default: "_antismash_final.gbk" }
     out:  [ result ]
 
-
-# << post-processing JS >>
-  antismash_json_generation:
-    run: antismash_json_generation.cwl
-    in:
-      input_js: unite_geneclusters_js/result
-      outputname: {default: 'geneclusters.json'}
-    out: [ output_json ]
-
 # << post-processing geneclusters.txt >>
   antismash_summary:
-    run: reformat-antismash.cwl
+    run: post-processing/reformat_antismash/reformat-antismash.cwl
     in:
       glossary: clusters_glossary
       geneclusters: unite_geneclusters_txt/result
@@ -110,11 +122,11 @@ steps:
 
 # << GFF for antismash >>
   antismash_gff:
-    run: ../../GFF/antismash_to_gff.cwl
+    run: post-processing/GFF_antismash/antismash_to_gff.cwl
     in:
       antismash_geneclus: antismash_summary/reformatted_clusters
       antismash_embl: unite_embl/result
-      antismash_gc_json: antismash_json_generation/output_json
+      antismash_gc_json: unite_geneclusters_json/antismash_result_json
       output_name:
         source: filtered_fasta
         valueFrom: $(self.nameroot).antismash.gff

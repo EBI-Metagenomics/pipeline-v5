@@ -1,0 +1,9 @@
+jsons:
+  - class: File
+    path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/test_toil/pipeline-v5/tools/Assembly/antismash/chunking_antismash_with_conditionals/gff/geneclusters.comma.json
+  - class: File
+    path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/test_toil/pipeline-v5/tools/Assembly/antismash/chunking_antismash_with_conditionals/gff/geneclusters.comma1.json
+
+filtered_fasta:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/test_toil/pipeline-v5/tools/Assembly/antismash/chunking_antismash_with_conditionals/gff/ERZ1292626_FASTA_antismash_final.embl

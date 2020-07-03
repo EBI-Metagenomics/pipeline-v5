@@ -1,0 +1,12 @@
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
+outdirname: antismash_result
+input_fasta:
+  format: edam:format_1929  # FASTA
+  class: File
+  path: ../test-input/test.fasta.1
+
+accession: result
+chunk_num: '1'

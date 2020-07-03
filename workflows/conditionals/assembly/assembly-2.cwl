@@ -335,7 +335,7 @@ steps:
 
 # << move PATHWAYS-SYSTEMS antismash summary>>
   move_antismash_summary_to_pathways_systems_folder:
-    run: ../../../tools/Assembly/antismash/cwl-s/move_antismash_summary.cwl
+    run: ../../../tools/Assembly/antismash/move_antismash_summary/move_antismash_summary.cwl
     in:
       antismash_summary: folder_functional_annotation/summary_antismash
       folder_name: { default: pathways-systems }

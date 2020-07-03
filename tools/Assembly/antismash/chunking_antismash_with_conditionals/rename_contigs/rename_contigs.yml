@@ -1,0 +1,6 @@
+full_fasta:
+  path:
+  class: File
+chunks:
+
+accession:
