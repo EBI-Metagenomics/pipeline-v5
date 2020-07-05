@@ -45,11 +45,21 @@ steps:
       same_number_of_residues: { default: "True" }
     out: [ chunks ]
 
+  rename_contigs:
+    run: rename_contigs/rename_contigs.cwl
+    in:
+      full_fasta: filtered_fasta
+      chunks: chunking_fasta/chunks
+      accession:
+        source: filtered_fasta
+        valueFrom:
+    out: [ renamed_contigs_in_chunks ]
+
   run_antismash:
     run: antismash_v4.cwl
     scatter: input_fasta
     in:
-      input_fasta: chunking_fasta/chunks
+      input_fasta: rename_contigs/renamed_contigs_in_chunks
       outdirname: { default: antismash_result}
     out:
       - geneclusters_js
