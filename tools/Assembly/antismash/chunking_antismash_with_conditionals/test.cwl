@@ -18,9 +18,12 @@ inputs:
     final_folder_name: string
     split_size: int
 
-outputs: []
-steps:
+outputs:
+  renamed:
+    type: File[]
+    outputSource: rename_contigs/renamed_contigs_in_chunks
 
+steps:
   calc_chunking_number:
     run: ../../../../utils/count_fasta.cwl
     in:
