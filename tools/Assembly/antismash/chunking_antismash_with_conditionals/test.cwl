@@ -1,7 +1,7 @@
 class: Workflow
 cwlVersion: v1.2.0-dev2
 
-label: "WF leaves sequences that length is more than 1000bp, run antismash + gene clusters post-processing, GFF generation"
+label: "WF leaves sequences that length is more than 5000bp, run antismash + gene clusters post-processing, GFF generation"
 
 requirements:
   - class: ResourceRequirement
@@ -49,3 +49,10 @@ steps:
         source: filtered_fasta
         valueFrom: $(self.nameroot)
     out: [ renamed_contigs_in_chunks ]
+
+  run_antismash:
+    run: antismash-subwf.cwl
+    scatter: fasta_file
+    in:
+      fasta_file: rename_contigs/renamed_contigs_in_chunks
+    out:
