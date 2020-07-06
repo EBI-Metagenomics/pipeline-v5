@@ -5,7 +5,6 @@ import argparse
 import sys
 from Bio import SeqIO
 import os
-import pickle
 
 NAME_LIMIT = 16
 
@@ -25,9 +24,8 @@ if __name__ == "__main__":
             contig_dict[record.name] = str(num)
             num += 1
         fasta = args.chunk
-        dict_with_new_names = {}
         new_filename = 'antismash.' + os.path.basename(fasta)
-        with open(new_filename, 'w') as new_chunk_file:
+        with open(new_filename, 'w') as new_chunk_file, open(os.path.basename(fasta)+'.tbl', 'wb') as f:
             for record in SeqIO.parse(fasta, 'fasta'):
                 name_contig = record.name
                 number_contig = contig_dict[name_contig]
@@ -38,6 +36,5 @@ if __name__ == "__main__":
                 new_record.id = new_name
                 new_record.description = new_name
                 SeqIO.write(new_record, new_chunk_file, "fasta")
-                dict_with_new_names[new_name] = name_contig
-        with open(os.path.basename(fasta)+'.pkl', 'wb') as f:
-            pickle.dump(dict_with_new_names, f)
+                f.write('\t'.join([new_name, name_contig]) + '\n')
+    f.close()

@@ -1,0 +1,7 @@
+fasta_file:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/test_toil/pipeline-v5/tools/Assembly/antismash/chunking_antismash_with_conditionals/antismash.ERZ1292626_FASTA.fasta.1
+
+dict_DE:
+  class: File
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/test_toil/pipeline-v5/tools/Assembly/antismash/chunking_antismash_with_conditionals/RZ1292626_FASTA.fasta.1.pkl

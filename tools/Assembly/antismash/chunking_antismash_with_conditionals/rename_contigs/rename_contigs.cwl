@@ -35,10 +35,10 @@ outputs:
     type: File
     outputBinding:
       glob: antismash.*
-  dict_DE:
+  names_table:
     type: File
     outputBinding:
-      glob: $(inputs.chunks.basename).pkl
+      glob: $(inputs.chunks.basename).tbl
 
 
 $namespaces:

@@ -24,7 +24,19 @@ outputs:
     outputSource: rename_contigs/renamed_contigs_in_chunks
   help_dict:
     type: File[]
-    outputSource: rename_contigs/dict_DE
+    outputSource: rename_contigs/names_table
+  antismash_js:
+    class: File[]
+    outputSource: run_antismash/geneclusters_js
+  antismash_txt:
+    class: File[]
+    outputSource: run_antismash/geneclusters_txt
+  antismash_gbk:
+    class: File[]
+    outputSource: run_antismash/gbk_file
+  antismash_embl:
+    class: File[]
+    outputSource: run_antismash/embl_file
 
 steps:
   calc_chunking_number:
@@ -52,13 +64,17 @@ steps:
       accession:
         source: filtered_fasta
         valueFrom: $(self.nameroot)
-    out: [ renamed_contigs_in_chunks, dict_DE ]
+    out: [ renamed_contigs_in_chunks, names_table ]
 
-#  run_antismash:
-#    run: antismash-subwf.cwl
-#    scatter: [fasta_file, dict_DE]
-#    scatterMethod: dotproduct
-#    in:
-#      fasta_file: rename_contigs/renamed_contigs_in_chunks
-#       dict_DE: rename_contigs/dict_DE
-#    out:
+  run_antismash:
+    run: antismash-subwf.cwl
+    scatter: [fasta_file, names_table]
+    scatterMethod: dotproduct
+    in:
+      fasta_file: rename_contigs/renamed_contigs_in_chunks
+      names_table: rename_contigs/names_table
+    out:
+      - antismash_js
+      - antismash_txt
+      - antismash_gbk
+      - antismash_embl

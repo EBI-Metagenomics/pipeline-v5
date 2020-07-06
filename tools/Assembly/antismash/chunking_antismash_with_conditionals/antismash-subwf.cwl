@@ -14,9 +14,21 @@ requirements:
 
 inputs:
     fasta_file: File
-    dict_DE: File
+    names_table: File
 
-outputs: []
+outputs:
+  antismash_js:
+    class: File
+    outputSource: run_antismash/geneclusters_js
+  antismash_txt:
+    class: File
+    outputSource: run_antismash/geneclusters_txt
+  antismash_gbk:
+    class: File
+    outputSource: run_antismash/gbk_file
+  antismash_embl:
+    class: File
+    outputSource: run_antismash/embl_file
 
 steps:
 
