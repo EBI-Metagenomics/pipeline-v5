@@ -14,6 +14,7 @@ requirements:
 
 inputs:
     fasta_file: File
+    dict_DE: File
 
 outputs: []
 

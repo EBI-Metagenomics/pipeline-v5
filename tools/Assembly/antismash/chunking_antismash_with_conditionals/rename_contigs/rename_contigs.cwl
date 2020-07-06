@@ -38,7 +38,7 @@ outputs:
   dict_DE:
     type: File
     outputBinding:
-      glob: "dict_DE.pkl"
+      glob: *dict_DE.pkl
 
 
 $namespaces:

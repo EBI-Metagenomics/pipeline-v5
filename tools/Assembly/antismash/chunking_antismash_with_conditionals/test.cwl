@@ -22,6 +22,8 @@ outputs:
   renamed:
     type: File[]
     outputSource: rename_contigs/renamed_contigs_in_chunks
+  help_dict: File[]
+    outputSource: rename_contigs/dict_DE
 
 steps:
   calc_chunking_number:
@@ -56,4 +58,5 @@ steps:
 #    scatter: fasta_file
 #    in:
 #      fasta_file: rename_contigs/renamed_contigs_in_chunks
+       dict_DE: rename_contigs/dict_DE
 #    out:
