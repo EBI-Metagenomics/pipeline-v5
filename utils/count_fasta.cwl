@@ -43,7 +43,7 @@ outputs:
     outputBinding:
       glob: count
       loadContents: true
-      outputEval: $(Number(self[0].contents)/inputs.number)
+      outputEval: $((Number(self[0].contents)/inputs.number) | 0)
 
 
 $schemas:
