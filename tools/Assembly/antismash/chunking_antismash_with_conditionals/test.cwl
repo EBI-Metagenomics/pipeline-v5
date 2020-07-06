@@ -26,16 +26,16 @@ outputs:
     type: File[]
     outputSource: rename_contigs/names_table
   antismash_js:
-    class: File[]
+    type: File[]
     outputSource: run_antismash/geneclusters_js
   antismash_txt:
-    class: File[]
+    type: File[]
     outputSource: run_antismash/geneclusters_txt
   antismash_gbk:
-    class: File[]
+    type: File[]
     outputSource: run_antismash/gbk_file
   antismash_embl:
-    class: File[]
+    type: File[]
     outputSource: run_antismash/embl_file
 
 steps:
