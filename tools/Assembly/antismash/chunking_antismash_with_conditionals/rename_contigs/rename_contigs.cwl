@@ -35,6 +35,10 @@ outputs:
     type: File
     outputBinding:
       glob: antismash.*
+  dict_DE:
+    type: File
+    outputBinding:
+      glob: "dict_DE.pkl"
 
 
 $namespaces:

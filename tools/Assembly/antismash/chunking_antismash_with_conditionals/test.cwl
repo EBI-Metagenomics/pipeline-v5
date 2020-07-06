@@ -49,7 +49,7 @@ steps:
       accession:
         source: filtered_fasta
         valueFrom: $(self.nameroot)
-    out: [ renamed_contigs_in_chunks ]
+    out: [ renamed_contigs_in_chunks, dict_DE ]
 
 #  run_antismash:
 #    run: antismash-subwf.cwl

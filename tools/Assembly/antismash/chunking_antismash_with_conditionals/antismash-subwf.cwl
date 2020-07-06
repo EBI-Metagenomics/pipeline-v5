@@ -29,3 +29,8 @@ steps:
       - geneclusters_txt
       - embl_file
       - gbk_file
+
+  # change DE
+  # change locus_tag
+
+  # change json
