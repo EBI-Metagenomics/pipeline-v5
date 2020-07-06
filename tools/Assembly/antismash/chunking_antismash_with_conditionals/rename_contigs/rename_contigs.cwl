@@ -32,6 +32,7 @@ baseCommand: [ antismash_rename_contigs.py ]
 
 outputs:
   renamed_contigs_in_chunks:
+    format: edam:format_1929  # FASTA
     type: File
     outputBinding:
       glob: antismash.*

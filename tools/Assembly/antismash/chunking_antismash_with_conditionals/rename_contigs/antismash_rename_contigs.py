@@ -25,7 +25,7 @@ if __name__ == "__main__":
             num += 1
         fasta = args.chunk
         new_filename = 'antismash.' + os.path.basename(fasta)
-        with open(new_filename, 'w') as new_chunk_file, open(os.path.basename(fasta)+'.tbl', 'wb') as f:
+        with open(new_filename, 'w') as new_chunk_file, open(os.path.basename(fasta)+'.tbl', 'w') as f:
             for record in SeqIO.parse(fasta, 'fasta'):
                 name_contig = record.name
                 number_contig = contig_dict[name_contig]
