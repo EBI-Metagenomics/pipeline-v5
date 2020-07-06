@@ -42,6 +42,7 @@ steps:
 
   rename_contigs:
     run: rename_contigs/rename_contigs.cwl
+    scatter: chunks
     in:
       full_fasta: filtered_fasta
       chunks: chunking_fasta/chunks
@@ -50,9 +51,9 @@ steps:
         valueFrom: $(self.nameroot)
     out: [ renamed_contigs_in_chunks ]
 
-  run_antismash:
-    run: antismash-subwf.cwl
-    scatter: fasta_file
-    in:
-      fasta_file: rename_contigs/renamed_contigs_in_chunks
-    out:
+#  run_antismash:
+#    run: antismash-subwf.cwl
+#    scatter: fasta_file
+#    in:
+#      fasta_file: rename_contigs/renamed_contigs_in_chunks
+#    out:

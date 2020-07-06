@@ -20,7 +20,7 @@ inputs:
     inputBinding:
       prefix: -i
   chunks:
-    type: File[]
+    type: File
     inputBinding:
       prefix: -c
   accession:
@@ -32,7 +32,7 @@ baseCommand: [ antismash_rename_contigs.py ]
 
 outputs:
   renamed_contigs_in_chunks:
-    type: File[]
+    type: File
     outputBinding:
       glob: antismash.*
 
