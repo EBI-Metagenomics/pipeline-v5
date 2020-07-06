@@ -60,5 +60,5 @@ steps:
 #    scatterMethod: dotproduct
 #    in:
 #      fasta_file: rename_contigs/renamed_contigs_in_chunks
-       dict_DE: rename_contigs/dict_DE
+#       dict_DE: rename_contigs/dict_DE
 #    out:
