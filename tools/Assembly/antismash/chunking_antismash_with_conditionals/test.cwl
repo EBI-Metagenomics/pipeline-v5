@@ -22,7 +22,8 @@ outputs:
   renamed:
     type: File[]
     outputSource: rename_contigs/renamed_contigs_in_chunks
-  help_dict: File[]
+  help_dict:
+    type: File[]
     outputSource: rename_contigs/dict_DE
 
 steps:
@@ -55,7 +56,8 @@ steps:
 
 #  run_antismash:
 #    run: antismash-subwf.cwl
-#    scatter: fasta_file
+#    scatter: [fasta_file, dict_DE]
+#    scatterMethod: dotproduct
 #    in:
 #      fasta_file: rename_contigs/renamed_contigs_in_chunks
        dict_DE: rename_contigs/dict_DE
