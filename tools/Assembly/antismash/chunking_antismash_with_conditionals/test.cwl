@@ -27,16 +27,16 @@ outputs:
     outputSource: rename_contigs/names_table
   antismash_js:
     type: File[]
-    outputSource: run_antismash/geneclusters_js
+    outputSource: run_antismash/antismash_js
   antismash_txt:
     type: File[]
-    outputSource: run_antismash/geneclusters_txt
+    outputSource: run_antismash/antismash_txt
   antismash_gbk:
     type: File[]
-    outputSource: run_antismash/gbk_file
+    outputSource: run_antismash/antismash_gbk
   antismash_embl:
     type: File[]
-    outputSource: run_antismash/embl_file
+    outputSource: run_antismash/antismash_embl
 
 steps:
   calc_chunking_number:
