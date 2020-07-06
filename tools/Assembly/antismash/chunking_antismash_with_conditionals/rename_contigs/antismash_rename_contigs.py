@@ -39,5 +39,5 @@ if __name__ == "__main__":
                 new_record.description = new_name
                 SeqIO.write(new_record, new_chunk_file, "fasta")
                 dict_with_new_names[new_name] = name_contig
-        with open(os.path.basename(fasta)+'dict_DE.pkl', 'wb') as f:
+        with open(os.path.basename(fasta)+'.pkl', 'wb') as f:
             pickle.dump(dict_with_new_names, f)
