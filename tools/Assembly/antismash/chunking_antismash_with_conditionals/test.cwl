@@ -73,6 +73,9 @@ steps:
     in:
       fasta_file: rename_contigs/renamed_contigs_in_chunks
       input_names_table: rename_contigs/names_table
+      accession:
+        source: filtered_fasta
+        valueFrom: $(self.nameroot)
     out:
       - antismash_js
       - antismash_txt
