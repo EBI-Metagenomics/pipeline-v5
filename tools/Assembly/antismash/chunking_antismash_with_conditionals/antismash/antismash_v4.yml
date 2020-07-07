@@ -6,4 +6,4 @@ outdirname: antismash_result
 input_fasta:
   format: edam:format_1929  # FASTA
   class: File
-  path: ../input/test.fasta.1
+  path: ../test-input/test.fasta.1
