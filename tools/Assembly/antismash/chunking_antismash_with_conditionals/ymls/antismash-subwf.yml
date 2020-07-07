@@ -1,6 +1,11 @@
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
 fasta_file:
   class: File
   path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/test_toil/pipeline-v5/tools/Assembly/antismash/chunking_antismash_with_conditionals/output_toil/antismash.ERZ1292626_FASTA.fasta.1
+  format: edam:format_1929  # FASTA
 
 accession: ERZ129262_FASTA
 
