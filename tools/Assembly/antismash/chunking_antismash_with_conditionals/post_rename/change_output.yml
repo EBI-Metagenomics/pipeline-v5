@@ -1,0 +1,8 @@
+embl_file:
+  class: File
+  path: test-input/test.embl
+gbk_filename: output.gbk
+embl_filename: output.embl
+names_table:
+  class: File
+  path: test-input/test.table

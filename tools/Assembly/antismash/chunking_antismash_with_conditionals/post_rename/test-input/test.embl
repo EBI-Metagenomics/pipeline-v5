@@ -1,0 +1,140 @@
+ID   ERZ1292626-10000; ; ; DNA; ; UNC; 574587 BP.
+XX
+AC   ERZ1292626-10000;
+XX
+DE   ERZ1292626-10000
+XX
+OS   .
+OC   .
+XX
+FH   Key             Location/Qualifiers
+FT   CDS             2..3454
+FT                   /locus_tag="ctg1_1"
+FT                   /translation="HVTRVLQPDGTAVALEHDKAGRIIQMHSRDPSAKEDETGWRTELR
+FT                   HDAQARLVAMRSLAPDASVLQEQSWRYDALGHLTETGTGGWPGNGDKTGNAAYAAQTRQ
+FT                   HHDALGRLLWSADVRGSFTQHRYDTESRLLQSGRYGGRADDGSRLMAQVQTYQPGAPEQ
+FT                   PPSAADKAGTETAPQARQFYDDFGRSVATLSPDSGLSIRGYDATDRLVSGRDALGQQAR
+FT                   YEYDLRGRILRQTITQLPQDGARPRTTTTRWRYQGPRLVALEHPEQSEAYEYNDRGLRV
+FT                   RKRITRHEESGANGESGESSQHHTLHYEYDSHGRLSAASLPDGSWLHYLRDGHGQITGL
+FT                   QRQRVRTPWLRWLSPAQTIATGFERDLVGLRSWQAGNGIEARYQRSREGLLARIVYRQT
+FT                   GKNNTRTASGTSHDWMLGARPTDIAEQLLGLTPAHAAEPMQAKAQATAATAAQTTAEPA
+FT                   PDQPGALGQPTDPQALLDMRYLWDSQGNLLLRQDHYSQAPQTLHQDSHAYDMHDRLIVQ
+FT                   VQRTGQELRSSRYHYDEAGRRTLDQQNVASGDLQAGTRAIAYLPGSHRWSAERAADQKD
+FT                   TTTQRTQYNANGQPLQAGPRSYRWDALGRLEQVSEQGASLARYRYNHRGERIAKHTGKA
+FT                   QGGSRAYLYESGQLSAELDAQGHITRQYIHLGQWPLAVIDTPQGRKPADGPGTLGRIVQ
+FT                   DLGTIAGRWVGGGERLAWLHTNHLGAVEAATDTQGQLIWRARYTAFGRQQVMSQPSAPS
+FT                   FEMPLRLPGQYHDAETGLHYNLHRYYDPDRGQYLTPDPLGTPDGPNPYSYVRGNPLRYV
+FT                   DPEGLILFAFDGTNNSNPPPDNDTWSNVYKFYLAYDQNINGKSWYMNGVGRYDDESKIT
+FT                   APWNDHMVASTARARVDHMLKNLDKFMEEHTFADGKKVSIDIVGFSRGAAMGRDFANRV
+FT                   ATRIKEQHWKEKSECMELRFLGLWDTVAQFGATGRLNDQWQMAIPPEVQHVFQAVALNE
+FT                   HRQLFPGESIDRGTQLGFIGSHADIGGSFGTGDLSNVALNWIAEKAKASGLTMNEWEDV
+FT                   GDAKWGMVTEPVLHDKSLTQSGGIPEDSLFCLKKNNEKTGECTHRRVAEIEGMTHAESQ
+FT                   RFIKYRDRPGFDRDGSSTITGDIDMKEYAKWLKENYGLTVALQ"
+FT   CDS             3988..4482
+FT                   /locus_tag="ctg1_2"
+FT                   /translation="MRGRLAYPRPARRGAQSNAAWAAAGTVKGVGRRLPSQYQDAETGL
+FT                   HYNLHRYYDPDRGQYLTPDPLGTPDGPNPYSYVRGNPLRYVDPEGLILFAFDGTNNSNP
+FT                   PPDKDTWSNVYKFYLAYDEKSNGEKWYMNGVGRDDKEGKIIAPKTTTKLPLPHVRVWTI
+FT                   C"
+FT   CDS             4500..5258
+FT                   /locus_tag="ctg1_3"
+FT                   /translation="MEEHTFPDGKKVSIDIVGFSRGAAMGRDFANRVATRIKEQHWKEK
+FT                   SECMELNFLGLWDTVAQFGANGLHNDQWQLAIPSEVRHVFHAVALNEHRYLFPGEGINR
+FT                   GTQLGFIGSHADIGGSFGTGDLSNVALNWIAEKAKESGLKMKKWDEIGNEAWGKVTEPV
+FT                   LHDKSYIYSDPPDDSAFCTRDNNGRSKDCIPRKKLSPGGMSHEESQRFIIYRTRPGMDS
+FT                   DGVSRITGDINMKEYTQWLKENYGLTVALQ"
+FT   CDS             5964..7061
+FT                   /locus_tag="ctg1_4"
+FT                   /translation="MKIFQLLIIYFTTSITQAYAKLNLSTTNTKPAHPPYVQLISRNGT
+FT                   SHLVKSILKTHSSENTPSLYTQEMRCGSEESTEIINSPISLYILPSFAQTTQYRPLLVH
+FT                   MGRKGDSTILQLKKDLSMVSRTRPLSEMTLVRSIAASVKGYFIGGITEKDMPFLQHLSH
+FT                   DLQKSKPLKIQGNRQGEITALFESQGRIIGIINYYVEKISQQSIGSALRVYGATGNLLI
+FT                   EIPLNSTATTGIALKDGGLAISYWVGEQLYVEKRSENFGFLWRTKLHQRQNIASIFGKM
+FT                   VEVGKDIAWVGVNDRKLLVHRISQQDQSVHTSIDTESGVVASGNDFNYVHAYGNELHIV
+FT                   SADSRLKTDSGANRTEFCFIESRDF"
+XX
+SQ   Sequence 574587 BP; 97245 A; 195540 C; 188100 G; 93602 T; 100 other;
+     ccacgtcacg cgcgtgctgc agcccgatgg caccgccgtg gcgctggagc atgacaaggc        60
+     cgggcgcatc atccagatgc acagccggga tccctcggcc aaggaggacg aaacgggctg       120
+     gcgcaccgaa ctgcgccacg acgcccaggc ccgactggtg gccatgcgca gcctggcccc       180
+     cgacgccagc gtgctgcaag agcaaagctg gcgctacgac gcgctgggcc acctcacgga       240
+     aaccggcacc ggcggctggc ccggcaacgg ggacaagacg ggcaatgccg cctatgcggc       300
+     ccagacccgc cagcaccatg acgccctggg ccgcctgctg tggagcgccg atgtccgagg       360
+     cagcttcaca cagcaccgct acgacacgga aagccgcctg ctgcagtccg gtcgctacgg       420
+     tggccgcgcc gatgacggca gccgcctcat ggcccaggtg cagacctacc agcccggcgc       480
+     gccagagcag ccgccatccg ccgcagacaa ggccggcact gaaactgcac cgcaggcacg       540
+     ccagttctac gacgacttcg gccgcagcgt cgccaccctc agccccgaca gcggcctgag       600
+     cattcgcggc tacgacgcca ccgaccggtt ggtctcgggc cgcgacgccc tgggccagca       660
+     ggcgcgctac gaatacgacc tgcgcggccg catcctgcgc caaaccatca cgcaactgcc       720
+     gcaagatggc gcgcggccac gcaccaccac cacccgctgg cgctaccagg gccccaggct       780
+     ggtggcgctg gagcatcccg agcaaagcga ggcctacgaa tacaacgaca ggggcctgcg       840
+     cgtgcgcaag cgcatcaccc gccatgaaga aagcggtgca aacggtgaaa gcggggagag       900
+     cagccagcac cacaccctcc actacgaata cgacagccac ggcagactct ccgccgccag       960
+     ccttcccgac ggcagctggc tgcactacct gcgcgacggc catggccaga tcaccggcct      1020
+     gcagcggcag cgcgtgcgca ctccctggct gcgctggctc agcccggcgc aaaccattgc      1080
+     caccggattc gagcgcgacc tggtgggact gcgcagctgg caggcaggca acggcatcga      1140
+     ggcccgctat cagcgcagcc gcgaaggtct gctggcgcgc atcgtctacc gccagaccgg      1200
+     caagaacaac acacgcactg cctctggcac atcccatgac tggatgctgg gtgcccggcc      1260
+     caccgacatt gcagagcaac tgctaggcct gaccccggcc catgcggccg agcccatgca      1320
+     agccaaggca caggccactg cagcaactgc cgcgcaaacg acagccgaac cggcgcccga      1380
+     ccagccggga gccctgggcc agcccaccga cccccaagcc ctgctggaca tgcgctacct      1440
+     gtgggacagc caaggcaacc tgctgctgcg ccaggaccac tacagccaag ccccgcagac      1500
+     tttgcaccag gacagccatg cctacgacat gcacgaccgc ctgatcgtcc aggtccagcg      1560
+     cactggccag gaactgcgct ccagccgcta ccactatgac gaggccggca ggcgcaccct      1620
+//
+ID   ERZ1292626_FASTA-2; ; ; DNA; ; UNC; 555360 BP.
+XX
+AC   ERZ1292626_FASTA-2;
+XX
+DE   ERZ1292626_FASTA-2
+XX
+OS   .
+OC   .
+XX
+FH   Key             Location/Qualifiers
+FT   CDS             complement(69..851)
+FT                   /locus_tag="ctg2_1"
+FT                   /translation="MDPRGSCRTLAVHQGTGTSVAIVGQVGNLLAQFGEQPGVVAGCAM
+FT                   AATIGPFFTAPKQVAHMRARQPHRPAERFHCCPRATSASAQSTFFAAYSTASLRIWFSM
+FT                   TCAYSEAGGTLQRLELLKSAPSQRDNSLWHVHVARSHDQGMTMHLTELLAKKSALDEEI
+FT                   ARAKKSEATVALRRVHELVTEFGLTTQQVFPLLPARGKKQGVAKYRNPVTGATWTGRGK
+FT                   PPAWILGKDRNEFLVAQHVQPEGPFLAEMAAAAGRNLA"
+FT   CDS             1292..1498
+FT                   /locus_tag="ctg2_2"
+FT                   /translation="MVESFVNTSKRDYVARMDLSDAQTVLAQLPAAFEHFNEVHPHSSL
+FT                   KMRSPREFRRQQAAWADQVLYCV"
+FT   CDS             complement(1872..2456)
+FT                   /locus_tag="ctg2_3"
+FT                   /translation="MLPLDPALFTLLNANAQTPAISIEAARAISSWLPSLCALPVMAGL
+FT                   LRGSPALRRTLVLALLSMLAAWAVARLVRWGFPAPRPAQLGMGVQWVEHALRSSFPSMH
+FT                   ATGAFALAQALTLGCTRHRRWVMVSAWSLALGMGWSRVHLGVHFPSDVVGGAIVGICSA
+FT                   TLVWHAALWRRLAVMPNLLPYNARTHSGRPR"
+FT   CDS             complement(2469..3245)
+FT                   /locus_tag="ctg2_4"
+FT                   /translation="MLPAMPTPEPRDFSAAPAQGPSFKSTLLWTLAALAVVLAWDAGAL
+FT                   DLAMARWFGDADGFALRSDWFFVNIAHESARRLAWLVVLGLTLCVWRPIGPLRLLPHGR
+FT                   RVQLVAGILLSLALISLLKYTSATSCPWDLAEFGGVARHVSHWSLGLADGGPGRCFPAG
+FT                   HASAGFAFLAGYFALRRHAPRAAWIWLAVSLAAGLSMGLAQQMRGAHFMSHTLWTGWLC
+FT                   WTAGWLFDLAVTRALRTRDSAPDSLWPAASLPPSTP"
+FT   CDS             3276..4037
+FT                   /locus_tag="ctg2_5"
+FT                   /translation="MPRRAAIVWRRSRQRPLHNARMRILVVEDNAGIAAGLQANLQQRR
+FT                   YAVDVCSTVADAWHALEMERFDAVLLDLGLPDGDGSEILRRLRSPRRPGGDSHALPDPN
+FT                   TPVLILTARDQVRERIAGLDLGADDYLVKPFDIDELEARLRAMLRRAGGQAAPVIRHGE
+FT                   LEVDPAARTVRRDGKLVEMSPREFSVLWVLLQARGRVLSRQQIEEHLYSWGTAVESNAV
+FT                   EVHIHHLRKKLGNASIVTMRGVGYFLPAENP"
+FT   CDS             4034..5404
+FT                   /locus_tag="ctg2_6"
+FT                   /translation="MSTAQQRRPSLIWHLMAWMLGALVVVWASFVALGYQTGVHEADEL
+FT                   TDGHLAGVAALVLNLEVAGAVGQGAATPVHEPPGLMAHDYQQSLSVALWDGAGRLISRT
+FT                   GDAPEPAFDTEQGFATLRLGPEHRAWRSFTQWSRDHARKVSVMIELQERDELADDIAGQ
+FT                   MIEPGLWLLPVVALALGLAIRRGMRPLNELSREVERLDLAQAERVSHRHALREFMPVVN
+FT                   SINTLLDRQQEALERERSLANEVAHELRTPLASIALQARALGDAPAGAMDAPAQRAALA
+FT                   RIGQDALHAGHVLSQLLALARAGRAMLADPPVPVDLAALARQVVAAHAQAAWQRGCSLS
+FT                   VQAPEALGVMGNAVLLELALRNLVENALKHTPHGTQIEVQAGQGPDGEVWLQVCDDGRR
+FT                   DGAERAAAPVDSLHLGHEIVARVLRAHQGSFGEAAPPEGFTTCYRMGMPGTGLAAAG"
+FT   CDS             5534..6598
+FT   CDS             complement(382150..383850)
+FT                   /locus_tag="ctg2_354"
+FT                   /sec_met="Type: none"
+FT                   /sec_met="Domains d

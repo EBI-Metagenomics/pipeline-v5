@@ -72,7 +72,7 @@ steps:
     scatterMethod: dotproduct
     in:
       fasta_file: rename_contigs/renamed_contigs_in_chunks
-      names_table: rename_contigs/names_table
+      input_names_table: rename_contigs/names_table
     out:
       - antismash_js
       - antismash_txt
