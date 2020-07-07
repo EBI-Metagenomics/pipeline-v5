@@ -47,21 +47,21 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.outdirname)/geneclusters.js
-      outputEval: |
-        ${
-          self[0].basename = inputs.input_fasta.basename + '.geneclusters.js';
-          return self[0]
-        }
+      #outputEval: |
+      #  ${
+      #    self[0].basename = inputs.input_fasta.basename + '.geneclusters.js';
+      #    return self[0]
+      #  }
 
   geneclusters_txt:
     type: File
     outputBinding:
       glob: $(inputs.outdirname)/geneclusters.txt
-      outputEval: |
-        ${
-          self[0].basename = inputs.input_fasta.basename + '.geneclusters.txt';
-          return self[0]
-        }
+      #outputEval: |
+      #  ${
+      #    self[0].basename = inputs.input_fasta.basename + '.geneclusters.txt';
+      #    return self[0]
+      #  }
 
   embl_file:
     type: File
