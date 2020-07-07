@@ -33,7 +33,7 @@ outputs:
 steps:
 
   run_antismash:
-    run: antismash_v4.cwl
+    run: antismash/antismash_v4.cwl
     in:
       input_fasta: fasta_file
       outdirname: { default: antismash_result}
@@ -45,7 +45,7 @@ steps:
 
   # change DE and locus_tags
   fix_embl_and_gbk:
-    run: post_rename/change_output.cwl
+    run: post-processing/fix_embl_gbk/change_output.cwl
     in:
       embl_file: run_antismash/embl_file
       gbk_filename:

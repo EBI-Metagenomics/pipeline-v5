@@ -104,7 +104,7 @@ steps:
 
 # << post-processing JS >>
   antismash_json_generation:
-    run: antismash_json_generation.cwl
+    run: post-processing/json_generation/antismash_json_generation.cwl
     in:
       input_js: unite_geneclusters_js/result
       outputname: {default: 'geneclusters.json'}
@@ -112,7 +112,7 @@ steps:
 
 # << post-processing geneclusters.txt >>
   antismash_summary:
-    run: reformat-antismash.cwl
+    run: post-processing/reformat_antismash/reformat-antismash.cwl
     in:
       glossary: clusters_glossary
       geneclusters: unite_geneclusters_txt/result
@@ -120,7 +120,7 @@ steps:
 
 # << GFF for antismash >>
   antismash_gff:
-    run: ../../GFF/antismash_to_gff.cwl
+    run: post-processing/GFF_antismash/antismash_to_gff.cwl
     in:
       antismash_geneclus: antismash_summary/reformatted_clusters
       antismash_embl: unite_embl/result

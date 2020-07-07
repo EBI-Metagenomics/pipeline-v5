@@ -1,5 +1,5 @@
 filtered_fasta:
   class: File
-  path: ../input/empty.fasta
+  path: ../itest-nput/empty.fasta
 final_folder_name: pathways-systems
 count: 0

@@ -16,8 +16,8 @@ requirements:
         entryname: $(inputs.input_fasta.basename).fasta
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    coresMax: 4
-    ramMin: 40000
+    coresMax: 1
+    ramMin: 20000
 
 hints:
   DockerRequirement:
@@ -47,11 +47,21 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.outdirname)/geneclusters.js
+      outputEval: |
+        ${
+          self[0].basename = inputs.input_fasta.basename + '.geneclusters.js';
+          return self[0]
+        }
 
   geneclusters_txt:
     type: File
     outputBinding:
       glob: $(inputs.outdirname)/geneclusters.txt
+      outputEval: |
+        ${
+          self[0].basename = inputs.input_fasta.basename + '.geneclusters.txt';
+          return self[0]
+        }
 
   embl_file:
     type: File
