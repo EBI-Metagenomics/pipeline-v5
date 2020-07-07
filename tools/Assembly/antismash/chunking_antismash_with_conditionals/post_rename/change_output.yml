@@ -1,8 +1,8 @@
 embl_file:
   class: File
-  path: test-input/test.embl
-gbk_filename: output.gbk
-embl_filename: output.embl
+  path: ../input/test-1-contig.embl
+gbk_filename: output-contig-1.gbk
+embl_filename: output-contig-1.embl
 names_table:
   class: File
-  path: test-input/test.table
+  path: ../input/test-1-contig.table
