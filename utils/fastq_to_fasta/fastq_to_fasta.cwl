@@ -4,7 +4,7 @@ class: CommandLineTool
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 100  # just a default, could be lowered
+    ramMin: 300  # just a default, could be lowered
 
 hints:
   DockerRequirement:

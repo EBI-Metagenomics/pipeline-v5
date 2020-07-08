@@ -20,29 +20,29 @@ hints:
 inputs:
 
   number_of_output_files:
-    type: boolean?
+    type: string  # boolean for esl-ssplit.pl
     inputBinding:
       position: 1
-      prefix: "-n"
+      # prefix: "-n"  # uncomment for esl-ssplit.pl
 
   same_number_of_residues:
-    type: boolean?
+    type: string # boolean for esl-ssplit.pl
     inputBinding:
       position: 2
-      prefix: "-r"
+      # prefix: "-r"  # uncomment for esl-ssplit.pl
 
   seqs:
-    # format: edam:format_1929  # collision with concatenate.cwl
     type: File
     inputBinding:
       position: 3
+
   chunk_size:
     type: int
     inputBinding:
       position: 4
 
 
-baseCommand: [ esl-ssplit.pl ]
+baseCommand: [ esl-ssplit.sh ]
 
 outputs:
   chunks:

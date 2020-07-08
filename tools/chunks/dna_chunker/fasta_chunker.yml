@@ -3,5 +3,5 @@ seqs:
   class: File
   path: ../../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.fasta
 chunk_size: 100
-number_of_output_files: True
-same_number_of_residues: True
+number_of_output_files: "True"
+same_number_of_residues: "True"

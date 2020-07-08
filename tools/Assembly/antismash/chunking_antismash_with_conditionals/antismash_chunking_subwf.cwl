@@ -41,8 +41,8 @@ steps:
     in:
       seqs: filtered_fasta
       chunk_size: calc_chunking_number/count
-      number_of_output_files: { default: True }
-      same_number_of_residues: { default: True }
+      number_of_output_files: { default: "True" }
+      same_number_of_residues: { default: "True" }
     out: [ chunks ]
 
   run_antismash:

@@ -27,7 +27,7 @@ inputs:
         position: 1
         prefix: -s
     label: merged and QC reads in fastq
-    format: edam:format_1930  # FASTQ
+    # format: edam:format_1930  # FASTQ
 
   threads:
     type: int

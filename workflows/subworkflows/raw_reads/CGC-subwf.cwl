@@ -28,6 +28,8 @@ steps:
     in:
       seqs: input_fasta
       chunk_size: chunk_size
+      number_of_output_files: { default: "False" }
+      same_number_of_residues: { default: "False" }
     out: [ chunks ]
     run: ../../../tools/chunks/dna_chunker/fasta_chunker.cwl
 
