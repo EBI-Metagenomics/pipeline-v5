@@ -34,10 +34,10 @@ steps:
       sequences: input_filtered_fasta
       number: { default: 1 }
     out: [ count ]
-    run: ../../../utils/count_fasta.cwl
+    run: ../../../../utils/count_fasta.cwl
 
   filter_contigs_antismash:
-    run: ../../qc-filtering/qc-filtering.cwl
+    run: ../../../qc-filtering/qc-filtering.cwl
     in:
       seq_file: input_filtered_fasta
       min_length: { default: 1000 }
@@ -47,7 +47,7 @@ steps:
     out: [filtered_file]
 
   antismash:
-    run: cwl-s/antismash_v4_with_postprocessing.cwl
+    run: antismash_v4_with_postprocessing.cwl
     in:
       outdirname: {default: 'antismash_result'}
       input_fasta: filter_contigs_antismash/filtered_file
