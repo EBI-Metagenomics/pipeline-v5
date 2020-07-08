@@ -120,7 +120,7 @@ steps:
     in:
       antismash_geneclus: antismash_summary/reformatted_clusters
       antismash_embl: unite_embl/result
-      antismash_gc_json: antismash_json_generation/output_json
+      antismash_gc_json: unite_geneclusters_js/result
       output_name:
         source: filtered_fasta
         valueFrom: $(self.nameroot).antismash.gff
