@@ -72,12 +72,29 @@ steps:
       - antismash_gbk
       - antismash_embl
 
-  unite_geneclusters_js:
+  remove_brackets_chunks_json:
+    run: post-processing/json_generation/remove_last_bracket.cwl
+    scatter: input_json
+    in:
+      input_json: run_antismash/antismash_js
+      outputname:
+        source: filtered_fasta
+        valueFrom: $(self.nameroot).remove.json
+    out: [ output_json ]
+
+  unite_geneclusters_jsons:
     run: ../../../../utils/concatenate.cwl
     in:
-      files: run_antismash/antismash_js
-      outputFileName: { default: geneclusters.js }
+      files: remove_brackets_chunks_json/output_json
+      outputFileName: { default: geneclusters.fix.json }
     out:  [ result ]
+
+  add_the_last_bracket_json:
+    run: post-processing/json_generation/add_last_bracket.cwl
+    in:
+      input_json: unite_geneclusters_jsons/result
+      outputname: { default: geneclusters.json }
+  out: [ output_json ]
 
   unite_geneclusters_txt:
     run: ../../../../utils/concatenate.cwl
@@ -120,7 +137,7 @@ steps:
     in:
       antismash_geneclus: antismash_summary/reformatted_clusters
       antismash_embl: unite_embl/result
-      antismash_gc_json: unite_geneclusters_js/result
+      antismash_gc_json: add_the_last_bracket_json/output_json
       output_name:
         source: filtered_fasta
         valueFrom: $(self.nameroot).antismash.gff
