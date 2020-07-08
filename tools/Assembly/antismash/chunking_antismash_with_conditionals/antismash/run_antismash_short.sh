@@ -9,4 +9,4 @@ done
 
 echo "run antismash"
 source ${CONDA_ENV} antismash && \
-antismash -v --smcogs --asf --disable-svg --knownclusterblast --subclusterblast --outputfolder ${OUTFOLDER} ${INPUT}
+antismash --smcogs --asf --disable-svg --knownclusterblast --outputfolder ${OUTFOLDER} ${INPUT}  # --subclusterblast -v

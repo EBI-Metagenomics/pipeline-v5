@@ -20,7 +20,7 @@ inputs:
 outputs:
   antismash_js:
     type: File
-    outputSource: fix_geneclusters_js/fixed_js
+    outputSource: fix_geneclusters_json/fixed_js
   antismash_txt:
     type: File
     outputSource: fix_geneclusters_txt/fixed_txt
@@ -80,13 +80,13 @@ steps:
       outputname: {default: 'geneclusters.json'}
     out: [ output_json ]
 
-  # change js
-  fix_geneclusters_js:
+  # change json
+  fix_geneclusters_json:
     run: post-processing/fix_geneclusters_js/change_geneclusters_js.cwl
     in:
       input_geneclusters_js: antismash_json_generation/output_json
       output_filename:
         source: fasta_file
-        valueFrom: $(self.basename).gncl.js
+        valueFrom: $(self.basename).gncl.json
       accession: accession
     out: [ fixed_js ]
