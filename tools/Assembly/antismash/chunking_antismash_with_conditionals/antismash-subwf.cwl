@@ -39,6 +39,9 @@ steps:
       input_fasta: fasta_file
       outdirname: { default: antismash_result}
       accession: accession
+      chunk_num:
+        source: fasta_file
+        valueFrom: $(self.nameext)
     out:
       - geneclusters_js
       - geneclusters_txt

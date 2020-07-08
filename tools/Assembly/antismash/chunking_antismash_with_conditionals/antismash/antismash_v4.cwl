@@ -26,6 +26,7 @@ hints:
 inputs:
 
   accession: string
+  chunk_num: string
 
   outdirname:
     type: string
@@ -51,7 +52,7 @@ outputs:
       glob: $(inputs.outdirname)/geneclusters.js
       outputEval: |
         ${
-          self[0].basename = inputs.accession + inputs.input_fasta.nameext + '.geneclusters.js';
+          self[0].basename = inputs.accession + inputs.chunk_num + '.geneclusters.js';
           return self[0]
         }
 
@@ -61,7 +62,7 @@ outputs:
       glob: $(inputs.outdirname)/geneclusters.txt
       outputEval: |
         ${
-          self[0].basename = inputs.accession + inputs.input_fasta.nameext + '.geneclusters.txt';
+          self[0].basename = inputs.accession + inputs.chunk_num + '.geneclusters.txt';
           return self[0]
         }
 

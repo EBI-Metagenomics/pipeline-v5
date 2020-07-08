@@ -9,3 +9,4 @@ input_fasta:
   path: ../test-input/test.fasta.1
 
 accession: result
+chunk_num: '1'
