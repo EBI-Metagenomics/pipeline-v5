@@ -58,7 +58,7 @@ steps:
 
   run_antismash:
     run: antismash-subwf.cwl
-    scatter: [fasta_file, names_table]
+    scatter: [fasta_file, input_names_table]
     scatterMethod: dotproduct
     in:
       fasta_file: rename_contigs/renamed_contigs_in_chunks
