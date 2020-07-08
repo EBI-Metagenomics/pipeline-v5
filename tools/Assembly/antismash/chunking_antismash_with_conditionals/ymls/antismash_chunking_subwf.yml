@@ -8,4 +8,4 @@ clusters_glossary:
   checksum: bd50e85246dc3609f7cab6fb4efe4845
 
 final_folder_name: outputname_antismash
-chunk_size: 1000
+split_size: 1000
