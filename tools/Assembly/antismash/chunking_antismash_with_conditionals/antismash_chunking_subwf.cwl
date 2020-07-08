@@ -75,21 +75,21 @@ steps:
   unite_geneclusters_js:
     run: ../../../../utils/concatenate.cwl
     in:
-      files: run_antismash/geneclusters_js
+      files: run_antismash/antismash_js
       outputFileName: { default: geneclusters.js }
     out:  [ result ]
 
   unite_geneclusters_txt:
     run: ../../../../utils/concatenate.cwl
     in:
-      files: run_antismash/geneclusters_txt
+      files: run_antismash/antismash_txt
       outputFileName: { default: geneclusters.txt }
     out:  [ result ]
 
   unite_embl:
     run: ../../../../utils/concatenate.cwl
     in:
-      files: run_antismash/embl_file
+      files: run_antismash/antismash_embl
       outputFileName:
         source: filtered_fasta
         valueFrom: $(self.nameroot)
@@ -99,7 +99,7 @@ steps:
   unite_gbk:
     run: ../../../../utils/concatenate.cwl
     in:
-      files: run_antismash/gbk_file
+      files: run_antismash/antismash_gbk
       outputFileName:
         source: filtered_fasta
         valueFrom: $(self.nameroot)
