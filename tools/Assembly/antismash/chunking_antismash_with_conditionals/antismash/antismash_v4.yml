@@ -7,3 +7,5 @@ input_fasta:
   format: edam:format_1929  # FASTA
   class: File
   path: ../test-input/test.fasta.1
+
+accession: result

@@ -38,6 +38,7 @@ steps:
     in:
       input_fasta: fasta_file
       outdirname: { default: antismash_result}
+      accession: accession
     out:
       - geneclusters_js
       - geneclusters_txt
