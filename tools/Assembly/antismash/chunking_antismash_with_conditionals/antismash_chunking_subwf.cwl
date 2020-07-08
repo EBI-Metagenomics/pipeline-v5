@@ -94,7 +94,7 @@ steps:
     in:
       input_json: unite_geneclusters_jsons/result
       outputname: { default: geneclusters.json }
-  out: [ output_json ]
+    out: [ output_json ]
 
   unite_geneclusters_txt:
     run: ../../../../utils/concatenate.cwl
