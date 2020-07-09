@@ -16,24 +16,26 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: 'alpine:3.7'
+    dockerPull: mgnify/pipeline-v5.bash
 
 inputs:
-  outputname: string
+  outputname:
+    type: string
+    inputBinding:
+      position: 2
 
   input_json:
     type: File
     inputBinding:
-      position: 3
+      position: 1
 
-baseCommand: [ head ]
-arguments: [ "-n", "-1"]
-
-stdout: $(inputs.outputname)
+baseCommand: [ remove_the_last_bracket.sh ]
 
 outputs:
   output_json:
-    type: stdout
+    type: File
+    outputBinding:
+      glob: $(inputs.outputname)
 
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
