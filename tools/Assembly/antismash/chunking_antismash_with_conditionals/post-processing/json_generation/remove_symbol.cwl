@@ -19,17 +19,21 @@ hints:
     dockerPull: mgnify/pipeline-v5.bash
 
 inputs:
-  outputname:
-    type: string
-    inputBinding:
-      position: 2
 
   input_json:
     type: File
     inputBinding:
       position: 1
+  outputname:
+    type: string
+    inputBinding:
+      position: 2
+  type:
+    type: string
+    inputBinding:
+      position: 3
 
-baseCommand: [ remove_the_last_bracket.sh ]
+baseCommand: [ remove_symbol.sh ]
 
 outputs:
   output_json:

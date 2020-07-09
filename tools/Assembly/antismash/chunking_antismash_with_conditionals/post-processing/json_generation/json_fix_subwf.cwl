@@ -19,14 +19,15 @@ inputs:
 outputs:
   antismash_result_json:
     type: File
-    outputSource: add_the_last_bracket_json/output_json
+    outputSource: add_the_first_bracket_json/output_json
 
 steps:
 
-  remove_brackets_chunks_json:
-    run: remove_last_bracket.cwl
+  remove_curly_brackets_chunks_json:
+    run: remove_symbol.cwl
     scatter: input_json
     in:
+      type: { default: "both" }
       input_json: jsons
       outputname:
         source: filtered_fasta
@@ -34,12 +35,13 @@ steps:
     out: [ output_json ]
 
   add_the_last_comma_json:
-    run: add_last_symbol.cwl
+    run: add_symbol.cwl
     scatter: input_json
     in:
-      input_json: remove_brackets_chunks_json/output_json
+      input_json: remove_curly_brackets_chunks_json/output_json
       outputname: { default: geneclusters.comma.json }
       symbol: { default: "," }
+      type: { default: "last" }
     out: [ output_json ]
 
   unite_geneclusters_jsons:
@@ -50,8 +52,9 @@ steps:
     out:  [ result ]
 
   remove_the_last_comma:
-    run: remove_last_bracket.cwl
+    run: remove_symbol.cwl
     in:
+      type: { default: "last"}
       input_json: unite_geneclusters_jsons/result
       outputname:
         source: filtered_fasta
@@ -59,10 +62,19 @@ steps:
     out: [ output_json ]
 
   add_the_last_bracket_json:
-    run: add_last_symbol.cwl
+    run: add_symbol.cwl
     in:
       input_json: remove_the_last_comma/output_json
-      outputname: { default: geneclusters.json }
+      outputname: { default: geneclusters.last.json }
       symbol: { default: "}" }
+      type: { default: "last" }
     out: [ output_json ]
 
+  add_the_first_bracket_json:
+    run: add_symbol.cwl
+    in:
+      input_json: add_the_last_bracket_json/output_json
+      outputname: { default: geneclusters.json }
+      symbol: { default: "}" }
+      type: { default: "first" }
+    out: [ output_json ]

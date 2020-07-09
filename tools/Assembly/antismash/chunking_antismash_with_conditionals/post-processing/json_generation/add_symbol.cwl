@@ -32,6 +32,10 @@ inputs:
     type: string
     inputBinding:
       position: 3
+  type:
+    type: string
+    inputBinding:
+      position: 4
 
 baseCommand: [ add_symbol_json.sh ]
 
