@@ -75,6 +75,6 @@ steps:
     in:
       input_json: add_the_last_bracket_json/output_json
       outputname: { default: geneclusters.json }
-      symbol: { default: "}" }
+      symbol: { default: "{" }
       type: { default: "first" }
     out: [ output_json ]
