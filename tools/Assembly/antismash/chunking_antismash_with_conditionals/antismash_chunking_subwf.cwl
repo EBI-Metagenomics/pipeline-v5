@@ -82,18 +82,28 @@ steps:
         valueFrom: $(self.nameroot).remove.json
     out: [ output_json ]
 
+  add_the_last_comma_json:
+    run: post-processing/json_generation/add_last_symbol.cwl
+    scatter: input_json
+    in:
+      input_json: remove_brackets_chunks_json/output_json
+      outputname: { default: geneclusters.comma.json }
+      symbol: { default: "," }
+    out: [ output_json ]
+
   unite_geneclusters_jsons:
     run: ../../../../utils/concatenate.cwl
     in:
-      files: remove_brackets_chunks_json/output_json
+      files: add_the_last_comma_json/output_json
       outputFileName: { default: geneclusters.fix.json }
     out:  [ result ]
 
   add_the_last_bracket_json:
-    run: post-processing/json_generation/add_last_bracket.cwl
+    run: post-processing/json_generation/add_last_symbol.cwl
     in:
       input_json: unite_geneclusters_jsons/result
       outputname: { default: geneclusters.json }
+      symbol: { default: "}" }
     out: [ output_json ]
 
   unite_geneclusters_txt:

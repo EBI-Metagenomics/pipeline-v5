@@ -19,17 +19,21 @@ hints:
     dockerPull: mgnify/pipeline-v5.bash
 
 inputs:
-  outputname:
-    type: string
-    inputBinding:
-      position: 2
 
   input_json:
     type: File
     inputBinding:
       position: 1
+  outputname:
+    type: string
+    inputBinding:
+      position: 2
+  symbol:
+    type: string
+    inputBinding:
+      position: 3
 
-baseCommand: [ add_bracket_json.sh ]
+baseCommand: [ add_symbol_json.sh ]
 
 outputs:
   output_json:
