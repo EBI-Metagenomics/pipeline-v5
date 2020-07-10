@@ -4,6 +4,8 @@ import argparse
 import sys
 import json
 
+NAME_LIMIT = 16
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="change embl file")
@@ -15,7 +17,8 @@ if __name__ == "__main__":
         parser.print_help()
     else:
         args = parser.parse_args()
-        name = args.accession.split('_')[0]
+        accession = args.accession.split('_')[0]
+
         with open(args.input, 'r') as jsfile, open(args.output, 'w') as out_json:
             data = json.load(jsfile)
             for cluster in data:
@@ -23,6 +26,10 @@ if __name__ == "__main__":
                     old_locus_tag = locus['locus_tag']
                     number = old_locus_tag.split('_')[0].split('ctg')[1]
                     postfix = old_locus_tag.split('_')[1]
+
+                    limit = min(NAME_LIMIT - 1 - len(number), len(accession) - 1)
+                    name = accession[0:limit]
+
                     new_locus_tag = name + '-' + number + '_' + postfix
                     locus['locus_tag'] = new_locus_tag
                     description = locus['description']
