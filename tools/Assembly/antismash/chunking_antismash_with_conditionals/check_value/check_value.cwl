@@ -19,7 +19,7 @@ expression: |
   ${
     var value = 0;
     if (inputs.number == 0) {
-      value = 1;
+      value = 2;
     } else {
       value = inputs.number;
     }
