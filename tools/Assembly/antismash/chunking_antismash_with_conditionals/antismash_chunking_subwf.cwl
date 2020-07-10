@@ -36,11 +36,17 @@ steps:
       number: split_size
     out: [ count ]
 
+  check_value:
+    run: check_value/check_value.cwl
+    in:
+      number: calc_chunking_number/count
+    out: [ out ]
+
   chunking_fasta:
     run: ../../../chunks/dna_chunker/fasta_chunker.cwl
     in:
       seqs: filtered_fasta
-      chunk_size: calc_chunking_number/count
+      chunk_size: check_value/out
       number_of_output_files: { default: "True" }
       same_number_of_residues: { default: "True" }
     out: [ chunks ]
