@@ -142,7 +142,8 @@ def build_gff(embl_file, gclusters, as_types, mag=False):
     """
     entries = SeqIO.parse(embl_file, 'embl')
     for entry in entries:
-        query_name = entry.description
+        query_name = entry.id
+        query_description = entry.description
         if mag:
             query_name = _mags_name_clean(query_name)
         query_name = query_name.replace(' ', '-')
@@ -163,7 +164,7 @@ def build_gff(embl_file, gclusters, as_types, mag=False):
             attributes = build_attributes(quals, gc_data, as_types)
             if attributes:
                 yield [
-                    query_name,
+                    query_description,
                     'antiSMASH',
                     'CDS',
                     str(entry_feature.location.start + 1), # correct offset gff are +1
@@ -171,7 +172,7 @@ def build_gff(embl_file, gclusters, as_types, mag=False):
                     '.',  # Score
                     '+' if entry_feature.strand > 0 else '-',
                     '.',
-                    'ID=' + query_name + ';' + attributes
+                    'ID=' + query_description + ';' + attributes
                 ]
             else:
                 logger.warning(entry.id + ' has no attributes')
