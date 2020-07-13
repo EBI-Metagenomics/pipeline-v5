@@ -16,7 +16,7 @@ inputs:
   chunk_size: int
   name_ips: string
 
-  InterProScan_databases: Directory
+  InterProScan_databases: string
   InterProScan_applications: string[]
   InterProScan_outputFormat: string[]
 

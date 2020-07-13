@@ -1,3 +1,7 @@
+$namespaces:
+  s: https://schema.org/
+  edam: http://edamontology.org/
+
 applications:
   - PfamA
   - TIGRFAM
@@ -7,8 +11,7 @@ applications:
 inputFile:
   class: File
   path: ../Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
+  format: edam:format_1929
 outputFormat:
   - TSV
-databases:
-  class: Directory
-  path: interproscan-5.36-75.0/data
+databases: interproscan-5.36-75.0/data

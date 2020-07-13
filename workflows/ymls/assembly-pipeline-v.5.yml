@@ -177,9 +177,7 @@ InterProScan_applications:
   - Gene3d
 InterProScan_outputFormat:
   - TSV
-InterProScan_databases:
-  class: Directory
-  path: interproscan-5.36-75.0/data
+InterProScan_databases: interproscan-5.36-75.0/data
 ips_header: 'protein_accession\tsequence_md5_digest\tsequence_length\tanalysis\tsignature_accession\tsignature_description\tstart_location\tstop_location\tscore\tstatus\tdate\taccession\tdescription\tgo\tpathways_annotations'
 
 # Diamond

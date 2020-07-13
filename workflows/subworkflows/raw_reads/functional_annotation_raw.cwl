@@ -21,7 +21,7 @@ inputs:
 
   chunk_size_IPS: int
   name_ips: string
-  InterProScan_databases: Directory
+  InterProScan_databases: string
   InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
   InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
