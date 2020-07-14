@@ -1,0 +1,14 @@
+{
+    "assembly"    : "/nfs/production/interpro/metagenomics/results/assemblies",
+    "mailto"      : "metagenomics@ebi.ac.uk",
+    "peptides"    : "/nfs/production/interpro/metagenomics/assembly_peptides",
+    "mapping"     : "/nfs/production/interpro/metagenomics/peptide_db/mapping",
+    "releases"    : "/nfs/production/interpro/metagenomics/peptide_db/releases",
+    "prodigal"    : "/nfs/production/interpro/metagenomics/peptide_db/prodigal",
+    "arch"        : "/nfs/production/interpro/metagenomics/peptide_db/calculateArch",
+    "pfam"        : "/nfs/production/interpro/metagenomics/peptide_db/pfam",
+    "pfam_batch"  : 5000,
+    "max_pep_length"  : 10000,
+    "pfam_dirs"   : 100,
+    "min_length"  : 500
+}
