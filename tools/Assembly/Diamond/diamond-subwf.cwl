@@ -15,10 +15,10 @@ inputs:
   outputFormat: string
   maxTargetSeqs: int
   strand: string
-  databaseFile: File
+  databaseFile: string
   threads: int
-  Uniref90_db_txt: File
-  filename: File
+  Uniref90_db_txt: string
+  filename: string
 
 outputs:
   diamond_output:

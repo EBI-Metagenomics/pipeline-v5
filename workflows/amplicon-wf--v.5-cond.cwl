@@ -27,13 +27,13 @@ inputs:
     lsu_db:
       type: File
       secondaryFiles: [ .mscluster ]
-    ssu_tax: File
-    lsu_tax: File
-    ssu_otus: File
-    lsu_otus: File
+    ssu_tax: string
+    lsu_tax: string
+    ssu_otus: string
+    lsu_otus: string
 
-    rfam_models: File[]
-    rfam_model_clans: File
+    rfam_models: string[]
+    rfam_model_clans: string
 
     ssu_label: string
     lsu_label: string
@@ -41,12 +41,12 @@ inputs:
     5.8s_pattern: string
 
     unite_db: {type: File, secondaryFiles: [.mscluster] }
-    unite_tax: File
-    unite_otu_file: File
+    unite_tax: string
+    unite_otu_file: string
     unite_label: string
     itsonedb: {type: File, secondaryFiles: [.mscluster] }
-    itsonedb_tax: File
-    itsonedb_otu_file: File
+    itsonedb_tax: string
+    itsonedb_otu_file: string
     itsonedb_label: string
 
 outputs:

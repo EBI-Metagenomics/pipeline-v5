@@ -24,12 +24,12 @@ inputs:
   silva_lsu_database:
     type: File
     secondaryFiles: [.mscluster]
-  silva_ssu_taxonomy: File
-  silva_lsu_taxonomy: File
-  silva_ssu_otus: File
-  silva_lsu_otus: File
-  ncRNA_ribosomal_models: File[]
-  ncRNA_ribosomal_model_clans: File
+  silva_ssu_taxonomy: string
+  silva_lsu_taxonomy: string
+  silva_ssu_otus: string
+  silva_lsu_otus: string
+  ncRNA_ribosomal_models: string[]
+  ncRNA_ribosomal_model_clans: string
   pattern_SSU: string
   pattern_LSU: string
   pattern_5S: string

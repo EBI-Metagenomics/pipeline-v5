@@ -26,15 +26,15 @@ inputs:
       separate: true
       prefix: -i
   graphs:
-    type: File
+    type: string
     inputBinding:
       prefix: -g
   pathways_names:
-    type: File
+    type: string
     inputBinding:
       prefix: -n
   pathways_classes:
-    type: File
+    type: string
     inputBinding:
       prefix: -c
   outputname:

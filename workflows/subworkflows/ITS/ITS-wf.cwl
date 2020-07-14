@@ -19,11 +19,11 @@ inputs:
   LSU_coordinates: File
   SSU_coordinates: File
   unite_database: {type: File, secondaryFiles: [.mscluster] }
-  unite_taxonomy: File
-  unite_otus: File
+  unite_taxonomy: string
+  unite_otus: string
   itsone_database: {type: File, secondaryFiles: [.mscluster] }
-  itsone_taxonomy: File
-  itsone_otus: File
+  itsone_taxonomy: string
+  itsone_otus: string
   otu_unite_label: string
   otu_itsone_label: string
 

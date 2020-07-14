@@ -24,8 +24,8 @@ inputs:
   HMM_database: string
 
   chunk_size_eggnog: int
-  EggNOG_db: File
-  EggNOG_diamond_db: File
+  EggNOG_db: string
+  EggNOG_diamond_db: string
   EggNOG_data_dir: string
 
   chunk_size_IPS: int

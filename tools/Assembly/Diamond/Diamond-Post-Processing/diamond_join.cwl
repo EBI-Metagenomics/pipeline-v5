@@ -23,13 +23,13 @@ inputs:
       separate: true
       prefix: -i
   input_db:
-    type: File
+    type: string
     inputBinding:
       separate: true
       prefix: -d
-  filename: File
+  filename: string
 
-stdout: $(inputs.filename.nameroot)_summary.diamond.without_header
+stdout: $(inputs.filename)_summary.diamond.without_header
 
 outputs:
   output_join:

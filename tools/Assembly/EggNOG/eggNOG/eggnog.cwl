@@ -28,13 +28,13 @@ inputs:
     label: Input FASTA file containing query sequences
 
   db:
-    type: File?  # data/eggnog.db
+    type: string?  # data/eggnog.db
     inputBinding:
       prefix: --database
     label: specify the target database for sequence searches (euk,bact,arch, host:port, local hmmpressed database)
 
   db_diamond:
-    type: File?  # data/eggnog_proteins.dmnd
+    type: string?  # data/eggnog_proteins.dmnd
     inputBinding:
       prefix: --dmnd_db
     label: Path to DIAMOND-compatible database

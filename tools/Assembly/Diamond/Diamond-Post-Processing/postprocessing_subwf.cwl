@@ -13,8 +13,8 @@ requirements:
 
 inputs:
   input_diamond: File
-  input_db: File
-  filename: File
+  input_db: string
+  filename: string
 
 outputs:
   join_out:

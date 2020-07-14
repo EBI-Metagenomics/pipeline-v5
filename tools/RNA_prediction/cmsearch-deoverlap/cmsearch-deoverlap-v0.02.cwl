@@ -8,7 +8,7 @@ baseCommand: [ cmsearch-deoverlap.pl ]
 
 inputs:
   - id: clan_information
-    type: File?
+    type: string?
     inputBinding:
       position: 0
       prefix: '--clanin'

@@ -27,7 +27,7 @@ inputs:
       prefix: --input-file
 
   config:
-    type: File
+    type: string
     inputBinding:
       prefix: --config
 

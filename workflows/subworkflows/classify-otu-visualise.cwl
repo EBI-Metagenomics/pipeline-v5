@@ -16,8 +16,8 @@ inputs:
   mapseq_ref:
     type: File
     secondaryFiles: [.mscluster]
-  mapseq_taxonomy: File
-  otu_ref: File
+  mapseq_taxonomy: string
+  otu_ref: string
   otu_label:
     type: string
   return_dirname: string

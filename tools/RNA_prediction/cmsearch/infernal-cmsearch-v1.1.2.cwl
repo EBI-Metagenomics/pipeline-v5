@@ -8,7 +8,7 @@ baseCommand:
   - cmsearch
 inputs:
   - id: covariance_model_database
-    type: File
+    type: string
     inputBinding:
       position: 1
   - id: cpu
@@ -64,13 +64,13 @@ outputs:
     type: File
     format: edam:format_3475
     outputBinding:
-      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch_matches.tbl
+      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
   - id: programOutput
     label: 'direct output to file, not stdout'
     type: File
     format: edam:format_3475
     outputBinding:
-      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch.out
+      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
 
 doc: >
   Infernal ("INFERence of RNA ALignment") is for searching DNA sequence
@@ -90,10 +90,10 @@ label: Search sequence(s) against a covariance model database
 arguments:
   - position: 0
     prefix: '--tblout'
-    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch_matches.tbl
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
   - position: 0
     prefix: '-o'
-    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.nameroot).cmsearch.out
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
 
 hints:
   - class: SoftwareRequirement
