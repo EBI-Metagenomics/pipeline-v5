@@ -26,17 +26,9 @@ inputs:
     ssu_otus: string
     lsu_otus: string
 
-<<<<<<< HEAD
     rfam_models: string[]
     rfam_model_clans: string
     other_ncRNA_models: string[]
-=======
-    rfam_models: File[]
-    rfam_model_clans: File
-    other_ncrna_models: string[]
->>>>>>> add dockers to pipeline
-    #other_ncRNA_name: string
-
     ssu_label: string
     lsu_label: string
     5s_pattern: string
@@ -157,7 +149,7 @@ steps:
       lsu_otus: lsu_otus
       rfam_models: rfam_models
       rfam_model_clans: rfam_model_clans
-      other_ncrna_models: other_ncrna_models
+      other_ncRNA_models: other_ncRNA_models
       ssu_label: ssu_label
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
