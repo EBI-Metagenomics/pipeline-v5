@@ -158,7 +158,7 @@ steps:
     in:
      input_sequences: filtered_fasta
      cmsearch_file: rna_prediction/ncRNA
-     other_ncRNA_ribosomal_models: other_ncrna_models
+     other_ncRNA_ribosomal_models: other_ncRNA_models
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
 
