@@ -9,4 +9,4 @@ done
 
 echo "run antismash"
 source ${CONDA_ENV} antismash && \
-antismash --smcogs --asf --disable-svg --knownclusterblast --outputfolder ${OUTFOLDER} ${INPUT}  # --subclusterblast -v
+antismash --genefinding prodigal-m --smcogs --asf --disable-svg --knownclusterblast --outputfolder ${OUTFOLDER} ${INPUT}  # --subclusterblast -v

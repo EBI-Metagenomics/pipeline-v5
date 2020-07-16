@@ -24,15 +24,16 @@ if __name__ == "__main__":
             for cluster in data:
                 for locus in data[cluster]['orfs']:
                     old_locus_tag = locus['locus_tag']
-                    number = old_locus_tag.split('_')[0].split('ctg')[1]
-                    postfix = old_locus_tag.split('_')[1]
+                    if len(old_locus_tag.split('_')[0].split('ctg')) > 1:
+                        number = old_locus_tag.split('_')[0].split('ctg')[1]
+                        postfix = old_locus_tag.split('_')[1]
 
-                    limit = min(NAME_LIMIT - 1 - len(number), len(accession) - 1)
-                    name = accession[0:limit]
+                        limit = min(NAME_LIMIT - 1 - len(number), len(accession) - 1)
+                        name = accession[0:limit]
 
-                    new_locus_tag = name + '-' + number + '_' + postfix
-                    locus['locus_tag'] = new_locus_tag
-                    description = locus['description']
-                    locus['description'] = description.replace(old_locus_tag, new_locus_tag)
+                        new_locus_tag = name + '-' + number + '_' + postfix
+                        locus['locus_tag'] = new_locus_tag
+                        description = locus['description']
+                        locus['description'] = description.replace(old_locus_tag, new_locus_tag)
             json.dump(data, out_json)
 
