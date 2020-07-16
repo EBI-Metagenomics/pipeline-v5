@@ -4,6 +4,7 @@ LABEL Maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 RUN apk add --no-cache bash
 
 COPY add_header \
+     add_symbol_json.sh \
      antismash_json_generation \
      awk_tool \
      biom-convert.sh \
@@ -14,6 +15,8 @@ COPY add_header \
      pull_ncrnas.sh \
      run_antismash_short.sh \
      run_samtools.sh \
+     remove_symbol.sh \
+     esl-ssplit.sh \
 /tools/
 
 RUN chmod a+x /tools/*

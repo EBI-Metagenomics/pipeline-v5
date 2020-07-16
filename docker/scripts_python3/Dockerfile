@@ -10,6 +10,9 @@ COPY antismash_to_gff.py \
      build_assembly_gff.py \
      count_fastq.py \
      count_lines.py \
+     change_antismash_output.py \
+     change_geneclusters_ctg_js.py \
+     change_geneclusters_ctg.py \
      fastq_to_fasta.py \
      functional_stats.py \
      generate_checksum.py \
@@ -23,6 +26,7 @@ COPY antismash_to_gff.py \
      parsing_hmmscan.py \
      reformat-antismash.py \
      split_to_chunks.py \
+     antismash_rename_contigs.py \
      run_result_file_chunker.py chunkFastaResultFileUtil.py chunkTSVFileUtil.py cleaningUtils.py \
      write_summaries.py \
 /tools/
