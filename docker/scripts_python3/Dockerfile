@@ -20,7 +20,7 @@ COPY antismash_to_gff.py \
      get_subunits_coords.py \
      get_subunits.py \
      hmmscan_tab.py \
-     its-length.py \
+     its-length-new.py \
      make_csv.py \
      move_antismash_summary.py \
      parsing_hmmscan.py \
