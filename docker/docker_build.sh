@@ -9,7 +9,7 @@ export PIPELINE=`pwd`/..
 # - get_subunits.py
 # - functional_stats.py
 # - write_summaries.py
-# - its-length.py
+# - its-length-new.py
 # - split_to_chunks.py
 # - chunking: chunkFastaResultFileUtil.py, chunkTSVFileUtil.py, cleaningUtils.py, run_result_file_chunker.py
 # - make_csv.py
