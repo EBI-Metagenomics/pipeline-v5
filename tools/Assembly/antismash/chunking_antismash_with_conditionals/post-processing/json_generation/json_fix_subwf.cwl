@@ -23,12 +23,18 @@ outputs:
 
 steps:
 
+  filter_empty_jsons:
+    run: ../filter_empty_jsons/filter_jsons.cwl
+    in:
+      input_jsons: jsons
+    out: [ non_empty_jsons ]
+
   remove_curly_brackets_chunks_json:
     run: remove_symbol.cwl
     scatter: input_json
     in:
       type: { default: "both" }
-      input_json: jsons
+      input_json: filter_empty_jsons/non_empty_jsons
       outputname:
         source: filtered_fasta
         valueFrom: $(self.nameroot).remove.json
