@@ -1,0 +1,6 @@
+input_fasta:
+  class: File
+  path: test.fasta
+mapping: /nfs/production/interpro/metagenomics/peptide_db/mapping
+count: 3
+accession: SRR1620013
