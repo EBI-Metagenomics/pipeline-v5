@@ -4,7 +4,4 @@ antismash_geneclus:
 antismash_embl:
   class: File
   path: ../antismash/expected-output/assembly-SRR1620013_small_FASTA_FASTA_antismash_final.embl.gz
-antismash_gc_json:
-  class: File
-  path: ../../../input_examples/assembly/geneclusters.json
 output_name: assembly-SRR1620013_small_FASTA_FASTA.antismash.gff

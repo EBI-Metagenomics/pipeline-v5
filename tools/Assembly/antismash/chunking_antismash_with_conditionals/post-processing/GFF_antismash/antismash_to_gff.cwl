@@ -24,10 +24,6 @@ inputs:
     type: File
     inputBinding:
       prefix: -e
-  antismash_gc_json:
-    type: File
-    inputBinding:
-      prefix: -j
   output_name:
     type: string
     inputBinding:
