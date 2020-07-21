@@ -18,9 +18,10 @@ outputs:
 expression: |
   ${
     var value = 0;
-    if (inputs.number == 0) {
+    if (inputs.number == 0 || inputs.number == 1) {
       value = 2;
-    } else {
+    }
+    else {
       value = inputs.number;
     }
     return {"out": value
