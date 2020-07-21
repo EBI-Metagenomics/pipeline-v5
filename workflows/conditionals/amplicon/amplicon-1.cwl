@@ -105,6 +105,7 @@ steps:
     run: ../../subworkflows/trim_and_reformat_reads.cwl
     in:
       reads: unzip_reads/unzipped_merged_reads
+      count: count_submitted_reads/count
     out: [ trimmed_and_reformatted_reads ]
 
 # << QC filtering >>
