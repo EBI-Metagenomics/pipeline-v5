@@ -1,5 +1,0 @@
-input_jsons:
-  - path: test.json
-    class: File
-  - path: test2.json
-    class: File

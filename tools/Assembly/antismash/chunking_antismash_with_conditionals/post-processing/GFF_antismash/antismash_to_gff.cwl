@@ -13,7 +13,7 @@ hints:
   DockerRequirement:
     dockerPull: alpine:3.9.4
 
-baseCommand: [antismash_to_gff.py]
+baseCommand: [antismash_to_gff_nojson.py]
 
 inputs:
   antismash_geneclus:
@@ -24,10 +24,6 @@ inputs:
     type: File
     inputBinding:
       prefix: -e
-  antismash_gc_json:
-    type: File
-    inputBinding:
-      prefix: -j
   output_name:
     type: string
     inputBinding:
