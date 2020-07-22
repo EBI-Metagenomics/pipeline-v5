@@ -37,8 +37,10 @@ requirements:
     coresMax: 1
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
+
+
 $schemas:
-  - 'https://schema.org/version/latest/schema.rdf'
+  - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
 s:copyrightHolder: "EMBL - European Bioinformatics Institute, 2018"
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:author: "Michael Crusoe, Maxim Scheremetjew"

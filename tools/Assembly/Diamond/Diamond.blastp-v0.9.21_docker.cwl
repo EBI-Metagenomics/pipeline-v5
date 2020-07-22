@@ -150,7 +150,7 @@ hints:
     dockerPull: 'buchfink/diamond:version0.9.21'
 $schemas:
   - 'http://edamontology.org/EDAM_1.20.owl'
-  - 'https://schema.org/version/latest/schema.rdf'
+  - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
 's:author': Maxim Scheremetjews
 's:copyrightHolder': 'EMBL - European Bioinformatics Institute, 2018'
 's:license': 'https://www.apache.org/licenses/LICENSE-2.0'

@@ -39,7 +39,7 @@ outputs:
 
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
- - https://schema.org/version/latest/schema.rdf
+ - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 's:author': 'Ekaterina Sakharova'
 's:copyrightHolder': EMBL - European Bioinformatics Institute

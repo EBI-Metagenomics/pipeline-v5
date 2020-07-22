@@ -41,7 +41,7 @@ steps:
 $namespaces:
  s: http://schema.org/
 $schemas:
- - https://schema.org/version/latest/schema.rdf
+ - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:copyrightHolder: "EMBL - European Bioinformatics Institute, 2019"

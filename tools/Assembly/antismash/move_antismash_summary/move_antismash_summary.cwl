@@ -34,7 +34,7 @@ $namespaces:
  s: http://schema.org/
  iana: https://www.iana.org/assignments/media-types/
 $schemas:
- - https://schema.org/version/latest/schema.rdf
+ - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:copyrightHolder: "EMBL - European Bioinformatics Institute"

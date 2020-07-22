@@ -63,7 +63,7 @@ steps:
     out: [ deoverlapped_matches ]
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'
-  - 'https://schema.org/version/latest/schema.rdf'
+  - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:copyrightHolder: "EMBL - European Bioinformatics Institute, 2018"
 s:author: "Arnaud Meng, Maxim Scheremetjew, Ekaterina Sakharova"

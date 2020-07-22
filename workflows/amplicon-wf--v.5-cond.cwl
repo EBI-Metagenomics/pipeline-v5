@@ -2,10 +2,6 @@
 class: Workflow
 cwlVersion: v1.2.0-dev2
 
-$namespaces:
- edam: http://edamontology.org/
- s: http://schema.org/
-
 requirements:
   SubworkflowFeatureRequirement: {}
   MultipleInputFeatureRequirement: {}
@@ -150,3 +146,14 @@ steps:
       count: after-qc/rna-count
       filename: { default: 'wf-completed' }
     out: [ created_file ]
+
+
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+$schemas:
+ - http://edamontology.org/EDAM_1.16.owl
+ - https://schema.org/version/latest/schemaorg-current-http.rdf
+
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"
+s:copyrightHolder: "EMBL - European Bioinformatics Institute"

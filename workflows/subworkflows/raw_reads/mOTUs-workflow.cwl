@@ -35,7 +35,7 @@ $namespaces:
  s: http://schema.org/
 $schemas:
  - http://edamontology.org/EDAM_1.18.owl
- - https://schema.org/version/latest/schema.rdf
+ - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 's:author': 'Varsha Kale'
 's:copyrightHolder': EMBL - European Bioinformatics Institute
