@@ -1,5 +1,0 @@
-outputname: result
-
-input_json:
-  class: File
-  path: test

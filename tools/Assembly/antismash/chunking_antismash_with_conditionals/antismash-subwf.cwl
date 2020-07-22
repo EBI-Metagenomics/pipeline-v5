@@ -18,9 +18,6 @@ inputs:
     accession: string
 
 outputs:
-  antismash_js:
-    type: File
-    outputSource: fix_geneclusters_json/fixed_js
   antismash_txt:
     type: File
     outputSource: fix_geneclusters_txt/fixed_txt
@@ -43,7 +40,6 @@ steps:
         source: fasta_file
         valueFrom: $(self.nameext)
     out:
-      - geneclusters_js
       - geneclusters_txt
       - embl_file
       - gbk_file
@@ -71,22 +67,3 @@ steps:
         source: fasta_file
         valueFrom: $(self.basename).gncl.txt
     out: [ fixed_txt ]
-
-  # convert js to json
-  antismash_json_generation:
-    run: post-processing/json_generation/antismash_json_generation.cwl
-    in:
-      input_js: run_antismash/geneclusters_js
-      outputname: {default: 'geneclusters.json'}
-    out: [ output_json ]
-
-  # change json
-  fix_geneclusters_json:
-    run: post-processing/fix_geneclusters_js/change_geneclusters_js.cwl
-    in:
-      input_geneclusters_js: antismash_json_generation/output_json
-      output_filename:
-        source: fasta_file
-        valueFrom: $(self.basename).gncl.json
-      accession: accession
-    out: [ fixed_js ]

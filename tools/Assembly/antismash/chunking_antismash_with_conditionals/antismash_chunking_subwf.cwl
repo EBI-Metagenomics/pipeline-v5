@@ -73,17 +73,9 @@ steps:
         source: filtered_fasta
         valueFrom: $(self.nameroot)
     out:
-      - antismash_js
       - antismash_txt
       - antismash_gbk
       - antismash_embl
-
-  unite_geneclusters_json:
-    run: post-processing/json_generation/json_fix_subwf.cwl
-    in:
-      jsons: run_antismash/antismash_js
-      filtered_fasta: filtered_fasta
-    out: [ antismash_result_json ]
 
   unite_geneclusters_txt:
     run: ../../../../utils/concatenate.cwl
@@ -126,7 +118,6 @@ steps:
     in:
       antismash_geneclus: antismash_summary/reformatted_clusters
       antismash_embl: unite_embl/result
-      antismash_gc_json: unite_geneclusters_json/antismash_result_json
       output_name:
         source: filtered_fasta
         valueFrom: $(self.nameroot).antismash.gff
