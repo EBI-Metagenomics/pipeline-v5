@@ -1,0 +1,6 @@
+{
+    "mapping"     : "/nfs/production/interpro/metagenomics/peptide_db/mapping",
+    "releases"    : "/nfs/production/interpro/metagenomics/peptide_db/releases",
+    "max_pep_length"    : 10000,
+    "peptides"    : "/nfs/production/interpro/metagenomics/assembly_peptides_v5"
+}

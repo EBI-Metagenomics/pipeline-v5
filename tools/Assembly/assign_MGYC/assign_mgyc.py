@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-import sys
 import os
-from datetime import datetime
 from Bio import SeqIO
-import json
-import re
 import hashlib
-import stat
 import fcntl
 
 
