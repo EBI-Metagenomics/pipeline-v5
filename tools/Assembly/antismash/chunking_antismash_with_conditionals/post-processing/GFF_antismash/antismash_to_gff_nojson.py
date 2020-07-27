@@ -501,8 +501,7 @@ if __name__ == "__main__":
 
     if not args.no_tabix:
         print("Sorting...")
-        # " {0}; grep -v ^"#" {0} | sort -k1,1 -k4,4n)".format(args.out)
-        grep = "(grep ^"
+        grep = "(grep ^\"#\" {0}; grep -v ^\"#\" {0} | sort -k1,1 -k4,4n)".format(args.out)
         grep += "| bgzip > {0}.bgz".format(args.out)
         print(grep)
         subprocess.call(grep, shell=True)
