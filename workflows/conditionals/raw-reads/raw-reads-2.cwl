@@ -54,6 +54,7 @@ inputs:
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ips_header: string
+    ko_file: string
 
     # GO
     go_config: string
@@ -194,6 +195,7 @@ steps:
        hmmscan_annotation: functional_annotation/hmm_result
        pfam_annotation: pfam/annotations
        rna: rna_prediction/ncRNA
+       ko_file: ko_file
        cds:
          source: cgc/results
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )

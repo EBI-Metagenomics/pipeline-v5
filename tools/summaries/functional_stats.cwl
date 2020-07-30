@@ -35,6 +35,10 @@ inputs:
     type: File?
     inputBinding:
         prefix: -a
+  ko_file:
+    type: string
+    inputBinding:
+        prefix: -ko
 
 baseCommand: [functional_stats.py]
 

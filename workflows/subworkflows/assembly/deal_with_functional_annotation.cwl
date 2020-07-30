@@ -25,6 +25,7 @@ inputs:
   ips_header: string
   output_gff_gz: File
   output_gff_index: File
+  ko_file: string
 
 outputs:
   functional_annotation_folder:
@@ -70,6 +71,7 @@ steps:
        antismash_gene_clusters: antismash_geneclusters_txt
        rna: rna
        cds: cds
+       ko_file: ko_file
     out: [summary_ips, summary_ko, summary_pfam, summary_antismash, stats]
 
 # add header

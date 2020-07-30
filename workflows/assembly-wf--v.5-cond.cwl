@@ -54,6 +54,7 @@ inputs:
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ips_header: string
+    ko_file: string
 
  # << diamond >>
     Uniref90_db_txt: string
@@ -209,6 +210,7 @@ steps:
       pathways_classes: pathways_classes
       gp_flatfiles_path: gp_flatfiles_path
       clusters_glossary: clusters_glossary
+      ko_file: ko_file
     out:
       - compressed_files
       - index_fasta_file

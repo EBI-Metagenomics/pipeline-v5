@@ -160,6 +160,7 @@ HMMSCAN_data:
   class: Directory
   path: ref-dbs
 hmmsearch_header: 'target_name\ttarget_accession\ttlen\tquery_name\tquery_accession\tqlen\tfull_sequence_e-value\tfull_sequence_score\tfull_sequence_bias\t#\tof\tc-evalue\ti-evalue\tdomain_score\tdomain_bias\thmm_coord_from\thmm_coord_to\tali_coord_from\tali_coord_to\tenv_coord_from\tenv_coord_to\tacc\tdescription_of_target'
+ko_file: ref-dbs/kofam_ko_desc.tsv
 
 EggNOG_db:
   path: eggnog-mapper/data/eggnog.db

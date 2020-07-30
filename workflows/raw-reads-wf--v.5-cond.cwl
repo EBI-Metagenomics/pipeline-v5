@@ -57,6 +57,7 @@ inputs:
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ips_header: string
+    ko_file: string
 
     # GO
     go_config: string
@@ -176,6 +177,7 @@ steps:
       InterProScan_outputFormat: InterProScan_outputFormat
       ips_header: ips_header
       go_config: go_config
+      ko_file: ko_file
     out:
       - motus_output
       - sequence_categorisation_folder
