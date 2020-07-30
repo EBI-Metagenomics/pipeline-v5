@@ -16,6 +16,7 @@ inputs:
   antismash_gene_clusters: File?
   rna: File
   cds: File
+  ko_file: string
 
 outputs:
   stats:
@@ -44,6 +45,7 @@ steps:
       cmsearch_file: rna
       cds_file: cds
       antismash_file: antismash_gene_clusters
+      ko_file: ko_file
     out: [stats, ips_yaml, ko_yaml, pfam_yaml, antismash_yaml]
 
   write_summaries:

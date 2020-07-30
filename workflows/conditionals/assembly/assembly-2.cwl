@@ -58,6 +58,7 @@ inputs:
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ips_header: string
+    ko_file: string
 
  # << diamond >>
     Uniref90_db_txt: string
@@ -263,6 +264,7 @@ steps:
       ips_header: ips_header
       output_gff_gz: gff/output_gff_gz
       output_gff_index: gff/output_gff_index
+      ko_file: ko_file
     out: [functional_annotation_folder, stats, summary_antismash]
 
 # ----------------------------------- << PATHWAYS and SYSTEMS >> -----------------------------------
