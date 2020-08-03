@@ -3,7 +3,7 @@ cwlVersion: v1.2.0-dev2
 
 requirements:
   - class: ResourceRequirement
-    ramMin: 50000
+    ramMin: 20000
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
@@ -116,21 +116,21 @@ outputs:
 
 # << functional annotation >>
   functional_annotation_folder:                              # [15]
-    type: Directory
+    type: Directory?
     outputSource: after-qc/functional_annotation_folder
   stats:                                                     # [6]
     outputSource: after-qc/stats
-    type: Directory
+    type: Directory?
 
 # << pathways and systems >>
   pathways_systems_folder:                                   # [~10]
-    type: Directory
+    type: Directory?
     outputSource: after-qc/pathways_systems_folder
   pathways_systems_folder_antismash:
     type: Directory
     outputSource: after-qc/pathways_systems_folder_antismash
   pathways_systems_folder_antismash_summary:
-    type: Directory
+    type: Directory?
     outputSource:  after-qc/pathways_systems_folder_antismash_summary
 
 # << sequence categorisation >>
@@ -148,6 +148,11 @@ outputs:
   completed_flag_file:
     type: File
     outputSource: touch_file_flag/created_file
+
+  no_cds_flag_file:
+    type: File?
+    outputSource: touch_no_cds_flag/created_file
+
 steps:
 
   before-qc:
@@ -226,6 +231,7 @@ steps:
       - sequence-categorisation_folder
       - rna-count
       - taxonomy-summary_folder
+      - count_CDS
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")
@@ -236,6 +242,13 @@ steps:
       filename: { default: 'wf-completed' }
     out: [ created_file ]
 
+  touch_no_cds_flag:
+    when: $(inputs.value == 0 )
+    run: ../utils/touch_file.cwl
+    in:
+      value: after-qc/count_CDS
+      filename: { default: 'no-cds' }
+    out: [ created_file ]
 
 $namespaces:
  edam: http://edamontology.org/

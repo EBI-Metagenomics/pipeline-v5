@@ -1,5 +1,5 @@
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev4
 
 requirements:
 #  - class: SchemaDefRequirement
@@ -9,7 +9,7 @@ requirements:
 #      - $import: ../tools/InterProScan/InterProScan-apps.yaml
 #      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
   - class: ResourceRequirement
-    ramMin: 50000
+    ramMin: 20000
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
@@ -104,24 +104,24 @@ outputs:
 
  # << functional annotation >>
   functional_annotation_folder:                              # [15]
-    type: Directory
-    outputSource: folder_functional_annotation/functional_annotation_folder
+    type: Directory?
+    outputSource: functional_annotation_and_post_processing/functional_annotation_folder
   stats:                                                     # [6]
-    outputSource: folder_functional_annotation/stats
-    type: Directory
+    type: Directory?
+    outputSource: functional_annotation_and_post_processing/stats
 
  # << pathways and systems >>
   pathways_systems_folder:
-    type: Directory
-    outputSource: move_to_pathways_systems_folder/out
+    type: Directory?
+    outputSource: functional_annotation_and_post_processing/pathways_systems_folder
 
  # << pathways and systems from antismash >>
   pathways_systems_folder_antismash:
     type: Directory
     outputSource: antismash/antismash_folder
   pathways_systems_folder_antismash_summary:
-    type: Directory
-    outputSource:  move_antismash_summary_to_pathways_systems_folder/summary_in_folder
+    type: Directory?
+    outputSource:  functional_annotation_and_post_processing/pathways_systems_folder_antismash_summary
 
  # << sequence categorisation >>
   sequence-categorisation_folder:                   # [2]
@@ -135,6 +135,11 @@ outputs:
   taxonomy-summary_folder:
     type: Directory
     outputSource: return_tax_dir/out
+
+ # FAA count
+  count_CDS:
+    type: int
+    outputSource: cgc/count_faa
 
 
 steps:
@@ -183,120 +188,10 @@ steps:
       maskfile: rna_prediction/ncRNA
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
-    out: [ results ]
+    out: [ results, count_faa ]
     run: ../../subworkflows/assembly/CGC-subwf.cwl
 
-# -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
-  functional_annotation:
-    run: ../../subworkflows/assembly/functional_annotation.cwl
-    in:
-      CGC_predicted_proteins:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      chunk_size_eggnog: protein_chunk_size_eggnog
-      chunk_size_hmm: protein_chunk_size_hmm
-      chunk_size_IPS: protein_chunk_size_IPS
-      name_ips: func_ann_names_ips
-      name_hmmer: func_ann_names_hmmer
-      HMM_gathering_bit_score: HMM_gathering_bit_score
-      HMM_omit_alignment: HMM_omit_alignment
-      HMM_database: HMM_name_database
-      EggNOG_db: EggNOG_db
-      EggNOG_diamond_db: EggNOG_diamond_db
-      EggNOG_data_dir: EggNOG_data_dir
-      InterProScan_databases: InterProScan_databases
-      InterProScan_applications: InterProScan_applications
-      InterProScan_outputFormat: InterProScan_outputFormat
-    out: [ hmm_result, ips_result, eggnog_annotations, eggnog_orthologs ]
-
-# -----------------------------------  << STEP GFF >>  -----------------------------------
-  gff:
-    run: ../../../tools/Assembly/GFF/gff_generation.cwl
-    in:
-      ips_results: functional_annotation/ips_result
-      eggnog_results: functional_annotation/eggnog_annotations
-      input_faa:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      output_name:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).annotations.gff
-    out: [ output_gff_gz, output_gff_index ]
-
-# -----------------------------------  << FUNCTIONAL ANNOTATION FOLDER >>  -----------------------------------
-
-# << DIAMOND >>
-  diamond:
-    run: ../../../tools/Assembly/Diamond/diamond-subwf.cwl
-    in:
-      queryInputFile:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      outputFormat: { default: '6' }
-      maxTargetSeqs: diamond_maxTargetSeqs
-      strand: { default: 'both'}
-      databaseFile: diamond_databaseFile
-      threads: { default: 32 }
-      Uniref90_db_txt: Uniref90_db_txt
-      filename:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot)
-    out: [post-processing_output]
-
-# << collect folder >>
-  folder_functional_annotation:
-    run: ../../subworkflows/assembly/deal_with_functional_annotation.cwl
-    in:
-      fasta: filtered_fasta
-      IPS_table: functional_annotation/ips_result
-      diamond_table: diamond/post-processing_output
-      hmmscan_table: functional_annotation/hmm_result
-      antismash_geneclusters_txt: antismash/antismash_clusters
-      rna: rna_prediction/ncRNA
-      cds:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      go_config: go_config
-      eggnog_orthologs: functional_annotation/eggnog_orthologs
-      eggnog_annotations: functional_annotation/eggnog_annotations
-      diamond_header: diamond_header
-      hmmsearch_header: hmmsearch_header
-      ips_header: ips_header
-      output_gff_gz: gff/output_gff_gz
-      output_gff_index: gff/output_gff_index
-      ko_file: ko_file
-    out: [functional_annotation_folder, stats, summary_antismash]
-
-# ----------------------------------- << PATHWAYS and SYSTEMS >> -----------------------------------
-
-# << KEGG PATHWAYS >>
-  pathways:
-    run: ../../subworkflows/assembly/kegg_analysis.cwl
-    in:
-      input_table_hmmscan: functional_annotation/hmm_result
-      filtered_fasta: filtered_fasta
-      outputname:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot)
-      graphs: graphs
-      pathways_names: pathways_names
-      pathways_classes: pathways_classes
-    out: [ kegg_pathways_summary, kegg_contigs_summary]
-
-# << GENOME PROPERTIES >>
-  genome_properties:
-    run: ../../../tools/Assembly/Genome_properties/genome_properties.cwl
-    in:
-      input_tsv_file: functional_annotation/ips_result
-      flatfiles_path: gp_flatfiles_path
-      GP_txt: {default: genomeProperties.txt}
-      name:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).summary.gprops.tsv
-    out: [ summary ]
-
-# << ANTISMASH >>
-
+# ------------------------- <<ANTISMASH >> -------------------------------
   antismash:
     run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
     in:
@@ -307,36 +202,65 @@ steps:
       - antismash_folder
       - antismash_clusters
 
+# -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
+# GFF
+# DIAMOND
+# KEGG pathways, move to pathways-systems
+# Genome Properties
+# tsv -> csv
+# move antismash summary to pathways-systems
 
-# << change TSV to CSV >>
-  change_formats_and_names:
-    run: ../../subworkflows/assembly/change_formats_and_names.cwl
+  functional_annotation_and_post_processing:
+    when: $(inputs.check_value != 0)
+    run: ../../subworkflows/assembly/func_ann_and_post_processing-subwf.cwl
     in:
-      genome_properties_summary: genome_properties/summary
-      kegg_summary: pathways/kegg_pathways_summary
-      fasta: filtered_fasta
-    out: [gp_summary_csv, kegg_summary_csv]
+      check_value: cgc/count_faa
 
-# << move PATHWAYS-SYSTEMS >>
-  move_to_pathways_systems_folder:
-    run: ../../../utils/return_directory.cwl
-    in:
-      file_list:
-        source:
-          - pathways/kegg_contigs_summary                       # kegg contigs.tsv -- not using
-          - change_formats_and_names/kegg_summary_csv           # kegg pathways.csv
-          - change_formats_and_names/gp_summary_csv             # genome properties.csv
-        linkMerge: merge_flattened
-      dir_name: { default: pathways-systems }
-    out: [ out ]
+      cgc_results_faa:
+         source: cgc/results
+         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      filtered_fasta: filtered_fasta
+      rna_prediction_ncRNA: rna_prediction/ncRNA
 
-# << move PATHWAYS-SYSTEMS antismash summary>>
-  move_antismash_summary_to_pathways_systems_folder:
-    run: ../../../tools/Assembly/antismash/move_antismash_summary/move_antismash_summary.cwl
-    in:
-      antismash_summary: folder_functional_annotation/summary_antismash
-      folder_name: { default: pathways-systems }
-    out: [ summary_in_folder ]
+      protein_chunk_size_eggnog:  protein_chunk_size_eggnog
+      EggNOG_db: EggNOG_db
+      EggNOG_diamond_db: EggNOG_diamond_db
+      EggNOG_data_dir: EggNOG_data_dir
+
+      protein_chunk_size_hmm: protein_chunk_size_hmm
+      func_ann_names_hmmer: func_ann_names_hmmer
+      HMM_gathering_bit_score: HMM_gathering_bit_score
+      HMM_omit_alignment: HMM_omit_alignment
+      HMM_name_database: HMM_name_database
+      hmmsearch_header: hmmsearch_header
+
+      protein_chunk_size_IPS: protein_chunk_size_IPS
+      func_ann_names_ips: func_ann_names_ips
+      InterProScan_databases: InterProScan_databases
+      InterProScan_applications: InterProScan_applications
+      InterProScan_outputFormat: InterProScan_outputFormat
+      ips_header: ips_header
+
+      diamond_maxTargetSeqs: diamond_maxTargetSeqs
+      diamond_databaseFile: diamond_databaseFile
+      Uniref90_db_txt: Uniref90_db_txt
+      diamond_header: diamond_header
+
+      antismash_geneclusters_txt: antismash/antismash_clusters
+      go_config: go_config
+
+      ko_file: ko_file
+      graphs: graphs
+      pathways_names: pathways_names
+      pathways_classes: pathways_classes
+
+      gp_flatfiles_path: gp_flatfiles_path
+    out:
+      - functional_annotation_folder
+      - stats
+      - pathways_systems_folder_antismash_summary
+      - pathways_systems_folder
+
 # ----------------------------------- << FINAL STEPS ROOT FOLDER >> -----------------------------------
 
 # index FASTA

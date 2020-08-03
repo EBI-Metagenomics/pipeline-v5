@@ -100,11 +100,11 @@ outputs:
     pickValue: all_non_null
 
   functional_annotation_folder:
-    type: Directory
+    type: Directory?
     outputSource: after-qc/functional_annotation_folder
   stats:
     outputSource: after-qc/stats
-    type: Directory
+    type: Directory?
 
   chunking_nucleotides:
     type: File[]
@@ -118,6 +118,11 @@ outputs:
   completed_flag_file:
     type: File
     outputSource: touch_file_flag/created_file
+
+  no_cds_flag_file:
+    type: File?
+    outputSource: touch_no_cds_flag/created_file
+
 
 steps:
 
@@ -188,6 +193,7 @@ steps:
       - stats
       - chunking_nucleotides
       - chunking_proteins
+      - count_CDS
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")
@@ -198,6 +204,13 @@ steps:
       filename: { default: 'wf-completed' }
     out: [ created_file ]
 
+  touch_no_cds_flag:
+    when: $(inputs.value == 0 )
+    run: ../utils/touch_file.cwl
+    in:
+      value: after-qc/count_CDS
+      filename: { default: 'no-cds' }
+    out: [ created_file ]
 
 $namespaces:
  edam: http://edamontology.org/

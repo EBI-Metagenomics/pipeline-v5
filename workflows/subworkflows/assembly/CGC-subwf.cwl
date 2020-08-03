@@ -21,6 +21,9 @@ outputs:
     type: File[]
     format: edam:format_1929
     outputSource: combine/result
+  count_faa:
+    type: int
+    outputSource: count_cds/count
 
 steps:
 
@@ -59,6 +62,15 @@ steps:
       postfix: postfixes
     out: [result]
     run: ../../../utils/concatenate.cwl
+
+  count_cds:
+    run: ../../../utils/count_fasta.cwl
+    in:
+      sequences:
+        source: combine/result
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      number: { default: 1 }
+    out: [ count ]
 
 
 $namespaces:

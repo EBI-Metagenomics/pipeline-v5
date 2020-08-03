@@ -9,7 +9,7 @@ requirements:
 #      - $import: ../tools/InterProScan/InterProScan-apps.yaml
 #      - $import: ../tools/InterProScan/InterProScan-protein_formats.yaml
   - class: ResourceRequirement
-    ramMin: 50000
+    ramMin: 20000
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
