@@ -79,6 +79,8 @@ if [[ "${ASSEMBLY_PIPELINE}" == "True" || "${WGS_PIPELINE}" == "True" ]]; then
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3m.gz -P db_kofam
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/db_kofam.hmm.h3p.gz -P db_kofam
     gunzip db_kofam/db_kofam.hmm.h3f.gz db_kofam/db_kofam.hmm.h3i.gz db_kofam/db_kofam.hmm.h3m.gz db_kofam/db_kofam.hmm.h3p.gz
+    # ko file
+    wget $FTP_DBS/kofam_ko_desc.tsv
 fi
 
 if [ "${ASSEMBLY_PIPELINE}" == "True" ]; then
@@ -98,7 +100,7 @@ if [ "${ASSEMBLY_PIPELINE}" == "True" ]; then
 
     # KEGG pathways
     echo 'pathways data'
-    wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/graphs.pkl.gz \
+    wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/graphs-20200805.pkl.gz \
        ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/all_pathways_class.txt.gz \
        ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/all_pathways_names.txt.gz
     gunzip graphs.pkl.gz all_pathways_class.txt.gz all_pathways_names.txt.gz
@@ -108,6 +110,7 @@ if [ "${ASSEMBLY_PIPELINE}" == "True" ]; then
     echo 'antismash_glossary'
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/antismash_glossary.tsv.gz
     gunzip antismash_glossary.tsv.gz
+
 fi
 
 # GO-config
