@@ -141,6 +141,9 @@ outputs:
     type: int
     outputSource: cgc/count_faa
 
+  optional_tax_file_flag:
+    type: File?
+    outputSource: no_tax_file_flag/created_file
 
 steps:
 
@@ -169,7 +172,20 @@ steps:
       - SSU_fasta_file
       - LSU_fasta_file
       - compressed_rnas
+      - number_LSU_mapseq
+      - number_SSU_mapseq
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
+
+# add no-tax file-flag if there are no lsu and ssu seqs
+  no_tax_file_flag:
+    when: $(inputs.count_lsu < 3 && inputs.count_ssu < 3)
+    run: ../../../utils/touch_file.cwl
+    in:
+      count_lsu: rna_prediction/number_LSU_mapseq
+      count_ssu: rna_prediction/number_SSU_mapseq
+      filename: { default: no-tax}
+    out: [ created_file ]
+
 
 # << OTHER ncrnas >>
   other_ncrnas:

@@ -86,6 +86,13 @@ outputs:
     type: File[]
     outputSource: gzip_files/compressed_file
 
+  number_LSU_mapseq:
+    type: int
+    outputSource: classify_LSUs/number_lines_mapseq
+  number_SSU_mapseq:
+    type: int
+    outputSource: classify_SSUs/number_lines_mapseq
+
 steps:
 
   index_reads:
@@ -150,7 +157,7 @@ steps:
       otu_label: pattern_SSU
       return_dirname: {default: 'SSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, compressed_fasta_output, fasta_output ]
+    out: [ out_dir, compressed_fasta_output, fasta_output, number_lines_mapseq ]
 
 # classify LSU
   classify_LSUs:
@@ -163,7 +170,7 @@ steps:
       otu_label: pattern_LSU
       return_dirname: {default: 'LSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, compressed_fasta_output, fasta_output ]
+    out: [ out_dir, compressed_fasta_output, fasta_output, number_lines_mapseq ]
 
 # gzip and chunk sequence-categorisation
   gzip_files:
@@ -172,6 +179,7 @@ steps:
     in:
       uncompressed_file: extract_subunits/fastas
     out: [compressed_file]
+
 
 
 $namespaces:

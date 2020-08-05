@@ -37,6 +37,10 @@ outputs:
     type: File
     outputSource: edit_empty_tax/fasta_out
 
+  number_lines_mapseq:
+    type: int
+    outputSource: count_lines_mapseq/number
+
 steps:
   mapseq:
     run: ../../tools/RNA_prediction/mapseq/mapseq.cwl
@@ -61,6 +65,12 @@ steps:
     in:
       otu_counts: classifications_to_otu_counts/otu_txt
     out: [ otu_visualization ]
+
+  count_lines_mapseq:
+    run: ../../utils/count_number_lines.cwl
+    in:
+      input_file: mapseq/classifications
+    out: [ number ]
 
   edit_empty_tax:
     run: ../../tools/RNA_prediction/biom-convert/empty_tax.cwl

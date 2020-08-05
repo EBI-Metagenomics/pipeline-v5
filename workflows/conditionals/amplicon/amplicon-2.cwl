@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev4
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -65,6 +65,10 @@ outputs:
     type: File
     outputSource: suppress_tax/stdout
 
+  #optional_tax_file_flag:
+  #  type: File?
+  #  outputSource: no_tax_file_flag/created_file
+
 steps:
 
 # << Get RNA >>
@@ -95,6 +99,8 @@ steps:
       - compressed_SSU_fasta
       - compressed_LSU_fasta
       - compressed_rnas
+      - number_LSU_mapseq
+      - number_SSU_mapseq
 
 # << ITS >>
   ITS:
@@ -115,6 +121,7 @@ steps:
       - masking_file
       - unite_folder
       - itsonedb_folder
+      - number_ITS_seqs
 
 # gzip and chunk
   gzip_files:

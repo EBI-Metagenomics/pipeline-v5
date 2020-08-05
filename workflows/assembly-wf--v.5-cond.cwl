@@ -152,6 +152,9 @@ outputs:
   no_cds_flag_file:
     type: File?
     outputSource: touch_no_cds_flag/created_file
+  no_tax_flag_file:
+    type: File?
+    outputSource: after-qc/optional_tax_file_flag
 
 steps:
 
@@ -232,6 +235,7 @@ steps:
       - rna-count
       - taxonomy-summary_folder
       - count_CDS
+      - optional_tax_file_flag
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")

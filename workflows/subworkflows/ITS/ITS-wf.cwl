@@ -40,10 +40,15 @@ outputs:
     type: Directory
     outputSource: run_itsonedb/out_dir
 
+  number_ITS_seqs:
+    type: int
+    outputSource: count_ITS_seqs/count
 
-#ADD QUALITY CONTROLLED READS
+
+# TODO: ADD QUALITY CONTROLLED READS
 
 steps:
+
   cat:
     run: ../../../utils/concatenate.cwl
     in:
@@ -96,6 +101,13 @@ steps:
       file_for_prefix: query_sequences
     out: [ out_dir, compressed_fasta_output, fasta_output ]
 
+# count IPS seqs
+  count_ITS_seqs:
+    run: ../../../utils/count_fasta.cwl
+    in:
+      sequences: mask_for_ITS/masked_sequences
+      number: { default: 1 }
+    out: [ count ]
 
 $namespaces:
  edam: http://edamontology.org/
