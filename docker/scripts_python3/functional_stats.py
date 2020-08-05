@@ -44,13 +44,23 @@ def define_tool(input_file):
 '''
 
 
-def stats(input_file, cds_column_number, protein_column_number, hash, outdir):
+def get_ko_desc(ko_file):
+    ko_dict = {}
+    with open(ko_file, 'r') as desc:
+        for line in desc:
+            split_line = line.strip('\n').split('\t')
+            ko_dict[split_line[0]] = split_line[1]
+    return ko_dict
+
+
+def stats(input_file, cds_column_number, protein_column_number, hash, outdir, ko_file):
 
     match_count, CDS_with_match_number, reads_with_match_count, go_match_count, go_CDS_match, go_reads_match \
         = [0 for _ in range(6)]
 
     cds, reads, go_cds, go_reads = [set() for _ in range(4)]
     entry2protein, entry2name = [{} for _ in range(2)]
+    ko_dict = get_ko_desc(ko_file)
 
     print(hash + ' :cds_column_number: ' + str(cds_column_number) + ', protein_column_number: ' + str(protein_column_number))
 
@@ -77,7 +87,7 @@ def stats(input_file, cds_column_number, protein_column_number, hash, outdir):
                 entry = splitLine[protein_column_number]
                 entry2protein.setdefault(entry, set()).add(cdsAccession)
                 if hash == 'KO':
-                    entry2name[entry] = " ".join(splitLine[22:])
+                    entry2name[entry] = ko_dict[entry]
                 elif hash == 'pfam':
                     entry2name[entry] = splitLine[5]
                 elif hash == 'antismash':
@@ -106,6 +116,7 @@ def stats(input_file, cds_column_number, protein_column_number, hash, outdir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generates stats files for all functional analyses")
+    parser.add_argument('-ko', "--ko_file", dest="ko_file", help='KO to decription mapping file', required=True)
     parser.add_argument("-i", "--interproscan", dest="interproscan", help="interproscan predicted seqs", required=True)
     parser.add_argument("-k", "--hmmscan", dest="hmmscan", help="hmmscan predicted seqs", required=True)
     parser.add_argument("-p", "--pfam", dest="pfam", help="pfam annotation predicted seqs", required=True)
@@ -120,8 +131,8 @@ if __name__ == "__main__":
         final_folder = os.path.join('functional-annotation', 'stats')
         if not os.path.exists(final_folder): os.makedirs(final_folder)
 
-        cdsAccessions_list = {'KO': 3, 'pfam': 0, 'InterProScan': 0, 'antismash': 1}
-        protein_column = {'KO': 0, 'pfam': 4, 'InterProScan': 11, 'antismash': 2}
+        cdsAccessions_list = {'KO': 0, 'pfam': 0, 'InterProScan': 0, 'antismash': 1}
+        protein_column = {'KO': 3, 'pfam': 4, 'InterProScan': 11, 'antismash': 2}
 
 
         files = [args.interproscan, args.hmmscan, args.pfam]
@@ -134,6 +145,6 @@ if __name__ == "__main__":
         for file_annotation, num in zip(files, range(len(files))):
             print(file_annotation)
             hash = hashes[num]
-            stats(file_annotation, cdsAccessions_list[hash], protein_column[hash], hash, final_folder)
+            stats(file_annotation, cdsAccessions_list[hash], protein_column[hash], hash, final_folder, args.ko_file)
 
         orf_stats(args.cds_file, args.cmsearch_deoverlap, final_folder)
