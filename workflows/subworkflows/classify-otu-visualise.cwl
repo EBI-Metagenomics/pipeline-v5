@@ -120,7 +120,7 @@ steps:
 
 $namespaces:
  edam: http://edamontology.org/
- iana: https://www.iana.org/assignments/media-types/ s: http://schema.org/
+ s: http://schema.org/
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
