@@ -3,7 +3,7 @@ class: CommandLineTool
 
 hints:
   DockerRequirement:
-    dockerPull: 'alpine:3.7'
+    dockerPull: debian:stable-slim
   ResourceRequirement:
     coresMin: 1
     ramMin: 1000
@@ -31,4 +31,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

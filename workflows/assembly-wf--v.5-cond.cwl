@@ -1,5 +1,5 @@
 class: Workflow
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 
 requirements:
   - class: ResourceRequirement
@@ -279,4 +279,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

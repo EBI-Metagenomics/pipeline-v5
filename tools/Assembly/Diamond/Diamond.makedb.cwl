@@ -1,8 +1,6 @@
 class: CommandLineTool
 cwlVersion: v1.0
-$namespaces:
-  edam: 'http://edamontology.org/'
-  s: 'http://schema.org/'
+
 baseCommand:
   - diamond
   - makedb
@@ -91,6 +89,13 @@ hints:
 $schemas:
   - 'http://edamontology.org/EDAM_1.20.owl'
   - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
-'s:copyrightHolder': 'EMBL - European Bioinformatics Institute, 2018'
-'s:license': 'https://www.apache.org/licenses/LICENSE-2.0'
-'s:author': Maxim Scheremetjew
+
+$namespaces:
+  edam: 'http://edamontology.org/'
+  s: 'http://schema.org/'
+
+s:author: "Maxim Scheremetjew"
+s:license: 'https://www.apache.org/licenses/LICENSE-2.0'
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

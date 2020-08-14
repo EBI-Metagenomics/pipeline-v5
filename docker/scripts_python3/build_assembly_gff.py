@@ -226,7 +226,7 @@ if __name__ == '__main__':
 
     print('Sorting...')
     subprocess.call('(grep ^"#" {0}; grep -v ^"#" {0} | sort -k1,1 -k4,4n)'.format(args.out) +
-                    ' | bgzip > {0}.gz'.format(args.out), shell=True)
+                    ' | bgzip > {0}.bgz'.format(args.out), shell=True)
     print('Building the index...')
-    subprocess.call(['tabix', '-p', 'gff', '{}.gz'.format(args.out)])
+    subprocess.call(['tabix', '-p', 'gff', '{}.bgz'.format(args.out)])
     print('Bye')

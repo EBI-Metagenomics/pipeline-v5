@@ -1,4 +1,4 @@
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 class: Workflow
 label: Trim and reformat reads (single and paired end version)
 
@@ -74,4 +74,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

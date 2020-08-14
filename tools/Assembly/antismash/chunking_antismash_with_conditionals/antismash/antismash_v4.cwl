@@ -3,11 +3,11 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 label: "antiSMASH"
+
 doc: |
   antiSMASH allows the rapid genome-wide identification, annotation and analysis
   of secondary metabolite biosynthesis gene clusters in bacterial and fungal genomes.
   It integrates and cross-links with a large number of in silico secondary metabolite analysis tools
-
 
 requirements:
   InitialWorkDirRequirement:
@@ -19,9 +19,11 @@ requirements:
     coresMax: 1
     ramMin: 20000
 
-hints:
-  DockerRequirement:
-    dockerPull:  mgnify/pipeline-v5.antismash
+# Disabled: container is 11Gb...
+# run with Docker and ANTISMASH_ENV_ACTIVATE ENV variable.
+# hints:
+#   DockerRequirement:
+#     dockerPull:  microbiomeinformatics/pipeline-v5.antismash:v4.2.0
 
 inputs:
 
@@ -83,6 +85,8 @@ $schemas:
  - http://edamontology.org/EDAM_1.20.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
-'s:author': 'Ekaterina Sakharova'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+s:author: "Ekaterina Sakharova"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"

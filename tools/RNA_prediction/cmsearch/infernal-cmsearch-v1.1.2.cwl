@@ -1,14 +1,30 @@
 class: CommandLineTool
 cwlVersion: v1.0
-$namespaces:
-  edam: 'http://edamontology.org/'
-  s: 'http://schema.org/'
 
-baseCommand:
-  - cmsearch
+label: Search sequence(s) against a covariance model database
+
+requirements:
+  - class: InlineJavascriptRequirement
+  - class: ResourceRequirement
+    ramMin: 24000
+    coresMin: 4
+
+hints:
+  - class: SoftwareRequirement
+    packages:
+      infernal:
+        specs:
+          - 'https://identifiers.org/rrid/RRID:SCR_011809'
+        version:
+          - 1.1.2
+  - class: DockerRequirement
+    dockerPull: microbiomeinformatics/pipeline-v5.cmsearch:v1.1.2
+
+baseCommand: [ cmsearch ]
+
 inputs:
   - id: covariance_model_database
-    type: [ string, File ]
+    type: string
     inputBinding:
       position: 1
   - id: cpu
@@ -57,6 +73,14 @@ inputs:
       prefix: '-Z'
     label: search space size in *Mb* to <x> for E-value calculations
 
+arguments:
+  - position: 0
+    prefix: '--tblout'
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
+  - position: 0
+    prefix: '-o'
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
+
 outputs:
   - id: matches
     doc: 'http://eddylab.org/infernal/Userguide.pdf#page=60'
@@ -64,47 +88,13 @@ outputs:
     type: File
     format: edam:format_3475
     outputBinding:
-      glob: |
-        ${
-          var name = "";
-          if (typeof inputs.covariance_model_database == "string") {
-            name =
-              inputs.query_sequences.basename +
-              "." +
-              inputs.covariance_model_database.split("/").slice(-1)[0] +
-              ".cmsearch_matches.tbl";
-          } else {
-            name =
-              inputs.query_sequences.basename +
-              "." +
-              inputs.covariance_model_database.nameroot +
-              ".cmsearch_matches.tbl";
-          }
-          return name;
-        }
+      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
   - id: programOutput
     label: 'direct output to file, not stdout'
     type: File
     format: edam:format_3475
     outputBinding:
-      glob: |
-        ${
-          var name = "";
-          if (typeof inputs.covariance_model_database == "string") {
-            name =
-              inputs.query_sequences.basename +
-              "." +
-              inputs.covariance_model_database.split("/").slice(-1)[0] +
-              ".cmsearch.out";
-          } else {
-            name =
-              inputs.query_sequences.basename +
-              "." +
-              inputs.covariance_model_database.nameroot +
-              ".cmsearch.out";
-          }
-          return name;
-        }
+      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
 
 doc: >
   Infernal ("INFERence of RNA ALignment") is for searching DNA sequence
@@ -119,77 +109,17 @@ doc: >
 
   Version 1.1.2 can be downloaded from
   http://eddylab.org/infernal/infernal-1.1.2.tar.gz
-label: Search sequence(s) against a covariance model database
 
-arguments:
-  - position: 0
-    prefix: '--tblout'
-    valueFrom: |
-      ${
-        var name = "";
-        if (typeof inputs.covariance_model_database == "string") {
-          name =
-            inputs.query_sequences.basename +
-            "." +
-            inputs.covariance_model_database.split("/").slice(-1)[0] +
-            ".cmsearch_matches.tbl";
-        } else {
-          name =
-            inputs.query_sequences.basename +
-            "." +
-            inputs.covariance_model_database.nameroot +
-            ".cmsearch_matches.tbl";
-        }
-        return name;
-      }
-  - position: 0
-    prefix: '-o'
-    valueFrom: |
-      ${
-        var name = "";
-        if (typeof inputs.covariance_model_database == "string") {
-          name =
-            inputs.query_sequences.basename +
-            "." +
-            inputs.covariance_model_database.split("/").slice(-1)[0] +
-            ".cmsearch.out";
-        } else {
-          name =
-            inputs.query_sequences.basename +
-            "." +
-            inputs.covariance_model_database.nameroot +
-            ".cmsearch.out";
-        }
-        return name;
-      }
-  - valueFrom: '> /dev/null'
-    shellQuote: false
-    position: 10
-  - valueFrom: '2> /dev/null'
-    shellQuote: false
-    position: 11
-
-hints:
-  - class: SoftwareRequirement
-    packages:
-      infernal:
-        specs:
-          - 'https://identifiers.org/rrid/RRID:SCR_011809'
-        version:
-          - 1.1.2
-  - class: DockerRequirement
-    dockerPull: mgnify/pipeline-v5.cmsearch:latest
-
-requirements:
-  - class: InlineJavascriptRequirement
-  - class: ResourceRequirement
-    ramMin: 32000
-    coresMin: 8
-  - class: ShellCommandRequirement
+$namespaces:
+  edam: 'http://edamontology.org/'
+  s: 'http://schema.org/'
 
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'
   - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': 'https://www.apache.org/licenses/LICENSE-2.0'
-'s:author': Michael Crusoe, Maxim Scheremetjew, Ekaterina Sakharova
+
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"
+s:author: "Michael Crusoe, Maxim Scheremetjew"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

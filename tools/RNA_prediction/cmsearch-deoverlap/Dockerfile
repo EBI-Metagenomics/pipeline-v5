@@ -9,4 +9,5 @@ LABEL Maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 ##############################################################
 
 ADD cmsearch-deoverlap.pl /usr/bin/
+
 CMD ["cmsearch-deoverlap.pl"]

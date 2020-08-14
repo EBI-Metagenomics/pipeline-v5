@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from __future__ import print_function
 import argparse
 import sys
 
@@ -40,6 +39,3 @@ if __name__ == "__main__":
         with open("geneclusters-summary.txt", "w") as reformatted:
             longNames = cluster_dict(args.glossary)
             reformat(args.antismash, longNames, reformatted)
-
-
-

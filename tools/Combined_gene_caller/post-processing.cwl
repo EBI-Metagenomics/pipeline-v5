@@ -1,15 +1,12 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-$namespaces:
- edam: http://edamontology.org/
- s: http://schema.org/
 
 label: "Combined Gene Caller: post-processing of FGS and Prodigal"
 
 hints:
   - class: DockerRequirement
-    dockerPull: mgnify/pipeline-v5.protein-post-processing:latest
+    dockerPull: microbiomeinformatics/pipeline-v5.protein-post-processing:v1.0
 
 requirements:
   ResourceRequirement:
@@ -70,11 +67,16 @@ outputs:
     outputBinding:
       glob: $(inputs.basename).ffn
 
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
 $schemas:
  - http://edamontology.org/EDAM_1.20.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
-'s:author': 'Ekaterina Sakharova'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+s:author: "Ekaterina Sakharova"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"

@@ -5,7 +5,7 @@ label: "Quality control filtering step using the BioPython package."
 
 hints:
   DockerRequirement:
-    dockerPull: mgnify/pipeline-v5.python2:latest
+    dockerPull: microbiomeinformatics/pipeline-v5.python2:v1
 
 requirements:
   ResourceRequirement:

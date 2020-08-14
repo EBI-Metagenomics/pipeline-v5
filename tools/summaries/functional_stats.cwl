@@ -75,7 +75,7 @@ outputs:
 
 hints:
   - class: DockerRequirement
-    dockerPull: mgnify/pipeline-v5.python3:latest
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
 
 
 $namespaces:

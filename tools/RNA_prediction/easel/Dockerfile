@@ -7,21 +7,27 @@ LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 # Software Version:     0.45h
 # Description:          https://github.com/EddyRivasLab/easel
 ##############################################################
-RUN apk add --no-cache bash wget
-RUN apk add --no-cache build-base
-RUN apk add --no-cache autoconf automake
+RUN apk add --no-cache bash wget build-base autoconf automake
 
 ENV VERSION=0.45h
+
 ENV ZIP=easel-$VERSION.tar.gz
 
-RUN wget https://github.com/EddyRivasLab/easel/archive/$ZIP && tar xvzf $ZIP && rm $ZIP
-RUN cd easel-easel-$VERSION && chmod a+x * && autoconf && ./configure && make
-
-ENV PATH="/easel-easel-$VERSION/miniapps:${PATH}"
+RUN wget -q https://github.com/EddyRivasLab/easel/archive/$ZIP && \
+    tar -xzf $ZIP && \
+    rm $ZIP && \
+    cd easel-easel-$VERSION && \
+    chmod a+x * && \
+    autoconf && \
+    ./configure && make
 
 RUN mkdir /tools
+
 COPY esl-index.sh /tools/esl-index.sh
+
 RUN chmod -R a+rwx /tools
+
+ENV PATH="/easel-easel-$VERSION/miniapps:${PATH}"
 ENV PATH="/tools:${PATH}"
 
 CMD [ "esl-index.sh" ]

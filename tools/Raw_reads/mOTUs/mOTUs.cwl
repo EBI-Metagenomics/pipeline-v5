@@ -1,5 +1,4 @@
 #!/usr/bin/env cwl-runner
-
 cwlVersion: v1.0
 class: CommandLineTool
 
@@ -10,38 +9,39 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: mgnify/pipeline-v5.motus
+    dockerPull: microbiomeinformatics/pipeline-v5.motus:v2.5.1
   SoftwareRequirement:
     packages:
       mOTUs2:
         specs: ["http://biom-format.org/index.html"]
         version: ["2.5.1"]
 
-
 label: "mOTU taxonomy assignment for assemblies"
+
+baseCommand: [ motus ]
 
 inputs:
   reads:
     type: File
     inputBinding:
-        position: 1
-        prefix: -s
+      position: 1
+      prefix: -s
     label: merged and QC reads in fastq
     # format: edam:format_1930  # FASTQ
 
   threads:
     type: int
     inputBinding:
-        prefix: -t
+      prefix: -t
     default: 4
 
   db:
     type: string
     inputBinding:
-        prefix: -db
-    default: /mOTUs_v2-2.5.1/db_mOTU/
+      prefix: -db
+    # FIXME: hardcoded test value
+    default: /data/databases/pipeline-v5/motus-v2.5.1/
 
-baseCommand: [motus]
 
 arguments: [profile, -c, -q]
 
@@ -62,6 +62,8 @@ $schemas:
  - http://edamontology.org/EDAM_1.18.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
-'s:author': 'Varsha Kale'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+s:author: 'Varsha Kale'
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"
