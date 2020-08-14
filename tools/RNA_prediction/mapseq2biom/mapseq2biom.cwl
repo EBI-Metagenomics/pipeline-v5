@@ -2,15 +2,17 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-hints:
-  DockerRequirement:
-    dockerPull: mgnify/pipeline-v5.mapseq2biom:latest
-
 requirements:
   ResourceRequirement:
     ramMin: 200
     tmpdirMin: 200
     coresMin: 2
+
+hints:
+  DockerRequirement:
+    dockerPull: microbiomeinformatics/pipeline-v5.mapseq2biom:v1.0
+
+baseCommand: [ 'mapseq2biom.pl' ]
 
 inputs:
   otu_table:
@@ -39,8 +41,6 @@ inputs:
     label: output NCBI taxids for all databases bar UNITE
     inputBinding:
         prefix: --taxid
-
-baseCommand: ['mapseq2biom.pl']
 
 arguments:
   - valueFrom: $(inputs.query.basename).tsv
@@ -77,9 +77,12 @@ $namespaces:
  edam: http://edamontology.org/
  iana: https://www.iana.org/assignments/media-types/
  s: http://schema.org/
+
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

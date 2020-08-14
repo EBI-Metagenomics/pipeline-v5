@@ -1,61 +1,38 @@
 #!/usr/bin/env bash
 
-export DOCKER_USERNAME=mgnify
-export DOCKER_PASSWORD=
+DOCKER_ORG="microbiomeinformatics"
 
-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+DOCKER_IMAGES=(
+    "python3:v1"
+    "python2:v1"
+    "bash-scripts:v1.1"
+    "biom-convert:v2.1.6"
+    "mapseq:v1.2.3"
+    "mapseq2biom:v1.0"
+    "cmsearch-deoverlap:v0.02"
+    "krona:v2.7.1"
+    "cmsearch:v1.1.2"
+    "trimmomatic:v0.36"
+    "easel:v0.45h"
+    "seqprep:v1.2"
+    "motus:v2.5.1"
+    "bedtools:v2.28.0"
+    "hmmer:v3.2.1"
+    "go-summary:v1.0"
+    "fraggenescan:v1.31"
+    "prodigal:v2.6.3"
+    "protein-post-processing:v1.0"
+    "genome-properties:v2.0.1"
+    "diamond:v0.9.25"
+    "eggnog:v2.0.0"
+    "dna_chunking:v0.11"
+)
 
-docker push mgnify/pipeline-v5.python3:latest
-docker push mgnify/pipeline-v5.python2:latest
-docker push mgnify/pipeline-v5.bash-scripts:latest
+# containers that are too heavy to be used, it's possible but not recommended.
+# "antismash:v4.2.0"
+# "interproscan:v5.36-75.0"
 
-# biom-convert 
-docker push mgnify/pipeline-v5.biom-convert:latest
-# mapseq
-docker push mgnify/pipeline-v5.mapseq:latest
-# mapseq2biom
-docker push mgnify/pipeline-v5.mapseq2biom:latest
-# cmsearch-deoverlap
-docker push mgnify/pipeline-v5.cmsearch-deoverlap:latest
-# krona
-docker push mgnify/pipeline-v5.krona:latest
-# cmsearch
-docker push mgnify/pipeline-v5.cmsearch:latest
-# trimmomatic
-docker push mgnify/pipeline-v5.trimmomatic:latest
-# easel
-docker push mgnify/pipeline-v5.easel:latest
-# SeqPrep
-docker push mgnify/pipeline-v5.seqprep:latest
-
-# mOUTs
-docker push mgnify/pipeline-v5.motus:latest
-# bedtools
-docker push mgnify/pipeline-v5.bedtools:latest
-
-# hmmer
-docker push mgnify/pipeline-v5.hmmer:latest
-# GO
-docker push mgnify/pipeline-v5.go-summary:latest
-
-# FragGeneScan
-docker push mgnify/pipeline-v5.fraggenescan:latest
-# Prodigal
-docker push mgnify/pipeline-v5.prodigal:latest
-# Prodigal + FGS post-processing
-docker push mgnify/pipeline-v5.protein-post-processing:latest
-
-# Genome properties
-docker push mgnify/pipeline-v5.genome-properties:latest
-
-# diamond
-docker push mgnify/pipeline-v5.diamond:latest
-
-# eggnog
-docker push mgnify/pipeline-v5.eggnog:latest
-
-# antismash
-docker push mgnify/pipeline-v5.antismash:latest
-
-# IPS
-docker push mgnify/pipeline-v5.interproscan:latest
+for IMG in "${DOCKER_IMAGES[@]}"
+do
+    docker push "${DOCKER_ORG}"/pipeline-v5."${IMG}"
+done

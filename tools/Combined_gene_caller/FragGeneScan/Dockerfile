@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM alpine:3.7 as build
 
 LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 ##############################################################
@@ -7,17 +7,23 @@ LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 # Software Version:     1.31
 # Description:          https://github.com/EBI-Metagenomics/fraggenescan
 ##############################################################
-RUN apt-get update -qq
-RUN apt-get install -y -qq gcc make git
+RUN apk add --no-cache build-base git
 
-RUN git clone https://github.com/EBI-Metagenomics/fraggenescan.git
-RUN cd fraggenescan && make && make clean && make fgs
+WORKDIR /
 
-ENV PATH="/fraggenescan:${PATH}"
+RUN git clone https://github.com/EBI-Metagenomics/fraggenescan.git && \
+    cd fraggenescan && make && make clean && make fgs
+
+FROM alpine:3.7
+
+RUN apk add --no-cache bash && \
+    mkdir /tools && mkdir /fraggenescan
 
 COPY run_FGS.sh /tools/
+COPY --from=build /fraggenescan /fraggenescan
+
 RUN chmod a+x /tools/*
-ENV PATH="/tools:${PATH}"
 
-CMD ['run_FGS.sh']
+ENV PATH="/fraggenescan:/tools:${PATH}"
 
+CMD ["run_FGS.sh"]

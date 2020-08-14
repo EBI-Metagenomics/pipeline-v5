@@ -7,18 +7,23 @@ LABEL maintainer="Varsha Kale <vkale@ebi.ac.uk>"
 # Software Version:     2.7.1
 # Description:          Tool to visualise Krona charts
 ##############################################################
-RUN apt-get update && apt-get install -y wget
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y curl ca-certificates && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV VERSION=2.7.1
 
-ENV ZIP=KronaTools-$VERSION.tar
-ENV URL=https://github.com/marbl/Krona/releases/download/v$VERSION/
+ENV TAR=KronaTools-$VERSION.tar
+
+ENV URL=https://github.com/marbl/Krona/releases/download/v$VERSION/$TAR
 
 WORKDIR /krona
-RUN wget $URL/$ZIP  \
-  && tar xvf $ZIP \
-  && rm $ZIP \
-  && cd KronaTools-$VERSION \
-  && ./install.pl
+
+RUN curl -L $URL --silent --show-error -o $TAR && \
+    tar -xf $TAR && \
+    rm $TAR && \
+    cd KronaTools-$VERSION && \
+    ./install.pl
 
 CMD ["ktImportText"]

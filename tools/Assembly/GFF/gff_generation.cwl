@@ -11,7 +11,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: mgnify/pipeline-v5.python3
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
 
 baseCommand: [ build_assembly_gff.py ]
 
@@ -57,6 +57,8 @@ $schemas:
  - http://edamontology.org/EDAM_1.20.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
-'s:author': 'Martin Beracochea, Ekaterina Sakharova, Varsha Kale'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+s:author: 'Martin Beracochea, Ekaterina Sakharova, Varsha Kale'
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"

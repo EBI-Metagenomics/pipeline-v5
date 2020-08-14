@@ -1,14 +1,35 @@
 class: CommandLineTool
 cwlVersion: v1.0
-$namespaces:
-  edam: 'http://edamontology.org/'
-  s: 'http://schema.org/'
 
 # TODO: Combine the 2 Diamond commands blastp and blastx into a single CWL tool description using Custome types
 # TODO: https://www.commonwl.org/user_guide/19-custom-types/index.html
+
+requirements:
+  - class: SchemaDefRequirement
+    types:
+      - $import: Diamond-strand_values.yaml
+      - $import: Diamond-output_formats.yaml
+  - class: ResourceRequirement
+    ramMin: 15000
+    tmpdirMin: 20000
+    coresMin: 16
+  - class: InlineJavascriptRequirement
+
+hints:
+  - class: DockerRequirement
+    dockerPull: microbiomeinformatics/pipeline-v5.diamond:v0.9.25
+
+label: Aligns DNA query sequences against a protein reference database
+
+arguments:
+  - position: 0
+    prefix: '--out'
+    valueFrom: $(inputs.queryInputFile.basename).diamond_matches
+
 baseCommand:
   - diamond
   - blastp
+
 inputs:
   - id: blockSize
     type: float?
@@ -110,14 +131,13 @@ inputs:
       (overrides --max-target-seqs option). For example, setting this to 10 will report all align-
       ments whose score is at most 10% lower than the best alignment score for a query.
 
-
-
 outputs:
   - id: matches
     type: File
     outputBinding:
       glob: $(inputs.queryInputFile.basename).diamond_matches
     format: edam:format_2333
+
 doc: |
   DIAMOND is a sequence aligner for protein and translated DNA searches,
   designed for high performance analysis of big sequence data.
@@ -131,30 +151,17 @@ doc: |
   Please visit https://github.com/bbuchfink/diamond for full documentation.
 
   Releases can be downloaded from https://github.com/bbuchfink/diamond/releases
-label: Aligns DNA query sequences against a protein reference database
-
-arguments:
-  - position: 0
-    prefix: '--out'
-    valueFrom: $(inputs.queryInputFile.basename).diamond_matches
-requirements:
-  - class: SchemaDefRequirement
-    types:
-      - $import: Diamond-strand_values.yaml
-      - $import: Diamond-output_formats.yaml
-  - class: ResourceRequirement
-    ramMin: 15000
-    tmpdirMin: 20000
-    coresMin: 16
-  - class: InlineJavascriptRequirement
-
-hints:
-  - class: DockerRequirement
-    dockerPull: mgnify/pipeline-v5.diamond
 
 $schemas:
   - 'http://edamontology.org/EDAM_1.20.owl'
   - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
-'s:author': Maxim Scheremetjews
-'s:copyrightHolder': 'EMBL - European Bioinformatics Institute, 2018'
-'s:license': 'https://www.apache.org/licenses/LICENSE-2.0'
+
+$namespaces:
+  edam: 'http://edamontology.org/'
+  s: 'http://schema.org/'
+
+s:author: "Maxim Scheremetjews"
+s:license: 'https://www.apache.org/licenses/LICENSE-2.0'
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

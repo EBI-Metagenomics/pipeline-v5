@@ -1,10 +1,12 @@
-FROM python:3
+FROM python:3-slim-buster
 
 LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 
-RUN pip install --upgrade pip
-RUN pip install -q biopython pandas networkx
-RUN pip install -q pyyaml
+RUN apt-get update && \
+    apt-get install -y tabix pigz && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir -q biopython pandas networkx pyyaml
 
 COPY antismash_to_gff_nojson.py \
      build_assembly_gff.py \
@@ -29,7 +31,7 @@ COPY antismash_to_gff_nojson.py \
      antismash_rename_contigs.py \
      run_result_file_chunker.py chunkFastaResultFileUtil.py chunkTSVFileUtil.py cleaningUtils.py \
      write_summaries.py \
-/tools/
+     /tools/
 
 RUN chmod a+x /tools/*
 

@@ -11,6 +11,10 @@ requirements:
     ramMin: 200
     coresMin: 2
 
+hints:
+  DockerRequirement:
+    dockerPull: microbiomeinformatics/krona:v2.7.1
+
 inputs:
   otu_counts:
     type: File
@@ -31,10 +35,6 @@ outputs:
     outputBinding:
       glob: "*.html"
 
-hints:
-  DockerRequirement:
-    dockerPull: mgnify/pipeline-v5.krona:latest
-
 $namespaces:
  edam: http://edamontology.org/
  iana: https://www.iana.org/assignments/media-types/
@@ -44,4 +44,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
