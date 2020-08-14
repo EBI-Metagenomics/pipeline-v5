@@ -1,6 +1,10 @@
 #!/bin/bash
 
-export PIPELINE=`pwd`/..
+set -e
+
+DOCKER_ORG="microbiomeinformatics"
+
+BASE_PATH=$(dirname "$(pwd)")
 
 ########### python3 ###########
 # - build_assembly_gff.py
@@ -16,12 +20,12 @@ export PIPELINE=`pwd`/..
 # - hmmscan_tab.py
 # - generate_checksum.py
 # - fastq_to_fasta.py
-docker build -t mgnify/pipeline-v5.python3 ${PIPELINE}/docker/scripts_python3
+docker build -t ${DOCKER_ORG}/pipeline-v5.python3:v1 "${BASE_PATH}"/docker/scripts_python3
 
 ########### python2 ###########
 # - MGRAST_base.py
 # - run_quality_filtering.py
-docker build -t mgnify/pipeline-v5.python2 ${PIPELINE}/docker/scripts_python2
+docker build -t ${DOCKER_ORG}/pipeline-v5.python2:v1 "${BASE_PATH}"/docker/scripts_python2
 
 ########### bash ###########
 # - empty_tax.sh
@@ -34,61 +38,48 @@ docker build -t mgnify/pipeline-v5.python2 ${PIPELINE}/docker/scripts_python2
 # - add_header
 # - run_samtools.sh
 # - clean_motus_output.sh
-docker build -t mgnify/pipeline-v5.bash-scripts ${PIPELINE}/docker/scripts_bash/
-
+docker build -t ${DOCKER_ORG}/pipeline-v5.bash-scripts:v1.1 "${BASE_PATH}"/docker/scripts_bash/
 
 ########### Tools ###########
 
-# biom-convert
-docker build -t mgnify/pipeline-v5.biom-convert ${PIPELINE}/tools/RNA_prediction/biom-convert
-# mapseq
-docker build -t mgnify/pipeline-v5.mapseq ${PIPELINE}/tools/RNA_prediction/mapseq
-# mapseq2biom
-docker build -t mgnify/pipeline-v5.mapseq2biom ${PIPELINE}/tools/RNA_prediction/mapseq2biom
-# cmsearch-deoverlap: biocrusoe/cmsearch-deoverlap
-docker build -t mgnify/pipeline-v5.cmsearch-deoverlap ${PIPELINE}/tools/RNA_prediction/cmsearch-deoverlap
-# krona
-docker build -t mgnify/pipeline-v5.krona ${PIPELINE}/tools/RNA_prediction/krona
-# cmsearch: quay.io/biocontainers/infernal:1.1.2--h470a237_1
-docker build -t mgnify/pipeline-v5.cmsearch ${PIPELINE}/tools/RNA_prediction/cmsearch
-# trimmomatic
-docker build -t mgnify/pipeline-v5.trimmomatic ${PIPELINE}/tools/Trimmomatic
-# easel: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
-docker build -t mgnify/pipeline-v5.easel ${PIPELINE}/tools/RNA_prediction/easel
-# SeqPrep: quay.io/biocontainers/seqprep:1.1--1
-docker build -t mgnify/pipeline-v5.seqprep ${PIPELINE}/tools/SeqPrep
+TOOLS=(
+    "biom-convert:v2.1.6 ${BASE_PATH}/tools/RNA_prediction/biom-convert"
+    "mapseq:v1.2.3 ${BASE_PATH}/tools/RNA_prediction/mapseq"
+    "mapseq2biom:v1.0 ${BASE_PATH}/tools/RNA_prediction/mapseq2biom"
+    "cmsearch-deoverlap:v0.02 ${BASE_PATH}/tools/RNA_prediction/cmsearch-deoverlap"
+    "krona:2.7.1 ${BASE_PATH}/tools/RNA_prediction/krona"
+    "cmsearch:v1.1.2 ${BASE_PATH}/tools/RNA_prediction/cmsearch"
+    "trimmomatic:v0.36 ${BASE_PATH}/tools/Trimmomatic"
+    "easel:v0.45h ${BASE_PATH}/tools/RNA_prediction/easel"
+    "seqprep:v1.2 ${BASE_PATH}/tools/SeqPrep"
+    "motus:v2.5.1 ${BASE_PATH}/tools/Raw_reads/mOTUs"
+    "bedtools:v2.28.0 ${BASE_PATH}/tools/mask-for-ITS/bedtools"
+    "hmmer:v3.2.1 ${BASE_PATH}/tools/hmmer"
+    "go-summary:v1.0 ${BASE_PATH}/tools/GO-slim"
+    "fraggenescan:v1.31 ${BASE_PATH}/tools/Combined_gene_caller/FragGeneScan"
+    "prodigal:v2.6.3 ${BASE_PATH}/tools/Combined_gene_caller/Prodigal"
+    "protein-post-processing:v1.0 ${BASE_PATH}/tools/Combined_gene_caller"
+    "genome-properties:v2.0.1 ${BASE_PATH}/tools/Assembly/Genome_properties"
+    "diamond:v0.9.25 ${BASE_PATH}/tools/Assembly/Diamond"
+    "eggnog:v2.0.0 ${BASE_PATH}/tools/Assembly/EggNOG/eggNOG"
+    "dna_chunking:v0.11 ${BASE_PATH}/tools/chunks/dna_chunker"
+)
 
-# mOUTs: quay.io/biocontainers/motus:2.1.1--py37_3
-docker build -t mgnify/pipeline-v5.motus ${PIPELINE}/tools/Raw_reads/mOTUs
-# bedtools: quay.io/biocontainers/bedtools:2.28.0--hdf88d34_0
-docker build -t mgnify/pipeline-v5.bedtools ${PIPELINE}/tools/mask-for-ITS/bedtools
+# containers that are too heavy to be used, it's possible but not recommended.
+# "antismash:v4.2.0 ${BASE_PATH}/tools/Assembly/antismash/chunking_antismash_with_conditionals"
+# "interproscan:v5.36-75.0 ${BASE_PATH}/tools/InterProScan"
 
-# hmmer quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
-docker build -t mgnify/pipeline-v5.hmmer ${PIPELINE}/tools/hmmscan
-# GO
-docker build -t mgnify/pipeline-v5.go-summary ${PIPELINE}/tools/GO-slim
+for KEY in "${!TOOLS[@]}"
+do
+    echo "=============================================="
+    echo "## Building ${TOOLS[$KEY]}"
+    set -x
+    # shellcheck disable=SC2086
+    docker build -t "${DOCKER_ORG}"/pipeline-v5.${TOOLS[$KEY]//\"/}
+    set +x
+    echo ""
+    echo ""
+    echo "=============================================="
+done
 
-# FragGeneScan
-docker build -t mgnify/pipeline-v5.fraggenescan ${PIPELINE}/tools/Combined_gene_caller/FragGeneScan
-# Prodigal
-docker build -t mgnify/pipeline-v5.prodigal ${PIPELINE}/tools/Combined_gene_caller/Prodigal
-# Prodigal + FGS post-processing
-docker build -t mgnify/pipeline-v5.protein-post-processing ${PIPELINE}/tools/Combined_gene_caller
-
-# Genome properties
-docker build -t mgnify/pipeline-v5.genome-properties ${PIPELINE}/tools/Assembly/Genome_properties
-
-# diamond: "buchfink/diamond:version0.9.30" (in production v9.25)
-docker build -t mgnify/pipeline-v5.diamond ${PIPELINE}/tools/Assembly/Diamond
-
-# eggnog
-docker build -t mgnify/pipeline-v5.eggnog ${PIPELINE}/tools/Assembly/EggNOG/eggNOG
-
-# antismash
-docker build -t mgnify/pipeline-v5.antismash ${PIPELINE}/tools/Assembly/antismash/chunking_antismash_with_conditionals
-
-# IPS: biocontainers/interproscan:v5.30-69.0_cv1
-docker build -t mgnify/pipeline-v5.interproscan ${PIPELINE}/tools/InterProScan
-
-# DNA chunking (perl)
-docker build -t mgnify/pipeline-v5.dna_chunking ${PIPELINE}/tools/chunks/dna_chunker
+echo "Done."

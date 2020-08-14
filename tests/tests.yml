@@ -1,0 +1,40 @@
+# Go Slim Summary
+- job: tools/GO-slim/go-summary-test-input.yml
+  tool: ../tools/GO-slim/go_summary.cwl
+  short_name: go_summary.cwl
+  doc: "GO Summary"
+  output:
+    go_summary:
+      location: Any
+      basename: test_output.go
+      nameroot: test_output
+      nameext: .go
+      class: File
+      checksum: sha1$5bba1715c0f4b23dc3c2b84fb9ad43d661b7d9e9
+      size: 5267
+      format: http://edamontology.org/format_3752
+    go_summary_slim:
+        location: Any
+        basename: test_output.go_slim
+        nameroot: test_output
+        nameext: .go_slim
+        class: File
+        checksum: sha1$89d834e08a5f214940a1712e4e873f27cd9482ac
+        size: 7298
+        format: http://edamontology.org/format_3752
+    stderr:
+        location: Any
+        basename: stderr.txt
+        nameroot: stderr
+        nameext: .txt
+        class: File
+        checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+        size: 0
+    stdout:
+        location: Any
+        basename: stdout.txt
+        nameroot: stdout
+        nameext: .txt
+        class: File
+        checksum: Any
+        size: 1511

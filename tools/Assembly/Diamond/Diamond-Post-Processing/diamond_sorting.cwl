@@ -9,7 +9,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: 'alpine:3.7'
+    dockerPull: debian:stable-slim
 
 baseCommand: ['sort', '-k2,2']
 

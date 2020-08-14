@@ -8,7 +8,13 @@ requirements:
     coresMax: 1
     ramMin: 200
 
+hints:
+  - class: DockerRequirement
+    dockerPull: debian:stable-slim
+
 label: "Parse Pfam hits from Interpro annotation output"
+
+baseCommand: []
 
 inputs:
   interpro:
@@ -16,8 +22,6 @@ inputs:
     label: Interpro scan results in TSV format
     format: edam:format_3475
   outputname: string
-
-baseCommand: []
 
 arguments:
   - awk
@@ -32,10 +36,6 @@ outputs:
     label: Pfam results only
     format: edam:format_3475
 
-hints:
-  - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
-
 $namespaces:
  edam: http://edamontology.org/
  s: http://schema.org/
@@ -44,4 +44,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder:   "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

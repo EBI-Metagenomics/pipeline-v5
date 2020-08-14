@@ -8,6 +8,10 @@ requirements:
   ResourceRequirement:
     ramMin: 300
 
+hints:
+  - class: DockerRequirement
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
+
 inputs:
   antismash_summary:
     type: File?
@@ -18,17 +22,13 @@ inputs:
     inputBinding:
       prefix: -f
 
-baseCommand: [move_antismash_summary.py]
+baseCommand: [ move_antismash_summary.py ]
 
 outputs:
   summary_in_folder:
     type: Directory
     outputBinding:
         glob: $(inputs.folder_name)
-
-hints:
-  - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
 
 $namespaces:
  s: http://schema.org/
@@ -37,4 +37,7 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
+

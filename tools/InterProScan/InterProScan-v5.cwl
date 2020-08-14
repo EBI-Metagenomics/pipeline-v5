@@ -1,46 +1,29 @@
 class: CommandLineTool
 cwlVersion: v1.0
 
+id: i5
+
 label: 'InterProScan: protein sequence classifier'
 
-id: i5
-baseCommand: []
+requirements:
+  - class: ShellCommandRequirement
+  - class: ResourceRequirement
+    ramMin: 15000
+    coresMin: 4
+  - class: InlineJavascriptRequirement
+  - class: ScatterFeatureRequirement
+ 
+# Disabled
+# hints:
+#   - class: DockerRequirement
+#     dockerPull: microbiomeinformatics/pipeline-v5.interproscan:v5.36-75.0
 
-arguments:
-  - position: 0
-    shellQuote: false
-    valueFrom: cp -r /opt/interproscan $(runtime.outdir)/interproscan;
-# TODO: Works for cwl-runner & cwlexec
-#  This solution will cause symbolic link creating warnings for the freemarker files
-  - position: 1
-    shellQuote: false
-    valueFrom: >-
-      cp -rs $(inputs.databases.path)/data/*
-      $(runtime.outdir)/interproscan/data;
-# TODO: The following solution will work for cwl-runner but not for cwlexec
-#  This solution avoids the symbolic link creating warnings for the freemarker files
-  - position: 1
-    shellQuote: false
-    valueFrom: >-
-      find $(inputs.databases.path)/data/ -maxdepth 1 -mindepth 1
-      -type d -not -iname '*freemarker' -exec cp -rs '{}' '$(runtime.outdir)/interproscan/data' \\;;
-  - position: 2
-    shellQuote: false
-    valueFrom: $(runtime.outdir)/interproscan/interproscan.sh
-  - position: 3
-    valueFrom: '--disable-precalc'
-  - position: 4
-    valueFrom: '--goterms'
-  - position: 5
-    valueFrom: '--pathways'
-  - position: 6
-    prefix: '--tempdir'
-    valueFrom: $(runtime.tmpdir)
+baseCommand: [ interproscan.sh ]
 
 inputs:
   - id: inputFile
-    # format: 'edam:format_1929'
     type: File
+    format: edam:format_1929
     inputBinding:
       position: 8
       prefix: '--input'
@@ -49,7 +32,7 @@ inputs:
       Optional, path to fasta file that should be loaded on Master startup.
       Alternatively, in CONVERT mode, the InterProScan 5 XML file to convert.
   - id: applications
-    type: string[]?  # InterProScan-apps.yaml#apps[]?
+    type: string[]?
     inputBinding:
       position: 9
       itemSeparator: ','
@@ -59,8 +42,7 @@ inputs:
       Optional, comma separated list of analyses. If this option is not set, ALL
       analyses will be run.
   - id: outputFormat
-    type: string[]?  # InterProScan-protein_formats.yaml#protein_formats[]?
-    default: TSV
+    type: string[]
     inputBinding:
       position: 10
       itemSeparator: ','
@@ -72,7 +54,7 @@ inputs:
       protein sequences are TSV, XML and GFF3, or for nucleotide sequences GFF3
       and XML.
   - id: databases
-    type: Directory
+    type: string? #Directory?
   - id: disableResidueAnnotation
     type: boolean?
     inputBinding:
@@ -96,27 +78,39 @@ inputs:
       Optional, the type of the input sequences (dna/rna (n) or protein (p)).
       The default sequence type is protein.
 
+arguments:
+  - position: 0
+    valueFrom: '--disable-precalc'
+  - position: 1
+    valueFrom: '--goterms'
+  - position: 2
+    valueFrom: '--pathways'
+  - position: 3
+    prefix: '--tempdir'
+    valueFrom: $(runtime.tmpdir)
+
 outputs:
   - id: i5Annotations
+    format: edam:format_3475
     type: File
     outputBinding:
-      glob: $(inputs.inputFile.basename).tsv
+      glob: $(inputs.inputFile.nameroot).f*.tsv
 
-requirements:
-  - class: ShellCommandRequirement
+doc: >-
+  InterProScan is the software package that allows sequences (protein and
+  nucleic) to be scanned against InterPro's signatures. Signatures are
+  predictive models, provided by several different databases, that make up the
+  InterPro consortium.
+  This tool description is using a Docker container tagged as version
+  v5.30-69.0.
+  Documentation on how to run InterProScan 5 can be found here:
+  https://github.com/ebi-pf-team/interproscan/wiki/HowToRun
+
 #  - class: SchemaDefRequirement
 #    types:
-#      - $import: InterProScan-apps.yaml
-#      - $import: InterProScan-protein_formats.yaml
-  - class: ResourceRequirement
-    ramMin: 2048
-    ramMax: 8192
-    coresMin: 4
-  - class: InlineJavascriptRequirement
-
-hints:
-  - class: DockerRequirement
-    dockerPull: mgnify/pipeline-v5.interproscan:latest
+#      - type: enum
+#        name: outputFormats
+#        symbols: [ TSV, XML, JSON, GFF3 ]
 
 $namespaces:
   edam: 'http://edamontology.org/'
@@ -126,21 +120,9 @@ $namespaces:
 $schemas:
   - 'http://edamontology.org/EDAM_1.20.owl'
   - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
-'s:author': 'Michael Crusoe, Aleksandra Ola Tarkowska, Maxim Scheremetjew'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': 'https://www.apache.org/licenses/LICENSE-2.0'
 
-
-doc: >-
-  InterProScan is the software package that allows sequences (protein and
-  nucleic) to be scanned against InterPro's signatures. Signatures are
-  predictive models, provided by several different databases, that make up the
-  InterPro consortium.
-
-
-  This tool description is using a Docker container tagged as version
-  v5.30-69.0.
-
-
-  Documentation on how to run InterProScan 5 can be found here:
-  https://github.com/ebi-pf-team/interproscan/wiki/HowToRun
+s:author: "Michael Crusoe, Aleksandra Ola Tarkowska, Maxim Scheremetjew"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

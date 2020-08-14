@@ -9,16 +9,13 @@ LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 #                       that are overlapping into a single
 #                       longer read
 ##############################################################
-RUN apk add --no-cache bash wget unzip
-RUN apk add --no-cache build-base
-RUN apk add --no-cache zlib-dev
+RUN apk add --no-cache bash wget unzip build-base zlib-dev
 
 ENV VERSION=1.2
 
-RUN wget https://github.com/jstjohn/SeqPrep/archive/v$VERSION.zip && unzip v$VERSION.zip
-
-
-RUN cd SeqPrep-$VERSION && make
+RUN wget https://github.com/jstjohn/SeqPrep/archive/v$VERSION.zip && \
+    unzip v$VERSION.zip && \
+    cd SeqPrep-$VERSION && make
 
 ENV PATH="/SeqPrep-$VERSION:${PATH}"
 

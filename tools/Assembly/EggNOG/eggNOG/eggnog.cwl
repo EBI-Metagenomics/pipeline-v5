@@ -3,13 +3,14 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 label: "eggNOG"
+
 doc: |
   eggNOG is a public resource that provides Orthologous Groups (OGs)
   of proteins at different taxonomic levels, each with integrated and summarized functional annotations.
 
 hints:
   DockerRequirement:
-    dockerPull: mgnify/pipeline-v5.eggnog
+    dockerPull: microbiomeinformatics/pipeline-v5.eggnog:v2.0.0
 
 requirements:
   ResourceRequirement:
@@ -96,10 +97,13 @@ outputs:
 $namespaces:
  edam: http://edamontology.org/
  s: http://schema.org/
+
 $schemas:
  - http://edamontology.org/EDAM_1.20.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
-'s:author': 'Ekaterina Sakharova'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+s:author: "Ekaterina Sakharova"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"

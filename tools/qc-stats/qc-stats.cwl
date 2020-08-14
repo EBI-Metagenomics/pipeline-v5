@@ -8,7 +8,7 @@ label: "Post QC-ed input analysis of sequence file"
 
 hints:
   DockerRequirement:
-    dockerPull: mgnify/pipeline-v5.python2:latest
+    dockerPull: microbiomeinformatics/pipeline-v5.python2:v1
 
 requirements:
   ResourceRequirement:

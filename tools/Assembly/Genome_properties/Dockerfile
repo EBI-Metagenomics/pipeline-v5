@@ -1,20 +1,17 @@
-FROM ubuntu:14.04
-
-# Update the repository sources list
-RUN apt-get update
+FROM ubuntu:20.04
 
 # Install compiler and perl stuff
-RUN apt-get install --yes \
+RUN apt-get update && \
+  apt-get install --yes \
   build-essential \
   gcc-multilib \
   perl \
-  git
+  git \
+  cpanminus && \
+  rm -rf /var/lib/apt/lists/*
 
 # Download code
-RUN git clone https://github.com/ebi-pf-team/genome-properties.git
-
-# Install perl modules
-RUN apt-get install --yes cpanminus
+RUN git clone --branch "v2.0.1" --depth 1 https://github.com/ebi-pf-team/genome-properties.git
 
 RUN cpanm \
   Data::Printer \
@@ -25,8 +22,8 @@ RUN cpanm \
   strict \
   Clone
 
-
 ENV PERL5LIB=/genome-properties/code/modules
+
 RUN export PERL5LIB=$PERL5LIB:/genome-properties/code/modules
 
 ENV PATH="/genome-properties/code/scripts/:${PATH}"

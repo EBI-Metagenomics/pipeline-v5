@@ -5,14 +5,7 @@ class: CommandLineTool
 
 hints:
   - class: DockerRequirement
-    dockerPull: mgnify/pipeline-v5.trimmomatic:latest
-#  - class: SoftwareRequirement
-#    packages:
-#      trimmomatic:
-#        version:
-#          - 0.36--6
-
-#  - $import: trimmomatic-docker.yml
+    dockerPull: microbiomeinformatics/pipeline-v5.trimmomatic:v0.36
 
 requirements:
 #  SchemaDefRequirement:
@@ -302,9 +295,12 @@ label: Trimmomatic - A flexible read trimming tool for Illumina NGS data
 $namespaces:
  edam: http://edamontology.org/
  s: http://schema.org/
+
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

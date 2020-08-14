@@ -1,6 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
@@ -9,12 +10,9 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: mgnify/pipeline-v5.seqprep:latest
- #SoftwareRequirement:
-   #packages:
-     #seqprep:
-       #specs: [ "https://identifiers.org/rrid/RRID:SCR_013004" ]
-       #version: [ "1.1" ]
+    dockerPull: microbiomeinformatics/pipeline-v5.seqprep:v1.2
+
+baseCommand: [ SeqPrep ]
 
 inputs:
  forward_reads:
@@ -30,8 +28,6 @@ inputs:
    inputBinding:
      prefix: -r
 
-baseCommand: SeqPrep
-
 arguments:
  - "-1"
  - forward_unmerged.fastq.gz
@@ -44,7 +40,6 @@ arguments:
  # - forward_discarded.fastq.gz
  # - "-4"
  # - reverse_discarded.fastq.gz
-
 
 outputs:
   merged_reads:
@@ -79,9 +74,12 @@ label: Tool for stripping adaptors and/or merging paired reads with overlap into
 $namespaces:
  edam: http://edamontology.org/
  s: http://schema.org/
+
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

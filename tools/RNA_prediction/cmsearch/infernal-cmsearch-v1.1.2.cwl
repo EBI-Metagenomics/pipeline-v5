@@ -1,11 +1,27 @@
 class: CommandLineTool
 cwlVersion: v1.0
-$namespaces:
-  edam: 'http://edamontology.org/'
-  s: 'http://schema.org/'
 
-baseCommand:
-  - cmsearch
+label: Search sequence(s) against a covariance model database
+
+requirements:
+  - class: InlineJavascriptRequirement
+  - class: ResourceRequirement
+    ramMin: 24000
+    coresMin: 4
+
+hints:
+  - class: SoftwareRequirement
+    packages:
+      infernal:
+        specs:
+          - 'https://identifiers.org/rrid/RRID:SCR_011809'
+        version:
+          - 1.1.2
+  - class: DockerRequirement
+    dockerPull: microbiomeinformatics/pipeline-v5.cmsearch:v1.1.2
+
+baseCommand: [ cmsearch ]
+
 inputs:
   - id: covariance_model_database
     type: string
@@ -57,6 +73,14 @@ inputs:
       prefix: '-Z'
     label: search space size in *Mb* to <x> for E-value calculations
 
+arguments:
+  - position: 0
+    prefix: '--tblout'
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
+  - position: 0
+    prefix: '-o'
+    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
+
 outputs:
   - id: matches
     doc: 'http://eddylab.org/infernal/Userguide.pdf#page=60'
@@ -85,35 +109,17 @@ doc: >
 
   Version 1.1.2 can be downloaded from
   http://eddylab.org/infernal/infernal-1.1.2.tar.gz
-label: Search sequence(s) against a covariance model database
 
-arguments:
-  - position: 0
-    prefix: '--tblout'
-    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
-  - position: 0
-    prefix: '-o'
-    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
+$namespaces:
+  edam: 'http://edamontology.org/'
+  s: 'http://schema.org/'
 
-hints:
-  - class: SoftwareRequirement
-    packages:
-      infernal:
-        specs:
-          - 'https://identifiers.org/rrid/RRID:SCR_011809'
-        version:
-          - 1.1.2
-  - class: DockerRequirement
-    dockerPull: mgnify/pipeline-v5.cmsearch:latest
-
-requirements:
-  - class: InlineJavascriptRequirement
-  - class: ResourceRequirement
-    ramMin: 24000
-    coresMin: 4
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'
   - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': 'https://www.apache.org/licenses/LICENSE-2.0'
-'s:author': Michael Crusoe, Maxim Scheremetjew
+
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"
+s:author: "Michael Crusoe, Maxim Scheremetjew"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 LABEL Maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 ########################################################################
@@ -10,20 +10,17 @@ LABEL Maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 
 ENV VERSION=0.36
 
-RUN apt-get update && apt-get -y install \
-    openjdk-8-jre \
-	python3 \
-    unzip
+RUN apt-get update && apt-get -y install openjdk-8-jre unzip && \
+    rm -rf /var/lib/apt/lists/*
 
 ADD http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-$VERSION.zip /NGStools/
 
-RUN unzip /NGStools/Trimmomatic-$VERSION.zip
+RUN unzip /NGStools/Trimmomatic-$VERSION.zip && \
+    mkdir /tools && \
+    mv Trimmomatic-$VERSION/trimmomatic-$VERSION.jar /tools/trimmomatic.jar
 
-RUN mkdir /tools
-RUN mv Trimmomatic-$VERSION/trimmomatic-$VERSION.jar /tools/trimmomatic.jar
 COPY trimmomatic /tools/
 
-RUN apt-get install -y nodejs
 RUN chmod a+rwx /tools/trimmomatic
 
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/tools

@@ -21,7 +21,16 @@ If you want to run pipeline locally, we recommend you use our pre-build docker c
 
 - memory for databases ~133G
 
+### Docker
+
+TODO complete this section.
+
+Tools that don't have docker containers:
+- antismash
+- interpro
+
 ## Installation
+
 ```bash
 git clone https://github.com/EBI-Metagenomics/pipeline-v5.git 
 cd pipeline-v5

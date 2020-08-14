@@ -1,8 +1,9 @@
-FROM perl:latest
+FROM perl:5.32-slim
 
 COPY mapseq2biom.pl /tools/
 
 RUN chmod a+x /tools/mapseq2biom.pl
+
 ENV PATH="/tools:${PATH}"
 
 ##############################################################
@@ -12,5 +13,6 @@ ENV PATH="/tools:${PATH}"
 # Description:          Convert mapseq to OTU tsv format for krona
 ##############################################################
 
+LABEL version=1.0.0
 
-CMD ["mapseq2biom.pl"]
+CMD [ "mapseq2biom.pl" ]
