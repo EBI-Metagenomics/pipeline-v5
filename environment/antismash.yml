@@ -1,0 +1,9 @@
+name: antismash42
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - pip=19.3.1
+  - python=2.7.18
+  - pip:
+    - antismash==4.2.0

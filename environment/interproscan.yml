@@ -1,0 +1,7 @@
+name: interpro
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - openjdk=8.0.192
+  - perl-digest-md5
