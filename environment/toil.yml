@@ -1,0 +1,10 @@
+name: toil
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.8
+  - nodejs
+  - pip:
+    - toil[cwl]==4.2.0
