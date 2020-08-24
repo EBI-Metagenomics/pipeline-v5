@@ -1,12 +1,12 @@
 # Conda environments
 
-We recommend the usage of miniconda for the installation of the different enviroments.
+We recommend the usage of [miniconda](https://docs.conda.io/en/latest/miniconda.html) for the installation of the different enviroments.
 
 ## [Toil](http://toil.ucsc-cgl.org/)
 
 CWL execution engine.
 
-Create the env `conda env create -f toil.yml`
+Create the env `conda env create -f toil.yml`, add `-n` for specify a name for th env.
 
 Citation: [http://doi.org/10.1038/nbt.3772](http://doi.org/10.1038/nbt.3772)
 
@@ -16,16 +16,20 @@ antiSMASH: Rapid identification, annotation and analysis of secondary metabolite
 
 Citation: [http://dx.doi.org/10.1093/nar/gkx319](http://dx.doi.org/10.1093/nar/gkx319)http://dx.doi.org/10.1093/nar/gkx319)
 
-Create the env `conda env create -f antismash.yml`
+Create the env `conda env create -f antismash.yml`, add `-n` for specify a name for th env.
 
-## [InterProScan](https://www.ebi.ac.uk/interpro/)
+## [InterProScan 5.36-75.0](https://www.ebi.ac.uk/interpro/)
 
 The conda env for interproscan doesn't include the application itself. To get the application:
 
 Download from [ebi ftp](ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.36-75.0/interproscan-5.36-75.0-64-bit.tar.gz) and follow the instructions.
 
-Then create the java env if you your env doesn't meet the minimal requirements. 
+InterproScan only requirements are: python3, perl 5 and java. If your environemtn doesn't meet the minimun requiriments you can user the provided conda enviroment:
 
-Use conda to install the proper version of java (`conda env -p interproscan.yml`)
+- `conda env -p interproscan.yml`, add `-n` for specify a name for th env.
 
 Release: [https://www.ebi.ac.uk/interpro/release_notes/75.0/](https://www.ebi.ac.uk/interpro/release_notes/75.0/)
+
+### Setup interproscan.sh
+
+Adjust interproscan.sh in the inteproscan installation folder. It is needed to source and activate the conda env (in cas)

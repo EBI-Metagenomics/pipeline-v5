@@ -17,6 +17,7 @@ while getopts :m:a:w: option; do
 		m) AMPLICON_PIPELINE=${OPTARG};;
 		a) ASSEMBLY_PIPELINE=${OPTARG};;
 		w) WGS_PIPELINE=${OPTARG};;
+    *) echo "Invalid option"; exit 0;;
 	esac
 done
 

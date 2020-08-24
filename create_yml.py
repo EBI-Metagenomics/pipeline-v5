@@ -135,9 +135,9 @@ if __name__ == "__main__":
                            "func_ann_names_hmmscan: .hmm.tsv.without_header\n")
                 # hmmer
                 file_yml.write("\n"
-                           "HMMSCAN_gathering_bit_score: true\n"
-                           "HMMSCAN_omit_alignment: true\n"
-                           "HMMSCAN_name_database: {dir}/db_kofam/db_kofam.hmm\n".format(dir=args.dir))
+                           "HMM_gathering_bit_score: true\n"
+                           "HMM_omit_alignment: true\n"
+                           "HMM_name_database: {dir}/db_kofam/db_kofam.hmm\n".format(dir=args.dir))
                 file_yml.write("\nhmmsearch_header: 'query_name\tquery_accession\ttlen\ttarget_name\ttarget_accession\tqlen"
                                "\tfull_sequence_e-value\tfull_sequence_score\tfull_sequence_bias\t#\tof\tc-evalue"
                                "\ti-evalue\tdomain_score\tdomain_bias\thmm_coord_from\thmm_coord_to\tali_coord_from"

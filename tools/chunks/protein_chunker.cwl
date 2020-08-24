@@ -9,8 +9,7 @@ doc: based upon code by Maxim Scheremetjew, EMBL-EBI
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 8000
-  ShellCommandRequirement: {}
+    ramMin: 5000
 
 hints:
   DockerRequirement:
@@ -21,6 +20,8 @@ hints:
       biopython:
         specs: [ "https://identifiers.org/rrid/RRID:SCR_007173" ]
         version: [ "1.65", "1.66", "1.69" ]
+
+baseCommand: [ split_to_chunks.py ]
 
 inputs:
   seqs:
@@ -36,17 +37,6 @@ inputs:
     type: string?
     inputBinding:
       prefix: -f
-
-arguments:
-  - valueFrom: '> /dev/null'
-    shellQuote: false
-    position: 10
-  - valueFrom: '2> /dev/null'
-    shellQuote: false
-    position: 11
-
-
-baseCommand: [ split_to_chunks.py ]
 
 outputs:
   chunks:
