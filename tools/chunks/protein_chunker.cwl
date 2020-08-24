@@ -21,6 +21,8 @@ hints:
         specs: [ "https://identifiers.org/rrid/RRID:SCR_007173" ]
         version: [ "1.65", "1.66", "1.69" ]
 
+baseCommand: [ split_to_chunks.py ]
+
 inputs:
   seqs:
     # format: edam:format_1929  # collision with concatenate.cwl
@@ -35,8 +37,6 @@ inputs:
     type: string?
     inputBinding:
       prefix: -f
-
-baseCommand: [ split_to_chunks.py ]
 
 outputs:
   chunks:
