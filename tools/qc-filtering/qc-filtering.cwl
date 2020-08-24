@@ -13,7 +13,7 @@ requirements:
     ramMin: 200
   InlineJavascriptRequirement: {}
 
-baseCommand: ["run_quality_filtering.py" ]
+baseCommand: [ "run_quality_filtering.py" ]
 
 inputs:
   seq_file:

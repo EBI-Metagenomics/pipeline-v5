@@ -6,5 +6,6 @@ channels:
 dependencies:
   - python=3.8
   - nodejs
+  - pip
   - pip:
     - toil[cwl]==4.2.0
