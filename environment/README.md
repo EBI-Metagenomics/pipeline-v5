@@ -6,7 +6,7 @@ We recommend the usage of [miniconda](https://docs.conda.io/en/latest/miniconda.
 
 CWL execution engine.
 
-Create the env 'conda env create -f toil.yml', add '-n' for specify a name for the env.
+Create the env 'conda env create -f toil.yml', add '-n' to specify a name for the env.
 
 Citation: [http://doi.org/10.1038/nbt.3772](http://doi.org/10.1038/nbt.3772)
 
@@ -16,7 +16,7 @@ antiSMASH: Rapid identification, annotation and analysis of secondary metabolite
 
 Citation: [http://dx.doi.org/10.1093/nar/gkx319](http://dx.doi.org/10.1093/nar/gkx319)http://dx.doi.org/10.1093/nar/gkx319)
 
-Create the env 'conda env create -f antismash.yml', add '-n' for specify a name for the env.
+Create the env 'conda env create -f antismash.yml', add '-n' to specify a name for the env.
 
 ## [InterProScan 5.36-75.0](https://www.ebi.ac.uk/interpro/)
 
@@ -28,7 +28,7 @@ Download from ebi ftp [ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.36-75.0
 
 InterproScan requirements are: python3, perl 5 and java. If your environment doesn't meet the minimum requirements you can use the provided conda environment:
 
-- 'conda env -p interproscan.yml', add '-n' for specify a name for th env.
+- 'conda env -p interproscan.yml', add '-n' to specify a name for th env.
 
 Release: [https://www.ebi.ac.uk/interpro/release_notes/75.0/](https://www.ebi.ac.uk/interpro/release_notes/75.0/)
 
