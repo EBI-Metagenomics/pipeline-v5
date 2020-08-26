@@ -47,6 +47,15 @@ bash ../download_dbs.sh -a True -m True -w True  # for all types
 cd ..
 ```
 
+##### mOTUs DB
+
+The docker container for mOTUs doesn't included the databases:
+
+```
+cd <dbs-path>/motus-v2.5.1/
+python /tools/Raw_reads/mOTUs/mOTUs_download_db.py
+```
+
 #### Create yml-file
 Set DIRECTORY as path to the same directory where you downloaded all databases (ref-dbs).
 
