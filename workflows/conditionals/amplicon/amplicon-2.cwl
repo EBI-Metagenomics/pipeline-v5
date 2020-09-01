@@ -96,8 +96,8 @@ steps:
       - LSU_folder
       - SSU_coords
       - LSU_coords
-      - compressed_SSU_fasta
-      - compressed_LSU_fasta
+      - SSU_fasta
+      - LSU_fasta
       - compressed_rnas
       - number_LSU_mapseq
       - number_SSU_mapseq
@@ -118,10 +118,10 @@ steps:
       otu_unite_label: unite_label
       otu_itsone_label: itsonedb_label
     out:
-      - masking_file
       - unite_folder
       - itsonedb_folder
       - number_ITS_seqs
+      - masking_file
 
 # gzip and chunk
   gzip_files:
@@ -147,12 +147,23 @@ steps:
       dir_name: { default: 'its' }
     out: [out]
 
+  gzip_SSU:
+    run: ../../../utils/pigz/gzip.cwl
+    in:
+      uncompressed_file: rna_prediction/SSU_fasta
+    out: [compressed_file]
+  gzip_LSU:
+    run: ../../../utils/pigz/gzip.cwl
+    in:
+      uncompressed_file: rna_prediction/LSU_fasta
+    out: [compressed_file]
+
 # suppress irrelevant rRNA/ITS tax folders
   suppress_tax:
     run: ../../../tools/mask-for-ITS/suppress_tax.cwl
     in:
-      ssu_file: rna_prediction/compressed_SSU_fasta
-      lsu_file: rna_prediction/compressed_LSU_fasta
+      ssu_file: gzip_SSU/compressed_file
+      lsu_file: gzip_LSU/compressed_file
       its_file: ITS/masking_file
       lsu_dir: rna_prediction/LSU_folder
       ssu_dir: rna_prediction/SSU_folder

@@ -42,7 +42,7 @@ class ChunkTSVFileUtil:
             if cleaningUtils.checkIfAlreadyChunked(os.path.join(outdirpath, os.path.basename(self._infile)), 1):
                 logging.info("This file has already been chunked! Jumping to the next file.")
             else:
-                print("File has not alredy chunked")
+                print("File has not already chunked")
                 infile_size_bytes = float(os.path.getsize(self._infile))
                 infile_size_megabytes = infile_size_bytes / 1024 / 1024
                 if infile_size_megabytes > self._cutoff:

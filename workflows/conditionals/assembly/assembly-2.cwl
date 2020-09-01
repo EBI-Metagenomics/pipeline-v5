@@ -169,8 +169,8 @@ steps:
       - SSU_folder
       - LSU_folder
       - LSU-SSU-count
-      - compressed_SSU_fasta
-      - compressed_LSU_fasta
+      - SSU_fasta
+      - LSU_fasta
       - compressed_rnas
       - number_LSU_mapseq
       - number_SSU_mapseq
@@ -297,8 +297,8 @@ steps:
       faa:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      LSU: rna_prediction/compressed_LSU_fasta
-      SSU: rna_prediction/compressed_SSU_fasta
+      LSU: rna_prediction/LSU_fasta
+      SSU: rna_prediction/SSU_fasta
     out:
       - nucleotide_fasta_chunks                         # fasta, ffn
       - protein_fasta_chunks                            # faa

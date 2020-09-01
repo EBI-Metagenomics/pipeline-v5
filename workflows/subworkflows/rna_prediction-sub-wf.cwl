@@ -63,12 +63,12 @@ outputs:
     type: File
     outputSource: extract_subunits_coords/LSU_seqs
 
-  compressed_SSU_fasta:
+  SSU_fasta:
     type: File?
-    outputSource: classify_SSUs/compressed_fasta_output
-  compressed_LSU_fasta:
+    outputSource: extract_subunits/SSU_seqs
+  LSU_fasta:
     type: File?
-    outputSource: classify_LSUs/compressed_fasta_output
+    outputSource: extract_subunits/LSU_seqs
   compressed_rnas:
     type: File[]
     outputSource: gzip_files/compressed_file
@@ -153,7 +153,7 @@ steps:
       otu_label: pattern_SSU
       return_dirname: {default: 'SSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, compressed_fasta_output, number_lines_mapseq ]
+    out: [ out_dir, number_lines_mapseq ]
 
   count_lsu_fasta:
     run: ../../utils/count_fasta.cwl
@@ -175,7 +175,7 @@ steps:
       otu_label: pattern_LSU
       return_dirname: {default: 'LSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, compressed_fasta_output, number_lines_mapseq ]
+    out: [ out_dir, number_lines_mapseq ]
 
 # gzip and chunk sequence-categorisation
   gzip_files:

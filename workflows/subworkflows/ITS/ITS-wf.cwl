@@ -28,9 +28,10 @@ inputs:
   otu_itsone_label: string
 
 outputs:
+
   masking_file:
     type: File?
-    outputSource: run_itsonedb/compressed_fasta_output
+    outputSource: gzip_masked_ITS/compressed_file
 
   unite_folder:
     type: Directory?
@@ -75,6 +76,12 @@ steps:
       maskfile: reformat_coords/maskfile
     out: [masked_sequences]
 
+  gzip_masked_ITS:
+    run: ../../../utils/pigz/gzip.cwl
+    in:
+      uncompressed_file: mask_for_ITS/masked_sequences
+    out: [ compressed_file ]
+
 #run unite and ITSonedb
 
   count_masked_fasta:
@@ -96,7 +103,7 @@ steps:
       otu_label: otu_unite_label
       return_dirname: {default: 'unite'}
       file_for_prefix: query_sequences
-    out: [ out_dir, compressed_fasta_output ]
+    out: [ out_dir ]
 
   run_itsonedb:
     when: $(inputs.fasta_count > 0)
@@ -110,7 +117,7 @@ steps:
       otu_label: otu_itsone_label
       return_dirname: {default: 'itsonedb'}
       file_for_prefix: query_sequences
-    out: [ out_dir, compressed_fasta_output ]
+    out: [ out_dir ]
 
 # count IPS seqs
   count_ITS_seqs:

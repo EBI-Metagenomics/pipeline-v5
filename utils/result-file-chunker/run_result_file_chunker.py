@@ -37,7 +37,7 @@ __author__ = 'Maxim Scheremetjew'
     cdsUnannotatedFaaDefaultTargetSize = 1442           # don't have
     cdsUnannotatedFfnDefaultTargetSize = 1980           # don't have
     cdsAnnotatedFaaDefaultTargetSize = 1442             # don't have
-    cdsAnnotatedFfnDefaultTargetSize = 1980             # dont't have
+    cdsAnnotatedFfnDefaultTargetSize = 1980             # don't have
 """
 
 DEFAULT_COMPRESSION_LEVEL = 6
