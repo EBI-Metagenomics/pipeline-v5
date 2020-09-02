@@ -1,0 +1,9 @@
+#dir_list:
+#  - class: Directory
+#    path: add_header
+#  - null
+file_list:
+  - class: File
+    path: qc-flag.cwl
+  - null
+dir_name: test_dir
