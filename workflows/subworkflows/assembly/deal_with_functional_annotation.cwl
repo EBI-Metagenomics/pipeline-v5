@@ -72,6 +72,7 @@ steps:
        rna: rna
        cds: cds
        ko_file: ko_file
+       type_analysis: { default: 'Contigs' }
     out: [summary_ips, summary_ko, summary_pfam, summary_antismash, stats]
 
 # add header

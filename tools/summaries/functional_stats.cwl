@@ -10,6 +10,11 @@ requirements:
     ramMin: 8000  # just a default, could be lowered
 
 inputs:
+
+  type_analysis:
+    type: string
+    inputBinding:
+        prefix: -t
   interproscan:
     type: File
     inputBinding:

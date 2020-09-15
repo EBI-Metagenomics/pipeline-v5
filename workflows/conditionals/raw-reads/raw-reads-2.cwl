@@ -210,6 +210,7 @@ steps:
 
        go_config: go_config
        ko_file: ko_file
+       type_analysis: { default: 'Reads' }
     out:
       - functional_annotation_folder
       - stats

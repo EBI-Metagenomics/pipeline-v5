@@ -272,6 +272,7 @@ steps:
       pathways_classes: pathways_classes
 
       gp_flatfiles_path: gp_flatfiles_path
+      type_analysis: { default: 'Contigs' }
     out:
       - functional_annotation_folder
       - stats

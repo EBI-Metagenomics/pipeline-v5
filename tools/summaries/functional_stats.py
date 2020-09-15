@@ -12,7 +12,7 @@ import re
 and number of contigs with match. ORF stats gives number of CDS, contigs with CDS and Reads with RNA. Outputs in TSV format.
 Entry map is generated for InterProScan as input to write IPR summary'''
 
-def orf_stats(cds_file, cmsearch_deoverlap, outdir):
+def orf_stats(cds_file, cmsearch_deoverlap, outdir, reads_contigs):
     numberOrfs = 0
     readsWithOrf = set()
     readsWithRNA = set()
@@ -26,7 +26,9 @@ def orf_stats(cds_file, cmsearch_deoverlap, outdir):
         readsWithRNA.add(RNAaccession)
     numberReadswithRNA = len(readsWithRNA)
     with open(os.path.join(outdir, "orf.stats"), "w") as file_out:
-        file_out.write("Predicted CDS\t" + str(numberOrfs) + "\nReads with predicted CDS\t" + str(numberReadsWithOrf) + "\nReads with predicted rRNA\t" + str(numberReadswithRNA))
+        file_out.write("\n".join(["Predicted CDS\t{numberOrfs}",
+                                  "{reads_contigs} with predicted CDS\t{numberReadsWithOrf}",
+                                  "{reads_contigs} with predicted rRNA\t{numberReadswithRNA}"]))
 
 
 '''
@@ -53,7 +55,7 @@ def get_ko_desc(ko_file):
     return ko_dict
 
 
-def stats(input_file, cds_column_number, protein_column_number, hash, outdir, ko_file):
+def stats(input_file, cds_column_number, protein_column_number, hash, outdir, ko_file, reads_contigs):
 
     match_count, CDS_with_match_number, reads_with_match_count, go_match_count, go_CDS_match, go_reads_match \
         = [0 for _ in range(6)]
@@ -105,14 +107,14 @@ def stats(input_file, cds_column_number, protein_column_number, hash, outdir, ko
                    "entry2name": entry2name}, mapsFile)
 
     with open(os.path.join(outdir, hash.lower() + ".stats"), "w") as file_out:
-        file_out.write("Total " + hash + " matches\t" + str(match_count) +
-                       "\nPredicted CDS with " + hash + " match\t" + str(CDS_with_match_count) +
-                       "\nReads with " + hash + " match\t"+str(reads_with_match_count))
+        file_out.write("\n".join(["Total {hash} matches\t{match_count}",
+                                  "Predicted CDS with {hash} match\t{CDS_with_match_count}",
+                                  "{reads_contigs} with {hash} match\t{reads_with_match_count}"]))
     if hash == 'InterProScan':
         with open(os.path.join(outdir, "go.stats"), "w") as file_out:
-            file_out.write("Total GO matches\t" + str(go_match_count) + "\nPredicted CDS with GO match\t" + str(
-                go_CDS_match) + "\nReads with GO match\t" + str(go_reads_match))
-
+            file_out.write("\n".join(["Total GO matches\t{go_match_count}",
+                                      "Predicted CDS with GO match\t{go_CDS_match}",
+                                      "{reads_contigs} with GO match\t{go_reads_match}"]))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generates stats files for all functional analyses")
@@ -123,6 +125,7 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--rna", dest="cmsearch_deoverlap", help="cmsearch deoverlapped results", required=True)
     parser.add_argument("-c", "--cds", dest="cds_file", help="predicted coding sequences", required=True)
     parser.add_argument("-a", "--antismash", dest="antismash", help="antismash gene clusters", required=False)
+    parser.add_argument("-t", "--type", dest="type", help="Contigs or Reads", required=False)
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -145,6 +148,6 @@ if __name__ == "__main__":
         for file_annotation, num in zip(files, range(len(files))):
             print(file_annotation)
             hash = hashes[num]
-            stats(file_annotation, cdsAccessions_list[hash], protein_column[hash], hash, final_folder, args.ko_file)
+            stats(file_annotation, cdsAccessions_list[hash], protein_column[hash], hash, final_folder, args.ko_file, args.type)
 
-        orf_stats(args.cds_file, args.cmsearch_deoverlap, final_folder)
+        orf_stats(args.cds_file, args.cmsearch_deoverlap, final_folder, args.type)

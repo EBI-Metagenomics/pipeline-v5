@@ -32,6 +32,7 @@ inputs:
 
   go_config: string
   ko_file: string
+  type_analysis: string
 
 outputs:
   functional_annotation_folder:
@@ -91,6 +92,7 @@ steps:
        rna: rna_prediction_ncRNA
        ko_file: ko_file
        cds: cgc_results_faa
+       type_analysis: type_analysis
     out: [summary_ips, summary_ko, summary_pfam, stats]
 
 # << ------------- FUNCTIONAL FORMATTING AND CHUNKING ------------ >>
