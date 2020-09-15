@@ -6,7 +6,7 @@ from Bio import SeqIO
 import json
 import re
 import hashlib
-import fcntl
+import time
 from filelock import Timeout, FileLock
 
 WAITING_TIME = 0  # (in sec)
@@ -33,6 +33,7 @@ def get_args():
     max_pep_length: 10000
 -p /nfs/production/interpro/metagenomics/peptide_db/mapping/mgyp/20190531
 -r 20200723 or another date
+--private: 1=private, 0=public
 """
 
 def get_bioms(mapping):
@@ -66,34 +67,37 @@ def create_digest(seq):
 
 
 def read_map_file(file):
+    start = time.time()
     map = {}
     if not os.path.exists(file):
         return map
     with open(file) as fh:
         for line in fh:
-            seq, partial, acc, _ = line.rstrip().split(' ')
+            seq, partial, *_ = line.rstrip().split(' ')
+            acc = _[0]
+            public_sign = _[1] if len(_) > 1 else 0
             if not seq in map:
                 map[seq] = {}
-            map[seq][partial] = acc
-    print('Length of already existing map-file: ', len(map))
-    return map
+            map[seq][partial] = [acc, public_sign]
+    end = time.time()
+    return map, end-start
 
 
-def map_accessions(seq, partial, map, next_acc, biome, obs_biome, assembly):
-    print(seq, partial)
+def map_accessions(seq, partial, map, next_acc, biome, obs_biome, assembly, public):
     if seq in map and partial in map[seq]:
-        print('found seq and partial in MAP')
-        acc = map[seq][partial]
+        print('--------- found seq and partial in map-file')
+        acc = map[seq][partial][0]
     elif seq in map:
-        print('found seq in MAP')
+        print('--------- found seq in map-file')
         acc = "MGYP%012d" % next_acc
         next_acc += 1
-        map[seq][partial] = acc
+        map[seq][partial] = [acc, public]
     else:
+        print('--------- new protein')
         acc = "MGYP%012d" % next_acc
         next_acc += 1
         map[seq] = {}
-        map[seq][partial] = acc
+        map[seq][partial] = [acc, public]
 
     if assembly in biome:
         b = biome[assembly]
@@ -102,7 +106,6 @@ def map_accessions(seq, partial, map, next_acc, biome, obs_biome, assembly):
     if not b in obs_biome:
         obs_biome[b] = 0
     obs_biome[b] += 1
-    print('update map file')
     return next_acc, acc
 
 
@@ -191,9 +194,10 @@ if __name__ == "__main__":
         for twochar in dict_hash_records:
             # read existing map-file
             mapping_dir_release = os.path.join(mapping_dir, TYPE, args.release, twochar)
-            print('Reading map file from ' + str(mapping_dir_release))
-            map = read_map_file(mapping_dir_release)
-            print('Process ', twochar, 'peptides', len(dict_hash_records[twochar]), 'size of map: ' + str(len(map)))
+            print('---> Reading map file from ' + str(mapping_dir_release))
+            map, reading_time = read_map_file(mapping_dir_release)
+            print('Process:', twochar, 'peptides:', len(dict_hash_records[twochar]), ', size of map: ' + str(len(map)),
+                  ', reading time:', reading_time, 's')
             cur_twochar = files_hash[twochar]
             lock_cur_twochar = FileLock(cur_twochar + '.lock')
             with lock_cur_twochar.acquire(timeout=WAITING_TIME):
@@ -203,7 +207,7 @@ if __name__ == "__main__":
                     partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.id)
                     next_acc, mgy_accession = map_accessions(map=map, next_acc=next_acc, seq=record.seq, biome=biome,
                                                              partial=partial, assembly=args.accession,
-                                                            obs_biome=obs_biome)
+                                                            obs_biome=obs_biome, public=public_value)
                     # write table of protein data
                     file_peptides.write(' '.join([mgy_accession, record.id, start_coordinate, stop_coordinate, strand,
                                                   partial, caller]))
@@ -216,6 +220,7 @@ if __name__ == "__main__":
             file_desc_twochar.close()
         # write next accession
         fd.write(str(next_acc))
+        print('Finish with accession number ', next_acc)
         fd.close()
     print('... Return max_acc file')
     print('Write biom counts', os.path.join(cur_mapping_dir, 'mgy_biome_counts_' + args.release + '.tsv'))

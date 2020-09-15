@@ -38,6 +38,22 @@ def create_digest(seq):
     return digest
 
 
+def get_length(header):
+    line = header.split('-')
+    for item in range(len(line)-1):
+        if line[item] == 'length':
+            return line[item+1]
+    return 0
+
+
+def get_kmercoverage(header):
+    line = header.split('-')
+    for item in range(len(line)):
+        if line[item] == 'cov':
+            return line[item+1]
+    return 0
+
+
 if __name__ == "__main__":
 
     TYPE = 'mgyc'
@@ -53,11 +69,13 @@ if __name__ == "__main__":
     # read fasta file, create digests, change contig names
     with open(new_fasta_name, 'w') as new_fasta, open(file_with_mgyc, 'w') as accession_file:
         for record in SeqIO.parse(args.fasta, "fasta"):
+            length = get_length(record.id)
+            kmer_covarage = get_kmercoverage(record.id)
             mgy_accession = "MGYC%012d" % next_acc
             hash_seq = create_digest(record.seq)
             hash_erz_seq = create_digest(args.accession + record.seq)
             next_acc += 1
-            accession_file.write(' '.join([mgy_accession, hash_erz_seq, hash_seq]) + '\n')
+            accession_file.write(' '.join([mgy_accession, hash_erz_seq, hash_seq, length, kmer_covarage]) + '\n')
             record.id = mgy_accession
             record.description = mgy_accession
             SeqIO.write(record, new_fasta, "fasta")
