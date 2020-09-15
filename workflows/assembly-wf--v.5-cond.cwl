@@ -15,6 +15,10 @@ inputs:
     contigs: File
     contig_min_length: int
 
+# << protein db >>
+    private: boolean?
+    mapping_directory_mgyc: string
+
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -173,6 +177,8 @@ steps:
     when: $(inputs.status.basename == 'QC-PASSED')
     in:
       status: before-qc/qc-status
+      private: private
+      mapping_directory_mgyc: mapping_directory_mgyc
       filtered_fasta: before-qc/filtered_fasta
       ssu_db: ssu_db
       lsu_db: lsu_db

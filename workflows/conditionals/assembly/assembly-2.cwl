@@ -19,6 +19,9 @@ requirements:
 inputs:
     filtered_fasta: File
 
+    mapping_directory_mgyc: string
+    private: boolean?
+
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -147,11 +150,32 @@ outputs:
 
 steps:
 
+# -----------------------------------  << Assign MGYCs >>  -----------------------------------
+
+  count_sequences_fasta:
+    run: ../../../utils/count_fasta.cwl
+    in:
+      sequences: filtered_fasta
+      number: { default: 1 }
+    out: [ count ]
+
+  assign_mgyc:
+    run: ../../../tools/Assembly/assign_MGYC/assign_mgyc.cwl
+    in:
+      input_fasta: filtered_fasta
+      mapping: mapping_directory_mgyc
+      count: count_sequences_fasta/count
+      accession:
+        source: filtered_fasta
+        valueFrom: $(self.nameroot.split('_')[0])
+    out: [ renamed_contigs_fasta ]
+
+
 # -----------------------------------  << RNA PREDICTION >>  -----------------------------------
   rna_prediction:
     in:
       type: { default: 'assembly'}
-      input_sequences: filtered_fasta
+      input_sequences: assign_mgyc/renamed_contigs_fasta
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
       silva_ssu_taxonomy: ssu_tax
@@ -192,7 +216,7 @@ steps:
   other_ncrnas:
     run: ../../subworkflows/other_ncrnas.cwl
     in:
-     input_sequences: filtered_fasta
+     input_sequences: assign_mgyc/renamed_contigs_fasta
      cmsearch_file: rna_prediction/ncRNA
      other_ncRNA_ribosomal_models: other_ncrna_models
      name_string: { default: 'other_ncrna' }
@@ -201,18 +225,26 @@ steps:
 # -----------------------------------  << COMBINED GENE CALLER >>  -----------------------------------
   cgc:
     in:
-      input_fasta: filtered_fasta
+      input_fasta: assign_mgyc/renamed_contigs_fasta
       maskfile: rna_prediction/ncRNA
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
     out: [ results, count_faa ]
     run: ../../subworkflows/assembly/CGC-subwf.cwl
 
+# -----------------------------------  << Assign MGYPs >>  -----------------------------------
+
+#  assign_mgyp:
+#    run: ../../../tools/Assembly/assign_MGYP/assign_mgyp.cwl
+#    in:
+#
+#    out: [  ]
+
 # ------------------------- <<ANTISMASH >> -------------------------------
   antismash:
     run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
     in:
-      input_filtered_fasta: filtered_fasta
+      input_filtered_fasta: assign_mgyc/renamed_contigs_fasta
       clusters_glossary: clusters_glossary
       final_folder_name: { default: pathways-systems }
     out:
@@ -220,12 +252,12 @@ steps:
       - antismash_clusters
 
 # -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
-# GFF
-# DIAMOND
-# KEGG pathways, move to pathways-systems
-# Genome Properties
-# tsv -> csv
-# move antismash summary to pathways-systems
+# - GFF
+# - DIAMOND
+# - KEGG pathways, move to pathways-systems
+# - Genome Properties
+# - tsv -> csv
+# - move antismash summary to pathways-systems
 
   functional_annotation_and_post_processing:
     when: $(inputs.check_value != 0)
@@ -236,7 +268,7 @@ steps:
       cgc_results_faa:
          source: cgc/results
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      filtered_fasta: filtered_fasta
+      filtered_fasta: assign_mgyc/renamed_contigs_fasta
       rna_prediction_ncRNA: rna_prediction/ncRNA
 
       protein_chunk_size_eggnog:  protein_chunk_size_eggnog
@@ -284,14 +316,14 @@ steps:
   fasta_index:
     run: ../../../tools/Assembly/index_fasta/fasta_index.cwl
     in:
-      fasta: filtered_fasta
+      fasta: assign_mgyc/renamed_contigs_fasta
     out: [fasta_index, fasta_bgz, bgz_index]
 
 # chunking
   chunking_final:
     run: ../../subworkflows/final_chunking.cwl
     in:
-      fasta: filtered_fasta
+      fasta: assign_mgyc/renamed_contigs_fasta
       ffn:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )

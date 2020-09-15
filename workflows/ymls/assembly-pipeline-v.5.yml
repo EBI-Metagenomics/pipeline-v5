@@ -2,7 +2,7 @@ contigs:
   class: File
   path: ../input_examples/assembly-SRR1620013_small_FASTA.fasta.gz
   format: edam:format_1929
-
+# private: True # set if run is from private study
 contig_min_length: 500
 
 # RNA PREDICTION

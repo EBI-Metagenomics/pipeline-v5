@@ -23,8 +23,6 @@ def get_args():
                         required=True)
     parser.add_argument("--private", help="set this option if run is from private request", dest="private",
                         required=False, action='store_true')
-    parser.add_argument("--public", help="set this option if run is from public request", dest="public",
-                        required=False, action='store_true')
     return parser
 """
 -f test.fasta \

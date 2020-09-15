@@ -42,6 +42,7 @@ if __name__ == "__main__":
 
     TYPE = 'mgyc'
     args = get_args().parse_args()
+    print('Run: ' + args.accession)
     mapping_dir = os.path.join(args.mapping, TYPE)
     # update number
     max_number_filename = os.path.join(mapping_dir, 'max_acc')

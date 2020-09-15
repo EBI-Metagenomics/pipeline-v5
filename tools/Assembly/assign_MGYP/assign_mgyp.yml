@@ -1,0 +1,7 @@
+input_fasta:
+  path: test.fasta
+  class: File
+config: new_config
+release: 20200915
+accession: testAccession
+# private: True
