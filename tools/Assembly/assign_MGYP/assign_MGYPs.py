@@ -24,17 +24,7 @@ def get_args():
     parser.add_argument("--private", help="set this option if run is from private request", dest="private",
                         required=False, action='store_true')
     return parser
-"""
--f test.fasta \
--a ERZ*** \
--c new_config
-    mapping: /nfs/production/interpro/metagenomics/peptide_db/mapping 
-    peptides: /nfs/production/interpro/metagenomics/assembly_peptides_v5
-    max_pep_length: 10000
--p /nfs/production/interpro/metagenomics/peptide_db/mapping/mgyp/20190531
--r 20200723 or another date
---private: 1=private, 0=public
-"""
+
 
 def get_bioms(mapping):
     biome_file = os.path.join(mapping, 'biome', 'all-biomes.txt')
@@ -84,16 +74,18 @@ def read_map_file(file):
 
 
 def map_accessions(seq, partial, map, next_acc, biome, obs_biome, assembly, public):
+    new = True
     if seq in map and partial in map[seq]:
-        print('--------- found seq and partial in map-file')
+        print('----------- found seq and partial in map-file')
         acc = map[seq][partial][0]
+        new = False
     elif seq in map:
-        print('--------- found seq in map-file')
+        print('----------- found only seq in map-file')
         acc = "MGYP%012d" % next_acc
         next_acc += 1
         map[seq][partial] = [acc, public]
     else:
-        print('--------- new protein')
+        print('----------- new protein')
         acc = "MGYP%012d" % next_acc
         next_acc += 1
         map[seq] = {}
@@ -106,7 +98,7 @@ def map_accessions(seq, partial, map, next_acc, biome, obs_biome, assembly, publ
     if not b in obs_biome:
         obs_biome[b] = 0
     obs_biome[b] += 1
-    return next_acc, acc
+    return next_acc, acc, new
 
 
 def parsing_header(header):
@@ -124,6 +116,27 @@ def parsing_header(header):
         sign_strand, stop_coordinate, start_coordinate = list_fields[length-1], list_fields[length-2], list_fields[length-3]
         strand = str(int(sign_strand + '1'))
     return partial, start_coordinate, stop_coordinate, strand, caller
+
+
+def update_max_accession(number_new_records, file_next_accession):
+    # Read the last given accession number
+    file_next_accession_lock_path = os.path.join(cur_mapping_dir, 'max_acc.lock')
+    lock_max_acc = FileLock(file_next_accession_lock_path)
+    # wait until max_acc would be available
+    with lock_max_acc.acquire(timeout=WAITING_TIME):
+        print('Locking max_acc file ...')
+        fd = open(file_next_accession, 'r+')
+        max = fd.read()
+        print('Start with accession number ', max)
+        next_acc = int(max) + number_new_records
+        fd.seek(0)
+        fd.truncate()
+        # write next accession
+        fd.write(str(next_acc))
+        print('Finish with accession number ', next_acc)
+        fd.close()
+    print('... Return max_acc file')
+    return int(max)
 
 
 if __name__ == "__main__":
@@ -176,53 +189,52 @@ if __name__ == "__main__":
     new_fasta = open(args.accession + '_FASTA.mgyp.fasta', 'w')
     print('New FASTA file: ' + args.accession + '_FASTA.mgyp.fasta')
 
-    # Read the last given accession number
-    file_next_accession = os.path.join(cur_mapping_dir, 'max_acc')
-    file_next_accession_lock_path = os.path.join(cur_mapping_dir, 'max_acc.lock')
-    lock_max_acc = FileLock(file_next_accession_lock_path)
-
-    # wait until max_acc would be available
-    with lock_max_acc.acquire(timeout=WAITING_TIME):
-        print('Locking max_acc file ...')
-        fd = open(file_next_accession, 'r+')
-        max = fd.read()
-        next_acc = int(max) + 1
-        print('Start with accession number ', next_acc)
-        fd.seek(0)
-        fd.truncate()
-
-        for twochar in dict_hash_records:
+    for twochar in dict_hash_records:
+        cur_twochar = files_hash[twochar]
+        lock_cur_twochar = FileLock(cur_twochar + '.lock')
+        with lock_cur_twochar.acquire(timeout=WAITING_TIME):
             # read existing map-file
             mapping_dir_release = os.path.join(mapping_dir, TYPE, args.release, twochar)
             print('---> Reading map file from ' + str(mapping_dir_release))
             map, reading_time = read_map_file(mapping_dir_release)
             print('Process:', twochar, 'peptides:', len(dict_hash_records[twochar]), ', size of map: ' + str(len(map)),
                   ', reading time:', reading_time, 's')
-            cur_twochar = files_hash[twochar]
-            lock_cur_twochar = FileLock(cur_twochar + '.lock')
-            with lock_cur_twochar.acquire(timeout=WAITING_TIME):
-                file_desc_twochar = open(cur_twochar, 'r+')
-                # adding all proteins
-                for record in dict_hash_records[twochar]:
-                    partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.id)
-                    next_acc, mgy_accession = map_accessions(map=map, next_acc=next_acc, seq=record.seq, biome=biome,
-                                                             partial=partial, assembly=args.accession,
-                                                            obs_biome=obs_biome, public=public_value)
-                    # write table of protein data
-                    file_peptides.write(' '.join([mgy_accession, record.id, start_coordinate, stop_coordinate, strand,
-                                                  partial, caller]))
-                    record.id = mgy_accession
-                    record.description = mgy_accession
-                    # write fasta file with new accessions
-                    SeqIO.write(record, new_fasta, "fasta")
-                    # write new sequences to twochar files
+
+            # find new records for map file
+            new_records = []
+            for record in dict_hash_records[twochar]:
+                partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.id)
+                if not (record.seq in map and partial in map[record.seq]):
+                    new_records.append(record)
+
+            # update accessions-file
+            file_next_accession = os.path.join(cur_mapping_dir, 'max_acc')
+            cur_accession = update_max_accession(len(new_records), file_next_accession)
+
+            file_desc_twochar = open(cur_twochar, 'r+')
+            # adding all proteins
+            print('-----> processing map-file')
+            for record in dict_hash_records[twochar]:
+                partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.id)
+                cur_accession, mgy_accession, new_protein_flag = map_accessions(map=map, next_acc=cur_accession,
+                                                                                seq=record.seq, biome=biome,
+                                                        partial=partial, assembly=args.accession,
+                                                        obs_biome=obs_biome, public=public_value)
+                print('Size map', len(map))
+                # write table of protein data
+                file_peptides.write(' '.join([mgy_accession, record.id, start_coordinate, stop_coordinate, strand,
+                                              partial, caller]))
+                record.id = mgy_accession
+                record.description = mgy_accession
+                # write fasta file with new accessions
+                SeqIO.write(record, new_fasta, "fasta")
+                # write new sequences to twochar files
+                if new_protein_flag:
+                    print('Updating map')
                     file_desc_twochar.write(' '.join([str(record.seq), str(partial), mgy_accession, str(public_value)]) + '\n')
             file_desc_twochar.close()
-        # write next accession
-        fd.write(str(next_acc))
-        print('Finish with accession number ', next_acc)
-        fd.close()
-    print('... Return max_acc file')
+            print('-----> Check final accession:', cur_accession)
+
     print('Write biom counts', os.path.join(cur_mapping_dir, 'mgy_biome_counts_' + args.release + '.tsv'))
     with open(os.path.join(cur_mapping_dir, 'mgy_biome_counts_' + args.release + '.tsv'), 'w') as fbiome:
         for b in sorted(obs_biome.items(), key=lambda x: x[1], reverse=True):
