@@ -4,8 +4,9 @@ import argparse
 import os
 from Bio import SeqIO
 import hashlib
-import fcntl
+from filelock import Timeout, FileLock
 
+WAITING_TIME = 0
 
 def get_args():
     parser = argparse.ArgumentParser(description="create file with MGYCs for run")
@@ -17,15 +18,18 @@ def get_args():
 
 
 def write_next_acc(filename, count):
-    fd = open(filename, 'r+')
-    fcntl.lockf(fd, fcntl.LOCK_EX)
-    max = fd.read()
-    next_acc = int(max) + 1
-    print('Start with accession number ', next_acc)
-    fd.seek(0)
-    fd.truncate()
-    fd.write(str(next_acc + int(count) - 1))
-    fcntl.lockf(fd, fcntl.LOCK_UN)
+    file_next_accession_lock_path = filename + '.lock'
+    lock_max_acc = FileLock(file_next_accession_lock_path)
+    with lock_max_acc.acquire(timeout=WAITING_TIME):
+        print('Locking max_acc file ...')
+        fd = open(filename, 'r+')
+        max = fd.read()
+        next_acc = int(max) + 1
+        print('Start with accession number ', next_acc)
+        fd.seek(0)
+        fd.truncate()
+        fd.write(str(next_acc + int(count) - 1))
+    fd.close()
     print('Finish with accession number: ', next_acc + int(count) - 1)
     return next_acc
 
