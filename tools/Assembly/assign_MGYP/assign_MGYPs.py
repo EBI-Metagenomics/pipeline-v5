@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
+import logging
 import os
+import gc
+import _pickle as cPickle
 from Bio import SeqIO
 import json
 import re
@@ -17,6 +20,7 @@ WAITING_TIME = 0  # (in sec)
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--fasta', dest='fasta', required=True, help='Fasta file with proteins')
+    parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument("-a", "--accession", help="run accession", dest="accession", required=True)
     parser.add_argument('-c', '--config', dest='config', required=True, help='path to mapping dir')
     parser.add_argument("-r", "--release", help="release name where to write new accessions", dest="release",
@@ -33,7 +37,7 @@ def get_bioms(mapping):
         for line in bfh:
             acc, b = line.rstrip().split('\t')
             biome[acc] = b
-    print('Biome', len(biome))
+    logging.info('Biome ' + str(len(biome)))
     return biome
 
 
@@ -56,36 +60,52 @@ def create_digest(seq):
     return digest
 
 
-def read_map_file(file):
+def read_map_file(file, mode='pickle'):
     start = time.time()
     map = {}
     if not os.path.exists(file):
         return map
-    with open(file) as fh:
-        for line in fh:
-            seq, partial, *_ = line.rstrip().split(' ')
-            acc = _[0]
-            public_sign = _[1] if len(_) > 1 else 0
-            if not seq in map:
-                map[seq] = {}
-            map[seq][partial] = [acc, public_sign]
+    if mode == 'pickle':
+        with open(file+'.pkl', 'rb') as read_file:
+            map = cPickle.load(read_file)
+    else:
+        with open(file) as fh:
+            for line in fh:
+                seq, partial, *_ = line.rstrip().split(' ')
+                acc = _[0]
+                public_sign = _[1] if len(_) > 1 else 0
+                if not seq in map:
+                    map[seq] = {}
+                map[seq][partial] = [acc, public_sign]
     end = time.time()
     return map, end-start
+
+
+def save_map_file(map, cur_twochar):
+    # save as pickle
+    start = time.time()
+    gc.disable()
+    with open(cur_twochar + '.pkl', 'wb') as pickle_file:
+        cPickle.dump(map, pickle_file)
+    pickle_file.close()
+    gc.enable()
+    end = time.time()
+    logging.debug('Saving took ' + str(end - start) + 's')
 
 
 def map_accessions(seq, partial, map, next_acc, biome, obs_biome, assembly, public):
     new = True
     if seq in map and partial in map[seq]:
-        print('----------- found seq and partial in map-file')
+        logging.debug('----------- found seq and partial in map-file')
         acc = map[seq][partial][0]
         new = False
     elif seq in map:
-        print('----------- found only seq in map-file')
+        logging.debug('----------- found only seq in map-file')
         acc = "MGYP%012d" % next_acc
         next_acc += 1
         map[seq][partial] = [acc, public]
     else:
-        print('----------- new protein')
+        logging.debug('----------- new protein')
         acc = "MGYP%012d" % next_acc
         next_acc += 1
         map[seq] = {}
@@ -108,7 +128,7 @@ def parsing_header(header):
         start_coordinate, stop_coordinate, strand = re.findall(r"#\s(.*?)\s", header)
         id, partial, start_type, stop_type, rbs_motif = re.findall(r"\=(.*?)\;", header)
     else:
-        #FGS header
+        # FGS header
         partial = '11'
         caller = 'FGS'
         list_fields = header.split('_')
@@ -124,18 +144,18 @@ def update_max_accession(number_new_records, file_next_accession):
     lock_max_acc = FileLock(file_next_accession_lock_path)
     # wait until max_acc would be available
     with lock_max_acc.acquire(timeout=WAITING_TIME):
-        print('Locking max_acc file ...')
+        logging.debug('Locking max_acc file ...')
         fd = open(file_next_accession, 'r+')
         max = fd.read()
-        print('Start with accession number ', max)
+        logging.info('Start with accession number ' + max)
         next_acc = int(max) + number_new_records
         fd.seek(0)
         fd.truncate()
         # write next accession
         fd.write(str(next_acc))
-        print('Finish with accession number ', next_acc)
+        logging.info('Finish with accession number ' + str(next_acc))
         fd.close()
-    print('... Return max_acc file')
+    logging.debug('... Return max_acc file')
     return int(max)
 
 
@@ -143,6 +163,7 @@ if __name__ == "__main__":
 
     TYPE = 'mgyp'
     args = get_args().parse_args()
+    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO)
     with open(args.config, 'r') as fc:
         config = json.loads(fc.read())
         mapping_dir = config['mapping']
@@ -155,9 +176,9 @@ if __name__ == "__main__":
 
     # check mapping dir for existence
     cur_mapping_dir = os.path.join(mapping_dir, TYPE, args.release)
-    print('Current mapping directory: ' + str(cur_mapping_dir))
+    logging.info('Current mapping directory: ' + str(cur_mapping_dir))
     if not os.path.exists(cur_mapping_dir):
-        print("Mapping directory doesn't exist")
+        logging.error("Mapping directory doesn't exist")
         exit(1)
 
     dict_hash_records, obs_biome, files_hash = [{} for _ in range(3)]
@@ -174,11 +195,11 @@ if __name__ == "__main__":
         dict_hash_records[twochar].append(record)
     # write long peprides
     with open(os.path.join(peptides_subfolder, 'long-proteins-number.txt'), 'w') as long_file:
-        print('Write number of long peptides: ', os.path.join(peptides_subfolder, 'long-proteins-number.txt'))
+        logging.info('Write number of long peptides: ' + str(os.path.join(peptides_subfolder, 'long-proteins-number.txt')))
         long_file.write(str(long_peptides))
 
     used_twochar = list(dict_hash_records.keys())
-    print('Used twochar hashes: ' + str(used_twochar))
+    logging.info('Used twochar hashes: ' + str(used_twochar))
     # prepare dict with names
     for twochar in used_twochar:
         files_hash[twochar] = os.path.join(cur_mapping_dir, twochar)
@@ -187,7 +208,7 @@ if __name__ == "__main__":
 
     file_peptides = open(peptides_file, 'w')
     new_fasta = open(args.accession + '_FASTA.mgyp.fasta', 'w')
-    print('New FASTA file: ' + args.accession + '_FASTA.mgyp.fasta')
+    logging.info('New FASTA file: ' + args.accession + '_FASTA.mgyp.fasta')
 
     for twochar in dict_hash_records:
         cur_twochar = files_hash[twochar]
@@ -195,10 +216,10 @@ if __name__ == "__main__":
         with lock_cur_twochar.acquire(timeout=WAITING_TIME):
             # read existing map-file
             mapping_dir_release = os.path.join(mapping_dir, TYPE, args.release, twochar)
-            print('---> Reading map file from ' + str(mapping_dir_release))
+            logging.debug('---> Reading map file from ' + str(mapping_dir_release))
             map, reading_time = read_map_file(mapping_dir_release)
-            print('Process:', twochar, 'peptides:', len(dict_hash_records[twochar]), ', size of map: ' + str(len(map)),
-                  ', reading time:', reading_time, 's')
+            logging.info('Process:' + twochar + ', peptides:' + str(len(dict_hash_records[twochar])) +
+                         ', size of map: ' + str(len(map)) + ', reading time: ' + str(reading_time) + 's')
 
             # find new records for map file
             new_records = []
@@ -213,14 +234,13 @@ if __name__ == "__main__":
 
             file_desc_twochar = open(cur_twochar, 'r+')
             # adding all proteins
-            print('-----> processing map-file')
+            logging.debug('-----> processing map-file')
             for record in dict_hash_records[twochar]:
                 partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.id)
                 cur_accession, mgy_accession, new_protein_flag = map_accessions(map=map, next_acc=cur_accession,
                                                                                 seq=record.seq, biome=biome,
                                                         partial=partial, assembly=args.accession,
                                                         obs_biome=obs_biome, public=public_value)
-                print('Size map', len(map))
                 # write table of protein data
                 file_peptides.write(' '.join([mgy_accession, record.id, start_coordinate, stop_coordinate, strand,
                                               partial, caller]))
@@ -228,14 +248,11 @@ if __name__ == "__main__":
                 record.description = mgy_accession
                 # write fasta file with new accessions
                 SeqIO.write(record, new_fasta, "fasta")
-                # write new sequences to twochar files
-                if new_protein_flag:
-                    print('Updating map')
-                    file_desc_twochar.write(' '.join([str(record.seq), str(partial), mgy_accession, str(public_value)]) + '\n')
+            save_map_file(map, cur_twochar)
             file_desc_twochar.close()
-            print('-----> Check final accession:', cur_accession)
+            logging.debug('-----> Check final accession: ' + str(cur_accession))
 
-    print('Write biom counts', os.path.join(cur_mapping_dir, 'mgy_biome_counts_' + args.release + '.tsv'))
+    logging.info('Write biom counts ' + str(os.path.join(cur_mapping_dir, 'mgy_biome_counts_' + args.release + '.tsv')))
     with open(os.path.join(cur_mapping_dir, 'mgy_biome_counts_' + args.release + '.tsv'), 'w') as fbiome:
         for b in sorted(obs_biome.items(), key=lambda x: x[1], reverse=True):
             fbiome.write(str(b[1]) + '\t' + b[0] + '\n')
