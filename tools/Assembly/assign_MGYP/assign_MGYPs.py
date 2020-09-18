@@ -53,10 +53,9 @@ def create_peptides_file(peptides, accession):
 
 
 def create_digest(seq):
-    dtype = 'sha256'
-    h = hashlib.new(dtype)
-    h.update(seq.encode('utf-8'))
-    digest = h.hexdigest()
+    #h = hashlib.new('sha256')
+    #digest = h.update(seq.encode('utf-8')).hexdigest()
+    digest = hashlib.sha256(str(seq).encode('utf-8')).hexdigest()
     return digest
 
 
@@ -65,9 +64,19 @@ def read_map_file(file, mode='pickle'):
     map = {}
     if not os.path.exists(file):
         return map
-    if mode == 'pickle':
-        with open(file+'.pkl', 'rb') as read_file:
-            map = cPickle.load(read_file)
+    if os.path.exists(file+'.pkl'):
+        if mode == 'pickle':
+            with open(file+'.pkl', 'rb') as read_file:
+                map = cPickle.load(read_file)
+        else:
+            with open(file) as fh:
+                for line in fh:
+                    seq, partial, *_ = line.rstrip().split(' ')
+                    acc = _[0]
+                    public_sign = _[1] if len(_) > 1 else 0
+                    if not seq in map:
+                        map[seq] = {}
+                    map[seq][partial] = [acc, public_sign]
     else:
         with open(file) as fh:
             for line in fh:
@@ -188,7 +197,7 @@ if __name__ == "__main__":
     for record in SeqIO.parse(args.fasta, "fasta"):
         if len(record.seq) > max_pep_length:
             long_peptides += 1
-        hash_seq = create_digest(record.seq)
+        hash_seq = create_digest(str(record.seq))
         twochar = hash_seq[:2]
         if twochar not in dict_hash_records:
             dict_hash_records[twochar] = []

@@ -12,15 +12,19 @@ requirements:
 inputs:
 
   input_fasta: File
-  maskfile: File
+  maskfile: File?
   postfixes: string[]
   chunk_size: int
 
 outputs:
-  results:
-    type: File[]
+  predicted_faa:
+    type: File
     format: edam:format_1929
-    outputSource: combine/result
+    outputSource: combine_faa/result
+  predicted_ffn:
+    type: File
+    format: edam:format_1929
+    outputSource: combine_ffn/result
   count_faa:
     type: int
     outputSource: count_cds/count
@@ -48,27 +52,34 @@ steps:
     run: ../../../tools/Combined_gene_caller/predict_proteins_assemblies.cwl
     label: CGC run
 
-
-  combine:
-    scatter: [ files, postfix ]
-    scatterMethod: dotproduct
+  combine_faa:
     in:
-      files:
-        - combined_gene_caller/predicted_proteins
-        - combined_gene_caller/predicted_seq
+      files: combined_gene_caller/predicted_proteins
       outputFileName:
         source: input_fasta
         valueFrom: $(self.nameroot)
-      postfix: postfixes
+      postfix:
+        source: postfixes
+        valueFrom: $(self[0])
+    out: [result]
+    run: ../../../utils/concatenate.cwl
+
+  combine_ffn:
+    in:
+      files: combined_gene_caller/predicted_seq
+      outputFileName:
+        source: input_fasta
+        valueFrom: $(self.nameroot)
+      postfix:
+        source: postfixes
+        valueFrom: $(self[1])
     out: [result]
     run: ../../../utils/concatenate.cwl
 
   count_cds:
     run: ../../../utils/count_fasta.cwl
     in:
-      sequences:
-        source: combine/result
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      sequences: combine_faa/result
       number: { default: 1 }
     out: [ count ]
 

@@ -17,7 +17,10 @@ inputs:
 
 # << protein db >>
     private: boolean?
-    mapping_directory_mgyc: string
+    mapping_directory_mgyc: string?
+    include_protein_assign: boolean?
+    mgyp_config: string?
+    mgyp_release: string?
 
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -178,7 +181,10 @@ steps:
     in:
       status: before-qc/qc-status
       private: private
+      include_protein_assign: include_protein_assign
       mapping_directory_mgyc: mapping_directory_mgyc
+      mgyp_config: mgyp_config
+      mgyp_release: mgyp_release
       filtered_fasta: before-qc/filtered_fasta
       ssu_db: ssu_db
       lsu_db: lsu_db

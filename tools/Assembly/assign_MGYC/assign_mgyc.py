@@ -35,10 +35,11 @@ def write_next_acc(filename, count):
 
 
 def create_digest(seq):
-    dtype = 'sha256'
-    h = hashlib.new(dtype)
-    h.update(seq.encode('utf-8'))
-    digest = h.hexdigest()
+    #dtype = 'sha256'
+    #h = hashlib.new(dtype)
+    #h.update(seq.encode('utf-8'))
+    #digest = h.hexdigest()
+    digest = hashlib.sha256(str(seq).encode('utf-8')).hexdigest()
     return digest
 
 
@@ -76,7 +77,7 @@ if __name__ == "__main__":
             length = get_length(record.id)
             kmer_covarage = get_kmercoverage(record.id)
             mgy_accession = "MGYC%012d" % next_acc
-            hash_seq = create_digest(record.seq)
+            hash_seq = create_digest(str(record.seq))
             hash_erz_seq = create_digest(args.accession + record.seq)
             next_acc += 1
             accession_file.write(' '.join([mgy_accession, hash_erz_seq, hash_seq, length, kmer_covarage]) + '\n')

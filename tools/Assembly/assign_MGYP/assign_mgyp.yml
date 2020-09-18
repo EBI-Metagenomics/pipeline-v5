@@ -1,7 +1,7 @@
 input_fasta:
-  path: test.fasta
+  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tools/Assembly/assign_MGYP/test.fasta
   class: File
-config: new_config
-release: 20200915
+config: /hps/nobackup2/production/metagenomics/pipeline/tools-v5/utils/config_protein_assign
+release: '20200724'
 accession: testAccession
 # private: True

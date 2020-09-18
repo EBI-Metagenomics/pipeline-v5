@@ -19,8 +19,11 @@ requirements:
 inputs:
     filtered_fasta: File
 
-    mapping_directory_mgyc: string
+    mapping_directory_mgyc: string?
     private: boolean?
+    include_protein_assign: boolean?
+    mgyp_config: string?
+    mgyp_release: string?
 
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -154,14 +157,18 @@ steps:
 
   count_sequences_fasta:
     run: ../../../utils/count_fasta.cwl
+    when: $(inputs.include_protein_assign_bool == true)
     in:
+      include_protein_assign_bool: include_protein_assign
       sequences: filtered_fasta
       number: { default: 1 }
     out: [ count ]
 
   assign_mgyc:
     run: ../../../tools/Assembly/assign_MGYC/assign_mgyc.cwl
+    when: $(inputs.include_protein_assign_bool == true)
     in:
+      include_protein_assign_bool: include_protein_assign
       input_fasta: filtered_fasta
       mapping: mapping_directory_mgyc
       count: count_sequences_fasta/count
@@ -225,20 +232,31 @@ steps:
 # -----------------------------------  << COMBINED GENE CALLER >>  -----------------------------------
   cgc:
     in:
-      input_fasta: assign_mgyc/renamed_contigs_fasta
-      maskfile: rna_prediction/ncRNA
+      input_fasta:
+        source:
+          - assign_mgyc/renamed_contigs_fasta
+          - filtered_fasta
+        pickValue: first_non_null
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
-    out: [ results, count_faa ]
+    out: [ predicted_faa, predicted_ffn, count_faa ]
     run: ../../subworkflows/assembly/CGC-subwf.cwl
 
 # -----------------------------------  << Assign MGYPs >>  -----------------------------------
 
-#  assign_mgyp:
-#    run: ../../../tools/Assembly/assign_MGYP/assign_mgyp.cwl
-#    in:
-#
-#    out: [  ]
+  assign_mgyp:
+    when: $(inputs.include_protein_assign_bool == true)
+    run: ../../../tools/Assembly/assign_MGYP/assign_mgyp.cwl
+    in:
+      include_protein_assign_bool: include_protein_assign
+      input_fasta: cgc/predicted_faa
+      config: mgyp_config
+      release: mgyp_release
+      accession:
+        source: filtered_fasta
+        valueFrom: $(self.nameroot)
+      private: private
+    out: [ renamed_proteins, stderr_protein_assign ]
 
 # ------------------------- <<ANTISMASH >> -------------------------------
   antismash:
@@ -264,10 +282,11 @@ steps:
     run: ../../subworkflows/assembly/func_ann_and_post_processing-subwf.cwl
     in:
       check_value: cgc/count_faa
-
       cgc_results_faa:
-         source: cgc/results
-         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        source:
+          - assign_mgyp/renamed_proteins
+          - cgc/predicted_faa
+        pickValue: first_non_null
       filtered_fasta: assign_mgyc/renamed_contigs_fasta
       rna_prediction_ncRNA: rna_prediction/ncRNA
 
@@ -324,12 +343,12 @@ steps:
     run: ../../subworkflows/final_chunking.cwl
     in:
       fasta: assign_mgyc/renamed_contigs_fasta
-      ffn:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
+      ffn: cgc/predicted_ffn
       faa:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        source:
+          - assign_mgyp/renamed_proteins
+          - cgc/predicted_faa
+        pickValue: first_non_null
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:

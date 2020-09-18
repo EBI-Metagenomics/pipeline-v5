@@ -6,7 +6,8 @@ label: "Assign MGYP to protein sequences"
 
 requirements:
   ResourceRequirement:
-    ramMin: 300
+    ramMin: 15000
+  InlineJavascriptRequirement: {}
 
 inputs:
   input_fasta:
@@ -18,7 +19,7 @@ inputs:
     inputBinding:
       prefix: -c
   release:
-    type: int
+    type: string
     inputBinding:
       prefix: -r
   accession:
@@ -32,11 +33,20 @@ inputs:
 
 baseCommand: [ assign_MGYPs.py ]
 
+stderr: stderr.txt
+
 outputs:
   renamed_proteins:
     type: File
     outputBinding:
-        glob: "*_FASTA.mgyp.fasta"
+      glob: "*.mgyp.fasta"
+      outputEval: |
+        ${
+          self[0].basename = inputs.input_fasta.nameroot + '.faa';
+          return self[0]
+        }
+  stderr_protein_assign:
+    type: stderr
 
 hints:
   - class: DockerRequirement

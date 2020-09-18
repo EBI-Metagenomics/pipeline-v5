@@ -7,6 +7,7 @@ label: "Assign MGYC to DNA contigs"
 requirements:
   ResourceRequirement:
     ramMin: 300
+  InlineJavascriptRequirement: {}
 
 inputs:
   input_fasta:
@@ -32,7 +33,12 @@ outputs:
   renamed_contigs_fasta:
     type: File
     outputBinding:
-        glob: "*mgyc.fasta"
+      glob: "*mgyc.fasta"
+      outputEval: |
+        ${
+          self[0].basename = inputs.input_fasta.basename;
+          return self[0]
+        }
 
 hints:
   - class: DockerRequirement
