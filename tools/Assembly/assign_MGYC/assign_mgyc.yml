@@ -1,6 +1,6 @@
 input_fasta:
   class: File
-  path: /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tools/Assembly/assign_MGYC/test.fasta
-mapping: /nfs/production/interpro/metagenomics/peptide_db/mapping
+  path: test.fasta
+mapping: mapping
 count: 3
 accession: SRR1620013
