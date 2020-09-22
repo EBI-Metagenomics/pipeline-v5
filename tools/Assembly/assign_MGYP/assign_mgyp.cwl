@@ -38,6 +38,7 @@ stderr: stderr.txt
 outputs:
   renamed_proteins:
     type: File
+    format: edam:format_1929
     outputBinding:
       glob: "*.mgyp.fasta"
       outputEval: |
@@ -53,9 +54,10 @@ hints:
     dockerPull: 'alpine:3.7'
 
 $namespaces:
+ edam: http://edamontology.org/
  s: http://schema.org/
- iana: https://www.iana.org/assignments/media-types/
 $schemas:
+ - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
