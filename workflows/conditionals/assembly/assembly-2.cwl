@@ -150,6 +150,7 @@ steps:
 # -----------------------------------  << RNA PREDICTION >>  -----------------------------------
   rna_prediction:
     in:
+      type: { default: 'assembly'}
       input_sequences: filtered_fasta
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db

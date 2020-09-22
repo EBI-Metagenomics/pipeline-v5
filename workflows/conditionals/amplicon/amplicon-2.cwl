@@ -75,6 +75,7 @@ steps:
   rna_prediction:
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
     in:
+      type: { default: 'raw'}
       input_sequences: filtered_fasta
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db

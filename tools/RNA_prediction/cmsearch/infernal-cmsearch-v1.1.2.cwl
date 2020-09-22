@@ -8,7 +8,7 @@ baseCommand:
   - cmsearch
 inputs:
   - id: covariance_model_database
-    type: string
+    type: [ string, File ]
     inputBinding:
       position: 1
   - id: cpu
@@ -64,13 +64,47 @@ outputs:
     type: File
     format: edam:format_3475
     outputBinding:
-      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
+      glob: |
+        ${
+          var name = "";
+          if (typeof inputs.covariance_model_database == "string") {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.split("/").slice(-1)[0] +
+              ".cmsearch_matches.tbl";
+          } else {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.nameroot +
+              ".cmsearch_matches.tbl";
+          }
+          return name;
+        }
   - id: programOutput
     label: 'direct output to file, not stdout'
     type: File
     format: edam:format_3475
     outputBinding:
-      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
+      glob: |
+        ${
+          var name = "";
+          if (typeof inputs.covariance_model_database == "string") {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.split("/").slice(-1)[0] +
+              ".cmsearch.out";
+          } else {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.nameroot +
+              ".cmsearch.out";
+          }
+          return name;
+        }
 
 doc: >
   Infernal ("INFERence of RNA ALignment") is for searching DNA sequence
@@ -90,10 +124,50 @@ label: Search sequence(s) against a covariance model database
 arguments:
   - position: 0
     prefix: '--tblout'
-    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
+    valueFrom: |
+      ${
+        var name = "";
+        if (typeof inputs.covariance_model_database == "string") {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.split("/").slice(-1)[0] +
+            ".cmsearch_matches.tbl";
+        } else {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.nameroot +
+            ".cmsearch_matches.tbl";
+        }
+        return name;
+      }
   - position: 0
     prefix: '-o'
-    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
+    valueFrom: |
+      ${
+        var name = "";
+        if (typeof inputs.covariance_model_database == "string") {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.split("/").slice(-1)[0] +
+            ".cmsearch.out";
+        } else {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.nameroot +
+            ".cmsearch.out";
+        }
+        return name;
+      }
+  - valueFrom: '> /dev/null'
+    shellQuote: false
+    position: 10
+  - valueFrom: '2> /dev/null'
+    shellQuote: false
+    position: 11
 
 hints:
   - class: SoftwareRequirement
@@ -109,11 +183,13 @@ hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
-    ramMin: 30000
-    coresMin: 4
+    ramMin: 32000
+    coresMin: 8
+  - class: ShellCommandRequirement
+
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'
   - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
 's:copyrightHolder': EMBL - European Bioinformatics Institute
 's:license': 'https://www.apache.org/licenses/LICENSE-2.0'
-'s:author': Michael Crusoe, Maxim Scheremetjew
+'s:author': Michael Crusoe, Maxim Scheremetjew, Ekaterina Sakharova
