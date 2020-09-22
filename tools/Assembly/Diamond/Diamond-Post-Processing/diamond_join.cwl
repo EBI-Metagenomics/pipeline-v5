@@ -23,7 +23,7 @@ inputs:
       separate: true
       prefix: -i
   input_db:
-    type: string
+    type: [string, File]
     inputBinding:
       separate: true
       prefix: -d

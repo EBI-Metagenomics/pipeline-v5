@@ -14,7 +14,7 @@ requirements:
 
 inputs:
     filtered_fasta: File
-    clusters_glossary: string
+    clusters_glossary: [string, File]
     final_folder_name: string
     split_size: int
 
