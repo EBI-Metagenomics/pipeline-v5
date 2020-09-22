@@ -94,6 +94,12 @@ arguments:
   - position: 0
     prefix: '-o'
     valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
+  - valueFrom: '> /dev/null'
+    shellQuote: false
+    position: 10
+  - valueFrom: '2> /dev/null'
+    shellQuote: false
+    position: 11
 
 hints:
   - class: SoftwareRequirement
@@ -111,9 +117,11 @@ requirements:
   - class: ResourceRequirement
     ramMin: 30000
     coresMin: 4
+  - class: ShellCommandRequirement
+
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'
   - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
 's:copyrightHolder': EMBL - European Bioinformatics Institute
 's:license': 'https://www.apache.org/licenses/LICENSE-2.0'
-'s:author': Michael Crusoe, Maxim Scheremetjew
+'s:author': Michael Crusoe, Maxim Scheremetjew, Ekaterina Sakharova
