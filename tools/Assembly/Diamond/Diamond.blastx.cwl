@@ -29,7 +29,7 @@ inputs:
       prefix: '--block-size'
     label: sequence block size in billions of letters (default=2.0)
   - id: databaseFile
-    type: string
+    type: [string, File]
     inputBinding:
       position: 0
       prefix: '--db'

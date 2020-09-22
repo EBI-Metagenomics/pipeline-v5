@@ -17,7 +17,7 @@ inputs:
   antismash_geneclusters_txt: File?
   rna: File
   cds: File
-  go_config: string?
+  go_config: [string?, File?]
   eggnog_orthologs: File
   eggnog_annotations: File
   diamond_header: string

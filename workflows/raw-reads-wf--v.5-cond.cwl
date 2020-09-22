@@ -21,13 +21,16 @@ inputs:
 
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
-    ssu_tax: string
-    lsu_tax: string
-    ssu_otus: string
-    lsu_otus: string
+    ssu_tax: [string, File]
+    lsu_tax: [string, File]
+    ssu_otus: [string, File]
+    lsu_otus: [string, File]
 
-    rfam_models: string[]
-    rfam_model_clans: string
+    rfam_models:
+      type:
+        - type: array
+          items: [string, File]
+    rfam_model_clans: [string, File]
     other_ncRNA_models: string[]
     ssu_label: string
     lsu_label: string
@@ -35,7 +38,7 @@ inputs:
     5.8s_pattern: string
 
     # cgc
-    CGC_config: string?
+    CGC_config: [string?, File?]
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -48,8 +51,8 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_name_database: string
     hmmsearch_header: string
-    EggNOG_db: string?
-    EggNOG_diamond_db: string?
+    EggNOG_db: [string?, File?]
+    EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: string?
     InterProScan_databases: string
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
@@ -58,7 +61,7 @@ inputs:
     ko_file: string
 
     # GO
-    go_config: string?
+    go_config: [string?, File?]
 
 outputs:
 

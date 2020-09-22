@@ -9,12 +9,17 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  clan_info: string
-  covariance_models: string[]
+  clan_info: [string, File]
+  #cores: int
+  covariance_models:
+    type:
+      - type: array
+        items: [string, File]
   query_sequences: File
+  targetFile: File
 
 outputs:
-  matches:
+  cmsearch_matches:
     outputSource: cmsearch/matches
     type: File[]
   concatenate_matches:
@@ -27,7 +32,7 @@ outputs:
 steps:
   cmsearch:
     label: Search sequence(s) against a covariance model database
-    run: ../../../tools/RNA_prediction/cmsearch/infernal-cmsearch-v1.1.2.cwl
+    run: ../../tools/RNA_prediction/cmsearch/infernal-cmsearch-v1.1.2.cwl
     in:
       covariance_model_database: covariance_models
       cpu: { default: 8 }
@@ -42,19 +47,19 @@ steps:
     out: [ matches, programOutput ]
 
   run_concatenate_matches:
-    run: ../../../utils/concatenate.cwl
+    run: ../../utils/concatenate.cwl
     in:
       files:
         - cmsearch/matches
       outputFileName:
-        source: query_sequences
+        source: targetFile
         valueFrom: $(self.nameroot)
       postfix: { default: ".cmsearch.all.tblout" }
     out: [ result ]
 
   remove_overlaps:
     label: Remove lower scoring overlaps from cmsearch --tblout files.
-    run: ../../../tools/RNA_prediction/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
+    run: ../../tools/RNA_prediction/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
     in:
       clan_information: clan_info
       cmsearch_matches: run_concatenate_matches/result
