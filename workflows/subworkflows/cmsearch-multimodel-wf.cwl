@@ -9,9 +9,12 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  clan_info: string
+  clan_info: [string, File]
   #cores: int
-  covariance_models: string[]
+  covariance_models:
+    type:
+      - type: array
+        items: [string, File]
   query_sequences: File
   targetFile: File
 

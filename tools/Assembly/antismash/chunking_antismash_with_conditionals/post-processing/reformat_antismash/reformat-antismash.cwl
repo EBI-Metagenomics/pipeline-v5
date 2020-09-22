@@ -18,7 +18,7 @@ baseCommand: [ reformat-antismash.py ]
 
 inputs:
   glossary:
-    type: string
+    type: [string, File]
     inputBinding:
       position: 1
       prefix: -g

@@ -13,9 +13,9 @@ inputs:
   input_table_hmmscan: File
   filtered_fasta: File
   outputname: string
-  graphs: string
-  pathways_names: string
-  pathways_classes: string
+  graphs: [string, File]
+  pathways_names: [string, File]
+  pathways_classes: [string, File]
 
 outputs:
 

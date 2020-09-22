@@ -26,7 +26,7 @@ inputs:
       prefix: --input-file
 
   config:
-    type: string?
+    type: [string?, File?]
     inputBinding:
       prefix: --config
     default: "/tools/go_summary-config.json"
