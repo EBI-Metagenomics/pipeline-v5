@@ -8,7 +8,7 @@ baseCommand:
   - cmsearch
 inputs:
   - id: covariance_model_database
-    type: string
+    type: [ string, File ]
     inputBinding:
       position: 1
   - id: cpu
@@ -115,8 +115,8 @@ hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
-    ramMin: 30000
-    coresMin: 4
+    ramMin: 16000
+    coresMin: 8
   - class: ShellCommandRequirement
 
 $schemas:

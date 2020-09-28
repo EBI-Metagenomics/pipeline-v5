@@ -13,7 +13,9 @@ baseCommand: [ cat ]
 
 inputs:
   files:
-    type: File[]
+    type:
+      - type: array
+        items: [ File, string ]
     inputBinding:
       position: 1
   outputFileName: string
