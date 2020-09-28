@@ -26,7 +26,11 @@ stdout: $(inputs.outputFileName)$(inputs.postfix)
 outputs:
   - id: result
     type: stdout
-    format: ${if ("format" in inputs.files[0]) return inputs.files[0].format; else return 'undefined'}
+    format: ${if (typeof(inputs.files[0]) == 'string') return 'underfined';
+            else {
+                   if ("format" in inputs.files[0]) return inputs.files[0].format;
+                   else return 'underfined'}
+            }
 
 doc: >
   The cat (short for concatenate) command is one of the most frequently used command in

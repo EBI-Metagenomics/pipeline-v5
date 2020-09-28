@@ -64,13 +64,29 @@ outputs:
     type: File
     format: edam:format_3475
     outputBinding:
-      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
+      glob: |
+        ${
+          var name = "";
+          if (typeof inputs.covariance_model_database == "string"){
+            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch_matches.tbl'; }
+          else {
+            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch_matches.tbl'; }
+          return name;
+        }
   - id: programOutput
     label: 'direct output to file, not stdout'
     type: File
     format: edam:format_3475
     outputBinding:
-      glob: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
+      glob: |
+        ${
+          var name = "";
+          if (typeof inputs.covariance_model_database == "string"){
+            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch.out'; }
+          else {
+            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch.out'; }
+          return name;
+        }
 
 doc: >
   Infernal ("INFERence of RNA ALignment") is for searching DNA sequence
@@ -90,10 +106,26 @@ label: Search sequence(s) against a covariance model database
 arguments:
   - position: 0
     prefix: '--tblout'
-    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch_matches.tbl
+    valueFrom: |
+      ${
+        var name = "";
+        if (typeof inputs.covariance_model_database == "string"){
+          name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch_matches.tbl'; }
+        else {
+          name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch_matches.tbl'; }
+        return name;
+      }
   - position: 0
     prefix: '-o'
-    valueFrom: $(inputs.query_sequences.basename).$(inputs.covariance_model_database.split('/').slice(-1)[0]).cmsearch.out
+    valueFrom: |
+      ${
+        var name = "";
+        if (typeof inputs.covariance_model_database == "string"){
+          name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch.out'; }
+        else {
+          name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch.out'; }
+        return name;
+      }
   - valueFrom: '> /dev/null'
     shellQuote: false
     position: 10

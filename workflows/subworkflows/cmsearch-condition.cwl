@@ -6,14 +6,17 @@ $namespaces:
 label: Identifies non-coding RNAs using Rfams covariance models
 
 requirements:
-  - class: ScatterFeatureRequirement
+  SubworkflowFeatureRequirement: {}
+  MultipleInputFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
+  StepInputExpressionRequirement: {}
+  ScatterFeatureRequirement: {}
 
 inputs:
   type: string
   query_sequences: File
   clan_info: string
   covariance_models: string[]
-  targetFile: File
 
 outputs:
 
@@ -39,7 +42,6 @@ steps:
       type: type
       clan_info: clan_info
       covariance_models: covariance_models
-      targetFile: targetFile
       query_sequences: query_sequences
     out: [ concatenate_matches, deoverlapped_matches ]
 
@@ -51,7 +53,6 @@ steps:
       type: type
       clan_info: clan_info
       covariance_models: covariance_models
-      targetFile: targetFile
       query_sequences: query_sequences
     out: [ concatenate_matches, deoverlapped_matches ]
 

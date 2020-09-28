@@ -12,7 +12,6 @@ inputs:
   query_sequences: File
   covariance_models: string[]
   clan_info: string
-  targetFile: File
 
 outputs:
   concatenate_matches:
@@ -28,7 +27,7 @@ steps:
     run: ../../utils/concatenate.cwl
     in:
       files: covariance_models
-      outputFileName: {default: '.cmsearch'}
+      outputFileName: {default: 'models_cmsearch'}
       postfix: {default: '.all.tblout'}
     out: [ result ]
 

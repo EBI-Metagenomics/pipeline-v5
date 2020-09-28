@@ -12,7 +12,6 @@ inputs:
   clan_info: string
   covariance_models: string[]
   query_sequences: File
-  targetFile: File
 
 outputs:
   matches:
@@ -48,7 +47,7 @@ steps:
       files:
         - cmsearch/matches
       outputFileName:
-        source: targetFile
+        source: query_sequences
         valueFrom: $(self.nameroot)
       postfix: { default: ".cmsearch.all.tblout" }
     out: [ result ]
