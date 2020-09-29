@@ -79,10 +79,19 @@ arguments:
     valueFrom: |
       ${
         var name = "";
-        if (typeof inputs.covariance_model_database == "string"){
-          name = inputs.query_sequences.basename.inputs.covariance_model_database.split('/').slice(-1)[0].cmsearch_matches.tbl; }
-        else {
-          name = inputs.query_sequences.basename.inputs.covariance_model_database.nameroot.cmsearch_matches.tbl; }
+        if (typeof inputs.covariance_model_database === "string") {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.split("/").slice(-1)[0] +
+            ".cmsearch_matches.tbl";
+        } else {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.nameroot +
+            ".cmsearch_matches.tbl";
+        }
         return name;
       }
   - position: 0
@@ -90,10 +99,19 @@ arguments:
     valueFrom: |
       ${
         var name = "";
-        if (typeof inputs.covariance_model_database == "string"){
-          name = inputs.query_sequences.basename.inputs.covariance_model_database.split('/').slice(-1)[0].cmsearch.out; }
-        else {
-          name = inputs.query_sequences.basename.inputs.covariance_model_database.nameroot.cmsearch.out; }
+        if (typeof inputs.covariance_model_database == "string") {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.split("/").slice(-1)[0] +
+            ".cmsearch.out";
+        } else {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.nameroot +
+            ".cmsearch.out";
+        }
         return name;
       }
 
@@ -107,10 +125,19 @@ outputs:
       glob: |
         ${
           var name = "";
-          if (typeof inputs.covariance_model_database == "string"){
-            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch_matches.tbl'; }
-          else {
-            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch_matches.tbl'; }
+          if (typeof inputs.covariance_model_database === "string") {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.split("/").slice(-1)[0] +
+              ".cmsearch_matches.tbl";
+          } else {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.nameroot +
+              ".cmsearch_matches.tbl";
+          }
           return name;
         }
 
@@ -122,10 +149,19 @@ outputs:
       glob: |
         ${
           var name = "";
-          if (typeof inputs.covariance_model_database == "string"){
-            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch.out'; }
-          else {
-            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch.out'; }
+          if (typeof inputs.covariance_model_database == "string") {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.split("/").slice(-1)[0] +
+              ".cmsearch.out";
+          } else {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.nameroot +
+              ".cmsearch.out";
+          }
           return name;
         }
 doc: >
@@ -151,7 +187,7 @@ $schemas:
   - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:author: "Michael Crusoe, Maxim Scheremetjew"
+s:author: "Michael Crusoe, Maxim Scheremetjew, Ekaterina Sakharova, Martin Beracochea"
 s:copyrightHolder:
     - name: "EMBL - European Bioinformatics Institute"
     - url: "https://www.ebi.ac.uk/"
