@@ -67,10 +67,19 @@ outputs:
       glob: |
         ${
           var name = "";
-          if (typeof inputs.covariance_model_database == "string"){
-            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch_matches.tbl'; }
-          else {
-            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch_matches.tbl'; }
+          if (typeof inputs.covariance_model_database == "string") {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.split("/").slice(-1)[0] +
+              ".cmsearch_matches.tbl";
+          } else {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.nameroot +
+              ".cmsearch_matches.tbl";
+          }
           return name;
         }
   - id: programOutput
@@ -81,10 +90,19 @@ outputs:
       glob: |
         ${
           var name = "";
-          if (typeof inputs.covariance_model_database == "string"){
-            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch.out'; }
-          else {
-            name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch.out'; }
+          if (typeof inputs.covariance_model_database == "string") {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.split("/").slice(-1)[0] +
+              ".cmsearch.out";
+          } else {
+            name =
+              inputs.query_sequences.basename +
+              "." +
+              inputs.covariance_model_database.nameroot +
+              ".cmsearch.out";
+          }
           return name;
         }
 
@@ -109,10 +127,19 @@ arguments:
     valueFrom: |
       ${
         var name = "";
-        if (typeof inputs.covariance_model_database == "string"){
-          name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch_matches.tbl'; }
-        else {
-          name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch_matches.tbl'; }
+        if (typeof inputs.covariance_model_database == "string") {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.split("/").slice(-1)[0] +
+            ".cmsearch_matches.tbl";
+        } else {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.nameroot +
+            ".cmsearch_matches.tbl";
+        }
         return name;
       }
   - position: 0
@@ -120,10 +147,19 @@ arguments:
     valueFrom: |
       ${
         var name = "";
-        if (typeof inputs.covariance_model_database == "string"){
-          name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.split('/').slice(-1)[0] + '.cmsearch.out'; }
-        else {
-          name = inputs.query_sequences.basename + '.' + inputs.covariance_model_database.nameroot + '.cmsearch.out'; }
+        if (typeof inputs.covariance_model_database == "string") {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.split("/").slice(-1)[0] +
+            ".cmsearch.out";
+        } else {
+          name =
+            inputs.query_sequences.basename +
+            "." +
+            inputs.covariance_model_database.nameroot +
+            ".cmsearch.out";
+        }
         return name;
       }
   - valueFrom: '> /dev/null'

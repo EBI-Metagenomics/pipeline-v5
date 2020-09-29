@@ -8,9 +8,7 @@ label: Identifies non-coding RNAs using Rfams covariance models
 requirements:
   SubworkflowFeatureRequirement: {}
   MultipleInputFeatureRequirement: {}
-  InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
-  ScatterFeatureRequirement: {}
 
 inputs:
   type: string

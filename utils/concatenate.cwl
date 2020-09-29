@@ -26,10 +26,10 @@ stdout: $(inputs.outputFileName)$(inputs.postfix)
 outputs:
   - id: result
     type: stdout
-    format: ${if (typeof(inputs.files[0]) == 'string') return 'underfined';
+    format: ${if (typeof(inputs.files[0]) == 'string') return 'undefined';
             else {
                    if ("format" in inputs.files[0]) return inputs.files[0].format;
-                   else return 'underfined'}
+                   else return 'undefined'}
             }
 
 doc: >
