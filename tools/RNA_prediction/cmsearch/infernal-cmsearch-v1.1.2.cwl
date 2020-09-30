@@ -183,7 +183,7 @@ hints:
 requirements:
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
-    ramMin: 16000
+    ramMin: 32000
     coresMin: 8
   - class: ShellCommandRequirement
 
