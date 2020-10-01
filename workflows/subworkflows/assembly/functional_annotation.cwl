@@ -26,7 +26,7 @@ inputs:
   chunk_size_eggnog: int
   EggNOG_db: [string, File]
   EggNOG_diamond_db: [string, File]
-  EggNOG_data_dir: string
+  EggNOG_data_dir: [string, Directory]
 
   chunk_size_IPS: int
   name_ips: string
