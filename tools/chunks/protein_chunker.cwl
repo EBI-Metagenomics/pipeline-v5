@@ -9,7 +9,8 @@ doc: based upon code by Maxim Scheremetjew, EMBL-EBI
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 5000
+    ramMin: 8000
+  ShellCommandRequirement: {}
 
 hints:
   DockerRequirement:
@@ -35,6 +36,15 @@ inputs:
     type: string?
     inputBinding:
       prefix: -f
+
+arguments:
+  - valueFrom: '> /dev/null'
+    shellQuote: false
+    position: 10
+  - valueFrom: '2> /dev/null'
+    shellQuote: false
+    position: 11
+
 
 baseCommand: [ split_to_chunks.py ]
 
