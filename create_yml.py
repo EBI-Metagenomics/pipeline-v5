@@ -60,10 +60,22 @@ if __name__ == "__main__":
                 "format": "edam:format_1929",
                 "checksum": "96dc05a4ab2933ec6f443a1a0ce0d225",
             },
-            "ssu_tax": args.dir + "/silva_ssu/slv_ssu_filtered2.txt",
-            "lsu_tax": args.dir + "/silva_lsu/slv_lsu_filtered2.txt",
-            "ssu_otus": args.dir + "silva_ssu/ssu2.otu",
-            "lsu_otus": args.dir + "/silva_lsu/lsu2.otu",
+            "ssu_tax": {
+                "class": "File",
+                "path": args.dir + "/silva_ssu/slv_ssu_filtered2.txt",
+            },
+            "lsu_tax": {
+                "class": "File",
+                "path": args.dir + "/silva_lsu/slv_lsu_filtered2.txt",
+            },
+            "ssu_otus": {
+                "class": "File",
+                "path": args.dir + "silva_ssu/ssu2.otu",
+            },
+            "lsu_otus": {
+                "class": "File",
+                "path": args.dir + "/silva_lsu/lsu2.otu",
+            },
         }
     )
     # lsu
@@ -81,10 +93,22 @@ if __name__ == "__main__":
                 "format": "edam:format_1929",
                 "checksum": "96dc05a4ab2933ec6f443a1a0ce0d225",
             },
-            "ssu_tax": args.dir + "/silva_ssu/slv_ssu_filtered2.txt",
-            "lsu_tax": args.dir + "/silva_lsu/slv_lsu_filtered2.txt",
-            "ssu_otus": args.dir + "/silva_ssu/ssu2.otu",
-            "lsu_otus": args.dir + "/silva_lsu/lsu2.otu",
+            "ssu_tax": {
+                "class": "File",
+                "path": args.dir + "/silva_ssu/slv_ssu_filtered2.txt",
+            },
+            "lsu_tax": {
+                "class": "File",
+                "path": args.dir + "/silva_lsu/slv_lsu_filtered2.txt",
+            },
+            "ssu_otus": {
+                "class": "File",
+                "path": args.dir + "/silva_ssu/ssu2.otu",
+            },
+            "lsu_otus": {
+                "class": "File",
+                "path": args.dir + "/silva_lsu/lsu2.otu",
+            },
         }
     )
 
@@ -128,12 +152,16 @@ if __name__ == "__main__":
             ]
         )
 
-    input_yaml.update({"rfam_models": rfam_models})
+    input_yaml.update(
+        {"rfam_models": [{"class": "File", "path": path} for path in rfam_models]}
+    )
 
     if args.type in ["assembly", "wgs"]:
         # ==== for wgs and assembly ====
         # rfam_model_clans
-        input_yaml.update({"rfam_model_clans": args.dir + "/rRNA.claninfo"})
+        input_yaml.update(
+            {"rfam_model_clans": {"class": "File", "path": args.dir + "/rRNA.claninfo"}}
+        )
 
         # other RNA
         input_yaml.update(
@@ -185,8 +213,11 @@ if __name__ == "__main__":
             {
                 "HMM_gathering_bit_score": True,
                 "HMM_omit_alignment": True,
-                "HMM_name_database": args.dir + "/db_kofam/db_kofam.hmm",
-                "hmmsearch_header": u"\t".join(
+                "HMM_name_database": {
+                    "class": "File",
+                    "path": args.dir + "/db_kofam/db_kofam.hmm",
+                },
+                "hmmsearch_header": "\t".join(
                     [
                         "query_name",
                         "tquery_accession",
@@ -227,11 +258,11 @@ if __name__ == "__main__":
                     "Gene3d",
                 ],
                 "InterProScan_outputFormat": ["TSV"],
-                "InterProScan_databases": args.dir
-                + "/interproscan-"
-                + IPS_VERSION
-                + "/data",
-                "ips_header": u"\t".join(
+                "InterProScan_databases": {
+                    "class": "File",
+                    "path": f"{args.dir}/interproscan-{IPS_VERSION}/data",
+                },
+                "ips_header": "\t".join(
                     [
                         "protein_accession",
                         "sequence_md5_digest",
@@ -261,26 +292,33 @@ if __name__ == "__main__":
             # eggnog
             input_yaml.update(
                 {
-                    "EggNOG_db": args.dir + "/eggnog/eggnog.db",
-                    "EggNOG_diamond_db": args.dir + "/eggnog/eggnog_proteins.dmnd",
-                    "EggNOG_data_dir": args.dir + "/eggnog/",
+                    "EggNOG_db": {
+                        "class": "File",
+                        "path": args.dir + "/eggnog/eggnog.db",
+                    },
+                    "EggNOG_diamond_db": {
+                        "class": "File",
+                        "path": args.dir + "/eggnog/eggnog_proteins.dmnd",
+                    },
+                    "EggNOG_data_dir": {
+                        "class": "File",
+                        "path": args.dir + "/eggnog/",
+                    },
                 }
             )
 
             # diamond
             input_yaml.update(
                 {
-                    "Uniref90_db_txt": args.dir
-                    + "/diamond/db_uniref90_"
-                    + UNIREF_VERSION
-                    + ".txt",
+                    "Uniref90_db_txt": {
+                        "class": "File",
+                        "path": f"{args.dir}/diamond/db_uniref90_{UNIREF_VERSION}.txt",
+                    },
+                    "diamond_databaseFile": {
+                        "class": "File",
+                        "path": f"{args.dir}/diamond/uniref90_{UNIREF_VERSION}_diamond-v{DIAMOND_VERSION}.dmnd",
+                    },
                     "diamond_maxTargetSeqs": 1,
-                    "diamond_databaseFile": args.dir
-                    + "/diamond/uniref90_"
-                    + UNIREF_VERSION
-                    + "_diamond-v"
-                    + DIAMOND_VERSION
-                    + ".dmnd",
                     "diamond_header": "\t".join(
                         [
                             "uniref90_ID",
@@ -308,16 +346,28 @@ if __name__ == "__main__":
             # pathways
             input_yaml.update(
                 {
-                    "graphs": args.dir + "/kegg_pathways/graphs.pkl",
-                    "pathways_names": args.dir
-                    + "/kegg_pathways/all_pathways_names.txt",
-                    "pathways_classes": args.dir
-                    + "/kegg_pathways/all_pathways_class.txt",
+                    "graphs": {
+                        "class": "File",
+                        "path": args.dir + "/kegg_pathways/graphs.pkl",
+                    },
+                    "pathways_names": {
+                        "class": "File",
+                        "path": args.dir + "/kegg_pathways/all_pathways_names.txt",
+                    },
+                    "pathways_classes": {
+                        "class": "File",
+                        "path": args.dir + "/kegg_pathways/all_pathways_class.txt",
+                    },
                 }
             )
             # antismash
             input_yaml.update(
-                {"clusters_glossary": args.dir + "/antismash_glossary.tsv"}
+                {
+                    "clusters_glossary": {
+                        "class": "File",
+                        "path": args.dir + "/antismash_glossary.tsv",
+                    }
+                }
             )
         else:
             # ==== only wgs ====
@@ -336,7 +386,14 @@ if __name__ == "__main__":
         )
 
         # rfam_model_clans
-        input_yaml.update({"rfam_model_clans": args.dir + "/ribosomal/ribo.claninfo"})
+        input_yaml.update(
+            {
+                "rfam_model_clans": {
+                    "class": "File",
+                    "path": args.dir + "/ribosomal/ribo.claninfo",
+                }
+            }
+        )
 
         # UNITE
         input_yaml.update(
@@ -347,8 +404,14 @@ if __name__ == "__main__":
                     "checksum": "ddb2105cb1f1ffa8941b44c19022b5a3",
                     "format": "edam:format_1929",
                 },
-                "unite_tax": args.dir + "/UNITE/UNITE-tax.txt",
-                "unite_otu_file": args.dir + "/UNITE/UNITE.otu",
+                "unite_tax": {
+                    "class": "File",
+                    "path": args.dir + "/UNITE/UNITE-tax.txt",
+                },
+                "unite_otu_file": {
+                    "class": "File",
+                    "path": args.dir + "/UNITE/UNITE.otu",
+                },
             }
         )
 
@@ -361,8 +424,14 @@ if __name__ == "__main__":
                     "checksum": "ec369f9fe6818482ce0ab184461ac116",
                     "format": "edam:format_1929",
                 },
-                "itsonedb_tax": args.dir + "/ITSonedb/ITSonedb-tax.txt",
-                "itsonedb_otu_file": args.dir + "/ITSonedb/ITSonedb.otu",
+                "itsonedb_tax": {
+                    "class": "File",
+                    "path": args.dir + "/ITSonedb/ITSonedb-tax.txt",
+                },
+                "itsonedb_otu_file": {
+                    "class": "File",
+                    "path": args.dir + "/ITSonedb/ITSonedb.otu",
+                },
             }
         )
 
