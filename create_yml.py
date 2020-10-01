@@ -217,33 +217,6 @@ if __name__ == "__main__":
                     "class": "File",
                     "path": args.dir + "/db_kofam/db_kofam.hmm",
                 },
-                "hmmsearch_header": "\t".join(
-                    [
-                        "query_name",
-                        "tquery_accession",
-                        "tlen",
-                        "target_name",
-                        "target_accession",
-                        "qlen",
-                        "full_sequence_e-value",
-                        "full_sequence_score",
-                        "full_sequence_bias",
-                        "#",
-                        "of",
-                        "c-evalue",
-                        "i-evalue",
-                        "domain_score",
-                        "domain_bias",
-                        "hmm_coord_from",
-                        "hmm_coord_to",
-                        "ali_coord_from",
-                        "ali_coord_to",
-                        "env_coord_from",
-                        "env_coord_to",
-                        "acc",
-                        "description_of_target",
-                    ]
-                ),
             }
         )
 
@@ -262,25 +235,6 @@ if __name__ == "__main__":
                     "class": "File",
                     "path": f"{args.dir}/interproscan-{IPS_VERSION}/data",
                 },
-                "ips_header": "\t".join(
-                    [
-                        "protein_accession",
-                        "sequence_md5_digest",
-                        "sequence_length",
-                        "analysis",
-                        "signature_accession",
-                        "signature_description",
-                        "start_location",
-                        "stop_location",
-                        "score",
-                        "status",
-                        "date",
-                        "accession",
-                        "description",
-                        "go",
-                        "pathways_annotations",
-                    ]
-                ),
             }
         )
 
@@ -319,27 +273,6 @@ if __name__ == "__main__":
                         "path": f"{args.dir}/diamond/uniref90_{UNIREF_VERSION}_diamond-v{DIAMOND_VERSION}.dmnd",
                     },
                     "diamond_maxTargetSeqs": 1,
-                    "diamond_header": "\t".join(
-                        [
-                            "uniref90_ID",
-                            "contig_name",
-                            "percentage_of_identical_matches",
-                            "lenght",
-                            "mismatch",
-                            "gapopen",
-                            "qstart",
-                            "qend",
-                            "sstart",
-                            "send",
-                            "evalue",
-                            "bitscore",
-                            "protein_name",
-                            "num_in_cluster",
-                            "taxonomy",
-                            "tax_id",
-                            "rep_id",
-                        ]
-                    ),
                 }
             )
 
