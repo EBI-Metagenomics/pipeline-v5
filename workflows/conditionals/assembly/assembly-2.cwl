@@ -53,21 +53,18 @@ inputs:
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
     HMM_name_database: string
-    hmmsearch_header: string
     EggNOG_db: [string, File]
     EggNOG_diamond_db: [string, File]
     EggNOG_data_dir: string
     InterProScan_databases: string
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-    ips_header: string
     ko_file: string
 
  # << diamond >>
     Uniref90_db_txt: [string, File]
     diamond_maxTargetSeqs: int
     diamond_databaseFile: [string, File]
-    diamond_header: string
 
  # << GO >>
     go_config: [string?, File?]
@@ -262,9 +259,6 @@ steps:
       go_config: go_config
       eggnog_orthologs: functional_annotation/eggnog_orthologs
       eggnog_annotations: functional_annotation/eggnog_annotations
-      diamond_header: diamond_header
-      hmmsearch_header: hmmsearch_header
-      ips_header: ips_header
       output_gff_gz: gff/output_gff_gz
       output_gff_index: gff/output_gff_index
       ko_file: ko_file

@@ -49,18 +49,24 @@ inputs:
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
     HMM_name_database: string
-    hmmsearch_header: string
     EggNOG_db: [string?, File?]
     EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: string?
     InterProScan_databases: string
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-    ips_header: string
     ko_file: string
 
     # GO
     go_config: [string?, File?]
+
+    # optional headers
+    hmmscan_header:
+      type: string?
+      default: "query_name query_accession tlen  target_name target_accession  qlen  full_sequence_e-value full_sequence_score full_sequence_bias  # of  c-evalue  i-evalue  domain_score  domain_bias hmm_coord_from  hmm_coord_to  ali_coord_from  ali_coord_to  env_coord_from  env_coord_to  acc description_of_ta rget"
+    ips_header:
+      type: string?
+      default: "protein_accession  sequence_md5_digest sequence_length analysis    signature_accession signature_description   start_location  stop_location   score   status  date    accession   description go  pathways_annotations"
 
 outputs:
   motus_output:
@@ -275,7 +281,7 @@ steps:
         - functional_annotation/hmm_result
         - functional_annotation/ips_result
       header:
-        - hmmsearch_header
+        - hmmscan_header
         - ips_header
     out: [ output_table ]
 
