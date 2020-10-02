@@ -53,8 +53,10 @@ inputs:
       Supported formats are TSV, XML, JSON, GFF3, HTML and SVG. Default for
       protein sequences are TSV, XML and GFF3, or for nucleotide sequences GFF3
       and XML.
+
   - id: databases
-    type: string? #Directory?
+    type: [string?, Directory]
+
   - id: disableResidueAnnotation
     type: boolean?
     inputBinding:

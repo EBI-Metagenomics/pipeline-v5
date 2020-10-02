@@ -54,7 +54,7 @@ inputs:
     EggNOG_db: [string, File]
     EggNOG_diamond_db: [string, File]
     EggNOG_data_dir: [string?, Directory]
-    InterProScan_databases: string
+    InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ko_file: [string, File]
