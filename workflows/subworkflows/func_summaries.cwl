@@ -16,7 +16,7 @@ inputs:
   antismash_gene_clusters: File?
   rna: File
   cds: File
-  ko_file: string
+  ko_file: [File, string]
 
 outputs:
   stats:

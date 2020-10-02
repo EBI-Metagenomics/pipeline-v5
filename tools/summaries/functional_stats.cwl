@@ -36,7 +36,7 @@ inputs:
     inputBinding:
         prefix: -a
   ko_file:
-    type: string
+    type: [string, File]
     inputBinding:
         prefix: -ko
 

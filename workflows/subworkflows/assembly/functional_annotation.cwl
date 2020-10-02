@@ -22,6 +22,7 @@ inputs:
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
   HMM_database: string
+  HMM_database_dir: Directory?
 
   chunk_size_eggnog: int
   EggNOG_db: [string, File]
@@ -92,6 +93,7 @@ steps:
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
+      HMM_database_dir: HMM_database_dir
       previous_step_result: run_IPS/ips_result
     out: [ hmm_result ]
 
