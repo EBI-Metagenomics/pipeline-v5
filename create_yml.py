@@ -113,12 +113,9 @@ if __name__ == "__main__":
     )
 
     # ko file
-    input_yaml.update({
-        "ko_file": {
-            "class": "File",
-            "path": args.dir + "/kofam_ko_desc.tsv"
-        }
-    })
+    input_yaml.update(
+        {"ko_file": {"class": "File", "path": args.dir + "/kofam_ko_desc.tsv"}}
+    )
 
     # rfam_models
     rfam_models = [
@@ -241,7 +238,7 @@ if __name__ == "__main__":
                 ],
                 "InterProScan_outputFormat": ["TSV"],
                 "InterProScan_databases": {
-                    "class": "File",
+                    "class": "Directory",
                     "path": f"{args.dir}/interproscan-{IPS_VERSION}/data",
                 },
             }
