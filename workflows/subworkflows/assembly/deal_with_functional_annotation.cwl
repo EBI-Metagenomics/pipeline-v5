@@ -22,7 +22,7 @@ inputs:
   eggnog_annotations: File
   output_gff_gz: File
   output_gff_index: File
-  ko_file: string
+  ko_file: [string, File]
   # optional
   diamond_header:
     type: string?

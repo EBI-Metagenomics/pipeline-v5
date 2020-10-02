@@ -13,11 +13,21 @@ hints:
 
 requirements:
   ShellCommandRequirement: {}
+  ScatterFeatureRequirement: {}
   ResourceRequirement:
     ramMin: 6000
     coresMin: 4
   InlineJavascriptRequirement: {}
-  ScatterFeatureRequirement: {}
+  InitialWorkDirRequirement:
+    listing: |
+      ${
+        if (typeof inputs.database_dir !== undefined) {
+            // this folder should have all the hmm aux files (.h3{mifp})
+            // uncompressed
+            return inputs.database_dir.listing;
+        }
+        return [];
+      }
 
 baseCommand: ["hmmsearch"]
 
@@ -50,10 +60,17 @@ inputs:
       position: 4
       prefix: "--cut_ga"
 
-  path_database:
+  database:
     type: string
+    doc: |
+      "Database name or path, depending on how your using it."
     inputBinding:
       position: 5
+  
+  database_directory:
+    type: Directory?
+    doc: |
+      "Database path"
 
   seqfile:
     format: edam:format_1929  # FASTA
@@ -61,7 +78,6 @@ inputs:
     inputBinding:
       position: 6
       separate: true
-
 
 outputs:
   output_table:
@@ -76,6 +92,6 @@ $schemas:
 
 s:author: "Ekaterina Sakharova"
 s:copyrightHolder:
-    - name: "EMBL - European Bioinformatics Institute"
-    - url: "https://www.ebi.ac.uk/"
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"

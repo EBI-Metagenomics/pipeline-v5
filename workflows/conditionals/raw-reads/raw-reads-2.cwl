@@ -49,13 +49,14 @@ inputs:
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
     HMM_name_database: string
+    HMM_database_dir: Directory?
     EggNOG_db: [string?, File?]
     EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: [string?, Directory]
     InterProScan_databases: string
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-    ko_file: string
+    ko_file: [string, File]
 
     # GO
     go_config: [string?, File?]
@@ -164,7 +165,6 @@ steps:
 
        filtered_fasta: filtered_fasta
        rna_prediction_ncRNA: rna_prediction/ncRNA
-
        cgc_results_faa: cgc/predicted_faa
        protein_chunk_size_hmm: protein_chunk_size_hmm
        protein_chunk_size_IPS: protein_chunk_size_IPS

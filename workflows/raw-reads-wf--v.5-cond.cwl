@@ -49,14 +49,14 @@ inputs:
     func_ann_names_hmmer: string
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
-    HMM_name_database: string
+    HMM_name_database: [string, File]
     EggNOG_db: [string?, File?]
     EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: [string?, Directory]
     InterProScan_databases: string
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-    ko_file: string
+    ko_file: [string, File]
 
     # GO
     go_config: [string?, File?]
@@ -185,7 +185,7 @@ steps:
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
       go_config: go_config
-      ko_file: ko_file
+      ko_file: [ko_file, File]
     out:
       - motus_output
       - sequence_categorisation_folder

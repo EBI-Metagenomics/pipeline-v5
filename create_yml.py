@@ -39,9 +39,9 @@ if __name__ == "__main__":
     input_yaml.update(
         {
             "ssu_label": "SSU_rRNA",
-            "nlsu_label": "LSU_rRNA",
+            "lsu_label": "LSU_rRNA",
             "5.8s_pattern": "5_8S_rRNA",
-            "n5s_pattern": "mtPerm-5S",
+            "5s_pattern": "mtPerm-5S",
         }
     )
 
@@ -111,6 +111,14 @@ if __name__ == "__main__":
             },
         }
     )
+
+    # ko file
+    input_yaml.update({
+        "ko_file": {
+            "class": "File",
+            "path": args.dir + "/kofam_ko_desc.tsv"
+        }
+    })
 
     # rfam_models
     rfam_models = [
@@ -204,7 +212,7 @@ if __name__ == "__main__":
                 "protein_chunk_size_IPS": 10000,
                 "protein_chunk_size_eggnog": 100000,
                 "func_ann_names_ips": ".I5.tsv.without_header",
-                "func_ann_names_hmmscan": ".hmm.tsv.without_header",
+                "func_ann_names_hmmer": ".hmm.tsv.without_header",
             }
         )
 
@@ -213,9 +221,10 @@ if __name__ == "__main__":
             {
                 "HMM_gathering_bit_score": True,
                 "HMM_omit_alignment": True,
-                "HMM_name_database": {
-                    "class": "File",
-                    "path": args.dir + "/db_kofam/db_kofam.hmm",
+                "HMM_database": "db_kofam.hmm",
+                "HMM_database_dir": {
+                    "class": "Directory",
+                    "path": args.dir + "/db_kofam/",
                 },
             }
         )

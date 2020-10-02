@@ -47,11 +47,7 @@ inputs:
     5.8s_pattern: string
 
  # << cgc >>
-<<<<<<< HEAD
-    CGC_config: string?
-=======
     CGC_config: [string?, File?]
->>>>>>> b819640... fixes
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -63,14 +59,15 @@ inputs:
     func_ann_names_hmmer: string
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
-    HMM_name_database: string
+    HMM_database: string
+    HMM_database_dir: Directory?
     EggNOG_db: [string, File]
     EggNOG_diamond_db: [string, File]
     EggNOG_data_dir: [string, Directory]
     InterProScan_databases: string
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-    ko_file: string
+    ko_file: [string, File]
 
  # << diamond >>
     Uniref90_db_txt: [string, File]
@@ -78,11 +75,7 @@ inputs:
     diamond_databaseFile: [string, File]
 
  # << GO >>
-<<<<<<< HEAD
-    go_config: string?
-=======
     go_config: [string?, File?]
->>>>>>> b819640... fixes
 
  # << Pathways >>
     graphs: [string, File]
@@ -151,7 +144,6 @@ outputs:
     type: Directory
     outputSource: return_tax_dir/out
 
-<<<<<<< HEAD
  # FAA count
   count_CDS:
     type: int
@@ -160,8 +152,6 @@ outputs:
   optional_tax_file_flag:
     type: File?
     outputSource: no_tax_file_flag/created_file
-=======
->>>>>>> b819640... fixes
 
   proteinDB_metadata:
     type: File?
@@ -191,12 +181,8 @@ steps:
 # -----------------------------------  << RNA PREDICTION >>  -----------------------------------
   rna_prediction:
     in:
-<<<<<<< HEAD
       type: { default: 'assembly'}
       input_sequences: accessioning_and_prediction/assigned_contigs
-=======
-      input_sequences: filtered_fasta
->>>>>>> b819640... fixes
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
       silva_ssu_taxonomy: ssu_tax
@@ -220,11 +206,7 @@ steps:
       - compressed_rnas
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
 
-<<<<<<< HEAD
 # ------------------------- << OTHER ncrnas >> -------------------------
-=======
-# << OTHER ncrnas >>
->>>>>>> b819640... fixes
   other_ncrnas:
     run: ../../subworkflows/other_ncrnas.cwl
     in:
@@ -234,7 +216,6 @@ steps:
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
 
-<<<<<<< HEAD
 # ------------------------- <<ANTISMASH >> -------------------------------
   antismash:
     run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
@@ -264,137 +245,8 @@ steps:
       rna_prediction_ncRNA: rna_prediction/ncRNA
 
       protein_chunk_size_eggnog: protein_chunk_size_eggnog
-=======
-# -----------------------------------  << COMBINED GENE CALLER >>  -----------------------------------
-  cgc:
-    in:
-      input_fasta: filtered_fasta
-      maskfile: rna_prediction/ncRNA
-      postfixes: CGC_postfixes
-      chunk_size: cgc_chunk_size
-    out: [ results ]
-    run: ../../subworkflows/assembly/CGC-subwf.cwl
-
-# -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
-  functional_annotation:
-    run: ../../subworkflows/assembly/functional_annotation.cwl
-    in:
-      CGC_predicted_proteins:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      chunk_size_eggnog: protein_chunk_size_eggnog
-      chunk_size_hmm: protein_chunk_size_hmm
-      chunk_size_IPS: protein_chunk_size_IPS
-      name_ips: func_ann_names_ips
-      name_hmmer: func_ann_names_hmmer
-      HMM_gathering_bit_score: HMM_gathering_bit_score
-      HMM_omit_alignment: HMM_omit_alignment
-      HMM_database: HMM_name_database
->>>>>>> b819640... fixes
-      EggNOG_db: EggNOG_db
-      EggNOG_diamond_db: EggNOG_diamond_db
-      EggNOG_data_dir: EggNOG_data_dir
-      InterProScan_databases: InterProScan_databases
-      InterProScan_applications: InterProScan_applications
-      InterProScan_outputFormat: InterProScan_outputFormat
-    out: [ hmm_result, ips_result, eggnog_annotations, eggnog_orthologs ]
-
-# -----------------------------------  << STEP GFF >>  -----------------------------------
-  gff:
-    run: ../../../tools/Assembly/GFF/gff_generation.cwl
-    in:
-      ips_results: functional_annotation/ips_result
-      eggnog_results: functional_annotation/eggnog_annotations
-      input_faa:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      output_name:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).annotations.gff
-    out: [ output_gff_gz, output_gff_index ]
-
-# -----------------------------------  << FUNCTIONAL ANNOTATION FOLDER >>  -----------------------------------
-
-# << DIAMOND >>
-  diamond:
-    run: ../../../tools/Assembly/Diamond/diamond-subwf.cwl
-    in:
-      queryInputFile:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      outputFormat: { default: '6' }
-      maxTargetSeqs: diamond_maxTargetSeqs
-      strand: { default: 'both'}
-      databaseFile: diamond_databaseFile
-      threads: { default: 32 }
-      Uniref90_db_txt: Uniref90_db_txt
-      filename:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot)
-    out: [post-processing_output]
-
-# << collect folder >>
-  folder_functional_annotation:
-    run: ../../subworkflows/assembly/deal_with_functional_annotation.cwl
-    in:
-      fasta: filtered_fasta
-      IPS_table: functional_annotation/ips_result
-      diamond_table: diamond/post-processing_output
-      hmmscan_table: functional_annotation/hmm_result
-      antismash_geneclusters_txt: antismash/antismash_clusters
-      rna: rna_prediction/ncRNA
-      cds:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      go_config: go_config
-      eggnog_orthologs: functional_annotation/eggnog_orthologs
-      eggnog_annotations: functional_annotation/eggnog_annotations
-      output_gff_gz: gff/output_gff_gz
-      output_gff_index: gff/output_gff_index
-      ko_file: ko_file
-    out: [functional_annotation_folder, stats, summary_antismash]
-
-# ----------------------------------- << PATHWAYS and SYSTEMS >> -----------------------------------
-
-# << KEGG PATHWAYS >>
-  pathways:
-    run: ../../subworkflows/assembly/kegg_analysis.cwl
-    in:
-      input_table_hmmscan: functional_annotation/hmm_result
-      filtered_fasta: filtered_fasta
-      outputname:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot)
-      graphs: graphs
-      pathways_names: pathways_names
-      pathways_classes: pathways_classes
-    out: [ kegg_pathways_summary, kegg_contigs_summary]
-
-<<<<<<< HEAD
       gp_flatfiles_path: gp_flatfiles_path
       type_analysis: { default: 'Contigs' }
-=======
-# << GENOME PROPERTIES >>
-  genome_properties:
-    run: ../../../tools/Assembly/Genome_properties/genome_properties.cwl
-    in:
-      input_tsv_file: functional_annotation/ips_result
-      flatfiles_path: gp_flatfiles_path
-      GP_txt: {default: genomeProperties.txt}
-      name:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).summary.gprops.tsv
-    out: [ summary ]
-
-# << ANTISMASH >>
-
-  antismash:
-    run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
-    in:
-      input_filtered_fasta: filtered_fasta
-      clusters_glossary: clusters_glossary
-      final_folder_name: { default: pathways-systems }
->>>>>>> b819640... fixes
     out:
       - antismash_folder
       - antismash_clusters
@@ -442,23 +294,11 @@ steps:
   chunking_final:
     run: ../../subworkflows/final_chunking.cwl
     in:
-<<<<<<< HEAD
       fasta: accessioning_and_prediction/assigned_contigs
       ffn: accessioning_and_prediction/predicted_seq
       faa: accessioning_and_prediction/predicted_proteins
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
-=======
-      fasta: filtered_fasta
-      ffn:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
-      faa:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      LSU: rna_prediction/compressed_LSU_fasta
-      SSU: rna_prediction/compressed_SSU_fasta
->>>>>>> b819640... fixes
     out:
       - nucleotide_fasta_chunks                         # fasta, ffn
       - protein_fasta_chunks                            # faa
