@@ -41,7 +41,7 @@ inputs:
     label: Path to DIAMOND-compatible database
 
   data_dir:
-    type: string  # data/
+    type: [string, Directory]  # data/
     inputBinding:
       prefix: --data_dir
     label: Directory to use for DATA_PATH
