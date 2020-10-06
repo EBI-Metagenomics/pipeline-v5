@@ -261,7 +261,7 @@ if __name__ == "__main__":
                         "path": args.dir + "/eggnog/eggnog_proteins.dmnd",
                     },
                     "EggNOG_data_dir": {
-                        "class": "File",
+                        "class": "Directory",
                         "path": args.dir + "/eggnog/",
                     },
                 }
