@@ -1,0 +1,13 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+forward:
+  class: File
+  path: ../../../input_examples/amplicon-paired-ERR2237853_1.fastq.gz
+  format: edam:format_1930
+
+reverse:
+  class: File
+  path: ../../../input_examples/amplicon-paired-ERR2237853_2.fastq.gz
+  format: edam:format_1930
+len: 100
