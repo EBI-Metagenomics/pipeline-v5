@@ -2,11 +2,11 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-label: "merges output of seqprep and unzips for paired end reads, or unzips file for single end"
+label: "unzip files"
 requirements:
   ResourceRequirement:
     coresMin: 1
-    ramMin: 200  # just a default, could be lowered
+    ramMin: 2000  # just a default, could be lowered
   InlineJavascriptRequirement: {}
 
 hints:
