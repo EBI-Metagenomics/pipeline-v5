@@ -31,6 +31,7 @@ inputs:
      prefix: -r
  namefile: File?
 
+
 baseCommand: SeqPrep
 
 arguments:

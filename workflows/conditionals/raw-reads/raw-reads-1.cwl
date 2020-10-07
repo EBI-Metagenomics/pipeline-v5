@@ -87,6 +87,7 @@ steps:
       paired_reads_length_filter: { default: 70 }
     out: [ unzipped_single_reads, count_forward_submitted_reads, fastp_report ]
 
+
 # << Trim and Reformat >>
   trim_quality_control:
     doc: |
