@@ -17,17 +17,22 @@ requirements:
   ResourceRequirement:
     ramMin: 6000
     coresMin: 4
-  InlineJavascriptRequirement: {}
-  InitialWorkDirRequirement:
-    listing: |
-      ${
-        if (typeof inputs.database_dir !== undefined) {
-            // this folder should have all the hmm aux files (.h3{mifp})
-            // uncompressed
-            return inputs.database_dir.listing;
-        }
-        return [];
-      }
+  # TODO: this is required after fixing the problem with the workdir and the
+  #       dbs being staged there - https://github.com/DataBiosphere/toil/issues/2534
+  # InlineJavascriptRequirement: {}
+  # InitialWorkDirRequirement:
+  #   listing: |
+  #     ${
+  #       // if datatabse is an object then it's a Directory otherwise
+  #       // it's a string
+  #       var typeOfDir = typeof inputs.database_dir;
+  #       if (typeOfDir === 'object') {
+  #           // this folder should have all the hmm aux files (.h3{mifp})
+  #           // uncompressed
+  #           return inputs.database_dir.listing;
+  #       }
+  #       return [];
+  #     }
 
 baseCommand: ["hmmsearch"]
 
