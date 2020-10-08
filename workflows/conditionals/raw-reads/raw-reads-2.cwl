@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev4
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -102,6 +102,15 @@ outputs:
     outputSource: write_summaries/stats
     type: Directory
 
+ # FAA count
+  count_CDS:
+    type: int
+    outputSource: cgc/count_faa
+
+  optional_tax_file_flag:
+    type: File?
+    outputSource: no_tax_file_flag/created_file
+
 steps:
 # << mOTUs2 >>
   motus_taxonomy:
@@ -114,6 +123,7 @@ steps:
   rna_prediction:
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
     in:
+      type: { default: 'raw'}
       input_sequences: filtered_fasta
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
@@ -133,9 +143,21 @@ steps:
       - LSU-SSU-count
       - SSU_folder
       - LSU_folder
-      - compressed_SSU_fasta
-      - compressed_LSU_fasta
+      - SSU_fasta
+      - LSU_fasta
       - compressed_rnas
+      - number_LSU_mapseq
+      - number_SSU_mapseq
+
+# add no-tax file-flag if there are no lsu and ssu seqs
+  no_tax_file_flag:
+    when: $(inputs.count_lsu < 3 && inputs.count_ssu < 3)
+    run: ../../../utils/touch_file.cwl
+    in:
+      count_lsu: rna_prediction/number_LSU_mapseq
+      count_ssu: rna_prediction/number_SSU_mapseq
+      filename: { default: no-tax}
+    out: [ created_file ]
 
 # << other ncrnas >>
   other_ncrnas:
@@ -154,7 +176,7 @@ steps:
       maskfile: rna_prediction/ncRNA
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
-    out: [ results ]
+    out: [ results, count_faa ]
     run: ../../subworkflows/raw_reads/CGC-subwf.cwl
 
 # << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
@@ -240,8 +262,8 @@ steps:
       faa:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      LSU: rna_prediction/compressed_LSU_fasta
-      SSU: rna_prediction/compressed_SSU_fasta
+      LSU: rna_prediction/LSU_fasta
+      SSU: rna_prediction/SSU_fasta
     out:
       - nucleotide_fasta_chunks                         # fasta, ffn
       - protein_fasta_chunks                            # faa
