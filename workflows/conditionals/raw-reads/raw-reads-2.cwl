@@ -48,7 +48,7 @@ inputs:
     func_ann_names_hmmer: string
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
-    HMM_name_database: string
+    HMM_database: [string, File]
     HMM_database_dir: Directory?
     EggNOG_db: [string?, File?]
     EggNOG_diamond_db: [string?, File?]

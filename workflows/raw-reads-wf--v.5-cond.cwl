@@ -49,7 +49,7 @@ inputs:
     func_ann_names_hmmer: string
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
-    HMM_name_database: [string, File]
+    HMM_database: [string, File]
     EggNOG_db: [string?, File?]
     EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: [string?, Directory]
@@ -172,7 +172,7 @@ steps:
       func_ann_names_hmmer: func_ann_names_hmmer
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
-      HMM_name_database: HMM_name_database
+      HMM_database: HMM_database
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
@@ -180,7 +180,7 @@ steps:
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
       go_config: go_config
-      ko_file: [ko_file, File]
+      ko_file: ko_file
     out:
       - motus_output
       - sequence_categorisation_folder
