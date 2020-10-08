@@ -5,7 +5,7 @@ DOCKER_ORG="microbiomeinformatics"
 DOCKER_IMAGES=(
     "python3:v1"
     "python2:v1"
-    "bash-scripts:v1.1"
+    "bash-scripts:v1.2"
     "biom-convert:v2.1.6"
     "mapseq:v1.2.3"
     "mapseq2biom:v1.0"

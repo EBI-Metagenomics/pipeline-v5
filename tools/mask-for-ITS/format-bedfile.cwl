@@ -11,7 +11,7 @@ requirements:
 
 hints:
    DockerRequirement:
-      dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.1
+      dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.2
 
 inputs:
   all_coordinates:
