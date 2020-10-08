@@ -10,6 +10,23 @@ IPS_VERSION = "5.36-75.0"
 DIAMOND_VERSION = "0.9.25"
 UNIREF_VERSION = "v2019_11"
 
+
+def convert_to_string(value):
+    """Convert File,Directory or [File,Directory] into string or a list of string"""
+    if type(value) is dict and value.get("class") in ["File", "Directory"]:
+        return value["path"]
+    elif type(value) is list or type(value) is tuple:
+        converted_list = []
+        for item in value:
+            if type(item) is dict and item.get("class") in ["File", "Directory"]:
+                converted_list.append(item["path"])
+            else:
+                converted_list.append(item)
+        return converted_list
+    else:
+        return value
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parsing first sub-wf of pipeline")
     parser.add_argument(
@@ -26,6 +43,12 @@ if __name__ == "__main__":
         choices=["assembly", "wgs", "amplicon"],
         help="Analysis type",
         required=True,
+    )
+    parser.add_argument(
+        "-c",
+        dest="cwltypes",
+        action="store_false",
+        help="Use File or Directory for databases instead of string. Please see #https://github.com/DataBiosphere/toil/issues/2534",
     )
 
     args = parser.parse_args()
@@ -373,6 +396,11 @@ if __name__ == "__main__":
                 },
             }
         )
+
+    if args.cwltypes:
+        # convert File and Directory entries to string
+        for key, value in input_yaml.items():
+            input_yaml[key] = convert_to_string(value)
 
     with open(args.type + ".yml", "w") as file_yml:
         yaml = YAML()
