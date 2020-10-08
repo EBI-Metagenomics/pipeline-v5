@@ -53,7 +53,7 @@ inputs:
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
     HMM_database: string
-    HMM_database_dir: Directory?
+    HMM_database_dir: [string, Directory?]
     EggNOG_db: [string, File]
     EggNOG_diamond_db: [string, File]
     EggNOG_data_dir: [string, Directory]

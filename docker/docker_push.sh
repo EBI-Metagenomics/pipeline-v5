@@ -26,6 +26,7 @@ DOCKER_IMAGES=(
     "diamond:v0.9.25"
     "eggnog:v2.0.0"
     "dna_chunking:v0.11"
+    "seqprep:v1.2"
 )
 
 # containers that are too heavy to be used, it's possible but not recommended.

@@ -22,7 +22,7 @@ inputs:
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
   HMM_database: string
-  HMM_database_dir: Directory?
+  HMM_database_dir: [string, Directory?]
 
   chunk_size_eggnog: int
   EggNOG_db: [string, File]
