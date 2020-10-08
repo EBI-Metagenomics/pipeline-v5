@@ -201,9 +201,11 @@ steps:
       - SSU_folder
       - LSU_folder
       - LSU-SSU-count
-      - compressed_SSU_fasta
-      - compressed_LSU_fasta
+      - SSU_fasta
+      - LSU_fasta
       - compressed_rnas
+      - number_LSU_mapseq
+      - number_SSU_mapseq
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
 
 # ------------------------- << OTHER ncrnas >> -------------------------
