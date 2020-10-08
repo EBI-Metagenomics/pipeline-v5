@@ -397,10 +397,19 @@ if __name__ == "__main__":
             }
         )
 
+    # files that can't be strings
+    NON_CONVERTABLES = [
+        "ssu_db",
+        "lsu_db",
+        "unite_db",
+        "itsonedb",
+    ]
+
     if args.cwltypes:
         # convert File and Directory entries to string
         for key, value in input_yaml.items():
-            input_yaml[key] = convert_to_string(value)
+            if key not in NON_CONVERTABLES:
+                input_yaml[key] = convert_to_string(value)
 
     with open(args.type + ".yml", "w") as file_yml:
         yaml = YAML()
