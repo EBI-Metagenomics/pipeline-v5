@@ -21,7 +21,7 @@ inputs:
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
   HMM_database: string
-  HMM_database_dir: Directory?
+  HMM_database_dir: [string, Directory?]
   previous_step_result: File?
 
 outputs:

@@ -63,6 +63,7 @@ TOOLS=(
     "diamond:v0.9.25 ${BASE_PATH}/tools/Assembly/Diamond"
     "eggnog:v2.0.0 ${BASE_PATH}/tools/Assembly/EggNOG/eggNOG"
     "dna_chunking:v0.11 ${BASE_PATH}/tools/chunks/dna_chunker"
+    "seqprep:v1.2 ${BASE_PATH}/tools/SeqPrep/Dockerfile"
 )
 
 # containers that are too heavy to be used, it's possible but not recommended.
