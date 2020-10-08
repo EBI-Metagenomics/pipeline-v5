@@ -38,7 +38,9 @@ docker build -t ${DOCKER_ORG}/pipeline-v5.python2:v1 "${BASE_PATH}"/docker/scrip
 # - add_header
 # - run_samtools.sh
 # - clean_motus_output.sh
-docker build -t ${DOCKER_ORG}/pipeline-v5.bash-scripts:v1.1 "${BASE_PATH}"/docker/scripts_bash/
+docker build -t ${DOCKER_ORG}/pipeline-v5.bash-scripts:v1.2 "${BASE_PATH}"/docker/scripts_bash/
+
+exit 0
 
 ########### Tools ###########
 
