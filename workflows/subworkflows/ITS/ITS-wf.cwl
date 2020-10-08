@@ -28,9 +28,10 @@ inputs:
   otu_itsone_label: string
 
 outputs:
+
   masking_file:
     type: File?
-    outputSource: run_itsonedb/compressed_fasta_output
+    outputSource: gzip_masked_ITS/compressed_file
 
   unite_folder:
     type: Directory?
@@ -40,10 +41,15 @@ outputs:
     type: Directory?
     outputSource: run_itsonedb/out_dir
 
+  number_ITS_seqs:
+    type: int
+    outputSource: count_ITS_seqs/count
 
-#ADD QUALITY CONTROLLED READS
+
+# TODO: ADD QUALITY CONTROLLED READS
 
 steps:
+
   cat:
     run: ../../../utils/concatenate.cwl
     in:
@@ -64,11 +70,17 @@ steps:
     out: [ maskfile ]
 
   mask_for_ITS:
-    run: ../../../tools/mask-for-ITS/bedtools/bedtools.cwl
+    run: ../../../tools/mask-for-ITS/bedtools.cwl
     in:
       sequences: query_sequences
       maskfile: reformat_coords/maskfile
     out: [masked_sequences]
+
+  gzip_masked_ITS:
+    run: ../../../utils/pigz/gzip.cwl
+    in:
+      uncompressed_file: mask_for_ITS/masked_sequences
+    out: [ compressed_file ]
 
 #run unite and ITSonedb
 
@@ -91,7 +103,7 @@ steps:
       otu_label: otu_unite_label
       return_dirname: {default: 'unite'}
       file_for_prefix: query_sequences
-    out: [ out_dir, compressed_fasta_output ]
+    out: [ out_dir ]
 
   run_itsonedb:
     when: $(inputs.fasta_count > 0)
@@ -105,8 +117,15 @@ steps:
       otu_label: otu_itsone_label
       return_dirname: {default: 'itsonedb'}
       file_for_prefix: query_sequences
-    out: [ out_dir, compressed_fasta_output ]
+    out: [ out_dir ]
 
+# count IPS seqs
+  count_ITS_seqs:
+    run: ../../../utils/count_fasta.cwl
+    in:
+      sequences: mask_for_ITS/masked_sequences
+      number: { default: 1 }
+    out: [ count ]
 
 $namespaces:
  edam: http://edamontology.org/

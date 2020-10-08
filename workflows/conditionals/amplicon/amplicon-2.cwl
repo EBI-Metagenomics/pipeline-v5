@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -65,12 +65,17 @@ outputs:
     type: File
     outputSource: suppress_tax/its_length
 
+  optional_tax_file_flag:
+    type: File?
+    outputSource: no_tax_file_flag/created_file
+
 steps:
 
 # << Get RNA >>
   rna_prediction:
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
     in:
+      type: { default: 'raw'}
       input_sequences: filtered_fasta
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
@@ -92,9 +97,11 @@ steps:
       - LSU_folder
       - SSU_coords
       - LSU_coords
-      - compressed_SSU_fasta
-      - compressed_LSU_fasta
+      - SSU_fasta
+      - LSU_fasta
       - compressed_rnas
+      - number_LSU_mapseq
+      - number_SSU_mapseq
 
 # << ITS >>
   ITS:
@@ -112,9 +119,10 @@ steps:
       otu_unite_label: unite_label
       otu_itsone_label: itsonedb_label
     out:
-      - masking_file
       - unite_folder
       - itsonedb_folder
+      - number_ITS_seqs
+      - masking_file
 
 # gzip and chunk
   gzip_files:
@@ -140,12 +148,23 @@ steps:
       dir_name: { default: 'its' }
     out: [out]
 
+  gzip_SSU:
+    run: ../../../utils/pigz/gzip.cwl
+    in:
+      uncompressed_file: rna_prediction/SSU_fasta
+    out: [compressed_file]
+  gzip_LSU:
+    run: ../../../utils/pigz/gzip.cwl
+    in:
+      uncompressed_file: rna_prediction/LSU_fasta
+    out: [compressed_file]
+
 # suppress irrelevant rRNA/ITS tax folders
   suppress_tax:
     run: ../../../tools/mask-for-ITS/suppress_tax.cwl
     in:
-      ssu_file: rna_prediction/compressed_SSU_fasta
-      lsu_file: rna_prediction/compressed_LSU_fasta
+      ssu_file: gzip_SSU/compressed_file
+      lsu_file: gzip_LSU/compressed_file
       its_file: ITS/masking_file
       lsu_dir: rna_prediction/LSU_folder
       ssu_dir: rna_prediction/SSU_folder
@@ -167,6 +186,14 @@ steps:
       dir_name: { default: 'sequence-categorisation' }
     out: [out]
 
+# return no-tax if there is no taxonomy-summary folder
+  no_tax_file_flag:
+    when: $(inputs.folder == null )
+    run: ../../../utils/touch_file.cwl
+    in:
+      folder: suppress_tax/out_tax
+      filename: { default: no-tax }
+    out: [ created_file ]
 
 $namespaces:
  edam: http://edamontology.org/

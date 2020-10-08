@@ -3,7 +3,7 @@ cwlVersion: v1.2.0-dev2
 
 requirements:
   - class: ResourceRequirement
-    ramMin: 50000
+    ramMin: 20000
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
@@ -33,7 +33,7 @@ inputs:
     5.8s_pattern: string
 
  # << cgc >>
-    CGC_config: string?
+    CGC_config: string
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -47,10 +47,9 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_name_database: string
     hmmsearch_header: string
-
     EggNOG_db: string
     EggNOG_diamond_db: string
-    EggNOG_data_dir: string?
+    EggNOG_data_dir: string
     InterProScan_databases: string
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
@@ -64,7 +63,7 @@ inputs:
     diamond_header: string
 
  # << GO >>
-    go_config: string?
+    go_config: string
 
  # << Pathways >>
     graphs: string
@@ -72,7 +71,7 @@ inputs:
     pathways_classes: string
 
  # << genome properties >>
-    gp_flatfiles_path: string?
+    gp_flatfiles_path: string
 
  # << antismash summary >>
     clusters_glossary: string
@@ -148,6 +147,13 @@ outputs:
     type: File?
     outputSource: touch_file_flag/created_file
 
+  no_cds_flag_file:
+    type: File?
+    outputSource: touch_no_cds_flag/created_file
+  no_tax_flag_file:
+    type: File?
+    outputSource: after-qc/optional_tax_file_flag
+
 steps:
 
   before-qc:
@@ -181,6 +187,7 @@ steps:
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
       5.8s_pattern: 5.8s_pattern
+      CGC_config: CGC_config
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
       protein_chunk_size_eggnog: protein_chunk_size_eggnog
@@ -225,6 +232,8 @@ steps:
       - sequence-categorisation_folder
       - rna-count
       - taxonomy-summary_folder
+      - count_CDS
+      - optional_tax_file_flag
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")
@@ -235,6 +244,13 @@ steps:
       filename: { default: 'wf-completed' }
     out: [ created_file ]
 
+  touch_no_cds_flag:
+    when: $(inputs.value == 0 )
+    run: ../utils/touch_file.cwl
+    in:
+      value: after-qc/count_CDS
+      filename: { default: 'no-cds' }
+    out: [ created_file ]
 
 $namespaces:
  edam: http://edamontology.org/

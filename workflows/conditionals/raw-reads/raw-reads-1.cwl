@@ -72,33 +72,21 @@ steps:
     out: [ hashsum ]
 
 
-# << SeqPrep only for paired reads >>
+# << SeqPrep (only for paired reads) + gunzip for paired and single>>
   overlap_reads:
     label: Paired-end overlapping reads are merged
-    run: ../../../tools/SeqPrep/seqprep.cwl
-    when: $(inputs.single == undefined)
+    run: ../../subworkflows/seqprep-subwf.cwl
     in:
       single: single_reads
       forward_reads: forward_reads
       reverse_reads: reverse_reads
-    out: [ merged_reads, forward_unmerged_reads, reverse_unmerged_reads ]
-
-# << unzipping only >>
-  unzip_reads:
-    run: ../../../utils/multiple-gunzip.cwl
-    in:
-      target_reads:
-        source:
-          - overlap_reads/merged_reads
-          - single_reads
-        pickValue: first_non_null
-      reads: { default: true }
-    out: [ unzipped_merged_reads ]
+      paired_reads_length_filter: { default: 100 }
+    out: [ unzipped_single_reads ]
 
   count_submitted_reads:
     run: ../../../utils/count_lines/count_lines.cwl
     in:
-      sequences: unzip_reads/unzipped_merged_reads
+      sequences: overlap_reads/unzipped_single_reads
       number: { default: 4 }
     out: [ count ]
 
@@ -109,7 +97,7 @@ steps:
       less than 15 over a 4 nucleotide wide window are removed)
     run: ../../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
-      reads1: unzip_reads/unzipped_merged_reads
+      reads1: overlap_reads/unzipped_single_reads
       phred: { default: '33' }
       leading: { default: 3 }
       trailing: { default: 3 }

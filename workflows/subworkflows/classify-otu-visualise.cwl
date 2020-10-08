@@ -29,18 +29,11 @@ outputs:
     type: Directory?
     outputSource: return_output_dir/out
 
-  compressed_fasta_output:
-    type: File
-    outputSource: compress_fasta/compressed_file
-
+  number_lines_mapseq:
+    type: int
+    outputSource: count_lines_mapseq/number
 
 steps:
-  compress_fasta:
-    run: ../../utils/pigz/gzip.cwl
-    in:
-      uncompressed_file: fasta
-    out: [ compressed_file ]
-    label: "compressed fasta file"
 
   mapseq:
     run: ../../tools/RNA_prediction/mapseq/mapseq.cwl
@@ -78,6 +71,7 @@ steps:
     in:
       input_file: mapseq/classifications
     out: [ number ]
+
 
 # if mapseq output has more than 2 lines - return folder, else return null
 

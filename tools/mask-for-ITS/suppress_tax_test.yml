@@ -16,3 +16,4 @@ ssu_dir:
 its_dir:
   class: Directory
   path: test-input/its
+

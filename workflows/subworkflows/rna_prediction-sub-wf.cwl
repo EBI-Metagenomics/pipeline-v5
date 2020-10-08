@@ -17,6 +17,7 @@ requirements:
 #      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
+  type: string
   input_sequences: File
   silva_ssu_database:
     type: File
@@ -63,15 +64,22 @@ outputs:
     type: File
     outputSource: extract_subunits_coords/LSU_seqs
 
-  compressed_SSU_fasta:
+  SSU_fasta:
     type: File?
-    outputSource: classify_SSUs/compressed_fasta_output
-  compressed_LSU_fasta:
+    outputSource: extract_subunits/SSU_seqs
+  LSU_fasta:
     type: File?
-    outputSource: classify_LSUs/compressed_fasta_output
+    outputSource: extract_subunits/LSU_seqs
   compressed_rnas:
     type: File[]
     outputSource: gzip_files/compressed_file
+
+  number_LSU_mapseq:
+    type: int
+    outputSource: classify_LSUs/number_lines_mapseq
+  number_SSU_mapseq:
+    type: int
+    outputSource: classify_SSUs/number_lines_mapseq
 
 steps:
 
@@ -83,13 +91,13 @@ steps:
 
 # cmsearch -> concatinate -> deoverlap
   find_ribosomal_ncRNAs:
-    run: cmsearch-multimodel-wf.cwl
+    run: cmsearch-condition.cwl
     in:
+      type: type
       query_sequences: input_sequences
       covariance_models: ncRNA_ribosomal_models
       clan_info: ncRNA_ribosomal_model_clans
-      targetFile: input_sequences
-    out: [ cmsearch_matches, concatenate_matches, deoverlapped_matches ]
+    out: [ concatenate_matches, deoverlapped_matches ]
 
 # extract coordinates for everything
   extract_coords:
@@ -146,7 +154,7 @@ steps:
       otu_label: pattern_SSU
       return_dirname: {default: 'SSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, compressed_fasta_output ]
+    out: [ out_dir, number_lines_mapseq ]
 
   count_lsu_fasta:
     run: ../../utils/count_fasta.cwl
@@ -168,7 +176,7 @@ steps:
       otu_label: pattern_LSU
       return_dirname: {default: 'LSU'}
       file_for_prefix: input_sequences
-    out: [ out_dir, compressed_fasta_output ]
+    out: [ out_dir, number_lines_mapseq ]
 
 # gzip and chunk sequence-categorisation
   gzip_files:
@@ -177,6 +185,7 @@ steps:
     in:
       uncompressed_file: extract_subunits/fastas
     out: [compressed_file]
+
 
 
 $namespaces:

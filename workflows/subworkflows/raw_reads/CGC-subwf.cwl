@@ -20,6 +20,9 @@ outputs:
   results:
     type: File[]
     outputSource: combine/result
+  count_faa:
+    type: int
+    outputSource: count_cds/count
 
 steps:
 
@@ -33,7 +36,6 @@ steps:
     out: [ chunks ]
     run: ../../../tools/chunks/dna_chunker/fasta_chunker.cwl
 
-
   # << CGC >>
   combined_gene_caller:
     scatter: input_fasta
@@ -43,7 +45,6 @@ steps:
     out: [ predicted_proteins, predicted_seq ]
     run: ../../../tools/Combined_gene_caller/predict_proteins_reads.cwl
     label: CGC run
-
 
   combine:
     scatter: [ files, postfix ]
@@ -59,6 +60,14 @@ steps:
     out: [result]
     run: ../../../utils/concatenate.cwl
 
+  count_cds:
+    run: ../../../utils/count_fasta.cwl
+    in:
+      sequences:
+        source: combine/result
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      number: { default: 1 }
+    out: [ count ]
 
 $namespaces:
  edam: http://edamontology.org/

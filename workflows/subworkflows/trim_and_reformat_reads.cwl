@@ -36,7 +36,7 @@ steps:
   split_seqs:
     in:
       seqs: reads
-      chunk_size: { default: 2000000 }
+      chunk_size: { default: 1000000 }
       file_format: { default: 'fastq' }
       fastq_count: count
     out: [ chunks ]

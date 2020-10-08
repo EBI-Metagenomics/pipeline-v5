@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev4
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -34,30 +34,32 @@ inputs:
     5.8s_pattern: string
 
     # cgc
-    CGC_config: string?
+    CGC_config: string
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
     # functional annotation
     protein_chunk_size_hmm: int
     protein_chunk_size_IPS: int
-    func_ann_names_ips: string
     func_ann_names_hmmer: string
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
     HMM_name_database: string
     hmmsearch_header: string
+
     EggNOG_db: string?
     EggNOG_diamond_db: string?
     EggNOG_data_dir: string?
+
+    func_ann_names_ips: string
     InterProScan_databases: string
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ips_header: string
+
     ko_file: string
 
-    # GO
-    go_config: string?
+    go_config: string
 
 outputs:
   motus_output:
@@ -72,10 +74,10 @@ outputs:
     outputSource: return_tax_dir/out
 
   chunking_nucleotides:
-    type: File[]?
+    type: File[]
     outputSource: chunking_final/nucleotide_fasta_chunks
   chunking_proteins:
-    type: File[]?
+    type: File[]
     outputSource: chunking_final/protein_fasta_chunks
   rna-count:
     type: File
@@ -86,11 +88,20 @@ outputs:
     outputSource: compression/compressed_file
 
   functional_annotation_folder:
-    type: Directory
-    outputSource: move_to_functional_annotation_folder/out
+    type: Directory?
+    outputSource: functional_annotation_and_post_processing/functional_annotation_folder
   stats:
-    outputSource: write_summaries/stats
-    type: Directory
+    type: Directory?
+    outputSource: functional_annotation_and_post_processing/stats
+
+ # FAA count
+  count_CDS:
+    type: int
+    outputSource: cgc/count_faa
+
+  optional_tax_file_flag:
+    type: File?
+    outputSource: no_tax_file_flag/created_file
 
 steps:
 # << mOTUs2 >>
@@ -104,6 +115,7 @@ steps:
   rna_prediction:
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
     in:
+      type: { default: 'raw'}
       input_sequences: filtered_fasta
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
@@ -123,9 +135,22 @@ steps:
       - LSU-SSU-count
       - SSU_folder
       - LSU_folder
-      - compressed_SSU_fasta
-      - compressed_LSU_fasta
+      - SSU_fasta
+      - LSU_fasta
       - compressed_rnas
+      - number_LSU_mapseq
+      - number_SSU_mapseq
+
+# add no-tax file-flag if there are no lsu and ssu seqs
+  no_tax_file_flag:
+    when: $(inputs.count_lsu < 3 && inputs.count_ssu < 3)
+    run: ../../../utils/touch_file.cwl
+    in:
+      count_lsu: rna_prediction/number_LSU_mapseq
+      count_ssu: rna_prediction/number_SSU_mapseq
+      filename: { default: no-tax}
+    out: [ created_file ]
+
 
 # << other ncrnas >>
   other_ncrnas:
@@ -144,67 +169,52 @@ steps:
       maskfile: rna_prediction/ncRNA
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
-    out: [ results ]
+    out: [ results, count_faa ]
     run: ../../subworkflows/raw_reads/CGC-subwf.cwl
 
-# << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
-  functional_annotation:
-    run: ../../subworkflows/raw_reads/functional_annotation_raw.cwl
-    in:
-      CGC_predicted_proteins:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      chunk_size_hmm: protein_chunk_size_hmm
-      chunk_size_IPS: protein_chunk_size_IPS
-      name_ips: func_ann_names_ips
-      name_hmmer: func_ann_names_hmmer
-      HMM_gathering_bit_score: HMM_gathering_bit_score
-      HMM_omit_alignment: HMM_omit_alignment
-      HMM_database: HMM_name_database
-      InterProScan_databases: InterProScan_databases
-      InterProScan_applications: InterProScan_applications
-      InterProScan_outputFormat: InterProScan_outputFormat
-    out: [ hmm_result, ips_result ]
+# << ------------------- FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG --------------- >>
+# GO SUMMARY
+# PFAM
+# summaries and stats IPS, HMMScan, Pfam
+# << ---- FUNCTIONAL FORMATTING AND CHUNKING ----- >>
+# add header: hmmsearch and IPS
+# chunking TSVs: hmmsearch and IPS
+# move to fucntional annotation
 
-# << GO SUMMARY>>
-  go_summary:
-    run: ../../../tools/GO-slim/go_summary.cwl
+  functional_annotation_and_post_processing:
+    when: $(inputs.check_value != 0)
+    run: ../../subworkflows/raw_reads/func_ann_and_post_proccessing-subwf.cwl
     in:
-      InterProScan_results: functional_annotation/ips_result
-      config: go_config
-      output_name:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).summary.go
-    out: [go_summary, go_summary_slim]
+       check_value: cgc/count_faa
 
-# << PFAM >>
-  pfam:
-    run: ../../../tools/Pfam-Parse/pfam_annotations.cwl
-    in:
-      interpro: functional_annotation/ips_result
-      outputname:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).pfam
-    out: [annotations]
+       filtered_fasta: filtered_fasta
+       rna_prediction_ncRNA: rna_prediction/ncRNA
 
-# << summaries and stats IPS, HMMScan, Pfam >>
-  write_summaries:
-    run: ../../subworkflows/func_summaries.cwl
-    in:
-       interproscan_annotation: functional_annotation/ips_result
-       hmmscan_annotation: functional_annotation/hmm_result
-       pfam_annotation: pfam/annotations
-       rna: rna_prediction/ncRNA
-       ko_file: ko_file
-       cds:
+       cgc_results_faa:
          source: cgc/results
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-    out: [summary_ips, summary_ko, summary_pfam, stats]
+       protein_chunk_size_hmm: protein_chunk_size_hmm
+       protein_chunk_size_IPS: protein_chunk_size_IPS
 
-# << FINAL STEPS >>
+       func_ann_names_ips: func_ann_names_ips
+       InterProScan_databases: InterProScan_databases
+       InterProScan_applications: InterProScan_applications
+       InterProScan_outputFormat: InterProScan_outputFormat
+       ips_header: ips_header
 
-# << TAXONOMY FORMATTING AND CHUNKING >>
+       func_ann_names_hmmer: func_ann_names_hmmer
+       HMM_gathering_bit_score: HMM_gathering_bit_score
+       HMM_omit_alignment: HMM_omit_alignment
+       HMM_database: HMM_name_database
+       hmmsearch_header: hmmsearch_header
 
+       go_config: go_config
+       ko_file: ko_file
+    out:
+      - functional_annotation_folder
+      - stats
+
+# << ------------------ FINAL STEPS -------------------------- >>
 # gzip
   compression:
     run: ../../../utils/pigz/gzip.cwl
@@ -218,6 +228,8 @@ steps:
         linkMerge: merge_flattened
     out: [compressed_file]
 
+# << --------- TAXONOMY FORMATTING AND CHUNKING ------ >>
+
 # << chunking >>
   chunking_final:
     run: ../../subworkflows/final_chunking.cwl
@@ -229,8 +241,8 @@ steps:
       faa:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      LSU: rna_prediction/compressed_LSU_fasta
-      SSU: rna_prediction/compressed_SSU_fasta
+      LSU: rna_prediction/LSU_fasta
+      SSU: rna_prediction/SSU_fasta
     out:
       - nucleotide_fasta_chunks                         # fasta, ffn
       - protein_fasta_chunks                            # faa
@@ -258,48 +270,6 @@ steps:
         - rna_prediction/LSU_folder
       dir_name: { default: 'taxonomy-summary' }
     out: [out]
-
-
-# << FUNCTIONAL FORMATTING AND CHUNKING >>
-
-# add header
-  header_addition:
-    scatter: [input_table, header]
-    scatterMethod: dotproduct
-    run: ../../../utils/add_header/add_header.cwl
-    in:
-      input_table:
-        - functional_annotation/hmm_result
-        - functional_annotation/ips_result
-      header:
-        - hmmsearch_header
-        - ips_header
-    out: [ output_table ]
-
-# << chunking TSVs >>
-  chunking_tsv:
-    run: ../../../utils/result-file-chunker/result_chunker.cwl
-    in:
-      infile: header_addition/output_table
-      format_file: { default: tsv }
-      outdirname: { default: table }
-    out: [chunks]
-
-# << move to fucntional annotation >>
-  move_to_functional_annotation_folder:
-    run: ../../../utils/return_directory.cwl
-    in:
-      file_list:
-        source:
-          - write_summaries/summary_ips
-          - write_summaries/summary_ko
-          - write_summaries/summary_pfam
-          - go_summary/go_summary
-          - go_summary/go_summary_slim
-          - chunking_tsv/chunks
-        linkMerge: merge_flattened
-      dir_name: { default: functional-annotation }
-    out: [ out ]
 
 
 $namespaces:

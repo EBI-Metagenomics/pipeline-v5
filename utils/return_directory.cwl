@@ -14,7 +14,12 @@ inputs:
     - "null"
     - type: array
       items: ["null", "File"]
-  dir_list: Directory[]?
+  dir_list:
+    type:
+    - "null"
+    - type: array
+      items: ["null", "Directory"]
+
   dir_name: string
 
 outputs:
@@ -22,20 +27,16 @@ outputs:
 
 expression: |
   ${
-    var in_list = "";
     var list2 = [];
-    if (inputs.file_list != null) {
-      for (const item in inputs.file_list) {
-        if (inputs.file_list[item] != null) {
-            list2.push(inputs.file_list[item]) }; }
-      in_list = list2;
-    } else {
-      in_list = inputs.dir_list;
-    }
+    var process;
+    if (inputs.file_list) { process = inputs.file_list } else { process = inputs.dir_list}
+    for (const item in process) {
+        if (process[item] != null) {
+            list2.push(process[item]) }; }
     return {"out": {
       "class": "Directory",
       "basename": inputs.dir_name,
-      "listing": in_list
+      "listing": list2
       }
     }; }
 

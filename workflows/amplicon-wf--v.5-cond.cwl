@@ -86,6 +86,10 @@ outputs:
     type: File?
     outputSource: touch_file_flag/created_file
 
+  no_tax_flag_file:
+    type: File?
+    outputSource: after-qc/optional_tax_file_flag
+
 steps:
 
   before-qc:
@@ -137,6 +141,7 @@ steps:
       - rna-count
       - gz_files
       - ITS-length
+      - optional_tax_file_flag
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")
