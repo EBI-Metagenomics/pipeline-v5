@@ -29,6 +29,7 @@ COPY add_header \
      diamond_post_run_join.sh \
      empty_tax.sh \
      format_bedfile \
+     filter_paired_reads.sh \
      pull_ncrnas.sh \
      run_antismash_short.sh \
      run_samtools.sh \
