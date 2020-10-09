@@ -69,7 +69,8 @@ arguments:
   - valueFrom: |
       ${
         if (inputs.database_directory && inputs.database_directory !== "") {
-          return inputs.database_directory.path + "/" + inputs.database;
+          var path = inputs.database_directory.path || inputs.database_directory; 
+          return path + "/" + inputs.database;
         } else {
           return inputs.database;
         }

@@ -8,7 +8,7 @@ requirements:
   SubworkflowFeatureRequirement: {}
   ResourceRequirement:
     ramMin: 30000
-    coresMin: 32
+    coresMin: 16
 
 inputs:
   queryInputFile: File
