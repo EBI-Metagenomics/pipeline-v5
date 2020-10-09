@@ -8,7 +8,7 @@ requirements:
   ScatterFeatureRequirement: {}
   ResourceRequirement:
     ramMin: 20000
-    coresMin: 32
+    coresMin: 16
 
 inputs:
   seqfile: File
