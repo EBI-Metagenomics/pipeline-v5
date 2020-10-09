@@ -17,4 +17,4 @@ before_script:
 
 script:
   - bash travis/conformance-tests.sh
-  - bash tests/cwltest.sh 
+  - bash tests/cwltest.sh
