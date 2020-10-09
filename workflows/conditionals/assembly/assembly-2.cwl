@@ -196,7 +196,7 @@ steps:
     in:
       CGC_predicted_proteins:
         source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
       chunk_size_eggnog: protein_chunk_size_eggnog
       chunk_size_hmm: protein_chunk_size_hmm
       chunk_size_IPS: protein_chunk_size_IPS
@@ -222,7 +222,7 @@ steps:
       eggnog_results: functional_annotation/eggnog_annotations
       input_faa:
         source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
       output_name:
         source: filtered_fasta
         valueFrom: $(self.nameroot).annotations.gff
@@ -236,7 +236,7 @@ steps:
     in:
       queryInputFile:
         source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
       outputFormat: { default: '6' }
       maxTargetSeqs: diamond_maxTargetSeqs
       strand: { default: 'both'}
@@ -260,7 +260,7 @@ steps:
       rna: rna_prediction/ncRNA
       cds:
         source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
       go_config: go_config
       eggnog_orthologs: functional_annotation/eggnog_orthologs
       eggnog_annotations: functional_annotation/eggnog_annotations
@@ -358,7 +358,7 @@ steps:
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
       faa:
         source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:

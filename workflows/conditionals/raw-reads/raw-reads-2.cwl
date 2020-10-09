@@ -185,7 +185,7 @@ steps:
     in:
       CGC_predicted_proteins:
         source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
       chunk_size_hmm: protein_chunk_size_hmm
       chunk_size_IPS: protein_chunk_size_IPS
       name_ips: func_ann_names_ips
@@ -231,7 +231,7 @@ steps:
        ko_file: ko_file
        cds:
          source: cgc/results
-         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+         valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
     out: [summary_ips, summary_ko, summary_pfam, stats]
 
 # << FINAL STEPS >>
@@ -261,7 +261,7 @@ steps:
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
       faa:
         source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:

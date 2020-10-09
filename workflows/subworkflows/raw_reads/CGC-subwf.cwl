@@ -65,7 +65,7 @@ steps:
     in:
       sequences:
         source: combine/result
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
       number: { default: 1 }
     out: [ count ]
 

@@ -31,7 +31,7 @@ expression: |
     var in_list = "";
     var list2 = [];
     if (inputs.file_list != null) {
-      for (const item in inputs.file_list) {
+      for (var item in inputs.file_list) {
         if (inputs.file_list[item] != null) {
             list2.push(inputs.file_list[item]) };
         }
