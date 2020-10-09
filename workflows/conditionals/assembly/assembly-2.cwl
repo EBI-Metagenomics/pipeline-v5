@@ -355,7 +355,7 @@ steps:
       fasta: filtered_fasta
       ffn:
         source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".ffn"; }).pop() )
       faa:
         source: cgc/results
         valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
