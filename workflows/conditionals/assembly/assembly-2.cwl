@@ -218,7 +218,9 @@ steps:
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
 
+
 # ------------------------- <<ANTISMASH >> -------------------------------
+
   antismash:
     run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
     in:
