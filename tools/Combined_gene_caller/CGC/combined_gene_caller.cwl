@@ -13,10 +13,8 @@ requirements:
     ramMin: 2000
     coresMin: 4
 
-#  InlineJavascriptRequirement: {}
-# baseCommand: [combined_gene_caller_docker.py]
-
 baseCommand: [combined_gene_caller.py]
+
 arguments: ["-v"]
 
 inputs:

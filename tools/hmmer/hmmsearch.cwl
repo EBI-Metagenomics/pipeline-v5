@@ -1,15 +1,8 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-$namespaces:
- edam: http://edamontology.org/
- s: http://schema.org/
 
 label: "Biosequence analysis using profile hidden Markov models"
-
-hints:
-  DockerRequirement:
-    dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
 requirements:
   ShellCommandRequirement: {}
@@ -17,9 +10,10 @@ requirements:
   ResourceRequirement:
     ramMin: 6000
     coresMin: 4
+  InlineJavascriptRequirement: {}
   # TODO: this is required after fixing the problem with the workdir and the
   #       dbs being staged there - https://github.com/DataBiosphere/toil/issues/2534
-  # InlineJavascriptRequirement: {}
+  # 
   # InitialWorkDirRequirement:
   #   listing: |
   #     ${
@@ -34,22 +28,11 @@ requirements:
   #       return [];
   #     }
 
-baseCommand: ["hmmsearch"]
+hints:
+  DockerRequirement:
+    dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
 
-arguments:
-  - valueFrom: '> /dev/null'
-    shellQuote: false
-    position: 10
-  - valueFrom: '2> /dev/null'
-    shellQuote: false
-    position: 11
-  - prefix: --domtblout
-    valueFrom: $(inputs.seqfile.nameroot)_hmmsearch.tbl
-    position: 2
-  - prefix: --cpu
-    valueFrom: '4'
-  - prefix: -o
-    valueFrom: '/dev/null'
+baseCommand: ["hmmsearch"]
 
 inputs:
 
@@ -69,8 +52,6 @@ inputs:
     type: string
     doc: |
       "Database name or path, depending on how your using it."
-    inputBinding:
-      position: 5
   
   database_directory:
     type: Directory?
@@ -84,12 +65,42 @@ inputs:
       position: 6
       separate: true
 
+arguments:
+  - valueFrom: |
+      ${
+        if (inputs.database_directory) {
+          return inputs.database_directory.path + "/" + inputs.database;
+        } else {
+          return inputs.database;
+        }
+      }
+    position: 5
+  - prefix: --domtblout
+    valueFrom: $(inputs.seqfile.nameroot)_hmmsearch.tbl
+    position: 2
+  - prefix: --cpu
+    valueFrom: '4'
+  # hmmer is too verbose
+  # discard all the std output and error
+  - prefix: -o
+    valueFrom: '/dev/null'
+  - valueFrom: '> /dev/null'
+    shellQuote: false
+    position: 10
+  - valueFrom: '2> /dev/null'
+    shellQuote: false
+    position: 11
+
 outputs:
   output_table:
     type: File
     format: edam:format_3475
     outputBinding:
       glob: "*_hmmsearch.tbl"
+
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 
 $schemas:
  - http://edamontology.org/EDAM_1.20.owl
