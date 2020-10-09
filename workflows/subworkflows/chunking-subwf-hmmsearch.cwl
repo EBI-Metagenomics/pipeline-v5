@@ -45,7 +45,7 @@ steps:
     in:
       seqfile: split_seqs/chunks
       database: HMM_database
-      database_dir: HMM_database_dir
+      database_directory: HMM_database_dir
       gathering_bit_score: HMM_gathering_bit_score
       omit_alignment: HMM_omit_alignment
     out: [ output_table ]
@@ -67,8 +67,6 @@ steps:
     in:
       input_table: combine/result
     out: [ output_with_tabs ]
-
-
 
 $namespaces:
  edam: http://edamontology.org/

@@ -1,3 +1,44 @@
+# Combined Gene Caller (CGC) subworkflow
+- job: tools/CGC/cgc.yml
+  tool: ../workflows/subworkflows/assembly/CGC-subwf.cwl
+  doc: "Combined Gene Caller (CGC) SBF"
+  short_name: CGC-subwf.cwl
+  output:
+    count_faa: 209
+    results:
+      - location: Any
+        basename: assembly-SRR1620013_small_CDS.faa
+        nameroot: assembly-SRR1620013_small_CDS
+        nameext: .faa
+        class: File
+        checksum: sha1$92b19cbf81d2638f0e019d30c58c50f1b15956b7
+        size: 43043
+        format: http://edamontology.org/format_1929
+      - location: Any
+        basename: assembly-SRR1620013_small_CDS.ffn
+        nameroot: assembly-SRR1620013_small_CDS
+        nameext: .ffn
+        class: File
+        checksum: sha1$51217937ede08b729061b0a2b2172842e3c25fdd
+        size: 101416
+        format: http://edamontology.org/format_1929
+
+# hmmsearch sub-workflow
+- job: tools/hmmsearch_swf/chunking-subwf-hmmsearch.cwl.yml
+  tool: ../workflows/subworkflows/chunking-subwf-hmmsearch.cwl
+  doc: "Chunking hmmsearch subworkflow"
+  short_name: hmmsearch_chunked_swf
+  output:
+    hmm_result:
+      location: Any
+      class: File
+      format: http://edamontology.org/format_3475
+      nameext: .tsv
+      basename: assembly-SRR1620013_small.hmm.tsv.tsv
+      nameroot: assembly-SRR1620013_small.hmm.tsv
+      checksum: sha1$bc60ba55913396ff7cc7888448d71d4af4680624
+      size: 2969
+
 # Go Slim Summary
 - job: tools/GO-slim/go-summary-test-input.yml
   tool: ../tools/GO-slim/go_summary.cwl
