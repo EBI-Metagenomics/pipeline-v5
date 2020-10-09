@@ -54,7 +54,7 @@ inputs:
       "Database name or path, depending on how your using it."
   
   database_directory:
-    type: Directory?
+    type: [string, Directory?]
     doc: |
       "Database path"
 
