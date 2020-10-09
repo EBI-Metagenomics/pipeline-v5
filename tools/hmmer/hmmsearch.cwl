@@ -68,7 +68,7 @@ inputs:
 arguments:
   - valueFrom: |
       ${
-        if (inputs.database_directory) {
+        if (inputs.database_directory && inputs.database_directory !== "") {
           return inputs.database_directory.path + "/" + inputs.database;
         } else {
           return inputs.database;
