@@ -415,5 +415,89 @@ if __name__ == "__main__":
         yaml = YAML()
         yaml.indent(mapping=2, sequence=4, offset=2)
         yaml.dump(input_yaml, file_yml)
+        # add headers manually
+        # the yml lib doesn't handle \t
+        file_yml.write(
+            "\n"
+            + 'diamon_header: "'
+            + "\t".join(
+                [
+                    "uniref90_ID",
+                    "contig_name",
+                    "percentage_of_identical_matches",
+                    "lenght",
+                    "mismatch",
+                    "gapopen",
+                    "start",
+                    "qend",
+                    "sstart",
+                    "send",
+                    "evalue",
+                    "bitscore",
+                    "protein_name",
+                    "num_in_cluster",
+                    "taxonomy",
+                    "tax_id",
+                    "rep_id",
+                ]
+            )
+            + '"'
+        )
+        file_yml.write("\n")
+        file_yml.write(
+            'hmmscan_header: "'
+            + "\t".join(
+                [
+                    "query_name",
+                    "query_accession",
+                    "tlen",
+                    "target_name",
+                    "target_accession",
+                    "qlen",
+                    "full_sequence_e-value",
+                    "full_sequence_score",
+                    "full_sequence_bias",
+                    "# of",
+                    "c-evalue",
+                    "i-evalue",
+                    "domain_score",
+                    "domain_bias",
+                    "hmm_coord_from",
+                    "hmm_coord_to",
+                    "ali_coord_from",
+                    "ali_coord_to",
+                    "env_coord_from",
+                    "env_coord_to",
+                    "acc",
+                    "description_of_ta",
+                    "rget",
+                ]
+            )
+            + '"'
+        )
+        file_yml.write("\n")
+        file_yml.write(
+            'ips_header: "'
+            + "\t".join(
+                [
+                    "protein_accession",
+                    "sequence_md5_digest",
+                    "sequence_length",
+                    "analysis",
+                    "signature_accession",
+                    "signature_description",
+                    "start_location",
+                    "stop_location",
+                    "score",
+                    "status",
+                    "date",
+                    "accession",
+                    "description",
+                    "go",
+                    "pathways_annotations",
+                ]
+            )
+            + '"'
+        )
 
     print("---------> yml done")

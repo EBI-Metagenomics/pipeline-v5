@@ -17,4 +17,4 @@ before_script:
 
 script:
   - bash travis/conformance-tests.sh
-  - bash tests/cwltest.sh
+  # disabled, travis VM has only 1 core- bash tests/cwltest.sh

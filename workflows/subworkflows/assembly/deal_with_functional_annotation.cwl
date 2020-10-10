@@ -23,16 +23,9 @@ inputs:
   output_gff_gz: File
   output_gff_index: File
   ko_file: [string, File]
-  # optional
-  diamond_header:
-    type: string?
-    default: "uniref90_ID    contig_name percentage_of_identical_matches lenght  mismatch    gapopen qstart  qend    sstart  send    evalue  bitscore    protein_name    num_in_cluster  taxonomy    tax_id  rep_id"
-  hmmscan_header:
-    type: string?
-    default: "query_name query_accession tlen  target_name target_accession  qlen  full_sequence_e-value full_sequence_score full_sequence_bias  # of  c-evalue  i-evalue  domain_score  domain_bias hmm_coord_from  hmm_coord_to  ali_coord_from  ali_coord_to  env_coord_from  env_coord_to  acc description_of_ta rget"
-  ips_header:
-    type: string?
-    default: "protein_accession  sequence_md5_digest sequence_length analysis    signature_accession signature_description   start_location  stop_location   score   status  date    accession   description go  pathways_annotations"
+  diamond_header: string
+  hmmscan_header: string
+  ips_header: string
 
 outputs:
   functional_annotation_folder:
