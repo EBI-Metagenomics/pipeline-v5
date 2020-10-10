@@ -54,18 +54,21 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_database: string
     HMM_database_dir: [string, Directory?]
+    hmmscan_header: string
     EggNOG_db: [string, File]
     EggNOG_diamond_db: [string, File]
     EggNOG_data_dir: [string, Directory]
     InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+    ips_header: string
     ko_file: [string, File]
 
  # << diamond >>
     Uniref90_db_txt: [string, File]
     diamond_maxTargetSeqs: int
     diamond_databaseFile: [string, File]
+    diamond_header: string
 
  # << GO >>
     go_config: [string?, File?]
@@ -254,8 +257,11 @@ steps:
     in:
       fasta: filtered_fasta
       IPS_table: functional_annotation/ips_result
+      ips_header: ips_header
       diamond_table: diamond/post-processing_output
+      diamond_header: diamond_header
       hmmscan_table: functional_annotation/hmm_result
+      hmmscan_header: hmmscan_header
       antismash_geneclusters_txt: antismash/antismash_clusters
       rna: rna_prediction/ncRNA
       cds:

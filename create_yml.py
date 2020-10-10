@@ -419,7 +419,7 @@ if __name__ == "__main__":
         # the yml lib doesn't handle \t
         file_yml.write(
             "\n"
-            + 'diamon_header: "'
+            + 'diamond_header: "'
             + "\t".join(
                 [
                     "uniref90_ID",
