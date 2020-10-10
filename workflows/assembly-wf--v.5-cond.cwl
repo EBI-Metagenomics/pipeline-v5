@@ -57,6 +57,7 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_database: string
     HMM_database_dir: [string, Directory?]
+    hmmscan_header: string
 
     EggNOG_db: [string, File]
     EggNOG_diamond_db: [string, File]
@@ -64,12 +65,14 @@ inputs:
     InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+    ips_header: string
     ko_file: [string, File]
 
  # << diamond >>
     Uniref90_db_txt: [string, File]
     diamond_maxTargetSeqs: int
     diamond_databaseFile: [string, File]
+    diamond_header: string
 
  # << GO >>
     go_config: [string?, File?]
@@ -212,15 +215,18 @@ steps:
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
       HMM_database_dir: HMM_database_dir
+      hmmscan_header: hmmscan_header
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
+      ips_header: ips_header
       Uniref90_db_txt: Uniref90_db_txt
       diamond_maxTargetSeqs: diamond_maxTargetSeqs
       diamond_databaseFile: diamond_databaseFile
+      diamond_header: diamond_header
       go_config: go_config
       graphs: graphs
       pathways_names: pathways_names

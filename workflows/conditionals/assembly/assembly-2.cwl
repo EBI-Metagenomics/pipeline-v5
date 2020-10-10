@@ -61,18 +61,21 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_database: string
     HMM_database_dir: [string, Directory?]
+    hmmscan_header: string
     EggNOG_db: [string, File]
     EggNOG_diamond_db: [string, File]
     EggNOG_data_dir: [string, Directory]
     InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+    ips_header: string
     ko_file: [string, File]
 
  # << diamond >>
     Uniref90_db_txt: [string, File]
     diamond_maxTargetSeqs: int
     diamond_databaseFile: [string, File]
+    diamond_header: string
 
  # << GO >>
     go_config: [string?, File?]
@@ -217,7 +220,6 @@ steps:
      other_ncRNA_ribosomal_models: other_ncrna_models
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
-
 
 # ------------------------- <<ANTISMASH >> -------------------------------
 
