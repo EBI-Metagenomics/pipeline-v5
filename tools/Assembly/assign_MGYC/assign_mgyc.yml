@@ -1,6 +1,6 @@
 input_fasta:
   class: File
-  path: test.fasta
+  path: accession.test.fasta
 mapping: mapping
 count: 3
 accession: SRR1620013

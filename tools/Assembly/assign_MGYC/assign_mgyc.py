@@ -4,9 +4,8 @@ import argparse
 import os
 from Bio import SeqIO
 import hashlib
-from filelock import Timeout, FileLock
+from oslo_concurrency import lockutils
 
-WAITING_TIME = 0
 
 def get_args():
     parser = argparse.ArgumentParser(description="create file with MGYCs for run")
@@ -17,19 +16,22 @@ def get_args():
     return parser
 
 
-def write_next_acc(filename, count):
-    file_next_accession_lock_path = filename + '.lock'
-    lock_max_acc = FileLock(file_next_accession_lock_path)
-    with lock_max_acc.acquire(timeout=WAITING_TIME):
+def write_next_acc(filename, path_lock, count):
+    with lockutils.lock(filename+'.lock', lock_path=path_lock, external=True):
         print('Locking max_acc file ...')
-        fd = open(filename, 'r+')
-        max = fd.read()
-        next_acc = int(max) + 1
-        print('Start with accession number ', next_acc)
-        fd.seek(0)
-        fd.truncate()
-        fd.write(str(next_acc + int(count) - 1))
-    fd.close()
+        filepath = os.path.join(path_lock, filename)
+        try:
+            fd = open(filepath, 'r+')
+            max = fd.read()
+            next_acc = int(max) + 1
+            print('Start with accession number ', next_acc)
+            fd.seek(0)
+            fd.truncate()
+            fd.write(str(next_acc + int(count) - 1))
+        except IOError:
+            os._exit(2)
+        finally:
+            fd.close()
     print('Finish with accession number: ', next_acc + int(count) - 1)
     return next_acc
 
@@ -66,8 +68,7 @@ if __name__ == "__main__":
     print('Run: ' + args.accession)
     mapping_dir = os.path.join(args.mapping, TYPE)
     # update number
-    max_number_filename = os.path.join(mapping_dir, 'max_acc')
-    next_acc = write_next_acc(max_number_filename, args.count)
+    next_acc = write_next_acc(filename='max_acc', path_lock=mapping_dir, count=args.count)
 
     new_fasta_name = args.accession+'_FASTA.mgyc.fasta'
     file_with_mgyc = os.path.join(mapping_dir, args.accession+'.txt')

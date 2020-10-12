@@ -10,11 +10,7 @@ import json
 import re
 import hashlib
 import time
-from filelock import Timeout, FileLock
-
-WAITING_TIME = 0  # (in sec)
-# If timeout <= 0, there is no timeout and this method will block until the lock could be acquired.
-# If timeout is None, the default timeout is used.
+from oslo_concurrency import lockutils
 
 
 def get_args():
@@ -148,23 +144,24 @@ def parsing_header(header):
 
 
 def update_max_accession(number_new_records, file_next_accession):
-    # Read the last given accession number
-    file_next_accession_lock_path = os.path.join(cur_mapping_dir, 'max_acc.lock')
-    lock_max_acc = FileLock(file_next_accession_lock_path)
-    # wait until max_acc would be available
-    with lock_max_acc.acquire(timeout=WAITING_TIME):
-        logging.debug('Locking max_acc file ...')
-        fd = open(file_next_accession, 'r+')
-        max = fd.read()
-        logging.info('Start with accession number ' + max)
-        next_acc = int(max) + number_new_records
-        fd.seek(0)
-        fd.truncate()
-        # write next accession
-        fd.write(str(next_acc))
-        logging.info('Finish with accession number ' + str(next_acc))
-        fd.close()
-    logging.debug('... Return max_acc file')
+    with lockutils.lock('.lock', 'max_acc', lock_path=cur_mapping_dir, external=True):
+        try:
+            logging.debug('Locking max_acc file ...')
+            # Read the last given accession number
+            fd = open(file_next_accession, 'r+')
+            max = fd.read()
+            logging.info('Start with accession number ' + max)
+            next_acc = int(max) + number_new_records
+            fd.seek(0)
+            fd.truncate()
+            # write next accession
+            fd.write(str(next_acc))
+            logging.info('Finish with accession number ' + str(next_acc))
+            logging.debug('... Return max_acc file')
+        except IOError:
+            os._exit(2)
+        finally:
+            fd.close()
     return int(max)
 
 
@@ -221,8 +218,7 @@ if __name__ == "__main__":
 
     for twochar in dict_hash_records:
         cur_twochar = files_hash[twochar]
-        lock_cur_twochar = FileLock(cur_twochar + '.lock')
-        with lock_cur_twochar.acquire(timeout=WAITING_TIME):
+        with lockutils.lock('.lock', cur_twochar, lock_path=os.path.dirname(cur_twochar), external=True):
             # read existing map-file
             mapping_dir_release = os.path.join(mapping_dir, TYPE, args.release, twochar)
             logging.debug('---> Reading map file from ' + str(mapping_dir_release))
@@ -240,25 +236,28 @@ if __name__ == "__main__":
             # update accessions-file
             file_next_accession = os.path.join(cur_mapping_dir, 'max_acc')
             cur_accession = update_max_accession(len(new_records), file_next_accession)
-
-            file_desc_twochar = open(cur_twochar, 'r+')
-            # adding all proteins
-            logging.debug('-----> processing map-file')
-            for record in dict_hash_records[twochar]:
-                partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.id)
-                cur_accession, mgy_accession, new_protein_flag = map_accessions(map=map, next_acc=cur_accession,
-                                                                                seq=record.seq, biome=biome,
-                                                        partial=partial, assembly=args.accession,
-                                                        obs_biome=obs_biome, public=public_value)
-                # write table of protein data
-                file_peptides.write(' '.join([mgy_accession, record.id, start_coordinate, stop_coordinate, strand,
-                                              partial, caller]))
-                record.id = mgy_accession
-                record.description = mgy_accession
-                # write fasta file with new accessions
-                SeqIO.write(record, new_fasta, "fasta")
-            save_map_file(map, cur_twochar)
-            file_desc_twochar.close()
+            try:
+                file_desc_twochar = open(cur_twochar, 'r+')
+                # adding all proteins
+                logging.debug('-----> processing map-file')
+                for record in dict_hash_records[twochar]:
+                    partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.id)
+                    cur_accession, mgy_accession, new_protein_flag = map_accessions(map=map, next_acc=cur_accession,
+                                                                                    seq=record.seq, biome=biome,
+                                                            partial=partial, assembly=args.accession,
+                                                            obs_biome=obs_biome, public=public_value)
+                    # write table of protein data
+                    file_peptides.write(' '.join([mgy_accession, record.id, start_coordinate, stop_coordinate, strand,
+                                                  partial, caller]))
+                    record.id = mgy_accession
+                    record.description = mgy_accession
+                    # write fasta file with new accessions
+                    SeqIO.write(record, new_fasta, "fasta")
+                save_map_file(map, cur_twochar)
+            except IOError:
+                os._exit(2)
+            finally:
+                file_desc_twochar.close()
             logging.debug('-----> Check final accession: ' + str(cur_accession))
 
     logging.info('Write biom counts ' + str(os.path.join(cur_mapping_dir, 'mgy_biome_counts_' + args.release + '.tsv')))
