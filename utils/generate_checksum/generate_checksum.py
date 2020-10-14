@@ -11,7 +11,7 @@ def file_as_bytes(file):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Convert table to CSV")
+    parser = argparse.ArgumentParser(description="Generate sha1 checksum of file")
     parser.add_argument("-i", "--input", dest="input", required=True)
 
     if len(sys.argv) == 1:
