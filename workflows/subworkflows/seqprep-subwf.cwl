@@ -45,14 +45,12 @@ steps:
       single: single_reads
       forward_reads: filter_paired/forward_filtered
       reverse_reads: filter_paired/reverse_filtered
-      name:
-        source: forward_reads
-        valueFrom: $(self.nameroot.split('_')[0])
+      namefile: forward_reads
     out: [ merged_reads, forward_unmerged_reads, reverse_unmerged_reads ]
 
 # << unzip merged reads >>
   unzip_merged_reads:
-    when: $(inputs.single == undefined)
+    when: $(inputs.target_reads != undefined)
     run: ../../utils/multiple-gunzip.cwl
     in:
       target_reads: overlap_reads/merged_reads
@@ -62,7 +60,7 @@ steps:
 # << unzipping single reads >>
   unzip_single_reads:
     run: ../../utils/multiple-gunzip.cwl
-    when: $(inputs.single != undefined)
+    when: $(inputs.target_reads != undefined)
     in:
       target_reads: single_reads
       reads: { default: true }
