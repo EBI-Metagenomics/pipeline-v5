@@ -92,7 +92,7 @@ outputs:
     outputSource: before-qc/qc-statistics_folder
 
 # << root folder >>
-  compressed_files:                                          # [5] fasta, cmsearch, ncRNA, deoverlapped
+  compressed_files:                                          # [2] cmsearch, deoverlapped
     type: File[]
     outputSource: after-qc/compressed_files
     pickValue: all_non_null
