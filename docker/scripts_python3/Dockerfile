@@ -1,9 +1,9 @@
-FROM python:3-slim-buster
+FROM python:3.7.9-slim-buster
 
 LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 
 RUN apt-get update && \
-    apt-get install -y tabix pigz && \
+    apt-get install -y tabix pigz genometools && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir -q biopython pandas networkx pyyaml

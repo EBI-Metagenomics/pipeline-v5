@@ -1,0 +1,6 @@
+infile:
+  - class: File
+    path: ../../input_examples/amplicon/ERR632171_FASTQ.fasta
+format_file: fasta
+type: p
+outdirname: folder

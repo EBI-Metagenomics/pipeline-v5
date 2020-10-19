@@ -9,7 +9,7 @@ requirements:
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
+    dockerPull: microbiomeinformatics/pipeline-v5.python3-test:latest
 
 inputs:
   infile:
