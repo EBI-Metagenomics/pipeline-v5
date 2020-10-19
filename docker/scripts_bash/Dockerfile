@@ -14,7 +14,7 @@ FROM alpine:3.7
 
 LABEL Maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 
-RUN apk add --no-cache pigz nodejs coreutils bash zlib bzip2 ncurses \
+RUN apk add --no-cache pigz nodejs coreutils bash zlib bzip2 ncurses  \
     ncurses-dev bzip2-dev xz-dev zlib-dev && \
     mkdir /tools && mkdir /samtools
 

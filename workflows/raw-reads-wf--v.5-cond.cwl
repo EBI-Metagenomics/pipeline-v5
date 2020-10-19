@@ -109,12 +109,9 @@ outputs:
     outputSource: after-qc/stats
     type: Directory?
 
-  chunking_nucleotides:
+  chunking_fastas:
     type: File[]?
-    outputSource: after-qc/chunking_nucleotides
-  chunking_proteins:
-    type: File[]?
-    outputSource: after-qc/chunking_proteins
+    outputSource: after-qc/chunking_fasta_files
 
   completed_flag_file:
     type: File?
@@ -194,8 +191,7 @@ steps:
       - compressed_files
       - functional_annotation_folder
       - stats
-      - chunking_nucleotides
-      - chunking_proteins
+      - chunking_fasta_files
       - count_CDS
       - optional_tax_file_flag
 
