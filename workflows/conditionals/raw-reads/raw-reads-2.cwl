@@ -81,12 +81,10 @@ outputs:
     type: Directory
     outputSource: return_tax_dir/out
 
-  chunking_nucleotides:
+  chunking_fasta_files:
     type: File[]?
-    outputSource: chunking_final/nucleotide_fasta_chunks
-  chunking_proteins:
-    type: File[]?
-    outputSource: chunking_final/protein_fasta_chunks
+    outputSource: chunking_final/fasta_chunks
+
   rna-count:
     type: File
     outputSource: rna_prediction/LSU-SSU-count
@@ -265,8 +263,7 @@ steps:
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:
-      - nucleotide_fasta_chunks                         # fasta, ffn
-      - protein_fasta_chunks                            # faa
+      - fasta_chunks                         # fasta, ffn, faa, chunks
       - SC_fasta_chunks                                 # LSU, SSU
 
 # << move chunked files >>
@@ -311,12 +308,12 @@ steps:
 
 # << chunking TSVs >>
   chunking_tsv:
-    run: ../../../utils/result-file-chunker/result_chunker.cwl
+    run: ../../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
-      infile: header_addition/output_table
-      format_file: { default: tsv }
+      input_files: header_addition/output_table
+      format: { default: tsv }
       outdirname: { default: table }
-    out: [chunks]
+    out: [ chunked_by_size_files ]
 
 # << move to fucntional annotation >>
   move_to_functional_annotation_folder:
@@ -329,7 +326,7 @@ steps:
           - write_summaries/summary_pfam
           - go_summary/go_summary
           - go_summary/go_summary_slim
-          - chunking_tsv/chunks
+          - chunking_tsv/chunked_by_size_files
         linkMerge: merge_flattened
       dir_name: { default: functional-annotation }
     out: [ out ]

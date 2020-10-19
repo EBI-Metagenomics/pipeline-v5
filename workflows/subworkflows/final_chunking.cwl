@@ -25,55 +25,50 @@ inputs:
     SSU: File?
 
 outputs:
-  nucleotide_fasta_chunks:
+  fasta_chunks:
     type: File[]?
-    outputSource: chinking_fasta_nucleotide/chunks
-
-  protein_fasta_chunks:
-    type: File[]?
-    outputSource: chinking_fasta_proteins/chunks
+    outputSource:
+      - chunking_fasta_nucleotide/chunked_by_size_files
+      - chunking_fasta_proteins/chunked_by_size_files
+    linkMerge: merge_flattened
+    pickValue: all_non_null
 
   SC_fasta_chunks:
     type: File[]?
-    outputSource: chinking_SC_fasta_nucleotide/chunks
+    outputSource: chunking_SC_fasta_nucleotide/chunked_by_size_files
+
 
 steps:
-  chinking_fasta_nucleotide:
-    run: ../../utils/result-file-chunker/result_chunker.cwl
+  chunking_fasta_nucleotide:
+    run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
-      infile:
+      input_files:
         - fasta
         - ffn
-      format_file: {default: fasta}
-      outdirname: {default: folder}
+      format: {default: fasta}
       type_fasta: {default: n}
-    out:
-      - chunks
+    out: [ chunked_by_size_files ]
 
-  chinking_fasta_proteins:
-    run: ../../utils/result-file-chunker/result_chunker.cwl
+  chunking_fasta_proteins:
+    run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
-      infile:
+      input_files:
         source:
           - faa
         linkMerge: merge_nested
-      format_file: {default: fasta}
-      outdirname: {default: folder}
+      format: {default: fasta}
       type_fasta: {default: p}
-    out:
-      - chunks
+    out: [ chunked_by_size_files ]
 
-  chinking_SC_fasta_nucleotide:
+  chunking_SC_fasta_nucleotide:
     when: $(inputs.lsu != null && inputs.ssu != null)
-    run: ../../utils/result-file-chunker/result_chunker.cwl
+    run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
       lsu: LSU
       ssu: SSU
-      infile:
+      input_files:
         - LSU
         - SSU
-      format_file: {default: fasta}
-      outdirname: {default: folder}
+      format: {default: fasta}
       type_fasta: {default: n}
-    out:
-      - chunks
+    out: [ chunked_by_size_files ]

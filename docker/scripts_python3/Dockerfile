@@ -1,4 +1,4 @@
-FROM python:3-slim-buster
+FROM python:3.7.9-slim-buster
 
 LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 
@@ -29,7 +29,6 @@ COPY antismash_to_gff_nojson.py \
      reformat-antismash.py \
      split_to_chunks.py \
      antismash_rename_contigs.py \
-     run_result_file_chunker.py chunkFastaResultFileUtil.py chunkTSVFileUtil.py cleaningUtils.py \
      write_summaries.py \
      /tools/
 

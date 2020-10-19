@@ -104,12 +104,11 @@ steps:
 
 # chunking
   chunking_tsv:
-    run: ../../../utils/result-file-chunker/result_chunker.cwl
+    run: ../../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
-      infile: header_addition/output_table
-      format_file: { default: tsv }
-      outdirname: { default: table }
-    out: [chunks]
+      input_files: header_addition/output_table
+      format: { default: tsv }
+    out: [chunked_by_size_files]
 
 # move FUNCTIONAL-ANNOTATION
   move_to_functional_annotation_folder:
@@ -125,7 +124,7 @@ steps:
           - write_summaries/summary_pfam
           - go_summary/go_summary
           - go_summary/go_summary_slim
-          - chunking_tsv/chunks
+          - chunking_tsv/chunked_by_size_files
         linkMerge: merge_flattened
       dir_name: { default: functional-annotation }
     out: [ out ]

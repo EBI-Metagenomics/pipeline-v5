@@ -1,41 +1,68 @@
 #!/usr/bin/env
-cwlVersion: v1.0
-class: CommandLineTool
-requirements:
-  InlineJavascriptRequirement: {}
-  ResourceRequirement:
-    coresMax: 1
-    ramMin: 1000  # just a default, could be lowered
+cwlVersion: v1.2.0-dev2
+class: Workflow
 
-hints:
-  - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
+requirements:
+  - class: SubworkflowFeatureRequirement
+  - class: MultipleInputFeatureRequirement
+  - class: InlineJavascriptRequirement
+  - class: StepInputExpressionRequirement
+  - class: ScatterFeatureRequirement
 
 inputs:
-  infile:
-    type: File[]
-    inputBinding:
-      prefix: -i
-  format_file:
-    type: string
-    inputBinding:
-      prefix: -f
-  type_fasta:
-    type: string?
-    inputBinding:
-      prefix: -t
-  outdirname:
-    type: string
-    inputBinding:
-      prefix: -o
-
-baseCommand: [run_result_file_chunker.py]
+  input_file: File
+  format: string
+  type_fasta: string?
 
 outputs:
-  chunks:
+  chunked_by_size_files:
     type: File[]
-    outputBinding:
-      glob: $(inputs.outdirname)/*
+    outputSource: gzip_chunks/compressed_file
+  chunked_file:
+    type: File
+    outputSource: create_chunks_file/chunks_file
+
+steps:
+
+  chunking_fasta:
+    when: $(inputs.format == 'fasta')
+    run: split_fasta.cwl
+    in:
+      infile: input_file
+      type_fasta: type_fasta
+      format: format
+    out: [ chunks ]
+
+  chunking_tsv:
+    when: $(inputs.format == 'tsv')
+    run: split_tsv.cwl
+    in:
+      format: format
+      infile: input_file
+      line_number: { default: 10000000 }
+      prefix:
+        source: input_file
+        valueFrom: "$(self.nameroot)_"
+    out: [ chunks ]
+
+  gzip_chunks:
+    run: ../pigz/gzip.cwl
+    scatter: uncompressed_file
+    in:
+      uncompressed_file:
+        source:
+          - chunking_tsv/chunks
+          - chunking_fasta/chunks
+        pickValue: all_non_null
+        linkMerge: merge_flattened
+    out: [compressed_file]
+
+  create_chunks_file:
+    run: create_chunks_file.cwl
+    in:
+      infile: input_file
+      list_chunks: gzip_chunks/compressed_file
+    out: [ chunks_file ]
 
 
 $namespaces:
