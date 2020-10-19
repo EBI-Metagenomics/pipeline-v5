@@ -19,11 +19,48 @@ outputs:
   unzipped_single_reads:
     type: File
     outputSource:
-      - unzip_merged_reads/unzipped_merged_reads
-      - unzip_single_reads/unzipped_merged_reads
+      - unzip_merged_reads/unzipped_file
+      - unzip_single_reads/unzipped_file
+    pickValue: first_non_null
+
+  count_forward_submitted_reads:
+    type: int
+    outputSource:
+      - count_submitted_reads/count
+      - count_submitted_reads_single/count
     pickValue: first_non_null
 
 steps:
+
+# ----- PAIRED-END PART -----
+
+# << unzipping paired reads >>
+  unzip_forward_reads:
+    run: ../../utils/multiple-gunzip.cwl
+    when: $(inputs.single == undefined)
+    in:
+      single: single_reads
+      target_reads: forward_reads
+      reads: { default: true }
+    out: [ unzipped_file ]
+
+  unzip_reverse_reads:
+    run: ../../utils/multiple-gunzip.cwl
+    when: $(inputs.single == undefined)
+    in:
+      single: single_reads
+      target_reads: reverse_reads
+      reads: { default: true }
+    out: [ unzipped_file ]
+
+  count_submitted_reads:
+    run: ../../utils/count_lines/count_lines.cwl
+    when: $(inputs.single == undefined)
+    in:
+      single: single_reads
+      sequences: unzip_forward_reads/unzipped_file
+      number: { default: 4 }
+    out: [ count ]
 
 # filter paired-end reads (for single do nothing)
   filter_paired:
@@ -31,10 +68,10 @@ steps:
     when: $(inputs.single == undefined)
     in:
       single: single_reads
-      forward: forward_reads
-      reverse: reverse_reads
+      forward: unzip_forward_reads/unzipped_file
+      reverse: unzip_reverse_reads/unzipped_file
       len: paired_reads_length_filter
-    out: [ forward_filtered, reverse_filtered ]
+    out: [ forward_filtered, reverse_filtered ]  # unzipped
 
 # << SeqPrep only for paired reads >>
   overlap_reads:
@@ -46,7 +83,7 @@ steps:
       forward_reads: filter_paired/forward_filtered
       reverse_reads: filter_paired/reverse_filtered
       namefile: forward_reads
-    out: [ merged_reads, forward_unmerged_reads, reverse_unmerged_reads ]
+    out: [ merged_reads, forward_unmerged_reads, reverse_unmerged_reads ]  # compressed
 
 # << unzip merged reads >>
   unzip_merged_reads:
@@ -55,7 +92,9 @@ steps:
     in:
       target_reads: overlap_reads/merged_reads
       reads: { default: true }
-    out: [ unzipped_merged_reads ]
+    out: [ unzipped_file ]
+
+# ----- SINGLE-END PART -----
 
 # << unzipping single reads >>
   unzip_single_reads:
@@ -64,7 +103,17 @@ steps:
     in:
       target_reads: single_reads
       reads: { default: true }
-    out: [ unzipped_merged_reads ]
+    out: [ unzipped_file ]
+
+  count_submitted_reads_single:
+    run: ../../utils/count_lines/count_lines.cwl
+    when: $(inputs.target_reads != undefined)
+    in:
+      target_reads: single_reads
+      sequences: unzip_single_reads/unzipped_file
+      number: { default: 4 }
+    out: [ count ]
+
 
 $namespaces:
  edam: http://edamontology.org/

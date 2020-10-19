@@ -58,13 +58,13 @@ steps:
     in:
       target_reads: contigs
       assembly: {default: true}
-    out: [unzipped_merged_reads]
+    out: [unzipped_file]
     run: ../../../utils/multiple-gunzip.cwl
 
 # << count reads pre QC >>
   count_reads:
     in:
-      sequences: unzip/unzipped_merged_reads
+      sequences: unzip/unzipped_file
       number: { default: 1 }
     out: [ count ]
     run: ../../../utils/count_fasta.cwl
@@ -72,7 +72,7 @@ steps:
 # <<clean fasta headers??>>
   clean_headers:
     in:
-      sequences: unzip/unzipped_merged_reads
+      sequences: unzip/unzipped_file
     out: [ sequences_with_cleaned_headers ]
     run: ../../../utils/clean_fasta_headers.cwl
     label: "removes spaces in some headers"

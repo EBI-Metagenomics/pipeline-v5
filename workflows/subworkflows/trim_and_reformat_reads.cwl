@@ -11,7 +11,6 @@ requirements:
 
 inputs:
   reads: File
-  count: int
 
 outputs:
   trimmed_and_reformatted_reads:
@@ -23,22 +22,30 @@ outputs:
  
 steps:
 
+  count_overlapped_reads:
+    run: ../../utils/count_lines/count_lines.cwl
+    in:
+      sequences: reads
+      number: { default: 4 }
+    out: [ count ]
+
   # return empty_file == input_file if it is absolutely empty
   touch_empty_fasta:
     when: $(inputs.fastq_count == 0)
     run: ../../utils/touch_file.cwl
     in:
       filename: { default: 'empty.fasta' }
-      fastq_count: count
+      fastq_count: count_overlapped_reads/count
     out: [ created_file ]
 
   # << Chunk faa file >>
   split_seqs:
+    when: $(inputs.fastq_count != 0)
     in:
       seqs: reads
       chunk_size: { default: 1000000 }
       file_format: { default: 'fastq' }
-      fastq_count: count
+      fastq_count: count_overlapped_reads/count
     out: [ chunks ]
     run: ../../tools/chunks/protein_chunker.cwl
 
@@ -57,7 +64,7 @@ steps:
       end_mode: { default: SE }
       minlen: { default: 100 }
       slidingwindow: { default: '4:15' }
-      fastq_count: count
+      fastq_count: count_overlapped_reads/count
     out: [reads1_trimmed]
 
   combine_trimmed:
@@ -68,7 +75,7 @@ steps:
         source: reads
         valueFrom: $(self.nameroot)
       postfix: { default: '.trimmed' }
-      fastq_count: count
+      fastq_count: count_overlapped_reads/count
     out: [result]
     run: ../../utils/concatenate.cwl
 
@@ -77,7 +84,7 @@ steps:
     run: ../../utils/fastq_to_fasta/fastq_to_fasta.cwl
     in:
       fastq: combine_trimmed/result
-      fastq_count: count
+      fastq_count: count_overlapped_reads/count
     out: [ fasta ]
 
   clean_fasta_headers:
@@ -85,7 +92,7 @@ steps:
     run: ../../utils/clean_fasta_headers.cwl
     in:
       sequences: convert_trimmed_reads_to_fasta/fasta
-      fastq_count: count
+      fastq_count: count_overlapped_reads/count
     out: [ sequences_with_cleaned_headers ]
 
 $namespaces:

@@ -7,7 +7,7 @@ label: "remove reads from both files that are less than LEN"
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 200
+    ramMin: 5000
 
 inputs:
   forward:
@@ -25,7 +25,7 @@ inputs:
     inputBinding:
         prefix: -l
 
-baseCommand: [filter_paired_reads.sh]
+baseCommand: [filter_paired_reads_uncompressed.sh]
 
 outputs:
   forward_filtered:
