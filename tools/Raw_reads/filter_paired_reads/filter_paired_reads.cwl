@@ -7,7 +7,7 @@ label: "remove reads from both files that are less than LEN"
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 200
+    ramMin: 5000
 
 inputs:
   forward:
