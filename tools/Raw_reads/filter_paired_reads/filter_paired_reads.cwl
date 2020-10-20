@@ -25,7 +25,7 @@ inputs:
     inputBinding:
         prefix: -l
 
-baseCommand: [filter_paired_reads.sh]
+baseCommand: [filter_paired_reads_uncompressed.sh]
 
 outputs:
   forward_filtered:

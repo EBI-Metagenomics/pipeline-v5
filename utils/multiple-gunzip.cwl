@@ -48,7 +48,7 @@ baseCommand: [ gunzip, -c ]
 outputs:
   unzipped_file:
     type: stdout
-    # <<doesn't support by cwltoil>> format: $(inputs.target_reads.format)
+    format: $(inputs.target_reads.format)
 
 stdout: ${ var ext = "";
        if (inputs.assembly) { ext = inputs.target_reads.nameroot.split('.')[0] + '_FASTA.unfiltered'; }

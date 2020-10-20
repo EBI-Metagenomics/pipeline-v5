@@ -10,13 +10,13 @@ while getopts :f:r:l: option; do
 	esac
 done
 
-#gunzip -c ${FORWARD} > forward.fastq
-#gunzip -c ${REVERSE} > reverse.fastq
+gunzip -c ${FORWARD} > forward.fastq
+gunzip -c ${REVERSE} > reverse.fastq
 
-seqtk comp ${FORWARD} | awk -v l="${LEN}" '{ if ($2 >= l) { print} }' | cut -f1 | sort > selected_1
-seqtk comp ${REVERSE} | awk -v l="${LEN}" '{ if ($2 >= l) { print} }' | cut -f1 | sort > selected_2
+seqtk comp forward.fastq | awk -v l="${LEN}" '{ if ($2 >= l) { print} }' | cut -f1 | sort > selected_1
+seqtk comp reverse.fastq | awk -v l="${LEN}" '{ if ($2 >= l) { print} }' | cut -f1 | sort > selected_2
 
 comm -12 selected_1 selected_2 > common
 
-seqtk subseq ${FORWARD} common > forward_filt.fastq
-seqtk subseq ${REVERSE} common > reverse_filt.fastq
+seqtk subseq forward.fastq common > forward_filt.fastq
+seqtk subseq reverse.fastq common > reverse_filt.fastq
