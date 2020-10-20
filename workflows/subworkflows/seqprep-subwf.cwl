@@ -24,7 +24,7 @@ outputs:
     pickValue: first_non_null
 
   count_forward_submitted_reads:
-    type: File
+    type: int
     outputSource: count_submitted_reads/count
 
 steps:
