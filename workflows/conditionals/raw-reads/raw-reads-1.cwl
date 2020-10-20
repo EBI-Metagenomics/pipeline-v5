@@ -81,14 +81,7 @@ steps:
       forward_reads: forward_reads
       reverse_reads: reverse_reads
       paired_reads_length_filter: { default: 70 }
-    out: [ unzipped_single_reads ]
-
-  count_submitted_reads:
-    run: ../../../utils/count_lines/count_lines.cwl
-    in:
-      sequences: overlap_reads/unzipped_single_reads
-      number: { default: 4 }
-    out: [ count ]
+    out: [ unzipped_single_reads, count_forward_submitted_reads ]
 
 # << Trim and Reformat >>
   trim_quality_control:
@@ -126,7 +119,7 @@ steps:
     run: ../../../tools/qc-filtering/qc-filtering.cwl
     in:
       seq_file: convert_trimmed_reads_to_fasta/fasta
-      submitted_seq_count: count_submitted_reads/count
+      submitted_seq_count: overlap_reads/count_forward_submitted_reads
       stats_file_name: {default: 'qc_summary'}
       min_length: qc_min_length
       input_file_format: { default: 'fasta' }

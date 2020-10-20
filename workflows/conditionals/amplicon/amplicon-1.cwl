@@ -69,13 +69,6 @@ steps:
       input_file: single_reads
     out: [ hashsum ]
 
-  count_submitted_reads:
-    run: ../../../utils/count_lines/count_lines.cwl
-    in:
-      sequences: overlap_reads/unzipped_single_reads
-      number: { default: 4 }
-    out: [ count ]
-
 # << SeqPrep (only for paired reads) + gunzip for paired and single>>
   overlap_reads:
     label: Paired-end overlapping reads are merged
@@ -85,14 +78,13 @@ steps:
       forward_reads: forward_reads
       reverse_reads: reverse_reads
       paired_reads_length_filter: { default: 70 }
-    out: [ unzipped_single_reads ]
+    out: [ unzipped_single_reads, count_forward_submitted_reads ]
 
 # << Trim and Reformat >>
   trimming:
     run: ../../subworkflows/trim_and_reformat_reads.cwl
     in:
       reads: overlap_reads/unzipped_single_reads
-      count: count_submitted_reads/count
     out: [ trimmed_and_reformatted_reads ]
 
 # << QC filtering >>
@@ -100,7 +92,7 @@ steps:
     run: ../../../tools/qc-filtering/qc-filtering.cwl
     in:
       seq_file: trimming/trimmed_and_reformatted_reads
-      submitted_seq_count: count_submitted_reads/count
+      submitted_seq_count: overlap_reads/count_forward_submitted_reads
       stats_file_name: {default: 'qc_summary'}
       min_length: qc_min_length
       input_file_format: { default: 'fasta' }

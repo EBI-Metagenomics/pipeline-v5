@@ -23,6 +23,10 @@ outputs:
       - unzip_single_reads/unzipped_file
     pickValue: first_non_null
 
+  count_forward_submitted_reads:
+    type: File
+    outputSource: count_submitted_reads/count
+
 steps:
 
 # << unzipping paired reads >>
@@ -44,14 +48,23 @@ steps:
       reads: { default: true }
     out: [ unzipped_file ]
 
+  count_submitted_reads:
+    run: ../../utils/count_lines/count_lines.cwl
+    when: $(inputs.single == undefined)
+    in:
+      single: single_reads
+      sequences: unzip_forward_reads/unzipped_file
+      number: { default: 4 }
+    out: [ count ]
+
 # filter paired-end reads (for single do nothing)
   filter_paired:
     run: ../../tools/Raw_reads/filter_paired_reads/filter_paired_reads.cwl
     when: $(inputs.single == undefined)
     in:
       single: single_reads
-      forward: forward_reads
-      reverse: reverse_reads
+      forward: unzip_forward_reads/unzipped_file
+      reverse: unzip_reverse_reads/unzipped_file
       len: paired_reads_length_filter
     out: [ forward_filtered, reverse_filtered ]  # unzipped
 
