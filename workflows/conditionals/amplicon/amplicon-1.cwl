@@ -69,6 +69,12 @@ steps:
       input_file: single_reads
     out: [ hashsum ]
 
+  count_submitted_reads:
+    run: ../../../utils/count_lines/count_lines.cwl
+    in:
+      sequences: overlap_reads/unzipped_single_reads
+      number: { default: 4 }
+    out: [ count ]
 
 # << SeqPrep (only for paired reads) + gunzip for paired and single>>
   overlap_reads:
@@ -80,13 +86,6 @@ steps:
       reverse_reads: reverse_reads
       paired_reads_length_filter: { default: 70 }
     out: [ unzipped_single_reads ]
-
-  count_submitted_reads:
-    run: ../../../utils/count_lines/count_lines.cwl
-    in:
-      sequences: overlap_reads/unzipped_single_reads
-      number: { default: 4 }
-    out: [ count ]
 
 # << Trim and Reformat >>
   trimming:

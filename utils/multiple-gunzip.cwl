@@ -46,7 +46,7 @@ inputs:
 baseCommand: [ gunzip, -c ]
 
 outputs:
-  unzipped_merged_reads:
+  unzipped_file:
     type: stdout
     # <<doesn't support by cwltoil>> format: $(inputs.target_reads.format)
 
