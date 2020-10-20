@@ -80,7 +80,7 @@ steps:
       single_reads: single_reads
       forward_reads: forward_reads
       reverse_reads: reverse_reads
-      paired_reads_length_filter: { default: 100 }
+      paired_reads_length_filter: { default: 70 }
     out: [ unzipped_single_reads ]
 
   count_submitted_reads:
