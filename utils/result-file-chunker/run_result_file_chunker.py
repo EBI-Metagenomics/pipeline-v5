@@ -1,1 +1,0 @@
-../../docker/scripts_python3/run_result_file_chunker.py

@@ -105,6 +105,12 @@ outputs:
   chunking_proteins:                                         # [1] faa
     type: File[]?
     outputSource: chunking_final/protein_fasta_chunks
+  chunking_nucleotides_files:
+    type: File[]?
+    outputSource: chunking_final/nucleotide_chunks_files
+  chunking_proteins_files:
+    type: File[]?
+    outputSource: chunking_final/protein_chunks_files
 
  # << functional annotation >>
   functional_annotation_folder:                              # [15]
@@ -371,6 +377,9 @@ steps:
       - nucleotide_fasta_chunks                         # fasta, ffn
       - protein_fasta_chunks                            # faa
       - SC_fasta_chunks                                 # LSU, SSU
+      - nucleotide_chunks_files
+      - protein_chunks_files
+      - SC_fasta_chunks_files
 
 # gzip
   compression:
@@ -392,6 +401,7 @@ steps:
       file_list:
         source:
           - chunking_final/SC_fasta_chunks
+          - chunking_final/SC_fasta_chunks_files
           - rna_prediction/compressed_rnas
           - other_ncrnas/ncrnas
         linkMerge: merge_flattened

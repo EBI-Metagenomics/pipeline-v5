@@ -116,6 +116,12 @@ outputs:
   chunking_proteins:                                         # [1] faa
     type: File[]?
     outputSource: after-qc/chunking_proteins
+  chunking_nucleotides_files:
+    type: File[]?
+    outputSource: after-qc/chunking_nucleotides_files
+  chunking_proteins_files:
+    type: File[]?
+    outputSource: after-qc/chunking_proteins_files
 
 # << functional annotation >>
   functional_annotation_folder:                              # [15]
@@ -230,6 +236,8 @@ steps:
       - sequence-categorisation_folder
       - rna-count
       - taxonomy-summary_folder
+      - chunking_nucleotides_files
+      - chunking_proteins_files
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")

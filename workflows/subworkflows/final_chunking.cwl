@@ -27,53 +27,65 @@ inputs:
 outputs:
   nucleotide_fasta_chunks:
     type: File[]?
-    outputSource: chinking_fasta_nucleotide/chunks
+    outputSource: chinking_fasta_nucleotide/chunked_by_size_files
 
   protein_fasta_chunks:
     type: File[]?
-    outputSource: chinking_fasta_proteins/chunks
+    outputSource: chinking_fasta_proteins/chunked_by_size_files
 
   SC_fasta_chunks:
     type: File[]?
-    outputSource: chinking_SC_fasta_nucleotide/chunks
+    outputSource: chinking_SC_fasta_nucleotide/chunked_by_size_files
+
+  nucleotide_chunks_files:
+    type: File[]?
+    outputSource: chinking_fasta_nucleotide/chunked_files
+
+  protein_chunks_files:
+    type: File[]?
+    outputSource: chinking_fasta_proteins/chunked_files
+
+  SC_fasta_chunks_files:
+    type: File[]?
+    outputSource: chinking_SC_fasta_nucleotide/chunked_files
 
 steps:
   chinking_fasta_nucleotide:
-    run: ../../utils/result-file-chunker/result_chunker.cwl
+    run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
-      infile:
+      input_files:
         - fasta
         - ffn
-      format_file: {default: fasta}
-      outdirname: {default: folder}
+      format: {default: fasta}
       type_fasta: {default: n}
     out:
-      - chunks
+      - chunked_by_size_files
+      - chunked_files
 
   chinking_fasta_proteins:
-    run: ../../utils/result-file-chunker/result_chunker.cwl
+    run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
-      infile:
+      input_files:
         source:
           - faa
         linkMerge: merge_nested
-      format_file: {default: fasta}
-      outdirname: {default: folder}
+      format: {default: fasta}
       type_fasta: {default: p}
     out:
-      - chunks
+      - chunked_by_size_files
+      - chunked_files
 
   chinking_SC_fasta_nucleotide:
     when: $(inputs.lsu != null && inputs.ssu != null)
-    run: ../../utils/result-file-chunker/result_chunker.cwl
+    run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
       lsu: LSU
       ssu: SSU
-      infile:
+      input_files:
         - LSU
         - SSU
-      format_file: {default: fasta}
-      outdirname: {default: folder}
+      format: {default: fasta}
       type_fasta: {default: n}
     out:
-      - chunks
+      - chunked_by_size_files
+      - chunked_files

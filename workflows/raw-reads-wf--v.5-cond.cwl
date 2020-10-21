@@ -111,6 +111,12 @@ outputs:
   chunking_proteins:
     type: File[]?
     outputSource: after-qc/chunking_proteins
+  chunking_nucleotides_files:
+    type: File[]?
+    outputSource: after-qc/chunking_nucleotides_files
+  chunking_proteins_files:
+    type: File[]?
+    outputSource: after-qc/chunking_proteins_files
 
   completed_flag_file:
     type: File?
@@ -193,6 +199,8 @@ steps:
       - chunking_proteins
       - count_CDS
       - optional_tax_file_flag
+      - chunking_nucleotides_files
+      - chunking_proteins_files
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")
