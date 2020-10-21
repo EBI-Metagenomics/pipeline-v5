@@ -25,9 +25,14 @@ outputs:
 
   count_forward_submitted_reads:
     type: int
-    outputSource: count_submitted_reads/count
+    outputSource:
+      - count_submitted_reads/count
+      - count_submitted_reads_single/count
+    pickValue: first_non_null
 
 steps:
+
+# ----- PAIRED-END PART -----
 
 # << unzipping paired reads >>
   unzip_forward_reads:
@@ -89,6 +94,8 @@ steps:
       reads: { default: true }
     out: [ unzipped_file ]
 
+# ----- SINGLE-END PART -----
+
 # << unzipping single reads >>
   unzip_single_reads:
     run: ../../utils/multiple-gunzip.cwl
@@ -97,6 +104,16 @@ steps:
       target_reads: single_reads
       reads: { default: true }
     out: [ unzipped_file ]
+
+  count_submitted_reads_single:
+    run: ../../utils/count_lines/count_lines.cwl
+    when: $(inputs.target_reads != undefined)
+    in:
+      target_reads: single_reads
+      sequences: unzip_single_reads/unzipped_file
+      number: { default: 4 }
+    out: [ count ]
+
 
 $namespaces:
  edam: http://edamontology.org/
