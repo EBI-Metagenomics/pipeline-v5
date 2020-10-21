@@ -10,9 +10,8 @@ __author__ = 'maxim'
 
 class ChunkTSVFileUtil:
 
-    def __init__(self, infile, line_number, cutoff, outdir, basename):
+    def __init__(self, infile, line_number, cutoff, outdir):
         """
-
         :param infile:
         :param line_number:
         :param cutoff: file size cutoff in MB for chunking.
@@ -22,23 +21,27 @@ class ChunkTSVFileUtil:
         self._line_number = str(line_number)
         self._cutoff = cutoff
         self._outdir = outdir
-        self._basename = basename
+
 
     def print_setup(self):
         print(vars(self))
+        # logging.info(
+        #     'Running the chunking program with the following settings:\nrootDir: {}\nresultFileSuffix: {}\nlineNumber: {}\ncutoff: {} MB'.format(
+        #         self._rootDir, self._resultFileSuffix, self._lineNumber, self._cutoff))
+
 
     def chunk_tsv_result_file(self):
         self.print_setup()
-        basename = self._basename
+        basename = os.path.basename(self._infile)
         nameroot = os.path.splitext(basename)[0]
         abspath = os.path.abspath(self._infile)
         dirpath = os.path.dirname(abspath)
         outdirpath = self._outdir
         try:
-            if cleaningUtils.checkIfAlreadyChunked(os.path.join(outdirpath, basename), 1):
+            if cleaningUtils.checkIfAlreadyChunked(os.path.join(outdirpath, os.path.basename(self._infile)), 1):
                 logging.info("This file has already been chunked! Jumping to the next file.")
             else:
-                print("File has not alredy chunked")
+                print("File has not already chunked")
                 infile_size_bytes = float(os.path.getsize(self._infile))
                 infile_size_megabytes = infile_size_bytes / 1024 / 1024
                 if infile_size_megabytes > self._cutoff:
@@ -57,11 +60,11 @@ class ChunkTSVFileUtil:
                         print(outdirpath)
 
                     # move and gzip initial file
-                    shutil.copyfile(self._infile, os.path.join(outdirpath, basename))
-                    cleaningUtils.compress(filePath=os.path.join(outdirpath, basename),
+                    shutil.copyfile(self._infile, os.path.join(outdirpath, os.path.basename(self._infile)))
+                    cleaningUtils.compress(filePath=os.path.join(outdirpath, os.path.basename(self._infile)),
                                            tool='pigz', options=['-p', '16'])
 
-                    with open(os.path.join(outdirpath, basename + '.chunks'), "w") as f:
+                    with open(os.path.join(outdirpath, os.path.basename(self._infile) + '.chunks'), "w") as f:
                         f.write(basename + '.gz')
         except:
             raise

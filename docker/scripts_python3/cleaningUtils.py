@@ -9,78 +9,11 @@ import time
 __author__ = 'maxim'
 
 
-def isValidFileName(fileName, resultFileSuffix):
-    #  TODO: Introduce a verbose mode and make them active for that mode
-    # print "Checking the following file: " + fileName
-    try:
-        index = fileName.index(resultFileSuffix)
-        if index + len(resultFileSuffix) == len(fileName):
-            #  TODO: Introduce a verbose mode and make them active for that mode
-            # print "Valid file name detected."
-            return True
-    except ValueError as e:
-        pass
-    except:
-        print("Unexpected error:", sys.exc_info()[0])
-        raise
-    # TODO: Introduce a verbose mode and make them active for that mode
-    # print "Not a valid file name."
-    return False
-
-
-def generateChunkedFastaFiles(sequenceFile, outputBaseDirectory, chunkSize):
-    """
-    sequence file -> chunked sequences files
-
-    Writes a fasta sequence file into smaller files with a specifed number of sequences
-    """
-    batchSize = 1000
-    fileCounter = 1
-    totalSequenceCounter = 0;
-    chunkSizeCounter = 0;
-    currentSequences = []
-    print('Creating sequence index...')
-    seqDict = SeqIO.index_db(sequenceFile + '.idx', sequenceFile, "fasta")
-    print('Finished indexing.')
-
-    for seqKey in seqDict.keys():
-        totalSequenceCounter += 1
-        chunkSizeCounter += 1
-        seqRecord = seqDict[seqKey]
-        currentSequences.append(seqRecord)
-
-        # Writing batches of sequence onto disc to save memory
-        if len(currentSequences) == batchSize:
-            writeFastaOutputFile(sequenceFile, fileCounter, outputBaseDirectory, currentSequences)
-            currentSequences = []
-
-        if chunkSizeCounter == chunkSize:
-            writeFastaOutputFile(sequenceFile, fileCounter, outputBaseDirectory, currentSequences)
-            currentSequences = []
-            chunkSizeCounter = 0  # reset chunk size counter
-            fileCounter += 1
-
-        if totalSequenceCounter % chunkSize == 0:
-            print(str(totalSequenceCounter) + ' records processed.')
-
-    seqDict.close()
-    # write any remaining sequences
-    if len(currentSequences) > 0:
-        writeFastaOutputFile(sequenceFile, fileCounter, outputBaseDirectory, currentSequences)
-
-
-def writeFastaOutputFile(fileName, infix, outputBaseDirectory, sequences):
-    fileName = re.sub('\.fasta$', '', fileName) + '_' + str(infix) + '.fasta'
-    outputFile = os.path.join(outputBaseDirectory, fileName)
-    with open(outputFile, "a") as fileHandler:
-        SeqIO.write(sequences, fileHandler, "fasta")
-        fileHandler.close()
-
-
-def pathExists(path, delay=30):
+def checkIfAlreadyChunked(path, delay=30):
     """Utility method that checks if a file or directory exists, accounting for NFS delays
-       If there is a delay in appearing then the delay is logged
-    """
+           If there is a delay in appearing then the delay is logged
+        """
+    print("Checking for the '.chunks' file")
     startTime = datetime.datetime.today()
     while not os.path.exists(path):
         currentTime = datetime.datetime.today()
@@ -88,37 +21,13 @@ def pathExists(path, delay=30):
         if timeSoFar.seconds > delay:
             return False
         time.sleep(1)
-    endTime = datetime.datetime.today()
-    totalTime = endTime - startTime
-    # if totalTime.seconds > 1:
-    #    print "Pathop: Took", totalTime.seconds, "to determine that path ",path, "exists"
     return True
-
-
-def checkIfAlreadyChunked(absoluteFilePath, delay):
-    print("Checking for the '.chunks' file")
-    if pathExists(absoluteFilePath + ".chunks", delay):
-        return True
-    return False
 
 
 def split(path, lineNumber, prefix):
     try:
         print('--> run split')
         subprocess.check_output(['split', '-d', '-l', lineNumber, path, prefix], stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError as ex:
-        print("--------error------")
-        print(ex.cmd)
-        print('return code', ex.returncode)
-        print(ex.output)
-
-
-def splitfasta(path, targetSize, tool_path):
-    try:
-        print('---> run fasta chunk')
-        subprocess.check_output(
-                [tool_path, 'splitfasta',
-                 '-targetsize', targetSize, path], stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as ex:
         print("--------error------")
         print(ex.cmd)

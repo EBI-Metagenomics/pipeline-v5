@@ -2,47 +2,35 @@ import sys
 import os
 import cleaningUtils as cleaningUtils
 import shutil
-import subprocess
 
 __author__ = 'maxim'
 
 
 class ChunkFASTAResultFileUtil:
     _rootDir = None    # protected variable
+
     _resultFileSuffix = None
+
     _targetSize = None
+
     _cutoff = None
 
-    def __init__(self, infile, resultFileSuffix, targetSize, tool_path, outdir, basename):
+    def __init__(self, infile, resultFileSuffix, targetSize, tool_path, outdir):
         self._infile = infile
         self._resultFileSuffix = resultFileSuffix
         self._targetSize = targetSize
         self._cutoff = float(targetSize)
         self._tool_path = tool_path
         self._outdir = outdir
-        self._basename = basename
 
-    def splitfasta(self, absoluteFilePath):
-        try:
-            print('---> run fasta chunk')
-            subprocess.check_output(
-                [self.tool_path, 'splitfasta',
-                 '-targetsize', self.targetSize, absoluteFilePath], stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as ex:
-            print("--------error------")
-            print(ex.cmd)
-            print('return code', ex.returncode)
-            print(ex.output)
-    __splitfasta = splitfasta
 
     def chunkFASTAResultFile(self):
-        print('Running the FASTA file chunking tool with the following settings:\ninfile: ' + self._infile
-              + '\nresultFileSuffix:' + self._resultFileSuffix + '\ntargetSize:' + str(self._targetSize) + '\ncutoff:'
-              + str(self._cutoff) + 'MB')
+        print('Running the FASTA file chunking tool with the following settings:\ninfile: ' + self._infile + '\nresultFileSuffix:' + self._resultFileSuffix + '\ntargetSize:' + str(
+            self._targetSize) + '\ncutoff:' + str(self._cutoff) + 'MB')
         # Check if that is a file we want to chunk
         # isValidFileName ?
         try:
-            basename = self._basename
+            basename = os.path.basename(self._infile)
             absoluteFilePath = os.path.abspath(self._infile)
             dirpath = os.path.dirname(absoluteFilePath)
             outdirpath = self._outdir
@@ -54,7 +42,7 @@ class ChunkFASTAResultFileUtil:
                 print('Input file size in MB:', fileSizeInMegabytes)
                 if fileSizeInMegabytes > self._cutoff:
                     print('Starting file chunking...')
-                    self.__splitfasta(absoluteFilePath=absoluteFilePath)
+                    cleaningUtils.splitfasta(absoluteFilePath, str(self._targetSize), self._tool_path)
                     print('File chunking finished.')
                     self.__moveChunkedFiles(dirpath, self._resultFileSuffix, self._infile, self._outdir)
                 else:
@@ -65,7 +53,7 @@ class ChunkFASTAResultFileUtil:
                         print(outdirpath)
 
                     # move and gzip initial file
-                    shutil.copyfile(absoluteFilePath, os.path.join(outdirpath, basename))
+                    shutil.copyfile(absoluteFilePath, os.path.join(outdirpath, os.path.basename(absoluteFilePath)))
                     cleaningUtils.compress(filePath=os.path.join(outdirpath, os.path.basename(absoluteFilePath)),
                                            tool='pigz', options=['-p', '16'])
 

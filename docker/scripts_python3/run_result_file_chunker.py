@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Copyright 2019 EMBL - European Bioinformatics Institute
+# Copyright 2020 EMBL - European Bioinformatics Institute
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -15,32 +15,14 @@
 # limitations under the License.
 import argparse
 import logging
-import sys
 import os
+from shutil import copyfile
 
 from chunkTSVFileUtil import ChunkTSVFileUtil
 from chunkFastaResultFileUtil import ChunkFASTAResultFileUtil
 
 __author__ = 'Maxim Scheremetjew'
 
-"""
-    [ResultFiles]
-    i5ChunkedFileLineNumber = 10000000
-    i5UnchunkedFileSizeCutoffInMB = 2253
-    chunkedFileSizeMaxInMB = 520
-    chunkedFileSizeMinInMB = 480
-    interproscanFastaDefaultTargetSize = 1819           # don't have, was for 'interproscan.fasta'
-    pCDSFastaDefaultTargetSize = 1847  
-    noFunctionFastaDefaultTargetSize = 1853             # don't have, was for 'noFunction.fasta' (LSU, SSU, models, mapseq ??)
-    nucleotideReadsFastaDefaultTargetSize = 1980        # ACC_FASTA.fasta.gz
-    cdsFaaDefaultTargetSize = 1350
-    cdsUnannotatedFaaDefaultTargetSize = 1442           # don't have
-    cdsUnannotatedFfnDefaultTargetSize = 1980           # don't have
-    cdsAnnotatedFaaDefaultTargetSize = 1442             # don't have
-    cdsAnnotatedFfnDefaultTargetSize = 1980             # dont't have
-"""
-
-DEFAULT_COMPRESSION_LEVEL = 6
 
 chunking_settings = {
     'TableChunkedFileLineNumber': 10000000,          # all tsv tables
@@ -52,60 +34,51 @@ chunking_settings = {
 }
 
 
-def parse_args(argv):
+def get_args():
     parser = argparse.ArgumentParser(
         description='Tool which chunks different types of pipeline result files (e.g. FASTA or TSV formatted)')
-    parser.add_argument('infile', help="Input file which needs chunking.")
-    parser.add_argument('file-type', choices=['fasta', 'tsv'], default='fasta')
-    parser.add_argument('type', choices=['p', 'n'], default='n')
-    parser.add_argument('-v', '--verbose', action='store_true')
-    return parser.parse_args(argv)
+    parser.add_argument("-i", "--input", nargs='+', help="Input file which needs chunking", required=True)
+    parser.add_argument("-f", "--format", choices=['fasta', 'tsv'], default='fasta', required=True)
+    parser.add_argument("-t", "--type", choices=['p', 'n'], default='n', required=False)
+    parser.add_argument("-c", "--cutoff", help="Set cutoff in Mb", required=False)
+    parser.add_argument("-o", "--outdir", help="Output directory name", required=True)
+    parser.add_argument("-v", "--verbose", action='store_true', required=False)
+    return parser
 
 
-def chunk_tsv_file(infile, outdir):
-    line_number = chunking_settings['TableChunkedFileLineNumber']
-    cutoff = chunking_settings['TableUnchunkedFileSizeCutoffInMB']
-    tsv_file_chunker = ChunkTSVFileUtil(infile=infile, line_number=line_number,
-                                        cutoff=float(cutoff), outdir=outdir)
-    tsv_file_chunker.chunk_tsv_result_file()
-
-
-def chunk_fasta_file(infile, fasta_type, outdir):
-    if fasta_type == 'n':
-        cutoff = chunking_settings["FfnFastaDefaultTargetSize"]
-    else:
-        cutoff = chunking_settings["FaaFastaDefaultTargetSize"]
-    tool_path = 'gt'
-    resultFileSuffix = os.path.basename(infile)
-    fasta_file_chunker = ChunkFASTAResultFileUtil(infile=infile,
-                                                  resultFileSuffix=resultFileSuffix,
-                                                  targetSize=cutoff,
-                                                  tool_path=tool_path,
-                                                  outdir=outdir)
-    fasta_file_chunker.chunkFASTAResultFile()
-
-
-def chunk_file(infile, file_format, fasta_type, outdir):
+def chunk_file(infile, file_format, fasta_type, outdir, basename, input_cutoff=None):
     if file_format == 'tsv':
-        chunk_tsv_file(infile, outdir)
+        line_number = chunking_settings['TableChunkedFileLineNumber']
+        cutoff = input_cutoff if input_cutoff else chunking_settings['TableUnchunkedFileSizeCutoffInMB']
+        tsv_file_chunker = ChunkTSVFileUtil(infile=infile, line_number=line_number,
+                                            cutoff=float(cutoff), outdir=outdir, basename=basename)
+        tsv_file_chunker.chunk_tsv_result_file()
     elif file_format == 'fasta':
-        chunk_fasta_file(infile, fasta_type, outdir)
+        if fasta_type == 'n':
+            cutoff = input_cutoff if input_cutoff else chunking_settings["FfnFastaDefaultTargetSize"]
+        else:
+            cutoff = input_cutoff if input_cutoff else chunking_settings["FaaFastaDefaultTargetSize"]
+        tool_path = 'gt'
+        resultFileSuffix = os.path.basename(infile)
+        fasta_file_chunker = ChunkFASTAResultFileUtil(infile=infile,
+                                                      resultFileSuffix=resultFileSuffix,
+                                                      targetSize=cutoff,
+                                                      tool_path=tool_path,
+                                                      outdir=outdir)
+        fasta_file_chunker.chunkFASTAResultFile()
     else:
         logging.warning("Unsupported file type.")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Convert fastq to fasta")
-    parser.add_argument("-i", "--input", nargs='+', help="Input fastq file", required=True)
-    parser.add_argument("-f", "--format", dest="format", help="Output fasta file", required=True)
-    parser.add_argument("-t", "--type", dest="type", help="-n for nucleotide fasta, -p for protein fasta")
-    parser.add_argument("-o", "--outdir", dest="outdir", help="Name of output folder", required=True)
 
-
-    if len(sys.argv) == 1:
-        parser.print_help()
-    else:
-        args = parser.parse_args()
-        for input_file in args.input:
-            print('Processing', input_file)
-            chunk_file(input_file, args.format, args.type, args.outdir)
+    args = get_args().parse_args()
+    for input_file in args.input:
+        print('Processing', input_file)
+        basename = os.path.basename(input_file)
+        copy_input = os.path.join(os.path.dirname(os.path.abspath(input_file)), 'copy_' + basename)
+        copyfile(input_file, copy_input)
+        print('Copy input to ', copy_input)
+        chunk_file(copy_input, args.format, args.type, args.outdir, basename, args.cutoff)
+        print('Delete copy')
+        os.remove(copy_input)
