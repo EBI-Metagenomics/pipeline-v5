@@ -40,6 +40,7 @@ steps:
 
   # << Chunk faa file >>
   split_seqs:
+    when: $(inputs.fastq_count != 0)
     in:
       seqs: reads
       chunk_size: { default: 1000000 }
