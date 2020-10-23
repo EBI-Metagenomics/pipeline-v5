@@ -101,27 +101,13 @@ outputs:
     type: File[]
     outputSource: after-qc/compressed_files
     pickValue: all_non_null
-  index_fasta_file:                                          # [1] fasta.bgz.fai
+  indexed_fasta_file:                                        # [3] fasta.bgz.fai, fasta.bgz.gzi, fasta.bgz
     type: File?
-    outputSource: after-qc/index_fasta_file
-  bgzip_index:                                               # [1] fasta.bgz.gzi
-    type: File?
-    outputSource: after-qc/bgzip_index
-  bgzip_fasta_file:                                          # [1] fasta.bgz
-    type: File?
-    outputSource: after-qc/bgzip_fasta_file
-  chunking_nucleotides:                                      # [2] fasta, ffn
+    outputSource: after-qc/index_fasta_with_indexes
+
+  chunking_nucleotides:                                      # [2] fasta, ffn, faa
     type: File[]?
-    outputSource: after-qc/chunking_nucleotides
-  chunking_proteins:                                         # [1] faa
-    type: File[]?
-    outputSource: after-qc/chunking_proteins
-  chunking_nucleotides_files:
-    type: File[]?
-    outputSource: after-qc/chunking_nucleotides_files
-  chunking_proteins_files:
-    type: File[]?
-    outputSource: after-qc/chunking_proteins_files
+    outputSource: after-qc/chunking_fasta_files
 
 # << functional annotation >>
   functional_annotation_folder:                              # [15]
@@ -223,11 +209,8 @@ steps:
       ko_file: ko_file
     out:
       - compressed_files
-      - index_fasta_file
-      - bgzip_fasta_file
-      - bgzip_index
-      - chunking_nucleotides
-      - chunking_proteins
+      - index_fasta_with_indexes
+      - chunking_fasta_files
       - functional_annotation_folder
       - stats
       - pathways_systems_folder
@@ -236,8 +219,6 @@ steps:
       - sequence-categorisation_folder
       - rna-count
       - taxonomy-summary_folder
-      - chunking_nucleotides_files
-      - chunking_proteins_files
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")

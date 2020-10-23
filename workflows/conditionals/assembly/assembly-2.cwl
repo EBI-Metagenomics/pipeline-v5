@@ -90,27 +90,15 @@ outputs:
   compressed_files:                                          # [2] cmsearch, ncRNA
     type: File[]
     outputSource: compression/compressed_file
-  index_fasta_file:                                          # [1] fasta.bgz.fai
-    type: File
-    outputSource: fasta_index/fasta_index
-  bgzip_fasta_file:                                          # [1] fasta.bgz
-    type: File
-    outputSource: fasta_index/fasta_bgz
-  bgzip_index:                                               # [1] fasta.bgz.gzi
-    type: File
-    outputSource: fasta_index/bgz_index
-  chunking_nucleotides:                                      # [2] fasta, ffn
+  index_fasta_with_indexes:                                  # [3] fasta.bgz.fai, fasta.bgz, fasta.bgz.gzi
+    type: File[]
+    outputSource:
+      - fasta_index/fasta_index
+      - fasta_index/fasta_bgz
+      - fasta_index/bgz_index
+  chunking_fasta_files:                                      # [6] fasta, ffn, faa, chunks
     type: File[]?
-    outputSource: chunking_final/nucleotide_fasta_chunks
-  chunking_proteins:                                         # [1] faa
-    type: File[]?
-    outputSource: chunking_final/protein_fasta_chunks
-  chunking_nucleotides_files:
-    type: File[]?
-    outputSource: chunking_final/nucleotide_chunks_files
-  chunking_proteins_files:
-    type: File[]?
-    outputSource: chunking_final/protein_chunks_files
+    outputSource: chunking_final/fasta_chunks
 
  # << functional annotation >>
   functional_annotation_folder:                              # [15]
@@ -374,12 +362,8 @@ steps:
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:
-      - nucleotide_fasta_chunks                         # fasta, ffn
-      - protein_fasta_chunks                            # faa
+      - fasta_chunks                         # fasta, ffn, faa, .chunks-files
       - SC_fasta_chunks                                 # LSU, SSU
-      - nucleotide_chunks_files
-      - protein_chunks_files
-      - SC_fasta_chunks_files
 
 # gzip
   compression:
@@ -401,7 +385,6 @@ steps:
       file_list:
         source:
           - chunking_final/SC_fasta_chunks
-          - chunking_final/SC_fasta_chunks_files
           - rna_prediction/compressed_rnas
           - other_ncrnas/ncrnas
         linkMerge: merge_flattened

@@ -81,18 +81,10 @@ outputs:
     type: Directory
     outputSource: return_tax_dir/out
 
-  chunking_nucleotides:
+  chunking_fasta_files:
     type: File[]?
-    outputSource: chunking_final/nucleotide_fasta_chunks
-  chunking_proteins:
-    type: File[]?
-    outputSource: chunking_final/protein_fasta_chunks
-  chunking_nucleotides_files:
-    type: File[]?
-    outputSource: chunking_final/nucleotide_chunks_files
-  chunking_proteins_files:
-    type: File[]?
-    outputSource: chunking_final/protein_chunks_files
+    outputSource: chunking_final/fasta_chunks
+
   rna-count:
     type: File
     outputSource: rna_prediction/LSU-SSU-count
@@ -271,12 +263,8 @@ steps:
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:
-      - nucleotide_fasta_chunks                         # fasta, ffn
-      - protein_fasta_chunks                            # faa
+      - fasta_chunks                         # fasta, ffn, faa, chunks
       - SC_fasta_chunks                                 # LSU, SSU
-      - nucleotide_chunks_files
-      - protein_chunks_files
-      - SC_fasta_chunks_files
 
 # << move chunked files >>
   move_to_seq_cat_folder:  # LSU and SSU
@@ -285,7 +273,6 @@ steps:
       file_list:
         source:
           - chunking_final/SC_fasta_chunks
-          - chunking_final/SC_fasta_chunks_files
           - rna_prediction/compressed_rnas
           - other_ncrnas/ncrnas
         linkMerge: merge_flattened
@@ -326,7 +313,7 @@ steps:
       input_files: header_addition/output_table
       format: { default: tsv }
       outdirname: { default: table }
-    out: [chunked_by_size_files, chunked_files]
+    out: [ chunked_by_size_files ]
 
 # << move to fucntional annotation >>
   move_to_functional_annotation_folder:
@@ -339,7 +326,6 @@ steps:
           - write_summaries/summary_pfam
           - go_summary/go_summary
           - go_summary/go_summary_slim
-          - chunking_tsv/chunked_files
           - chunking_tsv/chunked_by_size_files
         linkMerge: merge_flattened
       dir_name: { default: functional-annotation }

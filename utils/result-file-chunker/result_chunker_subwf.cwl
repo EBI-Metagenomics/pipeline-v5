@@ -17,11 +17,10 @@ inputs:
 outputs:
   chunked_by_size_files:
     type: File[]
-    outputSource: make_output_flatten/array1d
-
-  chunked_files:
-    type: File[]
-    outputSource: chunking/chunked_file
+    outputSource:
+      - make_output_flatten/array1d
+      - chunking/chunked_file
+    linkMerge: merge_flattened
 
 steps:
 

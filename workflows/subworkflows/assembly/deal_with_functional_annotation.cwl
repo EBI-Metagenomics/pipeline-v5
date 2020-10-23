@@ -108,7 +108,7 @@ steps:
     in:
       input_files: header_addition/output_table
       format: { default: tsv }
-    out: [chunked_by_size_files, chunked_files]
+    out: [chunked_by_size_files]
 
 # move FUNCTIONAL-ANNOTATION
   move_to_functional_annotation_folder:
@@ -125,7 +125,6 @@ steps:
           - go_summary/go_summary
           - go_summary/go_summary_slim
           - chunking_tsv/chunked_by_size_files
-          - chunking_tsv/chunked_files
         linkMerge: merge_flattened
       dir_name: { default: functional-annotation }
     out: [ out ]

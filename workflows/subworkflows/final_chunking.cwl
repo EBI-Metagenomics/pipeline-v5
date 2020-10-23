@@ -25,32 +25,21 @@ inputs:
     SSU: File?
 
 outputs:
-  nucleotide_fasta_chunks:
+  fasta_chunks:
     type: File[]?
-    outputSource: chinking_fasta_nucleotide/chunked_by_size_files
-
-  protein_fasta_chunks:
-    type: File[]?
-    outputSource: chinking_fasta_proteins/chunked_by_size_files
+    outputSource:
+      - chunking_fasta_nucleotide/chunked_by_size_files
+      - chunking_fasta_proteins/chunked_by_size_files
+    linkMerge: merge_flattened
+    pickValue: all_non_null
 
   SC_fasta_chunks:
     type: File[]?
-    outputSource: chinking_SC_fasta_nucleotide/chunked_by_size_files
+    outputSource: chunking_SC_fasta_nucleotide/chunked_by_size_files
 
-  nucleotide_chunks_files:
-    type: File[]?
-    outputSource: chinking_fasta_nucleotide/chunked_files
-
-  protein_chunks_files:
-    type: File[]?
-    outputSource: chinking_fasta_proteins/chunked_files
-
-  SC_fasta_chunks_files:
-    type: File[]?
-    outputSource: chinking_SC_fasta_nucleotide/chunked_files
 
 steps:
-  chinking_fasta_nucleotide:
+  chunking_fasta_nucleotide:
     run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
       input_files:
@@ -58,11 +47,9 @@ steps:
         - ffn
       format: {default: fasta}
       type_fasta: {default: n}
-    out:
-      - chunked_by_size_files
-      - chunked_files
+    out: [ chunked_by_size_files ]
 
-  chinking_fasta_proteins:
+  chunking_fasta_proteins:
     run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
       input_files:
@@ -71,11 +58,9 @@ steps:
         linkMerge: merge_nested
       format: {default: fasta}
       type_fasta: {default: p}
-    out:
-      - chunked_by_size_files
-      - chunked_files
+    out: [ chunked_by_size_files ]
 
-  chinking_SC_fasta_nucleotide:
+  chunking_SC_fasta_nucleotide:
     when: $(inputs.lsu != null && inputs.ssu != null)
     run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
@@ -86,6 +71,4 @@ steps:
         - SSU
       format: {default: fasta}
       type_fasta: {default: n}
-    out:
-      - chunked_by_size_files
-      - chunked_files
+    out: [ chunked_by_size_files ]
