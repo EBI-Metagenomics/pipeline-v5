@@ -61,6 +61,9 @@ outputs:
   hashsum_single:
     type: File?
     outputSource: before-qc/input_files_hashsum_single
+  fastp_filtering_json_report:
+    type: File?
+    outputSource: before-qc/fastp_filtering_json
 
   gz_files:
     type: File[]
@@ -107,6 +110,7 @@ steps:
       - qc-status
       - input_files_hashsum_paired
       - input_files_hashsum_single
+      - fastp_filtering_json
 
   after-qc:
     run: conditionals/amplicon/amplicon-2.cwl

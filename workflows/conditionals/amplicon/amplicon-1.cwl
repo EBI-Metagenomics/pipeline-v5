@@ -32,6 +32,10 @@ outputs:
     type: File?
     outputSource: hashsum_single/hashsum
 
+  fastp_filtering_json:
+    type: File?
+    outputSource: overlap_reads/fastp_report
+
   qc-statistics:
     type: Directory
     outputSource: qc_stats/output_dir
@@ -78,7 +82,7 @@ steps:
       forward_reads: forward_reads
       reverse_reads: reverse_reads
       paired_reads_length_filter: { default: 70 }
-    out: [ unzipped_single_reads, count_forward_submitted_reads ]
+    out: [ unzipped_single_reads, count_forward_submitted_reads, fastp_report ]
 
 # << Trim and Reformat >>
   trimming:
