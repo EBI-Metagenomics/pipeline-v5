@@ -5,6 +5,8 @@ import os
 from Bio import SeqIO
 import hashlib
 from oslo_concurrency import lockutils
+import _pickle as cPickle
+import gzip
 
 
 def get_args():
@@ -13,6 +15,7 @@ def get_args():
     parser.add_argument('-m', '--mapping', dest='mapping', required=True, help='folder to save MGYCs')
     parser.add_argument("-c", "--count", help="number of sequences in fasta file", dest="count", required=True)
     parser.add_argument("-a", "--accession", help="run accession", dest="accession", required=True)
+    parser.add_argument("--save-pickle", help="Save table to pickle", action='store_true', required=False)
     return parser
 
 
@@ -37,10 +40,7 @@ def write_next_acc(filename, path_lock, count):
 
 
 def create_digest(seq):
-    #dtype = 'sha256'
-    #h = hashlib.new(dtype)
-    #h.update(seq.encode('utf-8'))
-    #digest = h.hexdigest()
+    #digest = hashlib.new('sha256').update(seq.encode('utf-8')).hexdigest()
     digest = hashlib.sha256(str(seq).encode('utf-8')).hexdigest()
     return digest
 
@@ -61,6 +61,13 @@ def get_kmercoverage(header):
     return 0
 
 
+def open_fasta(filename):
+    if filename.endswith('.gz'):
+        return gzip.open(filename, 'rb')
+    else:
+        return open(filename, 'r')
+
+
 if __name__ == "__main__":
 
     TYPE = 'mgyc'
@@ -73,8 +80,10 @@ if __name__ == "__main__":
     new_fasta_name = args.accession+'_FASTA.mgyc.fasta'
     file_with_mgyc = os.path.join(mapping_dir, args.accession+'.txt')
     # read fasta file, create digests, change contig names
+    dict_contig = {}  # { contig_name: accession }
     with open(new_fasta_name, 'w') as new_fasta, open(file_with_mgyc, 'w') as accession_file:
-        for record in SeqIO.parse(args.fasta, "fasta"):
+        input_fasta_file = open_fasta(args.fasta)
+        for record in SeqIO.parse(input_fasta_file, "fasta"):
             length = get_length(record.id)
             kmer_covarage = get_kmercoverage(record.id)
             mgy_accession = "MGYC%012d" % next_acc
@@ -85,3 +94,8 @@ if __name__ == "__main__":
             record.id = mgy_accession
             record.description = mgy_accession
             SeqIO.write(record, new_fasta, "fasta")
+            dict_contig[record.id] = mgy_accession
+    if args.save_pickle:
+        filepath = os.path.join(mapping_dir, args.accession)
+        with open(filepath + '.pkl', 'wb') as pickle_file:
+            cPickle.dump(dict_contig, pickle_file)
