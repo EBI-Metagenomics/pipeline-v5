@@ -79,6 +79,10 @@ outputs:
   hashsum_single:
     type: File?
     outputSource: before-qc/input_files_hashsum_single
+  fastp_filtering_json_report:
+    type: File?
+    outputSource: before-qc/fastp_filtering_json
+
 
   sequence-categorisation_folder:
     type: Directory?
@@ -144,6 +148,7 @@ steps:
       - filtered_fasta
       - input_files_hashsum_paired
       - input_files_hashsum_single
+      - fastp_filtering_json
 
   after-qc:
     run: conditionals/raw-reads/raw-reads-2.cwl

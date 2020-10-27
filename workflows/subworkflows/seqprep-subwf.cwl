@@ -30,48 +30,38 @@ outputs:
       - count_submitted_reads_single/count
     pickValue: first_non_null
 
+  fastp_report:
+    type: File?
+    outputSource: filter_paired/json_report
+
 steps:
 
 # ----- PAIRED-END PART -----
 
 # << unzipping paired reads >>
-  unzip_forward_reads:
-    run: ../../utils/multiple-gunzip.cwl
-    when: $(inputs.single == undefined)
-    in:
-      single: single_reads
-      target_reads: forward_reads
-      reads: { default: true }
-    out: [ unzipped_file ]
-
-  unzip_reverse_reads:
-    run: ../../utils/multiple-gunzip.cwl
-    when: $(inputs.single == undefined)
-    in:
-      single: single_reads
-      target_reads: reverse_reads
-      reads: { default: true }
-    out: [ unzipped_file ]
-
   count_submitted_reads:
     run: ../../utils/count_lines/count_lines.cwl
     when: $(inputs.single == undefined)
     in:
       single: single_reads
-      sequences: unzip_forward_reads/unzipped_file
+      sequences: forward_reads
       number: { default: 4 }
     out: [ count ]
 
 # filter paired-end reads (for single do nothing)
   filter_paired:
-    run: ../../tools/Raw_reads/filter_paired_reads/filter_paired_reads.cwl
+    run: ../../utils/fastp.cwl
     when: $(inputs.single == undefined)
     in:
       single: single_reads
-      forward: unzip_forward_reads/unzipped_file
-      reverse: unzip_reverse_reads/unzipped_file
-      len: paired_reads_length_filter
-    out: [ forward_filtered, reverse_filtered ]  # unzipped
+      fastq1: forward_reads
+      fastq2: reverse_reads
+      min_length_required: paired_reads_length_filter
+      base_correction: { default: false }
+      disable_trim_poly_g: { default: false }
+      force_polyg_tail_trimming: { default: false }
+      threads: {default: 8}
+    out: [ out_fastq1, out_fastq2, json_report ]  # unzipped
 
 # << SeqPrep only for paired reads >>
   overlap_reads:
@@ -80,8 +70,8 @@ steps:
     when: $(inputs.single == undefined)
     in:
       single: single_reads
-      forward_reads: filter_paired/forward_filtered
-      reverse_reads: filter_paired/reverse_filtered
+      forward_reads: filter_paired/out_fastq1
+      reverse_reads: filter_paired/out_fastq2
       namefile: forward_reads
     out: [ merged_reads, forward_unmerged_reads, reverse_unmerged_reads ]  # compressed
 
