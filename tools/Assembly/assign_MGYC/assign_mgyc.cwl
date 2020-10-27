@@ -26,6 +26,10 @@ inputs:
     type: string
     inputBinding:
       prefix: -a
+  study_accession:
+    type: string
+    inputBinding:
+      prefix: -s
 
 baseCommand: [ assign_mgyc.py ]
 

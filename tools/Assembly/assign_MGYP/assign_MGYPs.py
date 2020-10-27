@@ -95,7 +95,7 @@ def save_map_file(map, cur_twochar):
     pickle_file.close()
     gc.enable()
     end = time.time()
-    logging.debug('Saving took ' + str(end - start) + 's')
+    logging.info('Saving took ' + str(end - start) + 's')
 
 
 def map_accessions(seq, partial, map, next_acc, biome, obs_biome, assembly, public):
@@ -229,7 +229,7 @@ if __name__ == "__main__":
             # find new records for map file
             new_records = []
             for record in dict_hash_records[twochar]:
-                partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.id)
+                partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.description)
                 if not (record.seq in map and partial in map[record.seq]):
                     new_records.append(record)
 
@@ -241,14 +241,14 @@ if __name__ == "__main__":
                 # adding all proteins
                 logging.debug('-----> processing map-file')
                 for record in dict_hash_records[twochar]:
-                    partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.id)
+                    partial, start_coordinate, stop_coordinate, strand, caller = parsing_header(record.description)
                     cur_accession, mgy_accession, new_protein_flag = map_accessions(map=map, next_acc=cur_accession,
                                                                                     seq=record.seq, biome=biome,
                                                             partial=partial, assembly=args.accession,
                                                             obs_biome=obs_biome, public=public_value)
                     # write table of protein data
                     file_peptides.write(' '.join([mgy_accession, record.id, start_coordinate, stop_coordinate, strand,
-                                                  partial, caller]))
+                                                  partial, caller]) + '\n')
                     record.id = mgy_accession
                     record.description = mgy_accession
                     # write fasta file with new accessions

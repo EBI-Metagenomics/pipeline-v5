@@ -7,15 +7,19 @@ import hashlib
 from oslo_concurrency import lockutils
 import _pickle as cPickle
 import gzip
+import json
 
 
 def get_args():
     parser = argparse.ArgumentParser(description="create file with MGYCs for run")
     parser.add_argument('-f', '--fasta', dest='fasta', required=True, help='Fasta file with original contig names')
-    parser.add_argument('-m', '--mapping', dest='mapping', required=True, help='folder to save MGYCs')
+    parser.add_argument('-m', '--mapping', dest='mapping', required=True, help='config')
     parser.add_argument("-c", "--count", help="number of sequences in fasta file", dest="count", required=True)
     parser.add_argument("-a", "--accession", help="run accession", dest="accession", required=True)
-    parser.add_argument("--save-pickle", help="Save table to pickle", action='store_true', required=False)
+    parser.add_argument("-s", "--study", help="study accession", dest="study", required=True)
+    parser.add_argument("--path-fasta", help="generate mgyc.fasta in assembly_peptides folder", required=False,
+                        action='store_true')
+    parser.add_argument("--save-json", help="Save table to json", action='store_true', required=False)
     return parser
 
 
@@ -63,7 +67,7 @@ def get_kmercoverage(header):
 
 def open_fasta(filename):
     if filename.endswith('.gz'):
-        return gzip.open(filename, 'rb')
+        return gzip.open(filename, 'rt')
     else:
         return open(filename, 'r')
 
@@ -72,13 +76,25 @@ if __name__ == "__main__":
 
     TYPE = 'mgyc'
     args = get_args().parse_args()
-    print('Run: ' + args.accession)
-    mapping_dir = os.path.join(args.mapping, TYPE)
+    accession = args.accession
+    with open(args.mapping, 'r') as fc:
+        config = json.loads(fc.read())
+        assembly_peptides_dir = config['peptides']
+        max_acc_dir = os.path.join(config['max_acc'], TYPE)
+    print('max_acc file ', max_acc_dir)
+    print('Run: ' + accession)
+    mapping_dir = os.path.join(assembly_peptides_dir, args.study, accession)
+    os.makedirs(mapping_dir, exist_ok=True)
+    print('map-file ', mapping_dir)
     # update number
-    next_acc = write_next_acc(filename='max_acc', path_lock=mapping_dir, count=args.count)
+    next_acc = write_next_acc(filename='max_acc', path_lock=max_acc_dir, count=args.count)
 
-    new_fasta_name = args.accession+'_FASTA.mgyc.fasta'
-    file_with_mgyc = os.path.join(mapping_dir, args.accession+'.txt')
+    if args.path_fasta:
+        new_fasta_name = os.path.join(mapping_dir, accession + '_FASTA.mgyc.fasta')
+    else:
+        new_fasta_name = accession + '_FASTA.mgyc.fasta'
+
+    file_with_mgyc = os.path.join(mapping_dir, accession+'.mgyc.txt')
     # read fasta file, create digests, change contig names
     dict_contig = {}  # { contig_name: accession }
     with open(new_fasta_name, 'w') as new_fasta, open(file_with_mgyc, 'w') as accession_file:
@@ -88,14 +104,15 @@ if __name__ == "__main__":
             kmer_covarage = get_kmercoverage(record.id)
             mgy_accession = "MGYC%012d" % next_acc
             hash_seq = create_digest(str(record.seq))
-            hash_erz_seq = create_digest(args.accession + record.seq)
+            hash_erz_seq = create_digest(accession + record.seq)
             next_acc += 1
             accession_file.write(' '.join([mgy_accession, hash_erz_seq, hash_seq, length, kmer_covarage]) + '\n')
+            dict_contig[record.id] = mgy_accession
             record.id = mgy_accession
             record.description = mgy_accession
             SeqIO.write(record, new_fasta, "fasta")
-            dict_contig[record.id] = mgy_accession
-    if args.save_pickle:
-        filepath = os.path.join(mapping_dir, args.accession)
-        with open(filepath + '.pkl', 'wb') as pickle_file:
-            cPickle.dump(dict_contig, pickle_file)
+    if args.save_json:
+        filepath = os.path.join(mapping_dir, accession)
+        with open(filepath + '.mgyc.json', 'w') as json_file:
+            json.dump(dict_contig, json_file)
+
