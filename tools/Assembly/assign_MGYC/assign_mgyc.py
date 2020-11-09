@@ -100,8 +100,8 @@ if __name__ == "__main__":
     with open(new_fasta_name, 'w') as new_fasta, open(file_with_mgyc, 'w') as accession_file:
         input_fasta_file = open_fasta(args.fasta)
         for record in SeqIO.parse(input_fasta_file, "fasta"):
-            length = get_length(record.id)
-            kmer_covarage = get_kmercoverage(record.id)
+            length = str(get_length(record.id))
+            kmer_covarage = str(get_kmercoverage(record.id))
             mgy_accession = "MGYC%012d" % next_acc
             hash_seq = create_digest(str(record.seq))
             hash_erz_seq = create_digest(accession + record.seq)
