@@ -39,7 +39,7 @@ steps:
     in:
       format: format
       infile: input_file
-      line_number: { default: 10000000 }
+      line_number: { default: 1000 }
       prefix:
         source: input_file
         valueFrom: "$(self.nameroot)_"

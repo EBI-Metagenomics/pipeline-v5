@@ -28,10 +28,10 @@ arguments:
       valueFrom: |
         ${
           if (inputs.type_fasta == 'n') {
-            return 1980
+            return 1
           }
           if (inputs.type_fasta == 'p') {
-            return 1442
+            return 1
           }
         }
 
