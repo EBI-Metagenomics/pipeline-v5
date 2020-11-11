@@ -1,9 +1,6 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-$namespaces:
- edam: http://edamontology.org/
- s: http://schema.org/
 
 label: "Genome properties https://genome-properties.readthedocs.io"
 
@@ -15,11 +12,9 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: genome_properties:latest
+    dockerPull: microbiomeinformatics/pipeline-v5.genome-properties:v2.0.1
 
-#baseCommand: ["perl", "/genome-properties/code/scripts/assign_genome_properties.pl"] # <--- for docker
-
-baseCommand: [assign_genome_properties.pl]    # without docker
+baseCommand: [ assign_genome_properties.pl ] # without docker
 
 arguments:
   - position: 1
@@ -43,13 +38,15 @@ inputs:
       prefix: "-matches"
 
   flatfiles_path:
-    type: string
+    type: string?
     inputBinding:
       prefix: "-gpdir"
+    default: "/genome-properties/flatfiles"
   GP_txt:
-    type: string
+    type: string?
     inputBinding:
       prefix: "-gpff"
+    default: "genomeProperties.txt"
 
   out_dir:
     type: string?
@@ -88,6 +85,12 @@ $schemas:
  - http://edamontology.org/EDAM_1.20.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
-'s:author': 'Ekaterina Sakharova'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
+s:author: "Ekaterina Sakharova"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"

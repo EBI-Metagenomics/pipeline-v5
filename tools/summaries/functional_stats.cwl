@@ -36,7 +36,7 @@ inputs:
     inputBinding:
         prefix: -a
   ko_file:
-    type: string
+    type: [string, File]
     inputBinding:
         prefix: -ko
 
@@ -70,7 +70,7 @@ outputs:
 
 hints:
   - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
 
 
 $namespaces:

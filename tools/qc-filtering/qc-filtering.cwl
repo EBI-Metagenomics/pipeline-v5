@@ -5,7 +5,7 @@ label: "Quality control filtering step using the BioPython package."
 
 hints:
   DockerRequirement:
-    dockerPull: alpine:3.7
+    dockerPull: microbiomeinformatics/pipeline-v5.python2:v1
 
 requirements:
   ResourceRequirement:
@@ -13,7 +13,7 @@ requirements:
     ramMin: 200
   InlineJavascriptRequirement: {}
 
-baseCommand: ["run_quality_filtering.py" ]
+baseCommand: [ "run_quality_filtering.py" ]
 
 inputs:
   seq_file:

@@ -14,4 +14,4 @@ esl-sfetch --index ${FASTA}
 sleep 60
 
 mkdir folder
-mv ${FASTA}* folder
+cp ${FASTA}* folder

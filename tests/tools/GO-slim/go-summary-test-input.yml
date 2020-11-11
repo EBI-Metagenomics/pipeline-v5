@@ -1,0 +1,5 @@
+InterProScan_results:
+  class: File
+  path: test-input/ips_out.tsv
+  format: http://edamontology.org/format_3475
+output_name: "test_output.go"

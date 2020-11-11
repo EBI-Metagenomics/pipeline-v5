@@ -17,15 +17,15 @@ inputs:
   antismash_geneclusters_txt: File?
   rna: File
   cds: File
-  go_config: string
+  go_config: [string?, File?]
   eggnog_orthologs: File
   eggnog_annotations: File
-  diamond_header: string
-  hmmsearch_header: string
-  ips_header: string
   output_gff_gz: File
   output_gff_index: File
-  ko_file: string
+  ko_file: [string, File]
+  diamond_header: string
+  hmmscan_header: string
+  ips_header: string
 
 outputs:
   functional_annotation_folder:
@@ -86,7 +86,7 @@ steps:
         - IPS_table
       header:
         - diamond_header
-        - hmmsearch_header
+        - hmmscan_header
         - ips_header
     out: [ output_table ]
 
@@ -104,12 +104,11 @@ steps:
 
 # chunking
   chunking_tsv:
-    run: ../../../utils/result-file-chunker/result_chunker.cwl
+    run: ../../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
-      infile: header_addition/output_table
-      format_file: { default: tsv }
-      outdirname: { default: table }
-    out: [chunks]
+      input_files: header_addition/output_table
+      format: { default: tsv }
+    out: [chunked_by_size_files]
 
 # move FUNCTIONAL-ANNOTATION
   move_to_functional_annotation_folder:
@@ -125,7 +124,7 @@ steps:
           - write_summaries/summary_pfam
           - go_summary/go_summary
           - go_summary/go_summary_slim
-          - chunking_tsv/chunks
+          - chunking_tsv/chunked_by_size_files
         linkMerge: merge_flattened
       dir_name: { default: functional-annotation }
     out: [ out ]
@@ -139,4 +138,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

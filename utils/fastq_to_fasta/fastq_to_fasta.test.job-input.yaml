@@ -1,4 +1,4 @@
 fastq:
   class: File
   format: 'edam:format_1930'
-  path: test-inputs/test_seqs.fq
+  path: test-input/test.fq

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
 import argparse
 import json
@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import logging
+from shutil import copy
 
 class Region(object):
     def __init__(self, start, end):
@@ -336,9 +337,9 @@ def get_counts(predictions):
     return total
 
 
-def filter_output_file_faa(output, filter_criterion):
-    command = ['sed', '-i', filter_criterion, output]
-    run_command(command)
+def filter_output_file_faa(input, filter_criterion, outputname):
+    out_file = open(outputname, "w")
+    subprocess.call(['sed', filter_criterion, input], stdout=out_file)
 
 
 if __name__ == "__main__":
@@ -366,18 +367,20 @@ if __name__ == "__main__":
         caller_priority = ['prodigal', 'fgs']
         logging.info('Prodigal presented')
         logging.info("Filtering Prodigal sequences...")
-        filter_output_file_faa(args['prodigal-faa'], 's/\*$//')
+        outputname_prodigal = os.path.basename(args['prodigal-faa'])
+        filter_output_file_faa(args['prodigal-faa'], 's/\*$//', outputname_prodigal)
         logging.info("Getting Prodigal regions...")
         all_predictions['prodigal'] = get_regions_prodigal(args['prodigal-out'])
-        files['prodigal'] = [args['prodigal-out'], args['prodigal-ffn'], args['prodigal-faa']]
+        files['prodigal'] = [args['prodigal-out'], args['prodigal-ffn'], outputname_prodigal]
 
     if args['fgs-out']:
         logging.info('FGS presented')
         logging.info("Filtering FragGeneScan sequences...")
-        filter_output_file_faa(args['fgs-faa'], 's/\*/X/g')
+        outputname_fgs = os.path.basename(args['fgs-faa'])
+        filter_output_file_faa(args['fgs-faa'], 's/\*/X/g', outputname_fgs)
         logging.info("Getting FragGeneScan regions ...")
         all_predictions['fgs'] = get_regions_fgs(args['fgs-out'])
-        files['fgs'] = [args['fgs-out'], args['fgs-ffn'], args['fgs-faa']]
+        files['fgs'] = [args['fgs-out'], args['fgs-ffn'], outputname_fgs]
 
     summary['all'] = get_counts(all_predictions)
 
@@ -413,7 +416,7 @@ if __name__ == "__main__":
     output_files(merged_predictions, summary, files, 'temp-dir', faselector_exec)
 
     # Remove intermediate files
-    for type in files:
-        if not type == 'merged':
-            for fn in files[type]:
-                os.remove(fn)
+#    for type in files:
+#        if not type == 'merged':
+#            for fn in files[type]:
+#                os.remove(fn)

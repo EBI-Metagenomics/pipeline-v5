@@ -1,3 +1,6 @@
+$namespaces:
+ edam: http://edamontology.org/
+
 covariance_model_database:
   class: File
   path: test-input/tRNA5.c.cm

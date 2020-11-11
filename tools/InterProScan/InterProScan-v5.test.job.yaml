@@ -15,3 +15,4 @@ inputFile:
 outputFormat:
   - TSV
 databases: interproscan-5.36-75.0/data
+

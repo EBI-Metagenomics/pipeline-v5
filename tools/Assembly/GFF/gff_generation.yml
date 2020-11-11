@@ -1,10 +1,16 @@
+$namespaces:
+ edam: http://edamontology.org/
+
 ips_results:
   class: File
+  format: edam:format_3475
   path: ../../InterProScan/expected-output/assembly-SRR1620013_small_FASTA_FASTA.I5.tsv
 eggnog_results:
   class: File
-  path: ../EggNOG/expected-output/assembly-SRR1620013_small_FASTA_FASTA.emapper.annotations.gz
+  path: ../EggNOG/expected-output/assembly-SRR1620013_small_FASTA_FASTA.emapper.annotations
+  format: edam:format_3475
 input_faa:
   class: File
   path: ../../../tools/Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
+  format: edam:format_1929
 output_name: assembly-SRR1620013_small_FASTA_FASTA.contigs.annotations.gff

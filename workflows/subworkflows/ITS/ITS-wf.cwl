@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 class: Workflow
 label: "ITS SubWorkflow"
 
@@ -19,11 +19,11 @@ inputs:
   LSU_coordinates: File
   SSU_coordinates: File
   unite_database: {type: File, secondaryFiles: [.mscluster] }
-  unite_taxonomy: string
-  unite_otus: string
+  unite_taxonomy: [string, File]
+  unite_otus: [string, File]
   itsone_database: {type: File, secondaryFiles: [.mscluster] }
-  itsone_taxonomy: string
-  itsone_otus: string
+  itsone_taxonomy: [string, File]
+  itsone_otus: [string, File]
   otu_unite_label: string
   otu_itsone_label: string
 
@@ -70,7 +70,7 @@ steps:
     out: [ maskfile ]
 
   mask_for_ITS:
-    run: ../../../tools/mask-for-ITS/bedtools.cwl
+    run: ../../../tools/mask-for-ITS/bedtools/bedtools.cwl
     in:
       sequences: query_sequences
       maskfile: reformat_coords/maskfile
@@ -135,4 +135,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

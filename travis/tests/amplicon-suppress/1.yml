@@ -1,6 +1,0 @@
-# RNA_prediction: empty_tax (empty input)
-- job: 1.run.yml
-  tool: ../../../workflows/subworkflows/classify-otu-visualise.cwl
-  short_name: classify-otu-visualise.cwl
-  doc: "classify-otu-visualise.cwl"
-  output:

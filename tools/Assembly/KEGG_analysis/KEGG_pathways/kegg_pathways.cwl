@@ -14,7 +14,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: kegg_pathways:latest
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
 
 baseCommand: [give_pathways.py]
 
@@ -26,15 +26,15 @@ inputs:
       separate: true
       prefix: -i
   graphs:
-    type: string
+    type: [string, File]
     inputBinding:
       prefix: -g
   pathways_names:
-    type: string
+    type: [string, File]
     inputBinding:
       prefix: -n
   pathways_classes:
-    type: string
+    type: [string, File]
     inputBinding:
       prefix: -c
   outputname:
@@ -63,6 +63,8 @@ outputs:
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
-'s:author': 'Ekaterina Sakharova'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+s:author: "Ekaterina Sakharova"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"

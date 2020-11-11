@@ -1,0 +1,1 @@
+../../../docker/scripts_bash/filter_paired_reads.sh

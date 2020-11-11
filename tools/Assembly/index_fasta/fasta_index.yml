@@ -5,3 +5,4 @@ fasta:
   class: File
   path: test-input/test.fasta
   format: edam:format_1929
+

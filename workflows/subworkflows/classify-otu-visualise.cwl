@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 class: Workflow
 label: "Run taxonomic classification, create OTU table and krona visualisation"
 
@@ -16,8 +16,8 @@ inputs:
   mapseq_ref:
     type: File
     secondaryFiles: [.mscluster]
-  mapseq_taxonomy: string
-  otu_ref: string
+  mapseq_taxonomy: [string, File]
+  otu_ref: [string, File]
   otu_label:
     type: string
   return_dirname: string
@@ -120,4 +120,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

@@ -1,6 +1,0 @@
-sequences:
-  class: File
-  path: test-input/test-cmsearch.fasta
-maskfile:
-  class: File
-  path: expected-output/ITS-maskfile

@@ -28,7 +28,7 @@ steps:
     in:
       input_fasta: input_fasta
     out: [ predicted_proteins_out, predicted_proteins_ffn, predicted_proteins_faa ]
-    run: prodigal.cwl
+    run: Prodigal/prodigal.cwl
 
   FGS:
     in:
@@ -38,7 +38,7 @@ steps:
         source: input_fasta
         valueFrom: $(self.basename).fgs
     out: [ predicted_proteins_out, predicted_proteins_ffn, predicted_proteins_faa ]
-    run: FGS.cwl
+    run: FragGeneScan/FGS.cwl
 
   post-processing:
     in:

@@ -19,7 +19,9 @@ EggNOG_db:
 EggNOG_diamond_db:
   path: eggnog-mapper/data/eggnog_proteins.dmnd
   class: File
-EggNOG_data_dir: eggnog-mapper/data/
+EggNOG_data_dir:
+  class: Directory
+  path: eggnog-mapper/data/
 
 InterProScan_applications:
   - PfamA

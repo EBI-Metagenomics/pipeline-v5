@@ -7,7 +7,7 @@ label: Redirecting Multiple Files Contain in a Single File
 
 hints:
   - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+    dockerPull: debian:stable-slim
 
 baseCommand: [ cat ]
 

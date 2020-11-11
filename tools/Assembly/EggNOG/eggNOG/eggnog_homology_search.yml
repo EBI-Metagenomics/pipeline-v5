@@ -1,0 +1,18 @@
+fasta_file:
+  class: File
+  path: ../../../Combined_gene_caller/expected-output/100000_130095.fasta.prodigal.faa
+  format: http://edamontology.org/format_1929
+db_diamond:
+  class: File
+  path: ../../../../../dbs/eggnog_proteins.dmnd
+db:
+  class: File
+  path: ../../../../../dbs/eggnog.db
+data_dir:
+  class: Directory
+  path: ../../../../../dbs/
+no_annot: true
+no_file_comments: true
+cpu: 16
+output: output_acc
+mode: diamond

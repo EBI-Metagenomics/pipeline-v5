@@ -1,4 +1,5 @@
 reads:
   class: File
-  path: merged-all.fq
+  path: test-input/unpaired.fq
   format: http://edamontology.org/format_1930
+

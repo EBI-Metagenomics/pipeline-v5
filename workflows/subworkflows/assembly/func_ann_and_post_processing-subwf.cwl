@@ -25,7 +25,7 @@ inputs:
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
   HMM_name_database: string
-  hmmsearch_header: string
+  hmmscan_header: string
 
   protein_chunk_size_IPS: int
   func_ann_names_ips: string
@@ -132,7 +132,7 @@ steps:
       eggnog_orthologs: functional_annotation/eggnog_orthologs
       eggnog_annotations: functional_annotation/eggnog_annotations
       diamond_header: diamond_header
-      hmmsearch_header: hmmsearch_header
+      hmmscan_header: hmmscan_header
       ips_header: ips_header
       output_gff_gz: gff/output_gff_gz
       output_gff_index: gff/output_gff_index

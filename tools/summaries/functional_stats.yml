@@ -1,14 +1,17 @@
-files:
-  - class: File
-    path: /Users/kates/Desktop/interpro_united
-  - class: File
-    path: /Users/kates/Desktop/hmm_united_tab
-  - class: File
-    path: /Users/kates/Desktop/interpo_united.annotations.pfam
+interproscan:
+  class: File
+  path: test-input/annot.ips
+hmmscan:
+  class: File
+  path: test-input/annot.hmm
+pfam:
+  class: File
+  path: test-input/annot.pfam
+  format:  http://edamontology.org/format_3475
 cmsearch_file:
   class: File
-  path: /Users/kates/Desktop/result.deoverlapped
+  path: test-input/result.deoverlapped
 cds_file:
   class: File
-  path: /Users/kates/Desktop/ERZ477576_FASTA.fasta.faa
+  path: test-input/small.fasta.faa
 

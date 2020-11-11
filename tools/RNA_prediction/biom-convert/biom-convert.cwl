@@ -6,19 +6,15 @@ requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     ramMin: 300
-#  SchemaDefRequirement:
-#    types:
-#      - $import: biom-convert-table.yaml
 
 hints:
   DockerRequirement:
-    dockerPull: quay.io/biocontainers/biom-format:2.1.6--py36_0
-#  SoftwareRequirement:
-#    packages:
-#      biom-format:
-#        specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
-#        version: [ "2.1.6" ]
-#
+    dockerPull: microbiomeinformatics/pipeline-v5.biom-convert:v2.1.6
+  SoftwareRequirement:
+    packages:
+      biom-format:
+        specs: [ "https://doi.org/10.1186/2047-217X-1-7" ]
+        version: [ "2.1.6" ]
 
 baseCommand: [ "biom-convert.sh" ]
 
@@ -91,9 +87,12 @@ outputs:
 $namespaces:
  edam: http://edamontology.org/
  s: http://schema.org/
+
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

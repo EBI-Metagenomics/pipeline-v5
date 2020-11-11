@@ -9,12 +9,16 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  clan_info: string
-  covariance_models: string[]
+  clan_info: [string, File]
+  #cores: int
+  covariance_models:
+    type:
+      - type: array
+        items: [string, File]
   query_sequences: File
 
 outputs:
-  matches:
+  cmsearch_matches:
     outputSource: cmsearch/matches
     type: File[]
   concatenate_matches:
@@ -26,7 +30,7 @@ outputs:
 
 steps:
   cmsearch:
-    label: Search sequence(s) against a covariance model database
+    label: Search sequence(s) against a covariance model databas
     run: ../../../tools/RNA_prediction/cmsearch/infernal-cmsearch-v1.1.2.cwl
     in:
       covariance_model_database: covariance_models

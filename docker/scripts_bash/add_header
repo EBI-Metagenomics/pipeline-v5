@@ -1,0 +1,9 @@
+#!/bin/bash
+while getopts i:h: option; do
+	case "${option}" in
+		i) INPUT=${OPTARG};;
+		h) HEADER=${OPTARG};;
+	esac
+done
+
+(echo -e ${HEADER} && cat ${INPUT})

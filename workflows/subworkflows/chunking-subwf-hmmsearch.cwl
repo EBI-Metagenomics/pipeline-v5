@@ -21,6 +21,7 @@ inputs:
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
   HMM_database: string
+  HMM_database_dir: [string, Directory?]
   previous_step_result: File?
 
 outputs:
@@ -43,7 +44,8 @@ steps:
     scatter: seqfile
     in:
       seqfile: split_seqs/chunks
-      path_database: HMM_database
+      database: HMM_database
+      database_directory: HMM_database_dir
       gathering_bit_score: HMM_gathering_bit_score
       omit_alignment: HMM_omit_alignment
     out: [ output_table ]
@@ -66,8 +68,6 @@ steps:
       input_table: combine/result
     out: [ output_with_tabs ]
 
-
-
 $namespaces:
  edam: http://edamontology.org/
  s: http://schema.org/
@@ -76,4 +76,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

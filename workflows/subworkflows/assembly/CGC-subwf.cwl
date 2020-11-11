@@ -8,6 +8,7 @@ requirements:
       coresMin: 8
   SubworkflowFeatureRequirement: {}
   ScatterFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
 
 inputs:
 
@@ -68,7 +69,7 @@ steps:
     in:
       sequences:
         source: combine/result
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
       number: { default: 1 }
     out: [ count ]
 
@@ -81,4 +82,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

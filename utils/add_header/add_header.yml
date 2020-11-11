@@ -1,5 +1,5 @@
 input_table:
   class: File
-  path: test.txt
-output_name: memevr
-header: 'me\tme2\tme3'
+  path: test-input/test.txt
+output_name: output-table
+header: 'column1\tcolumn2\tcolumn3'

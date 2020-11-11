@@ -9,18 +9,19 @@ doc: based upon code by Maxim Scheremetjew, EMBL-EBI
 requirements:
   ResourceRequirement:
     coresMax: 1
-    ramMin: 8000
-  ShellCommandRequirement: {}
+    ramMin: 5000
 
 hints:
   DockerRequirement:
-    dockerPull: 'alpine:3.7'
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
 
   SoftwareRequirement:
     packages:
       biopython:
         specs: [ "https://identifiers.org/rrid/RRID:SCR_007173" ]
         version: [ "1.65", "1.66", "1.69" ]
+
+baseCommand: [ split_to_chunks.py ]
 
 inputs:
   seqs:
@@ -37,17 +38,6 @@ inputs:
     inputBinding:
       prefix: -f
 
-arguments:
-  - valueFrom: '> /dev/null'
-    shellQuote: false
-    position: 10
-  - valueFrom: '2> /dev/null'
-    shellQuote: false
-    position: 11
-
-
-baseCommand: [ split_to_chunks.py ]
-
 outputs:
   chunks:
     format: edam:format_1929  # FASTA
@@ -63,4 +53,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"

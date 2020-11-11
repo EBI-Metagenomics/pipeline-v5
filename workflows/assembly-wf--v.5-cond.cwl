@@ -1,9 +1,9 @@
 class: Workflow
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 
 requirements:
   - class: ResourceRequirement
-    ramMin: 20000
+    ramMin: 50000
   - class: SubworkflowFeatureRequirement
   - class: MultipleInputFeatureRequirement
   - class: InlineJavascriptRequirement
@@ -18,13 +18,16 @@ inputs:
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
-    ssu_tax: string
-    lsu_tax: string
-    ssu_otus: string
-    lsu_otus: string
+    ssu_tax: [string, File]
+    lsu_tax: [string, File]
+    ssu_otus: [string, File]
+    lsu_otus: [string, File]
 
-    rfam_models: string[]
-    rfam_model_clans: string
+    rfam_models:
+      type:
+        - type: array
+          items: [string, File]
+    rfam_model_clans: [string, File]
     other_ncrna_models: string[]
 
     ssu_label: string
@@ -33,7 +36,7 @@ inputs:
     5.8s_pattern: string
 
  # << cgc >>
-    CGC_config: string
+    CGC_config: [string?, File?]
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -45,36 +48,38 @@ inputs:
     func_ann_names_hmmer: string
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
-    HMM_name_database: string
-    hmmsearch_header: string
-    EggNOG_db: string
-    EggNOG_diamond_db: string
-    EggNOG_data_dir: string
-    InterProScan_databases: string
+    HMM_database: string
+    HMM_database_dir: [string, Directory?]
+    hmmscan_header: string
+
+    EggNOG_db: [string, File]
+    EggNOG_diamond_db: [string, File]
+    EggNOG_data_dir: [string?, Directory]
+    InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
     ips_header: string
-    ko_file: string
+    ko_file: [string, File]
 
  # << diamond >>
-    Uniref90_db_txt: string
+    Uniref90_db_txt: [string, File]
     diamond_maxTargetSeqs: int
-    diamond_databaseFile: string
+    diamond_databaseFile: [string, File]
     diamond_header: string
 
  # << GO >>
-    go_config: string
+    go_config: [string?, File?]
 
  # << Pathways >>
-    graphs: string
-    pathways_names: string
-    pathways_classes: string
+    graphs: [string, File]
+    pathways_names: [string, File]
+    pathways_classes: [string, File]
 
  # << genome properties >>
-    gp_flatfiles_path: string
+    gp_flatfiles_path: string?
 
  # << antismash summary >>
-    clusters_glossary: string
+    clusters_glossary: [string, File]
 
 outputs:
   qc-status:                                                 # [1]
@@ -96,21 +101,13 @@ outputs:
     type: File[]
     outputSource: after-qc/compressed_files
     pickValue: all_non_null
-  index_fasta_file:                                          # [1] fasta.bgz.fai
+  indexed_fasta_file:                                        # [3] fasta.bgz.fai, fasta.bgz.gzi, fasta.bgz
     type: File?
-    outputSource: after-qc/index_fasta_file
-  bgzip_index:                                               # [1] fasta.bgz.gzi
-    type: File?
-    outputSource: after-qc/bgzip_index
-  bgzip_fasta_file:                                          # [1] fasta.bgz
-    type: File?
-    outputSource: after-qc/bgzip_fasta_file
-  chunking_nucleotides:                                      # [2] fasta, ffn
+    outputSource: after-qc/index_fasta_with_indexes
+
+  chunking_nucleotides:                                      # [2] fasta, ffn, faa
     type: File[]?
-    outputSource: after-qc/chunking_nucleotides
-  chunking_proteins:                                         # [1] faa
-    type: File[]?
-    outputSource: after-qc/chunking_proteins
+    outputSource: after-qc/chunking_fasta_files
 
 # << functional annotation >>
   functional_annotation_folder:                              # [15]
@@ -147,13 +144,6 @@ outputs:
     type: File?
     outputSource: touch_file_flag/created_file
 
-  no_cds_flag_file:
-    type: File?
-    outputSource: touch_no_cds_flag/created_file
-  no_tax_flag_file:
-    type: File?
-    outputSource: after-qc/optional_tax_file_flag
-
 steps:
 
   before-qc:
@@ -187,7 +177,6 @@ steps:
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
       5.8s_pattern: 5.8s_pattern
-      CGC_config: CGC_config
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
       protein_chunk_size_eggnog: protein_chunk_size_eggnog
@@ -197,8 +186,9 @@ steps:
       func_ann_names_hmmer: func_ann_names_hmmer
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
-      HMM_name_database: HMM_name_database
-      hmmsearch_header: hmmsearch_header
+      HMM_database: HMM_database
+      HMM_database_dir: HMM_database_dir
+      hmmscan_header: hmmscan_header
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
@@ -219,11 +209,8 @@ steps:
       ko_file: ko_file
     out:
       - compressed_files
-      - index_fasta_file
-      - bgzip_fasta_file
-      - bgzip_index
-      - chunking_nucleotides
-      - chunking_proteins
+      - index_fasta_with_indexes
+      - chunking_fasta_files
       - functional_annotation_folder
       - stats
       - pathways_systems_folder
@@ -232,8 +219,6 @@ steps:
       - sequence-categorisation_folder
       - rna-count
       - taxonomy-summary_folder
-      - count_CDS
-      - optional_tax_file_flag
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")
@@ -244,13 +229,6 @@ steps:
       filename: { default: 'wf-completed' }
     out: [ created_file ]
 
-  touch_no_cds_flag:
-    when: $(inputs.value == 0 )
-    run: ../utils/touch_file.cwl
-    in:
-      value: after-qc/count_CDS
-      filename: { default: 'no-cds' }
-    out: [ created_file ]
 
 $namespaces:
  edam: http://edamontology.org/
@@ -260,4 +238,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

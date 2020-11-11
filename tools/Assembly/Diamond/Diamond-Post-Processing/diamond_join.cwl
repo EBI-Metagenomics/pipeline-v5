@@ -11,7 +11,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: 'alpine:3.7'
+    dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.2
 
 baseCommand: [diamond_post_run_join.sh]
 
@@ -23,7 +23,7 @@ inputs:
       separate: true
       prefix: -i
   input_db:
-    type: string
+    type: [string, File]
     inputBinding:
       separate: true
       prefix: -d
@@ -44,6 +44,8 @@ $schemas:
  - http://edamontology.org/EDAM_1.20.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
-'s:author': 'Ekaterina Sakharova, Maxim Scheremetjew'
-'s:copyrightHolder': EMBL - European Bioinformatics Institute
-'s:license': "https://www.apache.org/licenses/LICENSE-2.0"
+s:author: 'Ekaterina Sakharova, Maxim Scheremetjew'
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
+s:license: "https://www.apache.org/licenses/LICENSE-2.0"

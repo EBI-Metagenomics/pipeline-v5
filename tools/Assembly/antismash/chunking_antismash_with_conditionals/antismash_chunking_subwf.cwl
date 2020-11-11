@@ -1,5 +1,5 @@
 class: Workflow
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 
 label: "WF leaves sequences that length is more than 1000bp, run antismash + gene clusters post-processing, GFF generation"
 
@@ -14,7 +14,7 @@ requirements:
 
 inputs:
     filtered_fasta: File
-    clusters_glossary: string
+    clusters_glossary: [string, File]
     final_folder_name: string
     split_size: int
 

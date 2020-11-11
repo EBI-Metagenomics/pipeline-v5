@@ -14,7 +14,7 @@ requirements:
 
 inputs:
     input_filtered_fasta: File
-    clusters_glossary: string
+    clusters_glossary: [string, File]
     final_folder_name: string
     chunk_size:
       type: int?

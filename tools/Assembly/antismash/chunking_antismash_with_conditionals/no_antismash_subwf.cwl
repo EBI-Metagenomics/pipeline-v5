@@ -1,5 +1,5 @@
 class: Workflow
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 
 label: "If filtered file is empty -> return file-flag no_antismash"
 

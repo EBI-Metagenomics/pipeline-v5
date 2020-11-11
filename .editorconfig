@@ -1,0 +1,6 @@
+[*.{cwl,yml,yaml,md,py}]
+charset = utf-8
+
+[*.{cwl,yml,yaml}]
+indent_style = space
+indent_size = 2

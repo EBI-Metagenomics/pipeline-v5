@@ -11,7 +11,8 @@ requirements:
 
 hints:
  DockerRequirement:
-   dockerPull: 'alpine:3.7'
+   dockerPull: debian:stable-slim
+
  SoftwareRequirement:
    packages: { gunzip }
 
@@ -64,4 +65,7 @@ $schemas:
  - http://edamontology.org/EDAM_1.16.owl
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
+

@@ -1,6 +1,10 @@
+$namespaces:
+  edam: 'http://edamontology.org/'
+
 clan_information:
   class: File
   path: test-input/ribo.claninfo
 cmsearch_matches:
+  format: edam:format_3475
   class: File
   path: test-input/1.cmsearch.tblout

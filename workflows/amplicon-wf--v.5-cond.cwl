@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -23,13 +23,16 @@ inputs:
     lsu_db:
       type: File
       secondaryFiles: [ .mscluster ]
-    ssu_tax: string
-    lsu_tax: string
-    ssu_otus: string
-    lsu_otus: string
+    ssu_tax: [string, File]
+    lsu_tax: [string, File]
+    ssu_otus: [string, File]
+    lsu_otus: [string, File]
 
-    rfam_models: string[]
-    rfam_model_clans: string
+    rfam_models:
+      type:
+        - type: array
+          items: [string, File]
+    rfam_model_clans: [string, File]
 
     ssu_label: string
     lsu_label: string
@@ -37,12 +40,12 @@ inputs:
     5.8s_pattern: string
 
     unite_db: {type: File, secondaryFiles: [.mscluster] }
-    unite_tax: string
-    unite_otu_file: string
+    unite_tax: [string, File]
+    unite_otu_file: [string, File]
     unite_label: string
     itsonedb: {type: File, secondaryFiles: [.mscluster] }
-    itsonedb_tax: string
-    itsonedb_otu_file: string
+    itsonedb_tax: [string, File]
+    itsonedb_otu_file: [string, File]
     itsonedb_label: string
 
 outputs:
@@ -165,4 +168,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

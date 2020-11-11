@@ -11,7 +11,7 @@ requirements:
 
 hints:
    DockerRequirement:
-      dockerPull: alpine:3.7
+      dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.2
 
 inputs:
   all_coordinates:
@@ -20,7 +20,7 @@ inputs:
     inputBinding:
       prefix: '-i'
 
-baseCommand: [format_bedfile]
+baseCommand: [ format_bedfile ]
 
 #reverse start and end where start < end (i.e. neg strand)
 

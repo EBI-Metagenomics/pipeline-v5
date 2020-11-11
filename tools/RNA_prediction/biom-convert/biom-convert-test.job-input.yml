@@ -1,6 +1,0 @@
-biom:
-  class: File
-  path: ../mapseq2biom/expected-output/test-mapseq.tsv
-  format: edam:format_3746
-json: true
-table_type: "OTU table"

@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2.0-dev4
 
 requirements:
   SubworkflowFeatureRequirement: {}
@@ -21,23 +21,24 @@ inputs:
 
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
-    ssu_tax: string
-    lsu_tax: string
-    ssu_otus: string
-    lsu_otus: string
+    ssu_tax: [string, File]
+    lsu_tax: [string, File]
+    ssu_otus: [string, File]
+    lsu_otus: [string, File]
 
-    rfam_models: string[]
-    rfam_model_clans: string
+    rfam_models:
+      type:
+        - type: array
+          items: [string, File]
+    rfam_model_clans: [string, File]
     other_ncRNA_models: string[]
-    #other_ncRNA_name: string
-
     ssu_label: string
     lsu_label: string
     5s_pattern: string
     5.8s_pattern: string
 
     # cgc
-    CGC_config: string
+    CGC_config: [string?, File?]
     CGC_postfixes: string[]
     cgc_chunk_size: int
 
@@ -48,19 +49,17 @@ inputs:
     func_ann_names_hmmer: string
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
-    HMM_name_database: string
-    hmmsearch_header: string
-    EggNOG_db: string?
-    EggNOG_diamond_db: string?
-    EggNOG_data_dir: string?
-    InterProScan_databases: string
+    HMM_database: [string, File]
+    EggNOG_db: [string?, File?]
+    EggNOG_diamond_db: [string?, File?]
+    EggNOG_data_dir: [string?, Directory]
+    InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-    ips_header: string
-    ko_file: string
+    ko_file: [string, File]
 
     # GO
-    go_config: string
+    go_config: [string?, File?]
 
 outputs:
 
@@ -110,12 +109,9 @@ outputs:
     outputSource: after-qc/stats
     type: Directory?
 
-  chunking_nucleotides:
+  chunking_fastas:
     type: File[]?
-    outputSource: after-qc/chunking_nucleotides
-  chunking_proteins:
-    type: File[]?
-    outputSource: after-qc/chunking_proteins
+    outputSource: after-qc/chunking_fasta_files
 
   completed_flag_file:
     type: File?
@@ -170,7 +166,6 @@ steps:
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
       5.8s_pattern: 5.8s_pattern
-      CGC_config: CGC_config
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
       protein_chunk_size_hmm: protein_chunk_size_hmm
@@ -179,15 +174,13 @@ steps:
       func_ann_names_hmmer: func_ann_names_hmmer
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
-      HMM_name_database: HMM_name_database
-      hmmsearch_header: hmmsearch_header
+      HMM_database: HMM_database
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
-      ips_header: ips_header
       go_config: go_config
       ko_file: ko_file
     out:
@@ -198,8 +191,7 @@ steps:
       - compressed_files
       - functional_annotation_folder
       - stats
-      - chunking_nucleotides
-      - chunking_proteins
+      - chunking_fasta_files
       - count_CDS
       - optional_tax_file_flag
 
@@ -228,4 +220,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

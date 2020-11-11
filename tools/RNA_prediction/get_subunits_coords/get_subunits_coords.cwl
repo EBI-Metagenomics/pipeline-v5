@@ -47,7 +47,7 @@ outputs:
 
 hints:
   - class: DockerRequirement
-    dockerPull: alpine:3.7
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
 
 $namespaces:
  s: http://schema.org/
@@ -55,5 +55,8 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
+
 

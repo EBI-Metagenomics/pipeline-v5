@@ -1,0 +1,10 @@
+outdirname: antismash_bad_output
+input_fasta:
+  class: File
+  path: ../test-input/empty.fasta
+  format: http://edamontology.org/format_1929
+glossary:
+  class: File
+  path: ../test-input/antismash_glossary.tsv
+outname: bad_fasta
+final_folder: foldername

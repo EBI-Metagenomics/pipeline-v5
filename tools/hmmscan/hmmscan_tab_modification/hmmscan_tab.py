@@ -1,0 +1,1 @@
+../../../docker/scripts_python3/hmmscan_tab.py

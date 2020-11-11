@@ -22,15 +22,16 @@ inputs:
   HMM_gathering_bit_score: boolean
   HMM_omit_alignment: boolean
   HMM_database: string
+  HMM_database_dir: [string, Directory?]
 
   chunk_size_eggnog: int
-  EggNOG_db: string
-  EggNOG_diamond_db: string
-  EggNOG_data_dir: string
+  EggNOG_db: [string, File]
+  EggNOG_diamond_db: [string, File]
+  EggNOG_data_dir: [string, Directory]
 
   chunk_size_IPS: int
   name_ips: string
-  InterProScan_databases: string
+  InterProScan_databases: [string, Directory]
   InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
   InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
 
@@ -92,6 +93,7 @@ steps:
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
+      HMM_database_dir: HMM_database_dir
       previous_step_result: run_IPS/ips_result
     out: [ hmm_result ]
 
@@ -104,4 +106,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

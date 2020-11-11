@@ -16,7 +16,7 @@ inputs:
   antismash_gene_clusters: File?
   rna: File
   cds: File
-  ko_file: string
+  ko_file: [File, string]
 
 outputs:
   stats:
@@ -78,4 +78,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+  - name: "EMBL - European Bioinformatics Institute"
+  - url: "https://www.ebi.ac.uk/"

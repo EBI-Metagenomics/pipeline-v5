@@ -2,19 +2,21 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-hints:
-  DockerRequirement:
-    dockerPull: mapseq2biom:latest
-
 requirements:
   ResourceRequirement:
     ramMin: 200
     tmpdirMin: 200
     coresMin: 2
 
+hints:
+  DockerRequirement:
+    dockerPull: microbiomeinformatics/pipeline-v5.mapseq2biom:v1.0
+
+baseCommand: [ 'mapseq2biom.pl' ]
+
 inputs:
   otu_table:
-    type: string
+    type: [string, File]
     doc: |
       the OTU table produced for the taxonomies found in the reference
       databases that was used with MAPseq
@@ -40,8 +42,6 @@ inputs:
     inputBinding:
         prefix: --taxid
 
-baseCommand: ['mapseq2biom.pl']
-
 arguments:
   - valueFrom: $(inputs.query.basename).tsv
     prefix: --outfile
@@ -50,7 +50,11 @@ arguments:
   - valueFrom: $(inputs.query.basename).notaxid.tsv
     prefix: --notaxidfile
 
+stderr: stderr.txt
+
 outputs:
+  stderr:
+    type: stderr
   otu_tsv:
     type: File
     format: edam:format_3746  # BIOM
@@ -67,15 +71,18 @@ outputs:
     type: File?
     format: edam:format_3746  # BIOM
     outputBinding:
-        glob: $(inputs.query.basename).notaxid.tsv
+      glob: $(inputs.query.basename).notaxid.tsv
 
 $namespaces:
  edam: http://edamontology.org/
  iana: https://www.iana.org/assignments/media-types/
  s: http://schema.org/
+
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
