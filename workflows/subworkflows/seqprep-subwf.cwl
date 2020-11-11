@@ -50,7 +50,7 @@ steps:
 
 # filter paired-end reads (for single do nothing)
   filter_paired:
-    run: ../../utils/fastp.cwl
+    run: ../../utils/fastp/fastp.cwl
     when: $(inputs.single == undefined)
     in:
       single: single_reads

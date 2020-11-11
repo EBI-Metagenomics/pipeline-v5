@@ -66,6 +66,8 @@ TOOLS=(
     "eggnog:v2.0.0 ${BASE_PATH}/tools/Assembly/EggNOG/eggNOG"
     "dna_chunking:v0.11 ${BASE_PATH}/tools/chunks/dna_chunker"
     "seqprep:v1.2 ${BASE_PATH}/tools/SeqPrep/Dockerfile"
+    "split-fasta:v1 ${BASE_PATH}/utils/result-file-chunker/Dockerfile"
+    "fastp:0.20.0 ${BASE_PATH}/utils/fastp/Dockerfile"
 )
 
 # containers that are too heavy to be used, it's possible but not recommended.

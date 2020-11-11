@@ -11,7 +11,7 @@ requirements:
 
 hints:
   - class: DockerRequirement
-    dockerPull: alpine:3.7
+    dockerPull: debian:stable-slim
 
 inputs:
   infile: File

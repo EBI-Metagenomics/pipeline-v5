@@ -27,6 +27,8 @@ DOCKER_IMAGES=(
     "eggnog:v2.0.0"
     "dna_chunking:v0.11"
     "seqprep:v1.2"
+    "split-fasta:v1"
+    "fastp:0.20.0"
 )
 
 # containers that are too heavy to be used, it's possible but not recommended.

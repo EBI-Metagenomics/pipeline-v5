@@ -14,7 +14,7 @@ requirements:
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:latest
+    dockerPull: debian:stable-slim
 
 inputs:
   infile:

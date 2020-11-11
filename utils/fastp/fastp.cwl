@@ -8,9 +8,9 @@ requirements:
     InlineJavascriptRequirement: {}
     ResourceRequirement:
       coresMin: 8
-#hints:
-#    DockerRequirement:
-#        dockerPull: quay.io/biocontainers/fastp:0.20.0--hdbcaa40_0
+hints:
+    DockerRequirement:
+        dockerPull: microbiomeinformatics/pipeline-v5.fastp:0.20.0
 
 baseCommand: [ fastp ]
 
