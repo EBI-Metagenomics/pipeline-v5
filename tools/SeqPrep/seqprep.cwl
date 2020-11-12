@@ -29,7 +29,6 @@ inputs:
      prefix: -r
  namefile: File?
 
-
 arguments:
  - "-1"
  - forward_unmerged.fastq.gz
