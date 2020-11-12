@@ -31,7 +31,7 @@ inputs:
         - type: array
           items: [string, File]
     rfam_model_clans: [string, File]
-    other_ncRNA_models: string[]
+    other_ncrna_models: string[]
     ssu_label: string
     lsu_label: string
     5s_pattern: string
@@ -161,7 +161,7 @@ steps:
       lsu_otus: lsu_otus
       rfam_models: rfam_models
       rfam_model_clans: rfam_model_clans
-      other_ncRNA_models: other_ncRNA_models
+      other_ncRNA_models: other_ncrna_models
       ssu_label: ssu_label
       lsu_label: lsu_label
       5s_pattern: 5s_pattern
