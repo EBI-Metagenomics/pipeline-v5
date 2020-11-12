@@ -29,7 +29,7 @@ outputs:
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:latest
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v2
 
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
