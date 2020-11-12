@@ -29,8 +29,6 @@ inputs:
      prefix: -r
  namefile: File?
 
-baseCommand: SeqPrep
-
 arguments:
  - "-1"
  - forward_unmerged.fastq.gz
