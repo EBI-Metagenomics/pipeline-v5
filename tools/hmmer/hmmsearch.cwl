@@ -30,7 +30,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: quay.io/biocontainers/hmmer:3.2.1--hf484d3e_1
+    dockerPull: microbiomeinformatics/pipeline-v5.hmmer:v3.2.1
 
 baseCommand: ["hmmsearch"]
 

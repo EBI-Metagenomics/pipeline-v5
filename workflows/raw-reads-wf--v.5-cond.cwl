@@ -50,12 +50,14 @@ inputs:
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
     HMM_database: [string, File]
+    hmmscan_header: string
     EggNOG_db: [string?, File?]
     EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: [string?, Directory]
     InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
+    ips_header: string
     ko_file: [string, File]
 
     # GO
@@ -175,12 +177,14 @@ steps:
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
+      hmmscan_header: hmmscan_header
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
+      ips_header: ips_header
       go_config: go_config
       ko_file: ko_file
     out:
