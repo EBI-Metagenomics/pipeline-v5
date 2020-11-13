@@ -22,9 +22,9 @@ If you want to run pipeline locally, we recommend you use our pre-build docker c
 
 ### Docker
 
-All the tools are containerized but antiSMASH and InterProScan.
+All the tools are containerized. 
 
-The instructions on how to setup the environment are [here](environment/README.md).
+Unfortunately, antiSMASH and InterProScan containers are very big: you can pull containers or pre-install these tools. The instructions on how to setup the environment are [here](environment/README.md).
 
 ## Installation
 
