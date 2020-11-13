@@ -24,7 +24,16 @@ If you want to run pipeline locally, we recommend you use our pre-build docker c
 
 All the tools are containerized. 
 
-Unfortunately, antiSMASH and InterProScan containers are very big: you can pull containers or pre-install these tools. The instructions on how to setup the environment are [here](environment/README.md).
+Unfortunately, antiSMASH and InterProScan containers are very big. We provide two options:
+1. Pre-install these tools. The instructions on how to setup the environment are [here](environment/README.md).
+
+2. Use containers. First of all you need to uncomment *hints* in **InterProScan-v5.cwl** and **antismash_v4.cwl**.
+Pre-pull containers from https://hub.docker.com/u/microbiomeinformatics
+```bash
+docker pull microbiomeinformatics/pipeline-v5.interproscan:v5.36-75.0
+docker pull microbiomeinformatics/pipeline-v5.antismash:v4.2.0
+```
+
 
 ## Installation
 
