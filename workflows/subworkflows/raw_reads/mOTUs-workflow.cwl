@@ -10,6 +10,7 @@ requirements:
 
 inputs:
     reads: File
+    motus_db: string?
 
 outputs:
   motus:
@@ -22,6 +23,7 @@ steps:
     run: ../../../tools/Raw_reads/mOTUs/mOTUs.cwl
     in:
       reads: reads
+      db: motus_db
     out: [ motu_taxonomy ]
 
   clean_classification:

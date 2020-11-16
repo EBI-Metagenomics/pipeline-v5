@@ -112,12 +112,15 @@ if [ "${ASSEMBLY_PIPELINE}" == "True" ]; then
     wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/antismash_glossary.tsv.gz
     gunzip antismash_glossary.tsv.gz
 fi
+# ======== WGS only
+# mOTUs db in container
+#if [ "${WGS_PIPELINE}" == "True" ]; then
+#    wget https://github.com/motu-tool/mOTUs_v2/archive/$MOTUS_VERSION.tar.gz && tar xvzf $MOTUS_VERSION.tar.gz && rm $MOTUS_VERSION.tar.gz && python3 mOTUs_v2-$VERSION/setup.py
+#fi
+
 
 # GO-config
 
 # Genome Properties flatfiles
 # https://github.com/ebi-pf-team/genome-properties/tree/master/flatfiles
 
-# ======== WGS
-# mOTUs db would be in docker
-# wget https://github.com/motu-tool/mOTUs_v2/archive/$MOTUS_VERSION.tar.gz && tar xvzf $MOTUS_VERSION.tar.gz && rm $MOTUS_VERSION.tar.gz && python3 mOTUs_v2-$VERSION/setup.py

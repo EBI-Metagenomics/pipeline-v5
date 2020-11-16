@@ -63,6 +63,7 @@ inputs:
     ips_header: string
 
     go_config: [string?, File?]
+    motus_db: string?
 
 outputs:
   motus_output:
@@ -110,6 +111,7 @@ steps:
     run: ../../subworkflows/raw_reads/mOTUs-workflow.cwl
     in:
       reads: motus_input
+      motus_db: motus_db
     out: [ motus ]
 
 # << Get RNA >>

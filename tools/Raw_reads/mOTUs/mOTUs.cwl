@@ -36,11 +36,9 @@ inputs:
     default: 4
 
   db:
-    type: string
+    type: string?
     inputBinding:
       prefix: -db
-    # FIXME: hardcoded test value
-    default: /data/databases/pipeline-v5/motus-v2.5.1/
 
 
 arguments: [profile, -c, -q]
