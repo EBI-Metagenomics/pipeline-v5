@@ -9,6 +9,7 @@ from ruamel.yaml import YAML
 IPS_VERSION = "5.36-75.0"
 DIAMOND_VERSION = "0.9.25"
 UNIREF_VERSION = "v2019_11"
+MOTUS_VERSION = "2.5.1"
 
 
 def convert_to_string(value):

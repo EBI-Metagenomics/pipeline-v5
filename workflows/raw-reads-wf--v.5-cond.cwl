@@ -62,6 +62,7 @@ inputs:
 
     # GO
     go_config: [string?, File?]
+    motus_db: string?
 
 outputs:
 
@@ -187,6 +188,7 @@ steps:
       ips_header: ips_header
       go_config: go_config
       ko_file: ko_file
+      motus_db: motus_db
     out:
       - motus_output
       - sequence_categorisation_folder
