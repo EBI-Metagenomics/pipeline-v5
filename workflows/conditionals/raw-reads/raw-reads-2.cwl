@@ -50,24 +50,19 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_database: [string, File]
     HMM_database_dir: [string, Directory?]
+    hmmscan_header: string
+    ko_file: [string, File]
+
     EggNOG_db: [string?, File?]
     EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: [string?, Directory]
+
     InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
     InterProScan_outputFormat: string[]  # ../tools/InterProScan/InterProScan-protein_formats.yaml#protein_formats[]?
-    ko_file: [string, File]
+    ips_header: string
 
-    # GO
     go_config: [string?, File?]
-
-    # optional headers
-    hmmscan_header:
-      type: string?
-      default: "query_name query_accession tlen  target_name target_accession  qlen  full_sequence_e-value full_sequence_score full_sequence_bias  # of  c-evalue  i-evalue  domain_score  domain_bias hmm_coord_from  hmm_coord_to  ali_coord_from  ali_coord_to  env_coord_from  env_coord_to  acc description_of_ta rget"
-    ips_header:
-      type: string?
-      default: "protein_accession  sequence_md5_digest sequence_length analysis    signature_accession signature_description   start_location  stop_location   score   status  date    accession   description go  pathways_annotations"
 
 outputs:
   motus_output:
