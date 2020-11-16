@@ -1,13 +1,18 @@
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
 seqfile:
   class: File
   path: ../Combined_gene_caller/expected-output/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
+  format: edam:format_1929
 
 gathering_bit_score: true
 
-name_database: db_kofam.hmm
+database: db_kofam.hmm
 
-data:
-  class: Directory
-  path: ref-dbs
+#database_directory:
+#  class: Directory
+#  path: ref-dbs
 
 omit_alignment: true
