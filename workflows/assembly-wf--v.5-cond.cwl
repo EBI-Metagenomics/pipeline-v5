@@ -57,7 +57,7 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_database: string
     HMM_database_dir: [string, Directory?]
-    hmmscan_header: string
+    hmmsearch_header: string
 
     EggNOG_db: [string, File]
     EggNOG_diamond_db: [string, File]
@@ -207,7 +207,7 @@ steps:
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
       HMM_database_dir: HMM_database_dir
-      hmmscan_header: hmmscan_header
+      hmmscan_header: hmmsearch_header
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
