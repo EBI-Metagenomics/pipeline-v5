@@ -10,7 +10,9 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  input_files: File[]
+  input_files:
+    type: array
+    items: ["null", "File"]
   format: string
   type_fasta: string?
 

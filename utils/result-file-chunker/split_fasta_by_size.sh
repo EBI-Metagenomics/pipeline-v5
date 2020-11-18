@@ -6,6 +6,10 @@ while getopts i:n: option; do
 	esac
 done
 
-cp ${INPUT} copy.fasta
-
-gt splitfasta -targetsize ${NUMBER} copy.fasta
+if [[ -s ${INPUT} ]]
+then
+    cp ${INPUT} copy.fasta
+    gt splitfasta -targetsize ${NUMBER} copy.fasta
+else
+    touch copy.fasta
+fi
