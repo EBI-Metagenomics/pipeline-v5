@@ -61,7 +61,7 @@ steps:
     out: [ chunked_by_size_files ]
 
   chunking_SC_fasta_nucleotide:
-    when: $(inputs.lsu != null && inputs.ssu != null)
+    when: $(inputs.lsu != null || inputs.ssu != null)
     run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
       lsu: LSU
