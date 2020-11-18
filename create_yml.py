@@ -446,7 +446,7 @@ if __name__ == "__main__":
         )
         file_yml.write("\n")
         file_yml.write(
-            'hmmscan_header: "'
+            'hmmsearch_header: "'
             + "\t".join(
                 [
                     "query_name",

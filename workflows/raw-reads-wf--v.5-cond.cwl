@@ -49,8 +49,9 @@ inputs:
     func_ann_names_hmmer: string
     HMM_gathering_bit_score: boolean
     HMM_omit_alignment: boolean
-    HMM_database: [string, File]
-    hmmscan_header: string
+    HMM_database: string
+    HMM_database_dir: [string, Directory?]
+    hmmsearch_header: string
     EggNOG_db: [string?, File?]
     EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: [string?, Directory]
@@ -178,7 +179,8 @@ steps:
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
-      hmmscan_header: hmmscan_header
+      HMM_database_dir: HMM_database_dir
+      hmmscan_header: hmmsearch_header
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
