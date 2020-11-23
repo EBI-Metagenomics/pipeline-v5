@@ -1,11 +1,12 @@
 #!/bin/bash
-while getopts f: option; do
+while getopts f:n: option; do
 	case "${option}" in
 		f) FASTA=${OPTARG};;
+		n) NAME=${OPTARG};;
 	esac
 done
 
 mkdir -p index && \
-cat ${FASTA} | bgzip -c > $FASTA.bgz && \
-samtools faidx $FASTA.bgz && mv $FASTA.bgz.fai $FASTA.bgz.gzi index/ && \
-mv $FASTA.bgz index/
+cat ${FASTA} | bgzip -c > $NAME.bgz && \
+samtools faidx $NAME.bgz
+# && mv $NAME.bgz.fai index/ && mv $NAME.bgz index/
