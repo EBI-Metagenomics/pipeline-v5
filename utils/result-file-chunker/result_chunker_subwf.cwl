@@ -11,8 +11,10 @@ requirements:
 
 inputs:
   input_files:
-    type: array
-    items: ["null", "File"]
+    type:
+    - "null"
+    - type: array
+      items: ["null", "File"]
   format: string
   type_fasta: string?
 
