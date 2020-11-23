@@ -8,7 +8,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: alpine:3.7
+    dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.2
 
 inputs:
   fasta:
@@ -17,21 +17,23 @@ inputs:
     inputBinding:
       prefix: -f
 
-baseCommand: [ run_samtools.sh ]
+arguments: ["-n", $(inputs.fasta.basename)]
+
+baseCommand: [ "run_samtools_docker.sh" ]
 
 outputs:
   fasta_index:
     type: File
     outputBinding:
-      glob: "index/$(inputs.fasta.basename).bgz.fai"
+      glob: "$(inputs.fasta.basename).bgz.fai"
   bgz_index:
     type: File
     outputBinding:
-      glob: "index/$(inputs.fasta.basename).bgz.gzi"
+      glob: "$(inputs.fasta.basename).bgz.gzi"
   fasta_bgz:
     type: File
     outputBinding:
-      glob: "index/$(inputs.fasta.basename).bgz"
+      glob: "$(inputs.fasta.basename).bgz"
 
 $namespaces:
  edam: http://edamontology.org/
@@ -41,4 +43,6 @@ $schemas:
  - https://schema.org/version/latest/schemaorg-current-http.rdf
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
-s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+s:copyrightHolder:
+    - name: "EMBL - European Bioinformatics Institute"
+    - url: "https://www.ebi.ac.uk/"
