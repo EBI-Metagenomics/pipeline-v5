@@ -1,0 +1,8 @@
+file_list:
+  - class: File
+    path: ../../input_files/empty_file
+  - class: File
+    path: ../../input_files/test-chunker.fasta
+  - null
+  - null
+dir_name: test-files

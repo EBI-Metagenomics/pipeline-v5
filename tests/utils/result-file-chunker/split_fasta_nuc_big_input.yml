@@ -1,0 +1,5 @@
+infile:
+  class: File
+  path: ../../input_files/test-chunker.fasta
+type_fasta: n
+size_limit: 1

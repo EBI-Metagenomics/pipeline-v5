@@ -30,7 +30,7 @@ steps:
 
   # return directory pathways-systems with "no_antismash" file inside
   return_antismash_in_folder:
-    run: ../../../../utils/return_directory.cwl
+    run: ../../../../utils/return_directory/return_directory.cwl
     in:
       file_list:
         source:

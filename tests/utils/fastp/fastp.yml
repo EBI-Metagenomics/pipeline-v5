@@ -1,0 +1,17 @@
+$namespaces:
+  edam: http://edamontology.org/
+
+fastq1:
+  class: File
+  path: ../../input_files/wgs-paired-SRR1620013_1_small.fastq.gz
+  format: edam:format_1929
+fastq2:
+  class: File
+  path: ../../input_files/wgs-paired-SRR1620013_2_small.fastq.gz
+  format: edam:format_1929
+
+min_length_required: 70
+base_correction: false
+disable_trim_poly_g: false
+force_polyg_tail_trimming: false
+threads: 8

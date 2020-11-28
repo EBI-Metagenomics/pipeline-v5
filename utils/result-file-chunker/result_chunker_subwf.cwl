@@ -17,6 +17,8 @@ inputs:
       items: ["null", "File"]
   format: string
   type_fasta: string?
+  size_limit: int?
+  line_number_tsv: int?
 
 outputs:
   chunked_by_size_files:
@@ -25,6 +27,7 @@ outputs:
       - make_output_flatten/array1d
       - chunking/chunked_file
     linkMerge: merge_flattened
+    pickValue: all_non_null
 
 steps:
 
@@ -35,6 +38,8 @@ steps:
       input_file: input_files
       type_fasta: type_fasta
       format: format
+      size_limit: size_limit
+      line_number_tsv: line_number_tsv
     out: [ chunked_by_size_files, chunked_file ]
 
   make_output_flatten:

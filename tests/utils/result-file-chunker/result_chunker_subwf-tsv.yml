@@ -1,0 +1,5 @@
+input_files:
+  - class: File
+    path: ../../input_files/IPS_output.tsv
+format: tsv
+line_number_tsv: 20

@@ -22,11 +22,13 @@ inputs:
     inputBinding:
       prefix: -i
   type_fasta: string  # n=nucleotide, p=protein
+  size_limit: int?
 
 arguments:
     - prefix: -n
       valueFrom: |
         ${
+          if (inputs.size_limit) { return inputs.size_limit }
           if (inputs.type_fasta == 'n') {
             return 1980
           }
@@ -41,7 +43,7 @@ outputs:
   chunks:
     type: File[]
     outputBinding:
-      glob: "*.fasta.*"
+      glob: "*.fasta*"
       outputEval: |
         ${
           if (self.length == 1) {

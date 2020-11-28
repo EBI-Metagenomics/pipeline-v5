@@ -141,7 +141,7 @@ steps:
 # return ITS dir
   return_its_dir:
     when: $(inputs.unite_folder != null && inputs.itsonedb_folder != null)
-    run: ../../../utils/return_directory.cwl
+    run: ../../../utils/return_directory/return_directory.cwl
     in:
       unite_folder: ITS/unite_folder
       itsonedb_folder: ITS/itsonedb_folder
@@ -176,7 +176,7 @@ steps:
 
 # return sequence-categorisation:
   return_seq_dir:
-    run: ../../../utils/return_directory.cwl
+    run: ../../../utils/return_directory/return_directory.cwl
     when: $(inputs.rna != null || inputs.tax != null )
     in:
       rna: rna_prediction/compressed_rnas

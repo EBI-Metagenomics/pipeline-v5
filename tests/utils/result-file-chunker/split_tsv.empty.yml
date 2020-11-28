@@ -1,0 +1,5 @@
+infile:
+  class: File
+  path: ../../input_files/empty_file
+line_number: 20
+prefix: empty_file

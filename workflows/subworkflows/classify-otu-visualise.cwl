@@ -97,7 +97,7 @@ steps:
 
   return_output_dir:
     when: $(inputs.count > 2)
-    run: ../../utils/return_directory.cwl
+    run: ../../utils/return_directory/return_directory.cwl
     in:
       count: count_lines_mapseq/number
       dir_name: return_dirname

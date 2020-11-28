@@ -264,7 +264,7 @@ steps:
 
 # << move chunked files >>
   move_to_seq_cat_folder:  # LSU and SSU
-    run: ../../../utils/return_directory.cwl
+    run: ../../../utils/return_directory/return_directory.cwl
     in:
       file_list:
         source:
@@ -277,7 +277,7 @@ steps:
 
 # return taxonomy summary dir
   return_tax_dir:
-    run: ../../../utils/return_directory.cwl
+    run: ../../../utils/return_directory/return_directory.cwl
     in:
       dir_list:
         - rna_prediction/SSU_folder
@@ -313,7 +313,7 @@ steps:
 
 # << move to fucntional annotation >>
   move_to_functional_annotation_folder:
-    run: ../../../utils/return_directory.cwl
+    run: ../../../utils/return_directory/return_directory.cwl
     in:
       file_list:
         source:

@@ -1,0 +1,5 @@
+infile:
+  class: File
+  path: ../../input_files/IPS_output.tsv
+line_number: 30
+prefix: TSVchunk
