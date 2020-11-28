@@ -1,0 +1,4 @@
+input_files:
+  - class: File
+    path: ../../input_files/empty_file
+format: tsv

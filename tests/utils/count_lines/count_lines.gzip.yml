@@ -1,0 +1,4 @@
+sequences:
+  class: File
+  path: ../../input_files/wgs-single-ERR1995312_small.fastq.gz
+number: 4

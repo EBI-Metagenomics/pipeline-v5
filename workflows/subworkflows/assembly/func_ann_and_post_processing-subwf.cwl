@@ -177,7 +177,7 @@ steps:
 
 # << move PATHWAYS-SYSTEMS >>
   move_to_pathways_systems_folder:
-    run: ../../../utils/return_directory.cwl
+    run: ../../../utils/return_directory/return_directory.cwl
     in:
       file_list:
         source:

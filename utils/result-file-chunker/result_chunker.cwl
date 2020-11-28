@@ -13,6 +13,10 @@ inputs:
   input_file: File
   format: string
   type_fasta: string?
+  size_limit: int?
+  line_number_tsv:
+    type: int
+    default: 10000000
 
 outputs:
   chunked_by_size_files:
@@ -31,6 +35,7 @@ steps:
       infile: input_file
       type_fasta: type_fasta
       format: format
+      size_limit: size_limit
     out: [ chunks ]
 
   chunking_tsv:
@@ -39,7 +44,7 @@ steps:
     in:
       format: format
       infile: input_file
-      line_number: { default: 10000000 }
+      line_number: line_number_tsv
       prefix:
         source: input_file
         valueFrom: "$(self.nameroot)_"

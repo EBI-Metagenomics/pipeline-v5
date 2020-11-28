@@ -1,0 +1,11 @@
+arrayTwoDim:
+  -
+      - class: File
+        path: ../../input_files/empty_file
+      - class: File
+        path: ../../input_files/input.fq
+  -
+      - class: File
+        path: ../../input_files/test-chunker.fasta
+      - class: File
+        path: ../../input_files/IPS_output.tsv

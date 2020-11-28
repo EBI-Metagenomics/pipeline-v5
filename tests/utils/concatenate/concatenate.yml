@@ -1,0 +1,7 @@
+files:
+  - class: File
+    path: input/file1.txt
+  - class: File
+    path: input/file2.txt
+outputFileName: final-file
+postfix: .txt

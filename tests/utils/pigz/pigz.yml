@@ -1,0 +1,3 @@
+uncompressed_file:
+  path: ../../input_files/empty_file
+  class: File

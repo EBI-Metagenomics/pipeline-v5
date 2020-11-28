@@ -1,0 +1,30 @@
+# 1 utils: make_csv
+# 2 utils: add_header
+# 3 utils: count_lines empty input
+# 4 utils: count_lines input.fq
+# 5 utils: count_lines gzipped input.fq
+# 6 utils: fastp
+# 7 utils: fastq to fasta
+# 8 utils: generate_checksum
+# 9 utils: pigz
+# 10 utils: result-chunker TSV
+# 11 utils: result-chunker empty TSV
+# 12 utils: result-chunker big fasta (nucleotide)
+# 13 utils: result-chunker small fasta (nucleotide)
+# 14 utils: result-chunker create chunks file
+# 15 utils: result-chunker-subwf tsv 3 chunks -- incorrect
+# 16 utils: result-chunker-subwf tsv empty -- incorrect
+# 17 utils: return-directory of files
+# 18 utils: return-directory of directories
+# 19 utils: QC-PASSED
+# 20 utils: QC-FAILED
+# 21 utils: touch file
+# 22 utils: move file
+# 23 utils: gunzip reads
+# 24 utils: gunzip assembly
+# 25 utils: make table tab-separated
+# 26 utils: make 2D array as 1D
+# 27 utils: count number of lines in file
+# 28 utils: count number of sequences in fasta-file
+# 29 utils: concatenate files
+# 30 utils: clean fasta headers

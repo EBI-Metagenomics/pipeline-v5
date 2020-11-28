@@ -1,0 +1,7 @@
+dir_list:
+  - class: Directory
+    path: ../add_header/expected-output
+  - class: Directory
+    path: ../add_header/test-input
+  - null
+dir_name: test-dirs

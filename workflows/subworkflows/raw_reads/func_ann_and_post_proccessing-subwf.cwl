@@ -121,7 +121,7 @@ steps:
 
 # << move to fucntional annotation >>
   move_to_functional_annotation_folder:
-    run: ../../../utils/return_directory.cwl
+    run: ../../../utils/return_directory/return_directory.cwl
     in:
       file_list:
         source:

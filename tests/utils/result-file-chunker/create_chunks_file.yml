@@ -1,0 +1,8 @@
+infile:
+  class: File
+  path: ../../input_files/test-chunker.fasta
+list_chunks:
+  - class: File
+    path: expected-output/test-chunker_1.fasta
+  - class: File
+    path: expected-output/test-chunker_2.fasta

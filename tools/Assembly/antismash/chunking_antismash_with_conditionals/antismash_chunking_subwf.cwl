@@ -148,7 +148,7 @@ steps:
     out: [ compressed_file ]
 
   return_antismash_in_folder:
-    run: ../../../../utils/return_directory.cwl
+    run: ../../../../utils/return_directory/return_directory.cwl
     in:
       file_list:
         - antismash_gff/output_gff_bgz

@@ -1,0 +1,4 @@
+sequences:
+  class: File
+  path: ../../input_files/assembly-SRR1620013_small.fasta
+number: 4

@@ -1,0 +1,4 @@
+sequences:
+  class: File
+  path: ../../input_files/input.fq
+number: 4
