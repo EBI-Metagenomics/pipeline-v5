@@ -16,12 +16,11 @@ inputs:
     contig_min_length: int
 
 # << protein db >>
+    include_protein_assign: boolean
+    public: int?
+    config_db_file: File?
+    run_accession: string?
     study_accession: string?
-    private: boolean?
-    include_protein_assign: boolean?
-    mgyp_config: string?
-    mgyc_config: string?
-    mgyp_release: string?
 
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -147,6 +146,10 @@ outputs:
     type: Directory?
     outputSource: after-qc/taxonomy-summary_folder
 
+  proteinDB_metadata:
+    type: File?
+    outputSource: after-qc/proteinDB_metadata
+
   rna-count:
     type: File?
     outputSource: after-qc/rna-count
@@ -181,12 +184,13 @@ steps:
     when: $(inputs.status.basename == 'QC-PASSED')
     in:
       status: before-qc/qc-status
+
       study_accession: study_accession
-      private: private
+      run_accession: run_accession
+      public: public
       include_protein_assign: include_protein_assign
-      mgyp_config: mgyp_config
-      mgyp_release: mgyp_release
-      mgyc_config: mgyc_config
+      config_db_file: config_db_file
+
       filtered_fasta: before-qc/filtered_fasta
       ssu_db: ssu_db
       lsu_db: lsu_db
@@ -248,6 +252,7 @@ steps:
       - taxonomy-summary_folder
       - count_CDS
       - optional_tax_file_flag
+      - proteinDB_metadata
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")

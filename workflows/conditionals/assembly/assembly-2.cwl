@@ -19,11 +19,11 @@ requirements:
 inputs:
     filtered_fasta: File
 
-    private: boolean?
-    include_protein_assign: boolean?
-    mgyp_config: string?
-    mgyp_release: string?
-    mgyc_config: string?
+# << accessioning >>
+    include_protein_assign: boolean
+    public: int?
+    config_db_file: File?
+    run_accession: string?
     study_accession: string?
 
  # << rna prediction >>
@@ -146,45 +146,42 @@ outputs:
  # FAA count
   count_CDS:
     type: int
-    outputSource: cgc/count_faa
+    outputSource: accessioning_and_prediction/count_faa
 
   optional_tax_file_flag:
     type: File?
     outputSource: no_tax_file_flag/created_file
 
+  proteinDB_metadata:
+    type: File?
+    outputSource: accessioning_and_prediction/mgyp_fasta_metadata
+
 steps:
 
-# -----------------------------------  << Assign MGYCs >>  -----------------------------------
-
-  count_sequences_fasta:
-    run: ../../../utils/count_fasta.cwl
-    when: $(inputs.include_protein_assign_bool == true)
+# -----------------------------------  << Assign & CGC >>  -----------------------------------
+  accessioning_and_prediction:
     in:
-      include_protein_assign_bool: include_protein_assign
-      sequences: filtered_fasta
-      number: { default: 1 }
-    out: [ count ]
-
-  assign_mgyc:
-    run: ../../../tools/Assembly/assign_MGYC/assign_mgyc.cwl
-    when: $(inputs.include_protein_assign_bool == true)
-    in:
-      include_protein_assign_bool: include_protein_assign
-      input_fasta: filtered_fasta
-      mapping: mgyc_config
-      count: count_sequences_fasta/count
-      accession:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot.split('_')[0])
+      include_protein_assign: include_protein_assign
+      filtered_fasta: filtered_fasta
+      config_db_file: config_db_file
       study_accession: study_accession
-    out: [ renamed_contigs_fasta ]
-
+      run_accession: run_accession
+      public: public
+      CGC_postfixes: CGC_postfixes
+      cgc_chunk_size: cgc_chunk_size
+    out:
+      - assigned_contigs
+      - predicted_proteins
+      - predicted_seq
+      - count_faa
+      - mgyp_fasta_metadata
+    run: ../../subworkflows/assembly/accessioning-prediction_subwf.cwl
 
 # -----------------------------------  << RNA PREDICTION >>  -----------------------------------
   rna_prediction:
     in:
       type: { default: 'assembly'}
-      input_sequences: assign_mgyc/renamed_contigs_fasta
+      input_sequences: accessioning_and_prediction/assigned_contigs
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
       silva_ssu_taxonomy: ssu_tax
@@ -210,61 +207,21 @@ steps:
       - number_SSU_mapseq
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
 
-# add no-tax file-flag if there are no lsu and ssu seqs
-  no_tax_file_flag:
-    when: $(inputs.count_lsu < 3 && inputs.count_ssu < 3)
-    run: ../../../utils/touch_file.cwl
-    in:
-      count_lsu: rna_prediction/number_LSU_mapseq
-      count_ssu: rna_prediction/number_SSU_mapseq
-      filename: { default: no-tax}
-    out: [ created_file ]
-
-
-# << OTHER ncrnas >>
+# ------------------------- << OTHER ncrnas >> -------------------------
   other_ncrnas:
     run: ../../subworkflows/other_ncrnas.cwl
     in:
-     input_sequences: assign_mgyc/renamed_contigs_fasta
+     input_sequences: accessioning_and_prediction/assigned_contigs
      cmsearch_file: rna_prediction/ncRNA
      other_ncRNA_ribosomal_models: other_ncrna_models
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
 
-# -----------------------------------  << COMBINED GENE CALLER >>  -----------------------------------
-  cgc:
-    in:
-      input_fasta:
-        source:
-          - assign_mgyc/renamed_contigs_fasta
-          - filtered_fasta
-        pickValue: first_non_null
-      postfixes: CGC_postfixes
-      chunk_size: cgc_chunk_size
-    out: [ predicted_faa, predicted_ffn, count_faa ]
-    run: ../../subworkflows/assembly/CGC-subwf.cwl
-
-# -----------------------------------  << Assign MGYPs >>  -----------------------------------
-
-  assign_mgyp:
-    when: $(inputs.include_protein_assign_bool == true)
-    run: ../../../tools/Assembly/assign_MGYP/assign_mgyp.cwl
-    in:
-      include_protein_assign_bool: include_protein_assign
-      input_fasta: cgc/predicted_faa
-      config: mgyp_config
-      release: mgyp_release
-      accession:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot)
-      private: private
-    out: [ renamed_proteins, stderr_protein_assign ]
-
 # ------------------------- <<ANTISMASH >> -------------------------------
   antismash:
     run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
     in:
-      input_filtered_fasta: assign_mgyc/renamed_contigs_fasta
+      input_filtered_fasta: accessioning_and_prediction/assigned_contigs
       clusters_glossary: clusters_glossary
       final_folder_name: { default: pathways-systems }
     out:
@@ -283,16 +240,12 @@ steps:
     when: $(inputs.check_value != 0)
     run: ../../subworkflows/assembly/func_ann_and_post_processing-subwf.cwl
     in:
-      check_value: cgc/count_faa
-      cgc_results_faa:
-        source:
-          - assign_mgyp/renamed_proteins
-          - cgc/predicted_faa
-        pickValue: first_non_null
-      filtered_fasta: assign_mgyc/renamed_contigs_fasta
+      check_value: accessioning_and_prediction/count_faa
+      cgc_results_faa: accessioning_and_prediction/predicted_proteins
+      filtered_fasta: accessioning_and_prediction/assigned_contigs
       rna_prediction_ncRNA: rna_prediction/ncRNA
 
-      protein_chunk_size_eggnog:  protein_chunk_size_eggnog
+      protein_chunk_size_eggnog: protein_chunk_size_eggnog
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
@@ -337,20 +290,16 @@ steps:
   fasta_index:
     run: ../../../tools/Assembly/index_fasta/fasta_index.cwl
     in:
-      fasta: assign_mgyc/renamed_contigs_fasta
+      fasta: accessioning_and_prediction/assigned_contigs
     out: [fasta_index, fasta_bgz, bgz_index]
 
 # chunking
   chunking_final:
     run: ../../subworkflows/final_chunking.cwl
     in:
-      fasta: assign_mgyc/renamed_contigs_fasta
-      ffn: cgc/predicted_ffn
-      faa:
-        source:
-          - assign_mgyp/renamed_proteins
-          - cgc/predicted_faa
-        pickValue: first_non_null
+      fasta: accessioning_and_prediction/assigned_contigs
+      ffn: accessioning_and_prediction/predicted_seq
+      faa: accessioning_and_prediction/predicted_proteins
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:
@@ -369,6 +318,16 @@ steps:
           - rna_prediction/cmsearch_result              # cmsearch.all
         linkMerge: merge_flattened
     out: [compressed_file]
+
+# add no-tax file-flag if there are no lsu and ssu seqs
+  no_tax_file_flag:
+    when: $(inputs.count_lsu < 3 && inputs.count_ssu < 3)
+    run: ../../../utils/touch_file.cwl
+    in:
+      count_lsu: rna_prediction/number_LSU_mapseq
+      count_ssu: rna_prediction/number_SSU_mapseq
+      filename: { default: no-tax}
+    out: [ created_file ]
 
 # ----------------------------------- << SEQUENCE CATEGORISATION FOLDER >> -----------------------------------
 # << move chunked files >>

@@ -17,11 +17,11 @@ inputs:
   chunk_size: int
 
 outputs:
-  predicted_faa:
+  predicted_proteins:
     type: File
     format: edam:format_1929
     outputSource: combine_faa/result
-  predicted_ffn:
+  predicted_seq:
     type: File
     format: edam:format_1929
     outputSource: combine_ffn/result

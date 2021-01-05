@@ -1,7 +1,0 @@
-input_fasta:
-  path: test.fasta
-  class: File
-config: config_protein_assign
-release: '20200724'
-accession: testAccession
-# private: True

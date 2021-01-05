@@ -2,11 +2,11 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: "Assign MGYP to protein sequences"
+label: "Assign MGYC to DNA contigs"
 
 requirements:
   ResourceRequirement:
-    ramMin: 15000
+    ramMin: 300
   InlineJavascriptRequirement: {}
 
 inputs:
@@ -14,40 +14,29 @@ inputs:
     type: File
     inputBinding:
       prefix: -f
-  config:
-    type: string
+  config_db_file:
+    type: File
     inputBinding:
       prefix: -c
-  release:
-    type: string
-    inputBinding:
-      prefix: -r
-  accession:
+  run_accession:
     type: string
     inputBinding:
       prefix: -a
-  private:
-    type: boolean?
-    inputBinding:
-      prefix: --private
 
-baseCommand: [ assign_MGYPs.py ]
 
-stderr: stderr.txt
+baseCommand: [ assign_mgyc.py ]
 
 outputs:
-  renamed_proteins:
+  renamed_contigs_fasta:
     type: File
     format: edam:format_1929
     outputBinding:
-      glob: "*.mgyp.fasta"
+      glob: "*mgyc.fasta"
       outputEval: |
         ${
-          self[0].basename = inputs.input_fasta.nameroot + '.faa';
+          self[0].basename = inputs.input_fasta.basename;
           return self[0]
         }
-  stderr_protein_assign:
-    type: stderr
 
 hints:
   - class: DockerRequirement
