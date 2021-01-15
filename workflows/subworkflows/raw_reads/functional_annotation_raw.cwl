@@ -48,7 +48,7 @@ steps:
     out: [ ips_result ]
 
   run_hmmer:
-    run: ../chunking-subwf-hmmsearch.cwl
+    run: ../hmmer/chunking-subwf-hmmsearch.cwl
     in:
       CGC_predicted_proteins: CGC_predicted_proteins
       chunk_size: chunk_size_hmm

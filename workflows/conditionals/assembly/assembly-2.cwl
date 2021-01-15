@@ -54,7 +54,7 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_database: string
     HMM_database_dir: [string, Directory?]
-    hmmscan_header: string
+    hmmsearch_header: string
     EggNOG_db: [string, File]
     EggNOG_diamond_db: [string, File]
     EggNOG_data_dir: [string, Directory]
@@ -103,23 +103,23 @@ outputs:
  # << functional annotation >>
   functional_annotation_folder:                              # [15]
     type: Directory
-    outputSource: folder_functional_annotation/functional_annotation_folder
+    outputSource: functional_annotation/functional_annotation_folder
   stats:                                                     # [6]
-    outputSource: folder_functional_annotation/stats
+    outputSource: functional_annotation/stats
     type: Directory
 
  # << pathways and systems >>
   pathways_systems_folder:
     type: Directory
-    outputSource: move_to_pathways_systems_folder/out
+    outputSource: functional_annotation/pathways_systems_folder
+  pathways_systems_folder_antismash_summary:
+    type: Directory
+    outputSource:  functional_annotation/pathways_systems_folder_antismash_summary
 
  # << pathways and systems from antismash >>
   pathways_systems_folder_antismash:
     type: Directory
     outputSource: antismash/antismash_folder
-  pathways_systems_folder_antismash_summary:
-    type: Directory
-    outputSource:  move_antismash_summary_to_pathways_systems_folder/summary_in_folder
 
  # << sequence categorisation >>
   sequence-categorisation_folder:                   # [2]
@@ -188,116 +188,63 @@ steps:
     run: ../../subworkflows/assembly/CGC-subwf.cwl
 
 # -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
+# - GFF generation
+# - DIAMOND
+# - KEGG PATHWAYS
+# - GENOME PROPERTIES
+# - make PATHWAYS-SYSTEMS folder
+# - move PATHWAYS-SYSTEMS antismash summary
+
   functional_annotation:
-    run: ../../subworkflows/assembly/functional_annotation.cwl
+    run: ../../subworkflows/assembly/Func_ann_and_post_processing-subwf.cwl
     in:
-      CGC_predicted_proteins:
+      filtered_fasta: filtered_fasta
+      cgc_results_faa:
         source: cgc/results
         valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
-      chunk_size_eggnog: protein_chunk_size_eggnog
-      chunk_size_hmm: protein_chunk_size_hmm
-      chunk_size_IPS: protein_chunk_size_IPS
-      name_ips: func_ann_names_ips
-      name_hmmer: func_ann_names_hmmer
+      rna_prediction_ncRNA: rna_prediction/ncRNA
+
+      protein_chunk_size_eggnog: protein_chunk_size_eggnog
+      EggNOG_db: EggNOG_db
+      EggNOG_diamond_db: EggNOG_diamond_db
+      EggNOG_data_dir: EggNOG_data_dir
+
+      protein_chunk_size_hmm: protein_chunk_size_hmm
+      func_ann_names_hmmer: func_ann_names_hmmer
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
       HMM_database_dir: HMM_database_dir
-      EggNOG_db: EggNOG_db
-      EggNOG_diamond_db: EggNOG_diamond_db
-      EggNOG_data_dir: EggNOG_data_dir
+      hmmsearch_header: hmmsearch_header
+
+      protein_chunk_size_IPS: protein_chunk_size_IPS
+      func_ann_names_ips: func_ann_names_ips
       InterProScan_databases: InterProScan_databases
       InterProScan_applications: InterProScan_applications
       InterProScan_outputFormat: InterProScan_outputFormat
-    out: [ hmm_result, ips_result, eggnog_annotations, eggnog_orthologs ]
-
-# -----------------------------------  << STEP GFF >>  -----------------------------------
-  gff:
-    run: ../../../tools/Assembly/GFF/gff_generation.cwl
-    in:
-      ips_results: functional_annotation/ips_result
-      eggnog_results: functional_annotation/eggnog_annotations
-      input_faa:
-        source: cgc/results
-        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
-      output_name:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).annotations.gff
-    out: [ output_gff_gz, output_gff_index ]
-
-# -----------------------------------  << FUNCTIONAL ANNOTATION FOLDER >>  -----------------------------------
-
-# << DIAMOND >>
-  diamond:
-    run: ../../../tools/Assembly/Diamond/diamond-subwf.cwl
-    in:
-      queryInputFile:
-        source: cgc/results
-        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
-      outputFormat: { default: '6' }
-      maxTargetSeqs: diamond_maxTargetSeqs
-      strand: { default: 'both'}
-      databaseFile: diamond_databaseFile
-      threads: { default: 32 }
-      Uniref90_db_txt: Uniref90_db_txt
-      filename:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot)
-    out: [post-processing_output]
-
-# << collect folder >>
-  folder_functional_annotation:
-    run: ../../subworkflows/assembly/deal_with_functional_annotation.cwl
-    in:
-      fasta: filtered_fasta
-      IPS_table: functional_annotation/ips_result
       ips_header: ips_header
-      diamond_table: diamond/post-processing_output
+
+      diamond_maxTargetSeqs: diamond_maxTargetSeqs
+      diamond_databaseFile: diamond_databaseFile
+      Uniref90_db_txt: Uniref90_db_txt
       diamond_header: diamond_header
-      hmmscan_table: functional_annotation/hmm_result
-      hmmscan_header: hmmscan_header
-      antismash_geneclusters_txt: antismash/antismash_clusters
-      rna: rna_prediction/ncRNA
-      cds:
-        source: cgc/results
-        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
+
+      antismash_geneclusters_txt: antismash_geneclusters_txt
       go_config: go_config
-      eggnog_orthologs: functional_annotation/eggnog_orthologs
-      eggnog_annotations: functional_annotation/eggnog_annotations
-      output_gff_gz: gff/output_gff_gz
-      output_gff_index: gff/output_gff_index
+
       ko_file: ko_file
-    out: [functional_annotation_folder, stats, summary_antismash]
-
-# ----------------------------------- << PATHWAYS and SYSTEMS >> -----------------------------------
-
-# << KEGG PATHWAYS >>
-  pathways:
-    run: ../../subworkflows/assembly/kegg_analysis.cwl
-    in:
-      input_table_hmmscan: functional_annotation/hmm_result
-      filtered_fasta: filtered_fasta
-      outputname:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot)
       graphs: graphs
       pathways_names: pathways_names
       pathways_classes: pathways_classes
-    out: [ kegg_pathways_summary, kegg_contigs_summary]
 
-# << GENOME PROPERTIES >>
-  genome_properties:
-    run: ../../../tools/Assembly/Genome_properties/genome_properties.cwl
-    in:
-      input_tsv_file: functional_annotation/ips_result
-      flatfiles_path: gp_flatfiles_path
-      GP_txt: {default: genomeProperties.txt}
-      name:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).summary.gprops.tsv
-    out: [ summary ]
+      gp_flatfiles_path: gp_flatfiles_path
+    out:
+      - functional_annotation_folder
+      - stats
+      - pathways_systems_folder_antismash_summary
+      - pathways_systems_folder
 
-# << ANTISMASH >>
+# << ----------------------------------- ANTISMASH ----------------------------------- >>
 
   antismash:
     run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
@@ -309,36 +256,6 @@ steps:
       - antismash_folder
       - antismash_clusters
 
-
-# << change TSV to CSV >>
-  change_formats_and_names:
-    run: ../../subworkflows/assembly/change_formats_and_names.cwl
-    in:
-      genome_properties_summary: genome_properties/summary
-      kegg_summary: pathways/kegg_pathways_summary
-      fasta: filtered_fasta
-    out: [gp_summary_csv, kegg_summary_csv]
-
-# << move PATHWAYS-SYSTEMS >>
-  move_to_pathways_systems_folder:
-    run: ../../../utils/return_directory/return_directory.cwl
-    in:
-      file_list:
-        source:
-          - pathways/kegg_contigs_summary                       # kegg contigs.tsv -- not using
-          - change_formats_and_names/kegg_summary_csv           # kegg pathways.csv
-          - change_formats_and_names/gp_summary_csv             # genome properties.csv
-        linkMerge: merge_flattened
-      dir_name: { default: pathways-systems }
-    out: [ out ]
-
-# << move PATHWAYS-SYSTEMS antismash summary>>
-  move_antismash_summary_to_pathways_systems_folder:
-    run: ../../../tools/Assembly/antismash/move_antismash_summary/move_antismash_summary.cwl
-    in:
-      antismash_summary: folder_functional_annotation/summary_antismash
-      folder_name: { default: pathways-systems }
-    out: [ summary_in_folder ]
 # ----------------------------------- << FINAL STEPS ROOT FOLDER >> -----------------------------------
 
 # index FASTA

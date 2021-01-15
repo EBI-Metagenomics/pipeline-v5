@@ -1,0 +1,11 @@
+forward_reads:
+   class: File
+   format: edam:format_1930  # FASTQ
+   path: ../../input_files/wgs-paired-SRR1620013_1_small.fastq.gz
+reverse_reads:
+   class: File
+   format: edam:format_1930  # FASTQ
+   path: ../../input_files/wgs-paired-SRR1620013_2_small.fastq.gz
+namefile:
+   class: File
+   path: ../../input_files/wgs-paired-SRR1620013_1_small.fastq.gz

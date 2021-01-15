@@ -1,0 +1,17 @@
+$namespaces:
+  edam: http://edamontology.org/
+
+sequences:
+  class: File
+  path: test-input/test.SSU.fasta
+  format: edam:format_1929
+database:
+  class: File
+  path: test-input/silva-SSU.fasta
+  format: edam:format_1929
+taxonomy:
+  class: File
+  path: test-input/silva-filt.txt
+prefix:
+  class: File
+  path: test-input/test.SSU.fasta

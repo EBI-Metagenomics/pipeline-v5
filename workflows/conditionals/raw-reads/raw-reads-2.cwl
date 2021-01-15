@@ -50,7 +50,7 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_database: string
     HMM_database_dir: [string, Directory?]
-    hmmscan_header: string
+    hmmsearch_header: string
     ko_file: [string, File]
 
     EggNOG_db: [string?, File?]
@@ -91,10 +91,10 @@ outputs:
 
   functional_annotation_folder:
     type: Directory
-    outputSource: move_to_functional_annotation_folder/out
+    outputSource: functional_annotation/functional_annotation_folder
   stats:
-    outputSource: write_summaries/stats
     type: Directory
+    outputSource: functional_annotation/stats
 
  # FAA count
   count_CDS:
@@ -175,59 +175,36 @@ steps:
     run: ../../subworkflows/raw_reads/CGC-subwf.cwl
 
 # << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
+# << GO SUMMARY>>
+# << PFAM >>
+# << summaries and stats IPS, HMMScan, Pfam >>
+# << add header to IPS and HMM and chunking TSVs >>
+
   functional_annotation:
-    run: ../../subworkflows/raw_reads/functional_annotation_raw.cwl
+    run: ../../subworkflows/raw_reads/Func_ann_and_post_proccessing-subwf.cwl
     in:
-      CGC_predicted_proteins:
+      filtered_fasta: filtered_fasta
+      rna_prediction_ncRNA: rna_prediction/ncRNA
+      cgc_results_faa:
         source: cgc/results
         valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
-      chunk_size_hmm: protein_chunk_size_hmm
-      chunk_size_IPS: protein_chunk_size_IPS
-      name_ips: func_ann_names_ips
-      name_hmmer: func_ann_names_hmmer
+      protein_chunk_size_hmm: protein_chunk_size_hmm
+      protein_chunk_size_IPS: protein_chunk_size_IPS
+      func_ann_names_ips: func_ann_names_ips
+      InterProScan_databases: InterProScan_databases
+      InterProScan_applications: InterProScan_applications
+      InterProScan_outputFormat: InterProScan_outputFormat
+      ips_header: ips_header
+      func_ann_names_hmmer: func_ann_names_hmmer
       HMM_gathering_bit_score: HMM_gathering_bit_score
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
       HMM_database_dir: HMM_database_dir
-      InterProScan_databases: InterProScan_databases
-      InterProScan_applications: InterProScan_applications
-      InterProScan_outputFormat: InterProScan_outputFormat
-    out: [ hmm_result, ips_result ]
+      hmmsearch_header: hmmsearch_header
+      go_config: go_config
+      ko_file: ko_file
+    out: [ functional_annotation_folder, stats ]
 
-# << GO SUMMARY>>
-  go_summary:
-    run: ../../../tools/GO-slim/go_summary.cwl
-    in:
-      InterProScan_results: functional_annotation/ips_result
-      config: go_config
-      output_name:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).summary.go
-    out: [go_summary, go_summary_slim]
-
-# << PFAM >>
-  pfam:
-    run: ../../../tools/Pfam-Parse/pfam_annotations.cwl
-    in:
-      interpro: functional_annotation/ips_result
-      outputname:
-        source: filtered_fasta
-        valueFrom: $(self.nameroot).pfam
-    out: [annotations]
-
-# << summaries and stats IPS, HMMScan, Pfam >>
-  write_summaries:
-    run: ../../subworkflows/func_summaries.cwl
-    in:
-       interproscan_annotation: functional_annotation/ips_result
-       hmmscan_annotation: functional_annotation/hmm_result
-       pfam_annotation: pfam/annotations
-       rna: rna_prediction/ncRNA
-       ko_file: ko_file
-       cds:
-         source: cgc/results
-         valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
-    out: [summary_ips, summary_ko, summary_pfam, stats]
 
 # << FINAL STEPS >>
 
@@ -284,48 +261,6 @@ steps:
         - rna_prediction/LSU_folder
       dir_name: { default: 'taxonomy-summary' }
     out: [out]
-
-
-# << FUNCTIONAL FORMATTING AND CHUNKING >>
-
-# add header
-  header_addition:
-    scatter: [input_table, header]
-    scatterMethod: dotproduct
-    run: ../../../utils/add_header/add_header.cwl
-    in:
-      input_table:
-        - functional_annotation/hmm_result
-        - functional_annotation/ips_result
-      header:
-        - hmmscan_header
-        - ips_header
-    out: [ output_table ]
-
-# << chunking TSVs >>
-  chunking_tsv:
-    run: ../../../utils/result-file-chunker/result_chunker_subwf.cwl
-    in:
-      input_files: header_addition/output_table
-      format: { default: tsv }
-      outdirname: { default: table }
-    out: [ chunked_by_size_files ]
-
-# << move to fucntional annotation >>
-  move_to_functional_annotation_folder:
-    run: ../../../utils/return_directory/return_directory.cwl
-    in:
-      file_list:
-        source:
-          - write_summaries/summary_ips
-          - write_summaries/summary_ko
-          - write_summaries/summary_pfam
-          - go_summary/go_summary
-          - go_summary/go_summary_slim
-          - chunking_tsv/chunked_by_size_files
-        linkMerge: merge_flattened
-      dir_name: { default: functional-annotation }
-    out: [ out ]
 
 
 $namespaces:

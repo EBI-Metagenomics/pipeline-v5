@@ -1,0 +1,24 @@
+interproscan:
+  class: File
+  path: test-input/annot.ips
+hmmscan:
+  class: File
+  path: test-input/annot.hmm
+pfam:
+  class: File
+  path: test-input/annot.pfam
+  format:  http://edamontology.org/format_3475
+cmsearch_file:
+  class: File
+  path: test-input/result.deoverlapped
+cds_file:
+  class: File
+  path: test-input/small.fasta.faa
+
+ko_file:
+  class: File
+  path: test-input/annot.ko
+
+antismash:
+  class: File
+  path: test-input/annot.antismash

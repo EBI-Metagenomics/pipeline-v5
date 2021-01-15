@@ -1,4 +1,0 @@
-input_table:
-  class: File
-  path: test-input/hmmscan_result.tbl
-  format: http://edamontology.org/format_3475

@@ -7,13 +7,13 @@
 # 7 utils: fastq to fasta
 # 8 utils: generate_checksum
 # 9 utils: pigz
-# 10 utils: result-chunker TSV
-# 11 utils: result-chunker empty TSV
-# 12 utils: result-chunker big fasta (nucleotide)
-# 13 utils: result-chunker small fasta (nucleotide)
+# 10 utils: result-chunker TSV   [ result: TSVchunk001.tsv, TSVchunk002.tsv ]
+# 11 utils: result-chunker empty TSV   [ result: empty TSV ]
+# 12 utils: result-chunker big fasta (nucleotide)   [ result: test-chunker_1.fasta, test-chunker_2.fasta ]
+# 13 utils: result-chunker small fasta (nucleotide)   [ result: assembly-SRR1620013_small.fasta ]
 # 14 utils: result-chunker create chunks file
-# 15 utils: result-chunker-subwf tsv 3 chunks -- incorrect
-# 16 utils: result-chunker-subwf tsv empty -- incorrect
+# 15 utils: result-chunker-subwf tsv 3 chunks
+# 16 utils: result-chunker-subwf tsv empty
 # 17 utils: return-directory of files
 # 18 utils: return-directory of directories
 # 19 utils: QC-PASSED
@@ -28,3 +28,4 @@
 # 28 utils: count number of sequences in fasta-file
 # 29 utils: concatenate files
 # 30 utils: clean fasta headers
+# 31 utils: result-chunker empty fasta  [ result: empty_file ]

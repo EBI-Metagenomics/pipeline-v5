@@ -1,0 +1,31 @@
+# 1 tools: Trimmomatic PE
+# 2 tools: Trimmomatic SE
+# 3 tools: summaries/functional_stats raw-reads                                     --not ready
+# 4 tools: summaries/functional_stats assembly                                      --not ready
+# 5 tools: SeqPrep
+# 6 tools: RNA_prediction: mapseq
+# 7 tools: RNA-prediction: mapseq2biom
+# 8 tools: RNA-prediction: pull ncRNA
+# 9 tools: RNA-prediction: krona
+# 10 tools: RNA-prediction: biom-convert hdf5
+# 11 tools: RNA-prediction: biom-convert json
+# 12 tools: RNA-prediction: get_subunits_fasta
+# 13 tools: RNA-prediction: get_subunits_coords
+# 14 tools: RNA-prediction: extract-coords
+# 15 tools: RNA-prediction: easel index
+# 16 tools: RNA-prediction: easel many seqs
+# 17 tools: RNA-prediction: cmsearch
+# 18 tools: RNA-prediction: cmsearch-deoverlap
+# 19 tools: motus
+# 21 tools: qc-stats
+# 21 tools: qc-filtering
+# 22 tools: Pfam parse
+# 23 tools: mask-for-ITS: bedtools
+# 24 tools: mask-for-ITS: format-bedfile
+# 25 tools: mask-for-ITS: suppress taxonomy ( "suppress" [], "tax-sum" [LSU, SSU] )
+# 26 tools: InterProScan
+# 27 tools: GoSlim Summary
+# 28 tools: hmmer: hmmsearch
+# 29 tools: hmmer: hmmscan
+# 30 tools: hmmer: hmmer-tab-modification
+# 31 tools: hmmer: hmmscan + hmmer-tab-modification

@@ -22,7 +22,7 @@ arguments:
     valueFrom: |
       ${
         var return_string = "";
-        for (const file of inputs.list_chunks) {
+        for (var file of inputs.list_chunks) {
           return_string = return_string + file.basename + "\n";
         }
         return return_string;

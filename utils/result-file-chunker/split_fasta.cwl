@@ -50,12 +50,14 @@ outputs:
             self[0].basename = inputs.infile.basename
             return self
           }
-          var list_new_files = [];
-          for (const cur_file of self) {
-            cur_file.basename = inputs.infile.nameroot + "_" + cur_file.basename.split('.').pop() + inputs.infile.nameext;
-            list_new_files.push(cur_file);
-            }
-          return list_new_files
+          else {
+            var list_new_files = [];
+            for (var i = 0; i < self.length; ++i) {
+              var cur_file = self[i];
+              cur_file.basename = inputs.infile.nameroot + "_" + cur_file.basename.split('.').pop() + inputs.infile.nameext;
+              list_new_files.push(cur_file);
+              }
+            return list_new_files }
         }
 
 $namespaces:
