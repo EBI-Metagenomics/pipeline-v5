@@ -1,0 +1,7 @@
+# Fri Jan 29 11:35:09 2021
+# emapper-2.0.0
+# /hps/nobackup2/production/metagenomics/pipeline/tools-v5/utils/emapper.py --cpu 16 --data_dir /scratch/8l1njn8i/stg4495b4bc-9a4d-4316-a097-0f19db4efd7e/test-input -i /scratch/8l1njn8i/stg4495b4bc-9a4d-4316-a097-0f19db4efd7e/test-input/test_queries.fa -m diamond -o test_output.tsv
+#
+# /hps/nobackup2/production/metagenomics/pipeline/tools-v5/eggnog-mapper-2.0.0/eggnog-mapper/bin/diamond blastp -d /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tools/Assembly/EggNOG/test-input/eggnog_proteins.dmnd -q /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tools/Assembly/EggNOG/test-input/test_queries.fa --more-sensitive --threads 16 -e 0.001000 -o /scratch/nm20_vng/emappertmp_dmdn_NMVOTR/18e820eb975c4bd09ebe948e67d2b649 --top 3 --query-cover 0 --subject-cover 0
+1000565.METUNv1_03812	1000565.METUNv1_03812	1.9e-207	716.8
+362663.ECP_0061	362663.ECP_0061	0.0	1636.3

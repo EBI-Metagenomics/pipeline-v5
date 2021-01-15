@@ -1,0 +1,8 @@
+outdirname: antismash_bad_output
+input_fasta:
+  class: File
+  path: ../test-input/empty.fasta
+  format: http://edamontology.org/format_1929
+
+accession: result-antismash-4.2.0
+chunk_num: '1'

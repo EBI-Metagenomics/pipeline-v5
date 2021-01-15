@@ -1,0 +1,18 @@
+$namespaces:
+  s: https://schema.org/
+  edam: http://edamontology.org/
+
+applications:
+  - PfamA
+  - TIGRFAM
+  - PRINTS
+  - PrositePatterns
+  - Gene3d
+inputFile:
+  class: File
+  path: test-input/test_single_protein.fasta
+  format: edam:format_1929
+outputFormat:
+  - TSV
+databases: test-input/databases/data
+

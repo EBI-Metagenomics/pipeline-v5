@@ -1,0 +1,4 @@
+antismash_summary:
+  class: File
+  path: ../test-input/move-summary.txt
+folder_name: "pathways-systems"

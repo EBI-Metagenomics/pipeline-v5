@@ -38,7 +38,7 @@ inputs:
       prefix: "-matches"
 
   flatfiles_path:
-    type: string?
+    type: [ string?, Directory? ]
     inputBinding:
       prefix: "-gpdir"
     default: "/genome-properties/flatfiles"

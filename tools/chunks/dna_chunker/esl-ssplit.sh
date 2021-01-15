@@ -7,7 +7,7 @@ same_number_of_residues=$2
 seqs=$3
 chunk_size=$4
 
-f="$(basename -- ${seqs})"
+f="copy-$(basename -- ${seqs})"
 # echo "$f"
 
 cp ${seqs} $f
@@ -25,3 +25,5 @@ else
     esl-ssplit.pl $f ${chunk_size}
     echo "4"
 fi
+
+rm $f

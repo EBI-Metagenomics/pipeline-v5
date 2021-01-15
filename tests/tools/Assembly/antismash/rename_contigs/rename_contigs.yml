@@ -1,0 +1,8 @@
+full_fasta:
+  path: ../test-input/test.fasta
+  class: File
+chunks:
+  path: ../test-input/test.fasta.1
+  class: File
+
+accession: test-rename

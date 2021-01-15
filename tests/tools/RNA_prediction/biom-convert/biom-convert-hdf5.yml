@@ -1,0 +1,11 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+count: 46
+
+biom:
+  class: File
+  path: ../mapseq2biom/expected-output/test-mapseq.notaxid.tsv
+  format: edam:format_3746
+hdf5: true
+table_type: 'OTU table'

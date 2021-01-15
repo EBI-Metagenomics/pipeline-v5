@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 cwlVersion: v1.2.0-dev2
+=======
+cwlVersion: v1.2.0-dev4
+>>>>>>> 1bb9721... tests for tools
 class: Workflow
 label: Trim and reformat reads (single and paired end version)
 
@@ -46,6 +50,7 @@ steps:
       fastq_count: count_overlapped_reads/count
     out: [ trimmed_and_reformatted_reads ]
 
+
 $namespaces:
  edam: http://edamontology.org/
  s: http://schema.org/
@@ -55,3 +60,4 @@ $schemas:
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+

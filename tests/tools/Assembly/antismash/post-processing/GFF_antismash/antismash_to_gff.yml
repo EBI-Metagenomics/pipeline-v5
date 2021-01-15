@@ -1,0 +1,7 @@
+antismash_geneclus:
+  class: File
+  path: ../../test-input/antismash_geneclusters.txt
+antismash_embl:
+  class: File
+  path: ../../test-input/antismash_final.embl
+output_name: test-antismash.gff

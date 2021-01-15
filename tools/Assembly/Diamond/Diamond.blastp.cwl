@@ -7,8 +7,8 @@ cwlVersion: v1.0
 requirements:
   - class: SchemaDefRequirement
     types:
-      - $import: Diamond-strand_values.yaml
-      - $import: Diamond-output_formats.yaml
+      - $import: yml-formats/Diamond-strand_values.yaml
+      - $import: yml-formats/Diamond-output_formats.yaml
   - class: ResourceRequirement
     ramMin: 15000
     tmpdirMin: 20000

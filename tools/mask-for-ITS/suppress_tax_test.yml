@@ -1,18 +1,19 @@
 ssu_file:
   class: File
-  path: test-input/SSU/SSU.fasta.gz
+  path: ../RNA_prediction/get_subunits_fasta/expected-output/SSU.fasta
 lsu_file:
   class: File
-  path: test-input/LSU/LSU.fasta.gz
+  path: ../RNA_prediction/get_subunits_fasta/expected-output/LSU.fasta
 its_file:
   class: File
-  path: test-input/its/its.fasta.gz
+  path: expected-output/masked-for-its.fasta  # ITS_masked.fasta.gz
 lsu_dir:
   class: Directory
-  path: test-input/LSU
+  path: taxonomy-summary/LSU
 ssu_dir:
   class: Directory
-  path: test-input/SSU
+  path: taxonomy-summary/SSU
 its_dir:
   class: Directory
   path: test-input/its
+

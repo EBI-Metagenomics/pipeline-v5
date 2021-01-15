@@ -24,7 +24,7 @@ inputs:
   output_gff_index: File
   ko_file: [string, File]
   diamond_header: string
-  hmmscan_header: string
+  hmmsearch_header: string
   ips_header: string
 
 outputs:
@@ -33,63 +33,39 @@ outputs:
     outputSource: move_to_functional_annotation_folder/out
   stats:
     type: Directory
-    outputSource: write_summaries/stats
+    outputSource: post_processing/stats
   summary_antismash:
     type: File?
-    outputSource: write_summaries/summary_antismash
+    outputSource: post_processing/summary_antismash
 
 steps:
 
-# << GO SUMMARY>>
-  go_summary:
-    run: ../../../tools/GO-slim/go_summary.cwl
+# GO SUMMARY; PFAM; summaries and stats IPS, HMMScan, Pfam; add header; chunking TSV
+  post_processing:
+    run: ../func-annotation-post-proccessing-go-pfam-stats-subwf.cwl
     in:
-      InterProScan_results: IPS_table
-      config: go_config
-      output_name:
-        source: fasta
-        valueFrom: $(self.nameroot).summary.go
-    out: [go_summary, go_summary_slim]
+      fasta: fasta
+      IPS_table: IPS_table
+      go_config: go_config
+      hmmscan_table: hmmscan_table
+      diamond_table: diamond_table
+      antismash_geneclusters_txt: antismash_geneclusters_txt
+      rna: rna
+      cds: cds
+      ko_file: ko_file
+      diamond_header: diamond_header
+      hmmsearch_header: hmmsearch_header
+      ips_header: ips_header
+    out:
+      - stats
+      - summary_antismash
+      - summary_pfam
+      - summary_ko
+      - summary_ips
+      - go_summary
+      - go_summary_slim
+      - chunked_tsvs
 
-# << PFAM >>
-  pfam:
-    run: ../../../tools/Pfam-Parse/pfam_annotations.cwl
-    in:
-      interpro: IPS_table
-      outputname:
-        source: fasta
-        valueFrom: $(self.nameroot).pfam
-    out: [annotations]
-
-# << summaries and stats IPS, HMMScan, Pfam >>
-  write_summaries:
-    run: ../func_summaries.cwl
-    in:
-       interproscan_annotation: IPS_table
-       hmmscan_annotation: hmmscan_table
-       pfam_annotation: pfam/annotations
-       antismash_gene_clusters: antismash_geneclusters_txt
-       rna: rna
-       cds: cds
-       ko_file: ko_file
-       type_analysis: { default: 'Contigs' }
-    out: [summary_ips, summary_ko, summary_pfam, summary_antismash, stats]
-
-# add header
-  header_addition:
-    scatter: [input_table, header]
-    scatterMethod: dotproduct
-    run: ../../../utils/add_header/add_header.cwl
-    in:
-      input_table:
-        - diamond_table
-        - hmmscan_table
-        - IPS_table
-      header:
-        - diamond_header
-        - hmmscan_header
-        - ips_header
-    out: [ output_table ]
 
 # << gzip functional annotation files >>
   compression_func_ann:
@@ -103,13 +79,6 @@ steps:
         linkMerge: merge_flattened
     out: [compressed_file]
 
-# chunking
-  chunking_tsv:
-    run: ../../../utils/result-file-chunker/result_chunker_subwf.cwl
-    in:
-      input_files: header_addition/output_table
-      format: { default: tsv }
-    out: [chunked_by_size_files]
 
 # move FUNCTIONAL-ANNOTATION
   move_to_functional_annotation_folder:
@@ -120,12 +89,12 @@ steps:
           - output_gff_gz
           - output_gff_index
           - compression_func_ann/compressed_file
-          - write_summaries/summary_ips
-          - write_summaries/summary_ko
-          - write_summaries/summary_pfam
-          - go_summary/go_summary
-          - go_summary/go_summary_slim
-          - chunking_tsv/chunked_by_size_files
+          - post_processing/summary_ips
+          - post_processing/summary_ko
+          - post_processing/summary_pfam
+          - post_processing/go_summary
+          - post_processing/go_summary_slim
+          - post_processing/chunked_tsvs
         linkMerge: merge_flattened
       dir_name: { default: functional-annotation }
     out: [ out ]

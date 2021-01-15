@@ -1,0 +1,7 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+reads:
+  path: ../../input_files/input.fq
+  class: File
+  format: 'edam:format_1930'

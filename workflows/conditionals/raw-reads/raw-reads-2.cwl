@@ -50,7 +50,7 @@ inputs:
     HMM_omit_alignment: boolean
     HMM_database: string
     HMM_database_dir: [string, Directory?]
-    hmmscan_header: string
+    hmmsearch_header: string
     ko_file: [string, File]
 
     EggNOG_db: [string?, File?]
@@ -91,10 +91,10 @@ outputs:
 
   functional_annotation_folder:
     type: Directory
-    outputSource: move_to_functional_annotation_folder/out
+    outputSource: functional_annotation/functional_annotation_folder
   stats:
-    outputSource: write_summaries/stats
     type: Directory
+    outputSource: functional_annotation/stats
 
  # FAA count
   count_CDS:
@@ -175,8 +175,13 @@ steps:
     run: ../../subworkflows/raw_reads/CGC-subwf.cwl
 
 # << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
+# << GO SUMMARY>>
+# << PFAM >>
+# << summaries and stats IPS, HMMScan, Pfam >>
+# << add header to IPS and HMM and chunking TSVs >>
+
   functional_annotation:
-    run: ../../subworkflows/raw_reads/functional_annotation_raw.cwl
+    run: ../../subworkflows/raw_reads/Func_ann_and_post_proccessing-subwf.cwl
     in:
        check_value: cgc/count_faa
 
@@ -204,6 +209,9 @@ steps:
     out:
       - functional_annotation_folder
       - stats
+
+
+# << FINAL STEPS >>
 
 # gzip
   compression:
@@ -252,48 +260,6 @@ steps:
         - rna_prediction/LSU_folder
       dir_name: { default: 'taxonomy-summary' }
     out: [out]
-
-
-# << FUNCTIONAL FORMATTING AND CHUNKING >>
-
-# add header
-  header_addition:
-    scatter: [input_table, header]
-    scatterMethod: dotproduct
-    run: ../../../utils/add_header/add_header.cwl
-    in:
-      input_table:
-        - functional_annotation/hmm_result
-        - functional_annotation/ips_result
-      header:
-        - hmmscan_header
-        - ips_header
-    out: [ output_table ]
-
-# << chunking TSVs >>
-  chunking_tsv:
-    run: ../../../utils/result-file-chunker/result_chunker_subwf.cwl
-    in:
-      input_files: header_addition/output_table
-      format: { default: tsv }
-      outdirname: { default: table }
-    out: [ chunked_by_size_files ]
-
-# << move to fucntional annotation >>
-  move_to_functional_annotation_folder:
-    run: ../../../utils/return_directory/return_directory.cwl
-    in:
-      file_list:
-        source:
-          - write_summaries/summary_ips
-          - write_summaries/summary_ko
-          - write_summaries/summary_pfam
-          - go_summary/go_summary
-          - go_summary/go_summary_slim
-          - chunking_tsv/chunked_by_size_files
-        linkMerge: merge_flattened
-      dir_name: { default: functional-annotation }
-    out: [ out ]
 
 
 $namespaces:

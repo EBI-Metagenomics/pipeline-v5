@@ -10,6 +10,7 @@ if [[ -s ${INPUT} ]]
 then
     cp ${INPUT} copy.fasta
     gt splitfasta -targetsize ${NUMBER} copy.fasta
+    rm copy.fasta
 else
     touch copy.fasta
 fi

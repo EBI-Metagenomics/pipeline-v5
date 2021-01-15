@@ -1,0 +1,29 @@
+# Combined Gene Caller (CGC) subworkflow
+- job: tools/CGC/cgc.yml
+  tool: ../workflows/subworkflows/assembly/CGC-subwf.cwl
+  doc: "Combined Gene Caller (CGC) SBF"
+  short_name: CGC-subwf.cwl
+  output:
+    count_faa: 209
+    results:
+      - location: Any
+        basename: assembly-SRR1620013_small_CDS.faa
+        nameroot: assembly-SRR1620013_small_CDS
+        nameext: .faa
+        class: File
+        checksum: sha1$92b19cbf81d2638f0e019d30c58c50f1b15956b7
+        size: 43043
+        format: http://edamontology.org/format_1929
+      - location: Any
+        basename: assembly-SRR1620013_small_CDS.ffn
+        nameroot: assembly-SRR1620013_small_CDS
+        nameext: .ffn
+        class: File
+        checksum: sha1$51217937ede08b729061b0a2b2172842e3c25fdd
+        size: 101416
+        format: http://edamontology.org/format_1929
+
+
+
+
+

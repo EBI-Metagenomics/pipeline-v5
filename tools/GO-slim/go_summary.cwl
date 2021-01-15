@@ -29,7 +29,7 @@ inputs:
     type: [string?, File?]
     inputBinding:
       prefix: --config
-    default: "/tools/go_summary-config.json"
+    default: "go_summary-config.json"
 
   output_name:
     type: string

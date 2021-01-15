@@ -12,7 +12,6 @@ requirements:
 inputs:
   genome_properties_summary: File
   kegg_summary: File
-  fasta: File
 
 outputs:
   gp_summary_csv:
@@ -43,7 +42,6 @@ steps:
         source: kegg_summary
         valueFrom: $(self.nameroot)
     out: [csv_result]
-
 
 
 $namespaces:

@@ -1,0 +1,4 @@
+input_geneclusters_txt:
+  class: File
+  path: ../../test-input/geneclusters.txt
+output_filename: renamed.gncl.txt

@@ -1,0 +1,5 @@
+fasta:
+  class: File
+  path: ../test-input/FASTA.fasta
+
+contig_min_limit: 5000

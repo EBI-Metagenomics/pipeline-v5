@@ -62,28 +62,28 @@
       basename: fastp.html
       class: File
       location: Any
-      checksum: sha1$eb8ffcec73d50fd0aaa64896cf6d1db594c26aa4
-      size: 450957
+      checksum: Any
+      size: Any
     json_report:
       path: Any
       basename: fastp.json
       class: File
       location: Any
-      checksum: sha1$b1f13069d91bb9de81a1ef696dd706d36daf430f
-      size: 107413
+      checksum: Any
+      size: Any
     out_fastq1:
       path: Any
       basename: wgs-paired-SRR1620013_1_small.fastq.fastp.fastq
       class: File
       location: Any
-      checksum: sha1$ce9ecc3c88483c3e466aff4f7623ecdaa4b09431
+      checksum: Any
       size: 5322456
     out_fastq2:
       path: Any
       basename: wgs-paired-SRR1620013_2_small.fastq.fastp.fastq
       class: File
       location: Any
-      checksum: sha1$1b899612e3f2c56d82a0eb40a5944ec34936b254
+      checksum: Any
       size: 5322456
 
 # 7 utils: fastq to fasta
@@ -154,7 +154,13 @@
   short_name: split_tsv.cwl
   doc: "result-chunker empty tsv"
   output:
-    chunks: []
+    chunks:
+      - class: File
+        basename: empty_file
+        size: 0
+        location: Any
+        path: Any
+        checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
 
 # 12 result-chunker big fasta (nucleotide)
 - job: result-file-chunker/split_fasta_nuc_big_input.yml
@@ -197,12 +203,12 @@
   doc: "result-chunker cheate chunks-file (2 chunks)"
   output:
     chunks_file:
-      - path: Any
-        basename: test-chunker.fasta.chunks
-        class: File
-        location: Any
-        checksum: sha1$78edb771bc497a56a27703d8f7086bf911d511f8
-        size: 43
+      path: Any
+      basename: test-chunker.fasta.chunks
+      class: File
+      location: Any
+      checksum: sha1$78edb771bc497a56a27703d8f7086bf911d511f8
+      size: 43
 
 # 15 result-chunker-subwf tsv 3 chunks
 - job: result-file-chunker/result_chunker_subwf-tsv.yml
@@ -215,19 +221,19 @@
         basename: IPS_output_001.tsv.gz
         class: File
         location: Any
-        checksum: sha1$5cd4493290e48ee50bf6d1b6a37184469793e2d2
+        checksum: Any
         size: 1178
       - path: Any
         basename: IPS_output_002.tsv.gz
         class: File
         location: Any
-        checksum: sha1$cd781828e6bcce2edfba529a291627c394d9ed0f
+        checksum: Any
         size: 1058
       - path: Any
         basename: IPS_output_003.tsv.gz
         class: File
         location: Any
-        checksum: sha1$3361b571edf8d715f26c0f95a12c63301465a574
+        checksum: Any
         size: 372
       - path: Any
         basename: IPS_output.tsv.chunks
@@ -244,11 +250,18 @@
   output:
     chunked_by_size_files:
       - path: Any
+        basename: empty_file.gz
+        class: File
+        location: Any
+        checksum: Any
+        size: 31
+      - path: Any
         basename: empty_file.chunks
         class: File
         location: Any
-        checksum: sha1$adc83b19e793491b1c6ea0fd8b46cd9f32e592fc
-        size: 1
+        checksum: sha1$5ae6ccbf8a652995bdc40c018c77894a88caa24a
+        size: 15
+
 
 # 17 return-directory of files
 - job: return_directory/return_directory_of_files.yml

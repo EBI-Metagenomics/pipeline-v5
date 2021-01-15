@@ -1,0 +1,12 @@
+fasta_file:
+  class: File
+  path: test-input/test_queries.fa
+  format: http://edamontology.org/format_1929
+
+data_dir:
+  class: Directory
+  path: test-input
+
+cpu: 16
+output: test_output.tsv
+mode: diamond

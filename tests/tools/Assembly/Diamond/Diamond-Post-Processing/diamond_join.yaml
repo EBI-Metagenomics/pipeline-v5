@@ -1,0 +1,11 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+input_diamond:
+  class: File
+  path: test-input/example_diamond_10_sorted
+  format: edam:format_2333
+input_db:
+  class: File
+  path: test-input/example_diamond_db
+filename: diamond-join

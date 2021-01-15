@@ -1,0 +1,4 @@
+input_table:
+  class: File
+  path: test-input/example_diamond_10
+  format: http://edamontology.org/format_2333

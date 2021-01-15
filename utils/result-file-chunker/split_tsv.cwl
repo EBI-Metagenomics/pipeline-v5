@@ -41,13 +41,17 @@ outputs:
       glob: "$(inputs.prefix)*"
       outputEval: |
         ${
+          if (self.length == 0) {
+            return [inputs.infile]
+          }
           if (self.length == 1) {
             self[0].basename = inputs.infile.basename
             return self
           }
 
           var list_new_files = [];
-          for (const cur_file of self) {
+          for (var i = 0; i < self.length; ++i) {
+            var cur_file = self[i];
             cur_file.basename = cur_file.basename + inputs.infile.nameext;
             list_new_files.push(cur_file);
             }

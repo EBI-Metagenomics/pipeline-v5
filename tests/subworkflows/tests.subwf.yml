@@ -1,0 +1,203 @@
+#cwltest
+
+# 1 hmmscan sub-workflow
+- job: hmmer/chunking-subwf-hmmscan.yml
+  tool: ../../workflows/subworkflows/hmmer/chunking-subwf-hmmscan.cwl
+  doc: "Chunking hmmscan subworkflow"
+  short_name: hmmsearch_chunked_swf
+  output:
+    hmmscan_result:
+      class: File
+      format: http://edamontology.org/format_3475
+      basename: assembly-SRR1620013_smallhmmscan_subwf
+      checksum: sha1$3d596a60bca4eb35cf41eeea35c7de818e8ea1f3
+      size: 2389
+
+# 2 hmmsearch sub-workflow
+- job: hmmer/chunking-subwf-hmmsearch.yml
+  tool: ../../workflows/subworkflows/hmmer/chunking-subwf-hmmsearch.cwl
+  doc: "Chunking hmmsearch subworkflow"
+  short_name: hmmsearch_chunked_swf
+  output:
+    hmm_result:
+      class: File
+      format: http://edamontology.org/format_3475
+      basename: assembly-SRR1620013_smallhmmsearch_subwf.tsv
+      checksum: sha1$bc60ba55913396ff7cc7888448d71d4af4680624
+      size: 2969
+
+# 3 seqprep subwf SE
+- job: seqprep-subwf/seqprep-subwf-SE.yml
+  tool: ../../workflows/subworkflows/seqprep-subwf.cwl
+  doc: "SeqPrep with filtering SE"
+  short_name: seqprep-subwf
+  output:
+    count_forward_submitted_reads: 100000
+    fastp_report: null
+    unzipped_single_reads:
+      class: File
+      format: http://edamontology.org/format_1930
+      basename: wgs-single-ERR1995312_small_FASTQ.fastq
+      checksum: sha1$79dc84507dc768863de40cb2f9f26898c22311c0
+      size: 22525127
+
+# 4 seqprep subwf PE
+- job: seqprep-subwf/seqprep-subwf-PE.yml
+  tool: ../../workflows/subworkflows/seqprep-subwf.cwl
+  doc: "SeqPrep with filtering PE"
+  short_name: seqprep-subwf
+  output:
+    count_forward_submitted_reads: 100000
+    fastp_report:
+      basename: "fastp.json"
+      class: File
+    unzipped_single_reads:
+      class: File
+      format: http://edamontology.org/format_1930
+      basename: wgs-paired-SRR1620013_MERGED_FASTQ.fastq
+      size: 5228793
+
+# 5 trimming subwf
+- job: trimming-subwf/trim_and_reformat_reads.yml
+  tool: ../../workflows/subworkflows/amplicon/trim_and_reformat_reads.cwl
+  doc: "Trimmomatic with chunking"
+  short_name: trimming-subwf
+  output:
+    trimmed_and_reformatted_reads:
+      class: File
+      basename: input.unfiltered_fasta
+      checksum: sha1$e79bdf4c0ba7097f27273f19f877d2a5771ba5cc
+      size: 2254
+
+# 6 trimming subwf empty input
+- job: trimming-subwf/trim_and_reformat_reads-empty.yml
+  tool: ../../workflows/subworkflows/amplicon/trim_and_reformat_reads.cwl
+  doc: "Trimmomatic with chunking empty input"
+  short_name: trimming-subwf
+  output:
+    trimmed_and_reformatted_reads:
+      class: File
+      basename: empty.fasta
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 7 other ncRNAs
+- job: other_ncrnas/other_ncrnas.yml
+  tool: ../../workflows/subworkflows/other_ncrnas.cwl
+  doc: "Pull ncRNAs subwf"
+  short_name: other_ncrnas
+  output:
+    ncrnas:
+      - class: File
+        basename: test-input.fa_tRNA.RF00005.fasta.gz
+        size: 415
+
+# 8 IPS chunking subwf
+- job: chunking-IPS-subwf/chunking-subwf-IPS.yml
+  tool: ../../workflows/subworkflows/chunking-subwf-IPS.cwl
+  doc: "Chunking IPS"
+  short_name: chunking-subwf-IPS
+  output:
+    ips_result:
+      class: File
+      basename: test_single_proteintest-IPS-subwf
+      checksum: sha1$cdf6a2d1fadcdc4ad56f1df3c1dfc579131d145e
+      size: 585
+      format: http://edamontology.org/format_3475
+
+# 9 KEGG subwf
+- job: kegg_pathways-subwf/kegg_analysis.yml
+  tool: ../../workflows/subworkflows/assembly/kegg_analysis.cwl
+  doc: "kegg_analysis"
+  short_name: kegg_analysis.cwl
+  output:
+    kegg_contigs_summary:
+      class: File
+      basename: test-kegg-subwf.summary.kegg_contigs.tsv
+      size: 1861
+      format: http://edamontology.org/format_3475
+    kegg_pathways_summary:
+      class: File
+      basename: test-kegg-subwf.summary.kegg_pathways.tsv
+      size: 459
+      format: http://edamontology.org/format_3475
+    modification_out:
+      class: File
+      basename: test_tab.tbl
+      size: 634
+      format: http://edamontology.org/format_3475
+    parsing_hmmscan_out:
+      class: File
+      basename: test_tab.tbl_parsed
+      size: 157
+      format: http://edamontology.org/format_3475
+
+# 10 assembly: change_formats_and_names
+- job: assembly/change_formats_and_names.yml
+  tool: ../../workflows/subworkflows/assembly/change_formats_and_names.cwl
+  doc: "change_formats_and_names (tsv->csv)"
+  short_name: change_formats_and_names.cwl
+  output:
+    gp_summary_csv:
+      class: File
+      basename: summary.gp
+      checksum: sha1$4ded439e52cfb1c11f0069c880c83f9c501ad87d
+      size: 127
+      format: http://edamontology.org/format_3752
+    kegg_summary_csv:
+      class: File
+      basename: empty_file
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+      format: http://edamontology.org/format_3752
+
+# 11 assembly: eggNOG
+- job: assembly/eggnog-subwf.yml
+  tool: ../../workflows/subworkflows/assembly/eggnog-subwf.cwl
+  doc: "eggnog-subwf"
+  short_name: eggnog-subwf.cwl
+  output:
+    annotations:
+      class: File
+      basename: eggnog-subwf-test.emapper.annotations
+      checksum: sha1$1de56d0143c56b7c17b420b808f114699608bca1
+      size: 1515
+      format: http://edamontology.org/format_3475
+    orthologs:
+      class: File
+      basename: eggnog-subwf-test.emapper.seed_orthologs
+      checksum: sha1$8bab68c257d526cb341273c7c0370ec766059d75
+      size: 102
+      format: http://edamontology.org/format_3475
+
+# 12 assembly: diamond-post-processing
+- job: assembly/diamond-postprocessing_subwf.yml
+  tool: ../../workflows/subworkflows/assembly/diamond-postprocessing_subwf.cwl
+  doc: "diamond-postprocessing_subwf"
+  short_name: diamond-postprocessing_subwf.cwl
+  output:
+    join_out:
+      basename: "diamond-post-processing-test_summary.diamond.without_header"
+      class: File
+      checksum: "sha1$310fda6fcd4f9222112a186e7b42949c335ead87"
+      format: http://edamontology.org/format_2333
+      size: 447
+
+# 13 assembly: diamond-subwf
+- job: assembly/diamond-subwf.yml
+  tool: ../../workflows/subworkflows/assembly/diamond-subwf.cwl
+  doc: "diamond-subwf"
+  short_name: diamond-subwf.yml
+  output:
+    diamond_output:
+      basename: "assembly-SRR1620013_small_CDS.faa.diamond_matches"
+      class: File
+      checksum: "sha1$d59af4761f71f568f37cb49b40114ce4ab227c35"
+      format: http://edamontology.org/format_2333
+      size: 90
+    post-processing_output:
+      basename: "diamond-subwf-test_summary.diamond.without_header"
+      class: File
+      checksum: "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709"
+      format: http://edamontology.org/format_2333
+      size: 0

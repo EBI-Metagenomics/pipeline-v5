@@ -1,0 +1,10 @@
+K00001	-	261	ERZ477576.814035-NODE-814035-length-229-cov-1.44253_1	-	66	2e-23	83.2	0.0	1	1	1e-27	2.2e-23	83.1	0.0	185	250	1	66	1	66	0.97	flagellar	L-ring	protein	precursor	FlgH
+K00003	-	349	ERZ477576.814055-NODE-814055-length-229-cov-1.43678_1	-	63	2.3e-21	76.3	0.0	1	1	1.1e-25	2.4e-21	76.3	0.0	249	309	2	62	1	63	0.96	RNase	adapter	protein	RapZ
+K00004	-	483	ERZ477576.814068-NODE-814068-length-229-cov-1.43678_1	-	75	8.2e-25	87.8	7.5	1	1	4.2e-29	8.8e-25	87.7	7.5	248	314	9	75	2	75	0.90	stearoyl-CoA	desaturase	(Delta-9	desaturase)	[EC:1.14.19.1]
+K00005	-	543	ERZ477576.814113-NODE-814113-length-229-cov-1.41954_1	-	76	4.4e-30	105.0	0.0	1	1	2.3e-34	4.7e-30	105.0	0.0	284	357	2	75	1	76	0.97	S-adenosylmethionine:tRNA	ribosyltransferase-isomerase	[EC:2.4.99.17]
+K00001	-	143	ERZ477576.814129-NODE-814129-length-229-cov-1.41954_1	-	58	2.7e-05	24.4	0.1	1	1	1.3e-09	2.7e-05	24.4	0.1	58	98	3	43	1	56	0.87	exodeoxyribonuclease	VII	small	subunit	[EC:3.1.11.6]
+K00004	-	557	ERZ477576.814134-NODE-814134-length-229-cov-1.41379_1	-	76	5.8e-24	85.1	0.0	1	1	3e-28	6.3e-24	85.0	0.0	263	337	1	76	1	76	0.99	glutamine	synthetase	[EC:6.3.1.2]
+K00008	-	237	ERZ477576.814139-NODE-814139-length-229-cov-1.41379_1	-	75	1.2e-17	64.4	0.2	1	1	6.1e-22	1.3e-17	64.3	0.2	124	196	4	75	1	75	0.96	23S	rRNA	(pseudouridine1915-N3)-methyltransferase	[EC:2.1.1.177]
+K00001	-	523	ERZ477576.814151-NODE-814151-length-229-cov-1.40805_1	-	76	8.1e-29	100.6	0.6	1	1	4e-33	8.4e-29	100.6	0.6	84	154	1	71	1	76	0.96	adenylosuccinate	synthase	[EC:6.3.4.4]
+K00001	-	572	ERZ477576.814183-NODE-814183-length-229-cov-1.4023_1	-	76	6.6e-20	71.4	0.0	1	1	3.2e-24	6.7e-20	71.4	0.0	52	118	10	76	1	76	0.92	phosphoribosylaminoimidazolecarboxamide	formyltransferase	/	IMP	cyclohydrolase	[EC:2.1.2.3	3.5.4.10]
+K00002	-	572	ERZ477576.814191-NODE-814191-length-229-cov-1.4023_1	-	76	3.8e-38	131.6	0.1	1	1	2e-42	4.2e-38	131.5	0.1	106	181	1	76	1	76	0.99	phosphoribosylaminoimidazolecarboxamide	formyltransferase	/	IMP	cyclohydrolase	[EC:2.1.2.3	3.5.4.10]

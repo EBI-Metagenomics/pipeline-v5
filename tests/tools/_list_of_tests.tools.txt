@@ -1,0 +1,61 @@
+# 1 tools: Trimmomatic PE
+# 2 tools: Trimmomatic SE
+# 3 tools: summaries/functional_stats raw-reads                                     --not ready
+# 4 tools: summaries/functional_stats assembly                                      --not ready
+# 5 tools: SeqPrep
+# 6 tools: RNA_prediction: mapseq
+# 7 tools: RNA-prediction: mapseq2biom
+# 8 tools: RNA-prediction: pull ncRNA
+# 9 tools: RNA-prediction: krona
+# 10 tools: RNA-prediction: biom-convert hdf5
+# 11 tools: RNA-prediction: biom-convert json
+# 12 tools: RNA-prediction: get_subunits_fasta
+# 13 tools: RNA-prediction: get_subunits_coords
+# 14 tools: RNA-prediction: extract-coords
+# 15 tools: RNA-prediction: easel index
+# 16 tools: RNA-prediction: easel many seqs
+# 17 tools: RNA-prediction: cmsearch
+# 18 tools: RNA-prediction: cmsearch-deoverlap
+# 19 tools: motus
+# 21 tools: qc-stats
+# 21 tools: qc-filtering
+# 22 tools: Pfam parse
+# 23 tools: mask-for-ITS: bedtools
+# 24 tools: mask-for-ITS: format-bedfile
+# 25 tools: mask-for-ITS: suppress taxonomy ( "suppress" [], "tax-sum" [LSU, SSU] )
+# 26 tools: InterProScan
+# 27 tools: GoSlim Summary
+# 28 tools: hmmer: hmmsearch
+# 29 tools: hmmer: hmmscan
+# 30 tools: hmmer: hmmer-tab-modification
+# 31 tools: hmmer: hmmscan + hmmer-tab-modification
+# 32 tools: CGC: prodigal
+# 33 tools: CGC: FragGeneScan
+# 34 tools: CGC: post-processing only FGS
+# 35 tools: CGC: post-processing prodigal + FGS
+# 36 tools: CGC: predict_proteins_reads
+# 37 tools: CGC: predict_proteins_assemblies
+# 38 tools: chunker for fasta-file 1 chunk
+# 39 tools: chunker for fasta-file 3 chunks
+# 40 tools: chunker for fasta-file empty input
+# 41 tools: Assembly: index_fasta
+# 42 tools: Assembly: KEGG: modification
+# 43 tools: Assembly: KEGG: parsing hmm table
+# 44 tools: Assembly: KEGG: get kegg pathways
+# 45 tools: Assembly: Genome Properties
+# 46 tools: Assembly: Eggnog seed_orthologs
+# 47 tools: Assembly: Eggnog annotations
+# 48 tools: Assembly: Diamond blastP
+# 49 tools: Assembly: Diamond post-processing sort input table
+# 50 tools: Assembly: Diamond post-processing join tables
+# 51 tools: Assembly: antismash: move_antismash_summary
+# 52 tools: Assembly: antismash: check_value (3)
+# 53 tools: Assembly: antismash: check_value (0)
+# 54 tools: Assembly: antismash: rename_contigs
+# 55 tools: Assembly: antismash: post-processing: fix_embl_gbk
+# 56 tools: Assembly: antismash: post-processing: fix_geneclusters_txt
+# 57 tools: Assembly: antismash: post-processing: reformat geneclusters.txt
+# 58 tools: Assembly: antismash: post-processing: gff
+# 59 tools: Assembly: antismash: antismash v4.2.0 good input
+# 60 tools: Assembly: antismash: antismash v4.2.0 bad input
+# 61 tools: Assembly: antismash: filtering fasta before antismash

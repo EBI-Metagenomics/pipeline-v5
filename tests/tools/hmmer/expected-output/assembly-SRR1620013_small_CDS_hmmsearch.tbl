@@ -1,0 +1,32 @@
+#                                                                                          --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name                      accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#              ------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+NODE-6-length-1934-cov-3.795104_1  -            523 example              -            432  4.4e-178  586.9  54.5   1   1  4.3e-179    5e-178  586.8  54.5     1   432     1   523     1   523 0.98 # 2 # 1573 # 1 # ;gc_cont=0.295
+NODE-4-length-2192-cov-4.325222_2  -            311 example              -            432     4e-82  270.7  15.0   1   1   4.1e-83   4.7e-82  270.5  15.0   100   376    16   310     3   311 0.93 # 959 # 1894 # -1 # ;gc_cont=0.312
+NODE-3-length-2984-cov-4.247866_2  -            314 example              -            432   1.7e-64  212.7  11.9   1   1   1.7e-65     2e-64  212.4  11.9     1   274    10   310    10   313 0.95 # 526 # 1470 # 1 # ;gc_cont=0.385
+NODE-221-length-655-cov-4.306667_1 -            218 example              -            432     7e-41  134.9   0.0   1   1   6.6e-42   7.7e-41  134.7   0.0     2   201     1   215     1   218 0.92 # 1 # 654 # 1 # ;gc_cont=0.557
+NODE-4-length-2192-cov-4.325222_1  -            194 example              -            432   9.7e-33  108.0   0.4   1   1   1.1e-33   1.3e-32  107.6   0.4   127   296     1   184     1   194 0.93 # 347 # 931 # -1 # ;gc_cont=0.260
+NODE-3-length-2984-cov-4.247866_1  -            127 example              -            432     1e-18   61.8   1.1   1   1     2e-19   2.3e-18   60.7   1.1   180   311    19   127     6   127 0.83 # 161 # 544 # 1 # ;gc_cont=0.417
+NODE-685-length-508-cov-3.218543_2 -            127 example              -            432   1.1e-16   55.1   0.0   1   2   2.6e-14     3e-13   43.8   0.0     5    70     1    77     1    79 0.93 # 123 # 506 # -1 # ;gc_cont=0.573
+NODE-685-length-508-cov-3.218543_2 -            127 example              -            432   1.1e-16   55.1   0.0   2   2   8.8e-05     0.001   12.4   0.0   166   202    75   110    72   127 0.76 # 123 # 506 # -1 # ;gc_cont=0.573
+NODE-498-length-547-cov-3.792683_1 -            182 example              -            432   4.9e-16   53.0   0.0   1   1   7.7e-17   8.9e-16   52.1   0.0     8   144     2   155     1   175 0.85 # 2 # 547 # -1 # ;gc_cont=0.632
+NODE-3-length-2984-cov-4.247866_5  -             80 example              -            432   1.9e-07   24.7   0.2   1   1   1.7e-08     2e-07   24.6   0.2   103   155     1    73     1    80 0.78 # 2440 # 2682 # 1 # ;gc_cont=0.288
+NODE-7-length-1147-cov-4.054945_1  -            139 example              -            432   3.9e-07   23.7   0.0   1   1   6.9e-07     8e-06   19.3   0.0    31    84     9    70     2   129 0.75 # 27 # 446 # -1 # ;gc_cont=0.602
+NODE-3-length-2984-cov-4.247866_4  -             91 example              -            432   3.1e-06   20.7   0.1   1   1   2.7e-07   3.2e-06   20.7   0.1    93   150     7    84     2    91 0.74 # 1970 # 2245 # 1 # ;gc_cont=0.268
+NODE-269-length-627-cov-4.344406_2 -            101 example              -            432   0.00036   13.9   0.0   1   1   3.9e-05   0.00046   13.5   0.0     1    17     3    19     3    26 0.91 # 322 # 627 # -1 # ;gc_cont=0.605
+NODE-414-length-571-cov-3.753876_1 -            190 example              -            432   0.00045   13.6   0.0   1   1   4.5e-05   0.00052   13.3   0.0     2    38     1    37     1    79 0.75 # 2 # 571 # -1 # ;gc_cont=0.586
+NODE-679-length-509-cov-3.350220_2 -             78 example              -            432   0.00059   13.2   0.0   1   1   5.1e-05   0.00059   13.2   0.0     1    31     3    31     3    75 0.63 # 272 # 508 # -1 # ;gc_cont=0.574
+NODE-186-length-676-cov-4.731079_1 -            225 example              -            432   0.00071   12.9   0.1   1   1   9.2e-05    0.0011   12.3   0.1     1    18     3    20     3    25 0.90 # 2 # 676 # -1 # ;gc_cont=0.569
+NODE-151-length-707-cov-3.527607_1 -             83 example              -            432     0.002   11.5   0.3   1   1    0.0002    0.0023   11.2   0.3     1    16     4    19     4    26 0.86 # 3 # 254 # 1 # ;gc_cont=0.603
+NODE-402-length-574-cov-5.138728_1 -            191 example              -            432    0.0024   11.2   0.0   1   1   0.00026     0.003   10.9   0.0     1    20     1    20     1    38 0.82 # 2 # 574 # 1 # ;gc_cont=0.562
+NODE-504-length-544-cov-3.394683_1 -            144 example              -            432    0.0044   10.3   0.0   1   1   0.00042    0.0048   10.2   0.0     1    15     2    16     2    45 0.89 # 1 # 435 # 1 # ;gc_cont=0.623
+#
+# Program:         hmmsearch
+# Version:         3.2.1 (June 2018)
+# Pipeline mode:   SEARCH
+# Query file:      /scratch/3ok_h6v8/stg4ab73d2f-6469-417a-b63c-2de8f48c4af9/db/test.hmm
+# Target file:     /scratch/3ok_h6v8/stg860e4daf-5fb3-449e-ad87-17f82fd895b2/assembly-SRR1620013_small_CDS.faa
+# Option settings: hmmsearch -o /dev/null --domtblout assembly-SRR1620013_small_CDS_hmmsearch.tbl --noali --cpu 4 /scratch/3ok_h6v8/stg4ab73d2f-6469-417a-b63c-2de8f48c4af9/db/test.hmm /scratch/3ok_h6v8/stg860e4daf-5fb3-449e-ad87-17f82fd895b2/assembly-SRR1620013_small_CDS.faa 
+# Current dir:     /scratch/en9t_qhe
+# Date:            Wed Jan 20 18:20:00 2021
+# [ok]

@@ -3,3 +3,6 @@ InterProScan_results:
   path: test-input/ips_out.tsv
   format: http://edamontology.org/format_3475
 output_name: "test_output.go"
+config:
+  class: File
+  path: ../../../tools/GO-slim/go_summary-config.json

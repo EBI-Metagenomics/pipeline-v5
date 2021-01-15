@@ -1,0 +1,14 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+input_sequences:
+  class: File
+  path: test-input/mrum-genome_fasta_test-input.fa
+  format: 'edam:format_1929'
+cmsearch_file:
+  class: File
+  path: test-input/cmsearch.tbl
+  format: http://edamontology.org/format_3475
+other_ncRNA_ribosomal_models:
+  - tRNA.RF00005
+name_string: other-test

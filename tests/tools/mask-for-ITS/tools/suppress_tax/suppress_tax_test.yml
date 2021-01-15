@@ -1,0 +1,19 @@
+ssu_file:
+  class: File
+  path: ../../test-input/SSU/SSU.fasta.gz
+lsu_file:
+  class: File
+  path: ../../test-input/LSU/LSU.fasta.gz
+its_file:
+  class: File
+  path: ../../test-input/its/its.fasta.gz
+lsu_dir:
+  class: Directory
+  path: ../../test-input/LSU
+ssu_dir:
+  class: Directory
+  path: ../../test-input/SSU
+its_dir:
+  class: Directory
+  path: ../../test-input/its
+

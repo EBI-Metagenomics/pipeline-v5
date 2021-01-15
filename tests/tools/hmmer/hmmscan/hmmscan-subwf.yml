@@ -1,0 +1,15 @@
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
+seqfile:
+  class: File
+  path: ../../../input_files/assembly-SRR1620013_small_CDS.faa
+  format: edam:format_1929
+data:
+  class: Directory
+  path: ../test-input/db
+name_database: test.hmm
+
+gathering_bit_score: false
+omit_alignment: true

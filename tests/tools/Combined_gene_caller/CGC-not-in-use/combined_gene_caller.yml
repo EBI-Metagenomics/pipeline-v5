@@ -1,0 +1,14 @@
+input_fasta:
+  class: File
+  path: ../test-input/100000_130095.fasta
+seq_type: "a"
+maskfile:
+  class: File
+  path: ../test-input/cmsearch.all.tblout.deoverlapped
+config:
+  class: File
+  path: combined_gene_caller_conf.json
+outdir: CGC-output
+postfixes:
+  - '_CDS.faa'
+  - '_CDS.ffn'

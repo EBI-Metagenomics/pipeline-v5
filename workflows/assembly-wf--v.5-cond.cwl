@@ -207,7 +207,7 @@ steps:
       HMM_omit_alignment: HMM_omit_alignment
       HMM_database: HMM_database
       HMM_database_dir: HMM_database_dir
-      hmmscan_header: hmmsearch_header
+      hmmsearch_header: hmmsearch_header
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
