@@ -1,6 +1,0 @@
-input_diamond:
-  class: File
-  path: diamond_matches
-input_db:
-  class: File
-  path: ref-dbs/db_uniref90_result.txt

@@ -1,0 +1,9 @@
+genome_properties_summary:
+  class: File
+  path: test-input/gp.SUMMARY_FILE_summary.gp.tsv
+  format: http://edamontology.org/format_3475
+
+kegg_summary:
+  class: File
+  path: ../../input_files/empty_file
+  format: http://edamontology.org/format_3475

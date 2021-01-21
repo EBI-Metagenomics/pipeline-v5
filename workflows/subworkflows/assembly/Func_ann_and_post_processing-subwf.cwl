@@ -105,7 +105,7 @@ steps:
 # -----------------------------------  << FUNCTIONAL ANNOTATION FOLDER >>  -----------------------------------
 # << DIAMOND >>
   diamond:
-    run: ../../../tools/Assembly/Diamond/diamond-subwf.cwl
+    run: diamond-subwf.cwl
     in:
       queryInputFile: cgc_results_faa
       outputFormat: { default: '6' }
@@ -174,7 +174,6 @@ steps:
     in:
       genome_properties_summary: genome_properties/summary
       kegg_summary: pathways/kegg_pathways_summary
-      fasta: filtered_fasta
     out: [gp_summary_csv, kegg_summary_csv]
 
 # << move PATHWAYS-SYSTEMS >>

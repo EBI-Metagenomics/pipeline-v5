@@ -1,0 +1,9 @@
+contig	module_accession	completeness	pathway_name	pathway_class	matching_ko	missing_ko
+NODE-6-length-1934-cov-3.795104	M00018	20.0	Threonine biosynthesis, aspartate => homoserine => threonine	Pathway modules; Amino acid metabolism; Serine and threonine metabolism	K00003	K01733,K00928,K00872,K00133
+NODE-6-length-1934-cov-3.795104	M00017	14.29	Methionine biosynthesis, apartate => homoserine => methionine	Pathway modules; Amino acid metabolism; Cysteine and methionine metabolism	K00003	K00928,K00133,K00651,K00548,K01760,K01739
+NODE-4-length-2192-cov-4.325222	M00018	20.0	Threonine biosynthesis, aspartate => homoserine => threonine	Pathway modules; Amino acid metabolism; Serine and threonine metabolism	K00003	K01733,K00928,K00872,K00133
+NODE-4-length-2192-cov-4.325222	M00017	14.29	Methionine biosynthesis, apartate => homoserine => methionine	Pathway modules; Amino acid metabolism; Cysteine and methionine metabolism	K00003	K00928,K00133,K00651,K00548,K01760,K01739
+NODE-3-length-2984-cov-4.247866	M00018	20.0	Threonine biosynthesis, aspartate => homoserine => threonine	Pathway modules; Amino acid metabolism; Serine and threonine metabolism	K00003	K01733,K00928,K00872,K00133
+NODE-3-length-2984-cov-4.247866	M00017	14.29	Methionine biosynthesis, apartate => homoserine => methionine	Pathway modules; Amino acid metabolism; Cysteine and methionine metabolism	K00003	K00928,K00133,K00651,K00548,K01760,K01739
+NODE-221-length-655-cov-4.306667	M00018	20.0	Threonine biosynthesis, aspartate => homoserine => threonine	Pathway modules; Amino acid metabolism; Serine and threonine metabolism	K00003	K01733,K00928,K00872,K00133
+NODE-221-length-655-cov-4.306667	M00017	14.29	Methionine biosynthesis, apartate => homoserine => methionine	Pathway modules; Amino acid metabolism; Cysteine and methionine metabolism	K00003	K00928,K00133,K00651,K00548,K01760,K01739

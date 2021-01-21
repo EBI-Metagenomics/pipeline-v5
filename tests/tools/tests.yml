@@ -23,21 +23,7 @@
         size: 101416
         format: http://edamontology.org/format_1929
 
-# hmmsearch sub-workflow
-- job: tools/hmmsearch_swf/chunking-subwf-hmmsearch.cwl.yml
-  tool: ../workflows/subworkflows/chunking-subwf-hmmsearch.cwl
-  doc: "Chunking hmmsearch subworkflow"
-  short_name: hmmsearch_chunked_swf
-  output:
-    hmm_result:
-      location: Any
-      class: File
-      format: http://edamontology.org/format_3475
-      nameext: .tsv
-      basename: assembly-SRR1620013_small.hmm.tsv.tsv
-      nameroot: assembly-SRR1620013_small.hmm.tsv
-      checksum: sha1$bc60ba55913396ff7cc7888448d71d4af4680624
-      size: 2969
+
 
 
 

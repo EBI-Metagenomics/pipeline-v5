@@ -1,0 +1,1 @@
+../../../docker/scripts_bash/run_samtools_docker.sh

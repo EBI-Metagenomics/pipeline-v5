@@ -1,0 +1,5 @@
+seqs:
+  format: edam:format_1929
+  class: File
+  path: ../test-input/test.fasta
+chunk_size: 100

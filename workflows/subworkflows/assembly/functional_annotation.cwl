@@ -61,7 +61,7 @@ steps:
 
   # << EggNOG >>
   eggnog:
-    run: ../../../tools/Assembly/EggNOG/eggnog-subwf.cwl
+    run: eggnog-subwf.cwl
     in:
       fasta_file: split_seqs/chunks
       db_diamond: EggNOG_diamond_db

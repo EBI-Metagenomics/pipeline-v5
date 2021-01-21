@@ -29,3 +29,23 @@
 # 29 tools: hmmer: hmmscan
 # 30 tools: hmmer: hmmer-tab-modification
 # 31 tools: hmmer: hmmscan + hmmer-tab-modification
+# 32 tools: CGC: prodigal
+# 33 tools: CGC: FragGeneScan
+# 34 tools: CGC: post-processing only FGS
+# 35 tools: CGC: post-processing prodigal + FGS
+# 36 tools: CGC: predict_proteins_reads
+# 37 tools: CGC: predict_proteins_assemblies
+# 38 tools: chunker for fasta-file 1 chunk
+# 39 tools: chunker for fasta-file 3 chunks
+# 40 tools: chunker for fasta-file empty input
+# 41 tools: Assembly: index_fasta
+# 42 tools: Assembly: KEGG: modification
+# 43 tools: Assembly: KEGG: parsing hmm table
+# 44 tools: Assembly: KEGG: get kegg pathways
+# 45 tools: Assembly: Genome Properties
+# 46 tools: Assembly: GFF
+# 47 tools: Assembly: Eggnog seed_orthologs
+# 48 tools: Assembly: Eggnog annotations
+# 49 tools: Assembly: Diamond blastP
+# 50 tools: Assembly: Diamond post-processing sort input table
+# 51 tools: Assembly: Diamond post-processing join tables

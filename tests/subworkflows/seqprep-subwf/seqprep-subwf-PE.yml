@@ -1,0 +1,13 @@
+$namespaces:
+  edam: http://edamontology.org/
+
+forward_reads:
+  class: File
+  format: edam:format_1930
+  path: ../../input_files/wgs-paired-SRR1620013_1_small.fastq.gz
+reverse_reads:
+  class: File
+  format: edam:format_1930
+  path: ../../input_files/wgs-paired-SRR1620013_2_small.fastq.gz
+
+paired_reads_length_filter: 70

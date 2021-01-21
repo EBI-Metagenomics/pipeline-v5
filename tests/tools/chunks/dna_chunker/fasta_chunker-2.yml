@@ -1,0 +1,7 @@
+seqs:
+  format: edam:format_1929
+  class: File
+  path: ../test-input/test.fasta
+chunk_size: 2
+number_of_output_files: "True"
+same_number_of_residues: "True"

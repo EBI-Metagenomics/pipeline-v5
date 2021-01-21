@@ -1,0 +1,22 @@
+masking_file:
+  class: File
+  path: ../test-input/cmsearch.all.tblout.deoverlapped
+predicted_proteins_fgs_out:
+  class: File
+  path: ../expected-output/100000_130095.fasta.fgs.out
+predicted_proteins_fgs_ffn:
+  class: File
+  path: ../expected-output/100000_130095.fasta.fgs.ffn
+predicted_proteins_fgs_faa:
+  class: File
+  path: ../expected-output/100000_130095.fasta.fgs.faa
+predicted_proteins_prodigal_out:
+  class: File
+  path: ../expected-output/100000_130095.fasta.prodigal
+predicted_proteins_prodigal_ffn:
+  class: File
+  path: ../expected-output/100000_130095.fasta.prodigal.ffn
+predicted_proteins_prodigal_faa:
+  class: File
+  path: ../expected-output/100000_130095.fasta.prodigal.faa
+basename: output_prodigal_and_fgs

@@ -28,6 +28,14 @@ def get_avg_length(masked_its):  # get average length of longest ITS sequences -
 def hits_to_num_ratio(fasta, input_folder):  # ratio of mapseq hits to number of total seqs LSU/SSU
     rna_sum, rna_num = [0 for _ in range(2)]
     rna = os.path.join(input_folder, '*.tsv')
+<<<<<<< Updated upstream
+=======
+    print(rna)
+    with open(glob.glob(rna)[0], 'r') as rna_hits:
+        for line in rna_hits:
+            if not line.startswith('#'):
+                rna_sum += float(line.split('\t')[1])
+>>>>>>> Stashed changes
     if 'empty' not in os.path.relpath(fasta):
         with open(glob.glob(rna)[0], 'r') as rna_hits:
             for line in rna_hits:

@@ -1,3 +1,8 @@
-# 1 Combined Gene Caller (CGC) subworkflow
-# 2 hmmsearch sub-workflow
-# 3 Go Slim Summary
+Tests for utils
+utils/_list_of_tests.subwf.txt
+
+Tests for tools
+tools/_list_of_tests.tools.txt
+
+Tests for subwfs
+subworkflows/_list_of_tests.subwf.txt

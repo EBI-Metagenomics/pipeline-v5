@@ -1,0 +1,7 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+input_table:
+  class: File
+  path: ../../test-input/badtab-file.txt
+  format: edam:format_3475

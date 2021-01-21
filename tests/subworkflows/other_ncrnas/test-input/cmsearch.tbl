@@ -1,0 +1,10 @@
+#target name         accession query name           accession mdl mdl from   mdl to seq from   seq to strand trunc pass   gc  bias  score   E-value inc description of target
+#------------------- --------- -------------------- --------- --- -------- -------- -------- -------- ------ ----- ---- ---- ----- ------ --------- --- ---------------------
+NC_013790.1          -         tRNA5                -         hmm        4       68   362023   361959      -     -    6 0.48   0.0   39.5   2.5e-07 !   Methanobrevibacter ruminantium M1 chromosome, complete genome
+NC_013790.1          -         tRNA5                -         hmm        6       69   762495   762559      +     -    6 0.65   0.0   32.7   3.6e-05 !   Methanobrevibacter ruminantium M1 chromosome, complete genome
+NC_013790.1          -         tRNA5                -         hmm        6       69  2041699  2041635      -     -    6 0.65   0.0   32.7   3.6e-05 !   Methanobrevibacter ruminantium M1 chromosome, complete genome
+NC_013790.1          -         tRNA5                -         hmm        2       64  2585264  2585201      -     -    6 0.56   0.0   31.4     9e-05 !   Methanobrevibacter ruminantium M1 chromosome, complete genome
+NC_013790.1          -         tRNA5                -         hmm        7       66  2351248  2351187      -     -    6 0.58   0.0   30.6   0.00017 !   Methanobrevibacter ruminantium M1 chromosome, complete genome
+NC_013790.1          -         tRNA5                -         hmm        8       64   662192   662251      +     -    6 0.63   0.0   29.8   0.00029 !   Methanobrevibacter ruminantium M1 chromosome, complete genome
+NC_013790.1          -         tRNA5                -         hmm        5       68  2585183  2585118      -     -    6 0.56   0.0   28.5   0.00076 !   Methanobrevibacter ruminantium M1 chromosome, complete genome
+NC_013790.1          -         tRNA5                -         hmm        7       62   735142   735198      +     -    6 0.60   0.0   27.2     0.002 !   Methanobrevibacter ruminantium M1 chromosome, complete genome

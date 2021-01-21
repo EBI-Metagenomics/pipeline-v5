@@ -1,0 +1,18 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+CGC_predicted_proteins:
+  class: File
+  path: ../../input_files/assembly-SRR1620013_small_CDS.faa
+  format: edam:format_1929
+
+chunk_size: 100
+name_hmmer: hmmsearch_subwf
+
+HMM_database_dir:
+  class: Directory
+  path: ../../tools/hmmer/test-input/db
+
+HMM_database: test.hmm
+HMM_omit_alignment: true
+HMM_gathering_bit_score: false

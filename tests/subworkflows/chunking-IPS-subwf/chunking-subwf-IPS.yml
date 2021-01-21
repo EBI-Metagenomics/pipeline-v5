@@ -1,0 +1,15 @@
+CGC_predicted_proteins:
+  class: File
+  path: test-input/test_single_protein.fasta
+chunk_size: 1
+name_ips: test-IPS-subwf
+
+InterProScan_databases: ../../tools/InterProScan/test-input/databases/data
+InterProScan_applications:
+  - PfamA
+  - TIGRFAM
+  - PRINTS
+  - PrositePatterns
+  - Gene3d
+InterProScan_outputFormat:
+  - TSV

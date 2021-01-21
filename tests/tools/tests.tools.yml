@@ -682,3 +682,402 @@
       checksum: sha1$5177d4e18b3d3e71928cd824d15915d4460d5ee8
       size: 2389
       format: http://edamontology.org/format_3475
+
+# 32 CGC: prodigal
+- job: Combined_gene_caller/Prodigal/prodigal.yml
+  tool: ../../tools/Combined_gene_caller/Prodigal/prodigal.cwl
+  short_name: prodigal.cwl
+  doc: "prodigal"
+  output:
+    predicted_proteins_out:
+      basename: 100000_130095.fasta.prodigal
+      class: File
+      checksum: sha1$56232527a45071861b81c9a24b71e40783abfa0c
+      size: 7645804
+    predicted_proteins_ffn:
+      basename: 100000_130095.fasta.prodigal.ffn
+      class: File
+      checksum: sha1$a7f864b18a805e6cf6057ed16b21257a95478f48
+      size: 20811025
+    predicted_proteins_faa:
+      basename: 100000_130095.fasta.prodigal.faa
+      class: File
+      checksum: sha1$9c27b252039535f9c76994e7d6511e07eabaeff0
+      size: 10629538
+    stderr:
+      basename: stderr.txt
+      class: File
+      checksum: sha1$ab692a833428a06bd4d3c71c1608087f64757db6
+      size: 1493996
+    stdout:
+      basename: stdout.txt
+      class: File
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 33 CGC: FragGeneScan
+- job: Combined_gene_caller/FragGeneScan/FGS.yml
+  tool: ../../tools/Combined_gene_caller/FragGeneScan/FGS.cwl
+  short_name: FGS.cwl
+  doc: "FGS"
+  output:
+    predicted_proteins_out:
+      path: Any
+      basename: fasta_file.fgs.out
+      class: File
+      location: Any
+      checksum: sha1$2e9d55e51555812b26b3601e4e2295f08238b988
+      size: 2051764
+    predicted_proteins_ffn:
+      path: Any
+      basename: fasta_file.fgs.ffn
+      class: File
+      location: Any
+      checksum: sha1$65a70912e600dee2d27358b9ec9adf93d09c53e4
+      size: 17034322
+    predicted_proteins_faa:
+      path: Any
+      basename: fasta_file.fgs.faa
+      class: File
+      location: Any
+      checksum: sha1$be912e71d36f73f3250f5dbf5cbbd6d7af331d36
+      size: 6768539
+    stderr:
+      basename: stderr.txt
+      class: File
+      size: 0
+    stdout:
+      basename: stdout.txt
+      class: File
+      size: 81
+
+# 34 CGC: post-processing only FGS
+- job: Combined_gene_caller/post-processing/post-processing_fgs.yml
+  tool: ../../tools/Combined_gene_caller/post-processing.cwl
+  short_name: post-processing.cwl
+  doc: "process FGS"
+  output:
+    predicted_seq:
+      path: Any
+      basename: output_fgs.ffn
+      class: File
+      location: Any
+      checksum: sha1$82f113e5a3e107a2a088fd3d3e6d61dac81002ef
+      size: 16963459
+      format: http://edamontology.org/format_1929
+    predicted_proteins:
+      path: Any
+      basename: output_fgs.faa
+      class: File
+      location: Any
+      checksum: sha1$342893a41e54775c6efa0256438ef0bec56146e1
+      size: 6739026
+      format: http://edamontology.org/format_1929
+    stderr:
+      path: Any
+      basename: stderr.txt
+      class: File
+      location: Any
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+    stdout:
+      path: Any
+      basename: stdout.txt
+      class: File
+      location: Any
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 35 CGC: post-processing prodigal + FGS
+- job: Combined_gene_caller/post-processing/post-processing_prodigal_and_fgs.yml
+  tool: ../../tools/Combined_gene_caller/post-processing.cwl
+  short_name: post-processing.cwl
+  doc: "unite FGS and Prodigal"
+  output:
+    predicted_seq:
+      path: Any
+      basename: output_prodigal_and_fgs.ffn
+      class: File
+      location: Any
+      checksum: sha1$11cc5407ad83f4d02e088f545e50bfc0e74d9c2f
+      size: 17165262
+      format: http://edamontology.org/format_1929
+    predicted_proteins:
+      path: Any
+      basename: output_prodigal_and_fgs.faa
+      class: File
+      location: Any
+      checksum: sha1$e31d7d851e78657a193c87112178ae1f0f572d3e
+      size: 6926673
+      format: http://edamontology.org/format_1929
+    stderr:
+      path: Any
+      basename: stderr.txt
+      class: File
+      location: Any
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+    stdout:
+      path: Any
+      basename: stdout.txt
+      class: File
+      location: Any
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 36 CGC: predict_proteins_reads sub-wf
+- job: Combined_gene_caller/predict_proteins_reads.yml
+  tool: ../../tools/Combined_gene_caller/predict_proteins_reads.cwl
+  short_name: predict_proteins_reads.cwl
+  doc: "predict_proteins_reads (FGS only + post-processing)"
+  output:
+    predicted_proteins:
+      basename: 100000_130095.fasta.faa
+      class: File
+      checksum: sha1$cf2dd72b5ef9d96d1e8ba67d00b00c85617a7915
+      size: 6999325
+      format: http://edamontology.org/format_1929
+    predicted_seq:
+      basename: 100000_130095.fasta.ffn
+      class: File
+      checksum: sha1$0fb6f2f1fc51bfe03e83987cf393b0019bb31923
+      size: 17494721
+      format: http://edamontology.org/format_1929
+
+# 37 CGC: predict_proteins_assemblies sub-wf
+- job: Combined_gene_caller/predict_proteins_assemblies.yml
+  tool: ../../tools/Combined_gene_caller/predict_proteins_assemblies.cwl
+  short_name: predict_proteins_assemblies.cwl
+  doc: "predict_proteins_reads (FGS, Prodigal + post-processing)"
+  output:
+    predicted_proteins:
+      basename: 100000_130095.fasta.faa
+      class: File
+      checksum: sha1$4f449fef944e449cfd53d487864f8c96f9b6b49f
+      size: 10835565
+      format: http://edamontology.org/format_1929
+    predicted_seq:
+      basename: 100000_130095.fasta.ffn
+      class: File
+      checksum: sha1$33db3044ae2fd2076699629edff317c2373ae3bd
+      size: 21326804
+      format: http://edamontology.org/format_1929
+
+# 38 chunker for fasta-file
+- job: chunks/protein_chunker/protein_chunker.yml
+  tool: ../../tools/chunks/protein_chunker.cwl
+  short_name: fasta_chunker.cwl
+  doc: "fasta_chunker 100 (1 chunk)"
+  output:
+    chunks:
+      - basename: 0_9.fasta
+        class: File
+        checksum: sha1$4e90a9dfe22d0b944fb2845f134a97fbfd6aeb2f
+        size: 4401
+        format: http://edamontology.org/format_1929
+
+# 39 chunker for fasta-file
+- job: chunks/protein_chunker/protein_chunker-3.yml
+  tool: ../../tools/chunks/protein_chunker.cwl
+  short_name: fasta_chunker.cwl
+  doc: "fasta_chunker (3 chunks)"
+  output:
+    chunks:
+      - basename: 1_3.fasta
+        class: File
+        checksum: sha1$6b7cd5445981ea7105f05e1f8c317472ca7c8d43
+        size: 1467
+        format: http://edamontology.org/format_1929
+      - basename: 4_6.fasta
+        class: File
+        checksum: sha1$6b7cd5445981ea7105f05e1f8c317472ca7c8d43
+        size: 1467
+        format: http://edamontology.org/format_1929
+      - basename: 7_9.fasta
+        class: File
+        checksum: sha1$6b7cd5445981ea7105f05e1f8c317472ca7c8d43
+        size: 1467
+        format: http://edamontology.org/format_1929
+
+# 40 chunker for fasta-file
+- job: chunks/protein_chunker/protein_chunker-empty.yml
+  tool: ../../tools/chunks/protein_chunker.cwl
+  short_name: fasta_chunker.cwl
+  doc: "fasta_chunker (empty input)"
+  output:
+    chunks:
+      - basename: 0_0.fasta
+        class: File
+        checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+        size: 0
+        format: http://edamontology.org/format_1929
+
+# 41 index fasta file
+- job: Assembly/index_fasta/fasta_index.yml
+  tool: ../../tools/Assembly/index_fasta/fasta_index.cwl
+  short_name: fasta_index.cwl
+  doc: "fasta_index"
+  output:
+    bgz_index:
+      basename: test.fasta.bgz.gzi
+      class: File
+      checksum: sha1$05fe405753166f125559e7c9ac558654f107c7e9
+      size: 8
+    fasta_bgz:
+      basename: test.fasta.bgz
+      class: File
+      checksum: sha1$5c9d6cf3a4efd89452138bc94e4fd43e26e1ee7f
+      size: 4020
+    fasta_index:
+      basename: test.fasta.bgz.fai
+      class: File
+      checksum: sha1$de09931b84950753830d05eadc6a856ebe691318
+      size: 871
+
+# 42 KEGG: modification
+- job: Assembly/KEGG_analysis/tools/Modification/modification_table.yml
+  tool: ../../tools/Assembly/KEGG_analysis/Modification/modification_table.cwl
+  short_name: modification_table.cwl
+  doc: "modification_table"
+  output:
+    output_with_tabs:
+      basename: badtab-file_tab.tbl
+      class: File
+      checksum: sha1$3c6cd5771e74610bd593bb7185bea2fcfd62e535
+      size: 638
+      format: http://edamontology.org/format_3475
+
+# 43 KEGG: parsing hmm table
+- job: Assembly/KEGG_analysis/tools/Parsing_hmmscan/parsing_hmmscan.yml
+  tool: ../../tools/Assembly/KEGG_analysis/Parsing_hmmscan/parsing_hmmscan.cwl
+  short_name: parsing_hmmscan.cwl
+  doc: "parsing_hmmscan"
+  output:
+    output_table:
+      basename: hmmsearch_tab.tbl_parsed
+      class: File
+      checksum: sha1$83ccb94a6d6877a960f118ae53203af2ce94edd6
+      size: 239
+      format: http://edamontology.org/format_3475
+
+# 44 KEGG: get pathways
+- job: Assembly/KEGG_analysis/tools/KEGG_pathways/kegg_pathways.yml
+  tool: ../../tools/Assembly/KEGG_analysis/KEGG_pathways/kegg_pathways.cwl
+  short_name: kegg_pathways.cwl
+  doc: "kegg_pathways"
+  output:
+    summary_contigs:
+      basename: test_output.summary.kegg_contigs.tsv
+      class: File
+      checksum: sha1$783bdc054827d5b018364778a0675272b70c88d7
+      size: 798
+      format: http://edamontology.org/format_3475
+    summary_pathways:
+      basename: test_output.summary.kegg_pathways.tsv
+      class: File
+      checksum: sha1$88cc5ace22e184373d8735aea731c5224ad46ad7
+      size: 779
+      format: http://edamontology.org/format_3475
+    stdout:
+      basename: stdout.txt
+      class: File
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 45 Genome Properties
+- job: Assembly/Genome_properties/genome_properties.yml
+  tool: ../../tools/Assembly/Genome_properties/genome_properties.cwl
+  short_name: genome_properties.cwl
+  doc: "genome_properties"
+  output:
+    json:
+      basename: JSON_test-gp
+      class: File
+      size: 1444131
+      format: http://edamontology.org/format_3464
+    stderr:
+      basename: stderr.txt
+      class: File
+      size: 107
+    stdout:
+      basename: stdout.txt
+      class: File
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+    summary:
+      basename: SUMMARY_FILE_test-gp
+      class: File
+      size: 63217
+      format: http://edamontology.org/format_3475
+    table:
+      basename: TABLE_test-gp
+      class: File
+      size: 536329
+      format: http://edamontology.org/format_3475
+
+# 47 Eggnog seed_orthologs
+- job: Assembly/EggNOG/eggnog-mapper.seed_orthologs.yml
+  tool: ../../tools/Assembly/EggNOG/eggnog.cwl
+  short_name: eggnog.cwl
+  doc: "Eggnog seed_orthologs"
+  output:
+    output_annotations:
+      basename: test_output.tsv.emapper.annotations
+      class: File
+      size: 2108
+      format: http://edamontology.org/format_3475
+      checksum: sha1$d8f2f17288c32607f25543fa26cd39fa05a298ed
+    output_orthologs:
+      basename: test_output.tsv.emapper.seed_orthologs
+      class: File
+      size: 970
+      checksum: sha1$582eb246da44110c9a7686680c66e953ac0fcd2c
+      format: http://edamontology.org/format_3475
+
+# 48 Eggnog annotations
+- job: Assembly/EggNOG/eggnog-mapper.annotations.yml
+  tool: ../../tools/Assembly/EggNOG/eggnog.cwl
+  short_name: eggnog.cwl
+  doc: "Eggnog annotations"
+  output:
+    output_annotations:
+      basename: annotation-output.emapper.annotations
+      class: File
+      size: 1515
+      format: http://edamontology.org/format_3475
+      checksum: sha1$1de56d0143c56b7c17b420b808f114699608bca1
+    output_orthologs: null
+
+# 49 Diamond blastP
+- job: Assembly/Diamond/Diamond.blastp.yaml
+  tool: ../../tools/Assembly/Diamond/Diamond.blastp.cwl
+  short_name: Diamond.blastp.cwl
+  doc: "Diamond.blastp"
+  output:
+    matches:
+      basename: "assembly-SRR1620013_small_CDS.faa.diamond_matches"
+      class: File
+      size: 90
+      format: http://edamontology.org/format_2333
+
+# 50 Diamond post-processing sort input table
+- job: Assembly/Diamond/Diamond-Post-Processing/diamond_sorting.job.yaml
+  tool: Assembly/Diamond/Diamond-Post-Processing/diamond_sorting.cwl
+  output:
+    output_sorted:
+      basename: "example_diamond_10_sorted"
+      class: File
+      size: 1233
+      format: http://edamontology.org/format_2333
+      checksum: sha1$0206e4c9560512f2078034abcaf0d614a0dbb5b9
+
+# 51 Diamond post-processing join tables
+- job: Assembly/Diamond/Diamond-Post-Processing/diamond_join.yaml
+  tool: Assembly/Diamond/Diamond-Post-Processing/diamond_join.cwl
+  output:
+    output_join:
+      basename: "diamond-join_summary.diamond.without_header"
+      class: File
+      checksum: "sha1$310fda6fcd4f9222112a186e7b42949c335ead87"
+      size: 447
+      format: http://edamontology.org/format_2333

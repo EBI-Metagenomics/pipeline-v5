@@ -1,9 +1,0 @@
-#cwltest
-
-- job: tools/Diamond-Post-Processing/diamond_sorting.job.yaml
-  tool: tools/Diamond-Post-Processing/diamond_sorting.cwl
-  output:
-    output_sorted:
-      basename: "example_diamond_10_sorted"
-      class: File
-      checksum: "sha1$0206e4c9560512f2078034abcaf0d614a0dbb5b9"

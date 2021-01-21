@@ -1,0 +1,15 @@
+queryInputFile:
+  class: File
+  path: ../../../input_files/assembly-SRR1620013_small_CDS.faa
+  format: edam:format_1929
+outputFormat: '6'
+maxTargetSeqs: 1
+strand: both
+databaseFile:
+  class: File
+  path: ../EggNOG/test-input/eggnog_proteins.dmnd
+threads: 32
+blockSize: null
+queryGeneticCode: null
+taxonList: null
+top: null
