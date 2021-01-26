@@ -19,6 +19,13 @@ requirements:
 inputs:
     filtered_fasta: File
 
+# << accessioning >>
+    include_protein_assign: boolean
+    public: int?
+    config_db_file: File?
+    run_accession: string?
+    study_accession: string?
+
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
     lsu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -139,19 +146,42 @@ outputs:
  # FAA count
   count_CDS:
     type: int
-    outputSource: cgc/count_faa
+    outputSource: accessioning_and_prediction/count_faa
 
   optional_tax_file_flag:
     type: File?
     outputSource: no_tax_file_flag/created_file
 
+  proteinDB_metadata:
+    type: File?
+    outputSource: accessioning_and_prediction/mgyp_fasta_metadata
+
 steps:
+
+# -----------------------------------  << Assign & CGC >>  -----------------------------------
+  accessioning_and_prediction:
+    in:
+      include_protein_assign: include_protein_assign
+      filtered_fasta: filtered_fasta
+      config_db_file: config_db_file
+      study_accession: study_accession
+      run_accession: run_accession
+      public: public
+      CGC_postfixes: CGC_postfixes
+      cgc_chunk_size: cgc_chunk_size
+    out:
+      - assigned_contigs
+      - predicted_proteins
+      - predicted_seq
+      - count_faa
+      - mgyp_fasta_metadata
+    run: ../../subworkflows/assembly/accessioning-prediction_subwf.cwl
 
 # -----------------------------------  << RNA PREDICTION >>  -----------------------------------
   rna_prediction:
     in:
       type: { default: 'assembly'}
-      input_sequences: filtered_fasta
+      input_sequences: accessioning_and_prediction/assigned_contigs
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
       silva_ssu_taxonomy: ssu_tax
@@ -177,42 +207,21 @@ steps:
       - number_SSU_mapseq
     run: ../../subworkflows/rna_prediction-sub-wf.cwl
 
-# add no-tax file-flag if there are no lsu and ssu seqs
-  no_tax_file_flag:
-    when: $(inputs.count_lsu < 3 && inputs.count_ssu < 3)
-    run: ../../../utils/touch_file.cwl
-    in:
-      count_lsu: rna_prediction/number_LSU_mapseq
-      count_ssu: rna_prediction/number_SSU_mapseq
-      filename: { default: no-tax}
-    out: [ created_file ]
-
-
-# << OTHER ncrnas >>
+# ------------------------- << OTHER ncrnas >> -------------------------
   other_ncrnas:
     run: ../../subworkflows/other_ncrnas.cwl
     in:
-     input_sequences: filtered_fasta
+     input_sequences: accessioning_and_prediction/assigned_contigs
      cmsearch_file: rna_prediction/ncRNA
      other_ncRNA_ribosomal_models: other_ncrna_models
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
 
-# -----------------------------------  << COMBINED GENE CALLER >>  -----------------------------------
-  cgc:
-    in:
-      input_fasta: filtered_fasta
-      maskfile: rna_prediction/ncRNA
-      postfixes: CGC_postfixes
-      chunk_size: cgc_chunk_size
-    out: [ results, count_faa ]
-    run: ../../subworkflows/assembly/CGC-subwf.cwl
-
 # ------------------------- <<ANTISMASH >> -------------------------------
   antismash:
     run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
     in:
-      input_filtered_fasta: filtered_fasta
+      input_filtered_fasta: accessioning_and_prediction/assigned_contigs
       clusters_glossary: clusters_glossary
       final_folder_name: { default: pathways-systems }
     out:
@@ -220,26 +229,23 @@ steps:
       - antismash_clusters
 
 # -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
-# GFF
-# DIAMOND
-# KEGG pathways, move to pathways-systems
-# Genome Properties
-# tsv -> csv
-# move antismash summary to pathways-systems
+# - GFF
+# - DIAMOND
+# - KEGG pathways, move to pathways-systems
+# - Genome Properties
+# - tsv -> csv
+# - move antismash summary to pathways-systems
 
   functional_annotation_and_post_processing:
     when: $(inputs.check_value != 0)
     run: ../../subworkflows/assembly/func_ann_and_post_processing-subwf.cwl
     in:
-      check_value: cgc/count_faa
-
-      cgc_results_faa:
-         source: cgc/results
-         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
-      filtered_fasta: filtered_fasta
+      check_value: accessioning_and_prediction/count_faa
+      cgc_results_faa: accessioning_and_prediction/predicted_proteins
+      filtered_fasta: accessioning_and_prediction/assigned_contigs
       rna_prediction_ncRNA: rna_prediction/ncRNA
 
-      protein_chunk_size_eggnog:  protein_chunk_size_eggnog
+      protein_chunk_size_eggnog: protein_chunk_size_eggnog
       EggNOG_db: EggNOG_db
       EggNOG_diamond_db: EggNOG_diamond_db
       EggNOG_data_dir: EggNOG_data_dir
@@ -285,20 +291,16 @@ steps:
   fasta_index:
     run: ../../../tools/Assembly/index_fasta/fasta_index.cwl
     in:
-      fasta: filtered_fasta
+      fasta: accessioning_and_prediction/assigned_contigs
     out: [fasta_index, fasta_bgz, bgz_index]
 
 # chunking
   chunking_final:
     run: ../../subworkflows/final_chunking.cwl
     in:
-      fasta: filtered_fasta
-      ffn:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
-      faa:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      fasta: accessioning_and_prediction/assigned_contigs
+      ffn: accessioning_and_prediction/predicted_seq
+      faa: accessioning_and_prediction/predicted_proteins
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:
@@ -317,6 +319,16 @@ steps:
           - rna_prediction/cmsearch_result              # cmsearch.all
         linkMerge: merge_flattened
     out: [compressed_file]
+
+# add no-tax file-flag if there are no lsu and ssu seqs
+  no_tax_file_flag:
+    when: $(inputs.count_lsu < 3 && inputs.count_ssu < 3)
+    run: ../../../utils/touch_file.cwl
+    in:
+      count_lsu: rna_prediction/number_LSU_mapseq
+      count_ssu: rna_prediction/number_SSU_mapseq
+      filename: { default: no-tax}
+    out: [ created_file ]
 
 # ----------------------------------- << SEQUENCE CATEGORISATION FOLDER >> -----------------------------------
 # << move chunked files >>

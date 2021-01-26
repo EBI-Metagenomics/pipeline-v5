@@ -20,7 +20,7 @@ baseCommand: [ unite_protein_predictions.py ]
 
 inputs:
   masking_file:
-    type: File
+    type: File?
     inputBinding:
       prefix: "--mask"
   predicted_proteins_prodigal_out:

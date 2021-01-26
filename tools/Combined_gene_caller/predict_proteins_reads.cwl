@@ -13,7 +13,7 @@ requirements:
 inputs:
 
   input_fasta: File
-  maskfile: File
+  maskfile: File?
 
 outputs:
   predicted_proteins:

@@ -169,7 +169,7 @@ steps:
       maskfile: rna_prediction/ncRNA
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
-    out: [ results, count_faa ]
+    out: [ predicted_faa, predicted_ffn, count_faa ]
     run: ../../subworkflows/raw_reads/CGC-subwf.cwl
 
 # << ------------------- FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG --------------- >>
@@ -190,9 +190,7 @@ steps:
        filtered_fasta: filtered_fasta
        rna_prediction_ncRNA: rna_prediction/ncRNA
 
-       cgc_results_faa:
-         source: cgc/results
-         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+       cgc_results_faa: cgc/predicted_faa
        protein_chunk_size_hmm: protein_chunk_size_hmm
        protein_chunk_size_IPS: protein_chunk_size_IPS
 
@@ -235,12 +233,8 @@ steps:
     run: ../../subworkflows/final_chunking.cwl
     in:
       fasta: filtered_fasta
-      ffn:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
-      faa:
-        source: cgc/results
-        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+      ffn: cgc/predicted_ffn
+      faa: cgc/predicted_faa
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:
