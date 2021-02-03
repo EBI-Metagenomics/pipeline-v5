@@ -10,52 +10,30 @@ requirements:
   MultipleInputFeatureRequirement: {}
 
 inputs:
-  reads: File
+  not_empty_reads: File
 
 outputs:
   trimmed_and_reformatted_reads:
     type: File
-    outputSource:
-      - clean_fasta_headers/sequences_with_cleaned_headers
-      - touch_empty_fasta/created_file
-    pickValue: first_non_null
- 
+    outputSource: clean_fasta_headers/sequences_with_cleaned_headers
+
 steps:
-
-  count_overlapped_reads:
-    run: ../../utils/count_lines/count_lines.cwl
-    in:
-      sequences: reads
-      number: { default: 4 }
-    out: [ count ]
-
-  # return empty_file == input_file if it is absolutely empty
-  touch_empty_fasta:
-    when: $(inputs.fastq_count == 0)
-    run: ../../utils/touch_file.cwl
-    in:
-      filename: { default: 'empty.fasta' }
-      fastq_count: count_overlapped_reads/count
-    out: [ created_file ]
 
   # << Chunk faa file >>
   split_seqs:
-    when: $(inputs.fastq_count != 0)
     in:
-      seqs: reads
+      seqs: not_empty_reads
       chunk_size: { default: 1000000 }
       file_format: { default: 'fastq' }
-      fastq_count: count_overlapped_reads/count
     out: [ chunks ]
-    run: ../../tools/chunks/protein_chunker.cwl
+    run: ../../../tools/chunks/protein_chunker.cwl
 
   trim_quality_control:
     doc: |
       Low quality trimming (low quality ends and sequences with < quality scores
       less than 15 over a 4 nucleotide wide window are removed)
-    run: ../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
+    run: ../../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     scatter: reads1
-    when: $(inputs.fastq_count != 0)
     in:
       reads1: split_seqs/chunks
       phred: { default: '33' }
@@ -64,35 +42,28 @@ steps:
       end_mode: { default: SE }
       minlen: { default: 100 }
       slidingwindow: { default: '4:15' }
-      fastq_count: count_overlapped_reads/count
     out: [reads1_trimmed]
 
   combine_trimmed:
-    when: $(inputs.fastq_count != 0)
     in:
       files: trim_quality_control/reads1_trimmed
       outputFileName:
-        source: reads
+        source: not_empty_reads
         valueFrom: $(self.nameroot)
       postfix: { default: '.trimmed' }
-      fastq_count: count_overlapped_reads/count
     out: [result]
-    run: ../../utils/concatenate.cwl
+    run: ../../../utils/concatenate.cwl
 
   convert_trimmed_reads_to_fasta:
-    when: $(inputs.fastq_count != 0)
-    run: ../../utils/fastq_to_fasta/fastq_to_fasta.cwl
+    run: ../../../utils/fastq_to_fasta/fastq_to_fasta.cwl
     in:
       fastq: combine_trimmed/result
-      fastq_count: count_overlapped_reads/count
     out: [ fasta ]
 
   clean_fasta_headers:
-    when: $(inputs.fastq_count != 0)
-    run: ../../utils/clean_fasta_headers.cwl
+    run: ../../../utils/clean_fasta_headers.cwl
     in:
       sequences: convert_trimmed_reads_to_fasta/fasta
-      fastq_count: count_overlapped_reads/count
     out: [ sequences_with_cleaned_headers ]
 
 $namespaces:
