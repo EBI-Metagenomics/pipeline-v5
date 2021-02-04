@@ -86,7 +86,7 @@ steps:
 
 # << Trim and Reformat >>
   trimming:
-    run: ../../subworkflows/trim_and_reformat_reads.cwl
+    run: ../../subworkflows/amplicon/trim_and_reformat_reads.cwl
     in:
       reads: overlap_reads/unzipped_single_reads
     out: [ trimmed_and_reformatted_reads ]

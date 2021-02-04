@@ -105,7 +105,7 @@ steps:
 
 # << ITS >>
   ITS:
-    run: ../../subworkflows/ITS/ITS-wf.cwl
+    run: ../../subworkflows/amplicon/ITS-wf.cwl
     in:
       query_sequences: filtered_fasta
       LSU_coordinates: rna_prediction/LSU_coords
