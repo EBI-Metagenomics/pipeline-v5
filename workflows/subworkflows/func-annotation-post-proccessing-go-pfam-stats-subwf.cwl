@@ -28,7 +28,7 @@ outputs:
     type: File?
     outputSource: write_summaries/summary_antismash
   stats:
-    type: File
+    type: Directory
     outputSource: write_summaries/stats
   summary_ips:
     type: File
@@ -53,7 +53,7 @@ steps:
 
 # << GO SUMMARY>>
   go_summary_step:
-    run: ../../../tools/GO-slim/go_summary.cwl
+    run: ../../tools/GO-slim/go_summary.cwl
     in:
       InterProScan_results: IPS_table
       config: go_config
@@ -64,7 +64,7 @@ steps:
 
 # << PFAM >>
   pfam:
-    run: ../../../tools/Pfam-Parse/pfam_annotations.cwl
+    run: ../../tools/Pfam-Parse/pfam_annotations.cwl
     in:
       interpro: IPS_table
       outputname:
@@ -89,7 +89,7 @@ steps:
   header_addition:
     scatter: [input_table, header]
     scatterMethod: dotproduct
-    run: ../../../utils/add_header/add_header.cwl
+    run: ../../utils/add_header/add_header.cwl
     in:
       input_table:
         - diamond_table
@@ -103,7 +103,7 @@ steps:
 
 # chunking
   chunking_tsv:
-    run: ../../../utils/result-file-chunker/result_chunker_subwf.cwl
+    run: ../../utils/result-file-chunker/result_chunker_subwf.cwl
     in:
       input_files: header_addition/output_table
       format: { default: tsv }

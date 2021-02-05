@@ -27,7 +27,7 @@ steps:
       input_table: input_diamond
     out:
       - output_sorted
-    run: ../../../tools/Assembly/Diamond/Diamond-Post-Processing/diamond_sorting.cwl
+    run: ../../../../tools/Assembly/Diamond/Diamond-Post-Processing/diamond_sorting.cwl
 
   join:
     in:
@@ -36,7 +36,7 @@ steps:
       filename: filename
     out:
       - output_join
-    run: ../../../tools/Assembly/Diamond/Diamond-Post-Processing/diamond_join.cwl
+    run: ../../../../tools/Assembly/Diamond/Diamond-Post-Processing/diamond_join.cwl
 
 $namespaces:
  s: http://schema.org/

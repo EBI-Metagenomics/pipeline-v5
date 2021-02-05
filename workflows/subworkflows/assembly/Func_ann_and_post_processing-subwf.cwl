@@ -105,7 +105,7 @@ steps:
 # -----------------------------------  << FUNCTIONAL ANNOTATION FOLDER >>  -----------------------------------
 # << DIAMOND >>
   diamond:
-    run: diamond-subwf.cwl
+    run: diamond/diamond-subwf.cwl
     in:
       queryInputFile: cgc_results_faa
       outputFormat: { default: '6' }

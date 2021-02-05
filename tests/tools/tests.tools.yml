@@ -596,7 +596,6 @@
     i5Annotations:
       basename: test_single_protein.fasta.tsv
       class: File
-      checksum: sha1$12674594ec05c0b60ed1a4cbbbcab02daa10acbf
       size: 391
       format: http://edamontology.org/format_3475
 
@@ -627,11 +626,9 @@
       checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
       size: 0
     stdout:
-      location: Any
       basename: stdout.txt
       class: File
-      checksum: Any
-      size: 1583
+
 
 # 28 hmmsearch
 - job: hmmer/hmmsearch/hmmsearch.yml
@@ -1083,7 +1080,7 @@
 
 # 51 Antismash move_summary to pathways-systems folder
 - job: Assembly/antismash/move_antismash_summary/move_antismash_summary.yml
-  tool: ../../tools/Assembly/antismash/move_antismash_summary.cwl
+  tool: ../../tools/Assembly/antismash/move_antismash_summary/move_antismash_summary.cwl
   short_name: move_antismash_summary.cwl
   doc: "move_antismash_summary"
   output:
@@ -1129,7 +1126,7 @@
 
 # 55 Antismash change_output
 - job: Assembly/antismash/post-processing/fix_embl_gbk/change_output.yml
-  tool: ../../tools/Assembly/antismash/post-processing/fix_embl_gbk/change_output.cwl
+  tool: ../../tools/Assembly/antismash/chunking_antismash_with_conditionals/post-processing/fix_embl_gbk/change_output.cwl
   short_name: change_output.cwl
   doc: "change_output"
   output:
@@ -1144,7 +1141,7 @@
 
 # 56 Antismash fix_geneclusters_txt
 - job: Assembly/antismash/post-processing/fix_geneclusters_txt/change_geneclusters_txt.yml
-  tool: ../../tools/Assembly/antismash/post-processing/fix_geneclusters_txt/change_geneclusters_txt.cwl
+  tool: ../../tools/Assembly/antismash/chunking_antismash_with_conditionals/post-processing/fix_geneclusters_txt/change_geneclusters_txt.cwl
   short_name: change_geneclusters_txt.cwl
   doc: "change_geneclusters_txt"
   output:
@@ -1154,8 +1151,8 @@
       size: 100
 
 # 57 Antismash post-processing geneclusters.txt
-- job: Assembly/antismash/post-processing/reformat_antismash/reformat_antismash.yml
-  tool: ../../tools/Assembly/antismash/post-processing/reformat_antismash/reformat_antismash.cwl
+- job: Assembly/antismash/post-processing/reformat_antismash/reformat-antismash.yml
+  tool: ../../tools/Assembly/antismash/chunking_antismash_with_conditionals/post-processing/reformat_antismash/reformat-antismash.cwl
   short_name: reformat_antismash.cwl
   doc: "reformat_antismash"
   output:
@@ -1166,7 +1163,7 @@
 
 # 58 Antismash post-processing gff
 - job: Assembly/antismash/post-processing/GFF_antismash/antismash_to_gff.yml
-  tool: ../../tools/Assembly/antismash/post-processing/GFF_antismash/antismash_to_gff.cwl
+  tool: ../../tools/Assembly/antismash/chunking_antismash_with_conditionals/post-processing/GFF_antismash/antismash_to_gff.cwl
   short_name: antismash gff.cwl
   doc: "antismash gff"
   output:
@@ -1230,9 +1227,9 @@
       class: File
       size: 0
 
-# 61 Antismash antismash-annotation v4.2.0
+# 61 Antismash filtering fasta
 - job: Assembly/antismash/filtering_fasta/filtering_fasta_for_antismash.yml
-  tool: ../../tools/Assembly/antismash/chunking_antismash_with_conditionals/antismash/filtering_fasta/filtering_fasta_for_antismash.cwl
+  tool: ../../tools/Assembly/antismash/chunking_antismash_with_conditionals/filtering_fasta/filtering_fasta_for_antismash.cwl
   short_name: filtering_fasta_for_antismash.cwl
   doc: "filtering_fasta_for_antismash"
   output:

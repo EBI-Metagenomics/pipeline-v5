@@ -38,7 +38,7 @@ steps:
       databaseFile: databaseFile
       threads: threads
     out: [ matches ]
-    run: ../../../tools/Assembly/Diamond/Diamond.blastp.cwl
+    run: ../../../../tools/Assembly/Diamond/Diamond.blastp.cwl
 
   post_processing_uniref90:
     in:

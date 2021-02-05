@@ -2,12 +2,21 @@ $namespaces:
   s: https://schema.org/
   edam: http://edamontology.org/
 
-include_protein_assign: false
+include_protein_assign: true
 
 filtered_fasta:
   class: File
   path: ../../../input_examples/assembly/assembly-SRR1620013_small_FASTA_FASTA.fasta
   format: edam:format_1929
+
+config_db_file:
+  class: File
+  path:
+
+study_accession: newStudy
+run_accession: newRun
+public: 1
+
 CGC_postfixes:
   - '_CDS.faa'
   - '_CDS.ffn'

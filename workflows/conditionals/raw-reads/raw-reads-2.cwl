@@ -200,7 +200,8 @@ steps:
        func_ann_names_hmmer: func_ann_names_hmmer
        HMM_gathering_bit_score: HMM_gathering_bit_score
        HMM_omit_alignment: HMM_omit_alignment
-       HMM_database: HMM_name_database
+       HMM_database: HMM_database
+       HMM_database_dir: HMM_database_dir
        hmmsearch_header: hmmsearch_header
 
        go_config: go_config

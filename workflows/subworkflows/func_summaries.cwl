@@ -16,7 +16,6 @@ inputs:
   antismash_gene_clusters: File?
   rna: File
   cds: File
-  type_analysis: string
   ko_file: [File, string]
 
 
@@ -48,7 +47,6 @@ steps:
       cds_file: cds
       antismash_file: antismash_gene_clusters
       ko_file: ko_file
-      type_analysis: type_analysis
     out: [stats, ips_yaml, ko_yaml, pfam_yaml, antismash_yaml]
 
   write_summaries:

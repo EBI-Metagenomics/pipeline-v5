@@ -1,5 +1,6 @@
+#!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.0
+cwlVersion: v1.2.0-dev2
 
 requirements:
 #  - class: SchemaDefRequirement
@@ -215,11 +216,10 @@ steps:
      name_string: { default: 'other_ncrna' }
     out: [ ncrnas ]
 
-
 # ------------------------- <<ANTISMASH >> -------------------------------
 
   antismash:
-    run: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/wf_antismash.cwl
+    run: ../../subworkflows/assembly/antismash/main_antismash_subwf.cwl
     in:
       input_filtered_fasta: accessioning_and_prediction/assigned_contigs
       clusters_glossary: clusters_glossary
@@ -227,7 +227,6 @@ steps:
     out:
       - antismash_folder
       - antismash_clusters
-
 
 # -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
 # - GFF generation
@@ -240,10 +239,8 @@ steps:
   functional_annotation:
     run: ../../subworkflows/assembly/Func_ann_and_post_processing-subwf.cwl
     in:
-      filtered_fasta: filtered_fasta
-      cgc_results_faa:
-        source: cgc/results
-        valueFrom: $( self.filter(function(file) { return file.nameext !== ".faa"; }).pop() )
+      filtered_fasta: accessioning_and_prediction/assigned_contigs
+      cgc_results_faa: accessioning_and_prediction/predicted_proteins
       rna_prediction_ncRNA: rna_prediction/ncRNA
 
       protein_chunk_size_eggnog: protein_chunk_size_eggnog

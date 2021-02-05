@@ -101,7 +101,6 @@
     ips_result:
       class: File
       basename: test_single_proteintest-IPS-subwf
-      checksum: sha1$cdf6a2d1fadcdc4ad56f1df3c1dfc579131d145e
       size: 585
       format: http://edamontology.org/format_3475
 
@@ -171,8 +170,8 @@
       format: http://edamontology.org/format_3475
 
 # 12 assembly: diamond-post-processing
-- job: assembly/diamond-postprocessing_subwf.yml
-  tool: ../../workflows/subworkflows/assembly/diamond-postprocessing_subwf.cwl
+- job: assembly/diamond/diamond-postprocessing_subwf.yml
+  tool: ../../workflows/subworkflows/assembly/diamond/diamond-postprocessing_subwf.cwl
   doc: "diamond-postprocessing_subwf"
   short_name: diamond-postprocessing_subwf.cwl
   output:
@@ -184,8 +183,8 @@
       size: 447
 
 # 13 assembly: diamond-subwf
-- job: assembly/diamond-subwf.yml
-  tool: ../../workflows/subworkflows/assembly/diamond-subwf.cwl
+- job: assembly/diamond/diamond-subwf.yml
+  tool: ../../workflows/subworkflows/assembly/diamond/diamond-subwf.cwl
   doc: "diamond-subwf"
   short_name: diamond-subwf.yml
   output:

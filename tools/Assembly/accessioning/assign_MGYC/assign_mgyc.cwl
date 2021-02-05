@@ -40,7 +40,7 @@ outputs:
 
 hints:
   - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+    dockerPull: 'microbiomeinformatics/pipeline-v5.protein_db:v1.0'
 
 $namespaces:
  edam: http://edamontology.org/

@@ -22,8 +22,9 @@ arguments:
     valueFrom: |
       ${
         var return_string = "";
-        for (var file of inputs.list_chunks) {
-          return_string = return_string + file.basename + "\n";
+        for (var i = 0; i < inputs.list_chunks.length; ++i) {
+          var cur_file = inputs.list_chunks[i];
+          return_string = return_string + cur_file.basename + "\n";
         }
         return return_string;
       }

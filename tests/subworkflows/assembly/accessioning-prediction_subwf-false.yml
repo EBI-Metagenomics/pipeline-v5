@@ -1,0 +1,14 @@
+$namespaces:
+  s: https://schema.org/
+  edam: http://edamontology.org/
+
+include_protein_assign: false
+
+filtered_fasta:
+  class: File
+  path: ../../input_files/assembly-SRR1620013_small.fasta
+  format: edam:format_1929
+CGC_postfixes:
+  - '_CDS.faa'
+  - '_CDS.ffn'
+cgc_chunk_size: 100000

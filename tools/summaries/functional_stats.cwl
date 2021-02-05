@@ -11,10 +11,6 @@ requirements:
 
 inputs:
 
-  type_analysis:
-    type: string
-    inputBinding:
-        prefix: -t
   interproscan:
     type: File
     inputBinding:

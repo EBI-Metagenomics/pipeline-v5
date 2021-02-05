@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-cwlVersion: v1.2.0-dev2
-=======
 cwlVersion: v1.2.0-dev4
->>>>>>> 1bb9721... tests for tools
 class: Workflow
 label: Trim and reformat reads (single and paired end version)
 

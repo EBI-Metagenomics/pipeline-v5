@@ -33,7 +33,6 @@ inputs:
 
   go_config: string
   ko_file: string
-  type_analysis: string
 
 outputs:
   functional_annotation_folder:
@@ -74,7 +73,7 @@ steps:
       rna: rna_prediction_ncRNA
       cds: cgc_results_faa
       ko_file: ko_file
-      hmmscan_header: hmmsearch_header
+      hmmsearch_header: hmmsearch_header
       ips_header: ips_header
     out:
       - stats

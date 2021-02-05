@@ -1,8 +1,0 @@
-input_diamond:
-  class: File
-  path: ../../tools/Assembly/Diamond/Diamond-Post-Processing/test-input/example_diamond_10
-  format: http://edamontology.org/format_2333
-input_db:
-  class: File
-  path: ../../tools/Assembly/Diamond/Diamond-Post-Processing/test-input/example_diamond_db
-filename: diamond-post-processing-test
