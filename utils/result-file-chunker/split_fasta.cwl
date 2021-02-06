@@ -14,7 +14,7 @@ requirements:
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.split-fasta:latest
+    dockerPull: microbiomeinformatics/pipeline-v5.split-fasta:v2
 
 inputs:
   infile:

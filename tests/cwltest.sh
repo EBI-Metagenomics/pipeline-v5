@@ -25,15 +25,15 @@ if [ "${CONTAINER}" == "False" ]; then
 else
     if [ "${UTILS}" == "True" ]; then
         echo "Testing utils"
-        cwltest --test utils/tests.utils.yml --verbose --tool cwltool -- --preserve-entire-environment --enable-dev
+        cwltest --test utils/tests.utils.yml --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --strict-memory-limit --singularity
     fi
     if [ "${TOOLS}" == "True" ]; then
         echo "Testing tools"
-        cwltest --test tools/tests.tools.yml --verbose --tool cwltool -- --preserve-entire-environment --enable-dev
+        cwltest --test tools/tests.tools.yml --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --strict-memory-limit --singularity
     fi
     if [ "${SUBWF}" == "True" ]; then
         echo "Testing subwfs"
-        cwltest --test subworkflows/tests.subwf.yml --verbose --tool cwltool -- --preserve-entire-environment --enable-dev
+        cwltest --test subworkflows/tests.subwf.yml --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --strict-memory-limit --singularity
     fi
 fi
 
