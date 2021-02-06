@@ -11,4 +11,5 @@
 # 11 subworkflows: assembly: eggnog
 # 12 subworkflows: assembly: diamond-post-processing
 # 13 subworkflows: assembly: diamond-subwf (not very good test because output of post-processing is empty)
+# 14 subworkflows: assembly: antismash subwf [empty input]
 classify-otu-visualise
