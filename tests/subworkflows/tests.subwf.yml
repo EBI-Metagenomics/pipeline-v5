@@ -207,15 +207,10 @@
   doc: "antismash-subwf no result"
   short_name: no_antismash_subwf.yml
   output:
-    :
-      basename: "assembly-SRR1620013_small_CDS.faa.diamond_matches"
-      class: File
-      checksum: "sha1$d59af4761f71f568f37cb49b40114ce4ab227c35"
-      format: http://edamontology.org/format_2333
-      size: 90
-    :
-      basename: "diamond-subwf-test_summary.diamond.without_header"
-      class: File
-      checksum: "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709"
-      format: http://edamontology.org/format_2333
-      size: 0
+    antismash_result_folder:
+      basename: "pathways-systems"
+      class: Directory
+      listing:
+        - basename: "no_antismash"
+          size: 0
+          class: File
