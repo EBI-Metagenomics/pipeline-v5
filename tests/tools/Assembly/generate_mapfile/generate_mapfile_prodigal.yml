@@ -1,0 +1,9 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+input_fasta:
+  class: File
+  path: test-input/test.mgyp.fasta
+  format: 'edam:format_1929'
+
+output_name: "map.output"

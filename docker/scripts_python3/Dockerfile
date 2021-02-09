@@ -18,6 +18,7 @@ COPY antismash_to_gff_nojson.py \
      fastq_to_fasta.py \
      functional_stats.py \
      generate_checksum.py \
+     generate_mapfile_prodigal.py \
      give_pathways.py  \
      get_subunits_coords.py \
      get_subunits.py \

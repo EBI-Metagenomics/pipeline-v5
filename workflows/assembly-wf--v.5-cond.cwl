@@ -148,6 +148,10 @@ outputs:
     type: File?
     outputSource: after-qc/proteinDB_metadata
 
+  digest_mapfile_for_virify:
+    type: File
+    outputSource: after-qc/digest_mapfile_for_virify
+
   rna-count:
     type: File?
     outputSource: after-qc/rna-count
@@ -241,6 +245,7 @@ steps:
       - count_CDS
       - optional_tax_file_flag
       - proteinDB_metadata
+      - digest_mapfile_for_virify
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")

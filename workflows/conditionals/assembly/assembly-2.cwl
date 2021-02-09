@@ -155,6 +155,10 @@ outputs:
     type: File?
     outputSource: accessioning_and_prediction/mgyp_fasta_metadata
 
+  digest_mapfile_for_virify:
+    type: File
+    outputSource: accessioning_and_prediction/mapfile_for_virify
+
 steps:
 
 # -----------------------------------  << Assign & CGC >>  -----------------------------------
@@ -174,6 +178,7 @@ steps:
       - predicted_seq
       - count_faa
       - mgyp_fasta_metadata
+      - mapfile_for_virify
     run: ../../subworkflows/assembly/accessioning-prediction_subwf.cwl
 
 # -----------------------------------  << RNA PREDICTION >>  -----------------------------------

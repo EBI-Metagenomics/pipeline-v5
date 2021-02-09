@@ -119,8 +119,6 @@
     stderr:
       basename: "stderr.txt"
       class: File
-      checksum: "sha1$498131762865a91f37eb4531220e78303e4c69b2"
-      size: 6556
 
 # 8 RNA-prediction: pull ncRNA
 - job: RNA_prediction/pull_ncrnas/pull_ncrnas.yml
@@ -1239,3 +1237,16 @@
       size: 7074
       format: http://edamontology.org/format_1929
     count_after_filtering: 1
+
+# 62 Assembly: generate mapfile for virify pipeline
+- job: Assembly/generate_mapfile/generate_mapfile_prodigal.yml
+  tool: ../../tools/Assembly/generate_mapfile/generate_mapfile_prodigal.cwl
+  short_name: generate_mapfile_prodigal.cwl
+  doc: "generate_mapfile_viral"
+  output:
+    mapfile:
+      basename: "map.output"
+      class: File
+      size: 265
+      checksum: "sha1$d53b63b78ef15420533ac255cedcb497ac98b398"
+

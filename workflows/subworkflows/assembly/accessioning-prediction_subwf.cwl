@@ -42,6 +42,9 @@ outputs:
   mgyp_fasta_stderr:
     type: File?
     outputSource: assign_mgyp/stderr_protein_assign
+  mapfile_for_virify:
+    type: File
+    outputSource: generate_mapfile/mapfile
 
 steps:
 
@@ -93,6 +96,17 @@ steps:
       config_db_file: config_db_file
       run_accession: run_accession
     out: [ renamed_proteins, stderr_protein_assign, proteins_metadata ]
+
+# -----------------------------------  << Generate map-file for viral pipeline >>  -------------------
+
+  generate_mapfile:
+    in:
+      input_fasta: assign_mgyp/renamed_proteins
+      output_name:
+        source: filtered_fasta
+        valueFrom: $(self.nameroot)
+    out: [ mapfile ]
+    run: ../../../tools/Assembly/generate_mapfile/generate_mapfile_prodigal.cwl
 
 
 $namespaces:
