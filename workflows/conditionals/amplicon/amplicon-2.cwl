@@ -64,6 +64,10 @@ outputs:
     type: File[]
     outputSource: gzip_files/compressed_file
 
+  variable-regions-summary:
+    type: File?
+    outputSource: rna_prediction/variable-regions-summary
+
   ITS-length:
     type: File
     outputSource: suppress_tax/its_length
@@ -95,6 +99,7 @@ steps:
     out:
       - ncRNA
       - cmsearch_result
+      - variable-regions-summary
       - LSU-SSU-count
       - SSU_folder
       - LSU_folder

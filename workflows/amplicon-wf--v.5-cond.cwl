@@ -81,6 +81,9 @@ outputs:
   rna-count:
     type: File?
     outputSource: after-qc/rna-count
+  variable-regions-summary:
+    type: File?
+    outputSource: after-qc/variable-regions-summary
   ITS-length:
     type: File?
     outputSource: after-qc/ITS-length
@@ -147,6 +150,7 @@ steps:
       - sequence-categorisation_folder
       - rna-count
       - gz_files
+      - variable-regions-summary
       - ITS-length
       - optional_tax_file_flag
 

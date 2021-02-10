@@ -49,6 +49,10 @@ outputs:
     type: File
     outputSource: find_ribosomal_ncRNAs/concatenate_matches
 
+  variable-regions-summary:
+    type: File?
+    outputSource: identify_variable_regions/variable-regions-summary
+
   LSU-SSU-count:
     type: File
     outputSource: extract_subunits_coords/counts
@@ -102,6 +106,14 @@ steps:
       covariance_models: ncRNA_ribosomal_models
       clan_info: ncRNA_ribosomal_model_clans
     out: [ concatenate_matches, deoverlapped_matches ]
+
+# identify targeted variable regions for amplicon runs
+  identify_variable_regions:
+    when: $(inputs.type == 'raw')
+    run: amplicon/variable-region-identification.cwl
+    in:
+      infernal_matches: find_ribosomal_ncRNAs/deoverlapped_matches
+    out: [ variable-regions-summary ]
 
 # extract coordinates for everything
   extract_coords:
