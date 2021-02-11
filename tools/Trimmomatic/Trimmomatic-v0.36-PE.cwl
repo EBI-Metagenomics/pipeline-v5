@@ -3,6 +3,10 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
+hints:
+  - class: DockerRequirement
+    dockerPull: microbiomeinformatics/pipeline-v5.trimmomatic:v0.36
+
 #hints:
 #  - class: SoftwareRequirement
 #    packages:
