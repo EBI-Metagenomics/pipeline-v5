@@ -1,7 +1,7 @@
 # 1 tools: Trimmomatic PE
 # 2 tools: Trimmomatic SE
-# 3 tools: summaries/functional_stats raw-reads                                     --not ready
-# 4 tools: summaries/functional_stats assembly                                      --not ready
+# 3 tools: summaries/functional_stats raw-reads
+# 4 tools: summaries/functional_stats assembly
 # 5 tools: SeqPrep
 # 6 tools: RNA_prediction: mapseq
 # 7 tools: RNA-prediction: mapseq2biom
@@ -60,3 +60,6 @@
 # 60 tools: Assembly: antismash: antismash v4.2.0 bad input
 # 61 tools: Assembly: antismash: filtering fasta before antismash
 # 62 tools: Assembly: generate mapfile for viral pipeline
+# 63 tools: Assembly: GFF
+# 64 tools: summaries/write_summaries assembly
+# 65 tools: summaries/write_summaries  raw-reads

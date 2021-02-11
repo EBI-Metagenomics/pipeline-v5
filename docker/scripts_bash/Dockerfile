@@ -4,11 +4,13 @@ LABEL Maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 
 RUN apk add --no-cache build-base ncurses-dev bzip2-dev xz-dev zlib-dev
 
+ENV SAMTOOLS_VERSION=1.9
+
 # samtools and bgzip
 RUN mkdir /samtools && \
-    wget https://github.com/samtools/samtools/releases/download/1.10/samtools-1.10.tar.bz2 && \
-    tar -xjf samtools-1.10.tar.bz2 && rm samtools-1.10.tar.bz2 && \
-    cd samtools-1.10 && ./configure --prefix=/samtools && make && make install install-htslib
+    wget https://github.com/samtools/samtools/releases/download/$SAMTOOLS_VERSION/samtools-$SAMTOOLS_VERSION.tar.bz2 && \
+    tar -xjf samtools-$SAMTOOLS_VERSION.tar.bz2 && rm samtools-$SAMTOOLS_VERSION.tar.bz2 && \
+    cd samtools-$SAMTOOLS_VERSION && ./configure --prefix=/samtools && make && make install install-htslib
 
 FROM alpine:3.7
 
@@ -31,7 +33,7 @@ COPY add_header \
      format_bedfile \
      pull_ncrnas.sh \
      run_antismash_short.sh \
-     run_samtools.sh \
+     run_samtools_docker.sh \
      remove_symbol.sh \
     /tools/
 

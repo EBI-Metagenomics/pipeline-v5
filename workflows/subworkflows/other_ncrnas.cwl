@@ -31,7 +31,7 @@ steps:
     out: [ sequences_with_index ]
 
   extract_coords:
-    run: ../../tools/RNA_prediction/extract-coords/extract-coords_awk.cwl
+    run: ../../tools/RNA_prediction/extract-coords/extract-coords.cwl
     in:
       infernal_matches: cmsearch_file
       name: name_string

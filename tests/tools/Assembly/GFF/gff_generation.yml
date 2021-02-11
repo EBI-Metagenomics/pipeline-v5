@@ -4,16 +4,16 @@ $namespaces:
 ips_results:
   class: File
   format: edam:format_3475
-  path: ../../InterProScan/expected-output/assembly-SRR1620013_small_FASTA_FASTA.I5.tsv
+  path: test-input/gff-test.ips.tsv
 
 eggnog_results:
   class: File
-  path: test-input/eggnog.tsv
+  path: test-input/gff-test.eggnog.tsv
   format: edam:format_3475
 
 input_faa:
   class: File
-  path: ../../../input_files/assembly-SRR1620013_small_FASTA_FASTA_CDS.faa
+  path: test-input/gff-test.fasta
   format: edam:format_1929
 
-output_name: assembly-SRR1620013_small_FASTA_FASTA.contigs.annotations.gff
+output_name: gff

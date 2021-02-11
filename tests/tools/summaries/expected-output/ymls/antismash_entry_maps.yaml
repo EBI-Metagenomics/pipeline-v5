@@ -1,0 +1,33 @@
+entry2name:
+  ERZ477576.814035-NODE-814035-length-229-cov-1.44253_1: Terpene
+  ERZ477576.814055-NODE-814055-length-229-cov-1.43678_1: Terpene2
+  ERZ477576.814068-NODE-814068-length-229-cov-1.43678_1: Terpene3
+  ERZ477576.814113-NODE-814113-length-229-cov-1.41954_1: Terpene4
+  ERZ477576.814129-NODE-814129-length-229-cov-1.41954_1: Terpene5
+  ERZ477576.814134-NODE-814134-length-229-cov-1.41379_1: Terpene7
+  ERZ477576.814139-NODE-814139-length-229-cov-1.41379_1: Terpene6
+  ERZ477576.814151-NODE-814151-length-229-cov-1.40805_1: Terpene8
+  ERZ477576.814183-NODE-814183-length-229-cov-1.4023_1: Terpene9
+  ERZ477576.814191-NODE-814191-length-229-cov-1.4023_1: Terpene10
+entry2protein:
+  ERZ477576.814035-NODE-814035-length-229-cov-1.44253_1: !!set
+    a1: null
+  ERZ477576.814055-NODE-814055-length-229-cov-1.43678_1: !!set
+    a2: null
+    a3: null
+  ERZ477576.814068-NODE-814068-length-229-cov-1.43678_1: !!set
+    a4: null
+  ERZ477576.814113-NODE-814113-length-229-cov-1.41954_1: !!set
+    a5: null
+  ERZ477576.814129-NODE-814129-length-229-cov-1.41954_1: !!set
+    a6: null
+  ERZ477576.814134-NODE-814134-length-229-cov-1.41379_1: !!set
+    a8: null
+  ERZ477576.814139-NODE-814139-length-229-cov-1.41379_1: !!set
+    a7: null
+  ERZ477576.814151-NODE-814151-length-229-cov-1.40805_1: !!set
+    a9: null
+  ERZ477576.814183-NODE-814183-length-229-cov-1.4023_1: !!set
+    a10: null
+  ERZ477576.814191-NODE-814191-length-229-cov-1.4023_1: !!set
+    a11: null

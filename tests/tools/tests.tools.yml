@@ -53,11 +53,113 @@
 # 3 summaries/functional_stats raw-reads
 - job: summaries/functional_stats_raw-reads.yml
   tool: ../../tools/summaries/functional_stats.cwl
-  output: []
+  output:
+    antismash_yaml: null
+    ips_yaml:
+      basename: "InterProScan_entry_maps.yaml"
+      size: 1957
+      format: http://edamontology.org/format_3750
+      class: File
+      checksum: sha1$afbc62e6723d9d971c32b776ff0838bd74e8427e
+    ko_yaml:
+      basename: "KO_entry_maps.yaml"
+      size: 1463
+      format: http://edamontology.org/format_3750
+      class: File
+      checksum: sha1$f9cfcbcd062702a550d06c4fc7a216e39c65c9aa
+    pfam_yaml:
+      basename: "pfam_entry_maps.yaml"
+      size: 1171
+      format: http://edamontology.org/format_3750
+      class: File
+      checksum: sha1$91e8b1011a0a8c648cf16e35b54ad60e8eba463c
+    stats:
+      basename: "functional-annotation"
+      class: Directory
+      listing:
+        - class: Directory
+          basename: "stats"
+          listing:
+            - basename: "interproscan.stats"
+              class: File
+              size: 103
+              checksum: sha1$cf65e8f4cda19dcbba7b8af5a8aec6a1b0c6b574
+            - basename: "orf.stats"
+              class: File
+              size: 73
+              checksum: sha1$6448fbf04537475cf7d0ddd8d49a31b8524ae5b0
+            - basename: "pfam.stats"
+              size: 79
+              class: File
+              checksum: sha1$bedf281f427e44914e5fdafbf7b07538ccedf2e8
+            - basename: "ko.stats"
+              size: 71
+              class: File
+              checksum: sha1$134738e9e3de8402cb66960bcd8630401ae291d1
+            - basename: "go.stats"
+              class: File
+              size: 71
+              checksum: sha1$833b1299452ebc7b7989eafd43afb34397814bff
+
 # 4 summaries/functional_stats assembly
 - job: summaries/functional_stats_assembly.yml
   tool: ../../tools/summaries/functional_stats.cwl
-  output: []
+  output:
+    antismash_yaml:
+      basename: "antismash_entry_maps.yaml"
+      class: File
+      checksum: sha1$a141d42851cbefde03982948e1de44272f2bee71
+      size: 1458
+      format: http://edamontology.org/format_3750
+    ips_yaml:
+      basename: "InterProScan_entry_maps.yaml"
+      size: 1957
+      format: http://edamontology.org/format_3750
+      class: File
+      checksum: sha1$afbc62e6723d9d971c32b776ff0838bd74e8427e
+    ko_yaml:
+      basename: "KO_entry_maps.yaml"
+      size: 1463
+      format: http://edamontology.org/format_3750
+      class: File
+      checksum: sha1$f9cfcbcd062702a550d06c4fc7a216e39c65c9aa
+    pfam_yaml:
+      basename: "pfam_entry_maps.yaml"
+      size: 1171
+      format: http://edamontology.org/format_3750
+      class: File
+      checksum: sha1$91e8b1011a0a8c648cf16e35b54ad60e8eba463c
+    stats:
+      basename: "functional-annotation"
+      class: Directory
+      listing:
+        - class: Directory
+          basename: "stats"
+          listing:
+            - basename: "antismash.stats"
+              size: 94
+              class: File
+              checksum: sha1$6a1965a8ba4145646eb91d6c5a4620bc10c887d7
+            - basename: "interproscan.stats"
+              class: File
+              size: 103
+              checksum: sha1$cf65e8f4cda19dcbba7b8af5a8aec6a1b0c6b574
+            - basename: "orf.stats"
+              class: File
+              size: 73
+              checksum: sha1$6448fbf04537475cf7d0ddd8d49a31b8524ae5b0
+            - basename: "pfam.stats"
+              size: 79
+              class: File
+              checksum: sha1$bedf281f427e44914e5fdafbf7b07538ccedf2e8
+            - basename: "ko.stats"
+              size: 71
+              class: File
+              checksum: sha1$134738e9e3de8402cb66960bcd8630401ae291d1
+            - basename: "go.stats"
+              class: File
+              size: 71
+              checksum: sha1$833b1299452ebc7b7989eafd43afb34397814bff
 
 # 5 SeqPrep
 - job: SeqPrep/seqprep.yml
@@ -276,8 +378,8 @@
 
 # 14 RNA-prediction: extract-coords
 - job: RNA_prediction/extract-coords/extract-coords_awk.yml
-  tool: ../../tools/RNA_prediction/extract-coords/extract-coords_awk.cwl
-  short_name: extract-coords_awk.cwl
+  tool: ../../tools/RNA_prediction/extract-coords/extract-coords.cwl
+  short_name: extract-coords.cwl
   doc: "easel"
   output:
     matched_seqs_with_coords:
@@ -286,7 +388,7 @@
       location: Any
       path: Any
       class: File
-      size: 524
+      size: 530
       format: http://edamontology.org/format_3475
 
 # 15 RNA-prediction: easel index
@@ -744,7 +846,6 @@
     stdout:
       basename: stdout.txt
       class: File
-      size: 81
 
 # 34 CGC: post-processing only FGS
 - job: Combined_gene_caller/post-processing/post-processing_fgs.yml
@@ -1250,3 +1351,75 @@
       size: 265
       checksum: "sha1$d53b63b78ef15420533ac255cedcb497ac98b398"
 
+# 63 Assembly: GFF file
+- job: Assembly/GFF/gff_generation.yml
+  tool: ../../tools/Assembly/GFF/gff_generation.cwl
+  short_name: gff_generation.cwl
+  doc: "gff_generation"
+  output:
+    output_gff_gz:
+      basename: "gff.bgz"
+      class: File
+      size: 655
+      checksum: "sha1$20483ecb2a0b1e84240a99fe9e8fff94444864b3"
+      format: http://edamontology.org/format_2306
+    output_gff_index:
+      basename: "gff.bgz.tbi"
+      class: File
+      size: 225
+      checksum: "sha1$d1eac5591aa3d87740eab64f406138fc980a45e5"
+    stdout:
+      basename: "stdout.txt"
+      class: File
+      size: 37
+      checksum: "sha1$4fc2effb5e8380e51a70d54f4cd0d1d13b2f1e5a"
+
+# 64 write summaries assembly
+- job: summaries/write_summaries_assembly.yml
+  tool: ../../tools/summaries/write_summaries.cwl
+  short_name: write_summaries.cwl
+  doc: "write_summaries"
+  output:
+    summary_antismash:
+      basename: "summary.antismash"
+      class: File
+      size: 708
+      checksum: "sha1$382c6cf3f117e05a927c95e7a0cb764f214955ff"
+    summary_ips:
+      basename: "summary.ips"
+      class: File
+      size: 714
+      checksum: "sha1$5f5eb699821cf45faf9b5a2b903bf8bc786c4d4a"
+    summary_ko:
+      basename: "summary.ko"
+      class: File
+      size: 688
+      checksum: "sha1$e8d90d0f3b0de53f5e100f806e98e229d3abc007"
+    summary_pfam:
+      basename: "summary.pfam"
+      class: File
+      size: 398
+      checksum: "sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc"
+
+# 65 write summaries raw-reads
+- job: summaries/write_summaries_assembly.yml
+  tool: ../../tools/summaries/write_summaries.cwl
+  short_name: write_summaries.cwl
+  doc: "write_summaries"
+  output:
+    summary_antismash: null
+    summary_ips:
+      basename: "summary.ips"
+      class: File
+      size: 714
+      checksum: "sha1$5f5eb699821cf45faf9b5a2b903bf8bc786c4d4a"
+    summary_ko:
+      basename: "summary.ko"
+      class: File
+      size: 688
+      checksum: "sha1$e8d90d0f3b0de53f5e100f806e98e229d3abc007"
+    summary_pfam:
+      basename: "summary.pfam"
+      class: File
+      size: 398
+      checksum: "sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc"

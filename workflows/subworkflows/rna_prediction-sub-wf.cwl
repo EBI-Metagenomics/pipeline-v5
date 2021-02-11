@@ -105,9 +105,12 @@ steps:
 
 # extract coordinates for everything
   extract_coords:
-    run: ../../tools/RNA_prediction/extract-coords/extract-coords_awk.cwl
+    run: ../../tools/RNA_prediction/extract-coords/extract-coords.cwl
     in:
       infernal_matches: find_ribosomal_ncRNAs/deoverlapped_matches
+      name:
+        source: find_ribosomal_ncRNAs/deoverlapped_matches
+        valueFrom: $(self.basename)
     out: [ matched_seqs_with_coords ]
 
 # extract coords of SSU ans LSU for ITS

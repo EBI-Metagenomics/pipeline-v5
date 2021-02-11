@@ -1,0 +1,202 @@
+# 1 [ 17 RNA-prediction: cmsearch ]
+- job: RNA_prediction/cmsearch/infernal-cmsearch.test.job.yaml
+  tool: ../../tools/RNA_prediction/cmsearch/infernal-cmsearch-v1.1.2.cwl
+  short_name: infernal-cmsearch-v1.1.2.cwl
+  doc: "INFERence of RNA ALignment"
+  output:
+    matches:
+      basename: mrum-genome.fa.tRNA5.c.cmsearch_matches.tbl
+      location: Any
+      path: Any
+      class: File
+      size: 8252
+      format: http://edamontology.org/format_3475
+    programOutput:
+      basename: mrum-genome.fa.tRNA5.c.cmsearch.out
+      location: Any
+      path: Any
+      class: File
+      size: 6741
+      format: http://edamontology.org/format_3475
+
+# 2 [ 19 motus ]
+- job: Raw_reads/mOTUs/motus-test.yml
+  tool: ../../tools/Raw_reads/mOTUs/mOTUs.cwl
+  short_name: mOTUs.cwl
+  doc: "motus"
+  output:
+    motu_taxonomy:
+      location: Any
+      path: Any
+      format: http://edamontology.org/format_3746
+      basename: unpaired.motus
+      class: File
+      size: 2740643
+    stderr:
+      location: Any
+      path: Any
+      basename: stderr.txt
+      class: File
+      size: 512
+
+# 3 [ 28 hmmsearch ]
+- job: hmmer/hmmsearch/hmmsearch.yml
+  tool: ../../tools/hmmer/hmmsearch/hmmsearch.cwl
+  short_name: hmmsearch.cwl
+  doc: "hmmsearch"
+  output:
+    output_table:
+      basename: assembly-SRR1620013_small_CDS_hmmsearch.tbl
+      class: File
+      size: 5585
+      format: http://edamontology.org/format_3475
+
+# 4 [ 29 hmmscan ]
+- job: hmmer/hmmscan/hmmscan.yml
+  tool: ../../tools/hmmer/hmmscan/hmmscan.cwl
+  short_name: hmmscan.cwl
+  doc: "hmmsearch"
+  output:
+    output_table:
+      basename: assembly-SRR1620013_small_CDS_hmmscan.tbl
+      class: File
+      size: 5010
+      format: http://edamontology.org/format_3475
+
+# 5 [ 32 CGC: prodigal ]
+- job: Combined_gene_caller/Prodigal/prodigal.yml
+  tool: ../../tools/Combined_gene_caller/Prodigal/prodigal.cwl
+  short_name: prodigal.cwl
+  doc: "prodigal"
+  output:
+    predicted_proteins_out:
+      basename: 100000_130095.fasta.prodigal
+      class: File
+      checksum: sha1$8b8c48367bae296cbad827c4909ddeeba8d4478c
+      size: 4661413
+    predicted_proteins_ffn:
+      basename: 100000_130095.fasta.prodigal.ffn
+      class: File
+      checksum: sha1$d2a01a66f0c24609ea83a79a18fcedb7c1fddce4
+      size: 18108685
+    predicted_proteins_faa:
+      basename: 100000_130095.fasta.prodigal.faa
+      class: File
+      checksum: sha1$d517ca6e008b4f5219d00f814476fe9f87defa15
+      size: 7927198
+    stderr:
+      basename: stderr.txt
+      class: File
+      checksum: sha1$ab692a833428a06bd4d3c71c1608087f64757db6
+      size: 1493996
+    stdout:
+      basename: stdout.txt
+      class: File
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 6 [ 37 CGC: predict_proteins_assemblies sub-wf ]
+- job: Combined_gene_caller/predict_proteins_assemblies.yml
+  tool: ../../tools/Combined_gene_caller/predict_proteins_assemblies.cwl
+  short_name: predict_proteins_assemblies.cwl
+  doc: "predict_proteins_reads (FGS, Prodigal + post-processing)"
+  output:
+    predicted_proteins:
+      basename: 100000_130095.fasta.faa
+      class: File
+      checksum: sha1$068b0116727e47dade39a41666560b59863a6e5a
+      size: 8141529
+      format: http://edamontology.org/format_1929
+    predicted_seq:
+      basename: 100000_130095.fasta.ffn
+      class: File
+      checksum: sha1$b000baf128d540a1bc6690de1309a3926b209f9d
+      size: 18632768
+      format: http://edamontology.org/format_1929
+
+# 7 [ 41 index fasta file ]
+- job: Assembly/index_fasta/fasta_index.yml
+  tool: ../../tools/Assembly/index_fasta/fasta_index.cwl
+  short_name: fasta_index.cwl
+  doc: "fasta_index"
+  output:
+    bgz_index:
+      basename: test.fasta.bgz.gzi
+      class: File
+      checksum: sha1$05fe405753166f125559e7c9ac558654f107c7e9
+      size: 8
+    fasta_bgz:
+      basename: test.fasta.bgz
+      class: File
+      checksum: sha1$42cea74a6445789964b20bc383d1a276ef4c3294
+      size: 4039
+    fasta_index:
+      basename: test.fasta.bgz.fai
+      class: File
+      checksum: sha1$de09931b84950753830d05eadc6a856ebe691318
+      size: 871
+
+# 8 [ 58 Antismash post-processing gff ]
+- job: Assembly/antismash/post-processing/GFF_antismash/antismash_to_gff.yml
+  tool: ../../tools/Assembly/antismash/chunking_antismash_with_conditionals/post-processing/GFF_antismash/antismash_to_gff.cwl
+  short_name: antismash gff.cwl
+  doc: "antismash gff"
+  output:
+    output_gff_bgz:
+      basename: "test-antismash.gff.bgz"
+      class: File
+      size: 20818
+      format: http://edamontology.org/format_2306
+    output_gff_index:
+      basename: "test-antismash.gff.bgz.tbi"
+      class: File
+      size: 946
+    stdout:
+      basename: "stdout.txt"
+      class: File
+      size: 145
+
+# 9 [ 45 Genome Properties ]
+# no json, bigger stderr, summary OK, table YES/NO instead of 1/0
+- job: Assembly/Genome_properties/genome_properties.yml
+  tool: ../../tools/Assembly/Genome_properties/genome_properties.cwl
+  short_name: genome_properties.cwl
+  doc: "genome_properties"
+  output:
+    json: null
+    stderr:
+      basename: stderr.txt
+      class: File
+      size: 1083
+    stdout:
+      basename: stdout.txt
+      class: File
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+    summary:
+      basename: SUMMARY_FILE_test-gp
+      class: File
+      size: 63217
+      format: http://edamontology.org/format_3475
+    table:
+      basename: TABLE_test-gp
+      class: File
+      size: 525921
+      format: http://edamontology.org/format_3475
+
+# 10 [ 46 Eggnog seed_orthologs ]
+- job: Assembly/EggNOG/eggnog-mapper.seed_orthologs.yml
+  tool: ../../tools/Assembly/EggNOG/eggnog.cwl
+  short_name: eggnog.cwl
+  doc: "Eggnog seed_orthologs"
+  output:
+    output_annotations:
+      basename: test_output.tsv.emapper.annotations
+      class: File
+      format: http://edamontology.org/format_3475
+      size: 2182
+    output_orthologs:
+      basename: test_output.tsv.emapper.seed_orthologs
+      class: File
+      size: 742
+      format: http://edamontology.org/format_3475

@@ -214,3 +214,112 @@
         - basename: "no_antismash"
           size: 0
           class: File
+
+# 15 func_summaries assembly
+- job: func_summaries/func_summaries-assembly.yml
+  tool: ../../workflows/subworkflows/func_summaries.cwl
+  doc: "func_summaries assembly"
+  short_name: func_summaries.cwl
+  output:
+    stats:
+      basename: "functional-annotation"
+      class: Directory
+      listing:
+        - class: Directory
+          basename: "stats"
+          listing:
+            - basename: "ko.stats"
+              class: File
+              size: 71
+              checksum: sha1$134738e9e3de8402cb66960bcd8630401ae291d1
+            - basename: "antismash.stats"
+              class: File
+              size: 94
+              checksum: sha1$6a1965a8ba4145646eb91d6c5a4620bc10c887d7
+            - basename: "pfam.stats"
+              class: File
+              size: 79
+              checksum: sha1$bedf281f427e44914e5fdafbf7b07538ccedf2e8
+            - basename: "interproscan.stats"
+              class: File
+              size: 103
+              checksum: sha1$cf65e8f4cda19dcbba7b8af5a8aec6a1b0c6b574
+            - basename: "go.stats"
+              class: File
+              size: 71
+              checksum: sha1$833b1299452ebc7b7989eafd43afb34397814bff
+            - basename: "orf.stats"
+              class: File
+              size: 73
+              checksum: sha1$6448fbf04537475cf7d0ddd8d49a31b8524ae5b0
+    summary_antismash:
+      class: File
+      basename: "fasta.summary.antismash"
+      size: 708
+      checksum: sha1$382c6cf3f117e05a927c95e7a0cb764f214955ff
+    summary_ips:
+      class: File
+      basename: "fasta.summary.ips"
+      size: 714
+      checksum: sha1$5f5eb699821cf45faf9b5a2b903bf8bc786c4d4a
+    summary_ko:
+      class: File
+      basename: "fasta.summary.ko"
+      size: 688
+      checksum: sha1$e8d90d0f3b0de53f5e100f806e98e229d3abc007
+    summary_pfam:
+      class: File
+      basename: "fasta.summary.pfam"
+      size: 398
+      checksum: sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc
+
+
+# 16 func_summaries raw-reads
+- job: func_summaries/func_summaries-raw-reads.yml
+  tool: ../../workflows/subworkflows/func_summaries.cwl
+  doc: "func_summaries raw-reads"
+  short_name: func_summaries.cwl
+  output:
+    stats:
+      basename: "functional-annotation"
+      class: Directory
+      listing:
+        - class: Directory
+          basename: "stats"
+          listing:
+            - basename: "ko.stats"
+              class: File
+              size: 71
+              checksum: sha1$134738e9e3de8402cb66960bcd8630401ae291d1
+            - basename: "pfam.stats"
+              class: File
+              size: 79
+              checksum: sha1$bedf281f427e44914e5fdafbf7b07538ccedf2e8
+            - basename: "interproscan.stats"
+              class: File
+              size: 103
+              checksum: sha1$cf65e8f4cda19dcbba7b8af5a8aec6a1b0c6b574
+            - basename: "go.stats"
+              class: File
+              size: 71
+              checksum: sha1$833b1299452ebc7b7989eafd43afb34397814bff
+            - basename: "orf.stats"
+              class: File
+              size: 73
+              checksum: sha1$6448fbf04537475cf7d0ddd8d49a31b8524ae5b0
+    summary_antismash: null
+    summary_ips:
+      class: File
+      basename: "fasta.summary.ips"
+      size: 714
+      checksum: sha1$5f5eb699821cf45faf9b5a2b903bf8bc786c4d4a
+    summary_ko:
+      class: File
+      basename: "fasta.summary.ko"
+      size: 688
+      checksum: sha1$e8d90d0f3b0de53f5e100f806e98e229d3abc007
+    summary_pfam:
+      class: File
+      basename: "fasta.summary.pfam"
+      size: 398
+      checksum: sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc

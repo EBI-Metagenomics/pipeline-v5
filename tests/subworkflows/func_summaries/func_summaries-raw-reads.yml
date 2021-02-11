@@ -1,0 +1,19 @@
+interproscan_annotation:
+  class: File
+  path: ../../tools/summaries/test-input/annot.ips.filt
+hmmscan_annotation:
+  class: File
+  path: ../../tools/summaries/test-input/annot.hmm
+pfam_annotation:
+  class: File
+  format:  http://edamontology.org/format_3475
+  path: ../../tools/summaries/test-input/annot.pfam.filt
+rna:
+  class: File
+  path: ../../tools/summaries/test-input/result.deoverlapped.filt
+cds:
+  class: File
+  path: ../../tools/summaries/test-input/fasta.faa
+ko_file:
+  class: File
+  path: ../../tools/summaries/test-input/annot.ko
