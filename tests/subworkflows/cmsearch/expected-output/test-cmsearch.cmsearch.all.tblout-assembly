@@ -1,0 +1,26 @@
+#target name                                       accession query name           accession mdl mdl from   mdl to seq from   seq to strand trunc pass   gc  bias  score   E-value inc description of target
+#------------------------------------------------- --------- -------------------- --------- --- -------- -------- -------- -------- ------ ----- ---- ---- ----- ------ --------- --- ---------------------
+ERZ1687496.479-NODE-479-length-5159-cov-572.753918 -         SSU_rRNA_bacteria    RF00177   hmm        4     1532     5012     3492      -     -    6 0.55  10.6 1129.9         0 !   -
+#
+# Program:         cmsearch
+# Version:         1.1.2 (July 2016)
+# Pipeline mode:   SEARCH
+# Query file:      /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-kate291chlzv/stg881fa05b-7415-4fcb-8265-8bbc6658dc57/RF00177.cm
+# Target file:     /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-kate291chlzv/stg948b3e33-b65a-436f-9120-71caa90e265e/test-cmsearch.fasta
+# Option settings: cmsearch -Z 1000 -o test-cmsearch.fasta.RF00177.cmsearch.out --tblout test-cmsearch.fasta.RF00177.cmsearch_matches.tbl --noali --hmmonly --cpu 8 /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-kate291chlzv/stg881fa05b-7415-4fcb-8265-8bbc6658dc57/RF00177.cm /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-kate291chlzv/stg948b3e33-b65a-436f-9120-71caa90e265e/test-cmsearch.fasta 
+# Current dir:     /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katel0_455i9
+# Date:            Tue Feb 16 09:34:27 2021
+# [ok]
+#target name                                       accession query name           accession mdl mdl from   mdl to seq from   seq to strand trunc pass   gc  bias  score   E-value inc description of target
+#------------------------------------------------- --------- -------------------- --------- --- -------- -------- -------- -------- ------ ----- ---- ---- ----- ------ --------- --- ---------------------
+ERZ1687496.479-NODE-479-length-5159-cov-572.753918 -         SSU_rRNA_archaea     RF01959   hmm        7     1476     5004     3494      -     -    6 0.55  13.0  677.7  9.9e-202 !   -
+#
+# Program:         cmsearch
+# Version:         1.1.2 (July 2016)
+# Pipeline mode:   SEARCH
+# Query file:      /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katefw_5ho3s/stgfd0f03cb-0a9a-43c6-83ab-0751ed67fc77/RF01959.cm
+# Target file:     /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katefw_5ho3s/stg57a45a83-f919-44c9-9dfd-790936d992ff/test-cmsearch.fasta
+# Option settings: cmsearch -Z 1000 -o test-cmsearch.fasta.RF01959.cmsearch.out --tblout test-cmsearch.fasta.RF01959.cmsearch_matches.tbl --noali --hmmonly --cpu 8 /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katefw_5ho3s/stgfd0f03cb-0a9a-43c6-83ab-0751ed67fc77/RF01959.cm /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katefw_5ho3s/stg57a45a83-f919-44c9-9dfd-790936d992ff/test-cmsearch.fasta 
+# Current dir:     /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-kate0mab0w01
+# Date:            Tue Feb 16 09:34:28 2021
+# [ok]

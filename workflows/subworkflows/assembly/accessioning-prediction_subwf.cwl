@@ -83,7 +83,7 @@ steps:
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
     out: [ predicted_proteins, predicted_seq, count_faa]
-    run: CGC-subwf.cwl
+    run: cgc/CGC-subwf.cwl
 
 # -----------------------------------  << Assign MGYPs >>  -----------------------------------
 

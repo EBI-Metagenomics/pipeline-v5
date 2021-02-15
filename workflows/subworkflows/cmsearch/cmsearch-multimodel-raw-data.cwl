@@ -10,8 +10,11 @@ requirements:
 
 inputs:
   query_sequences: File
-  covariance_models: string[]
-  clan_info: string
+  covariance_models:
+    type:
+    - type: array
+      items: [string, File]
+  clan_info: [string, File]
 
 outputs:
   concatenate_matches:
@@ -24,7 +27,7 @@ outputs:
 steps:
 
   cat_models:
-    run: ../../utils/concatenate.cwl
+    run: ../../../utils/concatenate.cwl
     in:
       files: covariance_models
       outputFileName: {default: 'models_cmsearch'}
@@ -32,7 +35,7 @@ steps:
     out: [ result ]
 
   split_fasta:
-    run: ../../tools/chunks/dna_chunker/fasta_chunker.cwl
+    run: ../../../tools/chunks/dna_chunker/fasta_chunker.cwl
     in:
       seqs: query_sequences
       chunk_size: { default: 2000000 }
@@ -42,7 +45,7 @@ steps:
 
   cmsearch:
     label: Search sequence(s) against a covariance model database
-    run: ../../tools/RNA_prediction/cmsearch/infernal-cmsearch-v1.1.2.cwl
+    run: ../../../tools/RNA_prediction/cmsearch/infernal-cmsearch-v1.1.2.cwl
     scatter: query_sequences
     in:
       query_sequences: split_fasta/chunks
@@ -55,7 +58,7 @@ steps:
     out: [ matches ]
 
   run_concatenate_matches:
-    run: ../../utils/concatenate.cwl
+    run: ../../../utils/concatenate.cwl
     in:
       files: cmsearch/matches
       outputFileName:
@@ -66,7 +69,7 @@ steps:
 
   remove_overlaps:
     label: Remove lower scoring overlaps from cmsearch --tblout files.
-    run: ../../tools/RNA_prediction/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
+    run: ../../../tools/RNA_prediction/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
     in:
       clan_information: clan_info
       cmsearch_matches: cmsearch/matches
@@ -74,7 +77,7 @@ steps:
     out: [ deoverlapped_matches ]
 
   run_concatenate_deoverlapped_matches:
-    run: ../../utils/concatenate.cwl
+    run: ../../../utils/concatenate.cwl
     in:
       files: remove_overlaps/deoverlapped_matches
       outputFileName:

@@ -1,26 +1,25 @@
 $namespaces:
   edam: http://edamontology.org/
-  iana: https://www.iana.org/assignments/media-types/
 
 fasta:
   class: File
-  path: ../tools/RNA_prediction/mapseq/test-input/test.SSU.fasta
+  path: ../input_files/test-cmsearch.fasta
   format: edam:format_1929
 mapseq_ref:
   class: File
-  path: ../tools/RNA_prediction/mapseq/test-input/silva-SSU.fasta
+  path: rna-prediction/test-input/SSU.fasta
   format: edam:format_1929
 mapseq_taxonomy:
   class: File
-  path: ../tools/RNA_prediction/mapseq/test-input/silva-filt.txt
+  path: rna-prediction/test-input/slv_ssu_filtered2.txt
 
 otu_ref:
   class: File
-  path: ../tools/RNA_prediction/mapseq2biom/test-input/test-otu
+  path: rna-prediction/test-input/ssu2.otu
 
 otu_label: "test-subwf"
 return_dirname: "result-classify"
 
 file_for_prefix:
   class: File
-  path: ../tools/RNA_prediction/mapseq/test-input/test.SSU.fasta
+  path: ../input_files/test-cmsearch.fasta

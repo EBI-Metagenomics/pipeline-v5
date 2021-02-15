@@ -95,7 +95,7 @@ steps:
 
 # cmsearch -> concatinate -> deoverlap
   find_ribosomal_ncRNAs:
-    run: cmsearch-condition.cwl
+    run: cmsearch/cmsearch-condition.cwl
     in:
       type: type
       query_sequences: input_sequences

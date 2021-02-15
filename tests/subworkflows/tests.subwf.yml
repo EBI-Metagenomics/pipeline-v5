@@ -201,13 +201,14 @@
       format: http://edamontology.org/format_2333
       size: 0
 
-# 14 assembly: antismash-subwf no antismash
-- job: assembly/antismash/no_antismash_subwf.yml
-  tool: ../../workflows/subworkflows/assembly/antismash/no_antismash_subwf.cwl
-  doc: "antismash-subwf no result"
-  short_name: no_antismash_subwf.yml
+# 14 assembly: antismash-main no antismash
+- job: assembly/antismash/main_antismash_subwf-no-antismash.yml
+  tool: ../../workflows/subworkflows/assembly/antismash/main_antismash_subwf.cwl
+  doc: "main_antismash_subwf no result"
+  short_name: main_antismash_subwf-no-antismash.yml
   output:
-    antismash_result_folder:
+    antismash_clusters: null
+    antismash_folder:
       basename: "pathways-systems"
       class: Directory
       listing:
@@ -215,7 +216,66 @@
           size: 0
           class: File
 
-# 15 func_summaries assembly
+# 15 assembly: antismash-main
+- job: assembly/antismash/main_antismash_subwf.yml
+  tool: ../../workflows/subworkflows/assembly/antismash/main_antismash_subwf.cwl
+  doc: "main_antismash_subwf"
+  short_name: main_antismash_subwf.yml
+  output:
+    antismash_clusters:
+      basename: "test_antismash_geneclusters.txt"
+      class: File
+      size: 446
+      checksum: sha1$729840ff18a9d7a67e286460ee3d4e755a1abe50
+    antismash_folder:
+      class: Directory
+      basename: "pathways-systems"
+      listing:
+        - basename: "test.antismash.gff.bgz"
+          class: File
+          size: 2198
+          checksum: sha1$293de8802acce4b526ffd7efd5bbe8d2d5db6773
+          format: http://edamontology.org/format_2306
+        - basename: "test.antismash.gff.bgz.tbi"
+          class: File
+          size: 164
+          checksum: sha1$cdf0e401354f2ae6ff2b5a17923778b172610876
+        - basename: "test_antismash_geneclusters.txt"
+          class: File
+          size: 446
+          checksum: sha1$729840ff18a9d7a67e286460ee3d4e755a1abe50
+        - basename: "test_antismash_final.embl.gz"
+          class: File
+          size: 147888
+          checksum: sha1$a1b10415133cdb385911d0c038a33d8232e5d2e9
+        - basename: "test_antismash_final.gbk.gz"
+          class: File
+          size: 146196
+          checksum: sha1$87da724dd403d98e878dce203ae4ecf8817b63c3
+
+# 16 assembly: antismash-annotation-subwf
+- job: assembly/antismash/antismash-annotation-subsubwf.yml
+  tool: ../../workflows/subworkflows/assembly/antismash/antismash-annotation-subsubwf.cwl
+  doc: "antismash-annotation-subsubwf: antismash + small post-processing"
+  short_name: antismash-annotation-subsubwf.cwl
+  output:
+    antismash_embl:
+      basename: "test.fasta.embl"
+      class: File
+      checksum: sha1$bd0986ab19f5efd55304104ff19c3da0337065bc
+      size: 437598
+    antismash_gbk:
+      basename: "test.fasta.gbk"
+      class: File
+      checksum: sha1$d2826b2c91187936db733f761950325a6a830b63
+      size: 418712
+    antismash_txt:
+      basename: "test.fasta.gncl.txt"
+      class: File
+      checksum: sha1$badc68430b3c44238ae5a47dc336388e82b617b0
+      size: 761
+
+# 17 func_summaries assembly
 - job: func_summaries/func_summaries-assembly.yml
   tool: ../../workflows/subworkflows/func_summaries.cwl
   doc: "func_summaries assembly"
@@ -274,7 +334,7 @@
       checksum: sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc
 
 
-# 16 func_summaries raw-reads
+# 18 func_summaries raw-reads
 - job: func_summaries/func_summaries-raw-reads.yml
   tool: ../../workflows/subworkflows/func_summaries.cwl
   doc: "func_summaries raw-reads"
@@ -323,3 +383,428 @@
       basename: "fasta.summary.pfam"
       size: 398
       checksum: sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc
+
+# 19 cmsearch assembly
+- job: cmsearch/cmsearch-condition-assembly.yml
+  tool: ../../workflows/subworkflows/cmsearch/cmsearch-condition.cwl
+  doc: "cmsearch-condition-assembly"
+  short_name: cmsearch-condition.cwl
+  output:
+    concatenate_matches:
+      basename: "test-cmsearch.cmsearch.all.tblout"
+      class: File
+      size: 3320
+      format: http://edamontology.org/format_3475
+    deoverlapped_matches:
+      basename: "test-cmsearch.cmsearch.all.tblout.deoverlapped"
+      class: File
+      checksum: sha1$0ec330cb4c1403d3e736ee50816b51289678fa35
+      size: 184
+      format: http://edamontology.org/format_3475
+
+# 20 cmsearch raw-reads
+- job: cmsearch/cmsearch-condition-raw-reads.yml
+  tool: ../../workflows/subworkflows/cmsearch/cmsearch-condition.cwl
+  doc: "cmsearch-condition-raw"
+  short_name: cmsearch-condition.cwl
+  output:
+    concatenate_matches:
+      basename: "test-cmsearch.cmsearch.all.tblout"
+      class: File
+      size: 1917
+      format: http://edamontology.org/format_3475
+    deoverlapped_matches:
+      basename: "test-cmsearch.cmsearch.all.tblout.deoverlapped"
+      class: File
+      checksum: sha1$0ec330cb4c1403d3e736ee50816b51289678fa35
+      size: 184
+      format: http://edamontology.org/format_3475
+
+# 21 CGC: predict_proteins_reads sub-wf
+- job: cgc/predict_proteins_reads.yml
+  tool: ../../../workflows/subworkflows/raw_reads/cgc/predict_proteins_reads.cwl
+  short_name: predict_proteins_reads.cwl
+  doc: "predict_proteins_reads (FGS only + post-processing)"
+  output:
+    predicted_proteins:
+      basename: 100000_130095.fasta.faa
+      class: File
+      checksum: sha1$cf2dd72b5ef9d96d1e8ba67d00b00c85617a7915
+      size: 6999325
+      format: http://edamontology.org/format_1929
+    predicted_seq:
+      basename: 100000_130095.fasta.ffn
+      class: File
+      checksum: sha1$0fb6f2f1fc51bfe03e83987cf393b0019bb31923
+      size: 17494721
+      format: http://edamontology.org/format_1929
+
+# 22 CGC: predict_proteins_assemblies sub-wf
+- job: cgc/predict_proteins_assemblies.yml
+  tool: ../../../workflows/subworkflows/raw_reads/cgc/predict_proteins_assemblies.cwl
+  short_name: predict_proteins_assemblies.cwl
+  doc: "predict_proteins_reads (FGS, Prodigal + post-processing)"
+  output:
+    predicted_proteins:
+      basename: 100000_130095.fasta.faa
+      class: File
+      checksum: sha1$4f449fef944e449cfd53d487864f8c96f9b6b49f
+      size: 10835565
+      format: http://edamontology.org/format_1929
+    predicted_seq:
+      basename: 100000_130095.fasta.ffn
+      class: File
+      checksum: sha1$33db3044ae2fd2076699629edff317c2373ae3bd
+      size: 21326804
+      format: http://edamontology.org/format_1929
+
+# 23 CGC: raw reads
+- job: cgc/CGC-subwf-raw.yml
+  tool: ../../../workflows/subworkflows/raw_reads/cgc/CGC-subwf.cwl
+  short_name: CGC-subwf.cwl
+  doc: "CGC-subwf-raw-reads (chunking+cgc+cat)"
+  output:
+    count_faa: 37961
+    predicted_faa:
+      basename: 100000_130095.fasta.faa
+      class: File
+      checksum: sha1$cf2dd72b5ef9d96d1e8ba67d00b00c85617a7915
+      size: 6999325
+      format: http://edamontology.org/format_1929
+    predicted_ffn:
+      basename: 100000_130095.fasta.ffn
+      class: File
+      checksum: sha1$0fb6f2f1fc51bfe03e83987cf393b0019bb31923
+      size: 17494721
+      format: http://edamontology.org/format_1929
+
+# 24 CGC: assembly
+- job: cgc/CGC-subwf-assembly.yml
+  tool: ../../../workflows/subworkflows/assembly/cgc/CGC-subwf.cwl
+  short_name: CGC-subwf.cwl
+  doc: "CGC-subwf-assembly (chunking+cgc+cat)"
+  output:
+    count_faa: 41127
+    predicted_proteins:
+      basename: 100000_130095.fasta.faa
+      class: File
+      checksum: sha1$4f449fef944e449cfd53d487864f8c96f9b6b49f
+      size: 10835565
+      format: http://edamontology.org/format_1929
+    predicted_seq:
+      basename: 100000_130095.fasta.ffn
+      class: File
+      checksum: sha1$33db3044ae2fd2076699629edff317c2373ae3bd
+      size: 21326804
+      format: http://edamontology.org/format_1929
+
+# 25 classify-otu-visualise
+- job: classify-otu-visualise.yml
+  tool: ../../../workflows/subworkflows/classify-otu-visualise.cwl
+  short_name: classify-otu-visualise.cwl
+  doc: "classify-otu-visualise SSU"
+  output:
+    number_lines_mapseq: 3
+    out_dir:
+      class: Directory
+      basename: "result-classify"
+      listing:
+        - basename: "test-cmsearch_SSU.fasta.mseq.gz"
+          class: File
+          checksum: sha1$45430ad28ebcb867b78757ab584e640f4edcab52
+          size: 299
+        - basename: "test-cmsearch_SSU.fasta.mseq.tsv"
+          class: File
+          checksum: sha1$f488c87fcffa2ec60a9b18b6c1beb94111aff184
+          size: 185
+        - basename: "test-cmsearch_SSU.fasta.mseq.txt"
+          class: File
+          checksum: sha1$5c2a383fb88da4f7e66e82ae8728e997fd44ca2b
+          size: 105
+        - basename: "krona.html"
+          class: File
+          size: 226796
+          format: https://www.iana.org/assignments/media-types/text/html
+        - basename: "test-cmsearch_SSU.fasta.mseq_hdf5.biom"
+          class: File
+          size: 37040
+        - basename: "test-cmsearch_SSU.fasta.mseq_json.biom"
+          class: File
+
+# 26 rna-prediction LSU+SSU
+- job: rna-prediction/rna_prediction-sub-wf.yml
+  tool: ../../../workflows/subworkflows/rna_prediction-sub-wf.cwl
+  short_name: rna_prediction-sub-wf.cwl
+  doc: "rna_prediction-sub-wf LSU+SSU"
+  output:
+    LSU-SSU-count:
+      basename: "RNA-counts"
+      class: File
+      checksum: sha1$c1017f6938453ac4a126a0ebb59717609e81855f
+      size: 23
+    LSU_coords:
+      basename: "LSU_coords"
+      class: File
+      checksum: sha1$9c21a1c7929fa281fdbb44c2641b4919724fb69c
+      size: 276
+    LSU_fasta:
+      basename: "LSU.fasta"
+      class: File
+      checksum: sha1$dbbcaff65670fdeb881fb9c159d6b7d792a85296
+      size: 6038
+      format: http://edamontology.org/format_1929
+    LSU_folder:
+      class: Directory
+      basename: "LSU"
+      listing:
+        - basename: "test-cmsearch_LSU.fasta.mseq.gz"
+          class: File
+          size: 439
+        - basename: "test-cmsearch_LSU.fasta.mseq.tsv"
+          class: File
+          size: 291
+          format: http://edamontology.org/format_3746
+        - basename: "test-cmsearch_LSU.fasta.mseq.txt"
+          class: File
+          size: 207
+        - basename: "krona.html"
+          class: File
+          size: 227249
+          format: https://www.iana.org/assignments/media-types/text/html
+        - basename: "test-cmsearch_LSU.fasta.mseq_hdf5.biom"
+          class: File
+          size: 37040
+        - basename: "test-cmsearch_LSU.fasta.mseq_json.biom"
+          class: File
+          size: 640
+    SSU_coords:
+      basename: "SSU_coords"
+      class: File
+      checksum: sha1$1faf283a2c760cb6464fd14f585238bfebe30a6b
+      size: 141
+    SSU_fasta:
+      basename: "SSU.fasta"
+      class: File
+      checksum: sha1$760881da11e5c788840c845a14ba64f94a01b2fe
+      size: 1628
+      format: http://edamontology.org/format_1929
+    SSU_folder:
+      class: Directory
+      basename: "SSU"
+      listing:
+        - basename: "test-cmsearch_SSU.fasta.mseq.gz"
+          class: File
+          size: 313
+        - basename: "test-cmsearch_SSU.fasta.mseq.tsv"
+          class: File
+          size: 183
+          format: http://edamontology.org/format_3746
+        - basename: "test-cmsearch_SSU.fasta.mseq.txt"
+          class: File
+          size: 105
+        - basename: "krona.html"
+          class: File
+          size: 226796
+          format: https://www.iana.org/assignments/media-types/text/html
+        - basename: "test-cmsearch_SSU.fasta.mseq_hdf5.biom"
+          class: File
+          size: 37040
+        - basename: "test-cmsearch_SSU.fasta.mseq_json.biom"
+          class: File
+          size: 494
+    cmsearch_result:
+      basename: "test-cmsearch.cmsearch.all.tblout"
+      class: File
+      size: 2653
+      format: http://edamontology.org/format_3475
+    compressed_rnas:
+      - basename: "LSU_rRNA_bacteria.RF02541.fa.gz"
+        class: File
+        size: 2127
+      - basename: "SSU_rRNA_bacteria.RF00177.fa.gz"
+        class: File
+        size: 709
+    ncRNA:
+      basename: "test-cmsearch.cmsearch.all.tblout.deoverlapped"
+      class: File
+      checksum: sha1$14976b1afef3dec5c89cc78f70a92cb94dc6b34f
+      size: 552
+      format: http://edamontology.org/format_3475
+    number_LSU_mapseq: 4
+    number_SSU_mapseq: 3
+
+# 27 rna-prediction LSU
+- job: rna-prediction/rna_prediction-sub-wf-LSU.yml
+  tool: ../../../workflows/subworkflows/rna_prediction-sub-wf.cwl
+  short_name: rna_prediction-sub-wf.cwl
+  doc: "rna_prediction-sub-wf LSU"
+  output:
+    LSU-SSU-count:
+      basename: "RNA-counts"
+      class: File
+      checksum: sha1$a29a78785f52b0a1317c4a4976c528d9e1fcffca
+      size: 23
+    LSU_coords:
+      basename: "LSU_coords"
+      class: File
+      checksum: sha1$b0b84fc1f83bf035efd8180831fd802c285a7b55
+      size: 137
+    LSU_fasta:
+      basename: "LSU.fasta"
+      class: File
+      checksum: sha1$ec3d6b47b394b569b76713ea263d66d78f3679f4
+      size: 3046
+      format: http://edamontology.org/format_1929
+    LSU_folder:
+      class: Directory
+      basename: "LSU"
+      listing:
+        - basename: "test-cmsearch-LSU_LSU.fasta.mseq.gz"
+          class: File
+          size: 332
+        - basename: "test-cmsearch-LSU_LSU.fasta.mseq.tsv"
+          class: File
+          size: 175
+          format: http://edamontology.org/format_3746
+        - basename: "test-cmsearch-LSU_LSU.fasta.mseq.txt"
+          class: File
+          size: 102
+        - basename: "krona.html"
+          class: File
+          size: 226797
+          format: https://www.iana.org/assignments/media-types/text/html
+        - basename: "test-cmsearch-LSU_LSU.fasta.mseq_hdf5.biom"
+          class: File
+          size: 37040
+        - basename: "test-cmsearch-LSU_LSU.fasta.mseq_json.biom"
+          class: File
+          size: 486
+    SSU_coords:
+      basename: "SSU_coords"
+      class: File
+      size: 0
+    SSU_fasta:
+      basename: "SSU.fasta"
+      class: File
+      size: 0
+      format: http://edamontology.org/format_1929
+    SSU_folder: null
+    cmsearch_result:
+      basename: "test-cmsearch-LSU.cmsearch.all.tblout"
+      class: File
+      size: 1871
+      format: http://edamontology.org/format_3475
+    compressed_rnas:
+      - basename: "LSU_rRNA_bacteria.RF02541.fa.gz"
+        class: File
+        size: 1175
+    ncRNA:
+      basename: "test-cmsearch-LSU.cmsearch.all.tblout.deoverlapped"
+      class: File
+      checksum: sha1$41507d8525f279fc686098499bfcf9b927ac19f6
+      size: 183
+      format: http://edamontology.org/format_3475
+    number_LSU_mapseq: 3
+    number_SSU_mapseq: null
+
+# 28 rna-prediction SSU
+- job: rna-prediction/rna_prediction-sub-wf-SSU.yml
+  tool: ../../../workflows/subworkflows/rna_prediction-sub-wf.cwl
+  short_name: rna_prediction-sub-wf.cwl
+  doc: "rna_prediction-sub-wf LSU"
+  output:
+    LSU-SSU-count:
+      basename: "RNA-counts"
+      class: File
+      checksum: sha1$7f939f4db3fab52ace10355fa04c16462327f45e
+      size: 23
+    LSU_coords:
+      basename: "LSU_coords"
+      class: File
+      checksum: sha1$9c21a1c7929fa281fdbb44c2641b4919724fb69c
+      size: 276
+    LSU_fasta:
+      basename: "LSU.fasta"
+      class: File
+      checksum: sha1$dbbcaff65670fdeb881fb9c159d6b7d792a85296
+      size: 6038
+      format: http://edamontology.org/format_1929
+    LSU_folder:
+      class: Directory
+      basename: "LSU"
+      listing:
+        - basename: "test-cmsearch_LSU.fasta.mseq.gz"
+          class: File
+          size: 439
+        - basename: "test-cmsearch_LSU.fasta.mseq.tsv"
+          class: File
+          size: 291
+          format: http://edamontology.org/format_3746
+        - basename: "test-cmsearch_LSU.fasta.mseq.txt"
+          class: File
+          size: 207
+        - basename: "krona.html"
+          class: File
+          size: 227249
+          format: https://www.iana.org/assignments/media-types/text/html
+        - basename: "test-cmsearch_LSU.fasta.mseq_hdf5.biom"
+          class: File
+          size: 37040
+        - basename: "test-cmsearch_LSU.fasta.mseq_json.biom"
+          class: File
+          size: 640
+    SSU_coords:
+      basename: "SSU_coords"
+      class: File
+      checksum: sha1$1faf283a2c760cb6464fd14f585238bfebe30a6b
+      size: 141
+    SSU_fasta:
+      basename: "SSU.fasta"
+      class: File
+      checksum: sha1$760881da11e5c788840c845a14ba64f94a01b2fe
+      size: 1628
+      format: http://edamontology.org/format_1929
+    SSU_folder:
+      class: Directory
+      basename: "SSU"
+      listing:
+        - basename: "test-cmsearch_SSU.fasta.mseq.gz"
+          class: File
+          size: 313
+        - basename: "test-cmsearch_SSU.fasta.mseq.tsv"
+          class: File
+          size: 183
+          format: http://edamontology.org/format_3746
+        - basename: "test-cmsearch_SSU.fasta.mseq.txt"
+          class: File
+          size: 105
+        - basename: "krona.html"
+          class: File
+          size: 226796
+          format: https://www.iana.org/assignments/media-types/text/html
+        - basename: "test-cmsearch_SSU.fasta.mseq_hdf5.biom"
+          class: File
+          size: 37040
+        - basename: "test-cmsearch_SSU.fasta.mseq_json.biom"
+          class: File
+          size: 494
+    cmsearch_result:
+      basename: "test-cmsearch.cmsearch.all.tblout"
+      class: File
+      size: 2653
+      format: http://edamontology.org/format_3475
+    compressed_rnas:
+      - basename: "LSU_rRNA_bacteria.RF02541.fa.gz"
+        class: File
+        size: 2127
+      - basename: "SSU_rRNA_bacteria.RF00177.fa.gz"
+        class: File
+        size: 709
+    ncRNA:
+      basename: "test-cmsearch.cmsearch.all.tblout.deoverlapped"
+      class: File
+      checksum: sha1$14976b1afef3dec5c89cc78f70a92cb94dc6b34f
+      size: 552
+      format: http://edamontology.org/format_3475
+    number_LSU_mapseq: 4
+    number_SSU_mapseq: 3

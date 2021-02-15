@@ -921,43 +921,56 @@
       checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
       size: 0
 
-# 36 CGC: predict_proteins_reads sub-wf
-- job: Combined_gene_caller/predict_proteins_reads.yml
-  tool: ../../tools/Combined_gene_caller/predict_proteins_reads.cwl
-  short_name: predict_proteins_reads.cwl
-  doc: "predict_proteins_reads (FGS only + post-processing)"
+# 36 write summaries assembly
+- job: summaries/write_summaries_assembly.yml
+  tool: ../../tools/summaries/write_summaries.cwl
+  short_name: write_summaries.cwl
+  doc: "write_summaries"
   output:
-    predicted_proteins:
-      basename: 100000_130095.fasta.faa
+    summary_antismash:
+      basename: "summary.antismash"
       class: File
-      checksum: sha1$cf2dd72b5ef9d96d1e8ba67d00b00c85617a7915
-      size: 6999325
-      format: http://edamontology.org/format_1929
-    predicted_seq:
-      basename: 100000_130095.fasta.ffn
+      size: 708
+      checksum: "sha1$382c6cf3f117e05a927c95e7a0cb764f214955ff"
+    summary_ips:
+      basename: "summary.ips"
       class: File
-      checksum: sha1$0fb6f2f1fc51bfe03e83987cf393b0019bb31923
-      size: 17494721
-      format: http://edamontology.org/format_1929
+      size: 714
+      checksum: "sha1$5f5eb699821cf45faf9b5a2b903bf8bc786c4d4a"
+    summary_ko:
+      basename: "summary.ko"
+      class: File
+      size: 688
+      checksum: "sha1$e8d90d0f3b0de53f5e100f806e98e229d3abc007"
+    summary_pfam:
+      basename: "summary.pfam"
+      class: File
+      size: 398
+      checksum: "sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc"
 
-# 37 CGC: predict_proteins_assemblies sub-wf
-- job: Combined_gene_caller/predict_proteins_assemblies.yml
-  tool: ../../tools/Combined_gene_caller/predict_proteins_assemblies.cwl
-  short_name: predict_proteins_assemblies.cwl
-  doc: "predict_proteins_reads (FGS, Prodigal + post-processing)"
+# 37 write summaries raw-reads
+- job: summaries/write_summaries_assembly.yml
+  tool: ../../tools/summaries/write_summaries.cwl
+  short_name: write_summaries.cwl
+  doc: "write_summaries"
   output:
-    predicted_proteins:
-      basename: 100000_130095.fasta.faa
+    summary_antismash: null
+    summary_ips:
+      basename: "summary.ips"
       class: File
-      checksum: sha1$4f449fef944e449cfd53d487864f8c96f9b6b49f
-      size: 10835565
-      format: http://edamontology.org/format_1929
-    predicted_seq:
-      basename: 100000_130095.fasta.ffn
+      size: 714
+      checksum: "sha1$5f5eb699821cf45faf9b5a2b903bf8bc786c4d4a"
+    summary_ko:
+      basename: "summary.ko"
       class: File
-      checksum: sha1$33db3044ae2fd2076699629edff317c2373ae3bd
-      size: 21326804
-      format: http://edamontology.org/format_1929
+      size: 688
+      checksum: "sha1$e8d90d0f3b0de53f5e100f806e98e229d3abc007"
+    summary_pfam:
+      basename: "summary.pfam"
+      class: File
+      size: 398
+      checksum: "sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc"
+
 
 # 38 chunker for fasta-file
 - job: chunks/protein_chunker/protein_chunker.yml
@@ -1374,52 +1387,3 @@
       size: 37
       checksum: "sha1$4fc2effb5e8380e51a70d54f4cd0d1d13b2f1e5a"
 
-# 64 write summaries assembly
-- job: summaries/write_summaries_assembly.yml
-  tool: ../../tools/summaries/write_summaries.cwl
-  short_name: write_summaries.cwl
-  doc: "write_summaries"
-  output:
-    summary_antismash:
-      basename: "summary.antismash"
-      class: File
-      size: 708
-      checksum: "sha1$382c6cf3f117e05a927c95e7a0cb764f214955ff"
-    summary_ips:
-      basename: "summary.ips"
-      class: File
-      size: 714
-      checksum: "sha1$5f5eb699821cf45faf9b5a2b903bf8bc786c4d4a"
-    summary_ko:
-      basename: "summary.ko"
-      class: File
-      size: 688
-      checksum: "sha1$e8d90d0f3b0de53f5e100f806e98e229d3abc007"
-    summary_pfam:
-      basename: "summary.pfam"
-      class: File
-      size: 398
-      checksum: "sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc"
-
-# 65 write summaries raw-reads
-- job: summaries/write_summaries_assembly.yml
-  tool: ../../tools/summaries/write_summaries.cwl
-  short_name: write_summaries.cwl
-  doc: "write_summaries"
-  output:
-    summary_antismash: null
-    summary_ips:
-      basename: "summary.ips"
-      class: File
-      size: 714
-      checksum: "sha1$5f5eb699821cf45faf9b5a2b903bf8bc786c4d4a"
-    summary_ko:
-      basename: "summary.ko"
-      class: File
-      size: 688
-      checksum: "sha1$e8d90d0f3b0de53f5e100f806e98e229d3abc007"
-    summary_pfam:
-      basename: "summary.pfam"
-      class: File
-      size: 398
-      checksum: "sha1$276d61fd5020d0fb6a002da18b386b9a9c5dffbc"

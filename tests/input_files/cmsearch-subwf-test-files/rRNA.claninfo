@@ -1,0 +1,6 @@
+CL00001 alpha_tmRNA beta_tmRNA cyano_tmRNA mt-tmRNA tmRNA tRNA tRNA-Sec
+CL00003 Metazoa_SRP Bacteria_small_SRP Fungi_SRP Dictyostelium_SRP Bacteria_large_SRP Plant_SRP Protozoa_SRP Archaea_SRP
+CL00002 RNaseP_nuc RNaseP_bact_a RNaseP_bact_b RNase_MRP RNaseP_arch RNase_P
+CL00111	SSU_rRNA_bacteria SSU_rRNA_archaea SSU_rRNA_eukarya SSU_rRNA_microsporidia SSU_trypano_mito
+CL00112	LSU_rRNA_archaea LSU_rRNA_bacteria LSU_rRNA_eukarya LSU_trypano_mito 5_8S_rRNA
+CL99999 5S_rRNA mtPerm-5S

@@ -1,0 +1,9 @@
+input_filtered_fasta:
+  class: File
+  path: ../../../input_files/empty_file
+clusters_glossary:
+  class: File
+  path: test-input/glossary.txt
+final_folder_name: pathways-systems
+chunk_size: 100000
+contig_min_limit: 5000

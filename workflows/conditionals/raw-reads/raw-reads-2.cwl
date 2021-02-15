@@ -172,7 +172,7 @@ steps:
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
     out: [ predicted_faa, predicted_ffn, count_faa ]
-    run: ../../subworkflows/raw_reads/CGC-subwf.cwl
+    run: ../../subworkflows/raw_reads/cgc/CGC-subwf.cwl
 
 # << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
 # << GO SUMMARY>>

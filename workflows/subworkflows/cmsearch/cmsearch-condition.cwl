@@ -9,12 +9,16 @@ requirements:
   SubworkflowFeatureRequirement: {}
   MultipleInputFeatureRequirement: {}
   StepInputExpressionRequirement: {}
+  InlineJavascriptRequirement: {}
 
 inputs:
   type: string
   query_sequences: File
-  clan_info: string
-  covariance_models: string[]
+  clan_info: [string, File]
+  covariance_models:
+    type:
+      - type: array
+        items: [string, File]
 
 outputs:
 
@@ -35,7 +39,7 @@ steps:
   cmsearch_assembly:
     when: $(inputs.type == 'assembly')
     label: Search sequence(s) against a covariance model database for assemblies
-    run: assembly/cmsearch-multimodel-assembly.cwl
+    run: cmsearch-multimodel-assembly.cwl
     in:
       type: type
       clan_info: clan_info

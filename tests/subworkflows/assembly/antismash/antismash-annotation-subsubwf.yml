@@ -4,11 +4,11 @@ $namespaces:
 
 fasta_file:
   class: File
-  path: ../../../tools/Assembly/antismash/test-input/test.fasta.1
+  path: test-input/test.fasta
   format: edam:format_1929  # FASTA
 
 accession: ACC_FASTA
 
 input_names_table:
   class: File
-  path: ../../../tools/Assembly/antismash/test-input/test-1-contig.table
+  path: test-input/test.table

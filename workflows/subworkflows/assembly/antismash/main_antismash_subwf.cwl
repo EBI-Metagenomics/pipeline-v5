@@ -13,15 +13,15 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-    input_filtered_fasta: File
-    clusters_glossary: [string, File]
-    final_folder_name: string
-    chunk_size:
-      type: int?
-      default: 100000
-    contig_min_limit:
-      type: int?
-      default: 5000
+  input_filtered_fasta: File
+  clusters_glossary: [string, File]
+  final_folder_name: string
+  chunk_size:
+    type: int?
+    default: 100000
+  contig_min_limit:
+    type: int?
+    default: 5000
 
 outputs:
   antismash_folder:

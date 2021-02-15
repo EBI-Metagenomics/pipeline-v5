@@ -1,0 +1,11 @@
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
+
+input_fasta:
+  class: File
+  path: ../../tools/Combined_gene_caller/test-input/100000_130095.fasta
+  format: edam:format_1929
+maskfile:
+  class: File
+  path: ../../tools/Combined_gene_caller/test-input/cmsearch.all.tblout.deoverlapped

@@ -1,0 +1,14 @@
+#target name                                       accession query name           accession mdl mdl from   mdl to seq from   seq to strand trunc pass   gc  bias  score   E-value inc description of target
+#------------------------------------------------- --------- -------------------- --------- --- -------- -------- -------- -------- ------ ----- ---- ---- ----- ------ --------- --- ---------------------
+ERZ1687496.479-NODE-479-length-5159-cov-572.753918 -         SSU_rRNA_bacteria    RF00177   hmm        4     1532     5012     3492      -     -    6 0.55  10.6 1129.9         0 !   -
+ERZ1687496.479-NODE-479-length-5159-cov-572.753918 -         SSU_rRNA_archaea     RF01959   hmm        7     1476     5004     3494      -     -    6 0.55  13.0  677.7  9.9e-202 !   -
+#
+# Program:         cmsearch
+# Version:         1.1.2 (July 2016)
+# Pipeline mode:   SEARCH
+# Query file:      /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katern3fsmw7/stg65c28b3c-8640-4ec5-bd6f-6919ce0a3d46/models_cmsearch.all.tblout
+# Target file:     /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katern3fsmw7/stgb3a034d8-264a-4c1d-b121-1219f3832876/test-cmsearch.fasta.1
+# Option settings: cmsearch -Z 1000 -o test-cmsearch.fasta.1.models_cmsearch.all.cmsearch.out --tblout test-cmsearch.fasta.1.models_cmsearch.all.cmsearch_matches.tbl --noali --cut_ga --hmmonly --cpu 8 /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katern3fsmw7/stg65c28b3c-8640-4ec5-bd6f-6919ce0a3d46/models_cmsearch.all.tblout /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katern3fsmw7/stgb3a034d8-264a-4c1d-b121-1219f3832876/test-cmsearch.fasta.1 
+# Current dir:     /hps/nobackup2/production/metagenomics/pipeline/testing/kate/pipeline-v5/tests/tmp-katea9jdy8hr
+# Date:            Tue Feb 16 09:24:39 2021
+# [ok]

@@ -33,8 +33,8 @@
 # 33 tools: CGC: FragGeneScan
 # 34 tools: CGC: post-processing only FGS
 # 35 tools: CGC: post-processing prodigal + FGS
-# 36 tools: CGC: predict_proteins_reads
-# 37 tools: CGC: predict_proteins_assemblies
+# 36 tools: summaries/write_summaries assembly
+# 37 tools: summaries/write_summaries  raw-reads
 # 38 tools: chunker for fasta-file 1 chunk
 # 39 tools: chunker for fasta-file 3 chunks
 # 40 tools: chunker for fasta-file empty input
@@ -61,5 +61,3 @@
 # 61 tools: Assembly: antismash: filtering fasta before antismash
 # 62 tools: Assembly: generate mapfile for viral pipeline
 # 63 tools: Assembly: GFF
-# 64 tools: summaries/write_summaries assembly
-# 65 tools: summaries/write_summaries  raw-reads

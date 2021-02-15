@@ -8,6 +8,7 @@ requirements:
       coresMin: 8
   SubworkflowFeatureRequirement: {}
   ScatterFeatureRequirement: {}
+  StepInputExpressionRequirement: {}
 
 inputs:
 
@@ -39,7 +40,7 @@ steps:
       number_of_output_files: { default: "False" }
       same_number_of_residues: { default: "False" }
     out: [ chunks ]
-    run: ../../../tools/chunks/dna_chunker/fasta_chunker.cwl
+    run: ../../../../tools/chunks/dna_chunker/fasta_chunker.cwl
 
   # << CGC >>
   combined_gene_caller:
@@ -48,7 +49,7 @@ steps:
       input_fasta: split_seqs/chunks
       maskfile: maskfile
     out: [ predicted_proteins, predicted_seq ]
-    run: ../../../tools/Combined_gene_caller/predict_proteins_reads.cwl
+    run: predict_proteins_reads.cwl
     label: CGC run
 
   combine_faa:
@@ -61,7 +62,7 @@ steps:
         source: postfixes
         valueFrom: $(self[0])
     out: [result]
-    run: ../../../utils/concatenate.cwl
+    run: ../../../../utils/concatenate.cwl
 
   combine_ffn:
     in:
@@ -73,10 +74,10 @@ steps:
         source: postfixes
         valueFrom: $(self[1])
     out: [result]
-    run: ../../../utils/concatenate.cwl
+    run: ../../../../utils/concatenate.cwl
 
   count_cds:
-    run: ../../../utils/count_fasta.cwl
+    run: ../../../../utils/count_fasta.cwl
     in:
       sequences: combine_faa/result
       number: { default: 1 }

@@ -1,0 +1,4 @@
+#cutoff: 0.00:0.08 0.00:0.08 0.70:0.35 0.70:0.35 0.70:0.35 0.80:0.25 0.92:0.08 0.95:0.05
+#name: SILVA
+#levels: Superkingdom Kingdom Phylum Class Order Family Genus Species
+HK694557.8.1512	sk__Bacteria;k__;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Tannerellaceae;g__Parabacteroides;s__
