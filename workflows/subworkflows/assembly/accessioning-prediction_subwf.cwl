@@ -19,6 +19,7 @@ inputs:
     public: int?
     CGC_postfixes: string[]
     cgc_chunk_size: int
+    generate_map_file_flag: boolean
 
 outputs:
   assigned_contigs:
@@ -100,7 +101,9 @@ steps:
 # -----------------------------------  << Generate map-file for viral pipeline >>  -------------------
 
   generate_mapfile:
+    when: $(inputs.generate_map_file == true)
     in:
+      generate_map_file: generate_map_file_flag
       input_fasta: assign_mgyp/renamed_proteins
       output_name:
         source: filtered_fasta

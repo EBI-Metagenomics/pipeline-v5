@@ -21,6 +21,9 @@ inputs:
     config_db_file: File?
     run_accession: string?
     study_accession: string?
+    generate_map_file_flag:
+      type: boolean?
+      default: false
 
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -185,6 +188,7 @@ steps:
       public: public
       include_protein_assign: include_protein_assign
       config_db_file: config_db_file
+      generate_map_file_flag: generate_map_file_flag
 
       filtered_fasta: before-qc/filtered_fasta
       ssu_db: ssu_db

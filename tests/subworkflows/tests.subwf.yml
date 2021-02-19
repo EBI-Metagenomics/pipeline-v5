@@ -422,7 +422,7 @@
 
 # 21 CGC: predict_proteins_reads sub-wf
 - job: cgc/predict_proteins_reads.yml
-  tool: ../../../workflows/subworkflows/raw_reads/cgc/predict_proteins_reads.cwl
+  tool: ../../workflows/subworkflows/raw_reads/cgc/predict_proteins_reads.cwl
   short_name: predict_proteins_reads.cwl
   doc: "predict_proteins_reads (FGS only + post-processing)"
   output:
@@ -441,7 +441,7 @@
 
 # 22 CGC: predict_proteins_assemblies sub-wf
 - job: cgc/predict_proteins_assemblies.yml
-  tool: ../../../workflows/subworkflows/raw_reads/cgc/predict_proteins_assemblies.cwl
+  tool: ../../workflows/subworkflows/raw_reads/cgc/predict_proteins_assemblies.cwl
   short_name: predict_proteins_assemblies.cwl
   doc: "predict_proteins_reads (FGS, Prodigal + post-processing)"
   output:
@@ -460,7 +460,7 @@
 
 # 23 CGC: raw reads
 - job: cgc/CGC-subwf-raw.yml
-  tool: ../../../workflows/subworkflows/raw_reads/cgc/CGC-subwf.cwl
+  tool: ../../workflows/subworkflows/raw_reads/cgc/CGC-subwf.cwl
   short_name: CGC-subwf.cwl
   doc: "CGC-subwf-raw-reads (chunking+cgc+cat)"
   output:
@@ -480,7 +480,7 @@
 
 # 24 CGC: assembly
 - job: cgc/CGC-subwf-assembly.yml
-  tool: ../../../workflows/subworkflows/assembly/cgc/CGC-subwf.cwl
+  tool: ../../workflows/subworkflows/assembly/cgc/CGC-subwf.cwl
   short_name: CGC-subwf.cwl
   doc: "CGC-subwf-assembly (chunking+cgc+cat)"
   output:
@@ -500,7 +500,7 @@
 
 # 25 classify-otu-visualise
 - job: classify-otu-visualise.yml
-  tool: ../../../workflows/subworkflows/classify-otu-visualise.cwl
+  tool: ../../workflows/subworkflows/classify-otu-visualise.cwl
   short_name: classify-otu-visualise.cwl
   doc: "classify-otu-visualise SSU"
   output:
@@ -533,7 +533,7 @@
 
 # 26 rna-prediction LSU+SSU
 - job: rna-prediction/rna_prediction-sub-wf.yml
-  tool: ../../../workflows/subworkflows/rna_prediction-sub-wf.cwl
+  tool: ../../workflows/subworkflows/rna_prediction-sub-wf.cwl
   short_name: rna_prediction-sub-wf.cwl
   doc: "rna_prediction-sub-wf LSU+SSU"
   output:
@@ -635,7 +635,7 @@
 
 # 27 rna-prediction LSU
 - job: rna-prediction/rna_prediction-sub-wf-LSU.yml
-  tool: ../../../workflows/subworkflows/rna_prediction-sub-wf.cwl
+  tool: ../../workflows/subworkflows/rna_prediction-sub-wf.cwl
   short_name: rna_prediction-sub-wf.cwl
   doc: "rna_prediction-sub-wf LSU"
   output:
@@ -709,50 +709,25 @@
 
 # 28 rna-prediction SSU
 - job: rna-prediction/rna_prediction-sub-wf-SSU.yml
-  tool: ../../../workflows/subworkflows/rna_prediction-sub-wf.cwl
+  tool: ../../workflows/subworkflows/rna_prediction-sub-wf.cwl
   short_name: rna_prediction-sub-wf.cwl
   doc: "rna_prediction-sub-wf LSU"
   output:
     LSU-SSU-count:
       basename: "RNA-counts"
       class: File
-      checksum: sha1$7f939f4db3fab52ace10355fa04c16462327f45e
+      checksum: sha1$c348611191f9bd702834344152d3185a0f9f6e35
       size: 23
     LSU_coords:
       basename: "LSU_coords"
       class: File
-      checksum: sha1$9c21a1c7929fa281fdbb44c2641b4919724fb69c
-      size: 276
+      size: 0
     LSU_fasta:
       basename: "LSU.fasta"
       class: File
-      checksum: sha1$dbbcaff65670fdeb881fb9c159d6b7d792a85296
-      size: 6038
+      size: 0
       format: http://edamontology.org/format_1929
-    LSU_folder:
-      class: Directory
-      basename: "LSU"
-      listing:
-        - basename: "test-cmsearch_LSU.fasta.mseq.gz"
-          class: File
-          size: 439
-        - basename: "test-cmsearch_LSU.fasta.mseq.tsv"
-          class: File
-          size: 291
-          format: http://edamontology.org/format_3746
-        - basename: "test-cmsearch_LSU.fasta.mseq.txt"
-          class: File
-          size: 207
-        - basename: "krona.html"
-          class: File
-          size: 227249
-          format: https://www.iana.org/assignments/media-types/text/html
-        - basename: "test-cmsearch_LSU.fasta.mseq_hdf5.biom"
-          class: File
-          size: 37040
-        - basename: "test-cmsearch_LSU.fasta.mseq_json.biom"
-          class: File
-          size: 640
+    LSU_folder: null
     SSU_coords:
       basename: "SSU_coords"
       class: File
@@ -768,43 +743,40 @@
       class: Directory
       basename: "SSU"
       listing:
-        - basename: "test-cmsearch_SSU.fasta.mseq.gz"
+        - basename: "test-cmsearch-SSU_SSU.fasta.mseq.gz"
           class: File
-          size: 313
-        - basename: "test-cmsearch_SSU.fasta.mseq.tsv"
+          size: 317
+        - basename: "test-cmsearch-SSU_SSU.fasta.mseq.tsv"
           class: File
           size: 183
           format: http://edamontology.org/format_3746
-        - basename: "test-cmsearch_SSU.fasta.mseq.txt"
+        - basename: "test-cmsearch-SSU_SSU.fasta.mseq.txt"
           class: File
           size: 105
         - basename: "krona.html"
           class: File
-          size: 226796
+          size: 226800
           format: https://www.iana.org/assignments/media-types/text/html
-        - basename: "test-cmsearch_SSU.fasta.mseq_hdf5.biom"
+        - basename: "test-cmsearch-SSU_SSU.fasta.mseq_hdf5.biom"
           class: File
           size: 37040
-        - basename: "test-cmsearch_SSU.fasta.mseq_json.biom"
+        - basename: "test-cmsearch-SSU_SSU.fasta.mseq_json.biom"
           class: File
           size: 494
     cmsearch_result:
-      basename: "test-cmsearch.cmsearch.all.tblout"
+      basename: "test-cmsearch-SSU.cmsearch.all.tbloutt"
       class: File
-      size: 2653
+      size: 1933
       format: http://edamontology.org/format_3475
     compressed_rnas:
-      - basename: "LSU_rRNA_bacteria.RF02541.fa.gz"
-        class: File
-        size: 2127
       - basename: "SSU_rRNA_bacteria.RF00177.fa.gz"
         class: File
         size: 709
     ncRNA:
-      basename: "test-cmsearch.cmsearch.all.tblout.deoverlapped"
+      basename: "test-cmsearch-SSU.cmsearch.all.tblout.deoverlapped"
       class: File
-      checksum: sha1$14976b1afef3dec5c89cc78f70a92cb94dc6b34f
-      size: 552
+      checksum: sha1$0ec330cb4c1403d3e736ee50816b51289678fa35
+      size: 184
       format: http://edamontology.org/format_3475
-    number_LSU_mapseq: 4
+    number_LSU_mapseq: null
     number_SSU_mapseq: 3

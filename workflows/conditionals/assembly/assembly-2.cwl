@@ -26,6 +26,7 @@ inputs:
     config_db_file: File?
     run_accession: string?
     study_accession: string?
+    generate_map_file_flag: boolean
 
  # << rna prediction >>
     ssu_db: {type: File, secondaryFiles: [.mscluster] }
@@ -172,6 +173,7 @@ steps:
       public: public
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
+      generate_map_file_flag: generate_map_file_flag
     out:
       - assigned_contigs
       - predicted_proteins

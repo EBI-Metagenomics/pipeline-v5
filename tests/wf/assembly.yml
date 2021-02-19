@@ -5,7 +5,7 @@ $namespaces:
 contigs:
   class: File
   format: edam:format_1929
-  path: ../input_files/assembly-SRR1620013_small.fasta
+  path: ../input_files/assembly_SRR1620013_small.fasta.gz
 
 include_protein_assign: false
 contig_min_length: 500
