@@ -1,0 +1,10 @@
+annotate_hits_table:
+  class: File
+  path: expected-output/test_output.tsv.emapper.seed_orthologs
+data_dir:
+  class: Directory
+  path: ../../../input_files/assembly/eggnog-and-diamond
+cpu: 16
+output: annotation-output
+
+no_file_comments: true

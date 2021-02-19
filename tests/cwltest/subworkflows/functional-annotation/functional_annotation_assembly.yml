@@ -1,0 +1,30 @@
+type: "assembly"
+CGC_predicted_proteins:
+  class: File
+  path: test-input/test.fasta
+
+name_ips: I5.tsv.without_header
+name_hmmer: hmm.tsv.without_header
+
+chunk_size_hmm: 50000
+chunk_size_IPS: 10000
+
+HMM_gathering_bit_score: false
+HMM_omit_alignment: true
+HMM_database: test.hmm
+HMM_database_dir:
+  class: Directory
+  path:  ../../tools/hmmer/test-input/db
+
+EggNOG_data_dir:
+  class: Directory
+  path: ../../tools/Assembly/EggNOG/test-input
+chunk_size_eggnog: 100000
+
+InterProScan_applications:
+  - PfamA
+InterProScan_outputFormat:
+  - TSV
+InterProScan_databases:
+  class: Directory
+  path: ../../tools/InterProScan/test-input/databases/data

@@ -42,7 +42,7 @@ steps:
 
 # GO SUMMARY; PFAM; summaries and stats IPS, HMMScan, Pfam; add header; chunking TSV
   post_processing:
-    run: ../func-annotation-post-proccessing-go-pfam-stats-subwf.cwl
+    run: ../functional-annotation/post-proccessing-go-pfam-stats-subwf.cwl
     in:
       fasta: fasta
       IPS_table: IPS_table

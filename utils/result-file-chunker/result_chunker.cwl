@@ -12,10 +12,12 @@ requirements:
 inputs:
   input_file: File
   format: string
-  type_fasta: string?
+  type_fasta:
+    type: string?
+    default: "n"
   size_limit: int?
   line_number_tsv:
-    type: int
+    type: int?
     default: 10000000
 
 outputs:

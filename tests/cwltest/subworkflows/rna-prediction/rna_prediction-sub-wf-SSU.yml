@@ -1,0 +1,49 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+type: "raw"
+input_sequences:
+  class: File
+  path: ../../input_files/cmsearch-subwf-test-files/test-cmsearch-SSU.fasta
+  format: 'edam:format_1929'
+
+ncRNA_ribosomal_models:
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF00177.cm
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF01959.cm
+
+ncRNA_ribosomal_model_clans:
+  class: File
+  path: ../../input_files/cmsearch-subwf-test-files/rRNA.claninfo
+
+pattern_SSU: 'SSU_rRNA'
+pattern_LSU: 'LSU_rRNA'
+pattern_5.8S: '5_8S_rRNA'
+pattern_5S: 'mtPerm-5S'
+
+
+silva_ssu_database:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/SSU.fasta
+  format: edam:format_1929  # FASTA
+  checksum: 6b0580823a8c6860a0674428745fb943
+silva_lsu_database:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/LSU.fasta
+  format: edam:format_1929  # FASTA
+  checksum: 96dc05a4ab2933ec6f443a1a0ce0d225
+
+silva_ssu_taxonomy:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/slv_ssu_filtered2.txt
+silva_lsu_taxonomy:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/slv_lsu_filtered2.txt
+silva_ssu_otus:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/ssu2.otu
+silva_lsu_otus:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/lsu2.otu
+

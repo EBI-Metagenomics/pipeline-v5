@@ -1,0 +1,7 @@
+$namespaces:
+  edam: http://edamontology.org/
+
+reads:
+  class: File
+  path: ../../input_files/wgs-single-ERR1995312_small.fastq.gz
+  format: edam:format_1930

@@ -1,0 +1,7 @@
+glossary:
+  class: File
+  path: ../../../../../input_files/assembly/antismash/antismash_glossary.tsv
+
+geneclusters:
+  class: File
+  path: ../../test-input/geneclusters.txt

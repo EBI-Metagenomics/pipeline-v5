@@ -3,9 +3,9 @@
 DOCKER_ORG="microbiomeinformatics"
 
 DOCKER_IMAGES=(
-    "python3:v1"
+    "python3:v3.1"
     "python2:v1"
-    "bash-scripts:v1.2"
+    "bash-scripts:v1.3"
     "biom-convert:v2.1.6"
     "mapseq:v1.2.3"
     "mapseq2biom:v1.0"
@@ -27,7 +27,7 @@ DOCKER_IMAGES=(
     "eggnog:v2.0.0"
     "dna_chunking:v0.11"
     "seqprep:v1.2"
-    "split-fasta:v1"
+    "split-fasta:v2"
     "fastp:0.20.0"
 )
 

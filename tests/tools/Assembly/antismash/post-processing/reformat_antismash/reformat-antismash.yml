@@ -1,7 +1,0 @@
-glossary:
-  class: File
-  path: ../../test-input/glossary.txt
-
-geneclusters:
-  class: File
-  path: ../../test-input/geneclusters.txt

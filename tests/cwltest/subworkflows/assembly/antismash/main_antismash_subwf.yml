@@ -1,0 +1,10 @@
+input_filtered_fasta:
+  class: File
+  path: test-input/test.fasta
+clusters_glossary:
+  class: File
+  path: ../../../input_files/assembly/antismash/antismash_glossary.tsv
+
+final_folder_name: pathways-systems
+chunk_size: 100000
+contig_min_limit: 5000

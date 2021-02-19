@@ -1,0 +1,10 @@
+1	Unclassified
+2	sk__Eukaryota	60517
+3	sk__Eukaryota;k__Alveolata	60516
+4	sk__Eukaryota;k__Alveolata;p__Alveolata_phy_Incertae_sedis	60515
+5	sk__Eukaryota;k__Alveolata;p__Alveolata_phy_Incertae_sedis;c__Alveolata_cls_Incertae_sedis	60514
+6	sk__Eukaryota;k__Alveolata;p__Alveolata_phy_Incertae_sedis;c__Alveolata_cls_Incertae_sedis;o__Alveolata_ord_Incertae_sedis	60513
+7	sk__Eukaryota;k__Fungi	60512
+8	sk__Eukaryota;k__Fungi;p__Ascomycota	60511
+9	sk__Eukaryota;k__Fungi;p__Ascomycota;c__Dothideomycetes;o__Capnodiales;f__Extremaceae;g__Vermiconia;s__Vermiconia_sp	60510
+10	sk__Eukaryota;k__Fungi;p__Ascomycota;c__Sordariomycetes;o__Hypocreales;f__Hypocreales_fam_Incertae_sedis;g__Acremonium	60509

@@ -10,7 +10,7 @@ requirements:
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:v2
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v3.1
 
 baseCommand: [ count_lines.py ]
 

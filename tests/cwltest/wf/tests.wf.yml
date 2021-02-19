@@ -1,0 +1,799 @@
+# 1: assembly pipeline
+- job: assembly/assembly.yml
+  tool: ../../../workflows/assembly-wf--v.5-cond.cwl
+  short_name: assembly-wf--v.5-cond.cwl
+  doc: "assembly-wf--v.5-cond.cwl"
+  output:
+    chunking_nucleotides:
+      - basename: "FASTA_FASTA.fasta.gz"
+        class: File
+        #size: 54445
+      - basename: "FASTA_FASTA.fasta.chunks"
+        class: File
+        size: 22
+        checksum: sha1$3859c59075c7f6813f0c57e95ad94937c2ae2114
+      - basename: "FASTA_FASTA_CDS.ffn.gz"
+        class: File
+        #size: 55539
+      - basename: "FASTA_FASTA_CDS.ffn.chunks"
+        class: File
+        size: 24
+        checksum: sha1$97f0a53281705364693d78769356323ef78c097a
+      - basename: "FASTA_FASTA_CDS.faa.gz"
+        class: File
+        #size: 39046
+      - basename: "FASTA_FASTA_CDS.faa.chunks"
+        class: File
+        size: 24
+        checksum: sha1$4904eda353d991d74191717464fa94597b7873de
+    completed_flag_file:
+      size: 0
+      basename: "wf-completed"
+      class: File
+    compressed_files:
+      - basename: "FASTA_FASTA.cmsearch.all.tblout.deoverlapped.gz"
+        class: File
+        #size: 248
+        #checksum: sha1$bfc0dc844c1a47900f6149511d467ff5dd481175
+      - basename: "FASTA_FASTA.cmsearch.all.tblout.gz"
+        class: File
+        #size: 1088
+        #checksum: sha1$3075dbce2501f0e9112c68dd98878b7ab429a252
+    digest_mapfile_for_virify: null
+    functional_annotation_folder:
+      class: Directory
+      basename: "functional-annotation"
+      listing:
+        - basename: "FASTA_FASTA.annotations.gff.bgz"
+          class: File
+          #size: 6019
+          #checksum: sha1$d761f74a222686249ed59dc06980caf1ccac7ff8
+        - basename: "FASTA_FASTA.annotations.gff.bgz.tbi"
+          class: File
+          size: 3846
+          checksum: sha1$e2bb42323b7740ec5fc3b94400f58f58aa30e3aa
+        - basename: "FASTA_FASTA.emapper.annotations.gz"
+          class: File
+          #size: 203
+          #checksum: sha1$c2171447f2460bbd4110ba8bfd354a6d5e9c43ef
+        - basename: "FASTA_FASTA.emapper.seed_orthologs.gz"
+          class: File
+          #size: 113
+          #checksum: sha1$2a530c41b61d18d8b289881b96d6129db7a69bbe
+        - basename: "FASTA_FASTA.summary.ips"
+          class: File
+          size: 16841
+          checksum: sha1$9aa3c06e29b290b7649f0bfe63720aa64a728bda
+        - basename: "FASTA_FASTA.summary.ko"
+          class: File
+          size: 50
+          checksum: sha1$f2a7a41c06ac520c71ff7aeb90eab3e5f759498e
+        - basename: "FASTA_FASTA.summary.pfam"
+          class: File
+          size: 9465
+          checksum: sha1$a3637557bb5ef74fb5f03e0c56c379ef213d14df
+        - basename: "FASTA_FASTA.summary.go"
+          class: File
+          size: 12432
+          checksum: sha1$6b8a1aa8f8a395ec3c2c6977ddf457b9382fd905
+          format: http://edamontology.org/format_3752
+        - basename: "FASTA_FASTA.summary.go_slim"
+          class: File
+          size: 7312
+          checksum: sha1$22d14ab744d28a2fe4bf4340f7bf7c39ae3e78b7
+          format: http://edamontology.org/format_3752
+        - basename: "FASTA_FASTA_summary.diamond.gz"
+          class: File
+          #size: 6634
+          #checksum: sha1$94693501323c109a2340f1d1898c582ebddebcca
+        - basename: "FASTA_FASTA.hmm.tsv.gz"
+          class: File
+          #size: 497
+          #checksum: sha1$80da73848f48731ce347f3fd4eec13f065f3479c
+        - basename: "FASTA_FASTA.I5.tsv.gz"
+          class: File
+          #size: 28423
+          #checksum: sha1$7edb2a1f91420845a194deb11626767f7c325a35
+        - basename: "FASTA_FASTA_summary.diamond.chunks"
+          class: File
+          size: 32
+          checksum: sha1$6d3367205da273aad396a0fdcb8dd37a1bfdba40
+        - basename: "FASTA_FASTA.hmm.tsv.chunks"
+          class: File
+          size: 24
+          checksum: sha1$0943c185a7046759efefeee8206b91e3492af4af
+        - basename: "FASTA_FASTA.I5.tsv.chunks"
+          class: File
+          size: 23
+          checksum: sha1$56bf730c8afb0cc36591f20ef8ea447be45cb0b7
+    hashsum_input:
+      basename: "FASTA.fasta.gz.sha1"
+      class: File
+      checksum: sha1$f75f76a38c1255467e9c7dda4f3d21c3bfa916b2
+      size: 57
+    indexed_fasta_file:
+      - basename: "FASTA_FASTA.fasta.bgz.fai"
+        class: File
+        size: 11572
+        checksum: sha1$ff3a157054e5aff380ab0ee740ad1fa73b19be05
+      - basename: "FASTA_FASTA.fasta.bgz"
+        class: File
+        #size: 55030
+        #checksum: sha1$402a89ba8727d486753fb041a162267c7c9729df
+      - basename: "FASTA_FASTA.fasta.bgz.gzi"
+        class: File
+        #size: 40
+        #checksum: sha1$0472bbd66db21d58bf7f4ca0e03da8f92d2fa9f4
+    pathways_systems_folder:
+      class: Directory
+      basename: "pathways-systems"
+      listing:
+        - basename: "FASTA_FASTA.summary.kegg_contigs.tsv"
+          class: File
+          checksum: sha1$3b86f2b00ffbaf341426cd98af32bc9c5d36bdd7
+          size: 87
+          format: http://edamontology.org/format_3475
+        - basename: "FASTA_FASTA.summary.kegg_pathways"
+          class: File
+          checksum: sha1$4d45c24898407f1068d590c09d48ca874e12e74d
+          size: 92
+          format: http://edamontology.org/format_3452
+        - basename: "FASTA_FASTA.summary.gprops"
+          class: File
+          checksum: sha1$ea52c689dbbe751bd9e2951ec6dd8eeedaec7978
+          size: 70749
+          format: http://edamontology.org/format_3452
+    pathways_systems_folder_antismash:
+      class: Directory
+      basename: "pathways-systems"
+      listing:
+        - basename: "FASTA_FASTA.antismash.gff.bgz"
+          class: File
+          #checksum: sha1$d2942e153cee5c403e306625659f49c101cc7034
+          #size: 72
+          format: http://edamontology.org/format_2306
+        - basename: "FASTA_FASTA.antismash.gff.bgz.tbi"
+          class: File
+          checksum: sha1$fd2eb344b5c7702fa656a33cb576f439ec76c9a0
+          size: 73
+        - basename: "FASTA_FASTA_antismash_geneclusters.txt"
+          class: File
+          checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+          size: 0
+        - basename: "FASTA_FASTA_antismash_final.embl.gz"
+          class: File
+          #checksum: sha1$b7753573ec3818f045dcfa1baff823616cbc2acf
+          #size: 5188
+        - basename: "FASTA_FASTA_antismash_final.gbk.gz"
+          class: File
+          #checksum: sha1$3f00f7a68edcd2362d8b6a985a9cab6ccd6a454c
+          #size: 5113
+    pathways_systems_folder_antismash_summary:
+      class: Directory
+      basename: "pathways-systems"
+      listing:
+        - class: File
+          basename: "FASTA_FASTA.summary.antismash"
+          size: 0
+    proteinDB_metadata: null
+    qc-statistics_folder:
+      basename: "qc-statistics"
+      class: Directory
+      listing:
+        - basename: "GC-distribution.out.full"
+          class: File
+          size: 756
+          checksum: sha1$e43538cab3c8189758bd7b47fa3b9e0083b5d67f
+        - basename: "summary.out"
+          class: File
+          size: 310
+          checksum: sha1$3af4345875853de369e9bcb804aad2329228161f
+        - basename: "seq-length.out.full_bin"
+          class: File
+          size: 57
+          checksum: sha1$012748df2dd9f4a9e40f6a9a13226e3a2daef0af
+        - basename: "GC-distribution.out.full_bin"
+          class: File
+          size: 48
+          checksum: sha1$8904a5d4d02c6e3786a2bc613ca4072e2aff639e
+        - basename: "GC-distribution.out.full_pcbin"
+          class: File
+          size: 64
+          checksum: sha1$5c54cf7f10ec87b714b40862747c66a70f7358fe
+        - basename: "seq-length.out.full"
+          class: File
+          size: 854
+          checksum: sha1$bbac4dae87a08a058a0905253c53e69411990564
+        - basename: "nucleotide-distribution.out.full"
+          class: File
+          size: 15726
+          checksum: sha1$f981198a415515c4bb89a005835fb098d3096b45
+        - basename: "seq-length.out.full_pcbin"
+          class: File
+          size: 72
+          checksum: sha1$1cb68167637ee8409848dbf3a1d96ce6c88cdcd3
+    qc-status:
+      basename: "QC-PASSED"
+      class: File
+      size: 0
+    qc_summary:
+      basename: "qc_summary"
+      class: File
+      checksum: sha1$942f392c36886df7ac13b037de2c0bf416fbe6c4
+      size: 199
+    rna-count:
+      basename: "RNA-counts"
+      class: File
+      checksum: sha1$7f939f4db3fab52ace10355fa04c16462327f45e
+      size: 23
+    sequence-categorisation_folder:
+      class: Directory
+      basename: "sequence-categorisation"
+      listing:
+        - basename: "LSU.fasta.gz"
+          class: File
+          #size: 186
+          #checksum: sha1$8ee16dc4205a1c3a706cfcfef7a562fe7a86bba1
+        - basename: "SSU.fasta.gz"
+          class: File
+          #size: 370
+          #checksum: sha1$1f6995b824c39ef185a2be7fab207b3898b1f7ca
+        - basename: "LSU.fasta.chunks"
+          class: File
+          size: 14
+          checksum: sha1$b0c3709897232c0aaa5e65f234ff2a58a9267047
+        - basename: "SSU.fasta.chunks"
+          class: File
+          size: 14
+          checksum: sha1$1b278f25d4822d158f8b8942887648c930d5c856
+        - basename: "LSU_rRNA_archaea.RF02540.fa.gz"
+          class: File
+          #size: 204
+          #checksum: sha1$993651ee08f79475c31f6a2f36a6773ca17749dc
+        - basename: "SSU_rRNA_bacteria.RF00177.fa.gz"
+          class: File
+          #size: 389
+          #checksum: sha1$658a3ace9159d9bf4cdeb5540e959f2fde250d0c
+    stats:
+      basename: "functional-annotation"
+      class: Directory
+      listing:
+        - basename: "stats"
+          class: Directory
+          listing:
+            - basename: "antismash.stats"
+              size: 91
+              class: File
+              checksum: sha1$0d5f3dc2857072911c6a385f9a1c38c4566f3f77
+            - basename: "ko.stats"
+              size: 70
+              class: File
+              checksum: sha1$c009d0e7c1578033a5e3886ca090d8fc4781bd1d
+            - basename: "pfam.stats"
+              size: 82
+              class: File
+              checksum: sha1$0e32ca731ce0bcc7eb6cb26cb092deda6ff19e9e
+            - basename: "go.stats"
+              size: 76
+              class: File
+              checksum: sha1$7960bbcafc519909a525a9c9f29ee23357385548
+            - basename: "interproscan.stats"
+              size: 106
+              class: File
+              checksum: sha1$2c94aa444bc73d2cde076d8d4631639a22a13317
+            - basename: "orf.stats"
+              size: 74
+              class: File
+              checksum: sha1$6f0df95d185435faaf51f1966877070e02cd7adf
+    taxonomy-summary_folder:
+      class: Directory
+      basename: "taxonomy-summary"
+      listing:
+        - basename: "SSU"
+          class: Directory
+          listing:
+            - basename: "FASTA_FASTA_SSU.fasta.mseq.gz"
+              class: File
+              #size: 264
+              #checksum: sha1$0b0790370d6373876303cffb5c1b8def50dd9cc1
+            - basename: "FASTA_FASTA_SSU.fasta.mseq.tsv"
+              class: File
+              checksum: sha1$c0e65df63e0fa49b0c6b24f07364af29647acc2b
+              size: 88
+              format: http://edamontology.org/format_3746
+            - basename: "FASTA_FASTA_SSU.fasta.mseq.txt"
+              class: File
+              checksum: sha1$eae1d791ea17296e8ef2c5ffb772acc779d272ec
+              size: 15
+              format: https://www.iana.org/assignments/media-types/text/tab-separated-values
+            - basename: "krona.html"
+              class: File
+              #size: 226269
+            - basename: "FASTA_FASTA_SSU.fasta.mseq_hdf5.biom"
+              class: File
+              #checksum: sha1$5ed1542bc3ba0b10ff3421130feb752a7f8f32be
+              size: 37040
+            - basename: "FASTA_FASTA_SSU.fasta.mseq_json.biom"
+              class: File
+              size: 399
+
+# 2: raw-reads
+- job: raw-reads/wgs-1.yml
+  tool: ../../../workflows/raw-reads-wf--v.5-cond.cwl
+  short_name: raw-reads-wf--v.5-cond.cwl
+  doc: "raw-reads-wf--v.5-cond.cwl"
+  output:
+    chunking_fastas:
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.fasta.gz"
+        class: File
+        #checksum: sha1$f69bdf3c5a1502d0a43a0155c5bdc6cf5f270f25
+        size: 348579
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_CDS.ffn.gz"
+        class: File
+        #checksum: sha1$23cd784ee378e4e90ee3b27a26b2d06d70a4e46d
+        size: 313691
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.fasta.chunks"
+        class: File
+        checksum: sha1$18069da0a6f1e1c5ed378a1a839e9be9a9f51a14
+        size: 45
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_CDS.ffn.chunks"
+        class: File
+        checksum: sha1$16c334c3dda319fb4258d02f6c759f5041484af7
+        size: 47
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_CDS.faa.gz"
+        class: File
+        #checksum: sha1$5bb2f3d689763df137177cabb3e2a69d624da1e6
+        size: 239157
+      - basename: wgs-paired-SRR1620013_MERGED_FASTQ_CDS.faa.chunks
+        class: File
+        checksum: sha1$653c5dfc64eb2e16a04112db9cd8c7fada4d2866
+        size: 47
+  completed_flag_file:
+    basename: wf-completed
+    class: File
+    checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+    size: 0
+  compressed_files:
+    - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.cmsearch.all.tblout.deoverlapped.gz"
+      class: File
+      #checksum: sha1$0f7501e21658c6e7231be3babb52eb0bad45f545
+      size: 1000
+    - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.cmsearch.all.tblout.gz"
+      class: File
+      #checksum: sha1$049bfe7b29769f0ff8c91b780c1720bee38e1a82
+      size: 1689
+  fastp_filtering_json_report:
+    basename: "fastp.json"
+    class: File
+    #checksum: sha1$9fd8f64ab91cdaddbc2aa60c7d557483b8ca1828
+    size: 107590
+  functional_annotation_folder:
+    class: Directory
+    basename: functional-annotation
+    listing:
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.summary.ips"
+        class: File
+        checksum: sha1$ed2dc5a7d022fcf2f8cf7058c24bb077693e3004
+        size: 60760
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.summary.ko"
+        class: File
+        checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+        size: 0
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.summary.pfam"
+        class: File
+        checksum: sha1$d52a9d1c36d8c70d6c71ff644dedcb100ee4f386
+        size: 36838
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.summary.go"
+        class: File
+        checksum: sha1$fa8783c7fd0ad918d8900e17f36776d647ec7cd4
+        size: 33415
+        format: http://edamontology.org/format_3752
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.summary.go_slim"
+        class: File
+        checksum: sha1$e4d0b5b74685310291df2b301371295e58175327
+        size: 7342
+        format: http://edamontology.org/format_3752
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.hmm.tsv.gz"
+        class: File
+        #checksum: sha1$cfbd4d6432462a8135ca7e364f0361c821478aea
+        size: 197
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.I5.tsv.gz"
+        class: File
+        #checksum: sha1$45248f66a91b719b5942e7606a4dd0f846f51751
+        size: 148356
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.hmm.tsv.chunks"
+        class: File
+        checksum: sha1$00c514fde12b047ec31259e2963c4b24c987f83a
+        size: 47
+      - basename: "wgs-paired-SRR1620013_MERGED_FASTQ.I5.tsv.chunks"
+        class: File
+        checksum: sha1$5983767c1719bbd383e362117f93f64a7a3894eb
+        size: 46
+  hashsum_paired:
+    - basename: "wgs-paired-SRR1620013_1_small.fastq.gz.sha1"
+      class: File
+      checksum: sha1$1d157fa544b65b0210ade09be9816b7e583564e5
+      size: 81
+    - basename: "wgs-paired-SRR1620013_2_small.fastq.gz.sha1"
+      class: File
+      checksum: sha1$c83668d6e51b505dbeefa04d678858c7aef7b210
+      size: 81
+  hashsum_single: null
+  motus_output:
+    basename: "wgs-paired-SRR1620013_MERGED_FASTQ.motus.tsv"
+    class: File
+    checksum: sha1$8a4158c3972a16af16932fd6e911e7a00e89d8b8
+    size: 2232
+  no_cds_flag_file: null
+  no_tax_flag_file: null
+  qc-statistics:
+    basename: "qc-statistics"
+    class: Directory
+    listing:
+      - class: File
+        basename: "GC-distribution.out.full"
+        checksum: sha1$03ffb1392e3dfffa310d3922ce4fe8f78eebf5e4
+        size: 4384
+      - class: File
+        basename: "summary.out"
+        checksum: sha1$6837b1a27ccb8b5111c15877b8c77e2b4ce8fe09
+        size: 312
+      - class: File
+        basename: "seq-length.out.full_bin"
+        checksum: sha1$590cd8a2a7fb1294ff9ec736aad0bcaf6c996dbe
+        size: 141
+      - class: File
+        basename: "GC-distribution.out.full_bin"
+        checksum: sha1$9c739737f8247101fb6509f34003d5cf94f8846c
+        size: 104
+      - class: File
+        basename: "GC-distribution.out.full_pcbin"
+        checksum: sha1$50cea4af511fb733dfbb0cadf8d35ddb7f375c1f
+        size: 114
+      - class: File
+        basename: "seq-length.out.full"
+        checksum: sha1$08e8c9729a9d17d5a5792b44bf0db77bd046b5d1
+        size: 639
+      - class: File
+        basename: "nucleotide-distribution.out.full"
+        checksum: sha1$8cf6a4b3f1bf5d33c7ee0d4283db4232ad4a7ddd
+        size: 5800
+      - class: File
+        basename: "seq-length.out.full_pcbin"
+        checksum: sha1$edeb223384617550e7e3516998661dd6c8286f6f
+        size: 147
+  qc-status:
+    basename: "QC-PASSED"
+    class: File
+    checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+    size: 0
+  qc_summary:
+    basename: "qc_summary"
+    class: File
+    checksum: sha1$c6e44f45885318410ea1b7e20cf53eafb007c342
+    size: 205
+  rna-count:
+    basename: "RNA-counts"
+    class: File
+    checksum: sha1$8a96e101127a162f7948b75906b0144d870111c6
+    size: 24
+  sequence-categorisation_folder:
+    class: Directory
+    basename: "sequence-categorisation"
+    listing:
+      - basename: "LSU.fasta.gz"
+        class: File
+        #checksum: sha1$a873da568a15e25e17a5ed8a3d5ce4be9d1c5ead
+        size: 921
+      - basename: "SSU.fasta.gz"
+        class: File
+        #checksum: sha1$1ca08253de8891de303666aa6e20e9ad07007b75
+        size: 705
+      - basename: "LSU.fasta.chunks"
+        class: File
+        checksum: sha1$b0c3709897232c0aaa5e65f234ff2a58a9267047
+        size: 14
+      - basename: "SSU.fasta.chunks"
+        class: File
+        checksum: sha1$1b278f25d4822d158f8b8942887648c930d5c856
+        size: 14
+      - basename: "LSU_rRNA_bacteria.RF02541.fa.gz"
+        class: File
+        #checksum: sha1$43c1494df3483e923931a35fa69f0458b02b021f
+        size: 940
+      - basename: "SSU_rRNA_bacteria.RF00177.fa.gz"
+        class: File
+        #checksum: sha1$011481fe8dc83c112cd0f13b14cf34457bfe2477
+        size: 724
+  stats:
+    basename: "functional-annotation"
+    class: Directory
+    listing:
+      - class: Directory
+        basename: "stats"
+        listing:
+          - class: File
+            basename: "ko.stats"
+            checksum: sha1$5dab5f4bd60062d6526053e25e3c6113aa8975c0
+            size: 70
+          - class: File
+            basename: "pfam.stats"
+            checksum: sha1$f96582c3b5b8046e5d859cf90cfad762d7c0375b
+            size: 85
+          - class: File
+            basename: "go.stats"
+            checksum: sha1$711cb615333b60c56b767ffea5b8fb99e96bd161
+            size: 77
+          - class: File
+            basename: "interproscan.stats"
+            checksum: sha1$4b97375d468b29cb70e1e5d9e3b8372cd978344d
+            size: 109
+          - class: File
+            basename: "orf.stats"
+            checksum: sha1$e87a3107105715a96f84be536c779d61874d788a
+            size: 77
+  taxonomy-summary_folder:
+    class: Directory
+    basename: "taxonomy-summary"
+    listing:
+      - class: Directory
+        basename: "SSU"
+        listing:
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_SSU.fasta.mseq.gz"
+            class: File
+            #checksum: sha1$4bcd1e524588ee3ca0e54f0202ca1950138d90db
+            size: 560
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_SSU.fasta.mseq.tsv"
+            class: File
+            checksum: sha1$195309b226bee31acf08050cc119f9a5b119b63c
+            size: 172
+            format: http://edamontology.org/format_3746
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_SSU.fasta.mseq.txt"
+            class: File
+            checksum: sha1$2ab509264a082e4f42638f6357b81b0b8be6f806
+            size: 83
+            format: https://www.iana.org/assignments/media-types/text/tab-separated-values
+          - basename: "krona.html"
+            class: File
+            checksum: sha1$fa903190cfdc6e4fef1224df6db1879aa4803aa2
+            size: 226681
+            format: https://www.iana.org/assignments/media-types/text/html
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_SSU.fasta.mseq_hdf5.biom"
+            class: File
+            #checksum: sha1$15a9aea8797561ec908e680f88ba29bd9faa9559
+            size: 37040
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_SSU.fasta.mseq_json.biom"
+            class: File
+            #checksum: sha1$f7f7ed7b2714938f72d0108ac534cc2246219074
+            size: 521
+      - class: Directory
+        basename: "LSU"
+        listing:
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_LSU.fasta.mseq.gz"
+            class: File
+            #checksum: sha1$cdff15e9fc3e4358c888be4f2b50dbc9a80c558b
+            size: 847
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_LSU.fasta.mseq.tsv"
+            class: File
+            checksum: sha1$dd9c1d7805021c7ca2e6425849aa34b9412ec770
+            size: 168
+            format: http://edamontology.org/format_3746
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_LSU.fasta.mseq.txt"
+            class: File
+            checksum: sha1$9c34739cfbdc1fd72e65881a0ad764552cf6d6ca
+            size: 84
+            format: https://www.iana.org/assignments/media-types/text/tab-separated-values
+          - basename: "krona.html"
+            class: File
+            #checksum: sha1$ca43453257e536eb20caeba6c9b1c8b9da94c3aa
+            size: 226684
+            format: https://www.iana.org/assignments/media-types/text/html
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_LSU.fasta.mseq_hdf5.biom"
+            class: File
+            #checksum: sha1$7e4ddb9684d439b6de93b0b10eb4cc83c7c04e0e
+            size: 37040
+          - basename: "wgs-paired-SRR1620013_MERGED_FASTQ_LSU.fasta.mseq_json.biom"
+            class: File
+            #checksum: sha1$51f4fb9f7880cbadaa94dd8b9ddfba0cd4f4c118
+            size: 517
+
+# 3: amplicon pipeline
+- job: amplicon/amplicon-only-its.yml
+  tool: ../../../workflows/amplicon-wf--v.5-cond.cwl
+  short_name: amplicon-wf--v.5-cond.cwl
+  doc: "amplicon-wf--v.5-cond.cwl"
+  output:
+    ITS-length:
+      basename: ITS_LENGTH
+      class: File
+      checksum: sha1$1c9b452812acbc9eb63213e159d5c9125064c43a
+      size: 44
+    completed_flag_file:
+      basename: "wf-completed"
+      class: File
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+    fastp_filtering_json_report:
+      basename: "fastp.json"
+      class: File
+      #checksum: sha1$ca39f234a0b693f3cdc48cfb18865cf0d9763659
+      size: 172198
+    gz_files:
+      - basename: "ERR2044670_MERGED_FASTQ.fasta.gz"
+        class: File
+        #checksum: sha1$9e1156d830f5e7b1fce62123925fff730f728010
+        #size: 1736133
+      - basename: "ERR2044670_MERGED_FASTQ.cmsearch.all.tblout.gz"
+        class: File
+        #checksum: sha1$1a39d6148152d8ecdc0d448fb182293e39f1290d
+        #size: 1205498
+      - basename: "ERR2044670_MERGED_FASTQ.cmsearch.all.tblout.deoverlapped.gz"
+        class: File
+        #checksum: sha1$61bacadcaf633c7602bf5f00cbc9fc4fa16865a6
+        #size: 893502
+    hashsum_paired:
+      - basename: "ERR2044670_1.fastq.gz.sha1"
+        class: File
+        checksum: sha1$4b2f79c05a29531add17253b7409774e230fc942
+        size: 64
+      - basename: "ERR2044670_2.fastq.gz.sha1"
+        class: File
+        checksum: sha1$53497049681db991ce1cef6d4e5aba514f4e8774
+        size: 64
+    hashsum_single: null
+    no_tax_flag_file: null
+    qc-statistics:
+      basename: qc-statistics
+      class: Directory
+      listing:
+        - class: File
+          basename: "GC-distribution.out.full"
+          checksum: sha1$d149d3d33b77d10a72f2600c0686ab4b66a5ac49
+          size: 1496
+        - class: File
+          basename: "summary.out"
+          checksum: sha1$6be0dd4383f2e60e023c880423c5fb5424def0b7
+          size: 311
+        - class: File
+          basename: GC-distribution.out.full_bin
+          checksum: sha1$10eade71c4cc483b796c6052bdff66b1cd3d9b68
+          size: 48
+        - class: File
+          basename: "GC-distribution.out.full_pcbin"
+          checksum: sha1$4b02997b945d8e004e4193c54fc4dacbddfcb003
+          size: 50
+        - class: File
+          basename: "seq-length.out.full"
+          checksum: sha1$b30b4a849bd47590c8d4aef07383aa971b389b39
+          size: 557
+        - class: File
+          basename: "nucleotide-distribution.out.full"
+          checksum: sha1$a74b15ded5a233ae50bf624c97954ebd524ccf59
+          size: 14118
+        - class: File
+          basename: "seq-length.out.full_pcbin"
+          checksum: sha1$ffdc015e1c9423a32e4be7ddacec9fe15a1048cc
+          size: 122
+    qc-status:
+      basename: "QC-PASSED"
+      class: File
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+    qc_summary:
+      basename: "qc_summary"
+      class: File
+      checksum: sha1$ab4a4b16cbc964dff189bc369e36962ddb9e4641
+      size: 208
+    rna-count:
+      basename: "RNA-counts"
+      class: File
+      checksum: sha1$c40d470aeffe91cc005373be17226c984a899760
+      size: 27
+    sequence-categorisation_folder:
+      class: Directory
+      basename: "sequence-categorisation"
+      listing:
+        - basename: "SSU_rRNA_archaea.RF01959.fa.gz"
+          class: File
+          #checksum: sha1$efc62252b4bffcf6d510ca15c197483adad6406a
+          #size: 1015
+        - basename: "SSU_rRNA_bacteria.RF00177.fa.gz"
+          class: File
+          #checksum: sha1$00c6dd0a09da0882ab354690da34616bfc05762a
+          #size: 1811978
+        - basename: "SSU.fasta.gz"
+          class: File
+          #checksum: sha1$1fc4158a1d9c1261fac929545508cab319dfcdba
+          #size: 1816104
+    suppressed_upload:
+      basename: "suppressed"
+      class: Directory
+      listing:
+        - class: Directory
+          basename: "its"
+          listing:
+            - class: Directory
+              basename: "itsonedb"
+              listing:
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_itsonedb.fasta.mseq.gz"
+                  #checksum: sha1$0867e648a723753c2b23a7213218a5cd25041063
+                  #size: 608
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_itsonedb.fasta.mseq.txt"
+                  checksum: sha1$dbe8f950d8b027bfe5b198e10783f52aacfe884a
+                  size: 398
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_itsonedb.fasta.mseq.tsv"
+                  checksum: sha1$e4e5b286208eaa9af8c52d8722b6db4fee46d613
+                  size: 490
+                - class: File
+                  basename: "krona.html"
+                  #checksum: sha1$c208e94e5fade1cee02412a64823eac436d1a1fa
+                  #size: 228125
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_itsonedb.fasta.mseq_json.biom"
+                  #checksum: sha1$f7ecd1700422d3b67a33c36afc1c5883bd7acb88
+                  #size: 880
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_itsonedb.fasta.mseq_hdf5.biom"
+                  #checksum: sha1$7a2fe66fefe1063fb05c4db10c155af698859726
+                  #size: 37040
+            - class: Directory
+              basename: "unite"
+              listing:
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_unite.fasta.mseq.gz"
+                  #checksum: sha1$d1c37e45f79366a21235a4f9ef31acb8800ee069
+                  #size: 390
+                - class: File
+                  basename: "krona.html"
+                  #checksum: sha1$04f4ab47fe17b1ac82ddc19329240bfcbe3d1c65
+                  #size: 227289
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_unite.fasta.mseq_hdf5.biom"
+                  #checksum: sha1$09ed97bbc6e525e00b16e76d94c3f50cfdc3bff3
+                  #size: 37040
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_unite.fasta.mseq.tsv"
+                  checksum: sha1$9535210347dbb59fae4f2843168b79ba422bba2e
+                  size: 314
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_unite.fasta.mseq_json.biom"
+                  #checksum: sha1$6196e78b4a33a9ea115cd62a22610eb4330618ad
+                  #size: 671
+                - class: File
+                  basename: "ERR2044670_MERGED_FASTQ_unite.fasta.mseq.txt"
+                  checksum: sha1$fee315741c19c5ba54f2a58871c5a4064f329a18
+                  size: 240
+        - class: File
+          basename: "ITS_masked.fasta.gz"
+          #checksum: sha1$5e2e32696c59e6da044120726d27301e405e423d
+          #size: 669330
+    taxonomy-summary_folder:
+      basename: "taxonomy-summary"
+      class: Directory
+      listing:
+        - class: Directory
+          basename: "SSU"
+          listing:
+            - class: File
+              basename: "ERR2044670_MERGED_FASTQ_SSU.fasta.mseq.txt"
+              checksum: sha1$029f1ab1f7c1c5b78bed2d3c629cee08880a2f78
+              size: 280
+            - class: File
+              basename: "krona.html"
+              #checksum: sha1$c99d138a583ee21b135cde10a67eac1a6acf24d8
+              #size: 227008
+            - class: File
+              basename: "ERR2044670_MERGED_FASTQ_SSU.fasta.mseq_hdf5.biom"
+              #checksum: sha1$abb94ac1fe29176ee4a3a35bc00a188453c53cb2
+              #size: 37040
+            - class: File
+              basename: "ERR2044670_MERGED_FASTQ_SSU.fasta.mseq.gz"
+              #checksum: sha1$d7134a6d81f83df52e7f1ce9f7ccc6c9c313c176
+              #size: 841394
+            - class: File
+              basename: "ERR2044670_MERGED_FASTQ_SSU.fasta.mseq_json.biom"
+              #checksum: sha1$62c048094075f28b736cedc234b39715e2e76340
+              #size: 826

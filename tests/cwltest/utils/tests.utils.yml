@@ -1,0 +1,513 @@
+# 1 make csv
+- job: make_csv/make_csv.yml
+  tool: ../../../utils/make_csv/make_csv.cwl
+  short_name: make_csv.cwl
+  doc: "TSV to CSV"
+  output:
+    csv_result:
+      path: Any
+      basename: output-test
+      class: File
+      location: Any
+      checksum: sha1$d430894ca951ab1baec7f3f86d0ad14ad5a535a9
+      size: 87
+
+# 2 utils: add_header
+- job: add_header/add_header.yml
+  tool: ../../../utils/add_header/add_header.cwl
+  short_name: add_header.cwl
+  doc: "add header to file"
+  output:
+    output_table:
+      path: Any
+      basename: test
+      class: File
+      location: Any
+      checksum: sha1$cb9a1b23f3d55ca327a822a01e78306a5b0604cc
+      size: 45
+      format: undefined
+
+# 3 utils: count_lines empty input
+- job: count_lines/count_lines.empty_input.yml
+  tool: ../../../utils/count_lines/count_lines.cwl
+  short_name: count_lines.cwl
+  doc: "count lines in file with division on value (empty input)"
+  output:
+    count: 0
+
+# 4 utils: count_lines input.fq
+- job: count_lines/count_lines.yml
+  tool: ../../../utils/count_lines/count_lines.cwl
+  short_name: count_lines.cwl
+  doc: "count lines in file with division on value (fastq)"
+  output:
+    count: 26
+
+# 5 utils: count_lines gzipped input.fq
+- job: count_lines/count_lines.gzip.yml
+  tool: ../../../utils/count_lines/count_lines.cwl
+  short_name: count_lines.cwl
+  doc: "count lines in file with division on value (gzipped fastq)"
+  output:
+    count: 100000
+
+# 6 utils: fastp
+- job: fastp/fastp.yml
+  tool: ../../../utils/fastp/fastp.cwl
+  short_name: fastp.cwl
+  doc: "fastp: filter paired fastq files"
+  output:
+    html_report:
+      path: Any
+      basename: fastp.html
+      class: File
+      location: Any
+      checksum: Any
+      size: Any
+    json_report:
+      path: Any
+      basename: fastp.json
+      class: File
+      location: Any
+      checksum: Any
+      size: Any
+    out_fastq1:
+      path: Any
+      basename: wgs-paired-SRR1620013_1_small.fastq.fastp.fastq
+      class: File
+      location: Any
+      checksum: Any
+      size: 5322456
+    out_fastq2:
+      path: Any
+      basename: wgs-paired-SRR1620013_2_small.fastq.fastp.fastq
+      class: File
+      location: Any
+      checksum: Any
+      size: 5322456
+
+# 7 utils: fastq to fasta
+- job: fastq_to_fasta/fastq_to_fasta.test.yaml
+  tool: ../../../utils/fastq_to_fasta/fastq_to_fasta.cwl
+  short_name: fastq_to_fasta.cwl
+  doc: "fastq_to_fasta"
+  output:
+    fasta:
+      path: Any
+      basename: input.unclean
+      class: File
+      location: Any
+      checksum: sha1$83d1e227f1badeefb4a2c70f3574d1b082a73563
+      size: 4001
+
+# 8 utils: generate_checksum
+- job: generate_checksum/generate_checksum.yml
+  tool: ../../../utils/generate_checksum/generate_checksum.cwl
+  short_name: generate_checksum.cwl
+  doc: "generate_checksum file sha1sum"
+  output:
+    hashsum:
+      path: Any
+      basename: input.fq.sha1
+      class: File
+      location: Any
+      checksum: sha1$a0c0b7e0ba30070ed8373b86296fa0f6dbc6ef7a
+      size: 51
+
+# 9 pigz
+- job: pigz/pigz.yml
+  tool: ../../../utils/pigz/gzip.cwl
+  short_name: gzip.cwl
+  doc: "compress file with PIGZ"
+  output:
+    compressed_file:
+      path: Any
+      basename: empty_file.gz
+      class: File
+      location: Any
+      checksum: Any
+      size: 31
+
+# 10 result-chunker TSV
+- job: result-file-chunker/split_tsv.yml
+  tool: ../../../utils/result-file-chunker/split_tsv.cwl
+  short_name: split_tsv.cwl
+  doc: "result-chunker tsv"
+  output:
+    chunks:
+      - path: Any
+        basename: TSVchunk001.tsv
+        class: File
+        location: Any
+        checksum: sha1$112b24a4588775466fd281f5c00becc15e12c3e9
+        size: 7807
+      - path: Any
+        basename: TSVchunk002.tsv
+        class: File
+        location: Any
+        checksum: sha1$012e39762dcf543754e7a99c306700c6e8875fc8
+        size: 3041
+
+# 11 result-chunker empty TSV
+- job: result-file-chunker/split_tsv.empty.yml
+  tool: ../../../utils/result-file-chunker/split_tsv.cwl
+  short_name: split_tsv.cwl
+  doc: "result-chunker empty tsv"
+  output:
+    chunks:
+      - class: File
+        basename: empty_file
+        size: 0
+        location: Any
+        path: Any
+        checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+
+# 12 result-chunker big fasta (nucleotide)
+- job: result-file-chunker/split_fasta_nuc_big_input.yml
+  tool: ../../../utils/result-file-chunker/split_fasta.cwl
+  short_name: split_fasta.cwl
+  doc: "result-chunker big fasta (nucleotide)"
+  output:
+    chunks:
+      - path: Any
+        basename: test-chunker_1.fasta
+        class: File
+        location: Any
+        checksum: sha1$2cd2d72dbac736f598e3c87aa705ee396d4da5bf
+        size: 1048902
+      - path: Any
+        basename: test-chunker_2.fasta
+        class: File
+        location: Any
+        checksum: sha1$c3a7424507e99014ead0edece14214d63073c5c6
+        size: 110388
+
+# 13 result-chunker small fasta (nucleotide)
+- job: result-file-chunker/split_fasta_nuc_small_input.yml
+  tool: ../../../utils/result-file-chunker/split_fasta.cwl
+  short_name: split_fasta.cwl
+  doc: "result-chunker big fasta (nucleotide)"
+  output:
+    chunks:
+      - path: Any
+        basename: assembly-SRR1620013_small.fasta
+        class: File
+        location: Any
+        checksum: sha1$aaf509ca6fc1badcd2f98b9a61c46d7c183be340
+        size: 105390
+
+# 14 result-chunker create chunks file
+- job: result-file-chunker/create_chunks_file.yml
+  tool: ../../../utils/result-file-chunker/create_chunks_file.cwl
+  short_name: create_chunks_file.cwl
+  doc: "result-chunker cheate chunks-file (2 chunks)"
+  output:
+    chunks_file:
+      path: Any
+      basename: test-chunker.fasta.chunks
+      class: File
+      location: Any
+      checksum: sha1$78edb771bc497a56a27703d8f7086bf911d511f8
+      size: 43
+
+# 15 result-chunker-subwf tsv 3 chunks
+- job: result-file-chunker/result_chunker_subwf-tsv.yml
+  tool: ../../../utils/result-file-chunker/result_chunker_subwf.cwl
+  short_name: result_chunker_subwf.cwl
+  doc: "result-chunker-subwf tsv 3 chunks"
+  output:
+    chunked_by_size_files:
+      - path: Any
+        basename: IPS_output_001.tsv.gz
+        class: File
+        location: Any
+        checksum: Any
+        size: 1178
+      - path: Any
+        basename: IPS_output_002.tsv.gz
+        class: File
+        location: Any
+        checksum: Any
+        size: 1058
+      - path: Any
+        basename: IPS_output_003.tsv.gz
+        class: File
+        location: Any
+        checksum: Any
+        size: 372
+      - path: Any
+        basename: IPS_output.tsv.chunks
+        class: File
+        location: Any
+        checksum: sha1$2dc0e9eef31a0ce482fed7eef17afc50e52c5728
+        size: 67
+
+# 16 result-chunker-subwf tsv empty
+- job: result-file-chunker/result_chunker_subwf-tsv-empty.yml
+  tool: ../../../utils/result-file-chunker/result_chunker_subwf.cwl
+  short_name: result_chunker_subwf.cwl
+  doc: "result-chunker-subwf tsv empty"
+  output:
+    chunked_by_size_files:
+      - path: Any
+        basename: empty_file.gz
+        class: File
+        location: Any
+        checksum: Any
+        size: 31
+      - path: Any
+        basename: empty_file.chunks
+        class: File
+        location: Any
+        checksum: sha1$5ae6ccbf8a652995bdc40c018c77894a88caa24a
+        size: 15
+
+
+# 17 return-directory of files
+- job: return_directory/return_directory_of_files.yml
+  tool: ../../../utils/return_directory/return_directory.cwl
+  short_name: return_directory.cwl
+  doc: "put files into directory"
+  output:
+    out:
+      path: Any
+      basename: test-files
+      location: Any
+      class: Directory
+      listing:
+        - class: File
+          location: Any
+          checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+          size: 0
+          basename: empty_file
+          path: Any
+        - class: File
+          location: Any
+          checksum: sha1$61f185c1d4dcff591068819eece017ac5ceb7e1d
+          size: 1159290
+          basename: test-chunker.fasta
+          path: Any
+
+# 18 return-directory of directories
+- job: return_directory/return_directory_of_dirs.yml
+  tool: ../../../utils/return_directory/return_directory.cwl
+  short_name: return_directory.cwl
+  doc: "put directories into directory"
+  output:
+    out:
+      path: Any
+      basename: test-dirs
+      location: Any
+      class: Directory
+      listing:
+        - class: Directory
+          basename: expected-output
+          path: Any
+          location: Any
+          listing:
+            - checksum: sha1$cb9a1b23f3d55ca327a822a01e78306a5b0604cc
+              basename: test
+              location: Any
+              path: Any
+              class: File
+              size: 45
+        - class: Directory
+          basename: test-input
+          location: Any
+          path: Any
+          listing:
+            - checksum: sha1$92652eaa899bdd2cb96fcf33482e9adc7c326fc9
+              basename: test.txt
+              location: Any
+              path: Any
+              class: File
+              size: 21
+
+# 19 QC-PASSED
+- job: qc-flag/qc-passed.yml
+  tool: ../../../utils/qc-flag.cwl
+  short_name: qc-flag.cwl
+  doc: "qc-flag.cwl passed"
+  output:
+    qc-flag:
+      path: Any
+      basename: QC-PASSED
+      class: File
+      location: Any
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 20 QC-FAILED
+- job: qc-flag/qc-failed.yml
+  tool: ../../../utils/qc-flag.cwl
+  short_name: qc-flag.cwl
+  doc: "qc-flag.cwl failed"
+  output:
+    qc-flag:
+      path: Any
+      basename: QC-FAILED
+      class: File
+      location: Any
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 21 touch file
+- job: touch/touch_file.yml
+  tool: ../../../utils/touch_file.cwl
+  short_name: touch_file.cwl
+  doc: "touch file"
+  output:
+    created_file:
+      path: Any
+      basename: touch-test-file
+      class: File
+      location: Any
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 22 move file
+- job: move/move.yml
+  tool: ../../../utils/move.cwl
+  short_name: move.cwl
+  doc: "move file"
+  output:
+    renamed_file:
+      path: Any
+      basename: filename-test
+      class: File
+      location: Any
+      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+      size: 0
+
+# 23 gunzip reads
+- job: multiple-gunzip/gunzip-reads.yml
+  tool: ../../../utils/multiple-gunzip.cwl
+  short_name: multiple-gunzip.cwl
+  doc: "gunzip reads"
+  output:
+    unzipped_file:
+      path: Any
+      basename: wgs-single-ERR1995312_small_FASTQ.fastq
+      class: File
+      location: Any
+      checksum: sha1$79dc84507dc768863de40cb2f9f26898c22311c0
+      size: 22525127
+
+# 24 gunzip assembly
+- job: multiple-gunzip/gunzip-assembly.yml
+  tool: ../../../utils/multiple-gunzip.cwl
+  short_name: multiple-gunzip.cwl
+  doc: "gunzip assembly"
+  output:
+    unzipped_file:
+      path: Any
+      basename: wgs-single-ERR1995312_small_FASTA.unfiltered
+      class: File
+      location: Any
+      checksum: sha1$79dc84507dc768863de40cb2f9f26898c22311c0
+      size: 22525127
+
+# 25 make table tab-separated
+- job: make_tab_sep/make_tab_sep.yml
+  tool: ../../../utils/make_tab_sep.cwl
+  short_name: make_tab_sep.cwl
+  doc: "make table tab-sep"
+  output:
+    output_with_tabs:
+      path: Any
+      basename: test.table_tab.tbl
+      class: File
+      location: Any
+      checksum: sha1$88d4e3eb8892d84880015ec2543a60d7b4d8c6d8
+      size: 31
+
+# 26 make 2D array as 1D
+- job: make_flatten/make_flatten.yml
+  tool: ../../../utils/make_flatten.cwl
+  short_name: make_flatten.cwl
+  doc: "make 2D array flatten"
+  output:
+    array1d:
+      - path: Any
+        basename: empty_file
+        class: File
+        location: Any
+        checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+        size: 0
+      - path: Any
+        basename: input.fq
+        class: File
+        location: Any
+        checksum: sha1$2abbbc42fdc1a1ff1f2f2ae730d22a60ec2fb75c
+        size: 6489
+      - path: Any
+        basename: test-chunker.fasta
+        class: File
+        location: Any
+        checksum: sha1$61f185c1d4dcff591068819eece017ac5ceb7e1d
+        size: 1159290
+      - path: Any
+        basename: IPS_output.tsv
+        class: File
+        location: Any
+        checksum: sha1$f1ce51e6e142ec7e1a78ed3611ba488ea5503ac0
+        size: 10848
+
+# 27 count number of lines in file
+- job: count_number_lines/count_number_lines.yml
+  tool: ../../../utils/count_number_lines.cwl
+  short_name: count_number_lines.cwl
+  doc: "count_number_lines"
+  output:
+    number: 45
+
+# 28 count number of sequences in fasta-file
+- job: count_fasta/count_fasta.yml
+  tool: ../../../utils/count_fasta.cwl
+  short_name: count_fasta.cwl
+  doc: "count number of sequences in fasta-file"
+  output:
+    count: 37
+
+# 29 concatenate files
+- job: concatenate/concatenate.yml
+  tool: ../../../utils/concatenate.cwl
+  short_name: concatenate.cwl
+  doc: "cat files"
+  output:
+    result:
+      class: File
+      size: 24
+      location: Any
+      path: Any
+      basename: final-file.txt
+      checksum: sha1$d98319716030799991daa0882d660c0ffd75a11d
+      format: undefined
+
+# 30 clean fasta headers
+- job: clean_fasta_headers/clean_fasta_headers.yml
+  tool: ../../../utils/clean_fasta_headers.cwl
+  short_name: clean_fasta_headers.cwl
+  doc: "clean fasta headers"
+  output:
+    sequences_with_cleaned_headers:
+      class: File
+      size: 267
+      location: Any
+      path: Any
+      basename: input.unfiltered_fasta
+      checksum: sha1$114fa993958af2a4eb8a185930b36fe10dc7ef0f
+
+# 31 result chunker empty fasta
+- job: result-file-chunker/split_fasta.empty.yml
+  tool: ../../../utils/result-file-chunker/split_fasta.cwl
+  short_name: split_fasta.cwl
+  doc: "result-chunker empty fasta"
+  output:
+    chunks:
+      - path: Any
+        basename: empty_file
+        class: File
+        location: Any
+        checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
+        size: 0

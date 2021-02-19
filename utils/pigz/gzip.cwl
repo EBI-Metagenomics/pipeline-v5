@@ -25,7 +25,7 @@ outputs:
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.2
+    dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.3
 
 
 $namespaces:

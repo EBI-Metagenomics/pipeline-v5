@@ -1,0 +1,5 @@
+#cutoff: 0.00:0.08 0.00:0.08 0.70:0.35 0.70:0.35 0.70:0.35 0.80:0.25 0.92:0.08 0.95:0.05
+#levels: Superkingdom Kingdom Phylum Class Order Family Genus Species
+#name: UNITE
+HQ219400	sk__Eukaryota;k__Fungi;p__Ascomycota;c__Sordariomycetes;o__Hypocreales;f__Hypocreales_fam_Incertae_sedis;g__Acremonium;s__Acremonium_sp
+AJ972859	sk__Eukaryota;k__Fungi;p__Ascomycota;c__Dothideomycetes;o__Capnodiales;f__Extremaceae;g__Vermiconia;s__Vermiconia_sp

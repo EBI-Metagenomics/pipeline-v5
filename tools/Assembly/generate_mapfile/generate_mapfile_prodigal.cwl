@@ -6,7 +6,7 @@ label: "Generate mapfile for digest(seq) and MGYP"
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:latest
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v3.1
 
 requirements:
   ResourceRequirement:

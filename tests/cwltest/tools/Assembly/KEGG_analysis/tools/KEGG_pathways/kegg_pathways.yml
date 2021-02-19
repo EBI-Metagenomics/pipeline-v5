@@ -1,0 +1,17 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+input_table:
+  class: File
+  path: ../../test-input/test_table
+  format: edam:format_3475
+graphs:
+  class: File
+  path: ../../../../../input_files/assembly/kegg/graphs.pkl
+pathways_names:
+  class: File
+  path: ../../../../../input_files/assembly/kegg/all_pathways_names.txt
+pathways_classes:
+  class: File
+  path: ../../../../../input_files/assembly/kegg/all_pathways_class.txt
+outputname: "test_output"

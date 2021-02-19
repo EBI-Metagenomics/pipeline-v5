@@ -16,9 +16,9 @@ inputs:
   rna_prediction_ncRNA: File
 
   protein_chunk_size_eggnog:  int
-  EggNOG_db: string
-  EggNOG_diamond_db: string
-  EggNOG_data_dir: string
+  EggNOG_db: [string?, File?]
+  EggNOG_diamond_db: [string?, File?]
+  EggNOG_data_dir: [string, Directory]
 
   protein_chunk_size_hmm: int
   func_ann_names_hmmer: string
@@ -30,25 +30,25 @@ inputs:
 
   protein_chunk_size_IPS: int
   func_ann_names_ips: string
-  InterProScan_databases: string
+  InterProScan_databases: [string, Directory]
   InterProScan_applications: string[]
   InterProScan_outputFormat: string[]
   ips_header: string
 
   diamond_maxTargetSeqs: int
-  diamond_databaseFile: string
-  Uniref90_db_txt: string
+  diamond_databaseFile: [string, File]
+  Uniref90_db_txt: [string, File]
   diamond_header: string
 
-  antismash_geneclusters_txt: File
-  go_config: string
+  antismash_geneclusters_txt: File?
+  go_config: [string, File]
 
-  ko_file: string
-  graphs: string
-  pathways_names: string
-  pathways_classes: string
+  ko_file: [string, File]
+  graphs: [string, File]
+  pathways_names: [string, File]
+  pathways_classes: [string, File]
 
-  gp_flatfiles_path: string
+  gp_flatfiles_path: [string?, Directory?]
 
 outputs:
 
@@ -70,8 +70,9 @@ outputs:
 steps:
 # -----------------------------------  << STEP FUNCTIONAL ANNOTATION >>  -----------------------------------
   functional_annotation:
-    run: ../../subworkflows/assembly/functional_annotation.cwl
+    run: ../functional-annotation/functional-annotation.cwl
     in:
+      type: { default: "assembly"}
       CGC_predicted_proteins: cgc_results_faa
       chunk_size_eggnog: protein_chunk_size_eggnog
       chunk_size_hmm: protein_chunk_size_hmm

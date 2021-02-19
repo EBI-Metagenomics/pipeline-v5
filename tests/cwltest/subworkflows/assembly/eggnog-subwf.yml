@@ -1,0 +1,11 @@
+fasta_file:
+  - class: File
+    path: ../../tools/Assembly/EggNOG/test-input/test_queries.fa
+    format: http://edamontology.org/format_1929
+
+data_dir:
+  class: Directory
+  path: ../../input_files/assembly/eggnog-and-diamond
+
+cpu: 8
+file_acc: eggnog-subwf-test

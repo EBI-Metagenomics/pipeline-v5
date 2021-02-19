@@ -31,7 +31,7 @@ outputs:
 
 hints:
   DockerRequirement:
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v3.1
 
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl

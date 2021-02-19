@@ -52,7 +52,7 @@ To download only amplicon databases do ```-m True -a False -w False```.
 
 ```bash
 mkdir ref-dbs && cd ref-dbs
-bash ../download_dbs.sh -a True -m True -w True  # for all types
+bash ../Installation/download_dbs.sh -a True -m True -w True  # for all types
 cd ..
 ```
 
@@ -62,8 +62,8 @@ Set DIRECTORY as path to the same directory where you downloaded all databases (
 TYPE: assembly/wgs/amplicon
 
 ```bash
-python3 create_yml.py --dir <DIRECTORY> --type <TYPE> 
-# example: python3 create_yml.py --dir ref-dbs --type assembly
+python3 Installation/create_yml.py --dir <DIRECTORY> --type <TYPE> 
+# example: python3 Installation/create_yml.py --dir ref-dbs --type assembly
 ```
 
 If you need to generate several YML-files, run this script several times with different TYPEs.

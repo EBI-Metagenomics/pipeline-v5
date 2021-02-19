@@ -20,7 +20,7 @@ BASE_PATH=$(dirname "$(pwd)")
 # - hmmscan_tab.py
 # - generate_checksum.py
 # - fastq_to_fasta.py
-docker build -t ${DOCKER_ORG}/pipeline-v5.python3:v1 "${BASE_PATH}"/docker/scripts_python3
+docker build -t ${DOCKER_ORG}/pipeline-v5.python3:v3.1 "${BASE_PATH}"/docker/scripts_python3
 
 ########### python2 ###########
 # - MGRAST_base.py
@@ -38,7 +38,7 @@ docker build -t ${DOCKER_ORG}/pipeline-v5.python2:v1 "${BASE_PATH}"/docker/scrip
 # - add_header
 # - run_samtools.sh
 # - clean_motus_output.sh
-docker build -t ${DOCKER_ORG}/pipeline-v5.bash-scripts:v1.2 "${BASE_PATH}"/docker/scripts_bash/
+docker build -t ${DOCKER_ORG}/pipeline-v5.bash-scripts:v1.3 "${BASE_PATH}"/docker/scripts_bash/
 
 exit 0
 

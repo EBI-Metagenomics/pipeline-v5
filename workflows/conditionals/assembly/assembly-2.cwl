@@ -64,8 +64,8 @@ inputs:
     HMM_database: string
     HMM_database_dir: [string, Directory?]
     hmmsearch_header: string
-    EggNOG_db: [string, File]
-    EggNOG_diamond_db: [string, File]
+    EggNOG_db: [string?, File?]
+    EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: [string, Directory]
     InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
@@ -88,7 +88,7 @@ inputs:
     pathways_classes: [string, File]
 
  # << genome properties >>
-    gp_flatfiles_path: string?
+    gp_flatfiles_path: [string?, Directory?]
 
  # << antismash summary >>
     clusters_glossary: [string, File]
@@ -187,7 +187,11 @@ steps:
   rna_prediction:
     in:
       type: { default: 'assembly'}
-      input_sequences: accessioning_and_prediction/assigned_contigs
+      input_sequences:
+        source:
+          - accessioning_and_prediction/assigned_contigs
+          - filtered_fasta
+        pickValue: first_non_null
       silva_ssu_database: ssu_db
       silva_lsu_database: lsu_db
       silva_ssu_taxonomy: ssu_tax
@@ -217,7 +221,11 @@ steps:
   other_ncrnas:
     run: ../../subworkflows/other_ncrnas.cwl
     in:
-     input_sequences: accessioning_and_prediction/assigned_contigs
+     input_sequences:
+       source:
+         - accessioning_and_prediction/assigned_contigs
+         - filtered_fasta
+       pickValue: first_non_null
      cmsearch_file: rna_prediction/ncRNA
      other_ncRNA_ribosomal_models: other_ncrna_models
      name_string: { default: 'other_ncrna' }
@@ -228,7 +236,11 @@ steps:
   antismash:
     run: ../../subworkflows/assembly/antismash/main_antismash_subwf.cwl
     in:
-      input_filtered_fasta: accessioning_and_prediction/assigned_contigs
+      input_filtered_fasta:
+        source:
+          - accessioning_and_prediction/assigned_contigs
+          - filtered_fasta
+        pickValue: first_non_null
       clusters_glossary: clusters_glossary
       final_folder_name: { default: pathways-systems }
     out:
@@ -246,7 +258,11 @@ steps:
   functional_annotation:
     run: ../../subworkflows/assembly/Func_ann_and_post_processing-subwf.cwl
     in:
-      filtered_fasta: accessioning_and_prediction/assigned_contigs
+      filtered_fasta:
+        source:
+          - accessioning_and_prediction/assigned_contigs
+          - filtered_fasta
+        pickValue: first_non_null
       cgc_results_faa: accessioning_and_prediction/predicted_proteins
       rna_prediction_ncRNA: rna_prediction/ncRNA
 
@@ -296,14 +312,22 @@ steps:
   fasta_index:
     run: ../../../tools/Assembly/index_fasta/fasta_index.cwl
     in:
-      fasta: accessioning_and_prediction/assigned_contigs
+      fasta:
+        source:
+          - accessioning_and_prediction/assigned_contigs
+          - filtered_fasta
+        pickValue: first_non_null
     out: [fasta_index, fasta_bgz, bgz_index]
 
 # chunking
   chunking_final:
     run: ../../subworkflows/final_chunking.cwl
     in:
-      fasta: accessioning_and_prediction/assigned_contigs
+      fasta:
+        source:
+          - accessioning_and_prediction/assigned_contigs
+          - filtered_fasta
+        pickValue: first_non_null
       ffn: accessioning_and_prediction/predicted_seq
       faa: accessioning_and_prediction/predicted_proteins
       LSU: rna_prediction/LSU_fasta

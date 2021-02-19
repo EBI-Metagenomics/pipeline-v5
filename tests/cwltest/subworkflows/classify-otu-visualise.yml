@@ -1,0 +1,25 @@
+$namespaces:
+  edam: http://edamontology.org/
+
+fasta:
+  class: File
+  path: ../input_files/cmsearch-subwf-test-files/test-cmsearch.fasta
+  format: edam:format_1929
+mapseq_ref:
+  class: File
+  path: ../input_files/mapseq-subwf-test-files/SSU.fasta
+  format: edam:format_1929
+mapseq_taxonomy:
+  class: File
+  path: ../input_files/mapseq-subwf-test-files/slv_ssu_filtered2.txt
+
+otu_ref:
+  class: File
+  path: ../input_files/mapseq-subwf-test-files/ssu2.otu
+
+otu_label: "test-subwf"
+return_dirname: "result-classify"
+
+file_for_prefix:
+  class: File
+  path: ../input_files/cmsearch-subwf-test-files/test-cmsearch.fasta

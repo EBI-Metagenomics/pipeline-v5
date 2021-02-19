@@ -62,8 +62,8 @@ inputs:
     HMM_database_dir: [string, Directory?]
     hmmsearch_header: string
 
-    EggNOG_db: [string, File]
-    EggNOG_diamond_db: [string, File]
+    EggNOG_db: [string?, File?]
+    EggNOG_diamond_db: [string?, File?]
     EggNOG_data_dir: [string?, Directory]
     InterProScan_databases: [string, Directory]
     InterProScan_applications: string[]  # ../tools/InterProScan/InterProScan-apps.yaml#apps[]?
@@ -87,7 +87,7 @@ inputs:
     pathways_classes: [string, File]
 
  # << genome properties >>
-    gp_flatfiles_path: string?
+    gp_flatfiles_path: [string?, Directory?]
 
  # << antismash summary >>
     clusters_glossary: [string, File]
@@ -113,7 +113,7 @@ outputs:
     outputSource: after-qc/compressed_files
     pickValue: all_non_null
   indexed_fasta_file:                                        # [3] fasta.bgz.fai, fasta.bgz.gzi, fasta.bgz
-    type: File?
+    type: File[]
     outputSource: after-qc/index_fasta_with_indexes
 
   chunking_nucleotides:                                      # [2] fasta, ffn, faa

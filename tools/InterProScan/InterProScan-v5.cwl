@@ -14,9 +14,9 @@ requirements:
   - class: ScatterFeatureRequirement
  
 # Disabled
-# hints:
-#   - class: DockerRequirement
-#     dockerPull: microbiomeinformatics/pipeline-v5.interproscan:v5.36-75.0
+hints:
+  - class: DockerRequirement
+    dockerPull: microbiomeinformatics/pipeline-v5.interproscan:v5.36-75.0
 
 baseCommand: [ interproscan.sh ]
 

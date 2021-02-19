@@ -13,7 +13,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:v3
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v3.1
 
   SoftwareRequirement:
     packages:

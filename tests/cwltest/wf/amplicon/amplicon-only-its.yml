@@ -1,0 +1,83 @@
+$namespaces:
+  s: https://schema.org/
+  edam: http://edamontology.org/
+
+forward_reads:
+  class: File
+  format: edam:format_1930
+  path: ../../input_files/amplicon/ERR2044670_1.fastq.gz
+reverse_reads:
+  class: File
+  format: edam:format_1930
+  path: ../../input_files/amplicon/ERR2044670_2.fastq.gz
+
+qc_min_length: 100
+stats_file_name: 'qc_summary'
+
+ssu_label: 'SSU_rRNA'
+lsu_label: 'LSU_rRNA'
+5.8s_pattern: '5_8S_rRNA'
+5s_pattern: 'mtPerm-5S'
+
+unite_label: 'UNITE'
+itsonedb_label: 'ITSonedb'
+
+ssu_db:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/SSU.fasta
+  format: edam:format_1929  # FASTA
+
+lsu_db:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/LSU.fasta
+  format: edam:format_1929  # FASTA
+
+ssu_tax:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/slv_ssu_filtered2.txt
+lsu_tax:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/slv_lsu_filtered2.txt
+ssu_otus:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/ssu2.otu
+lsu_otus:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/lsu2.otu
+
+rfam_models:
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF00177.cm
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF01959.cm
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF02540.cm
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF02541.cm
+
+rfam_model_clans:
+  class: File
+  path: ../../input_files/amplicon/ribo.claninfo
+
+unite_db:
+  class: File
+  path: ../../input_files/amplicon/dbs/unite.fasta
+  format: edam:format_1929  # FASTA
+itsonedb:
+  class: File
+  path: ../../input_files/amplicon/dbs/itsonedb.fasta
+  format: edam:format_1929  # FASTA
+
+unite_tax:
+  class: File
+  path: ../../input_files/amplicon/dbs/unite-tax.txt
+unite_otu_file:
+  class: File
+  path: ../../input_files/amplicon/dbs/unite.otu
+
+itsonedb_tax:
+  class: File
+  path: ../../input_files/amplicon/dbs/itsonedb-tax.txt
+itsonedb_otu_file:
+  class: File
+  path: ../../input_files/amplicon/dbs/itsonedb.otu

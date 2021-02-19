@@ -47,7 +47,7 @@ outputs:
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v3.1
 
 $namespaces:
  s: http://schema.org/

@@ -102,12 +102,14 @@ steps:
       count: count_lines_mapseq/number
       dir_name: return_dirname
       file_list:
-        - compress_mapseq/compressed_file
-        - classifications_to_otu_counts/otu_tsv
-        - classifications_to_otu_counts/otu_txt
-        - visualize_otu_counts/otu_visualization
-        - counts_to_hdf5/result
-        - counts_to_json/result
+        source:
+          - compress_mapseq/compressed_file
+          - classifications_to_otu_counts/otu_tsv
+          - classifications_to_otu_counts/otu_txt
+          - visualize_otu_counts/otu_visualization
+          - counts_to_hdf5/result
+          - counts_to_json/result
+        pickValue: all_non_null
     out: [ out ]
     label: "return all files in one folder"
 

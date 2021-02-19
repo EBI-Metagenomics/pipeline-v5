@@ -11,7 +11,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.2
+    dockerPull: microbiomeinformatics/pipeline-v5.bash-scripts:v1.3
 
 baseCommand: [diamond_post_run_join.sh]
 

@@ -21,9 +21,9 @@ requirements:
 
 # Disabled: container is 11Gb...
 # run with Docker and ANTISMASH_ENV_ACTIVATE ENV variable.
-# hints:
-#   DockerRequirement:
-#     dockerPull:  microbiomeinformatics/pipeline-v5.antismash:v4.2.0
+hints:
+  DockerRequirement:
+    dockerPull:  microbiomeinformatics/pipeline-v5.antismash:v4.2.0
 
 inputs:
 

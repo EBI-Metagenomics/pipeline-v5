@@ -1,0 +1,160 @@
+$namespaces:
+  s: https://schema.org/
+  edam: http://edamontology.org/
+
+contigs:
+  class: File
+  format: edam:format_1929
+  path: ../../input_files/assembly/FASTA.fasta.gz
+
+include_protein_assign: false
+contig_min_length: 500
+
+# RNA PREDICTION
+
+ssu_label: 'SSU_rRNA'
+lsu_label: 'LSU_rRNA'
+5.8s_pattern: '5_8S_rRNA'
+5s_pattern: 'mtPerm-5S'
+
+ssu_db:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/SSU.fasta
+  format: edam:format_1929  # FASTA
+
+lsu_db:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/LSU.fasta
+  format: edam:format_1929  # FASTA
+
+ssu_tax:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/slv_ssu_filtered2.txt
+lsu_tax:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/slv_lsu_filtered2.txt
+ssu_otus:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/ssu2.otu
+lsu_otus:
+  class: File
+  path: ../../input_files/mapseq-subwf-test-files/lsu2.otu
+
+
+rfam_models:
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF00177.cm
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF01959.cm
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF02540.cm
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF02541.cm
+
+rfam_model_clans:
+  class: File
+  path: ../../input_files/cmsearch-subwf-test-files/rRNA.claninfo
+
+# Combined gene caller
+CGC_postfixes:
+  - '_CDS.faa'
+  - '_CDS.ffn'
+cgc_chunk_size: 100000
+
+# functional annotation
+protein_chunk_size_eggnog: 100000
+protein_chunk_size_hmm: 50000
+protein_chunk_size_IPS: 10000
+
+func_ann_names_ips: .I5.tsv.without_header
+func_ann_names_hmmer: .hmm.tsv.without_header
+
+HMM_gathering_bit_score: true
+HMM_omit_alignment: true
+HMM_database: test.hmm
+HMM_database_dir:
+  class: Directory
+  path: ../../input_files/hmmer/db
+hmmsearch_header: 'query_name\tquery_accession\ttlen\ttarget_name\ttarget_accession\tqlen\tfull_sequence_e-value\tfull_sequence_score\tfull_sequence_bias\t#\tof\tc-evalue\ti-evalue\tdomain_score\tdomain_bias\thmm_coord_from\thmm_coord_to\tali_coord_from\tali_coord_to\tenv_coord_from\tenv_coord_to\tacc\tdescription_of_target'
+
+ko_file:
+  class: File
+  path: ../../input_files/assembly/kegg/kofam_ko_desc.tsv
+
+EggNOG_data_dir:
+  class: Directory
+  path: ../../input_files/assembly/eggnog-and-diamond/
+
+InterProScan_applications:
+  - PfamA
+  - TIGRFAM
+  - PRINTS
+  - PrositePatterns
+  - Gene3d
+InterProScan_outputFormat:
+  - TSV
+InterProScan_databases:
+  class: Directory
+  path: ../../tools/InterProScan/test-input/databases/data
+ips_header: 'protein_accession\tsequence_md5_digest\tsequence_length\tanalysis\tsignature_accession\tsignature_description\tstart_location\tstop_location\tscore\tstatus\tdate\taccession\tdescription\tgo\tpathways_annotations'
+
+# Diamond
+Uniref90_db_txt:
+  class: File
+  path: ../../input_files/assembly/eggnog-and-diamond/uniref90.txt
+diamond_maxTargetSeqs: 1
+diamond_databaseFile:
+  class: File
+  path: ../../input_files/assembly/eggnog-and-diamond/diamond.uniref90_db.dmnd
+diamond_header: 'uniref90_ID\tcontig_name\tpercentage_of_identical_matches\tlenght\tmismatch\tgapopen\tqstart\tqend\tsstart\tsend\tevalue\tbitscore\tprotein_name\tnum_in_cluster\ttaxonomy\ttax_id\trep_id'
+
+# GO
+go_config:
+  class: File
+  path: ../../../../tools/GO-slim/go_summary-config.json
+
+# Pathways
+graphs:
+  class: File
+  path: ../../input_files/assembly/kegg/graphs.pkl
+pathways_names:
+  class: File
+  path: ../../input_files/assembly/kegg/all_pathways_names.txt
+pathways_classes:
+  class: File
+  path: ../../input_files/assembly/kegg/all_pathways_class.txt
+
+# GP
+gp_flatfiles_path:
+  class: Directory
+  path: ../../input_files/assembly/genome_properties/flatfiles
+
+#antismash summary
+clusters_glossary:
+  class: File
+  path: ../../input_files/assembly/antismash/antismash_glossary.tsv
+  # checksum: bd50e85246dc3609f7cab6fb4efe4845
+
+#other ncrna
+other_ncrna_models:
+  - 'alpha_tmRNA.RF01849'
+  - 'Bacteria_large_SRP.RF01854'
+  - 'beta_tmRNA.RF01850'
+  - 'Dictyostelium_SRP.RF01570'
+  - 'Metazoa_SRP.RF00017'
+  - 'Protozoa_SRP.RF01856'
+  - 'RNaseP_arch.RF00373'
+  - 'RNaseP_bact_b.RF00011'
+  - 'RNaseP_nuc.RF00009'
+  - 'tRNA.RF00005'
+  - 'Archaea_SRP.RF01857'
+  - 'Bacteria_small_SRP.RF00169'
+  - 'cyano_tmRNA.RF01851'
+  - 'Fungi_SRP.RF01502'
+  - 'mt-tmRNA.RF02544'
+  - 'Plant_SRP.RF01855'
+  - 'RNase_MRP.RF00030'
+  - 'RNaseP_bact_a.RF00010'
+  - 'RNase_P.RF01577'
+  - 'tmRNA.RF00023'
+  - 'tRNA-Sec.RF01852'

@@ -37,3 +37,7 @@ if __name__ == "__main__":
         if len(currentSequences) > 0:
             fileName = str(cur_number - len(currentSequences)) + "_" + str(cur_number) + ext
             SeqIO.write(currentSequences, fileName, file_format)
+        if cur_number == 0:
+            fileName = '0_0' + ext
+            with open(fileName, 'w') as empty_file:
+                empty_file.close()

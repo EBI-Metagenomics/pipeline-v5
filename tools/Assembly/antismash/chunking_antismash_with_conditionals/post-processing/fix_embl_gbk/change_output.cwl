@@ -12,7 +12,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: microbiomeinformatics/pipeline-v5.python3:v1
+    dockerPull: microbiomeinformatics/pipeline-v5.python3:v3.1
 
 inputs:
   embl_file:

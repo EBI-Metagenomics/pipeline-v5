@@ -1,0 +1,65 @@
+Label	Description	Added	Last updated
+T1PKS	Type I PKS (Polyketide synthase)	<= 3.0	<= 3.0
+T2PKS	Type II PKS	<= 3.0	5.0
+T3PKS	Type III PKS	<= 3.0	<= 3.0
+transAT-PKS	Trans-AT PKS	<= 3.0	5.0
+transAT-PKS-like	Trans-AT PKS fragment, with trans-AT domain not found	<= 5.0	5.0
+PpyS-KS	PPY-like pyrone cluster	4.2	4.2
+hglE-KS	heterocyst glycolipid synthase-like PKS	5.0	5.0
+CDPS	tRNA-dependent cyclodipeptide synthases	5.0	5.0
+PKS-like	Other types of PKS cluster	5.0	5.0
+arylpolyene	Aryl polyene cluster	<= 3.0	<= 3.0
+resorcinol	Resorcinol cluster	<= 3.0	<= 3.0
+ladderane	Ladderane cluster	<= 3.0	<= 3.0
+PUFA	Polyunsaturated fatty acid cluster	<= 3.0	<= 3.0
+nrps	Non-ribosomal peptide synthetase cluster	<= 3.0	<= 3.0
+nrps-like	NRPS-like fragment	5.0	5.0
+thioamide-NRP	Thioamide-containing non-ribosomal peptide	5.0	5.0
+terpene	Terpene	<= 3.0	4.1
+lanthipeptide	Lanthipeptide cluster	4.2	5.0
+lipolanthine	Lanthipeptide class containing N-terminal fatty acids	5.0	5.0
+bacteriocin	Bacteriocin or other unspecified ribosomally synthesised and post-translationally modified peptide product (RiPP) cluster	4.1	5.0
+betalactone	beta-lactone containing protease inhibitor	5.0	5.0
+thiopeptide	Thiopeptide cluster	4.2	5.0
+linaridin	Linaridin cluster	<= 3.0	<= 3.0
+cyanobactin	Cyanobactin cluster	<= 3.0	<= 3.0
+glycocin	Glycocin cluster	<= 3.0	<= 3.0
+LAP	Linear azol(in)e-containing peptides	<= 3.0	5.0
+lassopeptide	Lasso peptide cluster	<= 3.0	5.0
+sactipeptide	Sactipeptide cluster	<= 3.0	4.0
+bottromycin	Bottromycin cluster	<= 3.0	<= 3.0
+head_to_tail	Head-to-tail cyclised (subtilosin-like) cluster	<= 3.0	<= 3.0
+microviridin	Microviridin cluster	<= 3.0	<= 3.0
+proteusin	Proteusin cluster	<= 3.0	<= 3.0
+blactam	β-lactam cluster	<= 3.0	<= 3.0
+amglyccycl	Aminoglycoside/aminocyclitol cluster	<= 3.0	<= 3.0
+aminocoumarin	Aminocoumarin cluster	<= 3.0	<= 3.0
+siderophore	Siderophore cluster	<= 3.0	<= 3.0
+ectoine	Ectoine cluster	<= 3.0	<= 3.0
+butyrolactone	Butyrolactone cluster	<= 3.0	<= 3.0
+indole	Indole cluster	<= 3.0	4.0
+nucleoside	Nucleoside cluster	<= 3.0	5.0
+phosphoglycolipid	Phosphoglycolipid cluster	<= 3.0	<= 3.0
+melanin	Melanin cluster	<= 3.0	<= 3.0
+oligosaccharide	Oligosaccharide cluster	<= 3.0	<= 3.0
+furan	Furan cluster	<= 3.0	5.0
+hserlactone	Homoserine lactone cluster	<= 3.0	<= 3.0
+phenazine	Phenazine cluster	<= 3.0	<= 3.0
+phosphonate	Phosphonate cluster	<= 3.0	<= 3.0
+fused	Pheganomycin-style protein ligase-containing cluster	4.0	4.0
+PBDE	Polybrominated diphenyl ether cluster	4.1	4.1
+acyl_amino_acids	N-acyl amino acid cluster	4.0	4.1
+tropodithietic-acid	Tropodithietic acid cluster	5.0	5.0
+NAGGN	N-acetylglutaminylglutamine amide	5.0	5.0
+RaS-RiPP	Streptide-like thioether-bond RiPPs	5.0	5.0
+fungal-RiPP	Fungal RiPP with POP or UstH peptidase types and a modification	5.0	5.0
+TfuA-related	TfuA-related RiPPs	5.1	5.1
+other	Cluster containing a secondary metabolite-related protein that does not fit into any other category	4.0	5.0
+saccharide	Saccharide cluster (loose strictness, likely from primary metabolism)	<= 3.0	<= 3.0
+fatty_acid	Fatty acid cluster (loose strictness, likely from primary metabolism)	<= 3.0	4.2
+halogenated	Cluster containing a halogenase and thus potentially generating a halogenated product	5.0	5.0
+otherks	Other types of PKS cluster	<= 3.0	5.0
+microcin	Microcin cluster	<= 3.0	5.0
+cf_saccharide	Possible saccharide cluster	<= 3.0	5.0
+cf_fatty_acid	Possible fatty acid cluster	<= 3.0	5.0
+cf_putative	Putative cluster of unknown type identified with the ClusterFinder algorithm	<= 3.0	5.0

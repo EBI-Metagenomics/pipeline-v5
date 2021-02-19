@@ -1,0 +1,19 @@
+$namespaces:
+ edam: http://edamontology.org/
+
+type: raw
+
+query_sequences:
+  path: ../../input_files/cmsearch-subwf-test-files/test-cmsearch.fasta
+  class: File
+  format: 'edam:format_1929'
+
+clan_info:
+  class: File
+  path: ../../input_files/cmsearch-subwf-test-files/rRNA.claninfo
+
+covariance_models:
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF00177.cm
+  - class: File
+    path: ../../input_files/cmsearch-subwf-test-files/RF01959.cm

@@ -1,0 +1,8 @@
+362663.ECP_0061	2a2fe3137086b844cfe451f02e883f21	783	Pfam	PF03104	DNA polymerase family B, exonuclease domain	204	296	4.2E-6	T	22-02-2021	IPR006133	DNA-directed DNA polymerase, family B, exonuclease domain		
+362663.ECP_0061	2a2fe3137086b844cfe451f02e883f21	783	Pfam	PF03104	DNA polymerase family B, exonuclease domain	74	164	1.2E-4	T	22-02-2021	IPR006133	DNA-directed DNA polymerase, family B, exonuclease domain		
+362663.ECP_0061	2a2fe3137086b844cfe451f02e883f21	783	Pfam	PF00136	DNA polymerase family B	380	738	4.5E-43	T	22-02-2021	IPR006134	DNA-directed DNA polymerase, family B, multifunctional domain	GO:0000166|GO:0003677	
+A0A379	8969f479c3c7ffb016eb0549099744bc	2281	Pfam	PF05695	Plant protein of unknown function (DUF825)	1	1481	0.0	T	22-02-2021	IPR008543	Uncharacterised protein family Ycf2	GO:0005524|GO:0009507	
+A0A379	8969f479c3c7ffb016eb0549099744bc	2281	Pfam	PF00004	ATPase family associated with various cellular activities (AAA)	1631	1802	1.2E-7	T	22-02-2021	IPR003959	ATPase, AAA-type, core	GO:0005524	
+1000565.METUNv1_03812	54b1be9e7c617bf5369017d2a690e9db	363	Pfam	PF06071	Protein of unknown function (DUF933)	279	362	4.5E-39	T	22-02-2021	IPR013029	YchF, C-terminal domain		Reactome: R-HSA-114608
+1000565.METUNv1_03812	54b1be9e7c617bf5369017d2a690e9db	363	Pfam	PF01926	50S ribosome-binding GTPase	5	116	3.1E-22	T	22-02-2021	IPR006073	GTP binding domain	GO:0005525	
+NODE-6-length-1934-cov-3.795104_1	b6951ac286ab9094eb297d22df66bff3	523	Pfam	PF01076	Plasmid recombination enzyme	15	205	5.8E-69	T	22-02-2021	IPR001668	Plasmid recombination enzyme	GO:0003677|GO:0006310	

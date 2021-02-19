@@ -19,7 +19,7 @@ inputs:
   protein_chunk_size_IPS: int
 
   func_ann_names_ips: string
-  InterProScan_databases: string
+  InterProScan_databases: [string, Directory]
   InterProScan_applications: string[]
   InterProScan_outputFormat: string[]
   ips_header: string
@@ -31,8 +31,8 @@ inputs:
   HMM_database_dir: [string, Directory?]
   hmmsearch_header: string
 
-  go_config: string
-  ko_file: string
+  go_config: [string, File]
+  ko_file: [string, File]
 
 outputs:
   functional_annotation_folder:
@@ -46,8 +46,9 @@ steps:
 
 # << FUNCTIONAL ANNOTATION: hmmscan, IPS, eggNOG >>
   functional_annotation:
-    run: ../../subworkflows/raw_reads/functional_annotation_raw.cwl
+    run: ../functional-annotation/functional-annotation.cwl
     in:
+      type: { default: "raw-reads"}
       CGC_predicted_proteins: cgc_results_faa
       chunk_size_hmm: protein_chunk_size_hmm
       chunk_size_IPS: protein_chunk_size_IPS
@@ -64,7 +65,7 @@ steps:
 
 # GO SUMMARY; PFAM; summaries and stats IPS, HMMScan, Pfam; add header; chunking TSV
   post_processing:
-    run: ../func-annotation-post-proccessing-go-pfam-stats-subwf.cwl
+    run: ../functional-annotation/post-proccessing-go-pfam-stats-subwf.cwl
     in:
       fasta: filtered_fasta
       IPS_table: functional_annotation/ips_result

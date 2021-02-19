@@ -1,0 +1,181 @@
+UniRef90_A0A085AZN6	Molybdenum ABC transporter	n=25	Tax=Bacteria	TaxID=2	RepID=A0A085AZN6_CUTAC
+UniRef90_A0A085B1P7	Uncharacterized protein	n=7	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A085B1P7_CUTAC
+UniRef90_A0A085B2J2	Polyphosphate glucokinase/transcriptional regulator	n=26	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A085B2J2_CUTAC
+UniRef90_A0A085B3L0	3-dehydroquinate synthase	n=33	Tax=Bacteria	TaxID=2	RepID=A0A085B3L0_CUTAC
+UniRef90_A0A085B3R8	Alcohol dehydrogenase	n=15	Tax=Bacteria	TaxID=2	RepID=A0A085B3R8_CUTAC
+UniRef90_A0A085B3Y5	Uncharacterized protein	n=30	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A085B3Y5_CUTAC
+UniRef90_A0A085B449	Uncharacterized protein	n=18	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A085B449_CUTAC
+UniRef90_A0A085B4F0	PPK2 domain-containing protein	n=29	Tax=Bacteria	TaxID=2	RepID=A0A085B4F0_CUTAC
+UniRef90_A0A085B4T5	DoxX protein	n=19	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A085B4T5_CUTAC
+UniRef90_A0A151A3E3	Uncharacterized protein	n=13	Tax=Bacteria	TaxID=2	RepID=A0A151A3E3_9STAP
+UniRef90_A0A1B3Q0G8	PriCT_1 domain-containing protein	n=1	Tax=Cutibacterium avidum	TaxID=33010	RepID=A0A1B3Q0G8_9ACTN
+UniRef90_A0A1D4S1V7	Replication initiation protein	n=5	Tax=Staphylococcus	TaxID=1279	RepID=A0A1D4S1V7_STASA
+UniRef90_A0A1D4S5E6	Uncharacterized protein	n=3	Tax=Staphylococcus	TaxID=1279	RepID=A0A1D4S5E6_STASA
+UniRef90_A0A239WDX4	Iron import ATP-binding/permease protein IrtA	n=31	Tax=Bacteria	TaxID=2	RepID=A0A239WDX4_9ACTN
+UniRef90_A0A2B7IHW1	ABC transporter permease	n=12	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A2B7IHW1_CUTAC
+UniRef90_A0A2B7ISV3	RNA helicase	n=35	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A2B7ISV3_CUTAC
+UniRef90_A0A2T4K879	Replication protein Rep	n=14	Tax=Bacteria	TaxID=2	RepID=A0A2T4K879_9STAP
+UniRef90_A0A371N6U0	Arginine biosynthesis bifunctional protein ArgJ	n=12	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A371N6U0_CUTAC
+UniRef90_A0A380JNS0	Uncharacterized protein	n=1	Tax=Staphylococcus saprophyticus subsp. saprophyticus	TaxID=147452	RepID=A0A380JNS0_STASA
+UniRef90_A0A389VCW6	MobC domain-containing protein	n=175	Tax=root	TaxID=1	RepID=A0A389VCW6_STAAU
+UniRef90_A0A389VD09	Uncharacterized protein	n=8	Tax=Staphylococcus	TaxID=1279	RepID=A0A389VD09_STAAU
+UniRef90_A0A3D8Z189	ABC transporter permease	n=6	Tax=Bacteria	TaxID=2	RepID=A0A3D8Z189_CUTAC
+UniRef90_A0A3D8Z302	Uncharacterized protein	n=3	Tax=Cutibacterium acnes	TaxID=1747	RepID=A0A3D8Z302_CUTAC
+UniRef90_A0A3R6VX71	Uncharacterized protein	n=26	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A3R6VX71_9ACTN
+UniRef90_A0A3R6XMT1	Uncharacterized protein	n=5	Tax=Terrabacteria group	TaxID=1783272	RepID=A0A3R6XMT1_9ACTN
+UniRef90_A0A3R6YA75	Class I SAM-dependent DNA methyltransferase	n=37	Tax=Bacteria	TaxID=2	RepID=A0A3R6YA75_9ACTN
+UniRef90_A0A3R6Z2K4	Uncharacterized protein	n=15	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A3R6Z2K4_9ACTN
+UniRef90_A0A417XGF8	Mannose-6-phosphate isomerase, class I	n=23	Tax=Propionibacteriaceae	TaxID=31957	RepID=A0A417XGF8_9ACTN
+UniRef90_A0A417XHI7	3D-(3,5/4)-trihydroxycyclohexane-1,2-dione acylhydrolase (Decyclizing)	n=44	Tax=Bacteria	TaxID=2	RepID=A0A417XHI7_9ACTN
+UniRef90_A0A4U9THN8	Signal peptidase I	n=5	Tax=Staphylococcaceae	TaxID=90964	RepID=A0A4U9THN8_STACP
+UniRef90_A0A4Y1V6U4	2,3-diaminopropionate biosynthesis protein SbnB	n=36	Tax=Bacteria	TaxID=2	RepID=A0A4Y1V6U4_CUTAC
+UniRef90_A0A4Y1V942	Uncharacterized protein	n=1	Tax=Cutibacterium acnes subsp. acnes	TaxID=1734925	RepID=A0A4Y1V942_CUTAC
+UniRef90_A0A4Y1VBJ3	Thymidylate synthase	n=5	Tax=Cutibacterium acnes	TaxID=1747	RepID=A0A4Y1VBJ3_CUTAC
+UniRef90_A0A4Y1VBM2	HTH tetR-type domain-containing protein	n=23	Tax=Bacteria	TaxID=2	RepID=A0A4Y1VBM2_CUTAC
+UniRef90_A7VN77	Uncharacterized protein (Fragment)	n=9	Tax=Terrabacteria group	TaxID=1783272	RepID=A7VN77_9FIRM
+UniRef90_D2JD01	Uncharacterized protein	n=2	Tax=Staphylococcus epidermidis	TaxID=1282	RepID=D2JD01_STAEP
+UniRef90_D4H9A5	Cell envelope-like function transcriptional attenuator common domain protein	n=4	Tax=Cutibacterium acnes	TaxID=1747	RepID=D4H9A5_CUTAS
+UniRef90_D4H9A8	N5-carboxyaminoimidazole ribonucleotide synthase	n=28	Tax=Bacteria	TaxID=2	RepID=D4H9A8_CUTAS
+UniRef90_D4H9M1	Methyltransferase domain protein	n=3	Tax=Cutibacterium acnes	TaxID=1747	RepID=D4H9M1_CUTAS
+UniRef90_D4H9Q6	DEAD/DEAH box helicase	n=8	Tax=Propionibacteriaceae	TaxID=31957	RepID=D4H9Q6_CUTAS
+UniRef90_D4HA27	Efflux ABC transporter, permease protein	n=27	Tax=Propionibacteriaceae	TaxID=31957	RepID=D4HA27_CUTAS
+UniRef90_D4HA89	Dihydroxyacetone kinase, DhaK subunit	n=38	Tax=Bacteria	TaxID=2	RepID=D4HA89_CUTAS
+UniRef90_D4HAT8	Dihydrolipoamide acetyltransferase component of pyruvate dehydrogenase complex	n=36	Tax=Bacteria	TaxID=2	RepID=D4HAT8_CUTAS
+UniRef90_D4HBD7	IclR helix-turn-helix domain protein	n=23	Tax=Propionibacteriaceae	TaxID=31957	RepID=D4HBD7_CUTAS
+UniRef90_D4HCW6	CobN/magnesium chelatase domain protein	n=39	Tax=Bacteria	TaxID=2	RepID=D4HCW6_CUTAS
+UniRef90_D4HDE9	Pyruvate dehydrogenase E1 component	n=57	Tax=Propionibacteriaceae	TaxID=31957	RepID=D4HDE9_CUTAS
+UniRef90_D4HEB7	Pribosyltran domain-containing protein	n=19	Tax=Bacteria	TaxID=2	RepID=D4HEB7_CUTAS
+UniRef90_D4HEN9	Alpha-1,4 glucan phosphorylase	n=48	Tax=root	TaxID=1	RepID=D4HEN9_CUTAS
+UniRef90_D4HEQ5	Transporter, anaerobic C4-dicarboxylate uptake (Dcu) family	n=34	Tax=Bacteria	TaxID=2	RepID=D4HEQ5_CUTAS
+UniRef90_D4HEV6	Citrate synthase	n=41	Tax=root	TaxID=1	RepID=D4HEV6_CUTAS
+UniRef90_D4HEW2	DNA protecting protein DprA	n=33	Tax=Propionibacteriaceae	TaxID=31957	RepID=D4HEW2_CUTAS
+UniRef90_D4HFB5	Actinobacterial surface-anchored domain protein	n=28	Tax=Propionibacteriaceae	TaxID=31957	RepID=D4HFB5_CUTAS
+UniRef90_D4HFF1	Uncharacterized protein	n=15	Tax=Propionibacteriaceae	TaxID=31957	RepID=D4HFF1_CUTAS
+UniRef90_E4HJ77	Replicative DNA helicase	n=37	Tax=Bacteria	TaxID=2	RepID=E4HJ77_9ACTN
+UniRef90_E4HKT4	Uncharacterized protein	n=26	Tax=Bacteria	TaxID=2	RepID=E4HKT4_9ACTN
+UniRef90_E4HN02	GTP-binding protein TypA	n=54	Tax=Bacteria	TaxID=2	RepID=E4HN02_9ACTN
+UniRef90_E4HN57	Dihydroxyacetone kinase, phosphotransfer subunit	n=20	Tax=Propionibacteriaceae	TaxID=31957	RepID=E4HN57_9ACTN
+UniRef90_E4HNL6	Uncharacterized protein	n=3	Tax=Propionibacteriaceae	TaxID=31957	RepID=E4HNL6_9ACTN
+UniRef90_E4HPC8	Dihydrofolate reductase	n=27	Tax=Propionibacteriaceae	TaxID=31957	RepID=E4HPC8_9ACTN
+UniRef90_E6D475	Uncharacterized protein	n=19	Tax=Propionibacteriaceae	TaxID=31957	RepID=E6D475_CUTAC
+UniRef90_E6D555	Proteasome endopeptidase complex	n=26	Tax=Propionibacteriaceae	TaxID=31957	RepID=E6D555_CUTAC
+UniRef90_E6D5L9	Response regulator receiver domain protein	n=19	Tax=Terrabacteria group	TaxID=1783272	RepID=E6D5L9_CUTAC
+UniRef90_E6D5N3	Aconitate hydratase	n=54	Tax=Propionibacteriaceae	TaxID=31957	RepID=E6D5N3_CUTAC
+UniRef90_E6D804	Uroporphyrinogen-III synthase	n=12	Tax=Propionibacteriaceae	TaxID=31957	RepID=E6D804_CUTAC
+UniRef90_E6D881	Uncharacterized protein	n=34	Tax=root	TaxID=1	RepID=E6D881_CUTAC
+UniRef90_E6D8F5	Glycerol-3-phosphate dehydrogenase, anaerobic, A subunit	n=38	Tax=Bacteria	TaxID=2	RepID=E6D8F5_CUTAC
+UniRef90_F3P2E0	Tat pathway signal sequence domain protein	n=3	Tax=Propionibacteriaceae	TaxID=31957	RepID=F3P2E0_9ACTN
+UniRef90_F9NS88	Anchored repeat-type ABC transporter, ATP-binding subunit	n=26	Tax=Bacteria	TaxID=2	RepID=F9NS88_9ACTN
+UniRef90_F9NUC2	Putative membrane protein	n=1	Tax=[Propionibacterium] namnetense SK182B-JCVI	TaxID=1051006	RepID=F9NUC2_9ACTN
+UniRef90_F9NV29	Uncharacterized protein	n=23	Tax=Propionibacteriaceae	TaxID=31957	RepID=F9NV29_9ACTN
+UniRef90_F9NX76	Superoxide dismutase	n=32	Tax=cellular organisms	TaxID=131567	RepID=F9NX76_9ACTN
+UniRef90_F9NXJ5	Mycinamicin-resistance protein MyrA	n=13	Tax=Propionibacteriaceae	TaxID=31957	RepID=F9NXJ5_9ACTN
+UniRef90_G4CVN0	Sugar ABC superfamily ATP binding cassette transporter, binding protein	n=35	Tax=Bacteria	TaxID=2	RepID=G4CVN0_9ACTN
+UniRef90_G4CXX2	Uroporphyrin-III C-methyltransferase/uroporphyrinogen-III synthase	n=52	Tax=Bacteria	TaxID=2	RepID=G4CXX2_9ACTN
+UniRef90_G4CYV0	Methylmalonyl-CoA mutase	n=39	Tax=Propionibacteriaceae	TaxID=31957	RepID=G4CYV0_9ACTN
+UniRef90_H0BID8	Uncharacterized protein	n=1	Tax=Streptomyces sp. W007	TaxID=1055352	RepID=H0BID8_9ACTN
+UniRef90_Q6A5D0	Uronate isomerase	n=43	Tax=Propionibacteriaceae	TaxID=31957	RepID=UXAC_CUTAK
+UniRef90_Q6A5Z2	Putative asparaginase	n=19	Tax=Bacteria	TaxID=2	RepID=Q6A5Z2_CUTAK
+UniRef90_Q6A657	Putative two-component system response regulator	n=22	Tax=Bacteria	TaxID=2	RepID=Q6A657_CUTAK
+UniRef90_Q6A6K4	50S ribosomal protein L10	n=27	Tax=Propionibacteriaceae	TaxID=31957	RepID=RL10_CUTAK
+UniRef90_Q6A6Q4	Adenylate kinase	n=41	Tax=Bacteria	TaxID=2	RepID=KAD_CUTAK
+UniRef90_Q6A6Q9	30S ribosomal protein S11	n=50	Tax=root	TaxID=1	RepID=RS11_CUTAK
+UniRef90_Q6A6R0	30S ribosomal protein S4	n=20	Tax=Bacteria	TaxID=2	RepID=RS4_CUTAK
+UniRef90_Q6A6S1	ABC transporter ATP-binding protein	n=26	Tax=Bacteria	TaxID=2	RepID=Q6A6S1_CUTAK
+UniRef90_Q6A6W2	60 kDa chaperonin 2	n=50	Tax=Propionibacteriaceae	TaxID=31957	RepID=CH602_CUTAK
+UniRef90_Q6A725	Nucleoside triphosphate pyrophosphatase	n=33	Tax=Propionibacteriaceae	TaxID=31957	RepID=NTPP_CUTAK
+UniRef90_Q6A7F4	Valine--tRNA ligase	n=55	Tax=Bacteria	TaxID=2	RepID=SYV_CUTAK
+UniRef90_Q6A7G0	Protoheme IX farnesyltransferase	n=25	Tax=Propionibacteriaceae	TaxID=31957	RepID=COXX_CUTAK
+UniRef90_Q6A7M3	Ribosome maturation factor RimP	n=34	Tax=Propionibacteriaceae	TaxID=31957	RepID=RIMP_CUTAK
+UniRef90_Q6A7P6	Polyribonucleotide nucleotidyltransferase	n=60	Tax=Bacteria	TaxID=2	RepID=PNP_CUTAK
+UniRef90_Q6A7W3	Putative hydrolase	n=24	Tax=Propionibacteriaceae	TaxID=31957	RepID=Q6A7W3_CUTAK
+UniRef90_Q6A837	NAD-glutamate dehydrogenase	n=64	Tax=Bacteria	TaxID=2	RepID=Q6A837_CUTAK
+UniRef90_Q6A850	RecBCD enzyme subunit RecB	n=50	Tax=Bacteria	TaxID=2	RepID=Q6A850_CUTAK
+UniRef90_Q6A8C4	ATP synthase subunit delta	n=23	Tax=Propionibacteriaceae	TaxID=31957	RepID=ATPD_CUTAK
+UniRef90_Q6A8I8	Alanine--tRNA ligase	n=63	Tax=Bacteria	TaxID=2	RepID=SYA_CUTAK
+UniRef90_Q6A8V3	1-deoxy-D-xylulose-5-phosphate synthase	n=39	Tax=Propionibacteriaceae	TaxID=31957	RepID=DXS_CUTAK
+UniRef90_Q6A952	Alpha,alpha-trehalose-phosphate synthase	n=40	Tax=Propionibacteriaceae	TaxID=31957	RepID=Q6A952_CUTAK
+UniRef90_Q6A997	Chaperone protein DnaJ 1	n=46	Tax=root	TaxID=1	RepID=DNAJ1_CUTAK
+UniRef90_Q6A9B5	Putative RNA helicase	n=40	Tax=Propionibacteriaceae	TaxID=31957	RepID=Q6A9B5_CUTAK
+UniRef90_Q6A9C4	Thiamine-phosphate synthase	n=29	Tax=Bacteria	TaxID=2	RepID=Q6A9C4_CUTAK
+UniRef90_Q6A9H6	Gamma-glutamyl phosphate reductase	n=48	Tax=Propionibacteriaceae	TaxID=31957	RepID=PROA_CUTAK
+UniRef90_Q6A9Q4	UDP-N-acetylmuramoylalanine--D-glutamate ligase	n=36	Tax=Terrabacteria group	TaxID=1783272	RepID=MURD_CUTAK
+UniRef90_Q6A9Q5	Phospho-N-acetylmuramoyl-pentapeptide-transferase	n=37	Tax=Bacteria	TaxID=2	RepID=MRAY_CUTAK
+UniRef90_Q6AAD6	4-diphosphocytidyl-2-C-methyl-D-erythritol kinase	n=30	Tax=Bacteria	TaxID=2	RepID=ISPE_CUTAK
+UniRef90_Q6AAY9	Conserved protein	n=18	Tax=Propionibacteriaceae	TaxID=31957	RepID=Q6AAY9_CUTAK
+UniRef90_Q6ABJ2	Potassium-transporting ATPase potassium-binding subunit	n=45	Tax=Propionibacteriaceae	TaxID=31957	RepID=KDPA_CUTAK
+UniRef90_Q6ABS5	Formate--tetrahydrofolate ligase	n=57	Tax=root	TaxID=1	RepID=FTHS_CUTAK
+UniRef90_S3XXZ8	APH domain-containing protein	n=34	Tax=Propionibacteriaceae	TaxID=31957	RepID=S3XXZ8_9ACTN
+UniRef90_U7ISY9	Protein translocase subunit SecY	n=31	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7ISY9_9ACTN
+UniRef90_U7J7P3	bact-PGI_C domain-containing protein	n=33	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7J7P3_9ACTN
+UniRef90_U7J8C8	Uncharacterized protein	n=33	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7J8C8_9ACTN
+UniRef90_U7J8I2	SpoU_methylase domain-containing protein	n=23	Tax=Terrabacteria group	TaxID=1783272	RepID=U7J8I2_9ACTN
+UniRef90_U7J8N4	Uncharacterized protein	n=16	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7J8N4_9ACTN
+UniRef90_U7JA46	Uncharacterized protein	n=24	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7JA46_9ACTN
+UniRef90_U7JAX3	YbhB/YbcL family Raf kinase inhibitor-like protein	n=35	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7JAX3_9ACTN
+UniRef90_U7JB32	Uncharacterized protein	n=16	Tax=Bacteria	TaxID=2	RepID=U7JB32_9ACTN
+UniRef90_U7JBF3	Aminotran_1_2 domain-containing protein	n=38	Tax=Bacteria	TaxID=2	RepID=U7JBF3_9ACTN
+UniRef90_U7JCT0	Uncharacterized protein	n=9	Tax=Bacteria	TaxID=2	RepID=U7JCT0_9ACTN
+UniRef90_U7JEW7	ACT domain-containing protein	n=22	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7JEW7_9ACTN
+UniRef90_U7JG93	Rieske domain-containing protein	n=22	Tax=Bacteria	TaxID=2	RepID=U7JG93_9ACTN
+UniRef90_U7JGC4	4HBT domain-containing protein	n=26	Tax=Actinobacteria	TaxID=201174	RepID=U7JGC4_9ACTN
+UniRef90_U7JGS5	ABC transmembrane type-1 domain-containing protein	n=28	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7JGS5_9ACTN
+UniRef90_U7JHX4	PTS EIIC type-2 domain-containing protein	n=39	Tax=Bacteria	TaxID=2	RepID=U7JHX4_9ACTN
+UniRef90_U7JI09	AHS2 domain-containing protein	n=22	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7JI09_9ACTN
+UniRef90_U7JIC6	Cell division protein CrgA	n=22	Tax=Bacteria	TaxID=2	RepID=U7JIC6_9ACTN
+UniRef90_U7JJ61	CbiA domain-containing protein	n=45	Tax=Bacteria	TaxID=2	RepID=U7JJ61_9ACTN
+UniRef90_U7JJB7	Complex1_49kDa domain-containing protein	n=31	Tax=Bacteria	TaxID=2	RepID=U7JJB7_9ACTN
+UniRef90_U7JKX7	Transcription termination/antitermination protein NusA	n=35	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7JKX7_9ACTN
+UniRef90_U7JL70	ABC transmembrane type-1 domain-containing protein	n=24	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7JL70_9ACTN
+UniRef90_U7JMB5	PTS EIIA type-2 domain-containing protein	n=26	Tax=Bacteria	TaxID=2	RepID=U7JMB5_9ACTN
+UniRef90_U7JTQ5	Heme ABC exporter, ATP-binding protein CcmA	n=31	Tax=Actinobacteria	TaxID=201174	RepID=U7JTQ5_9ACTN
+UniRef90_U7K3U6	Glyco_trans_4-like_N domain-containing protein	n=32	Tax=Propionibacteriaceae	TaxID=31957	RepID=U7K3U6_9ACTN
+UniRef90_U7K5K9	Sensory transduction protein regX3	n=38	Tax=Bacteria	TaxID=2	RepID=U7K5K9_9ACTN
+UniRef90_UPI0001EF331A	hypothetical protein	n=1	Tax=Cutibacterium acnes	TaxID=1747	RepID=UPI0001EF331A
+UniRef90_UPI0004D5C592	carboxyltransferase domain-containing protein	n=1	Tax=Cutibacterium acnes	TaxID=1747	RepID=UPI0004D5C592
+UniRef90_UPI00085C8251	relaxase/mobilization nuclease domain-containing protein	n=3	Tax=Firmicutes	TaxID=1239	RepID=UPI00085C8251
+UniRef90_UPI0009BD7C7A	MFS transporter	n=1	Tax=Cutibacterium acnes	TaxID=1747	RepID=UPI0009BD7C7A
+UniRef90_UPI000D1EFBEB	HTH domain-containing protein	n=1	Tax=Streptomyces sp. AmelKG-D3	TaxID=1115568	RepID=UPI000D1EFBEB
+UniRef90_UPI000E69DE73	plasmid recombination protein	n=2	Tax=Staphylococcus saprophyticus	TaxID=29385	RepID=UPI000E69DE73
+UniRef90_W4TG96	Histidine kinase domain-containing protein	n=22	Tax=Propionibacteriaceae	TaxID=31957	RepID=W4TG96_CUTAC
+UniRef90_W4TGQ3	Glutamine--fructose-6-phosphate aminotransferase [isomerizing]	n=30	Tax=Propionibacteriaceae	TaxID=31957	RepID=W4TGQ3_CUTAC
+UniRef90_W4TLY8	Galactokinase	n=1	Tax=Cutibacterium acnes JCM 18909	TaxID=1302241	RepID=W4TLY8_CUTAC
+UniRef90_W4TPH6	Cobalamin biosynthesis protein CbiG	n=1	Tax=Cutibacterium acnes JCM 18909	TaxID=1302241	RepID=W4TPH6_CUTAC
+UniRef90_W4TQQ1	Heat-inducible transcription repressor HrcA	n=4	Tax=Bacteria	TaxID=2	RepID=W4TQQ1_CUTAC
+UniRef90_W4TRF5	3-phosphoshikimate 1-carboxyvinyltransferase	n=32	Tax=Propionibacteriaceae	TaxID=31957	RepID=W4TRF5_CUTAC
+UniRef90_W4TRI6	Cystathionine beta-synthase	n=2	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4TRI6_CUTAC
+UniRef90_W4TSH1	Multifunctional fusion protein	n=1	Tax=Cutibacterium acnes JCM 18916	TaxID=1302242	RepID=W4TSH1_CUTAC
+UniRef90_W4TSW2	Delta-aminolevulinic acid dehydratase	n=1	Tax=Cutibacterium acnes JCM 18916	TaxID=1302242	RepID=W4TSW2_CUTAC
+UniRef90_W4TT02	Zinc ABC transporter	n=9	Tax=Propionibacteriaceae	TaxID=31957	RepID=W4TT02_CUTAC
+UniRef90_W4TT16	Hypothetical nudix hydrolase YeaB	n=3	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4TT16_CUTAC
+UniRef90_W4TTF3	Sialic acid transporter	n=1	Tax=Cutibacterium acnes JCM 18916	TaxID=1302242	RepID=W4TTF3_CUTAC
+UniRef90_W4TW36	Ribulokinase	n=3	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4TW36_CUTAC
+UniRef90_W4TW74	Nicotinate-nucleotide adenylyltransferase	n=3	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4TW74_CUTAC
+UniRef90_W4TWQ8	DNA topoisomerase (ATP-hydrolyzing)	n=2	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4TWQ8_CUTAC
+UniRef90_W4TWQ9	Endo-beta-N-acetylglucosaminidase family protein	n=4	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4TWQ9_CUTAC
+UniRef90_W4TXW3	Substrate-specific component BioY of biotin ECF transporter	n=2	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4TXW3_CUTAC
+UniRef90_W4TY23	NagD-like phosphatase	n=3	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4TY23_CUTAC
+UniRef90_W4TYV7	Ribonucleotide reductase	n=1	Tax=Cutibacterium acnes JCM 18916	TaxID=1302242	RepID=W4TYV7_CUTAC
+UniRef90_W4TZC8	Low-affinity inorganic phosphate transporter	n=2	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4TZC8_CUTAC
+UniRef90_W4TZT0	Low-affinity inorganic phosphate transporter	n=1	Tax=Cutibacterium acnes JCM 18916	TaxID=1302242	RepID=W4TZT0_CUTAC
+UniRef90_W4U0Y8	DNA-directed RNA polymerase subunit beta	n=1	Tax=Cutibacterium acnes JCM 18916	TaxID=1302242	RepID=W4U0Y8_CUTAC
+UniRef90_W4U1L4	Aconitate hydratase	n=1	Tax=Cutibacterium acnes JCM 18918	TaxID=1302243	RepID=W4U1L4_CUTAC
+UniRef90_W4U372	Excinuclease ABC subunit A	n=1	Tax=Cutibacterium acnes JCM 18918	TaxID=1302243	RepID=W4U372_CUTAC
+UniRef90_W4U6U3	PTS EIIB type-2 domain-containing protein	n=25	Tax=Bacteria	TaxID=2	RepID=W4U6U3_CUTAC
+UniRef90_W4U756	Helicase	n=1	Tax=Cutibacterium acnes JCM 18918	TaxID=1302243	RepID=W4U756_CUTAC
+UniRef90_W4U7A5	NADH dehydrogenase	n=1	Tax=Cutibacterium acnes JCM 18918	TaxID=1302243	RepID=W4U7A5_CUTAC
+UniRef90_W4U841	ABC transporter	n=3	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4U841_CUTAC
+UniRef90_W4U9H9	ATP-dependent Clp protease	n=3	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4U9H9_CUTAC
+UniRef90_W4UA21	Uncharacterized protein	n=1	Tax=Cutibacterium acnes JCM 18918	TaxID=1302243	RepID=W4UA21_CUTAC
+UniRef90_W4UAD1	Uncharacterized protein	n=1	Tax=Cutibacterium acnes JCM 18918	TaxID=1302243	RepID=W4UAD1_CUTAC
+UniRef90_W4UAH6	Potassium-transporting ATPase ATP-binding subunit	n=2	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4UAH6_CUTAC
+UniRef90_W4UBI3	Multifunctional fusion protein	n=1	Tax=Cutibacterium acnes JCM 18918	TaxID=1302243	RepID=W4UBI3_CUTAC
+UniRef90_W4UCT9	Leucyl-tRNA synthetase	n=1	Tax=Cutibacterium acnes JCM 18920	TaxID=1302244	RepID=W4UCT9_CUTAC
+UniRef90_W4UEB6	L-lactate dehydrogenase	n=1	Tax=Cutibacterium acnes JCM 18920	TaxID=1302244	RepID=W4UEB6_CUTAC
+UniRef90_W4UES8	DNA-directed DNA polymerase	n=1	Tax=Cutibacterium acnes JCM 18920	TaxID=1302244	RepID=W4UES8_CUTAC
+UniRef90_W4UFC0	Aspartokinase	n=2	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4UFC0_CUTAC
+UniRef90_W4UFF9	Glutamate synthase	n=1	Tax=Cutibacterium acnes JCM 18920	TaxID=1302244	RepID=W4UFF9_CUTAC
+UniRef90_W4UFY9	Collagen alpha 1(I) chain	n=1	Tax=Cutibacterium acnes JCM 18920	TaxID=1302244	RepID=W4UFY9_CUTAC
+UniRef90_W4UGL6	Membrane protein	n=1	Tax=Cutibacterium acnes JCM 18920	TaxID=1302244	RepID=W4UGL6_CUTAC
+UniRef90_W4UIB3	Pyruvate-flavodoxin oxidoreductase	n=1	Tax=Cutibacterium acnes JCM 18920	TaxID=1302244	RepID=W4UIB3_CUTAC
+UniRef90_W4UJT4	Fumarate hydratase class II	n=2	Tax=Cutibacterium acnes	TaxID=1747	RepID=W4UJT4_CUTAC
