@@ -39,7 +39,7 @@ else
     if [ "${TOOLS}" == "True" ]; then
         echo "Testing tools"
         cwltest --test ${WORKDIR}/tools/tests.tools.yml \
-         -n 1-16,18,20-25,27,30-31,33-36,38-40,42-44,47-57,61-65 \
+         -n 1-16,18,20-25,27,30-31,33-36,38-40,42-44,47-57,60-62,64-65 \
          --verbose --tool cwltool -- --preserve-entire-environment --enable-dev \
         --strict-memory-limit --singularity --leave-container
 
@@ -55,14 +55,15 @@ else
         --leave-container
         # 1 [17], 2 [19], 3 [28], 4 [29], 10 [46] - different headers because of file paths
         # 5 [32], 6 [37] prodigal - prints additional version to output files
-        # 7 [41], 8 [58] uses bgzip that does different gzipping
+        # 7 [41], 8 [58], 12 [63] uses bgzip that does different gzipping
         # 9 [45] GenomeProperties
-        # 26, 59, 60 - IPS and antismash don't have docker containers in use
+        # 11 [59] antismash
+        # 26 - IPS
     fi
     if [ "${SUBWF}" == "True" ]; then
-        echo "Testing subwfs"
+        echo "Testing subwfs without IPS -n 1-7,9-28,31"
         cwltest --test ${WORKDIR}/subworkflows/tests.subwf.yml \
-        -n 8,15-31 \
+        -n 15-16 \
         --timeout 10800 \
         --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --strict-memory-limit --singularity --leave-container
     fi

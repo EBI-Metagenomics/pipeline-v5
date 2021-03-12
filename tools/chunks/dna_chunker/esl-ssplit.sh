@@ -7,10 +7,10 @@ same_number_of_residues=$2
 seqs=$3
 chunk_size=$4
 
-f="copy-$(basename -- ${seqs})"
-# echo "$f"
+f="$(basename -- ${seqs})"
+#echo "$f"
 
-cp ${seqs} $f
+cp -u ${seqs} $f
 
 if [[ ${number_of_output_files} == "True" && ${same_number_of_residues} == "True" ]]; then
     esl-ssplit.pl -n -r $f ${chunk_size}

@@ -74,6 +74,6 @@ RUN chmod a+rwx /tools/*
 ENV PATH="/tools:${PATH}"
 
 #ENV PYTHONPATH="/tools/pip:${PYTHONPATH}"
-
+RUN ln -s /usr/bin/diamond-aligner  /usr/bin/diamond
 CMD ["run_antismash_short.sh"]
 

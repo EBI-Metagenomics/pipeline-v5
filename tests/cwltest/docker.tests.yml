@@ -193,3 +193,53 @@
       class: File
       size: 736
       format: http://edamontology.org/format_3475
+
+# 11 [ 59 Antismash antismash-annotation v4.2.0]
+# difference: ACCESSION   c00001_NODE-3-.. and ACCESSION   c00001_NODE-3-
+- job: tools/Assembly/antismash/antismash-4.2.0/antismash_v4.yml
+  tool: ../../tools/Assembly/antismash/chunking_antismash_with_conditionals/antismash/antismash_v4.cwl
+  short_name: antismash_v4.cwl
+  doc: "antismash_v4 good input"
+  output:
+    embl_file:
+      basename: "c00001_NODE-3-...final.embl"
+      class: File
+      size: 5984
+      checksum: sha1$53b9919d5ad683907fdf502a2ff201b0273f3c09
+    gbk_file:
+      basename: "c00001_NODE-3-...final.gbk"
+      class: File
+      size: 5763
+      checksum: sha1$86393a39ebed7d736d3dda16fbb6e9c0a94178cb
+    geneclusters_js:
+      basename: "result-antismash-4.2.0.1.geneclusters.js"
+      class: File
+      size: 46
+      checksum: sha1$b0b489cdaa138db577b5b518ca14b4736ae28ccb
+    geneclusters_txt:
+      basename: "result-antismash-4.2.0.1.geneclusters.txt"
+      class: File
+      size: 0
+
+# 12 [ 63 Assembly: GFF file ]
+- job: tools/Assembly/GFF/gff_generation.yml
+  tool: ../../tools/Assembly/GFF/gff_generation.cwl
+  short_name: gff_generation.cwl
+  doc: "gff_generation"
+  output:
+    output_gff_gz:
+      basename: "gff.bgz"
+      class: File
+      size: 656
+      checksum: "sha1$1956509d59c53e7e65922d9d76ce93c8126ca00b"
+      format: http://edamontology.org/format_2306
+    output_gff_index:
+      basename: "gff.bgz.tbi"
+      class: File
+      size: 225
+      checksum: "sha1$faaa4663dcb9e84efcd3d240ac1f0a118f5dbec4"
+    stdout:
+      basename: "stdout.txt"
+      class: File
+      size: 37
+      checksum: "sha1$4fc2effb5e8380e51a70d54f4cd0d1d13b2f1e5a"

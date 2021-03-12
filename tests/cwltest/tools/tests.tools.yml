@@ -1354,14 +1354,14 @@
     output_gff_gz:
       basename: "gff.bgz"
       class: File
-      #size: 655
-      #checksum: "sha1$20483ecb2a0b1e84240a99fe9e8fff94444864b3"
+      size: 655
+      checksum: "sha1$20483ecb2a0b1e84240a99fe9e8fff94444864b3"
       format: http://edamontology.org/format_2306
     output_gff_index:
       basename: "gff.bgz.tbi"
       class: File
       size: 225
-      #checksum: "sha1$d1eac5591aa3d87740eab64f406138fc980a45e5"
+      checksum: "sha1$d1eac5591aa3d87740eab64f406138fc980a45e5"
     stdout:
       basename: "stdout.txt"
       class: File

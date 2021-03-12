@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -e
 
 while getopts i:o: option; do
 	case "${option}" in
