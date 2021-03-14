@@ -39,7 +39,7 @@ else
     if [ "${TOOLS}" == "True" ]; then
         echo "Testing tools"
         cwltest --test ${WORKDIR}/tools/tests.tools.yml \
-         -n 1-16,18,20-25,27,30-31,33-36,38-40,42-44,47-57,60-62,64-65 \
+         -n 1-16,18,20-25,27,30-31,33-36,38-40,42-44,47-57,60-66 \
          --verbose --tool cwltool -- --preserve-entire-environment --enable-dev \
         --strict-memory-limit --singularity --leave-container
 
@@ -55,7 +55,7 @@ else
         --leave-container
         # 1 [17], 2 [19], 3 [28], 4 [29], 10 [46] - different headers because of file paths
         # 5 [32], 6 [37] prodigal - prints additional version to output files
-        # 7 [41], 8 [58], 12 [63] uses bgzip that does different gzipping
+        # 7 [41], 8 [58], [63] uses bgzip that does different gzipping
         # 9 [45] GenomeProperties
         # 11 [59] antismash
         # 26 - IPS

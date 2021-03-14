@@ -5,4 +5,4 @@ InterProScan_results:
 output_name: "test_output.go"
 config:
   class: File
-  path: ../../../tools/GO-slim/go_summary-config.json
+  path: ../../../../tools/GO-slim/go_summary-config.json

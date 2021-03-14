@@ -220,26 +220,3 @@
       basename: "result-antismash-4.2.0.1.geneclusters.txt"
       class: File
       size: 0
-
-# 12 [ 63 Assembly: GFF file ]
-- job: tools/Assembly/GFF/gff_generation.yml
-  tool: ../../tools/Assembly/GFF/gff_generation.cwl
-  short_name: gff_generation.cwl
-  doc: "gff_generation"
-  output:
-    output_gff_gz:
-      basename: "gff.bgz"
-      class: File
-      size: 656
-      checksum: "sha1$1956509d59c53e7e65922d9d76ce93c8126ca00b"
-      format: http://edamontology.org/format_2306
-    output_gff_index:
-      basename: "gff.bgz.tbi"
-      class: File
-      size: 225
-      checksum: "sha1$faaa4663dcb9e84efcd3d240ac1f0a118f5dbec4"
-    stdout:
-      basename: "stdout.txt"
-      class: File
-      size: 37
-      checksum: "sha1$4fc2effb5e8380e51a70d54f4cd0d1d13b2f1e5a"

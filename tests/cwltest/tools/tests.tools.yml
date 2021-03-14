@@ -383,7 +383,7 @@
   doc: "easel"
   output:
     matched_seqs_with_coords:
-      basename: test-cmsearch.txt.matched_seqs_with_coords_test
+      basename: test-cmsearch.txt.matched_seqs_with_coords
       checksum: sha1$fdf31923e36e148a19e29df7cf9003a971a3001b
       location: Any
       path: Any
@@ -1354,16 +1354,38 @@
     output_gff_gz:
       basename: "gff.bgz"
       class: File
-      size: 655
-      checksum: "sha1$20483ecb2a0b1e84240a99fe9e8fff94444864b3"
+      #size: 654-656
+      #checksum: "sha1$20483ecb2a0b1e84240a99fe9e8fff94444864b3"
       format: http://edamontology.org/format_2306
     output_gff_index:
       basename: "gff.bgz.tbi"
       class: File
       size: 225
-      checksum: "sha1$d1eac5591aa3d87740eab64f406138fc980a45e5"
+      #checksum: "sha1$d1eac5591aa3d87740eab64f406138fc980a45e5"
     stdout:
       basename: "stdout.txt"
       class: File
       size: 37
       checksum: "sha1$4fc2effb5e8380e51a70d54f4cd0d1d13b2f1e5a"
+
+# 64 chunks: dna_chunker
+- job: chunks/dna_chunker/fasta_chunker.yml
+  tool: ../../../tools/chunks/dna_chunker/fasta_chunker.cwl
+  short_name: fasta_chunker.cwl
+  doc: "fasta_chunker.cwl 3 chunks"
+  output:
+
+# 65 chunks: dna_chunker
+- job: chunks/dna_chunker/fasta_chunker-2.yml
+  tool: ../../../tools/chunks/dna_chunker/fasta_chunker.cwl
+  short_name: fasta_chunker.cwl
+  doc: "fasta_chunker.cwl 2 chunks"
+  output:
+
+# 66 chunks: dna_chunker
+- job: chunks/dna_chunker/fasta_chunker-empty.yml
+  tool: ../../../tools/chunks/dna_chunker/fasta_chunker.cwl
+  short_name: fasta_chunker.cwl
+  doc: "fasta_chunker.cwl empty input"
+  output:
+

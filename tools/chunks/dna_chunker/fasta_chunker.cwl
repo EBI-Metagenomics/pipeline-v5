@@ -15,7 +15,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: microbiomeinformatics/pipeline-v5.dna_chunking:v0.11.1
+    dockerPull: microbiomeinformatics/pipeline-v5.dna_chunking:v0.11.2
 
 baseCommand: [ esl-ssplit.sh ]
 
