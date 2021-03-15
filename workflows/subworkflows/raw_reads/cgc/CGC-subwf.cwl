@@ -35,12 +35,13 @@ steps:
   # << Chunk faa file >>
   split_seqs:
     in:
-      seqs: input_fasta
-      chunk_size: chunk_size
-      number_of_output_files: { default: "False" }
-      same_number_of_residues: { default: "False" }
+      infile: input_fasta
+    #  seqs: input_fasta
+    #  chunk_size: chunk_size
+    #  number_of_output_files: { default: "False" }
+    #  same_number_of_residues: { default: "False" }
     out: [ chunks ]
-    run: ../../../../tools/chunks/dna_chunker/fasta_chunker.cwl
+    run: ../../../../utils/result-file-chunker/split_fasta.cwl  #tools/chunks/dna_chunker/fasta_chunker.cwl
 
   # << CGC >>
   combined_gene_caller:

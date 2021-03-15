@@ -29,26 +29,11 @@ outputs:
 
 steps:
 
-  calc_chunking_number:
-    run: ../../../../utils/count_fasta.cwl
-    in:
-      sequences: filtered_fasta
-      number: split_size
-    out: [ count ]
-
-  check_value:
-    run: ../../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/check_value/check_value.cwl
-    in:
-      number: calc_chunking_number/count
-    out: [ out ]
-
   chunking_fasta:
-    run: ../../../../tools/chunks/dna_chunker/fasta_chunker.cwl
+    run: ../../../../utils/result-file-chunker/split_fasta.cwl  #split_subwf_perl.cwl
     in:
-      seqs: filtered_fasta
-      chunk_size: check_value/out
-      number_of_output_files: { default: "True" }
-      same_number_of_residues: { default: "True" }
+      infile: filtered_fasta
+      size_limit: split_size
     out: [ chunks ]
 
   rename_contigs:

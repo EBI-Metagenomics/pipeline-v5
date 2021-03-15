@@ -16,15 +16,23 @@ done
 if [ "${CONTAINER}" == "False" ]; then
     if [ "${UTILS}" == "True" ]; then
         echo "Testing utils"
-        cwltest --test ${WORKDIR}/utils/tests.utils.yml --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --no-container
+        cwltest --test ${WORKDIR}/utils/tests.utils.yml \
+          --timeout 1800 \
+          --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --no-container
     fi
     if [ "${TOOLS}" == "True" ]; then
         echo "Testing tools"
-        cwltest --test ${WORKDIR}/tools/tests.tools.yml --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --no-container
+        cwltest --test ${WORKDIR}/tools/tests.tools.yml \
+          -n 1-63 \
+          --timeout 1800 \
+          --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --no-container
     fi
     if [ "${SUBWF}" == "True" ]; then
         echo "Testing subwfs"
-        cwltest --test ${WORKDIR}/subworkflows/tests.subwf.yml --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --no-container
+        cwltest --test ${WORKDIR}/subworkflows/tests.subwf.yml \
+          -n 1-31 \
+          --timeout 10800 \
+          --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --no-container
     fi
     if [ "${PIPELINE}" == "True" ]; then
         echo "Testing whole wf"
@@ -39,31 +47,23 @@ else
     if [ "${TOOLS}" == "True" ]; then
         echo "Testing tools"
         cwltest --test ${WORKDIR}/tools/tests.tools.yml \
-         -n 1-16,18,20-25,27,30-31,33-36,38-40,42-44,47-57,60-66 \
+         -n 1-16,18,20-25,27,30-31,33-36,38-40,42-44,47-57,60-73 \
+         --timeout 1800 \
          --verbose --tool cwltool -- --preserve-entire-environment --enable-dev \
         --strict-memory-limit --singularity --leave-container
 
-        # without test 26 (IPS doesn't have docker yet)
-        # 45 GenomeProperties YES/NO in table instead of 1/0
-        # without test 59,60 (antismash doesn't have docker yet)
-
-        echo "Testing tools docker"
-        cwltest --test ${WORKDIR}/docker.tests.yml --verbose --tool cwltool -- --preserve-entire-environment \
-        --enable-dev \
-        --strict-memory-limit \
-        --singularity \
-        --leave-container
-        # 1 [17], 2 [19], 3 [28], 4 [29], 10 [46] - different headers because of file paths
-        # 5 [32], 6 [37] prodigal - prints additional version to output files
-        # 7 [41], 8 [58], [63] uses bgzip that does different gzipping
-        # 9 [45] GenomeProperties
-        # 11 [59] antismash
-        # 26 - IPS
+        # DOCKER FIXES 64-73
+        # [17], [19], [28], [29], [46] - different headers because of file paths
+        # [32], [37] prodigal - prints additional version to output files
+        # [41], [58], [63] uses bgzip that does different gzipping
+        # [45] GenomeProperties (YES/NO in table instead of 1/0)
+        # [59] antismash (names of contigs in embl and gbk files)
+        # 26 - IPS (container doesn't work in Jenkins)
     fi
     if [ "${SUBWF}" == "True" ]; then
-        echo "Testing subwfs without IPS -n 1-7,9-28,31"
+        echo "Testing subwfs without 8, 29, 30(IPS), 15-16 (antismash), 22 and 24 changed to 32 and 33"
         cwltest --test ${WORKDIR}/subworkflows/tests.subwf.yml \
-        -n 15-16 \
+        -n 1-7,9-14,17-21,23,25-28,31-33 \
         --timeout 10800 \
         --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --strict-memory-limit --singularity --leave-container
     fi
@@ -74,7 +74,3 @@ else
         --verbose --tool cwltool -- --preserve-entire-environment --enable-dev --strict-memory-limit --singularity --leave-container
     fi
 fi
-
-# cwltest --tool cwltool -- --enable-dev --no-container --test tests.yml -j 4 --verbose -n 1
-
-# cwltest --test tests/tests.yml "$@" --tool toil-cwl-runner -- --enable-dev --disableProgress

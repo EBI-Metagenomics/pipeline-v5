@@ -12,7 +12,7 @@ copy_file="copy-$(basename -- ${seqs})"
 #echo "$f"
 
 cp ${seqs} ${copy_file}
-
+chmod a+rwx ${copy_file}
 if [[ ${number_of_output_files} == "True" && ${same_number_of_residues} == "True" ]]; then
     esl-ssplit.pl -oroot ${f} -n -r ${copy_file} ${chunk_size}
     echo "1"

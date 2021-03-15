@@ -28,8 +28,7 @@ fi
 
 antismash --genefinding prodigal-m --smcogs --asf --disable-svg --knownclusterblast --outputfolder "${OUTFOLDER}" "${INPUT}"
 
-if [ $? -eq 0 ]
-then
+if [ $? -eq 0 ]; then
     echo "Success"
 else
     echo "Creating empty folder"

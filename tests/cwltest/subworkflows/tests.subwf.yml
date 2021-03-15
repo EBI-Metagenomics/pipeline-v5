@@ -843,3 +843,42 @@
       class: File
       checksum: sha1$715601d2a7c0df054b4810591040fe2f96d5bc25
       size: 245
+
+# 32 [ 22 CGC: predict_proteins_assemblies sub-wf ]
+- job: cgc/predict_proteins_assemblies.yml
+  tool: ../../../workflows/subworkflows/assembly/cgc/predict_proteins_assemblies.cwl
+  short_name: predict_proteins_assemblies.cwl
+  doc: "predict_proteins_reads (FGS, Prodigal + post-processing)"
+  output:
+    predicted_proteins:
+      basename: 100000_130095.fasta.faa
+      class: File
+      checksum: sha1$068b0116727e47dade39a41666560b59863a6e5a
+      size: 8141529
+      format: http://edamontology.org/format_1929
+    predicted_seq:
+      basename: 100000_130095.fasta.ffn
+      class: File
+      checksum: sha1$b000baf128d540a1bc6690de1309a3926b209f9d
+      size: 18632768
+      format: http://edamontology.org/format_1929
+
+# 33 [24 docker CGC: assembly]
+- job: cgc/CGC-subwf-assembly.yml
+  tool: ../../../workflows/subworkflows/assembly/cgc/CGC-subwf.cwl
+  short_name: CGC-subwf.cwl
+  doc: "CGC-subwf-assembly (chunking+cgc+cat)"
+  output:
+    count_faa: 41127
+    predicted_proteins:
+      basename: "100000_130095_CDS.faa"
+      class: File
+      checksum: sha1$068b0116727e47dade39a41666560b59863a6e5a
+      size: 8141529
+      format: http://edamontology.org/format_1929
+    predicted_seq:
+      basename: "100000_130095_CDS.ffn"
+      class: File
+      checksum: sha1$b000baf128d540a1bc6690de1309a3926b209f9d
+      size: 18632768
+      format: http://edamontology.org/format_1929

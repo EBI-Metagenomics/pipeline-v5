@@ -61,3 +61,13 @@
 # 61 tools: Assembly: antismash: filtering fasta before antismash
 # 62 tools: Assembly: generate mapfile for viral pipeline
 # 63 tools: Assembly: GFF
+# 64 tools: == docker test 17 RNA-prediction: cmsearch
+# 65 tools: == docker test 19 motus
+# 66 tools: == docker test 28 hmmsearch
+# 67 tools: == docker test 29 hmmscan
+# 68 tools: == docker test 32 CGC: prodigal
+# 69 tools: == docker test 41 index fasta file
+# 70 tools: == docker test 58 Antismash post-processing gff
+# 71 tools: == docker test 45 Genome Properties
+# 72 tools: == docker test 46 Eggnog seed_orthologs
+# 73 tools: == docker test 59 Antismash antismash-annotation v4.2.0

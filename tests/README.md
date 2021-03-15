@@ -37,7 +37,7 @@ bash cwltest/cwltest.sh -c False -t True -s True -u True -w True -p True  # with
     - cmsearch 
       - assembly [subwf#19]
       - raw-reads [subwf#20]
-        - cmsearch [tool#17]
+        - cmsearch [tool#17] [docker#64]
         - cmsearch-deoverlap [tool#18]
     - extract-coords [tool#14]
     - get_subunits_coords [tool#13]
@@ -52,7 +52,7 @@ bash cwltest/cwltest.sh -c False -t True -s True -u True -w True -p True  # with
 - CGC
   - assembly [subwf#24]
     - predict_proteins_assemblies [subwf#22]
-      - prodigal [tool#32]
+      - prodigal [tool#32] [docker#68]
       - FragGeneScan [tool#33]
       - post-processing prodigal + FGS [tool#35]
   - raw-reads [subwf#23]
@@ -63,15 +63,15 @@ bash cwltest/cwltest.sh -c False -t True -s True -u True -w True -p True  # with
   - raw-reads [subwf#30]
     - hmmer
       - hmmscan sub-wf [subwf#1]
-        - hmmscan [tool#29]
+        - hmmscan [tool#29] [docker#67]
       - hmmsearch sub-wf [subwf#2]
         - hmmscan + hmmer-tab-modification [tool#31]
-          - hmmsearch [tool#28]
+          - hmmsearch [tool#28] [docker#66]
           - hmmer-tab-modification [tool#30]
     - IPS-chunking [subwf#8]
       - InterProScan [tool#26]
     - eggnog [subwf#11]
-      - Eggnog seed_orthologs [tool#46]
+      - Eggnog seed_orthologs [tool#46] [docker#72]
       - Eggnog annotations [tool#47]
 - post-proccessing-go-pfam-stats-subwf
   - GoSlim Summary [tool#27]
@@ -89,7 +89,7 @@ bash cwltest/cwltest.sh -c False -t True -s True -u True -w True -p True  # with
     - fasta-file empty input [tool#40]
 - assembly processing
   - generate mapfile for viral pipeline [tool#62]
-  - index_fasta [tool#41]
+  - index_fasta [tool#41] [docker#69]
   - antismash 
     - main sub-wf empty input [subwf#14]
     - main sub-wf [subwf#15]
@@ -100,13 +100,13 @@ bash cwltest/cwltest.sh -c False -t True -s True -u True -w True -p True  # with
         - filtering fasta before antismash [tool#61]
         - rename_contigs [tool#54]
         - antismash 
-            - v4.2.0 good input [tool#59]
+            - v4.2.0 good input [tool#59] [docker#73]
             - v4.2.0 bad input [tool#60]
         - post-processing
           - fix_embl_gbk [tool#55]
           - fix_geneclusters_txt [tool#56]
           - reformat geneclusters.txt [tool#57]
-          - gff [tool#58]
+          - gff [tool#58] [docker#70]
         - move_antismash_summary [tool#51]
   - diamond
     - diamond-subwf [subwf#13]
@@ -119,11 +119,11 @@ bash cwltest/cwltest.sh -c False -t True -s True -u True -w True -p True  # with
     - KEGG parsing hmm table [tool#43]
     - KEGG get kegg pathways [tool#44]
   - change_formats_and_names [subwf#10]
-  - Genome Properties [tool#45]
+  - Genome Properties [tool#45] [docker#71]
   - GFF [tool#63]
 - raw-reads processing
   - mOTUs [subwf#31]
-    - motus [tool#19]
+    - motus [tool#19] [docker#65]
 - ITS processing
   - bedtools [tool#23]
   - format-bedfile [tool#24]

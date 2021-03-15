@@ -21,7 +21,9 @@ inputs:
     type: File
     inputBinding:
       prefix: -i
-  type_fasta: string  # n=nucleotide, p=protein
+  type_fasta:
+    type: string?
+    default: 'n'   # n=nucleotide, p=protein
   size_limit: int?
 
 arguments:
@@ -42,6 +44,7 @@ baseCommand: [ split_fasta_by_size.sh ]
 outputs:
   chunks:
     type: File[]
+    format: 'edam:format_1929'
     outputBinding:
       glob: "*.fasta*"
       outputEval: |

@@ -617,7 +617,7 @@
       basename: "fastp.json"
       class: File
       #checksum: sha1$ca39f234a0b693f3cdc48cfb18865cf0d9763659
-      size: 172198
+      #size: 172198
     gz_files:
       - basename: "ERR2044670_MERGED_FASTQ.fasta.gz"
         class: File
@@ -648,32 +648,32 @@
       listing:
         - class: File
           basename: "GC-distribution.out.full"
-          checksum: sha1$d149d3d33b77d10a72f2600c0686ab4b66a5ac49
-          size: 1496
+          #checksum: sha1$d149d3d33b77d10a72f2600c0686ab4b66a5ac49
+          #size: 1496
         - class: File
           basename: "summary.out"
-          checksum: sha1$6be0dd4383f2e60e023c880423c5fb5424def0b7
+          #checksum: sha1$6be0dd4383f2e60e023c880423c5fb5424def0b7
           size: 311
         - class: File
           basename: GC-distribution.out.full_bin
-          checksum: sha1$10eade71c4cc483b796c6052bdff66b1cd3d9b68
+          #checksum: sha1$10eade71c4cc483b796c6052bdff66b1cd3d9b68
           size: 48
         - class: File
           basename: "GC-distribution.out.full_pcbin"
-          checksum: sha1$4b02997b945d8e004e4193c54fc4dacbddfcb003
-          size: 50
+          #checksum: sha1$4b02997b945d8e004e4193c54fc4dacbddfcb003
+          #size: 50
         - class: File
           basename: "seq-length.out.full"
-          checksum: sha1$b30b4a849bd47590c8d4aef07383aa971b389b39
-          size: 557
+          #checksum: sha1$b30b4a849bd47590c8d4aef07383aa971b389b39
+          #size: 557
         - class: File
           basename: "nucleotide-distribution.out.full"
-          checksum: sha1$a74b15ded5a233ae50bf624c97954ebd524ccf59
-          size: 14118
+          #checksum: sha1$a74b15ded5a233ae50bf624c97954ebd524ccf59
+          #size: 14118
         - class: File
           basename: "seq-length.out.full_pcbin"
-          checksum: sha1$ffdc015e1c9423a32e4be7ddacec9fe15a1048cc
-          size: 122
+          #checksum: sha1$ffdc015e1c9423a32e4be7ddacec9fe15a1048cc
+          #size: 122
     qc-status:
       basename: "QC-PASSED"
       class: File
@@ -682,12 +682,12 @@
     qc_summary:
       basename: "qc_summary"
       class: File
-      checksum: sha1$ab4a4b16cbc964dff189bc369e36962ddb9e4641
+      #checksum: sha1$ab4a4b16cbc964dff189bc369e36962ddb9e4641
       size: 208
     rna-count:
       basename: "RNA-counts"
       class: File
-      checksum: sha1$c40d470aeffe91cc005373be17226c984a899760
+      #checksum: sha1$c40d470aeffe91cc005373be17226c984a899760
       size: 27
     sequence-categorisation_folder:
       class: Directory

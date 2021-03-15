@@ -35,12 +35,13 @@ steps:
     out: [ result ]
 
   split_fasta:
-    run: ../../../tools/chunks/dna_chunker/fasta_chunker.cwl
+    run: ../../../utils/result-file-chunker/split_fasta.cwl #../../../tools/chunks/dna_chunker/fasta_chunker.cwl
     in:
-      seqs: query_sequences
-      chunk_size: { default: 2000000 }
-      number_of_output_files: { default: "False" }
-      same_number_of_residues: { default: "False" }
+      infile: query_sequences
+      #seqs: query_sequences
+      #chunk_size: { default: 2000000 }
+      #number_of_output_files: { default: "False" }
+      #same_number_of_residues: { default: "False" }
     out: [ chunks ]
 
   cmsearch:
