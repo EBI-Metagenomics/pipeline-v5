@@ -49,9 +49,9 @@ outputs:
     type: File
     outputSource: find_ribosomal_ncRNAs/concatenate_matches
 
-  variable-regions-summary:
-    type: File?
-    outputSource: identify_variable_regions/variable-regions-summary
+  variable-regions-folder:
+    type: Directory?
+    outputSource: identify_variable_regions/variable-regions-folder
 
   LSU-SSU-count:
     type: File
@@ -113,7 +113,7 @@ steps:
     run: amplicon/variable-region-identification.cwl
     in:
       infernal_matches: find_ribosomal_ncRNAs/deoverlapped_matches
-    out: [ variable-regions-summary ]
+    out: [ variable-regions-folder ]
 
 # extract coordinates for everything
   extract_coords:
