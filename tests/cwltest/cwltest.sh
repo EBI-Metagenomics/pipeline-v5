@@ -47,7 +47,7 @@ else
     if [ "${TOOLS}" == "True" ]; then
         echo "Testing tools"
         cwltest --test ${WORKDIR}/tools/tests.tools.yml \
-         -n 1-16,18,20-25,27,30-31,33-36,38-40,42-44,47-57,60-73 \
+         -n 1-16,18,20-25,27,30-31,33-36,38-40,42-45,47-57,60-73 \
          --timeout 1800 \
          --verbose --tool cwltool -- --preserve-entire-environment --enable-dev \
         --strict-memory-limit --singularity --leave-container
@@ -56,7 +56,6 @@ else
         # [17], [19], [28], [29], [46] - different headers because of file paths
         # [32], [37] prodigal - prints additional version to output files
         # [41], [58], [63] uses bgzip that does different gzipping
-        # [45] GenomeProperties (YES/NO in table instead of 1/0)
         # [59] antismash (names of contigs in embl and gbk files)
         # 26 - IPS (container doesn't work in Jenkins)
     fi

@@ -1,4 +1,4 @@
-FROM alpine:3.7 as build
+FROM ubuntu:20.04 as build
 
 LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 ##############################################################
@@ -8,7 +8,9 @@ LABEL maintainer="Ekaterina Sakharova <kates@ebi.ac.uk>"
 # Description:          protein-coding gene prediction for prokaryotic genomes
 ##############################################################
 
-RUN apk add --no-cache git build-base zlib-dev
+#RUN apk add --no-cache git build-base zlib-dev
+
+RUN apt-get update && apt-get install -y git-all #zlib-dev
 
 RUN git clone --depth 1 --branch 'v2.6.3' https://github.com/hyattpd/Prodigal.git && \
     cd Prodigal && make install

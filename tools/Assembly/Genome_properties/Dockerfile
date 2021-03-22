@@ -11,7 +11,9 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 # Download code
-RUN git clone --branch "v2.0.1" --depth 1 https://github.com/ebi-pf-team/genome-properties.git
+#RUN git clone --branch "v2.0.1" --depth 1 https://github.com/ebi-pf-team/genome-properties.git
+
+RUN git clone https://github.com/ebi-pf-team/genome-properties.git
 
 RUN cpanm \
   Data::Printer \
