@@ -1081,7 +1081,6 @@
     stderr:
       basename: stderr.txt
       class: File
-      size: 107
     stdout:
       basename: stdout.txt
       class: File
@@ -1426,35 +1425,7 @@
       size: 4980
       format: http://edamontology.org/format_3475
 
-# 68 [ 32 CGC: prodigal ]
-- job: Combined_gene_caller/Prodigal/prodigal.yml
-  tool: ../../../tools/Combined_gene_caller/Prodigal/prodigal.cwl
-  short_name: prodigal.cwl
-  doc: "prodigal"
-  output:
-    predicted_proteins_out:
-      basename: 100000_130095.fasta.prodigal
-      class: File
-      checksum: sha1$8b8c48367bae296cbad827c4909ddeeba8d4478c
-      size: 4661413
-    predicted_proteins_ffn:
-      basename: 100000_130095.fasta.prodigal.ffn
-      class: File
-      checksum: sha1$d2a01a66f0c24609ea83a79a18fcedb7c1fddce4
-      size: 18108685
-    predicted_proteins_faa:
-      basename: 100000_130095.fasta.prodigal.faa
-      class: File
-      checksum: sha1$d517ca6e008b4f5219d00f814476fe9f87defa15
-      size: 7927198
-    stderr:
-      basename: stderr.txt
-      class: File
-    stdout:
-      basename: stdout.txt
-      class: File
-
-# 69 [ 41 index fasta file ]
+# 68 [ 41 index fasta file ]
 - job: Assembly/index_fasta/fasta_index.yml
   tool: ../../../tools/Assembly/index_fasta/fasta_index.cwl
   short_name: fasta_index.cwl
@@ -1476,7 +1447,7 @@
       checksum: sha1$de09931b84950753830d05eadc6a856ebe691318
       size: 871
 
-# 70 [ 58 Antismash post-processing gff ]
+# 69 [ 58 Antismash post-processing gff ]
 - job: Assembly/antismash/post-processing/GFF_antismash/antismash_to_gff.yml
   tool: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/post-processing/GFF_antismash/antismash_to_gff.cwl
   short_name: antismash gff.cwl
@@ -1496,34 +1467,7 @@
       class: File
       size: 145
 
-# 71 [ 45 Genome Properties ]
-# no json, bigger stderr, summary OK, table YES/NO instead of 1/0
-- job: Assembly/Genome_properties/genome_properties.yml
-  tool: ../../../tools/Assembly/Genome_properties/genome_properties.cwl
-  short_name: genome_properties.cwl
-  doc: "genome_properties"
-  output:
-    json: null
-    stderr:
-      basename: stderr.txt
-      class: File
-    stdout:
-      basename: stdout.txt
-      class: File
-      checksum: sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709
-      size: 0
-    summary:
-      basename: SUMMARY_FILE_test-gp
-      class: File
-      size: 63217
-      format: http://edamontology.org/format_3475
-    table:
-      basename: TABLE_test-gp
-      class: File
-      size: 525921
-      format: http://edamontology.org/format_3475
-
-# 72 [ 46 Eggnog seed_orthologs ]
+# 70 [ 46 Eggnog seed_orthologs ]
 - job: Assembly/EggNOG/eggnog-mapper.seed_orthologs.yml
   tool: ../../../tools/Assembly/EggNOG/eggnog.cwl
   short_name: eggnog.cwl
@@ -1538,7 +1482,7 @@
       class: File
       format: http://edamontology.org/format_3475
 
-# 73 [ 59 Antismash antismash-annotation v4.2.0]
+# 71 [ 59 Antismash antismash-annotation v4.2.0]
 # difference: ACCESSION   c00001_NODE-3-.. and ACCESSION   c00001_NODE-3-
 - job: Assembly/antismash/antismash-4.2.0/antismash_v4.yml
   tool: ../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/antismash/antismash_v4.cwl
