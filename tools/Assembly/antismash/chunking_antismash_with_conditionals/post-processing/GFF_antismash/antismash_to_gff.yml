@@ -1,7 +1,0 @@
-antismash_geneclus:
-  class: File
-  path: ../antismash/expected-output/assembly-SRR1620013_small_FASTA_FASTA_antismash_geneclusters.txt
-antismash_embl:
-  class: File
-  path: ../antismash/expected-output/assembly-SRR1620013_small_FASTA_FASTA_antismash_final.embl.gz
-output_name: assembly-SRR1620013_small_FASTA_FASTA.antismash.gff

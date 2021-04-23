@@ -16,9 +16,6 @@ inputs:
     input_filtered_fasta: File
     clusters_glossary: string
     final_folder_name: string
-    chunk_size:
-      type: int?
-      default: 100000
     contig_min_limit:
       type: int?
       default: 5000
@@ -42,7 +39,7 @@ steps:
     run: filtering_fasta_for_antismash.cwl
     in:
       fasta: input_filtered_fasta
-      contig_min_limit: { default: 5000 }
+      contig_min_limit: contig_min_limit
     out:
       - filtered_fasta_for_antismash
       - count_after_filtering
