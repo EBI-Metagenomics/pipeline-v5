@@ -5,6 +5,7 @@ import sys
 from Bio import SeqIO
 
 if __name__ == "__main__":
+    # FIXME: this script needs more documentation
     parser = argparse.ArgumentParser(description="change embl file")
     parser.add_argument("-i", "--input", dest="input", help="embl input file", required=True)
     parser.add_argument("-e", "--embl", dest="embl", help="embl output filename", required=True)
