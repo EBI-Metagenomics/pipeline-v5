@@ -91,6 +91,8 @@ def get_args(a):
                         required=False, help='Stats ffn FGS')
     parser.add_argument('-f', '--fgs-faa', action='store', dest='fgs-faa',
                         required=False, help='Stats faa FGS')
+    parser.add_argument('-p', '--caller-priority', action='store', dest='caller-prio',
+                        required=False, help='Caller priority: prodigal,fgs or fgs,prodigal')
     parser.add_argument("-v", "--verbose", help="verbose output", dest="verbose", action="count", required=False)
     return vars(parser.parse_args())
 
@@ -362,9 +364,14 @@ if __name__ == "__main__":
     summary = {}
     all_predictions = {}
     files = {}
-    caller_priority = ['fgs', 'prodigal']
-    if args['prodigal-out']:
+    caller_priority = []
+    if args['caller-prio']:
+        caller_priority = args['caller-prio'].split(",")
+    else:
         caller_priority = ['prodigal', 'fgs']
+    logging.info('Caller priority: 1. {}, 2. {}'.format(caller_priority[0], caller_priority[1]))
+    
+    if args['prodigal-out']:
         logging.info('Prodigal presented')
         logging.info("Filtering Prodigal sequences...")
         outputname_prodigal = os.path.basename(args['prodigal-faa'])

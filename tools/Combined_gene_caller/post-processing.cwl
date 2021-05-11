@@ -6,7 +6,7 @@ label: "Combined Gene Caller: post-processing of FGS and Prodigal"
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.protein-post-processing:v1.0
+    dockerPull: microbiomeinformatics/pipeline-v5.protein-post-processing:v1.0.1
 
 requirements:
   ResourceRequirement:
@@ -48,6 +48,11 @@ inputs:
     inputBinding:
       prefix: "--name"
     type: string
+  genecaller_order:
+    inputBinding:
+      prefix: "--caller-priority"
+    type: string?
+
 
 stdout: stdout.txt
 stderr: stderr.txt

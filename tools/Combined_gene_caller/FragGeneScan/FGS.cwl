@@ -6,7 +6,7 @@ label: "Combined Gene Caller: FragGeneScan"
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.fraggenescan:v1.31
+    dockerPull: microbiomeinformatics/pipeline-v5.fraggenescan:v1.31.1
 
 requirements:
   ResourceRequirement:
@@ -34,6 +34,13 @@ inputs:
     inputBinding:
       separate: true
       prefix: "-s"
+  train:
+    type: string?
+    inputBinding:
+      separate: true
+      prefix: "-t"
+    default: "illumina_5"
+
 
 stdout: stdout.txt
 stderr: stderr.txt

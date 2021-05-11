@@ -17,6 +17,8 @@ inputs:
   maskfile: File?
   postfixes: string[]
   chunk_size: int
+  genecaller_order: string?
+  fgs_train: string?
 
 outputs:
   predicted_proteins:
@@ -51,6 +53,8 @@ steps:
     in:
       input_fasta: split_seqs/chunks
       maskfile: maskfile
+      genecaller_order: genecaller_order
+      fgs_train: fgs_train
     out: [ predicted_proteins, predicted_seq ]
     run: predict_proteins_assemblies.cwl
     label: CGC run

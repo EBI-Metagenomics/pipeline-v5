@@ -52,6 +52,8 @@ inputs:
     CGC_config: [string?, File?]
     CGC_postfixes: string[]
     cgc_chunk_size: int
+    fgs_train: string?
+    genecaller_order: string?
 
  # << functional annotation >>
     protein_chunk_size_eggnog: int
@@ -173,6 +175,8 @@ steps:
       public: public
       CGC_postfixes: CGC_postfixes
       cgc_chunk_size: cgc_chunk_size
+      fgs_train: fgs_train
+      genecaller_order: genecaller_order
       generate_map_file_flag: generate_map_file_flag
     out:
       - assigned_contigs

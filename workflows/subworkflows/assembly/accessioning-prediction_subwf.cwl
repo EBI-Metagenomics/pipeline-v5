@@ -19,6 +19,8 @@ inputs:
     public: int?
     CGC_postfixes: string[]
     cgc_chunk_size: int
+    fgs_train: string?
+    genecaller_order: string?
     generate_map_file_flag: boolean
 
 outputs:
@@ -83,6 +85,8 @@ steps:
         pickValue: first_non_null
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
+      genecaller_order: genecaller_order
+      fgs_train: fgs_train
     out: [ predicted_proteins, predicted_seq, count_faa]
     run: cgc/CGC-subwf.cwl
 
