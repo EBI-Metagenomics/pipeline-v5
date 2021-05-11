@@ -120,6 +120,19 @@ steps:
         valueFrom: $(self.nameroot)
     out: [post-processing_output]
 
+# << CRISPRCasFinder >>
+  crispercas:
+    run: ../../../tools/CRISPRCasFinder/runCRISPRCasFinderl.cwl
+    in:
+      sequences: filtered_fasta
+      spacer_fasta:
+        source: filtered_fasta
+        valueFrom: $(self.nameroot).crisprcas.fasta
+      crisprcas_gff: 
+        source: filtered_fasta
+        valueFrom: $(self.nameroot).crisprcas.gff
+    out: [ crisprcasfinder_fasta, crisprcasfinder_gff ]
+
 # << collect folder >>
   folder_functional_annotation:
     run: ../../subworkflows/assembly/deal_with_functional_annotation.cwl
@@ -140,6 +153,8 @@ steps:
       output_gff_gz: gff/output_gff_gz
       output_gff_index: gff/output_gff_index
       ko_file: ko_file
+      crisprcas_fasta: crisprcas/crisprcas_fasta
+      crisprcas_gff: crisprcas/crisprcas_gff
     out: [functional_annotation_folder, stats, summary_antismash]
 
 # ----------------------------------- << PATHWAYS and SYSTEMS >> -----------------------------------

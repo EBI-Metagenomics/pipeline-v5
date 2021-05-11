@@ -26,6 +26,8 @@ inputs:
   diamond_header: string
   hmmsearch_header: string
   ips_header: string
+  crisprcas_fasta: File
+  crisprcas_gff: File
 
 outputs:
   functional_annotation_folder:
@@ -95,6 +97,8 @@ steps:
           - post_processing/go_summary
           - post_processing/go_summary_slim
           - post_processing/chunked_tsvs
+          - crisprcas_fasta
+          - crisprcas_gff
         linkMerge: merge_flattened
       dir_name: { default: functional-annotation }
     out: [ out ]
