@@ -41,7 +41,18 @@ class Annotation:
 
     @classmethod
     def clean_seq_name(cls, name):
-        return re.sub(r'_\d+$', '', name)
+        # prodigal clean up
+        prodigal_match = re.match('_\d+$', name)
+        if prodigal_match:
+            return re.sub(r'_\d+$', '', name)
+        # fgs clean_up
+        fgs_match = re.match('^(?P<contig>.+?)_\d+_\d+\_.', name)
+        if fgs_match:
+            groups = fgs_match.groupdict()
+            return groups['contig']
+        
+        # no fgs or prodigal
+        return name
 
     def _split_line(self, line):
         return line.replace('\n', ' ').replace('\r', '').split('\t')
@@ -108,12 +119,26 @@ def parse_fasta_header_mags(header):
 def parse_fasta_header(header):
     # FIXME: add sanity check
     # FIXME: what should we do with cases like :
-    #        ERZ477576.1085103-NODE-1085103-length-126-cov-0.633803_1_126_+ 
-    splitted = header.replace('>', '').split(' # ')
-    if len(splitted) < 4:
-        return None, None, None, None
-    return splitted[:4]
-
+    #        ERZ477576.1085103-NODE-1085103-length-126-cov-0.633803_1_126_+
+ 
+    # Prodigal header example: >NODE-3-length-2984-cov-4.247866_3 # 1439 # 1894 # 1 # ID=3_3;partial=00;start_type=TTG;rbs_motif=TAA;rbs_spacer=8bp;gc_cont=0.340  
+    prodigal_match = re.match('^>(?P<contig>.+?)\s#\s(?P<start>\d+)\s#\s(?P<end>\d+)\s#\s(?P<strand>.+?)\s#', header)
+    if prodigal_match:
+        groups = prodigal_match.groupdict()
+        return groups['contig'], groups['start'], groups['end'], groups['strand']
+    
+    # FGS header example: >ERZ1759872.3-contig-100_3188_4599_-
+    fgs_match = re.match('^>.+?_(?P<start>\d+)_(?P<end>\d+)_(?P<strand>.)', header)
+    if fgs_match:
+        groups = fgs_match.groupdict()
+        strand = '1'
+        if groups['strand'] == '-':
+            strand = "-1"
+        return header.rstrip().replace(">", ""), groups['start'], groups['end'], strand
+    
+    # unable to parse fasta header
+    return None, None, None, None
+    
 
 def load_annotation(file, klass, annotations):
     """Load the annotations of a TSV by `query_name` (contig name at the moment)
@@ -175,7 +200,7 @@ def build_gff(annotations, faa):
             clean_name = Annotation.clean_seq_name(contig_name)
 
             row_annotations = Annotation.merge([ann.get() for ann in annotations.get(contig_name, [])])
-
+            
             ann_string = ';'.join(['{}={}'.format(k, ','.join(v).strip()) for k, v in row_annotations.items()])
 
             eggNOGScore = ''.join(row_annotations.get('eggNOG_score', []))
@@ -213,16 +238,23 @@ if __name__ == '__main__':
         '-o', dest='out', help='Ouput GFF file name', required=True)
     args = parser.parse_args()
 
+    annotations = {}
+    load_annotation(args.egg, EggResult, annotations)
+    load_annotation(args.interpro, InterProResult, annotations)
+
+    if len(annotations) < 1:
+        print("No annotations loaded, aborting")
+        sys.exit(1)
+
+    records = 0
     with open(args.out, 'w', buffering=1) as out_handle:
-
         print('##gff-version 3', file=out_handle)
-
-        annotations = {}
-        load_annotation(args.egg, EggResult, annotations)
-        load_annotation(args.interpro, InterProResult, annotations)
-
         for row in build_gff(annotations, args.faa):
             print('\t'.join(row), file=out_handle)
+            records += 1
+    if records == 0:
+        print("No annotations in GFF, aborting")
+        sys.exit(1)
 
     print('Sorting...')
     subprocess.call('(grep ^"#" {0}; grep -v ^"#" {0} | sort -k1,1 -k4,4n)'.format(args.out) +
