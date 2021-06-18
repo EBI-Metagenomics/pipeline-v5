@@ -18,6 +18,7 @@ import argparse
 import re
 import subprocess
 import sys
+import os
 from urllib import parse
 
 
@@ -218,6 +219,13 @@ def build_gff(annotations, faa):
                     'ID=' + clean_name + ';' + ann_string
                 ]
 
+def error_exit(gff_file):
+    if os.path.exists(gff_file):
+        os.remove(gff_file)
+    open("no_antismash", "w").close()
+    sys.exit(0)
+
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -244,7 +252,7 @@ if __name__ == '__main__':
 
     if len(annotations) < 1:
         print("No annotations loaded, aborting")
-        sys.exit(1)
+        error_exit(args.out)
 
     records = 0
     with open(args.out, 'w', buffering=1) as out_handle:
@@ -254,7 +262,7 @@ if __name__ == '__main__':
             records += 1
     if records == 0:
         print("No annotations in GFF, aborting")
-        sys.exit(1)
+        error_exit(args.out)
 
     print('Sorting...')
     subprocess.call('(grep ^"#" {0}; grep -v ^"#" {0} | sort -k1,1 -k4,4n)'.format(args.out) +
