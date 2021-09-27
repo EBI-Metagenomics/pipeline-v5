@@ -1,0 +1,41 @@
+name: base
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - asn1crypto=0.22.0
+  - biopython=1.65
+  - cffi=1.10.0
+  - conda=4.5.2
+  - conda-env=2.6.0
+  - cryptography=1.8.1
+  - enum34=1.1.6
+  - futures=3.2.0
+  - idna=2.6
+  - ipaddress=1.0.18
+  - libffi=3.2.1
+  - mkl=11.3.3
+  - numpy=1.10.4
+  - openssl=1.0.2g
+  - packaging=16.8
+  - pip=8.1.1
+  - psutil=3.3.0
+  - pycosat=0.6.1
+  - pycparser=2.18
+  - pycrypto=2.6.1
+  - pyopenssl=17.0.0
+  - pyparsing=2.2.0
+  - python=2.7.13
+  - pyyaml=3.11
+  - readline=6.2
+  - requests=2.12.4
+  - ruamel_yaml=0.11.14
+  - setuptools=20.3
+  - six=1.10.0
+  - sqlite=3.13.0
+  - tk=8.5.18
+  - wheel=0.29.0
+  - yaml=0.1.6
+  - zlib=1.2.8
+  - pip:
+      - peasel==0.3.1
