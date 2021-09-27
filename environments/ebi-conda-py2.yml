@@ -6,7 +6,6 @@ dependencies:
   - asn1crypto=0.22.0
   - biopython=1.65
   - cffi=1.10.0
-  - conda=4.5.2
   - conda-env=2.6.0
   - cryptography=1.8.1
   - enum34=1.1.6
