@@ -59,63 +59,59 @@ if __name__ == "__main__":
     parser.add_argument("-e", "--five_eights", dest="five_eights", help="5.8S pattern")
     parser.add_argument("-p", "--prefix", dest="prefix", help="prefix for models")
 
-    if len(sys.argv) == 1:
-        parser.print_help()
+    args = parser.parse_args()
+    if not args.prefix:
+        prefix = ''
     else:
-        args = parser.parse_args()
-        if not args.prefix:
-            prefix = ''
-        else:
-            prefix = args.prefix
-        print('Start fasta mode')
-        out_ssu = open(SSU_filename, 'wt')
-        out_lsu = open(LSU_filename, 'wt')
-        out_5S = open(FiveS_filename, 'wt')
-        out_5_8S = open(FiveEightS_filename, 'wt')
+        prefix = args.prefix
 
-        names = set_model_names(prefix)
+    print('Start fasta mode')
+    out_ssu = open(SSU_filename, 'wt')
+    out_lsu = open(LSU_filename, 'wt')
+    out_5S = open(FiveS_filename, 'wt')
+    out_5_8S = open(FiveEightS_filename, 'wt')
 
-        SSU_a_out, SSU_b_out, SSU_e_out, LSU_a_out, LSU_b_out, LSU_e_out = open_model_files(names)
+    names = set_model_names(prefix)
 
-        for record in SeqIO.parse(args.input, "fasta"):
+    SSU_a_out, SSU_b_out, SSU_e_out, LSU_a_out, LSU_b_out, LSU_e_out = open_model_files(names)
 
-            if args.lsu in record.id:
-                SeqIO.write(record, out_lsu, "fasta")
-            elif args.ssu in record.id:
-                SeqIO.write(record, out_ssu, "fasta")
-            elif args.fives in record.id:
-                SeqIO.write(record, out_5S, "fasta")
-            elif args.five_eights in record.id:
-                SeqIO.write(record, out_5_8S, "fasta")
+    for record in SeqIO.parse(args.input, "fasta"):
 
-            if SSU_rRNA_archaea in record.id:
-                SeqIO.write(record, SSU_a_out, "fasta")
-            elif SSU_rRNA_bacteria in record.id:
-                SeqIO.write(record, SSU_b_out, "fasta")
-            elif SSU_rRNA_eukarya in record.id:
-                SeqIO.write(record, SSU_e_out, "fasta")
-            elif LSU_rRNA_archaea in record.id:
-                SeqIO.write(record, LSU_a_out, "fasta")
-            elif LSU_rRNA_bacteria in record.id:
-                SeqIO.write(record, LSU_b_out, "fasta")
-            elif LSU_rRNA_eukarya in record.id:
-                SeqIO.write(record, LSU_e_out, "fasta")
+        if args.lsu in record.id:
+            SeqIO.write(record, out_lsu, "fasta")
+        elif args.ssu in record.id:
+            SeqIO.write(record, out_ssu, "fasta")
+        elif args.fives in record.id:
+            SeqIO.write(record, out_5S, "fasta")
+        elif args.five_eights in record.id:
+            SeqIO.write(record, out_5_8S, "fasta")
 
-        out_5S.close()
-        out_5_8S.close()
-        SSU_a_out.close()
-        SSU_b_out.close()
-        SSU_e_out.close()
-        LSU_a_out.close()
-        LSU_b_out.close()
-        LSU_e_out.close()
-
-        # remove empty files
-        for onefile in [LSU_filename, SSU_filename, FiveS_filename, FiveEightS_filename] + names:
-            if os.path.getsize(onefile) == 0:
-                os.remove(onefile)
-
-        # remove directory if it's empty ??
+        if SSU_rRNA_archaea in record.id:
+            SeqIO.write(record, SSU_a_out, "fasta")
+        elif SSU_rRNA_bacteria in record.id:
+            SeqIO.write(record, SSU_b_out, "fasta")
+        elif SSU_rRNA_eukarya in record.id:
+            SeqIO.write(record, SSU_e_out, "fasta")
+        elif LSU_rRNA_archaea in record.id:
+            SeqIO.write(record, LSU_a_out, "fasta")
+        elif LSU_rRNA_bacteria in record.id:
+            SeqIO.write(record, LSU_b_out, "fasta")
+        elif LSU_rRNA_eukarya in record.id:
+            SeqIO.write(record, LSU_e_out, "fasta")
 
     out_ssu.close()
     out_lsu.close()
+    out_5S.close()
+    out_5_8S.close()
+    SSU_a_out.close()
+    SSU_b_out.close()
+    SSU_e_out.close()
+    LSU_a_out.close()
+    LSU_b_out.close()
+    LSU_e_out.close()
+
+    # remove empty files
+    for onefile in [LSU_filename, SSU_filename, FiveS_filename, FiveEightS_filename] + names:
+        if os.path.getsize(onefile) == 0:
+            print "Removing the empty file: " + str(onefile)
+            os.remove(onefile)
