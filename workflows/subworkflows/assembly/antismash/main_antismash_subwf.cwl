@@ -13,15 +13,12 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  input_filtered_fasta: File
-  clusters_glossary: [string, File]
-  final_folder_name: string
-  chunk_size:
-    type: int?
-    default: 100000
-  contig_min_limit:
-    type: int?
-    default: 5000
+    input_filtered_fasta: File
+    clusters_glossary: string
+    final_folder_name: string
+    contig_min_limit:
+      type: int?
+      default: 5000
 
 outputs:
   antismash_folder:
@@ -42,7 +39,7 @@ steps:
     run: ../../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/filtering_fasta/filtering_fasta_for_antismash.cwl
     in:
       fasta: input_filtered_fasta
-      contig_min_limit: { default: 5000 }
+      contig_min_limit: contig_min_limit
     out:
       - filtered_fasta_for_antismash
       - count_after_filtering

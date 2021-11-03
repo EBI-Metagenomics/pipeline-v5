@@ -48,7 +48,7 @@ steps:
     out: [ renamed_contigs_in_chunks, names_table ]
 
   run_antismash:
-    run: antismash-annotation-subsubwf.cwl
+    run: antismash_subwf.cwl
     scatter: [fasta_file, input_names_table]
     scatterMethod: dotproduct
     in:
@@ -91,7 +91,10 @@ steps:
 
 # << post-processing geneclusters.txt >>
   antismash_summary:
-    run: ../../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/post-processing/reformat_antismash/reformat-antismash.cwl
+    run: post-processing/reformat_antismash/reformat_antismash.cwl
+    doc: |
+      Combine the information from the glossary with the united
+      antiSMASH geneclusters.txt files.
     in:
       glossary: clusters_glossary
       geneclusters: unite_geneclusters_txt/result
@@ -99,7 +102,9 @@ steps:
 
 # << GFF for antismash >>
   antismash_gff:
-    run: ../../../../tools/Assembly/antismash/chunking_antismash_with_conditionals/post-processing/GFF_antismash/antismash_to_gff.cwl
+    run: post-processing/gff_antismash/antismash_to_gff.cwl
+    doc: |
+      Build a .gff file with the antiSMASH annotations
     in:
       antismash_geneclus: antismash_summary/reformatted_clusters
       antismash_embl: unite_embl/result
