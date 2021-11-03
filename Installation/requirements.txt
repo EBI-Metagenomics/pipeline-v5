@@ -1,6 +1,0 @@
-cwl-runner==1.0
-cwltool==3.0.20200724003302
-cwltest==2.0.20200626112502
-html5lib==1.0.1
-schema-salad==7.0.20200612160654
-# toil[cwl]==4.2.0
