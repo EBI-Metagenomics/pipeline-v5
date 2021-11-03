@@ -6,7 +6,7 @@ label: "Combined Gene Caller: Prodigal"
 
 hints:
   - class: DockerRequirement
-    dockerPull: microbiomeinformatics/pipeline-v5.prodigal:v2.6.3
+    dockerPull: microbiomeinformatics/pipeline-v5.prodigal:v2.6.3.1
 
 requirements:
   ResourceRequirement:

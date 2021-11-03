@@ -12,7 +12,7 @@ requirements:
 
 hints:
   DockerRequirement:
-    dockerPull: microbiomeinformatics/pipeline-v5.genome-properties:v2.0.1
+    dockerPull: microbiomeinformatics/pipeline-v5.genome-properties:v2.0.1.2
 
 baseCommand: [ assign_genome_properties.pl ] # without docker
 
