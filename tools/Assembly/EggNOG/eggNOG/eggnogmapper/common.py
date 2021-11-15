@@ -91,7 +91,7 @@ HMMSCAN = find_executable('hmmscan') or pjoin(BASE_PATH, 'bin', 'hmmscan')
 HMMSTAT = find_executable('hmmstat') or pjoin(BASE_PATH, 'bin', 'hmmstat')
 HMMPGMD = find_executable('hmmpgmd') or pjoin(BASE_PATH, 'bin', 'hmmpgmd')
 PHMMER = find_executable('phmmer') or pjoin(BASE_PATH, 'bin', 'phmmer')
-DIAMOND = pjoin(BASE_PATH, 'bin', 'diamond')
+DIAMOND = find_executable('diamond') or pjoin(BASE_PATH, 'bin', 'diamond')
 
 print DIAMOND, BASE_PATH
 
