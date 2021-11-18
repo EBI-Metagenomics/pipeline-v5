@@ -3,5 +3,5 @@
   "full_gene_ontology_obo_file": "go-basic-metagenomics_release_20160705.obo",
   "metagenomics_go_slim_ids_file": "metagenomics_go_slim_ids.txt",
   "metagenomics_go_slim_banding_file": "metagenomics_go_slim_banding.txt",
-  "owltools_bin_file": "owltools/owltools"
+  "owltools_bin_file": "owltools"
 }

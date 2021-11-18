@@ -39,7 +39,6 @@ SPECIFIC_FILES = [
     "owltools",
     "faselector",
     "format_bedfile",
-    "trimmomatic",
 ]
 
 if __name__ == "__main__":
