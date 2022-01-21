@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
 import argparse
 import sys
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     LSU_e_out.close()
 
     # remove empty files
-    for onefile in [LSU_filename, SSU_filename, FiveS_filename, FiveEightS_filename] + names:
+    for onefile in [FiveS_filename, FiveEightS_filename] + names:
         if os.path.getsize(onefile) == 0:
             print "Removing the empty file: " + str(onefile)
             os.remove(onefile)

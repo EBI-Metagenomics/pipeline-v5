@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 while getopts i:o: option; do
 	case "${option}" in
 	i) INPUT=${OPTARG} ;;
@@ -21,3 +19,12 @@ antismash --genefinding prodigal-m \
 	--disable-svg \
 	--knownclusterblast \
 	--outputfolder "${OUTFOLDER}" "${INPUT}"
+
+if [ $? -eq 0 ]; then
+	echo "Success"
+else
+	echo "Creating empty folder"
+	rm -rf "${OUTFOLDER}"
+	mkdir -p "${OUTFOLDER}" &&
+		touch "${OUTFOLDER}"/geneclusters.js "${OUTFOLDER}"/geneclusters.txt "${OUTFOLDER}"/empty.final.embl "${OUTFOLDER}"/empty.final.gbk
+fi

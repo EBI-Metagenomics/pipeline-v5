@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 from stat import S_IREAD, S_IWUSR, S_IWGRP, S_IRGRP, S_IEXEC
 
-FILE_EXTENSIONS = [".py", ".sh", ".json", ".pl", ".obo"]
+FILE_EXTENSIONS = [".py", ".sh", ".json", ".pl", ".obo", ".txt", ".jar", ".vmoptions"]
 
 IGNORE_EXTENSIONS = [
     ".cwl",
@@ -39,7 +39,6 @@ SPECIFIC_FILES = [
     "owltools",
     "faselector",
     "format_bedfile",
-    "trimmomatic",
 ]
 
 if __name__ == "__main__":
