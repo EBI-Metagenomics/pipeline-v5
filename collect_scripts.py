@@ -86,5 +86,5 @@ if __name__ == "__main__":
 
                 shutil.copy(file_path, dest)
                 print(f"Script {file_path} copied to {dest}")
-                os.chmod(dest, S_IREAD | S_IRGRP | S_IWUSR | S_IRGRP | S_IEXEC)
+                os.chmod(dest, S_IREAD | S_IRGRP | S_IWUSR | S_IRGRP | S_IEXEC | S_IXGRP)
                 print(f"- made {dest} as writable")
