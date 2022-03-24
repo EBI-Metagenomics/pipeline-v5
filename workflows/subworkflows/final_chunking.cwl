@@ -19,8 +19,8 @@ requirements:
 
 inputs:
     fasta: File
-    ffn: File
-    faa: File
+    ffn: File?
+    faa: File?
     LSU: File?
     SSU: File?
 
