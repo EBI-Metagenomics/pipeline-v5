@@ -81,7 +81,7 @@ steps:
 
 # << First part >>
   before-qc:
-    run: conditionals/raw-reads/raw-reads-1-qc-cond.cwl
+    run: ../conditionals/raw-reads/raw-reads-1-qc-cond.cwl
     in:
       single_reads: single_reads
       forward_reads: forward_reads
@@ -98,7 +98,7 @@ steps:
       - fastp_filtering_json
 
   after-qc:
-    run: conditionals/raw-reads/raw-reads-2-rna-only.cwl
+    run: ../conditionals/raw-reads/raw-reads-2-rna-only.cwl
     in:
       filtered_fasta: before-qc/filtered_fasta
       ssu_db: ssu_db

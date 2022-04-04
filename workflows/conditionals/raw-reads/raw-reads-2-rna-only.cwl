@@ -42,7 +42,7 @@ outputs:
 
   chunking_nucleotides:
     type: File[]
-    outputSource: chunking_final/nucleotide_fasta_chunks
+    outputSource: fasta_chunking/nucleotide_fasta_chunks
   rna-count:
     type: File
     outputSource: rna_prediction/LSU-SSU-count
@@ -124,14 +124,18 @@ steps:
 # << --------- TAXONOMY FORMATTING AND CHUNKING ------ >>
 
 # << chunking >>
-  chunking_final:
-    run: ../../subworkflows/final_chunking.cwl
+  fasta_chunking:
+    run: ../../../utils/result-file-chunker/result_chunker.cwl
     in:
       fasta: filtered_fasta
+    out:
+      - nucleotide_fasta_chunks                         # fasta
+  tax_chunking:
+    run: ../../../utils/result-file-chunker/result_chunker.cwl
+    in:
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta
     out:
-      - nucleotide_fasta_chunks                         # fasta, ffn
       - SC_fasta_chunks                                 # LSU, SSU
 
 # << move chunked files >>
@@ -140,7 +144,7 @@ steps:
     in:
       file_list:
         source:
-          - chunking_final/SC_fasta_chunks
+          - tax_chunking/SC_fasta_chunks
           - rna_prediction/compressed_rnas
           - other_ncrnas/ncrnas
         linkMerge: merge_flattened
