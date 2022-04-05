@@ -14,7 +14,7 @@ inputs:
     reverse_reads: File?
     single_reads: File?
     paired_reads_length_filter: int
-    qc : boolean
+    qc: boolean
 
 outputs:
   unzipped_single_reads:
@@ -55,6 +55,7 @@ steps:
     run: ../../utils/fastp.cwl
     when: $(inputs.single == undefined && inputs.qc == true)
     in:
+      qc: qc
       single: single_reads
       fastq1: forward_reads
       fastq2: reverse_reads
@@ -71,6 +72,7 @@ steps:
     run: ../../tools/SeqPrep/seqprep.cwl
     when: $(inputs.single == undefined && inputs.qc == true)
     in:
+      qc: qc
       single: single_reads
       forward_reads: filter_paired/out_fastq1
       reverse_reads: filter_paired/out_fastq2
@@ -83,6 +85,7 @@ steps:
     run: ../../tools/SeqPrep/seqprep.cwl
     when: $(inputs.single == undefined && inputs.qc == false)
     in:
+      qc: qc
       single: single_reads
       forward_reads: forward_reads
       reverse_reads: reverse_reads
@@ -94,6 +97,7 @@ steps:
     when: $(inputs.target_reads != undefined && inputs.qc == true)
     run: ../../utils/multiple-gunzip.cwl
     in:
+      qc: qc
       target_reads: overlap_reads/merged_reads
       reads: { default: true }
     out: [ unzipped_file ]
@@ -103,6 +107,7 @@ steps:
     when: $(inputs.target_reads != undefined && inputs.qc == false)
     run: ../../utils/multiple-gunzip.cwl
     in:
+      qc: qc
       target_reads: overlap_reads_noqc/merged_reads
       reads: { default: true }
     out: [ unzipped_file ]
