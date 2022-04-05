@@ -13,9 +13,13 @@ hints:
 
 inputs:
   infile:
-    type: File[]
+    type: File[]?
     inputBinding:
       prefix: -i
+  infile_single:
+    type: File?
+    inputBinding:
+      prefix : -i
   format_file:
     type: string
     inputBinding:
@@ -33,7 +37,7 @@ baseCommand: [run_result_file_chunker.py]
 
 outputs:
   chunks:
-    type: File[]
+    type: File[]?
     outputBinding:
       glob: $(inputs.outdirname)/*
 

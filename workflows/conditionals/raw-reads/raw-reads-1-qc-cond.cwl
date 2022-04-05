@@ -80,12 +80,13 @@ steps:
 # << SeqPrep (only for paired reads) + gunzip for paired and single>>
   overlap_reads:
     label: Paired-end overlapping reads are merged
-    run: ../../subworkflows/seqprep-subwf.cwl
+    run: ../../subworkflows/seqprep-qc-cond-subwf.cwl
     in:
       single_reads: single_reads
       forward_reads: forward_reads
       reverse_reads: reverse_reads
       paired_reads_length_filter: { default: 70 }
+      qc: run_qc
     out: [ unzipped_single_reads, count_forward_submitted_reads, fastp_report ]
 
 # ----- QC = TRUE -----
@@ -95,9 +96,10 @@ steps:
     doc: |
       Low quality trimming (low quality ends and sequences with < quality scores
       less than 15 over a 4 nucleotide wide window are removed)
-    when: $(inputs.run_qc == True)
+    when: $(inputs.run_qc == true)
     run: ../../../tools/Trimmomatic/Trimmomatic-v0.36-SE.cwl
     in:
+      run_qc: run_qc
       reads1: overlap_reads/unzipped_single_reads
       phred: { default: '33' }
       leading: { default: 3 }
@@ -110,16 +112,18 @@ steps:
   #fastq
   clean_fasta_headers:
     run: ../../../utils/clean_fasta_headers.cwl
-    when: $(inputs.run_qc == True)
+    when: $(inputs.run_qc == true)
     in:
+      run_qc: run_qc
       sequences: trim_quality_control/reads1_trimmed
     out: [ sequences_with_cleaned_headers ]
 
   #fasta
   convert_trimmed_reads_to_fasta:
     run: ../../../utils/fastq_to_fasta/fastq_to_fasta.cwl
-    when: $(inputs.run_qc == True)
+    when: $(inputs.run_qc == true)
     in:
+      run_qc: run_qc
       fastq: clean_fasta_headers/sequences_with_cleaned_headers
     out: [ fasta ]
 
@@ -127,8 +131,9 @@ steps:
 # << QC filtering >>
   length_filter:
     run: ../../../tools/qc-filtering/qc-filtering.cwl
-    when: $(inputs.run_qc == True)
+    when: $(inputs.run_qc == true)
     in:
+      run_qc: run_qc
       seq_file: convert_trimmed_reads_to_fasta/fasta
       submitted_seq_count: overlap_reads/count_forward_submitted_reads
       stats_file_name: {default: 'qc_summary'}
@@ -138,8 +143,9 @@ steps:
 
   count_processed_reads:
     run: ../../../utils/count_fasta.cwl
-    when: $(inputs.run_qc == True)
+    when: $(inputs.run_qc == true)
     in:
+      run_qc: run_qc
       sequences: length_filter/filtered_file
       number: { default: 1 }
     out: [ count ]
@@ -147,18 +153,20 @@ steps:
 # << QC FLAG >>
   QC-FLAG:
     run: ../../../utils/qc-flag.cwl
-    when: $(inputs.run_qc == True)
+    when: $(inputs.run_qc)
     in:
-        qc_count: count_processed_reads/count
+      run_qc: run_qc
+      qc_count: count_processed_reads/count
     out: [ qc-flag ]
 
 # << QC >>
   qc_stats:
     run: ../../../tools/qc-stats/qc-stats.cwl
-    when: $(inputs.run_qc == True)
+    when: $(inputs.run_qc == true)
     in:
-        QCed_reads: length_filter/filtered_file
-        sequence_count: count_processed_reads/count
+      run_qc: run_qc
+      QCed_reads: length_filter/filtered_file
+      sequence_count: count_processed_reads/count
     out: [ output_dir, summary_out ]
 
 
@@ -167,16 +175,18 @@ steps:
   #fastq
   clean_fasta_headers_noqc:
     run: ../../../utils/clean_fasta_headers.cwl
-    when: $(inputs.run_qc == False)
+    when: $(inputs.run_qc == false)
     in:
+      run_qc: run_qc
       sequences: overlap_reads/unzipped_single_reads
     out: [ sequences_with_cleaned_headers ]
 
   #fasta
   convert_trimmed_reads_to_fasta_noqc:
     run: ../../../utils/fastq_to_fasta/fastq_to_fasta.cwl
-    when: $(inputs.run_qc == False)
+    when: $(inputs.run_qc == false)
     in:
+      run_qc: run_qc
       fastq: clean_fasta_headers_noqc/sequences_with_cleaned_headers
     out: [ fasta ]
 
