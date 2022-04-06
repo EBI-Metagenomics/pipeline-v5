@@ -5,6 +5,7 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 300  # just a default, could be lowered
+  InlineJavascriptRequirement: {}
 
 hints:
   DockerRequirement:
@@ -21,10 +22,13 @@ inputs:
     # format: edam:format_1930  # FASTQ
     inputBinding:
       prefix: '-i'
+  qc:
+    type: boolean   #choose to run qc
+    default: true
 
 arguments:
-  - valueFrom: $(inputs.fastq.nameroot).unclean
-    prefix: '-o'
+   - prefix: '-o'
+     valueFrom: ${ if (inputs.qc == true) { return (inputs.fastq.nameroot).concat('.unclean'); } else { return (inputs.fastq.nameroot).concat('.fasta'); } }
 
 baseCommand: [ fastq_to_fasta.py ]
 
@@ -33,7 +37,7 @@ outputs:
     type: File
     format: edam:format_1929  # FASTA
     outputBinding:
-      glob: "*.unclean"
+      glob: "$(inputs.fastq.nameroot)*"
 
 $namespaces:
  edam: http://edamontology.org/
