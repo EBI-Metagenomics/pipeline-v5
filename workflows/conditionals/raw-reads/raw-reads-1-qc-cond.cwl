@@ -121,9 +121,9 @@ steps:
   #fasta
   convert_trimmed_reads_to_fasta:
     run: ../../../utils/fastq_to_fasta/fastq_to_fasta.cwl
-    when: $(inputs.run_qc == true)
+    when: $(inputs.qc == true)
     in:
-      run_qc: run_qc
+      qc: run_qc
       fastq: clean_fasta_headers/sequences_with_cleaned_headers
     out: [ fasta ]
 
@@ -184,9 +184,9 @@ steps:
   #fasta
   convert_trimmed_reads_to_fasta_noqc:
     run: ../../../utils/fastq_to_fasta/fastq_to_fasta.cwl
-    when: $(inputs.run_qc == false)
+    when: $(inputs.qc == false)
     in:
-      run_qc: run_qc
+      qc: run_qc
       fastq: clean_fasta_headers_noqc/sequences_with_cleaned_headers
     out: [ fasta ]
 
