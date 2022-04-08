@@ -23,12 +23,12 @@ inputs:
     inputBinding:
       prefix: '-i'
   qc:
-    type: boolean   #choose to run qc
-    default: true
+    type: boolean?   #choose to run qc
+    #default: true
 
 arguments:
    - prefix: '-o'
-     valueFrom: ${ if (inputs.qc == true) { return (inputs.fastq.nameroot).concat('.unclean'); } else { return (inputs.fastq.nameroot).concat('.fasta'); } }
+     valueFrom: ${ if (inputs.qc == false) { return (inputs.fastq.nameroot).concat('.fasta'); } else { return (inputs.fastq.nameroot).concat('.unclean'); } }
 
 baseCommand: [ fastq_to_fasta.py ]
 

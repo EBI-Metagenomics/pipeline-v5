@@ -19,7 +19,7 @@ requirements:
 inputs:
   infernal_matches:
     label: output from infernal cmsearch
-    format: edam:format_3475
+    #format: edam:format_3475 remove to deal with empty files
     type: File
     inputBinding:
       prefix: -i

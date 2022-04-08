@@ -121,8 +121,9 @@ steps:
   #fasta
   convert_trimmed_reads_to_fasta:
     run: ../../../utils/fastq_to_fasta/fastq_to_fasta.cwl
-    when: $(inputs.qc == true)
+    when: $(inputs.run_qc == true)
     in:
+      run_qc: run_qc
       qc: run_qc
       fastq: clean_fasta_headers/sequences_with_cleaned_headers
     out: [ fasta ]
@@ -153,7 +154,7 @@ steps:
 # << QC FLAG >>
   QC-FLAG:
     run: ../../../utils/qc-flag.cwl
-    when: $(inputs.run_qc)
+    when: $(inputs.run_qc == true)
     in:
       run_qc: run_qc
       qc_count: count_processed_reads/count
@@ -184,8 +185,9 @@ steps:
   #fasta
   convert_trimmed_reads_to_fasta_noqc:
     run: ../../../utils/fastq_to_fasta/fastq_to_fasta.cwl
-    when: $(inputs.qc == false)
+    when: $(inputs.run_qc == false)
     in:
+      run_qc: run_qc
       qc: run_qc
       fastq: clean_fasta_headers_noqc/sequences_with_cleaned_headers
     out: [ fasta ]
@@ -201,3 +203,4 @@ $schemas:
 
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:copyrightHolder: "EMBL - European Bioinformatics Institute"
+
