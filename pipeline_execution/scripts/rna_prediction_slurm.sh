@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #default values
-PIPELINE_DIR=$(realpath "../../")
+SCRIPT_PATH=$(realpath "$0")
+PIPELINE_DIR=$(dirname "${SCRIPT_PATH%/*/*}")
 MEMORY=50G
 NUM_CORES=4
 LIMIT_QUEUE=100
