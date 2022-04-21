@@ -1,11 +1,12 @@
 #!/bin/bash
 
 #default values
+PIPELINE_DIR=$(realpath "../../")
 MEMORY=50G
 NUM_CORES=4
 LIMIT_QUEUE=100
-YML='../templates/rna_prediction_template.yml'
-DB_DIR='../ref-dbs'
+YML="${PIPELINE_DIR}/pipeline_execution/templates/rna_prediction_template.yml"
+DB_DIR="${PIPELINE_DIR}/pipeline_execution/ref-dbs/"
 
 _usage() {
     echo "
@@ -17,14 +18,14 @@ Script arguments.
   -l                  Limit number of jobs to schedule. (optional, default ${LIMIT_QUEUE})
 
   Pipeline parameters:
-  -y                  template yml file. (optional, default ${YML})
+  -y                  template yml file. (optional, default ../templates/rna_prediction_template.yml})
   -f                  Forward reads fasta file path.
   -r                  Reverse reads fasta file path.
   -s                  Single reads fasta file path.
   -q                  Run qc ('true' or 'false').
   -n                  Name of run and prefix to output files.
   -d                  Path to run directory.
-  -p                  Path to database directory. (optional, default ${DB_DIR})
+  -p                  Path to database directory. (optional, default ../ref-dbs)
 "
 }
 
@@ -115,7 +116,7 @@ fi
 
 export TOIL_SLURM_ARGS="--array=1-${LIMIT_QUEUE}%20" #schedule 100 jobs 20 running at one time
 
-export CWL=../../workflows/subworkflows/qc-merge-rna.cwl
+export CWL="${PIPELINE_DIR}/workflows/subworkflows/qc-merge-rna.cwl"
 
 # work dir
 export WORK_DIR=${RUN_DIR}/work-dir

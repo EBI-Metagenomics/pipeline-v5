@@ -14,6 +14,8 @@ db_constant_strings = ['ssu_tax', 'lsu_tax', 'ssu_otus', 'lsu_otus', 'rfam_model
 
 #   Append databases path to values in template yaml
 def db_dir(db_path, yaml_path):
+    if not db_path.endswith('/'):
+        db_path += '/'
     with open(yaml_path) as f:
         doc = yaml.load(f, Loader=yaml.SafeLoader)
         for dc in db_constants:
