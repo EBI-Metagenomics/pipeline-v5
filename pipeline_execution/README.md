@@ -8,7 +8,7 @@ This repository contains scripts for execution of CWL workflows
 
 This workflow runs a conditional QC step, RNA prediction and classification against SILVA databases.
 
-####Required databases 
+#### Required databases 
 
 ```bash
 mkdir ref-dbs && cd ref-dbs && 
@@ -32,7 +32,7 @@ wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_mo
   -P other 
 ```
 
-####Execution
+#### Execution
 
 Source the tool and CWL environments before executing the following script.
 
