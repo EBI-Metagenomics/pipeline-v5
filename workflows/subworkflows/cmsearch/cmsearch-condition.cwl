@@ -1,15 +1,10 @@
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2
 class: Workflow
-$namespaces:
-  edam: 'http://edamontology.org/'
-  s: 'http://schema.org/'
-label: Identifies non-coding RNAs using Rfams covariance models
+doc: |
+  Identifies non-coding RNAs using Rfams covariance models
 
 requirements:
-  SubworkflowFeatureRequirement: {}
   MultipleInputFeatureRequirement: {}
-  StepInputExpressionRequirement: {}
-  InlineJavascriptRequirement: {}
 
 inputs:
   type: string
@@ -58,9 +53,14 @@ steps:
       query_sequences: query_sequences
     out: [ concatenate_matches, deoverlapped_matches ]
 
+$namespaces:
+  edam: 'http://edamontology.org/'
+  s: 'http://schema.org/'
+
 $schemas:
   - 'http://edamontology.org/EDAM_1.16.owl'
   - 'https://schema.org/version/latest/schemaorg-current-http.rdf'
+
 s:license: "https://www.apache.org/licenses/LICENSE-2.0"
 s:copyrightHolder: "EMBL - European Bioinformatics Institute, 2018"
 s:author: "Ekaterina Sakharova"

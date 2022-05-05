@@ -16,6 +16,8 @@ requirements:
     coresMin: 2
     ramMin: 200
 
+baseCommand: awk_tool
+
 inputs:
   infernal_matches:
     label: output from infernal cmsearch
@@ -29,10 +31,13 @@ inputs:
     inputBinding:
         prefix: -n
         valueFrom: |
-                $(self? self : inputs.infernal_matches.basename)
+          $(
+            if (self) {
+              return self;
+            } else {
+              return inputs.infernal_matches.basename;
+          )
     default: ""
-
-baseCommand: awk_tool
 
 outputs:
   matched_seqs_with_coords:

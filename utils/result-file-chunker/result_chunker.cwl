@@ -1,13 +1,12 @@
-#!/usr/bin/env
-cwlVersion: v1.2.0-dev2
+#!/usr/bin/env cwl-runner
+cwlVersion: v1.2
 class: Workflow
 
 requirements:
-  - class: SubworkflowFeatureRequirement
-  - class: MultipleInputFeatureRequirement
-  - class: InlineJavascriptRequirement
-  - class: StepInputExpressionRequirement
-  - class: ScatterFeatureRequirement
+  SubworkflowFeatureRequirement: {}
+  MultipleInputFeatureRequirement: {}
+  StepInputExpressionRequirement: {}
+  ScatterFeatureRequirement: {}
 
 inputs:
   input_file: File
