@@ -146,7 +146,7 @@ export RENAMED_YML=${RUN_DIR}/"${NAME}".yml
 
 echo "Writing yaml file"
 
-python3 "prepare_yml.py" \
+python3 rna_prediction_yml.py \
   -y "${YML}" \
   -o "${RENAMED_YML}" \
   -a "raw-reads" \

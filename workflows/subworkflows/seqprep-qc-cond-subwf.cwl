@@ -14,7 +14,7 @@ inputs:
     reverse_reads: File?
     single_reads: File?
     
-    paired_reads_length_filter: File?
+    paired_reads_length_filter: int
 
     qc: boolean
 

@@ -1,31 +1,39 @@
 #!/usr/bin/env python3
 
 import argparse
-import yaml
+from ruamel.yaml import YAML
+import os
 
 RAW_READS_ANALYSIS = "raw-reads"
 ASSEMBLY_ANALYSIS = "assembly"
 AMPLICON_ANALYSIS = "amplicon"
 
 
-db_constants = [
+db_fields = [
     "ssu_db",
     "lsu_db",
+    "ssu_tax",
+    "lsu_tax",
+    "ssu_otus",
+    "lsu_otus",
+    "rfam_models",
+    "rfam_model_clans",
 ]
-db_constant_strings = ["ssu_tax", "lsu_tax", "ssu_otus", "lsu_otus", "rfam_model_clans"]
 
 
-#   Append databases path to values in template yaml
 def db_dir(db_path, yaml_path):
+    """Append databases path to values in template yaml"""
     if not db_path.endswith("/"):
         db_path += "/"
     with open(yaml_path) as f:
-        doc = yaml.load(f, Loader=yaml.SafeLoader)
-        for dc in db_constants:
-            doc[dc]["path"] = db_path + doc[dc]["path"]
-        for dcs in db_constant_strings:
-            doc[dcs] = db_path + doc[dcs]
-        doc["rfam_models"] = [db_path + x for x in doc["rfam_models"]]
+        yaml = YAML(typ="safe")
+        doc = yaml.load(f)
+        for db_field in db_fields:
+            if isinstance(doc[db_field], (list, tuple)):
+                for el in doc[db_field]:
+                    el["path"] = os.path.join(db_path, el["path"])
+            else:
+                doc[db_field]["path"] = os.path.join(db_path, doc[db_field]["path"])
     return doc
 
 
@@ -75,12 +83,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     type_required = args.analysis in [RAW_READS_ANALYSIS, AMPLICON_ANALYSIS]
-    if type_required and args.type is None:
+    if type_required and not args.type:
         parser.error(
             f"For {RAW_READS_ANALYSIS} or {AMPLICON_ANALYSIS}, --type is required."
         )
 
-    if args.analysis in [ASSEMBLY_ANALYSIS, AMPLICON_ANALYSIS] and args.single is None:
+    if args.analysis in [ASSEMBLY_ANALYSIS, AMPLICON_ANALYSIS] and not args.single:
         parser.error(
             f"For {ASSEMBLY_ANALYSIS} or {AMPLICON_ANALYSIS}, --single is required."
         )
@@ -88,47 +96,36 @@ if __name__ == "__main__":
     print(f"Loading the constants from {args.yml}.")
 
     # load template yml file and append database path
-    constants = db_dir(args.db_dir, args.yml)
+    template_yml = db_dir(args.db_dir, args.yml)
 
     print("---------> prepare YML file for " + args.analysis)
 
     with open(args.output, "w") as output_yml:
-        yaml.dump(constants, output_yml)  #  write edited constants
+        yaml = YAML(typ="safe")
         if args.analysis in [RAW_READS_ANALYSIS, AMPLICON_ANALYSIS]:
             if args.type == "single":
-                print(
-                    "single_reads:",
-                    "  class: File",
-                    "  format: edam:format_1930",
-                    "  path: " + args.single,
-                    sep="\n",
-                    file=output_yml,
-                )
+                template_yml["single_reads"] = {
+                    "class": "File",
+                    "format": "edam:format_1930",
+                    "path": args.single,
+                }
             elif args.type == "paired":
-                print(
-                    "forward_reads:",
-                    "  class: File",
-                    "  format: edam:format_1930",
-                    "  path: " + args.fr,
-                    sep="\n",
-                    file=output_yml,
-                )
-                print(
-                    "reverse_reads:",
-                    "  class: File",
-                    "  format: edam:format_1930",
-                    "  path: " + args.rr,
-                    sep="\n",
-                    file=output_yml,
-                )
+                template_yml["forward_reads"] = {
+                    "class": "File",
+                    "format": "edam:format_1930",
+                    "path": args.fr,
+                }
+                template_yml["reverse_reads"] = {
+                    "class": "File",
+                    "format": "edam:format_1930",
+                    "path": args.rr,
+                }
         elif args.analysis == ASSEMBLY_ANALYSIS:
-            print(
-                "contigs:",
-                "  class: File",
-                "  format: edam:format_1929",
-                "  path: " + args.single,
-                sep="\n",
-                file=output_yml,
-            )
+            template_yml["contigs"] = {
+                "class": "File",
+                "format": "edam:format_1929",
+                "path": args.single,
+            }
+        yaml.dump(template_yml, output_yml)
 
         print("---------> yml done")
