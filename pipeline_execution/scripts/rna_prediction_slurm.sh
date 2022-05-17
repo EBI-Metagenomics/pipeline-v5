@@ -170,7 +170,7 @@ TOIL_PARAMS+=(
   --disableCaching
   --defaultMemory "${MEMORY}"
   --defaultCores "${NUM_CORES}"
-  --batchSystem SLURM
+  --batchSystem slurm
   --retryCount 0
   "$CWL"
   "$RENAMED_YML"
