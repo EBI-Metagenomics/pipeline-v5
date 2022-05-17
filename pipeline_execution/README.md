@@ -19,8 +19,8 @@ mkdir silva_ssu silva_lsu
 wget \
   ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/silva_ssu-20200130.tar.gz \
   ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/silva_lsu-20200130.tar.gz 
-tar --extract --gzip --directory=silva_ssu silva_ssu-20200130.tar.gz
-tar --extract --gzip --directory=silva_lsu silva_lsu-20200130.tar.gz
+tar xfv silva_ssu-20200130.tar.gz --directory=silva_ssu --strip-components 1
+tar xfv silva_lsu-20200130.tar.gz --directory=silva_lsu --strip-components 1
 
 mkdir ribosomal
 
