@@ -1,5 +1,5 @@
 #!/usr/bin/env
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2
 class: CommandLineTool
 
 label: "Tool does chunking of input table by number of lines in line_number.

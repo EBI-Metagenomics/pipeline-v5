@@ -1,20 +1,14 @@
 #!/usr/bin/env cwl-runner
 class: Workflow
-cwlVersion: v1.2.0-dev4
+cwlVersion: v1.2
 
 requirements:
-  SubworkflowFeatureRequirement: {}
   MultipleInputFeatureRequirement: {}
-  InlineJavascriptRequirement: {}
-  StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
   ResourceRequirement:
     ramMin: 25000
     ramMax: 25000
     coresMin: 2
-#  SchemaDefRequirement:
-#    types:
-#      - $import: ../tools/biom-convert/biom-convert-table.yaml
 
 inputs:
   type: string
@@ -192,7 +186,6 @@ steps:
     in:
       uncompressed_file: extract_subunits/fastas
     out: [compressed_file]
-
 
 
 $namespaces:

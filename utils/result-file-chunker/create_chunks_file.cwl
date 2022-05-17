@@ -1,5 +1,5 @@
 #!/usr/bin/env
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2
 class: CommandLineTool
 
 label: "Tool creates file NAME.chunks and add inside basenames of given list of files"

@@ -1,3 +1,4 @@
+#!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
 
@@ -5,6 +6,7 @@ requirements:
   ResourceRequirement:
     coresMax: 1
     ramMin: 300  # just a default, could be lowered
+  InlineJavascriptRequirement: {}
 
 hints:
   DockerRequirement:
@@ -15,25 +17,36 @@ hints:
         specs: [ "https://identifiers.org/rrid/RRID:SCR_007173" ]
         version: [ "1.65", "1.66", "1.69" ]
 
+baseCommand: [ fastq_to_fasta.py ]
+
 inputs:
   fastq:
     type: File
     # format: edam:format_1930  # FASTQ
     inputBinding:
       prefix: '-i'
+  qc:
+    type: boolean?
+    doc: Set to try to run QC
+    # default: true
 
 arguments:
-  - valueFrom: $(inputs.fastq.nameroot).unclean
-    prefix: '-o'
-
-baseCommand: [ fastq_to_fasta.py ]
+  - prefix: '-o'
+    valueFrom: |
+      ${
+        if (inputs.qc == false) {
+          return (inputs.fastq.nameroot).concat('.fasta');
+        } else {
+          return (inputs.fastq.nameroot).concat('.unclean');
+        }
+      }
 
 outputs:
   fasta:
     type: File
     format: edam:format_1929  # FASTA
     outputBinding:
-      glob: "*.unclean"
+      glob: "$(inputs.fastq.nameroot)*"
 
 $namespaces:
  edam: http://edamontology.org/

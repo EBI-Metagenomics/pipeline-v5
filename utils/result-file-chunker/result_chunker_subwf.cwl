@@ -1,13 +1,9 @@
-#!/usr/bin/env
-cwlVersion: v1.2.0-dev2
+#!/usr/bin/env cwl-runner
+cwlVersion: v1.2
 class: Workflow
 
 requirements:
-  - class: SubworkflowFeatureRequirement
-  - class: MultipleInputFeatureRequirement
-  - class: InlineJavascriptRequirement
-  - class: StepInputExpressionRequirement
-  - class: ScatterFeatureRequirement
+  ScatterFeatureRequirement: {}
 
 inputs:
   input_files:
@@ -47,7 +43,6 @@ steps:
     in:
       arrayTwoDim: chunking/chunked_by_size_files
     out: [ array1d ]
-
 
 $namespaces:
  edam: http://edamontology.org/
