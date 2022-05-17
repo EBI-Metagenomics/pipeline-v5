@@ -132,7 +132,7 @@ rfam_models:
   checksum: adf704922a7f539d0a2ea5132e36db42
 - class: File
   path: ref-dbs/other/tRNA-Sec.cm
-  checkum: 73b3442df0671d75ced6a540c4bc4b31
+  checksum: 73b3442df0671d75ced6a540c4bc4b31
 
 rfam_model_clans:
   class: File
@@ -165,9 +165,9 @@ other_ncRNA_models:
 forward_reads:
   class: File
   format: edam:format_1930
-  path: inputs/SRP305791_SRR13685159.clean_1.fastq.gz
+  path: inputs/SRR13685159_1.fq.gz
 reverse_reads:
   class: File
   format: edam:format_1930
-  path: inputs/SRP305791_SRR13685159.clean_2.fastq.gz
+  path: inputs/SRR13685159_2.fq.gz
 run_qc: false

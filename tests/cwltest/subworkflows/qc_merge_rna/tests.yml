@@ -1,0 +1,137 @@
+- job: qc_merge_rna-PE.yml
+  tool: ../../../../workflows/subworkflows/qc-merge-rna.cwl
+  short_name: qc-merge-rna.cwl
+  doc: QC & RNA prediction
+  output:
+    chunking_nucleotides:
+      - basename: SRR13685159_MERGED_FASTQ.fasta.gz
+        checksum: Any
+        class: File
+        location: Any
+        path: Any
+        size: 37386
+      - basename: SRR13685159_MERGED_FASTQ.fasta.chunks
+        checksum: sha1$ca7b54aa92ab4bceeab3db8daf1b1bfc2ba6f799
+        class: File
+        location: Any
+        path: Any
+        size: 35
+    fastp_filtering_json_report: null
+    hashsum_paired:
+      - basename: SRR13685159_1.fq.gz.sha1
+        checksum: sha1$7d1288266c771620a8e5ba5806fa5449ea29b87b
+        class: File
+        location: Any
+        path: Any
+        size: 62
+      - basename: SRR13685159_2.fq.gz.sha1
+        checksum: sha1$3df1eb7b7844df4601274c5f9c6351174025644c
+        class: File
+        location: Any
+        path: Any
+        size: 62
+    hashsum_single: null
+    no_tax_flag_file: null
+    qc-statistics: null
+    qc-status: null
+    qc_summary: null
+    rna-count:
+      basename: RNA-counts
+      checksum: sha1$93d717b50d21e07939a275d0849ce198862fae34
+      class: File
+      location: Any
+      path: Any
+      size: 23
+    sequence-categorisation_folder:
+      basename: sequence-categorisation
+      class: Directory
+      listing:
+        - basename: LSU.fasta.gz
+          checksum: Any
+          class: File
+          location: Any
+          path: Any
+          size: 276
+        - basename: SSU.fasta.gz
+          checksum: Any
+          class: File
+          location: Any
+          path: Any
+          size: 30
+        - basename: LSU.fasta.chunks
+          checksum: sha1$b0c3709897232c0aaa5e65f234ff2a58a9267047
+          class: File
+          location: Any
+          path: Any
+          size: 14
+        - basename: SSU.fasta.chunks
+          checksum: sha1$1b278f25d4822d158f8b8942887648c930d5c856
+          class: File
+          location: Any
+          path: Any
+          size: 14
+        - basename: LSU_rRNA_bacteria.RF02541.fa.gz
+          checksum: Any
+          class: File
+          location: Any
+          path: Any
+          size: 186
+        - basename: LSU_rRNA_eukarya.RF02543.fa.gz
+          checksum: Any
+          class: File
+          location: Any
+          path: Any
+          size: 199
+      location: Any
+      path: Any
+    taxonomy-summary_folder:
+      basename: taxonomy-summary
+      class: Directory
+      listing:
+        - basename: LSU
+          class: Directory
+          listing:
+            - basename: SRR13685159_MERGED_FASTQ_LSU.fasta.mseq.gz
+              checksum: Any
+              class: File
+              location: Any
+              path: Any
+              size: 343
+            - basename: SRR13685159_MERGED_FASTQ_LSU.fasta.mseq.tsv
+              checksum: Any
+              class: File
+              format: "http://edamontology.org/format_3746"
+              location: Any
+              path: Any
+              size: 133
+            - basename: SRR13685159_MERGED_FASTQ_LSU.fasta.mseq.txt
+              checksum: Any
+              class: File
+              format: >-
+                https://www.iana.org/assignments/media-types/text/tab-separated-values
+              location: Any
+              path: Any
+              size: 48
+            - basename: krona.html
+              checksum: Any
+              class: File
+              format: "https://www.iana.org/assignments/media-types/text/html"
+              location: Any
+              path: Any
+              size: 226440
+            - basename: SRR13685159_MERGED_FASTQ_LSU.fasta.mseq_hdf5.biom
+              checksum: Any
+              class: File
+              location: Any
+              path: Any
+              size: 37040
+            - basename: SRR13685159_MERGED_FASTQ_LSU.fasta.mseq_json.biom
+              checksum: Any
+              class: File
+              location: Any
+              path: Any
+              size: 488
+          location: Any
+          path: Any
+      location: Any
+      path: Any

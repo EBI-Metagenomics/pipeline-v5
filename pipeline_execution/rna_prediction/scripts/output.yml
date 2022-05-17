@@ -1,0 +1,54 @@
+$namespaces: {edam: 'http://edamontology.org/', s: 'https://schema.org/'}
+5.8s_pattern: 5_8S_rRNA
+5s_pattern: mtPerm-5S
+forward_reads: {class: File, format: 'edam:format_1930', path: forward.fq}
+lsu_db: {checksum: 96dc05a4ab2933ec6f443a1a0ce0d225, class: File, format: 'edam:format_1929',
+  path: /fancy/path/silva_lsu/LSU.fasta}
+lsu_label: LSU_rRNA
+lsu_otus: {checksum: 515df01f33ed8d5741fbe0e55e4780b9, class: File, path: /fancy/path/silva_lsu/lsu2.otu}
+lsu_tax: {checksum: d521ce911cb9b94f4d304286ed9f8c3e, class: File, path: /fancy/path/silva_lsu/slv_lsu_filtered2.txt}
+other_ncRNA_models: [alpha_tmRNA.RF01849, Bacteria_large_SRP.RF01854, beta_tmRNA.RF01850,
+  Dictyostelium_SRP.RF01570, Metazoa_SRP.RF00017, Protozoa_SRP.RF01856, RNaseP_arch.RF00373,
+  RNaseP_bact_b.RF00011, RNaseP_nuc.RF00009, tRNA.RF00005, Archaea_SRP.RF01857, Bacteria_small_SRP.RF00169,
+  cyano_tmRNA.RF01851, Fungi_SRP.RF01502, mt-tmRNA.RF02544, Plant_SRP.RF01855, RNase_MRP.RF00030,
+  RNaseP_bact_a.RF00010, RNase_P.RF01577, tmRNA.RF00023, tRNA-Sec.RF01852]
+qc_min_length: 100
+reverse_reads: {class: File, format: 'edam:format_1930', path: reverse.fq}
+rfam_model_clans: {checksum: 4dffaadeaac92821c19bd0e5a152f370, class: File, path: /fancy/path/rRNA.claninfo}
+rfam_models:
+- {checksum: 30af1b9283ed10bfb22fbd1571be51e9, class: File, path: /fancy/path/Rfam/ribosomal/RF00002.cm}
+- {checksum: 94a864300ab97ea91c8e334af1f15ccf, class: File, path: /fancy/path/Rfam/ribosomal/RF00177.cm}
+- {checksum: 358464d747ca08973983181e6c5d3c36, class: File, path: /fancy/path/Rfam/ribosomal/RF01959.cm}
+- {checksum: 7e207426e32053bdad4dbe325f4d53f2, class: File, path: /fancy/path/Rfam/ribosomal/RF01960.cm}
+- {checksum: 21c240b829b6c8d44acb320826dd3988, class: File, path: /fancy/path/Rfam/ribosomal/RF02540.cm}
+- {checksum: 909e8186ecff869c21bd4f17b17d6d18, class: File, path: /fancy/path/Rfam/ribosomal/RF02541.cm}
+- {checksum: f21a130574b87a3cae0eb4aab0f38e6a, class: File, path: /fancy/path/Rfam/ribosomal/RF02542.cm}
+- {checksum: 6ec013d40fbce6dbbb2a1c35e68d777c, class: File, path: /fancy/path/Rfam/ribosomal/RF02543.cm}
+- {checksum: 91f899f34613e77694b97c993414e5c2, class: File, path: /fancy/path/Rfam/ribosomal/RF02546.cm}
+- {checksum: 43f94845c34819ebbecfa9050a992ea9, class: File, path: /fancy/path/Rfam/ribosomal/RF02547.cm}
+- {checksum: bb386488759438f4c3648044a6e7e990, class: File, path: /fancy/path/Rfam/other/alpha_tmRNA.cm}
+- {checksum: b0d6d8960d012a40f7b2b4c8ed50cb1f, class: File, path: /fancy/path/Rfam/other/Plant_SRP.cm}
+- {checksum: 0b85ae3b178150ad302fe295ea5794dc, class: File, path: /fancy/path/Rfam/other/Archaea_SRP.cm}
+- {checksum: 4f7bb93a56ea9e3f4f00df19e2b1efe3, class: File, path: /fancy/path/Rfam/other/Protozoa_SRP.cm}
+- {checksum: 0ce2c0407c18a6a6f67d907718556951, class: File, path: /fancy/path/Rfam/other/Bacteria_large_SRP.cm}
+- {checksum: 339d31cf05f52736c8036d8a28824f53, class: File, path: /fancy/path/Rfam/other/RNase_MRP.cm}
+- {checksum: aac546e28fe85eb6478dceab842b7ba2, class: File, path: /fancy/path/Rfam/other/Bacteria_small_SRP.cm}
+- {checksum: 80b98e26b20e3dbcf025d5414023d5e1, class: File, path: /fancy/path/Rfam/other/RNaseP_arch.cm}
+- {checksum: af26a7a601e4b0ae4b7edf7c9459b02d, class: File, path: /fancy/path/Rfam/other/beta_tmRNA.cm}
+- {checksum: 4501e8e0357aefbf76849a619a423c94, class: File, path: /fancy/path/Rfam/other/RNaseP_bact_a.cm}
+- {checksum: 60ba0326655a2b558ec7adad571c7d90, class: File, path: /fancy/path/Rfam/other/cyano_tmRNA.cm}
+- {checksum: 3d5c292715b9df28d74ed032fdcb2041, class: File, path: /fancy/path/Rfam/other/RNaseP_bact_b.cm}
+- {checksum: 57d27c4d9098f3a05447030c28330238, class: File, path: /fancy/path/Rfam/other/Dictyostelium_SRP.cm}
+- {checksum: 387d3694d17a2fd5bb9edebb586105af, class: File, path: /fancy/path/Rfam/other/RNase_P.cm}
+- {checksum: b874eb43eca0af9dbdd402ae8cdc7d76, class: File, path: /fancy/path/Rfam/other/Fungi_SRP.cm}
+- {checksum: d82176ee498688ffeaba25263956123e, class: File, path: /fancy/path/Rfam/other/RNaseP_nuc.cm}
+- {checksum: 2e0d37364dd446be81710d013d6b8947, class: File, path: /fancy/path/Rfam/other/Metazoa_SRP.cm}
+- {checksum: 2b6475b810ce90021bb742473bc1f455, class: File, path: /fancy/path/Rfam/other/tmRNA.cm}
+- {checksum: 77b2478f1f638066d2eed2b18b0c518b, class: File, path: /fancy/path/Rfam/other/mt-tmRNA.cm}
+- {checksum: adf704922a7f539d0a2ea5132e36db42, class: File, path: /fancy/path/Rfam/other/tRNA.cm}
+- {checkum: 73b3442df0671d75ced6a540c4bc4b31, class: File, path: /fancy/path/Rfam/other/tRNA-Sec.cm}
+ssu_db: {checksum: 6b0580823a8c6860a0674428745fb943, class: File, format: 'edam:format_1929',
+  path: /fancy/path/silva_ssu/SSU.fasta}
+ssu_label: SSU_rRNA
+ssu_otus: {checksum: 75d6cb73018a4f969063de6927cfb1ab, class: File, path: /fancy/path/silva_ssu/ssu2.otu}
+ssu_tax: {checksum: f4e7019da9e4c9e38cf3bbd8d304bf0c, class: File, path: /fancy/path/silva_ssu/slv_ssu_filtered2.txt}
