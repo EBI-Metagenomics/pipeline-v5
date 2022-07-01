@@ -14,6 +14,12 @@ inputs:
 
   input_fasta: File
   maskfile: File
+  genecaller_order:
+    type: string?
+    default: "prodigal,fgs"
+  fgs_train:
+    type: string?
+    default: "illumina_5"
 
 outputs:
   predicted_proteins:
@@ -33,6 +39,7 @@ steps:
   FGS:
     in:
       input_fasta: input_fasta
+      train: fgs_train
       seq_type: { default: "1"}
       output:
         source: input_fasta

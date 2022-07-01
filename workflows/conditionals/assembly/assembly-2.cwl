@@ -40,6 +40,8 @@ inputs:
     CGC_config: string
     CGC_postfixes: string[]
     cgc_chunk_size: int
+    fgs_train: string?
+    genecaller_order: string?
 
  # << functional annotation >>
     protein_chunk_size_eggnog: int
@@ -205,6 +207,8 @@ steps:
       maskfile: rna_prediction/ncRNA
       postfixes: CGC_postfixes
       chunk_size: cgc_chunk_size
+      fgs_train: fgs_train
+      genecaller_order: genecaller_order
     out: [ results, count_faa ]
     run: ../../subworkflows/assembly/CGC-subwf.cwl
 

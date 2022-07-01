@@ -51,6 +51,10 @@ inputs:
     inputBinding:
       prefix: "--name"
     type: string
+  genecaller_order:
+    inputBinding:
+      prefix: "--caller-priority"
+    type: string?
 
 stdout: stdout.txt
 stderr: stderr.txt
