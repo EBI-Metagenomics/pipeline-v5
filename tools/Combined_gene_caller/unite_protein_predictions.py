@@ -363,15 +363,13 @@ if __name__ == "__main__":
     summary = {}
     all_predictions = {}
     files = {}
-    caller_priority = []
+    caller_priority = ['prodigal', 'fgs']
     if args['caller-prio']:
         caller_priority = args['caller-prio'].split(",")
     else:
-        caller_priority = ['prodigal', 'fgs']
     logging.info('Caller priority: 1. {}, 2. {}'.format(caller_priority[0], caller_priority[1]))
 
     if args['prodigal-out']:
-        caller_priority = ['prodigal', 'fgs']
         logging.info('Prodigal presented')
         logging.info("Filtering Prodigal sequences...")
         filter_output_file_faa(args['prodigal-faa'], 's/\*$//')
