@@ -366,7 +366,7 @@ if __name__ == "__main__":
     caller_priority = ['prodigal', 'fgs']
     if args['caller-prio']:
         caller_priority = args['caller-prio'].split(",")
-    else:
+
     logging.info('Caller priority: 1. {}, 2. {}'.format(caller_priority[0], caller_priority[1]))
 
     if args['prodigal-out']:

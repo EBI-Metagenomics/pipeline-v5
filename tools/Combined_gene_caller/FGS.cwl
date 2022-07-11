@@ -35,7 +35,7 @@ inputs:
       separate: true
       prefix: "-s"
   train:
-    type: string?
+    type: string
     inputBinding:
       separate: true
       prefix: "-t"

@@ -40,8 +40,8 @@ inputs:
     CGC_config: string
     CGC_postfixes: string[]
     cgc_chunk_size: int
-    fgs_train: string?
-    genecaller_order: string?
+    fgs_train: string
+    genecaller_order: string
 
  # << functional annotation >>
     protein_chunk_size_eggnog: int

@@ -15,8 +15,8 @@ inputs:
   maskfile: File
   postfixes: string[]
   chunk_size: int
-  genecaller_order: string?
-  fgs_train: string?
+  genecaller_order: string
+  fgs_train: string
 
 outputs:
   results:

@@ -36,8 +36,12 @@ inputs:
     CGC_config: string
     CGC_postfixes: string[]
     cgc_chunk_size: int
-    genecaller_order: string?
-    fgs_train: string?
+    genecaller_order:
+      type: string
+      default: "prodigal,fgs"
+    fgs_train:
+      type: string
+      default: "illumina_5"
 
  # << functional annotation >>
     protein_chunk_size_eggnog: int

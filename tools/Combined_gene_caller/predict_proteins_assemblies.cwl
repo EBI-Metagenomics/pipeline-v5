@@ -15,10 +15,10 @@ inputs:
   input_fasta: File
   maskfile: File
   genecaller_order:
-    type: string?
+    type: string
     default: "prodigal,fgs"
   fgs_train:
-    type: string?
+    type: string
     default: "illumina_5"
 
 outputs:
