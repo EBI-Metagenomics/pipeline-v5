@@ -147,6 +147,8 @@ CGC_postfixes:
   - '_CDS.faa'
   - '_CDS.ffn'
 cgc_chunk_size: 100000
+genecaller_order: 'prodigal,fgs'
+fgs_train: 'illumina_5'
 
 # functional annotation
 fa_chunk_size: 100000
