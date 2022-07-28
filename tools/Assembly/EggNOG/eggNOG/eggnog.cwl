@@ -13,10 +13,10 @@ hints:
 
 requirements:
   ResourceRequirement:
-    ramMin: 10000
+    ramMin: 1000
     coresMin: 32
 
-baseCommand: [emapper.py]
+baseCommand: [emapper_wrapper.sh]
 
 inputs:
   fasta_file:
