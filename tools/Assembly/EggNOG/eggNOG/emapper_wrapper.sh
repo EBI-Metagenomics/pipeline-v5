@@ -24,14 +24,17 @@ while [[ $# -gt 0 ]]; do
 done
 
 clean() {
-    echo "Removing the db from ${MEMDIR}/${DB}"
-    rm -f "${MEMDIR}/${DB}"
+    if [ -n "${SRCDIR}" ]; then
+        echo "Removing the db from ${MEMDIR}/${DB}"
+        echo rm -f "${MEMDIR}/${DB}"
+    fi
 }
 
 trap clean EXIT SIGINT SIGTERM
 
-echo "Storing the eggnog.db sqlite in memory (/dev/shm)"
+if [ -n "${SRCDIR}" ]; then
+    echo "Storing the eggnog.db sqlite in memory (/dev/shm)"
+    echo cp "${SRCDIR}/${DB}" "${MEMDIR}/${DB}"
+fi
 
-cp "${SRCDIR}/${DB}" "${MEMDIR}/${DB}"
-
-emapper.py "${ARGS[@]}"
+echo emapper.py "${ARGS[@]}"
