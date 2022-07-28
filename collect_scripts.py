@@ -18,7 +18,7 @@ import os
 import shutil
 import sys
 from pathlib import Path
-from stat import S_IREAD, S_IWUSR, S_IWGRP, S_IRGRP, S_IEXEC
+from stat import S_IREAD, S_IWUSR, S_IWGRP, S_IRGRP, S_IEXEC, S_IXGRP
 
 FILE_EXTENSIONS = [".py", ".sh", ".json", ".pl", ".obo", ".txt", ".jar", ".vmoptions"]
 
