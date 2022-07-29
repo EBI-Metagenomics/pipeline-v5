@@ -37,4 +37,4 @@ if [ -n "${SRCDIR}" ]; then
     echo cp "${SRCDIR}/${DB}" "${MEMDIR}/${DB}"
 fi
 
-echo emapper.py "${ARGS[@]}"
+emapper.py "${ARGS[@]}"
