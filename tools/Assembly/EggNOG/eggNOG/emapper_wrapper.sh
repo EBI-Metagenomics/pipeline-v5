@@ -26,7 +26,7 @@ done
 clean() {
     if [ -n "${SRCDIR}" ]; then
         echo "Removing the db from ${MEMDIR}/${DB}"
-        echo rm -f "${MEMDIR}/${DB}"
+        rm -f "${MEMDIR}/${DB}"
     fi
 }
 
@@ -34,7 +34,7 @@ trap clean EXIT SIGINT SIGTERM
 
 if [ -n "${SRCDIR}" ]; then
     echo "Storing the eggnog.db sqlite in memory (/dev/shm)"
-    echo cp "${SRCDIR}/${DB}" "${MEMDIR}/${DB}"
+    cp "${SRCDIR}/${DB}" "${MEMDIR}/${DB}"
 fi
 
 emapper.py "${ARGS[@]}"
