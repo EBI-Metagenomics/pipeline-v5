@@ -13,7 +13,7 @@ hints:
 
 requirements:
   ResourceRequirement:
-    ramMin: 1000
+    ramMin: 10000
     coresMin: 16
 
 baseCommand: [emapper_wrapper.sh]
