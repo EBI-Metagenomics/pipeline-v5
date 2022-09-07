@@ -5,6 +5,7 @@ import sys
 
 
 if __name__ == "__main__":
+    # FIXME: this script needs more documentation
     parser = argparse.ArgumentParser(description="change embl file")
     parser.add_argument("-i", "--input", dest="input", help="geneclusters.txt", required=True)
     parser.add_argument("-o", "--output", dest="output", help="filename for output", required=True)

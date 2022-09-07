@@ -1,51 +1,51 @@
-#!/usr/bin/env
+#!/usr/bin/env cwl-runner
+
 cwlVersion: v1.0
 class: CommandLineTool
 
-$namespaces:
- edam: http://edamontology.org/
- s: http://schema.org/
-
 requirements:
-  InlineJavascriptRequirement: {}
   ShellCommandRequirement: {}
-  ResourceRequirement:
-    coresMax: 1
-    ramMin: 200  # just a default, could be lowered
+  InlineJavascriptRequirement: {}
 
-hints:
-  - class: DockerRequirement
-    dockerPull: 'alpine:3.7'
+baseCommand: ["grep", "-c", "^>"]
 
 inputs:
   sequences:
     type: File
     streamable: true
-    # format: edam:format_1929  # FASTA
+    inputBinding: {position: 1}
   number:
     type: int
 
-baseCommand: []
-
 arguments:
-    - grep
-    - -c
-    - '^>'
-    - $(inputs.sequences)
-    - '|'
-    - cat
+  - valueFrom: '|'
+    position: 2
+    shellQuote: false
+  - valueFrom: cat
+    shellQuote: false
+    position: 3
 
-stdout: count
+stdout: grepcount
 
 outputs:
   count:
     type: int
     outputBinding:
-      glob: count
+      glob: grepcount
       loadContents: true
-      outputEval: $((Number(self[0].contents)/inputs.number) | 0)
+      outputEval: |
+        ${
+          var grep_count = parseInt(self[0].contents) || 0;
+          if (grep_count === 0) {
+            return 0;
+          } else {
+            return parseInt(grep_count / inputs.number);
+          }
+        }
 
-
+$namespaces:
+ edam: http://edamontology.org/
+ s: http://schema.org/
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl
  - https://schema.org/version/latest/schemaorg-current-http.rdf

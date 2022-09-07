@@ -31,8 +31,6 @@ steps:
     in:
       fasta_file: fasta_file
       db_diamond: db_diamond
-      db: db
-      data_dir: data_dir
       no_annot: {default: true}
       no_file_comments: {default: true}
       cpu: cpu

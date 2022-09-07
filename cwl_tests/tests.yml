@@ -1,0 +1,27 @@
+- job: tools/antismash_gff/antismash_gff.yml
+  tool: ../tools/Assembly/antismash/chunking_antismash_with_conditionals/post-processing/gff_antismash/antismash_to_gff.cwl
+  short_name: antismash_gff.cwl
+  doc: "antiSMASH gff build"
+  output:
+    output_gff_bgz:
+        basename: "test_antismash.gff.bgz"
+        class: "File"
+        checksum: "sha1$74f5ae222fb44eaf11d36c743edffe0370904571"
+        size: 21030
+        format: "http://edamontology.org/format_2306"
+        location: Any
+        path: Any
+    output_gff_index:
+        basename: "test_antismash.gff.bgz.tbi"
+        class: "File"
+        checksum: "sha1$bdbb56999c8d1ce81a1c48c6e175dd1428bd8534"
+        size: 944
+        location: Any
+        path: Any
+    stdout:
+        basename: "stdout.txt"
+        class: "File"
+        checksum: "sha1$da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        size: 0
+        location: Any
+        path: Any

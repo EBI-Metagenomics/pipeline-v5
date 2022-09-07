@@ -19,7 +19,7 @@ inputs:
 
 arguments: ["-n", $(inputs.fasta.basename)]
 
-baseCommand: [ "run_samtools_docker.sh" ]
+baseCommand: [ "run_samtools.sh" ]
 
 outputs:
   fasta_index:

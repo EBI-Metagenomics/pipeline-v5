@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import os, re, sys, math, subprocess, random
 from collections import defaultdict
