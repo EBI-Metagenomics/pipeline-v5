@@ -1,4 +1,4 @@
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2
 class: Workflow
 $namespaces:
   edam: 'http://edamontology.org/'
