@@ -42,6 +42,7 @@ inputs:
     cgc_chunk_size: int
     fgs_train: string
     genecaller_order: string
+    pdb_config: string
 
  # << functional annotation >>
     protein_chunk_size_eggnog: int
@@ -143,6 +144,11 @@ outputs:
     type: int
     outputSource: cgc/count_faa
 
+# ProteinDB annotation
+  pdb_fasta:
+    type: File
+    outputSource: cgc/pdb_results
+
   optional_tax_file_flag:
     type: File?
     outputSource: no_tax_file_flag/created_file
@@ -209,7 +215,8 @@ steps:
       chunk_size: cgc_chunk_size
       fgs_train: fgs_train
       genecaller_order: genecaller_order
-    out: [ results, count_faa ]
+      pdb_config: pdb_config
+    out: [ results, pdb_results, count_faa ]
     run: ../../subworkflows/assembly/CGC-subwf.cwl
 
 # ------------------------- <<ANTISMASH >> -------------------------------
@@ -238,7 +245,7 @@ steps:
       check_value: cgc/count_faa
 
       cgc_results_faa:
-         source: cgc/results
+         source: cgc/pdb_results
          valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
       filtered_fasta: filtered_fasta
       rna_prediction_ncRNA: rna_prediction/ncRNA
@@ -300,7 +307,7 @@ steps:
         source: cgc/results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.ffn.*$/)).pop() )
       faa:
-        source: cgc/results
+        source: cgc/pdb_results
         valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
       LSU: rna_prediction/LSU_fasta
       SSU: rna_prediction/SSU_fasta

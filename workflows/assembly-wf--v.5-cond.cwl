@@ -42,6 +42,7 @@ inputs:
     fgs_train:
       type: string
       default: "illumina_5"
+    pdb_config: string
 
  # << functional annotation >>
     protein_chunk_size_eggnog: int
@@ -198,6 +199,7 @@ steps:
       cgc_chunk_size: cgc_chunk_size
       genecaller_order: genecaller_order
       fgs_train: fgs_train
+      pdb_config: pdb_config
       protein_chunk_size_eggnog: protein_chunk_size_eggnog
       protein_chunk_size_hmm: protein_chunk_size_hmm
       protein_chunk_size_IPS: protein_chunk_size_IPS
@@ -242,6 +244,7 @@ steps:
       - taxonomy-summary_folder
       - count_CDS
       - optional_tax_file_flag
+      - pdb_fasta
 
   touch_file_flag:
     when: $(inputs.count != undefined || inputs.status.basename == "QC-FAILED")

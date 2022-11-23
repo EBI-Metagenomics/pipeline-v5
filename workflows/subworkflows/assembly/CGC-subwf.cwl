@@ -17,12 +17,17 @@ inputs:
   chunk_size: int
   genecaller_order: string
   fgs_train: string
+  pdb_config: string
 
 outputs:
   results:
     type: File[]
     format: edam:format_1929
     outputSource: combine/result
+  pdb_results:
+    type: File
+    format: edam:format_1929
+    outputSource: pdb_registration/pdb_result
   count_faa:
     type: int
     outputSource: count_cds/count
@@ -64,8 +69,18 @@ steps:
         source: input_fasta
         valueFrom: $(self.nameroot)
       postfix: postfixes
-    out: [result]
+    out: [ result ]
     run: ../../../utils/concatenate.cwl
+
+  pdb_registration:
+    run: ../../../tools/Combined_gene_caller/pdb_registration.cwl
+    in:
+      pdb_config: pdb_config
+      prot_fasta:
+        source: combine/result
+        valueFrom: $( self.filter(file => !!file.basename.match(/^.*.faa.*$/)).pop() )
+    out: [ pdb_result ]
+
 
   count_cds:
     run: ../../../utils/count_fasta.cwl
