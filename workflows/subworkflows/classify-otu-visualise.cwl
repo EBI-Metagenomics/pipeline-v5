@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2
 class: Workflow
 label: "Run taxonomic classification, create OTU table and krona visualisation"
 

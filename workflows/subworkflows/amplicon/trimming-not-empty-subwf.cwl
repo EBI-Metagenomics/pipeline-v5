@@ -1,4 +1,4 @@
-cwlVersion: v1.2.0-dev2
+cwlVersion: v1.2
 class: Workflow
 label: Trim and reformat reads (single and paired end version)
 
