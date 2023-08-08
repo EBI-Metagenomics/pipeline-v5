@@ -34,6 +34,12 @@ inputs:
     inputBinding:
       separate: true
       prefix: "-s"
+  train:
+    type: string
+    inputBinding:
+      separate: true
+      prefix: "-t"
+    default: "illumina_5"
 
 stdout: stdout.txt
 stderr: stderr.txt
