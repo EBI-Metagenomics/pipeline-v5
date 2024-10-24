@@ -2,13 +2,15 @@ class: Workflow
 cwlVersion: v1.2
 
 requirements:
-  - class: ResourceRequirement
-    ramMin: 20000
-  - class: SubworkflowFeatureRequirement
-  - class: MultipleInputFeatureRequirement
-  - class: InlineJavascriptRequirement
-  - class: StepInputExpressionRequirement
-  - class: ScatterFeatureRequirement
+  ResourceRequirement:
+    ramMin: 5000
+    ramMax: 10000
+    coresMin: 4
+  SubworkflowFeatureRequirement: {}
+  MultipleInputFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
+  StepInputExpressionRequirement: {}
+  ScatterFeatureRequirement: {}
 
 inputs:
   filtered_fasta: File

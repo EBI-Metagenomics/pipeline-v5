@@ -10,6 +10,10 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
+  ResourceRequirement:
+    ramMin: 5000
+    ramMax: 10000
+    coresMin: 4
 #  SchemaDefRequirement:
 #    types:
 #      - $import: ../tools/biom-convert/biom-convert-table.yaml

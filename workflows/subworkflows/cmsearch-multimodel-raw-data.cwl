@@ -6,7 +6,11 @@ $namespaces:
 label: Identifies non-coding RNAs using Rfams covariance models
 
 requirements:
-  - class: ScatterFeatureRequirement
+  ScatterFeatureRequirement: {}
+  ResourceRequirement:
+    ramMin: 5000
+    ramMax: 10000
+    coresMin: 4
 
 inputs:
   query_sequences: File

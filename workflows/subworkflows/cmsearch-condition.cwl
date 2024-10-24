@@ -9,6 +9,10 @@ requirements:
   SubworkflowFeatureRequirement: {}
   MultipleInputFeatureRequirement: {}
   StepInputExpressionRequirement: {}
+  ResourceRequirement:
+    ramMin: 5000
+    ramMax: 10000
+    coresMin: 4
 
 inputs:
   type: string

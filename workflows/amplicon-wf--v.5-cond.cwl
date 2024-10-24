@@ -8,6 +8,10 @@ requirements:
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
   ScatterFeatureRequirement: {}
+  ResourceRequirement:
+    ramMin: 20000
+    ramMax: 30000
+    coresMin: 4
 
 inputs:
     single_reads: File?

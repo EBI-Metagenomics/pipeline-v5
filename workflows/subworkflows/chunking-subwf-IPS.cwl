@@ -4,7 +4,7 @@ cwlVersion: v1.0
 
 requirements:
   ResourceRequirement:
-      ramMin: 1000
+      ramMin: 5000
       coresMin: 1
   SubworkflowFeatureRequirement: {}
   ScatterFeatureRequirement: {}

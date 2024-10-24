@@ -10,6 +10,10 @@ requirements:
   ShellCommandRequirement: {}
   InlineJavascriptRequirement: {}
   StepInputExpressionRequirement: {}
+  ResourceRequirement:
+    ramMin: 5000
+    ramMax: 10000
+    coresMin: 4
 
 inputs:
   input_sequences: File

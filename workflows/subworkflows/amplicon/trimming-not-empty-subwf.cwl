@@ -8,6 +8,10 @@ requirements:
   StepInputExpressionRequirement: {}
   InlineJavascriptRequirement: {}
   MultipleInputFeatureRequirement: {}
+  ResourceRequirement:
+    ramMin: 5000
+    ramMax: 10000
+    coresMin: 4
 
 inputs:
   not_empty_reads: File

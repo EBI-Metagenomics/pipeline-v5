@@ -7,6 +7,10 @@ label: Subworkflow for mOTUs classification
 requirements:
     SubworkflowFeatureRequirement: {}
     InlineJavascriptRequirement: {}
+    ResourceRequirement:
+      ramMin: 5000
+      ramMax: 10000
+      coresMin: 4
 
 inputs:
     reads: File
