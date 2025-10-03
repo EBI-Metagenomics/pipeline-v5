@@ -38,9 +38,6 @@ inputs:
 
 baseCommand: ["go_summary_pipeline-1.0.py"]
 
-stderr: stderr.txt
-stdout: stdout.txt
-
 outputs:
   go_summary:
     type: File
@@ -52,8 +49,6 @@ outputs:
     format: edam:format_3752
     outputBinding:
       glob: "*.go_slim"
-  stderr: stderr
-  stdout: stdout
 
 $schemas:
  - http://edamontology.org/EDAM_1.16.owl

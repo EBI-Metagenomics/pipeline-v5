@@ -11,7 +11,7 @@ requirements:
     listing: [$(inputs.seqs)]
   ResourceRequirement:
     coresMax: 1
-    ramMin: 5000
+    ramMin: 25000
 
 hints:
   DockerRequirement:

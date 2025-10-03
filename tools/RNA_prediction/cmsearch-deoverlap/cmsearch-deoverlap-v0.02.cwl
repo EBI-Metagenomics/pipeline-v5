@@ -36,7 +36,7 @@ requirements:
     envDef:
       LC_ALL: C
   - class: ResourceRequirement
-    ramMin: 200
+    ramMin: 8000
     coresMin: 2
   - class: InitialWorkDirRequirement
     listing:

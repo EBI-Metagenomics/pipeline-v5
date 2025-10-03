@@ -41,7 +41,7 @@ inputs:
   Uniref90_db_txt: string
   diamond_header: string
 
-  antismash_geneclusters_txt: File
+  antismash_geneclusters_txt: File?
   go_config: string
 
   ko_file: string
