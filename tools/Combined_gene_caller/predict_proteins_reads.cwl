@@ -14,6 +14,9 @@ inputs:
 
   input_fasta: File
   maskfile: File
+  genecaller_order:
+    type: string
+    default: "prodigal,fgs"
 
 outputs:
   predicted_proteins:
@@ -41,6 +44,7 @@ steps:
       predicted_proteins_fgs_out: FGS/predicted_proteins_out
       predicted_proteins_fgs_ffn: FGS/predicted_proteins_ffn
       predicted_proteins_fgs_faa: FGS/predicted_proteins_faa
+      genecaller_order: genecaller_order
       basename:
         source: input_fasta
         valueFrom: $(self.basename)
